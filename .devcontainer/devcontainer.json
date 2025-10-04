@@ -1,0 +1,22 @@
+{
+  "name": "Oktomusic",
+  "image": "mcr.microsoft.com/devcontainers/base:noble",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "22",
+      "pnpmVersion": "latest",
+      "nvmVersion": "latest"
+    }
+  },
+  "forwardPorts": [],
+  "postCreateCommand": "pnpm install",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "README.md"
+      ]
+    },
+    "vscode": {}
+  }
+}
