@@ -9,12 +9,15 @@
   "editor.detectIndentation": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
-    "source.fixAll.ts": "always"
+    "source.fixAll.ts": "always",
   },
   "files.insertFinalNewline": true,
+  "files.eol": "\n",
   "prettier.enable": true,
+  "prettier.requireConfig": true,
   "prettier.configPath": "prettier.config.ts",
   "prettier.prettierPath": "./node_modules/prettier",
+  "prettier.embeddedLanguageFormatting": "auto",
   "npm.packageManager": "pnpm",
   "material-icon-theme.activeIconPack": "nest",
   "[yaml]": {
@@ -26,7 +29,7 @@
     "editor.quickSuggestions": {
       "strings": true,
       "other": true,
-      "comments": false
+      "comments": false,
     },
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },

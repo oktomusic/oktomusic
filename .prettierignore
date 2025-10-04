@@ -1,0 +1,5 @@
+apps/backend/dist
+apps/frontend/dist
+apps/website/.vitepress/dist
+apps/website/.vitepress/cache
+**/node_modules
