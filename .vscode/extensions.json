@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "ms-azuretools.vscode-docker",
+    "docker.docker",
+    "ms-vscode-remote.remote-containers",
+    "redhat.vscode-yaml",
+    "redhat.vscode-xml",
+    "esbenp.prettier-vscode"
+  ]
+}

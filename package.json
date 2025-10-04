@@ -1,0 +1,19 @@
+{
+  "name": "@oktomusic/monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "commitlint": "commitlint --edit",
+    "format": "prettier --check ."
+  },
+  "keywords": [],
+  "packageManager": "pnpm@10.18.0",
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@commitlint/types": "^20.0.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14"
+  }
+}
