@@ -32,7 +32,7 @@ FROM caddy:2-alpine
 COPY --from=builder /app/apps/frontend/dist /srv
 
 # Create basic Caddyfile for static file serving
-RUN echo -e "{\n\tauto_https off\n}\n\n:80 {\n\troot * /srv\n\tfile_server\n\ttry_files {path} /index.html\n}" > /etc/caddy/Caddyfile
+RUN printf "{\n\tauto_https off\n}\n\n:80 {\n\troot * /srv\n\tfile_server\n\ttry_files {path} /index.html\n}" > /etc/caddy/Caddyfile
 
 EXPOSE 80
 
