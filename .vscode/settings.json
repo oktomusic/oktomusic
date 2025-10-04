@@ -11,6 +11,7 @@
     "source.fixAll.eslint": "always",
     "source.fixAll.ts": "always"
   },
+  "files.insertFinalNewline": true,
   "prettier.enable": true,
   "prettier.configPath": "prettier.config.ts",
   "prettier.prettierPath": "./node_modules/prettier",
