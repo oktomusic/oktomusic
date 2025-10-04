@@ -11,6 +11,7 @@
   "prettier.configPath": "prettier.config.ts",
   "prettier.prettierPath": "./node_modules/prettier",
   "npm.packageManager": "pnpm",
+  "material-icon-theme.activeIconPack": "nest",
   "[yaml]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
