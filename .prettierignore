@@ -3,3 +3,4 @@ apps/frontend/dist
 apps/website/.vitepress/dist
 apps/website/.vitepress/cache
 **/node_modules
+pnpm-lock.yaml

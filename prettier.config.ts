@@ -4,9 +4,9 @@ const config: Config = {
   plugins: ["prettier-plugin-tailwindcss"],
   useTabs: false,
   tabWidth: 2,
-  trailingComma: "none",
+  trailingComma: "all",
   singleQuote: false,
-  semi: false
+  semi: false,
 }
 
 export default config
