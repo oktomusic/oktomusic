@@ -1,0 +1,16 @@
+{
+  "name": "@oktomusic/website",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "packageManager": "pnpm@10.18.0",
+  "devDependencies": {
+    "vitepress": "2.0.0-alpha.12"
+  }
+}
