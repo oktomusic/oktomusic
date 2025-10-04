@@ -3,10 +3,7 @@
     "ESLint": {
       "type": "stdio",
       "command": "pnpm",
-      "args": [
-        "dlx",
-        "@eslint/mcp@latest"
-      ]
+      "args": ["dlx", "@eslint/mcp@latest"]
     }
   }
 }

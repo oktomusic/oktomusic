@@ -7,6 +7,10 @@
   "editor.tabSize": 2,
   "editor.indentSize": 2,
   "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.fixAll.ts": "always"
+  },
   "prettier.enable": true,
   "prettier.configPath": "prettier.config.ts",
   "prettier.prettierPath": "./node_modules/prettier",
