@@ -1,39 +1,43 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-# Build stage
-FROM node:22-alpine AS builder
+FROM --platform=$BUILDPLATFORM node:22-alpine AS builder
 
-# Enable corepack for pnpm
-RUN corepack enable
+LABEL org.opencontainers.image.title="Oktomusic Website"
+LABEL org.opencontainers.image.description="Media server"
+LABEL org.opencontainers.image.authors="AFCMS <afcm.contact@gmail.com>"
+LABEL org.opencontainers.image.licenses="AGPL-3.0-only"
+LABEL org.opencontainers.image.source="https://github.com/oktomusic/oktomusic"
+LABEL io.artifacthub.package.readme-url="https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/README.md"
+LABEL io.artifacthub.package.category="storage"
+LABEL io.artifacthub.package.keywords="music,server"
+LABEL io.artifacthub.package.license="AGPL-3.0-only"
+LABEL io.artifacthub.package.maintainers='[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]'
+
+ARG TARGETOS
+ARG TARGETARCH
+
+RUN corepack enable pnpm
 
 WORKDIR /app
 
-# Copy workspace configuration
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 
-# Copy website app package.json and docs
 COPY apps/website/package.json apps/website/
 COPY docs/ docs/
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile --filter @oktomusic/website...
+RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfile --filter @oktomusic/website...
 
-# Copy website configuration
 COPY apps/website/ apps/website/
 
-# Build the website
 WORKDIR /app/apps/website
 RUN pnpm build
 
-# Production stage
-FROM caddy:2-alpine
+FROM caddy:2-alpine AS production
 
-# Copy built static files
 COPY --from=builder /app/apps/website/.vitepress/dist /srv
 
-# Create basic Caddyfile for static file serving
-RUN printf "{\n\tauto_https off\n}\n\n:80 {\n\troot * /srv\n\tfile_server\n\ttry_files {path} /index.html\n}" > /etc/caddy/Caddyfile
+COPY apps/frontend/Caddyfile /etc/caddy/Caddyfile
 
 EXPOSE 80
 

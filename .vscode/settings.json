@@ -37,5 +37,9 @@
     "editor.autoClosingBrackets": "never",
     "files.trimFinalNewlines": true,
     "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[caddyfile]": {
+    "editor.insertSpaces": false,
+    "editor.defaultFormatter": "matthewpi.caddyfile-support"
   }
 }
