@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "Oktomusic"
-  text: "A media server"
-  tagline: WIP Documentation
+  text: "A VitePress Site"
+  tagline: WIP documentation
   actions:
     - theme: brand
       text: Markdown Examples

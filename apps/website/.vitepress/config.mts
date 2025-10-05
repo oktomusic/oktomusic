@@ -1,8 +1,8 @@
-import { defineConfig } from "vitepress";
+import { defineConfig } from "vitepress"
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  srcDir: "../../docs/website",
+  srcDir: "docs",
 
   title: "Oktomusic",
   description: "A media server",
@@ -27,4 +27,5 @@ export default defineConfig({
       { icon: "github", link: "https://github.com/oktomusic/oktomusic" },
     ],
   },
-});
+  cleanUrls: true,
+})
