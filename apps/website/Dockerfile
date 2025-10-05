@@ -24,7 +24,6 @@ WORKDIR /app
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 
 COPY apps/website/package.json apps/website/
-COPY docs/ docs/
 
 RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfile --filter @oktomusic/website...
 
