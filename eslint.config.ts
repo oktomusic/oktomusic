@@ -1,19 +1,19 @@
 /// <reference types="@types/node" />
 
-import js from "@eslint/js"
-import globals from "globals"
-import tseslint from "typescript-eslint"
-import pluginReact from "eslint-plugin-react"
-import pluginReactRefresh from "eslint-plugin-react-refresh"
-import pluginReactHooks from "eslint-plugin-react-hooks"
-import prettier from "eslint-config-prettier/flat"
-import { defineConfig, globalIgnores } from "eslint/config"
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
+import pluginReactRefresh from "eslint-plugin-react-refresh";
+import pluginReactHooks from "eslint-plugin-react-hooks";
+import prettier from "eslint-config-prettier/flat";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 const configBase = [
   js.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
   prettier,
-]
+];
 
 const configsReact = [
   js.configs.recommended,
@@ -22,7 +22,7 @@ const configsReact = [
   pluginReactRefresh.configs.vite,
   pluginReactHooks.configs["recommended-latest"],
   prettier,
-]
+];
 
 export default defineConfig([
   globalIgnores(["node_modules", "**/dist", "**/cache", "**/tsdown.config.ts"]),
@@ -100,4 +100,4 @@ export default defineConfig([
       },
     },
   },
-])
+]);

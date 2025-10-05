@@ -1,3 +1,3 @@
 export const myFunction = () => {
-  return "Hello, world!"
-}
+  return "Hello, world!";
+};
