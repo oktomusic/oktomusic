@@ -20,6 +20,8 @@
   "prettier.embeddedLanguageFormatting": "auto",
   "npm.packageManager": "pnpm",
   "material-icon-theme.activeIconPack": "nest",
+  "jest.enable": true,
+  "jest.jestCommandLine": "pnpm jest",
   "[yaml]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
