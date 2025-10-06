@@ -6,7 +6,10 @@
   "scripts": {
     "lint": "eslint .",
     "commitlint": "commitlint --edit",
-    "format": "prettier --check ."
+    "format": "prettier --check .",
+    "test": "NODE_OPTIONS=\"\" jest",
+    "test:watch": "NODE_OPTIONS=\"\" jest --watch",
+    "test:cov": "NODE_OPTIONS=\"\" jest --coverage"
   },
   "keywords": [],
   "packageManager": "pnpm@10.18.0",

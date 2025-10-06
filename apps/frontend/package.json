@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "cd ../.. && NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/frontend",
+    "test:watch": "cd ../.. && NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/frontend --watch",
+    "test:cov": "cd ../.. && NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/frontend --coverage"
   },
   "dependencies": {
     "react": "^19.1.1",

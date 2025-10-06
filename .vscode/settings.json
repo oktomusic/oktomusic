@@ -24,7 +24,8 @@
     "certification": "bibliography"
   },
   "jest.enable": true,
-  "jest.jestCommandLine": "pnpm jest",
+  "jest.jestCommandLine": "NODE_OPTIONS=\"\" pnpm jest",
+  "jest.rootPath": ".",
   "[yaml]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
