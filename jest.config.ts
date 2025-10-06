@@ -1,4 +1,6 @@
-const config = {
+import type { Config } from "jest";
+
+const config: Config = {
   projects: [
     {
       displayName: "@oktomusic/backend",
@@ -6,18 +8,10 @@ const config = {
       rootDir: "./apps/backend",
       testMatch: ["<rootDir>/src/**/*.spec.ts", "<rootDir>/test/**/*.e2e-spec.ts"],
       preset: "ts-jest",
-      transform: {
-        "^.+\\.ts$": [
-          "ts-jest",
-          {
-            tsconfig: "<rootDir>/tsconfig.spec.json",
-          },
-        ],
-      },
       moduleFileExtensions: ["js", "json", "ts"],
       collectCoverageFrom: ["**/*.(t|j)s"],
       coverageDirectory: "../../coverage/backend",
-    },
+    } as Config,
     {
       displayName: "@oktomusic/frontend",
       testEnvironment: "jsdom",
@@ -44,7 +38,7 @@ const config = {
       },
       collectCoverageFrom: ["src/**/*.{ts,tsx}", "!src/**/*.d.ts"],
       coverageDirectory: "../../coverage/frontend",
-    },
+    } as Config,
   ],
 };
 

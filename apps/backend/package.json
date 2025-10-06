@@ -13,11 +13,11 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "cd ../.. && NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/backend",
-    "test:watch": "cd ../.. && NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/backend --watch",
-    "test:cov": "cd ../.. && NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/backend --coverage",
-    "test:debug": "cd ../.. && NODE_OPTIONS=\"\" node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --selectProjects=@oktomusic/backend --runInBand",
-    "test:e2e": "cd ../.. && NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/backend --testPathPatterns=e2e-spec"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.6",
@@ -43,5 +43,22 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   }
 }
