@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "pnpm -w exec eslint -c eslint.config.ts apps/frontend",
+    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix apps/frontend"
   },
   "dependencies": {
     "react": "^19.1.1",

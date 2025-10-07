@@ -1,0 +1,69 @@
+---
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  eslint:
+    name: ESLint (${{ matrix.pkg }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pkg:
+          - "@oktomusic/backend"
+          - "@oktomusic/frontend"
+          - "@oktomusic/lyrics"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Use NodeJS 22
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .node-version
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint package
+        run: |
+          pnpm --filter "${{ matrix.pkg }}" run lint
+
+  deploy-website:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Use NodeJS 22
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .node-version
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build website
+        run: pnpm --filter "@oktomusic/website" run build
+
+      - name: Build & Deploy Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./apps/website/.vitepress/dist --project-name=oktomusic
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

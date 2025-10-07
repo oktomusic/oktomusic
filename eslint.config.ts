@@ -25,7 +25,13 @@ const configsReact = [
 ];
 
 export default defineConfig([
-  globalIgnores(["node_modules", "**/dist", "**/cache", "**/tsdown.config.ts"]),
+  globalIgnores([
+    "node_modules",
+    "**/dist",
+    "**/cache",
+    "**/tsdown.config.ts",
+    "coverage",
+  ]),
 
   // @oktomusic/backend (NestJS)
   {

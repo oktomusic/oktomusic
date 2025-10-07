@@ -30,7 +30,9 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit",
-    "release": "bumpp && npm publish"
+    "release": "bumpp && npm publish",
+    "lint": "pnpm -w exec eslint -c eslint.config.ts packages/lyrics",
+    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/lyrics"
   },
   "devDependencies": {
     "@types/node": "^22.15.17",

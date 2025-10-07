@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "lint": "pnpm -w exec eslint -c eslint.config.ts --no-error-on-unmatched-pattern apps/website",
+    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --no-error-on-unmatched-pattern --fix apps/website"
   },
   "license": "AGPL-3.0-only",
   "packageManager": "pnpm@10.18.0",
