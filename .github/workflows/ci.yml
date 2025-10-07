@@ -47,6 +47,9 @@ jobs:
     name: Deploy Website
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    permissions:
+      contents: read
+      deployments: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
