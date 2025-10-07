@@ -6,7 +6,17 @@
   "scripts": {
     "lint": "eslint .",
     "commitlint": "commitlint --edit",
-    "format": "prettier --check ."
+    "format": "prettier --check .",
+    "test": "NODE_OPTIONS=\"\" jest",
+    "test:watch": "NODE_OPTIONS=\"\" jest --watch",
+    "test:cov": "NODE_OPTIONS=\"\" jest --coverage",
+    "test:backend": "NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/backend",
+    "test:backend:watch": "NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/backend --watch",
+    "test:backend:cov": "NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/backend --coverage",
+    "test:backend:e2e": "NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/backend --testPathPatterns=e2e-spec",
+    "test:frontend": "NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/frontend",
+    "test:frontend:watch": "NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/frontend --watch",
+    "test:frontend:cov": "NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/frontend --coverage"
   },
   "keywords": [],
   "packageManager": "pnpm@10.18.0",
