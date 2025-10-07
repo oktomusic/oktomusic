@@ -8,6 +8,7 @@
     "redhat.vscode-xml",
     "esbenp.prettier-vscode",
     "matthewpi.caddyfile-support",
-    "orta.vscode-jest"
+    "orta.vscode-jest",
+    "myriad-dreamin.tinymist"
   ]
 }

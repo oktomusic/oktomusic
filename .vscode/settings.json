@@ -20,6 +20,9 @@
   "prettier.embeddedLanguageFormatting": "auto",
   "npm.packageManager": "pnpm",
   "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.folders.associations": {
+    "certification": "bibliography"
+  },
   "jest.enable": true,
   "jest.jestCommandLine": "pnpm jest",
   "[yaml]": {
@@ -43,5 +46,8 @@
   "[caddyfile]": {
     "editor.insertSpaces": false,
     "editor.defaultFormatter": "matthewpi.caddyfile-support"
+  },
+  "[typst]": {
+    "editor.defaultFormatter": "myriad-dreamin.tinymist"
   }
 }
