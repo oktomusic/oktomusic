@@ -5,8 +5,10 @@ packages:
 linkWorkspacePackages: true
 
 onlyBuiltDependencies:
-  - "@nestjs/core"
+  - '@nestjs/core'
   - esbuild
+  - sharp
   - unrs-resolver
+  - workerd
 
 sharedWorkspaceLockfile: true
