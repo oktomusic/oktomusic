@@ -6,7 +6,10 @@ const config: Config = {
       displayName: "@oktomusic/backend",
       testEnvironment: "node",
       rootDir: "./apps/backend",
-      testMatch: ["<rootDir>/src/**/*.spec.ts", "<rootDir>/test/**/*.e2e-spec.ts"],
+      testMatch: [
+        "<rootDir>/src/**/*.spec.ts",
+        "<rootDir>/test/**/*.e2e-spec.ts",
+      ],
       preset: "ts-jest",
       moduleFileExtensions: ["js", "json", "ts"],
       collectCoverageFrom: ["**/*.(t|j)s"],
@@ -43,4 +46,3 @@ const config: Config = {
 };
 
 export default config;
-

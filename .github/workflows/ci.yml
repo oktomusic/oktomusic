@@ -27,6 +27,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+
       - name: Use NodeJS 22
         uses: actions/setup-node@v5
         with:
@@ -47,6 +50,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
 
       - name: Use NodeJS 22
         uses: actions/setup-node@v5
