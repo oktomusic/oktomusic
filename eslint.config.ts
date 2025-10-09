@@ -20,7 +20,7 @@ const configsReact = [
   tseslint.configs.recommendedTypeChecked,
   pluginReact.configs.flat.recommended,
   pluginReactRefresh.configs.vite,
-  pluginReactHooks.configs["recommended-latest"],
+  pluginReactHooks.configs.flat["recommended-latest"],
   prettier,
 ];
 
