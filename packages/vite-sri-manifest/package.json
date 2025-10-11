@@ -25,7 +25,9 @@
   },
   "scripts": {
     "build": "tsdown",
-    "dev": "tsdown --watch"
+    "dev": "tsdown --watch",
+    "lint": "pnpm -w exec eslint -c eslint.config.ts packages/vite-sri-manifest",
+    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/vite-sri-manifest"
   },
   "devDependencies": {
     "@types/node": "^24.7.2",
