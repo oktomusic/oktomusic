@@ -6,9 +6,7 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/backend build",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ],
+      "problemMatcher": ["$tsc"],
       "group": "build"
     },
     {
@@ -16,9 +14,7 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/backend build",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ],
+      "problemMatcher": ["$tsc"],
       "group": "build"
     }
   ]

@@ -17,7 +17,6 @@ async function bootstrap() {
     )
     .setDescription("Oktomusic API")
     .setVersion("0.0.1")
-    .addServer("/api")
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

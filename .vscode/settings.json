@@ -9,7 +9,7 @@
   "editor.detectIndentation": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
-    "source.fixAll.ts": "always",
+    "source.fixAll.ts": "always"
   },
   "files.insertFinalNewline": true,
   "files.eol": "\n",
@@ -126,7 +126,7 @@
     "xargs": false,
     "eval": false,
     "Invoke-Expression": false,
-    "iex": false,
+    "iex": false
   },
   "[yaml]": {
     "editor.insertSpaces": true,
@@ -137,7 +137,7 @@
     "editor.quickSuggestions": {
       "strings": true,
       "other": true,
-      "comments": false,
+      "comments": false
     },
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },

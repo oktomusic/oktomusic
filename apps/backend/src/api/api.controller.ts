@@ -1,5 +1,5 @@
-import { Controller, Get } from "@nestjs/common"
-import { ApiService } from "./api.service"
+import { Controller, Get } from "@nestjs/common";
+import { ApiService } from "./api.service";
 
 @Controller("api")
 export class ApiController {
@@ -7,6 +7,6 @@ export class ApiController {
 
   @Get("info")
   getInfo(): string {
-    return this.apiService.getHello()
+    return this.apiService.getHello();
   }
 }

@@ -1,12 +1,12 @@
-import path from "node:path"
+import path from "node:path";
 
-import { Module } from "@nestjs/common"
-import { GraphQLModule } from "@nestjs/graphql"
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo"
+import { Module } from "@nestjs/common";
+import { GraphQLModule } from "@nestjs/graphql";
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 
-import { ApiController } from "./api.controller"
-import { ApiService } from "./api.service"
-import { ApiResolver } from "./api.resolver"
+import { ApiController } from "./api.controller";
+import { ApiService } from "./api.service";
+import { ApiResolver } from "./api.resolver";
 
 @Module({
   imports: [
