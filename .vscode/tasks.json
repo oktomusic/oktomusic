@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "backend: build once",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/backend build",
+      "isBackground": false,
+      "problemMatcher": [
+        "$tsc"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "backend: build once",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/backend build",
+      "isBackground": false,
+      "problemMatcher": [
+        "$tsc"
+      ],
+      "group": "build"
+    }
+  ]
+}

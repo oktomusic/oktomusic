@@ -1,10 +1,13 @@
+import path from "node:path";
+import type { Response } from "express";
 import { NestFactory } from "@nestjs/core";
+import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const config = new DocumentBuilder()
     .setTitle("Oktomusic")
@@ -14,12 +17,28 @@ async function bootstrap() {
     )
     .setDescription("Oktomusic API")
     .setVersion("0.0.1")
+    .addServer("/api")
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api", app, documentFactory);
+  SwaggerModule.setup("api/docs", app, documentFactory);
 
   app.enableShutdownHooks();
+  // Configure Handlebars view engine
+  app.setBaseViewsDir(path.join(__dirname, "views"));
+  app.setViewEngine("hbs");
+
+  // Serve static assets from the public directory at the base path
+  app.useStaticAssets(path.join(__dirname, "public"), {
+    index: false,
+    redirect: false,
+  });
+
+  // Fallback: render the main view for any non-API route not matched by static assets
+  const server = app.getHttpAdapter().getInstance();
+  server.get(/^\/(?!api\b).*/, (_req: unknown, res: Response) => {
+    res.render("index");
+  });
 
   await app.listen(process.env.PORT ?? 3000);
 }
