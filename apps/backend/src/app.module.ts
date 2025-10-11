@@ -12,7 +12,6 @@ import { AppResolver } from "./app.resolver";
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      playground: true,
       graphiql: true,
       autoSchemaFile: path.join(__dirname, "schema.gql"),
       sortSchema: true,
