@@ -1,0 +1,42 @@
+---
+name: "Setup Environment"
+description: "Checkout, setup PNPM, setup Node using .node-version, and install dependencies"
+
+inputs:
+  node-version-file:
+    description: "Path to the Node version file"
+    required: false
+    default: ".node-version"
+  cache:
+    description: "Cache manager for setup-node"
+    required: false
+    default: "pnpm"
+  frozen-lockfile:
+    description: "Install with --frozen-lockfile"
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
+    - name: Setup PNPM
+      uses: pnpm/action-setup@v4
+
+    - name: Use NodeJS
+      uses: actions/setup-node@v5
+      with:
+        node-version-file: ${{ inputs.node-version-file }}
+        cache: ${{ inputs.cache }}
+
+    - name: Install dependencies (frozen)
+      if: ${{ inputs.frozen-lockfile == 'true' }}
+      run: pnpm install --frozen-lockfile
+      shell: bash
+
+    - name: Install dependencies
+      if: ${{ inputs.frozen-lockfile != 'true' }}
+      run: pnpm install
+      shell: bash
