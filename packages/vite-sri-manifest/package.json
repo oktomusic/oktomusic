@@ -1,0 +1,38 @@
+{
+  "name": "@oktomusic/vite-sri-manifest",
+  "version": "0.0.1",
+  "description": "A Vite plugin to generate Subresource Integrity (SRI) hashes in the manifest for your assets.",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "AFCMS",
+    "email": "afcm.contact@gmail.com",
+    "url": "https://afcms.dev"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/AFCMS"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "tsdown": "latest",
+    "vite": "^7.1.9"
+  },
+  "peerDependencies": {
+    "vite": "^7.1.9"
+  }
+}

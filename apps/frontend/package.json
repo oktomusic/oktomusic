@@ -16,13 +16,14 @@
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@types/node": "^24.6.0",
+    "@oktomusic/vite-sri-manifest": "workspace:^",
+    "@types/node": "^24.7.2",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.4",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",
     "globals": "^16.4.0",
     "typescript": "~5.9.3",
-    "vite": "^7.1.7"
+    "vite": "^7.1.9"
   }
 }
