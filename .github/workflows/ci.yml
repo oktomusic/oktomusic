@@ -17,6 +17,9 @@ jobs:
     name: Check @oktomusic/vite-sri-manifest
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
 
@@ -34,6 +37,9 @@ jobs:
           - "@oktomusic/frontend"
           - "@oktomusic/lyrics"
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
 
@@ -49,6 +55,9 @@ jobs:
     name: Build Website
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
 
@@ -64,6 +73,9 @@ jobs:
       contents: read
       deployments: write
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
 

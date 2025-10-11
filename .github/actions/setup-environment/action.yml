@@ -11,17 +11,10 @@ inputs:
     description: "Cache manager for setup-node"
     required: false
     default: "pnpm"
-  frozen-lockfile:
-    description: "Install with --frozen-lockfile"
-    required: false
-    default: "true"
 
 runs:
   using: "composite"
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v5
-
     - name: Setup PNPM
       uses: pnpm/action-setup@v4
 
@@ -32,11 +25,5 @@ runs:
         cache: ${{ inputs.cache }}
 
     - name: Install dependencies (frozen)
-      if: ${{ inputs.frozen-lockfile == 'true' }}
       run: pnpm install --frozen-lockfile
-      shell: bash
-
-    - name: Install dependencies
-      if: ${{ inputs.frozen-lockfile != 'true' }}
-      run: pnpm install
       shell: bash
