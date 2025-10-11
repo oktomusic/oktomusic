@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Environment
-        uses: ./.github/actions/setup-node-pnpm
+        uses: ./.github/actions/setup-environment
 
       - name: Build
         run: pnpm --filter "@oktomusic/vite-sri-manifest" build
@@ -35,7 +35,7 @@ jobs:
           - "@oktomusic/lyrics"
     steps:
       - name: Setup Environment
-        uses: ./.github/actions/setup-node-pnpm
+        uses: ./.github/actions/setup-environment
 
       - name: Build @oktomusic/lyrics
         if: matrix.pkg == '@oktomusic/frontend'
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Environment
-        uses: ./.github/actions/setup-node-pnpm
+        uses: ./.github/actions/setup-environment
 
       - name: Build website
         run: pnpm --filter "@oktomusic/website" run build
@@ -65,7 +65,7 @@ jobs:
       deployments: write
     steps:
       - name: Setup Environment
-        uses: ./.github/actions/setup-node-pnpm
+        uses: ./.github/actions/setup-environment
 
       - name: Build website
         run: pnpm --filter "@oktomusic/website" run build
