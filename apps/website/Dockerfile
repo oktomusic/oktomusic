@@ -4,12 +4,12 @@
 FROM --platform=$BUILDPLATFORM node:22-alpine AS builder
 
 LABEL org.opencontainers.image.title="Oktomusic Website"
-LABEL org.opencontainers.image.description="Media server"
+LABEL org.opencontainers.image.description="Music streaming server"
 LABEL org.opencontainers.image.authors="AFCMS <afcm.contact@gmail.com>"
 LABEL org.opencontainers.image.licenses="AGPL-3.0-only"
 LABEL org.opencontainers.image.source="https://github.com/oktomusic/oktomusic"
 LABEL io.artifacthub.package.readme-url="https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/README.md"
-LABEL io.artifacthub.package.category="storage"
+LABEL io.artifacthub.package.category="skip-prediction"
 LABEL io.artifacthub.package.keywords="music,server"
 LABEL io.artifacthub.package.license="AGPL-3.0-only"
 LABEL io.artifacthub.package.maintainers='[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]'
