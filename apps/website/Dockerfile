@@ -36,7 +36,7 @@ FROM caddy:2-alpine AS production
 
 COPY --from=builder /app/apps/website/.vitepress/dist /srv
 
-COPY apps/frontend/Caddyfile /etc/caddy/Caddyfile
+COPY apps/website/Caddyfile /etc/caddy/Caddyfile
 
 EXPOSE 80
 
