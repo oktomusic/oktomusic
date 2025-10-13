@@ -227,12 +227,15 @@ jobs:
           push-to-registry: false
 
       - name: Install cosign
+        if: github.event_name != 'pull_request'
         uses: sigstore/cosign-installer@v3
 
       - name: Check cosign installation
+        if: github.event_name != 'pull_request'
         run: cosign version
 
       - name: Sign the images with GitHub OIDC Token
+        if: github.event_name != 'pull_request'
         env:
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
           TAGS: ${{ steps.meta.outputs.tags }}
