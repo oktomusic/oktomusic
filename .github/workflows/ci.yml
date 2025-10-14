@@ -158,7 +158,10 @@ jobs:
       - name: Setup Docker
         uses: ./.github/actions/setup-docker
         with:
+          login: ${{ github.event_name != 'pull_request' }}
           registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           cosign: ${{ github.event_name != 'pull_request' }}
 
       - name: Extract Docker metadata
