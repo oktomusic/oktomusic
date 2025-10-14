@@ -7,6 +7,7 @@ linkWorkspacePackages: true
 onlyBuiltDependencies:
   - "@apollo/protobufjs"
   - "@nestjs/core"
+  - "@scarf/scarf"
   - esbuild
   - sharp
   - unrs-resolver
