@@ -1,26 +1,25 @@
 <html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="{{asset "/vite.svg"}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Oktomusic</title>
-
     {{#each ogp}}
-      <meta property="{{this.property}}" content="{{this.content}}" />
+    <meta property="{{this.property}}" content="{{this.content}}" />
     {{/each}}
   </head>
   <body>
     <div id="root"></div>
     {{#if dev}}
-      <script type="module">
-        import RefreshRuntime from "http://localhost:5173/@react-refresh";
-        RefreshRuntime.injectIntoGlobalHook(window);
-        window.$RefreshReg$ = () => {};
-        window.$RefreshSig$ = () => (type) => type;
-        window.__vite_plugin_react_preamble_installed__ = true;
-      </script>
-      <script type="module" src="http://localhost:5173/@vite/client"></script>
-      <script type="module" src="http://localhost:5173/src/main.tsx"></script>
+    <script type="module">
+      import RefreshRuntime from "{{asset '/@react-refresh' }}";
+      RefreshRuntime.injectIntoGlobalHook(window);
+      window.$RefreshReg$ = () => {};
+      window.$RefreshSig$ = () => (type) => type;
+      window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+    <script type="module" src="{{asset "/@vite/client"}}"></script>
+    <script type="module" src="{{asset "/src/main.tsx"}}"></script>
     {{else}}
     {{/if}}
   </body>

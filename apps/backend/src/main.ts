@@ -1,17 +1,17 @@
 import path from "node:path";
-import type { Response } from "express";
+import fs from "node:fs";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import hbs from "hbs";
 
 import { AppModule } from "./app.module";
-import { buildViewModel } from "./views/view-model";
-import { OpenGraphService } from "./common/opengraph/opengraph.service";
+import { ConfigService } from "@nestjs/config";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  const config = new DocumentBuilder()
+  const swaggerConfig = new DocumentBuilder()
     .setTitle("Oktomusic")
     .setLicense(
       "AGPL-3.0-only",
@@ -21,7 +21,8 @@ async function bootstrap() {
     .setVersion("0.0.1")
     .build();
 
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  const documentFactory = () =>
+    SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup("api/docs", app, documentFactory);
 
   app.enableShutdownHooks();
@@ -29,19 +30,41 @@ async function bootstrap() {
   app.setBaseViewsDir(path.join(__dirname, "views"));
   app.setViewEngine("hbs");
 
-  // Serve static assets from the public directory at the base path
-  app.useStaticAssets(path.join(__dirname, "public"), {
-    index: false,
-    redirect: false,
+  const configService = app.get(ConfigService);
+  const isDev = Boolean(configService.get("app.isDev"));
+  const viteOrigin = configService.get<string | undefined>("vite.origin");
+
+  // Register a Handlebars helper to prefix asset URLs with the Vite origin in development
+  hbs.registerHelper("asset", (p: unknown) => {
+    if (typeof p !== "string" || !p) return "";
+    // Absolute URL? return as-is
+    if (/^https?:\/\//i.test(p)) return p;
+    // Avoid prefixing API routes
+    if (p.startsWith("/api")) return p;
+    if (isDev && viteOrigin) {
+      const pathname = p.startsWith("/") ? p : `/${p}`;
+      try {
+        return new URL(pathname, viteOrigin).toString();
+      } catch {
+        return `${viteOrigin}${pathname}`;
+      }
+    }
+    return p;
   });
 
-  // Fallback: render the main view for any non-API route not matched by static assets
-  /*const server = app.getHttpAdapter().getInstance();
-  const og = app.get(OpenGraphService);
-  server.get(/^\/(?!api\b).*\/, (_req: unknown, res: Response) => {
-    res.render("index", buildViewModel({ ogp: og.getDefaultTags() }));
-  });*/
+  if (!isDev) {
+    const candidates = [
+      path.resolve(__dirname, "../../frontend/dist"),
+      path.join(__dirname, "public"),
+    ];
+    for (const dir of candidates) {
+      if (fs.existsSync(dir)) {
+        app.useStaticAssets(dir, { index: false, redirect: false });
+      }
+    }
+  }
 
-  await app.listen(process.env.PORT ?? 3000);
+  const port = Number(configService.get("http.port") ?? 3000);
+  await app.listen(port);
 }
 void bootstrap();
