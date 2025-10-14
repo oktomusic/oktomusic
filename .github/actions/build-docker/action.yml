@@ -1,0 +1,91 @@
+---
+name: "Build Docker Image"
+description: "Build a Docker image, optionally push and sign"
+
+inputs:
+  registry:
+    description: "Docker registry to push to"
+    required: false
+    default: "ghcr.io"
+  image_name:
+    description: "Name of the image to build and push"
+    required: true
+  context:
+    description: "Build context"
+    required: false
+    default: "."
+  dockerfile:
+    description: "Path to the Dockerfile"
+    required: false
+    default: "apps/website/Dockerfile"
+  annotations:
+    description: "Add annotations/labels to the built image"
+    required: true
+  platforms:
+    description: "Platforms to build for"
+    required: false
+    default: "linux/amd64,linux/arm64"
+  push:
+    description: "Push the image to the registry"
+    required: false
+    default: "false"
+  no_cache:
+    description: "Disable build cache"
+    required: false
+    default: "false"
+  attestations:
+    description: "Enable build attestations"
+    required: false
+    default: "false"
+  cosign:
+    description: "Enable image signing"
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ inputs.registry }}/${{ inputs.image_name }}
+        # io.artifacthub.package.logo-url=
+        labels: ${{ inputs.annotations }}
+        annotations: ${{ inputs.annotations }}
+
+    # https://github.com/docker/build-push-action
+    - name: Build and push Docker image
+      id: build-and-push
+      uses: docker/build-push-action@v6
+      with:
+        context: ${{ inputs.context }}
+        file: ${{ inputs.dockerfile }}
+        platforms: ${{ inputs.platforms }}
+        push: ${{ inputs.push }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        no-cache: ${{ inputs.no_cache }}
+
+    - name: Attest Build Provenance
+      if: ${{ inputs.attestations }}
+      uses: actions/attest-build-provenance@v3
+      with:
+        subject-name: ${{ inputs.registry }}/${{ inputs.image_name }}
+        subject-digest: ${{ steps.build-and-push.outputs.digest }}
+        push-to-registry: false
+
+    - name: Sign the images with GitHub OIDC Token
+      if: ${{ inputs.cosign }}
+      env:
+        DIGEST: ${{ steps.build-and-push.outputs.digest }}
+        TAGS: ${{ steps.meta.outputs.tags }}
+      run: |
+        images=""
+        for tag in ${TAGS}; do
+          images+="${tag}@${DIGEST} "
+        done
+        cosign sign --yes ${images}
+      shell: bash
