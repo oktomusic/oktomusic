@@ -13,7 +13,7 @@ export class OpenGraphService {
         content: "Self-hostable music streaming server",
       },
       { property: "og:type", content: "website" },
-      { property: "og:locale", content: "en" },
+      { property: "og:locale", content: "en_US" },
     ];
 
     // if (url) tags.push({ property: "og:url", content: url })
