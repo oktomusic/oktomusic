@@ -12,19 +12,24 @@ export default defineConfig({
     manifestSRIPlugin(),
   ],
   server: {
-    //cors: true,
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET"],
+    },
     port: 5173,
     strictPort: true,
-    //origin: "http://localhost:5173",
     hmr: {
       protocol: "ws",
       port: 5173,
     },
+    origin: "http://localhost:5173",
   },
   build: {
     manifest: true,
     rollupOptions: {
       input: "src/main.tsx",
     },
+    outDir: "dist",
   },
+  base: "/",
 });

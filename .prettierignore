@@ -4,3 +4,8 @@ apps/website/.vitepress/dist
 apps/website/.vitepress/cache
 **/node_modules
 pnpm-lock.yaml
+
+# Prettier have an issue where the DOCTYPE is removed from Handlebars files
+# https://github.com/prettier/prettier/issues/11223
+# https://github.com/glimmerjs/glimmer-vm/issues/870
+*.hbs

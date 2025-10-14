@@ -36,11 +36,11 @@ async function bootstrap() {
   });
 
   // Fallback: render the main view for any non-API route not matched by static assets
-  const server = app.getHttpAdapter().getInstance();
+  /*const server = app.getHttpAdapter().getInstance();
   const og = app.get(OpenGraphService);
-  server.get(/^\/(?!api\b).*/, (_req: unknown, res: Response) => {
+  server.get(/^\/(?!api\b).*\/, (_req: unknown, res: Response) => {
     res.render("index", buildViewModel({ ogp: og.getDefaultTags() }));
-  });
+  });*/
 
   await app.listen(process.env.PORT ?? 3000);
 }
