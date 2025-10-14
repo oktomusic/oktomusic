@@ -5,6 +5,8 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module";
+import { buildViewModel } from "./views/view-model";
+import { OpenGraphService } from "./common/opengraph/opengraph.service";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -35,8 +37,9 @@ async function bootstrap() {
 
   // Fallback: render the main view for any non-API route not matched by static assets
   const server = app.getHttpAdapter().getInstance();
+  const og = app.get(OpenGraphService);
   server.get(/^\/(?!api\b).*/, (_req: unknown, res: Response) => {
-    res.render("index");
+    res.render("index", buildViewModel({ ogp: og.getDefaultTags() }));
   });
 
   await app.listen(process.env.PORT ?? 3000);
