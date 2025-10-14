@@ -155,23 +155,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
-
-      - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v3
-
-      # Login against a Docker registry except on PR
-      # https://github.com/docker/login-action
-      - name: Log into registry ${{ env.REGISTRY }}
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3.4.0
+      - name: Setup Docker
+        uses: ./.github/actions/setup-docker
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          cosign: ${{ github.event_name != 'pull_request' }}
 
       - name: Extract Docker metadata
         id: meta
