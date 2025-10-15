@@ -1,2 +1,13 @@
 apps/website/.vitepress/dist
 apps/website/.vitepress/cache
+apps/frontend/dist
+apps/backend/dist
+node_modules
+.git
+.github
+*.md
+!README.md
+.vscode
+.husky
+coverage
+*.log
