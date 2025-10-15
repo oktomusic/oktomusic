@@ -66,5 +66,5 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfi
 # Copy built backend and frontend
 COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 
-CMD [ "pnpm", "run", "--filter", "@oktomusic/backend", "start:prod" ]
+CMD ["node", "apps/backend/dist/main.js"]
 
