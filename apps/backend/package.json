@@ -32,6 +32,7 @@
     "@nestjs/swagger": "^11.2.0",
     "@types/hbs": "^4.0.5",
     "graphql": "^16.11.0",
+    "handlebars": "^4.7.8",
     "hbs": "^4.2.0",
     "http-proxy": "^1.18.1",
     "reflect-metadata": "^0.2.2",

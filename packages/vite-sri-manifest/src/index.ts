@@ -31,6 +31,7 @@ export default function manifestSRIPlugin(): Plugin {
 
       const manifest = JSON.parse(file.toString());
 
+      // Generate SRI for main entries
       for (const entry of Object.values<any>(manifest)) {
         if (entry.file && bundle[entry.file]) {
           const asset = bundle[entry.file];
@@ -38,6 +39,30 @@ export default function manifestSRIPlugin(): Plugin {
             asset.type === "asset" ? asset.source : asset.code,
           );
           entry.sri = generateSRI(content);
+        }
+
+        // Generate SRI for CSS files
+        if (entry.css && Array.isArray(entry.css)) {
+          for (const cssFile of entry.css) {
+            if (bundle[cssFile]) {
+              const asset = bundle[cssFile];
+              const content = Buffer.from(
+                asset.type === "asset" ? asset.source : asset.code,
+              );
+              const sri = generateSRI(content);
+
+              // Add CSS file as its own entry if it doesn't exist
+              if (!manifest[cssFile]) {
+                manifest[cssFile] = {
+                  file: cssFile,
+                  src: cssFile,
+                  sri,
+                };
+              } else {
+                manifest[cssFile].sri = sri;
+              }
+            }
+          }
         }
       }
 
