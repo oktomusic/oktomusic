@@ -27,7 +27,7 @@ COPY packages/vite-sri-manifest/package.json packages/vite-sri-manifest/
 COPY apps/backend/package.json apps/backend/
 COPY apps/frontend/package.json apps/frontend/
 
-RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfile --filter @oktomusic/backend... --filter @oktomusic/frontend...
+RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfile --filter @oktomusic/vite-sri-manifest --filter @oktomusic/backend --filter @oktomusic/frontend
 
 COPY packages/vite-sri-manifest/ packages/vite-sri-manifest/
 COPY apps/backend/ apps/backend/
@@ -42,9 +42,9 @@ RUN pnpm run --filter @oktomusic/frontend build
 # Build the backend
 RUN pnpm run --filter @oktomusic/backend build
 
-# Copy frontend dist to backend's public directory
+# Copy frontend dist to backend's public directory (including hidden .vite directory)
 RUN mkdir -p apps/backend/dist/public && \
-    cp -r apps/frontend/dist/* apps/backend/dist/public/
+    cp -r apps/frontend/dist/. apps/backend/dist/public/
 
 FROM node:22-slim AS production
 
