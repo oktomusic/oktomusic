@@ -70,7 +70,7 @@ runs:
         no-cache: ${{ inputs.no_cache }}
 
     - name: Attest Build Provenance
-      if: ${{ inputs.attestations }}
+      if: ${{ inputs.attestations == 'true' }}
       uses: actions/attest-build-provenance@v3
       with:
         subject-name: ${{ inputs.registry }}/${{ inputs.image_name }}
@@ -78,7 +78,7 @@ runs:
         push-to-registry: false
 
     - name: Sign the images with GitHub OIDC Token
-      if: ${{ inputs.cosign }}
+      if: ${{ inputs.cosign == 'true' }}
       env:
         DIGEST: ${{ steps.build-and-push.outputs.digest }}
         TAGS: ${{ steps.meta.outputs.tags }}
