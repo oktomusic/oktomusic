@@ -44,12 +44,5 @@
     "ts-jest": "^29.4.4",
     "typescript-eslint": "^8.46.0",
     "wrangler": "^4.42.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/node": "^24.7.2",
-      "typescript": "^5.9.3",
-      "tsdown": "^0.15.6"
-    }
   }
 }

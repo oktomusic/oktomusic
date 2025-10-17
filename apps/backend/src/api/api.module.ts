@@ -7,6 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { ApiController } from "./api.controller";
 import { ApiService } from "./api.service";
 import { ApiResolver } from "./api.resolver";
+import { PrismaService } from "../db/prisma.service";
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { ApiResolver } from "./api.resolver";
     }),
   ],
   controllers: [ApiController],
-  providers: [ApiService, ApiResolver],
+  providers: [ApiService, ApiResolver, PrismaService],
 })
 export class ApiModule {}
