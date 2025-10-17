@@ -30,6 +30,7 @@ export default defineConfig([
     "**/dist",
     "**/cache",
     "**/tsdown.config.ts",
+    "**/generated/prisma",
     "coverage",
   ]),
 
