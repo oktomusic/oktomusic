@@ -40,6 +40,7 @@ RUN pnpm run --filter @oktomusic/vite-sri-manifest build
 RUN pnpm run --filter @oktomusic/frontend build
 
 # Build the backend
+RUN pnpm run --filter @oktomusic/backend db:generate
 RUN pnpm run --filter @oktomusic/backend build
 
 # Copy frontend dist to backend's public directory (including hidden .vite directory)
@@ -66,5 +67,5 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfi
 # Copy built backend and frontend
 COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 
-CMD ["node", "apps/backend/dist/main.js"]
+CMD ["node", "apps/backend/dist/src/main.js"]
 
