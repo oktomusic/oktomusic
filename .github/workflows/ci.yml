@@ -36,6 +36,9 @@ jobs:
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
 
+      - name: Prisma generate
+        run: pnpm --filter "@oktomusic/backend" run db:generate
+
       - name: Build
         run: pnpm --filter "@oktomusic/backend" build
 
