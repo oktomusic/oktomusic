@@ -4,19 +4,21 @@ packages:
 
 linkWorkspacePackages: true
 
-overrides:
-  "@types/node": ^24.7.2
-  typescript: ^5.9.3
-  tsdown: ^0.15.6
-
 onlyBuiltDependencies:
-  - "@apollo/protobufjs"
-  - "@nestjs/core"
-  - "@prisma/client"
-  - "@scarf/scarf"
+  - '@apollo/protobufjs'
+  - '@nestjs/core'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@scarf/scarf'
   - esbuild
+  - prisma
   - sharp
   - unrs-resolver
   - workerd
+
+overrides:
+  '@types/node': ^24.7.2
+  tsdown: ^0.15.6
+  typescript: ^5.9.3
 
 sharedWorkspaceLockfile: true
