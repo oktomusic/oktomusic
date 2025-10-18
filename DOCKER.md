@@ -51,6 +51,9 @@ If you prefer to build and run manually:
 # Build the image
 docker build -t oktomusic:latest .
 
+# Create a network for the containers (if not already created by compose)
+docker network create oktomusic_default
+
 # Start the database (if not already running)
 docker compose -f compose.dev.yml up -d
 
@@ -64,12 +67,16 @@ docker run -d \
   oktomusic:latest
 ```
 
+> **Note**: The above commands are for development/testing. For production, use Docker secrets or environment files to manage sensitive credentials securely.
+
 ### Environment Variables
 
 Required environment variables:
 - `DATABASE_URL`: PostgreSQL connection string (format: `postgresql://user:password@host:port/database`)
 - `NODE_ENV`: Set to `production` for production builds
 - `PORT`: Server port (default: 3000)
+
+> **Security Note**: In production environments, use Docker secrets, environment files (.env), or a secure secrets management system to handle sensitive information like database passwords. Never commit credentials to version control.
 
 ### Testing the API
 
@@ -93,7 +100,24 @@ Database migrations will run on every startup but will only apply new migrations
 
 ### Troubleshooting
 
-**Certificate Issues During Build**: The Dockerfile includes workarounds for CI/CD environments that may have certificate issues. In production environments, you may want to remove the `npm config set strict-ssl false` and `NODE_TLS_REJECT_UNAUTHORIZED=0` settings for better security.
+**Certificate Issues During Build**: The Dockerfile includes workarounds for CI/CD environments that may have certificate issues (specifically, `npm config set strict-ssl false` and `NODE_TLS_REJECT_UNAUTHORIZED=0`). 
+
+For production deployments, you should:
+1. Remove these SSL bypass settings from the Dockerfile
+2. Ensure proper SSL certificates are available in the build environment
+3. Use the `NODE_EXTRA_CA_CERTS` environment variable to point to your certificate bundle if needed
+4. Build in an environment with properly configured SSL/TLS
+
+Example for secure production builds:
+```dockerfile
+# Replace these lines in the Dockerfile:
+# RUN npm config set strict-ssl false && npm install -g pnpm@10.18.1
+# With:
+RUN npm install -g pnpm@10.18.1
+
+# Remove this line from builder stage:
+# ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+```
 
 **Migration Errors**: Check the container logs with `docker logs <container-name>` to see detailed migration output.
 
