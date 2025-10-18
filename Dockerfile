@@ -14,17 +14,10 @@ LABEL io.artifacthub.package.keywords="music,server,streaming"
 LABEL io.artifacthub.package.license="AGPL-3.0-only"
 LABEL io.artifacthub.package.maintainers='[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]'
 
-# Install pnpm directly using npm instead of corepack to avoid certificate issues
-RUN npm config set strict-ssl false && npm install -g pnpm@10.18.1
-
-# Install OpenSSL for Prisma
-RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+RUN corepack enable pnpm
 
 ARG TARGETOS
 ARG TARGETARCH
-
-# Disable SSL verification for build process (needed in some CI environments)
-ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 
 WORKDIR /usr/src/app
 
@@ -56,11 +49,7 @@ RUN mkdir -p apps/backend/dist/public && \
 
 FROM node:22-slim AS production
 
-# Install pnpm directly using npm instead of corepack
-RUN npm config set strict-ssl false && npm install -g pnpm@10.18.1
-
-# Install OpenSSL for Prisma
-RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+RUN corepack enable pnpm
 
 ENV NODE_ENV=production
 
@@ -85,8 +74,19 @@ COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 COPY --from=builder /usr/src/app/apps/backend/src/generated ./apps/backend/src/generated
 
 # Create entrypoint script for running migrations before starting the app
-RUN printf '#!/bin/sh\nset -e\ncd /usr/src/app/apps/backend\necho "Running Prisma migrations..."\nnpx prisma migrate deploy\necho "Migrations completed successfully"\ncd /usr/src/app\nexec node apps/backend/dist/src/main.js\n' > /entrypoint.sh && \
-    chmod +x /entrypoint.sh
+RUN <<'EOF'
+cat > /entrypoint.sh <<'SH'
+#!/bin/sh
+set -e
+cd /usr/src/app/apps/backend
+echo "Running Prisma migrations..."
+npx prisma migrate deploy
+echo "Migrations completed successfully"
+cd /usr/src/app
+exec node apps/backend/dist/src/main.js
+SH
+chmod +x /entrypoint.sh
+EOF
 
 ENTRYPOINT ["/entrypoint.sh"]
 
