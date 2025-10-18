@@ -180,12 +180,14 @@ Check that `introspection: true` is set in `apps/backend/src/api/api.module.ts`.
 npm list @apollo/server @nestjs/apollo @nestjs/graphql
 ```
 
-Current versions (from package.json):
+Current versions (from package.json as of October 2025):
 - `@apollo/server`: ^5.0.0
 - `@nestjs/apollo`: ^13.2.1
 - `@nestjs/graphql`: ^13.2.0
 
 These versions are known to work correctly with `introspection: true` configuration.
+
+**Note:** If you're seeing different versions, check your `package.json` for the actual versions installed in your project.
 
 ### 3. Verify NODE_ENV
 In production (Docker), `NODE_ENV=production` is set in the root `Dockerfile` (line 54).
