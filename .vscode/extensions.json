@@ -10,6 +10,7 @@
     "matthewpi.caddyfile-support",
     "orta.vscode-jest",
     "myriad-dreamin.tinymist",
-    "graphql.vscode-graphql"
+    "graphql.vscode-graphql",
+    "prisma.prisma"
   ]
 }
