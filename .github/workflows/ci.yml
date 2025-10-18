@@ -186,7 +186,7 @@ jobs:
             org.opencontainers.image.authors=AFCMS <afcm.contact@gmail.com>
             org.opencontainers.image.licenses=AGPL-3.0-only
             org.opencontainers.image.source=https://github.com/oktomusic/oktomusic
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/docs/artifacthub/website.md
             io.artifacthub.package.category=skip-prediction
             io.artifacthub.package.keywords=website
             io.artifacthub.package.license=AGPL-3.0-only
@@ -235,7 +235,7 @@ jobs:
             org.opencontainers.image.authors=AFCMS <afcm.contact@gmail.com>
             org.opencontainers.image.licenses=AGPL-3.0-only
             org.opencontainers.image.source=https://github.com/oktomusic/oktomusic
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/docs/artifacthub/container.md
             io.artifacthub.package.category=skip-prediction
             io.artifacthub.package.keywords=music,server,streaming
             io.artifacthub.package.license=AGPL-3.0-only
