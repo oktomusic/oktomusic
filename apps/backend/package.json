@@ -14,7 +14,7 @@
     "start:prod": "node dist/main",
     "lint": "pnpm -w exec eslint -c eslint.config.ts apps/backend",
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix apps/backend",
-    "db:generate": "prisma generate",
+    "db:generate": "prisma generate --no-hints",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:status": "prisma migrate status",
