@@ -14,6 +14,8 @@ import { PrismaService } from "../db/prisma.service";
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       graphiql: true,
+      // Explicitly enable introspection in all environments (including production)
+      // This overrides Apollo Server's default behavior of disabling introspection when NODE_ENV=production
       introspection: true,
       path: "/api/graphql",
       autoSchemaFile: path.join(__dirname, "schema.gql"),
