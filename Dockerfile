@@ -64,8 +64,18 @@ COPY --from=builder /usr/src/app/apps/backend/package.json ./apps/backend/
 # Install production dependencies only
 RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfile --filter @oktomusic/backend --prod
 
+# Copy Prisma schema and migrations for runtime migration
+COPY --from=builder /usr/src/app/apps/backend/prisma ./apps/backend/prisma
+
 # Copy built backend and frontend
 COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 
-CMD ["node", "apps/backend/dist/src/main.js"]
+# Copy the generated Prisma client
+COPY --from=builder /usr/src/app/apps/backend/src/generated ./apps/backend/src/generated
+
+# Create entrypoint script for running migrations before starting the app
+RUN printf '#!/bin/sh\nset -e\ncd /usr/src/app/apps/backend\necho "Running Prisma migrations..."\nnpx prisma migrate deploy\necho "Migrations completed successfully"\ncd /usr/src/app\nexec node apps/backend/dist/src/main.js\n' > /entrypoint.sh && \
+    chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
