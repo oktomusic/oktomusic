@@ -14,6 +14,7 @@ import { PrismaService } from "../db/prisma.service";
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       graphiql: true,
+      introspection: true,
       path: "/api/graphql",
       autoSchemaFile: path.join(__dirname, "schema.gql"),
       sortSchema: true,
