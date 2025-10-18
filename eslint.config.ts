@@ -7,6 +7,7 @@ import pluginReact from "eslint-plugin-react";
 import pluginReactRefresh from "eslint-plugin-react-refresh";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import prettier from "eslint-config-prettier/flat";
+import pluginLingui from "eslint-plugin-lingui";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 const configBase = [
@@ -22,6 +23,7 @@ const configsReact = [
   pluginReactRefresh.configs.vite,
   pluginReactHooks.configs.flat["recommended-latest"],
   prettier,
+  pluginLingui.configs["flat/recommended"],
 ];
 
 export default defineConfig([
@@ -61,6 +63,7 @@ export default defineConfig([
   // @oktomusic/frontend (Vite)
   {
     files: ["apps/frontend/**/*.{ts,tsx}"],
+    ignores: ["apps/frontend/src/locales/**"],
     extends: configsReact,
     languageOptions: {
       globals: { ...globals.node },
@@ -80,7 +83,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["apps/frontend/vite.config.ts"],
+    files: ["apps/frontend/vite.config.ts", "apps/frontend/lingui.config.ts"],
     extends: configBase,
     languageOptions: {
       globals: { ...globals.node },

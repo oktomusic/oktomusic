@@ -1,14 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { lingui } from "@lingui/vite-plugin";
 import manifestSRIPlugin from "@oktomusic/vite-sri-manifest";
 
 export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [["babel-plugin-react-compiler"]],
+        plugins: [
+          "babel-plugin-react-compiler",
+          "@lingui/babel-plugin-lingui-macro",
+        ],
       },
     }),
+    lingui(),
     manifestSRIPlugin(),
   ],
   server: {
