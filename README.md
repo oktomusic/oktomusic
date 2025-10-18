@@ -1,5 +1,7 @@
 # Oktomusic
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/oktomusic&style=for-the-badge)](https://artifacthub.io/packages/container/oktomusic/oktomusic)
+
 ---
 
 <img align="right" src=".github/Hexa_Logo_Sign_RVB_Full.svg" width="300px"/>
