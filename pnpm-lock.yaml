@@ -210,6 +210,9 @@ importers:
         specifier: ^7.9.4
         version: 7.9.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
     devDependencies:
+      '@lingui/babel-plugin-lingui-macro':
+        specifier: ^5.5.1
+        version: 5.5.1(typescript@5.9.3)
       '@lingui/cli':
         specifier: ^5.5.1
         version: 5.5.1(typescript@5.9.3)

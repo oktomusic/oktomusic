@@ -20,6 +20,7 @@
     "react-router": "^7.9.4"
   },
   "devDependencies": {
+    "@lingui/babel-plugin-lingui-macro": "^5.5.1",
     "@lingui/cli": "^5.5.1",
     "@lingui/core": "^5.5.1",
     "@lingui/react": "^5.5.1",
