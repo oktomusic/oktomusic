@@ -14,6 +14,7 @@
     "po:compile": "lingui compile --typescript"
   },
   "dependencies": {
+    "@lingui/detect-locale": "^5.5.1",
     "jotai": "^2.15.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
