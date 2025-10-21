@@ -11,6 +11,7 @@ export default defineConfig({
           "babel-plugin-react-compiler",
           "@lingui/babel-plugin-lingui-macro",
         ],
+        presets: ["jotai/babel/preset"],
       },
     }),
     lingui(),
