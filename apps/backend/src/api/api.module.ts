@@ -7,10 +7,11 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { ApiController } from "./api.controller";
 import { ApiService } from "./api.service";
 import { ApiResolver } from "./api.resolver";
-import { PrismaService } from "../db/prisma.service";
+import { PrismaModule } from "../db/prisma.module";
 
 @Module({
   imports: [
+    PrismaModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       graphiql: true,
@@ -21,6 +22,6 @@ import { PrismaService } from "../db/prisma.service";
     }),
   ],
   controllers: [ApiController],
-  providers: [ApiService, ApiResolver, PrismaService],
+  providers: [ApiService, ApiResolver],
 })
 export class ApiModule {}

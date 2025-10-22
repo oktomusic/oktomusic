@@ -90,3 +90,6 @@ EOF
 
 ENTRYPOINT ["/entrypoint.sh"]
 
+HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=5 \
+    CMD wget -qO- http://localhost:3000/api/health >/dev/null 2>&1 || exit 1
+
