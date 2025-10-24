@@ -11,6 +11,7 @@ import { loadManifest, type ViteManifest } from "./utils/vite_manifest";
 
 import { registerViteAssetTagsHelper } from "./views/helpers/viteAssetTags.helper";
 import { registerAssetHelper } from "./views/helpers/asset.helper";
+import { HttpConfig } from "./config/definitions/http.config";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -75,7 +76,8 @@ async function bootstrap() {
     next();
   });
 
-  const port = Number(configService.get("http.port") ?? 3000);
+  const port = configService.getOrThrow<HttpConfig>("http").port;
+
   await app.listen(port);
 }
 void bootstrap();
