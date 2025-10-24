@@ -30,6 +30,7 @@ async function bootstrap() {
     SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup("api/docs", app, documentFactory);
 
+  app.enableCors({ origin: false });
   app.enableShutdownHooks();
   // Configure Handlebars view engine
   app.setBaseViewsDir(path.join(__dirname, "views"));
