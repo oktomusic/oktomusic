@@ -4,6 +4,7 @@ import { ConfigModule as NestConfigModule } from "@nestjs/config";
 import appConfig from "./definitions/app.config";
 import httpConfig from "./definitions/http.config";
 import viteConfig from "./definitions/vite.config";
+import oidcConfig from "./definitions/oidc.config";
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import viteConfig from "./definitions/vite.config";
         "apps/backend/.env",
         "apps/backend/.env.local",
       ],
-      load: [appConfig, httpConfig, viteConfig],
+      load: [appConfig, httpConfig, oidcConfig, viteConfig],
     }),
   ],
   exports: [NestConfigModule],
