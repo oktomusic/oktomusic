@@ -29,12 +29,16 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - pkg-lyrics
+      - pkg-api-schemas
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
+
+      - name: Build @oktomusic/api-schemas
+        run: pnpm --filter "@oktomusic/api-schemas" build
 
       - name: Prisma generate
         run: pnpm --filter "@oktomusic/backend" run db:generate
@@ -56,6 +60,7 @@ jobs:
     needs:
       - pkg-vite-sri-manifest
       - pkg-lyrics
+      - pkg-api-schemas
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -110,6 +115,23 @@ jobs:
       - name: Lint
         run: |
           pnpm --filter "@oktomusic/lyrics" run lint
+
+  pkg-api-schemas:
+    name: "@oktomusic/api-schemas"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build
+        run: pnpm --filter "@oktomusic/api-schemas" build
+
+      - name: Lint
+        run: |
+          pnpm --filter "@oktomusic/api-schemas" run lint
 
   website:
     name: "@oktomusic/website"

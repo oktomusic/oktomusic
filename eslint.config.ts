@@ -95,6 +95,22 @@ export default defineConfig([
     },
   },
 
+  // @oktomusic/api-schemas (tsdown)
+  {
+    files: ["packages/api-schemas/**/*.ts"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
+      prettier,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: "./packages/api-schemas/tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+
   // @oktomusic/lyrics (tsdown)
   {
     files: ["packages/lyrics/**/*.ts"],
