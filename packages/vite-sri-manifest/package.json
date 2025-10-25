@@ -30,9 +30,9 @@
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/vite-sri-manifest"
   },
   "devDependencies": {
-    "@types/node": "^24.7.2",
+    "@types/node": "^24.9.1",
     "tsdown": "latest",
-    "vite": "^7.1.11"
+    "vite": "^7.1.12"
   },
   "peerDependencies": {
     "vite": "^7.1.9"
