@@ -29,6 +29,118 @@
   "jest.rootPath": ".",
   "chat.agent.enabled": true,
   "chat.tools.terminal.autoApprove": {
+    // Approved project-specific commands
+    //
+    // @oktomusic/backend
+    "pnpm --filter @oktomusic/backend build": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/backend start": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/backend start:dev": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/backend start:debug": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/backend lint": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/backend lint:fix": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    // @oktomusic/frontend
+    "pnpm --filter @oktomusic/frontend dev": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/frontend build": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/frontend lint": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/frontend lint:fix": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/frontend po:extract": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/frontend po:compile": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    // @oktomusic/lyrics
+    "pnpm --filter @oktomusic/lyrics build": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/lyrics dev": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/lyrics typecheck": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/lyrics lint": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/lyrics lint:fix": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    // @oktomusic/api-schemas
+    "pnpm --filter @oktomusic/api-schemas build": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/api-schemas dev": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/api-schemas typecheck": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/api-schemas lint": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/api-schemas lint:fix": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    // @oktomusic/vite-sri-manifest
+    "pnpm --filter @oktomusic/vite-sri-manifest build": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/vite-sri-manifest dev": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/vite-sri-manifest lint": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm --filter @oktomusic/vite-sri-manifest lint:fix": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    // Approved common safe commands
     "cd": true,
     "echo": true,
     "ls": true,
