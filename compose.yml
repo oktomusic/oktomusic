@@ -21,6 +21,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: oktomusic-app
+    env_file:
+      - ./apps/backend/.env
     environment:
       DATABASE_URL: postgresql://oktomusic:oktomusic@postgres:5432/oktomusic
       NODE_ENV: production
