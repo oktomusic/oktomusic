@@ -1,7 +1,11 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { ApiController } from "./api/api.controller";
-import { ApiService } from "./api/api.service";
-import type { HelloWorld } from "./generated/prisma";
+import oidcConfig from "./config/definitions/oidc.config";
+
+// Mock ESM package to avoid Jest ESM parsing during tests
+jest.mock("@oktomusic/api-schemas", () => ({
+  ApiInfoResJSONSchema: {},
+}));
 
 describe("ApiController", () => {
   let apiController: ApiController;
@@ -11,17 +15,10 @@ describe("ApiController", () => {
       controllers: [ApiController],
       providers: [
         {
-          provide: ApiService,
+          provide: oidcConfig.KEY,
           useValue: {
-            listHelloWorld: jest
-              .fn()
-              .mockResolvedValue([
-                {
-                  id: 1,
-                  createdAt: new Date("2020-01-01"),
-                  text: "Hello World",
-                },
-              ]) as unknown as () => Promise<HelloWorld[]>,
+            issuer: "https://issuer.example.com",
+            clientId: "client-123",
           },
         },
       ],
@@ -30,11 +27,15 @@ describe("ApiController", () => {
     apiController = app.get<ApiController>(ApiController);
   });
 
-  describe("root", () => {
-    it("should return HelloWorld list", async () => {
-      await expect(apiController.getInfo()).resolves.toEqual([
-        { id: 1, createdAt: new Date("2020-01-01"), text: "Hello World" },
-      ]);
+  describe("info", () => {
+    it("should return backend info", () => {
+      expect(apiController.getInfo()).toEqual({
+        version: "0.0.1",
+        oidc: {
+          issuer: "https://issuer.example.com",
+          client_id: "client-123",
+        },
+      });
     });
   });
 });
