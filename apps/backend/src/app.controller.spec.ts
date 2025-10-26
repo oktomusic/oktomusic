@@ -1,5 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { ApiController } from "./api/api.controller";
+import { ApiService } from "./api/api.service";
 import oidcConfig from "./config/definitions/oidc.config";
 
 // Mock ESM package to avoid Jest ESM parsing during tests
@@ -19,6 +20,12 @@ describe("ApiController", () => {
           useValue: {
             issuer: "https://issuer.example.com",
             clientId: "client-123",
+          },
+        },
+        {
+          provide: ApiService,
+          useValue: {
+            listUsers: jest.fn(),
           },
         },
       ],
