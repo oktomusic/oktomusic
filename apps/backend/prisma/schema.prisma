@@ -13,3 +13,22 @@ model HelloWorld {
   createdAt DateTime @default(now())
   text      String
 }
+
+// User profiles
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  oidcSub   String   @unique // OIDC "sub" claim
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([username])
+  @@index([role])
+}
