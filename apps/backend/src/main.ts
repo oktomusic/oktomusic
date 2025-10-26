@@ -16,6 +16,12 @@ import { HttpConfig } from "./config/definitions/http.config";
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  // Get Configuration
+  const configService = app.get(ConfigService);
+  const isDev = Boolean(configService.get("app.isDev"));
+  const viteOrigin = configService.get<string | undefined>("vite.origin");
+
+  // Setup Swagger
   const swaggerConfig = new DocumentBuilder()
     .setTitle("Oktomusic")
     .setLicense(
@@ -25,21 +31,21 @@ async function bootstrap() {
     .setDescription("Oktomusic API")
     .setVersion("0.0.1")
     .setOpenAPIVersion("3.1.0")
-    .build();
+    .addSecurity("oidc", {
+      type: "openIdConnect",
+      openIdConnectUrl: `${configService.getOrThrow<string>("oidc.issuer")}/.well-known/openid-configuration`,
+    });
 
-  const documentFactory = () =>
-    SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup("api/docs", app, documentFactory);
+  const document = SwaggerModule.createDocument(app, swaggerConfig.build());
+  SwaggerModule.setup("api/docs", app, document, {
+    swaggerOptions: {},
+  });
 
   app.enableCors({ origin: false });
   app.enableShutdownHooks();
   // Configure Handlebars view engine
   app.setBaseViewsDir(path.join(__dirname, "views"));
   app.setViewEngine("hbs");
-
-  const configService = app.get(ConfigService);
-  const isDev = Boolean(configService.get("app.isDev"));
-  const viteOrigin = configService.get<string | undefined>("vite.origin");
 
   // Load Vite manifest in production mode
   let viteManifest: ViteManifest | null = null;
