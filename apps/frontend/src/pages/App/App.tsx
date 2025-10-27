@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useLingui } from "@lingui/react/macro";
+
+import type { ApiInfoRes } from "@oktomusic/api-schemas";
+import { getInfo } from "../../api/axios/endpoints/info";
 
 import reactLogo from "../../assets/react.svg";
 import viteLogo from "/vite.svg";
@@ -10,6 +13,14 @@ function App() {
   const [count, setCount] = useState(0);
 
   const { t } = useLingui();
+
+  const [status, setStatus] = useState<ApiInfoRes | undefined>(undefined);
+
+  useEffect(() => {
+    getInfo()
+      .then((res) => setStatus(res))
+      .catch(console.error);
+  }, []);
 
   return (
     <>
@@ -26,9 +37,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <p>{JSON.stringify(status, null, 2)}</p>
         <Link to="/appinfo">{"App Info"}</Link>
       </div>
       <p className="read-the-docs">
