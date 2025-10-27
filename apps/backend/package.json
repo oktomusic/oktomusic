@@ -30,11 +30,11 @@
     "@apollo/server": "^5.0.0",
     "@as-integrations/express5": "^1.1.2",
     "@nestjs/apollo": "^13.2.1",
-    "@nestjs/common": "^11.1.7",
+    "@nestjs/common": "^11.1.8",
     "@nestjs/config": "^4.0.2",
-    "@nestjs/core": "^11.1.7",
+    "@nestjs/core": "^11.1.8",
     "@nestjs/graphql": "^13.2.0",
-    "@nestjs/platform-express": "^11.1.7",
+    "@nestjs/platform-express": "^11.1.8",
     "@nestjs/swagger": "^11.2.1",
     "@nestjs/terminus": "^11.0.0",
     "@oktomusic/api-schemas": "workspace:^",
@@ -53,10 +53,10 @@
   "devDependencies": {
     "@nestjs/cli": "^11.0.10",
     "@nestjs/schematics": "^11.0.9",
-    "@nestjs/testing": "^11.1.7",
+    "@nestjs/testing": "^11.1.8",
     "@types/express": "^5.0.4",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.10.7",
+    "@types/node": "catalog:default",
     "@types/supertest": "^6.0.3",
     "http-proxy-middleware": "^3.0.5",
     "jest": "^30.2.0",
@@ -66,7 +66,7 @@
     "ts-loader": "^9.5.4",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:default"
   },
   "jest": {
     "moduleFileExtensions": [

@@ -35,9 +35,9 @@
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/lyrics"
   },
   "devDependencies": {
-    "@types/node": "^22.15.17",
+    "@types/node": "catalog:default",
     "bumpp": "^10.3.1",
-    "tsdown": "^0.15.9",
-    "typescript": "^5.9.3"
+    "tsdown": "catalog:default",
+    "typescript": "catalog:default"
   }
 }

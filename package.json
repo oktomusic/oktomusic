@@ -27,7 +27,7 @@
     "@eslint/js": "^9.38.0",
     "@jest/globals": "^30.2.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.18.8",
+    "@types/node": "catalog:default",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-lingui": "^0.11.0",
