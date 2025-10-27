@@ -71,6 +71,9 @@ jobs:
       - name: Build @oktomusic/vite-sri-manifest
         run: pnpm --filter "@oktomusic/vite-sri-manifest" build
 
+      - name: Build @oktomusic/api-schemas
+        run: pnpm --filter "@oktomusic/api-schemas" build
+
       - name: Build
         run: pnpm --filter "@oktomusic/frontend" build
 
