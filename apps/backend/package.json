@@ -27,7 +27,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@apollo/server": "^5.0.0",
+    "@apollo/server": "^5.1.0",
     "@as-integrations/express5": "^1.1.2",
     "@nestjs/apollo": "^13.2.1",
     "@nestjs/common": "^11.1.8",
@@ -54,7 +54,7 @@
     "@nestjs/cli": "^11.0.10",
     "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^11.1.8",
-    "@types/express": "^5.0.4",
+    "@types/express": "^5.0.5",
     "@types/jest": "^30.0.0",
     "@types/node": "catalog:default",
     "@types/supertest": "^6.0.3",

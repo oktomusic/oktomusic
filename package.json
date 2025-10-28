@@ -19,7 +19,7 @@
     "test:frontend:cov": "NODE_OPTIONS=\"\" jest --selectProjects=@oktomusic/frontend --coverage"
   },
   "keywords": [],
-  "packageManager": "pnpm@10.19.0",
+  "packageManager": "pnpm@10.20.0",
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
@@ -44,6 +44,6 @@
     "prettier-plugin-tailwindcss": "^0.7.1",
     "ts-jest": "^29.4.5",
     "typescript-eslint": "^8.46.2",
-    "wrangler": "^4.45.0"
+    "wrangler": "^4.45.1"
   }
 }
