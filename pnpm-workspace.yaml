@@ -23,7 +23,7 @@ overrides:
 
 catalogs:
   default:
-    "@types/node": ^22.18.8
+    "@types/node": ^24.9.2
     typescript: ^5.9.3
     tsdown: ^0.15.9
 
