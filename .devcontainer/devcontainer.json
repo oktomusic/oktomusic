@@ -4,7 +4,7 @@
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
-      "version": "22",
+      "version": "lts/krypton",
       "pnpmVersion": "latest",
       "nvmVersion": "latest"
     },
@@ -18,7 +18,9 @@
   "postCreateCommand": "pnpm install",
   "customizations": {
     "codespaces": {
-      "openFiles": ["README.md"]
+      "openFiles": [
+        "README.md"
+      ]
     },
     "vscode": {}
   }
