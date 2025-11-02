@@ -31,6 +31,15 @@
   "chat.tools.terminal.autoApprove": {
     // Approved project-specific commands
     //
+    // Global
+    "pnpm run lint": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm run format": {
+      "approve": true,
+      "matchCommandLine": true
+    },
     // @oktomusic/backend
     "pnpm --filter @oktomusic/backend build": {
       "approve": true,
