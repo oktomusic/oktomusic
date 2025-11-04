@@ -21,14 +21,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Use Node.js LTS/Krypton
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: ".node-version"
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
