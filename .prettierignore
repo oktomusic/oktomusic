@@ -1,5 +1,7 @@
 apps/backend/dist
+apps/backend/src/generated
 apps/frontend/dist
+apps/frontend/src/locales/**/*.ts
 apps/website/.vitepress/dist
 apps/website/.vitepress/cache
 **/node_modules
