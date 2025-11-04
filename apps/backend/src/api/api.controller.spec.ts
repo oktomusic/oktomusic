@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { ApiController } from "./api/api.controller";
-import { ApiService } from "./api/api.service";
-import oidcConfig from "./config/definitions/oidc.config";
+import { ApiController } from "./api.controller";
+import { ApiService } from "./api.service";
+import oidcConfig from "../config/definitions/oidc.config";
 
 // Mock ESM package to avoid Jest ESM parsing during tests
 jest.mock("@oktomusic/api-schemas", () => ({

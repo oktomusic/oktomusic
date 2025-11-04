@@ -8,6 +8,7 @@ import { ApiController } from "./api.controller";
 import { ApiService } from "./api.service";
 import { ApiResolver } from "./api.resolver";
 import { PrismaModule } from "../db/prisma.module";
+import { AuthController } from './auth/auth.controller';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { PrismaModule } from "../db/prisma.module";
       sortSchema: true,
     }),
   ],
-  controllers: [ApiController],
+  controllers: [ApiController, AuthController],
   providers: [ApiService, ApiResolver],
 })
 export class ApiModule {}
