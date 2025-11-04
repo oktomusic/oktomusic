@@ -1,12 +1,14 @@
-import { defineConfig } from "vitest/config"
-import viteTsconfigPaths from "vite-tsconfig-paths"
+import { defineConfig } from "vitest/config";
+import viteTsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   plugins: [viteTsconfigPaths()],
   resolve: {
     alias: {
-      "@oktomusic/api-schemas": "/home/runner/work/oktomusic/oktomusic/apps/backend/test/mocks/api-schemas.ts",
-      "openid-client": "/home/runner/work/oktomusic/oktomusic/apps/backend/test/mocks/openid-client.ts",
+      "@oktomusic/api-schemas":
+        "/home/runner/work/oktomusic/oktomusic/apps/backend/test/mocks/api-schemas.ts",
+      "openid-client":
+        "/home/runner/work/oktomusic/oktomusic/apps/backend/test/mocks/openid-client.ts",
     },
   },
   test: {
@@ -23,4 +25,4 @@ export default defineConfig({
       exclude: ["src/**/*.spec.ts", "src/**/*.e2e-spec.ts"],
     },
   },
-})
+});
