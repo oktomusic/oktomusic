@@ -9,6 +9,7 @@
       ]
     },
     "playwright": {
+      "type": "stdio",
       "command": "pnpm",
       "args": [
         "dlx",
