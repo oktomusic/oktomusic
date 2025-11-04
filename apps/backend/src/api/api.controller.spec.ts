@@ -1,15 +1,16 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { ApiController } from "./api.controller";
-import { ApiService } from "./api.service";
-import oidcConfig from "../config/definitions/oidc.config";
+import { describe, it, expect, beforeEach, vi } from "vitest"
+import { Test, TestingModule } from "@nestjs/testing"
+import { ApiController } from "./api.controller"
+import { ApiService } from "./api.service"
+import oidcConfig from "../config/definitions/oidc.config"
 
-// Mock ESM package to avoid Jest ESM parsing during tests
-jest.mock("@oktomusic/api-schemas", () => ({
+// Mock ESM package
+vi.mock("@oktomusic/api-schemas", () => ({
   ApiInfoResJSONSchema: {},
-}));
+}))
 
 describe("ApiController", () => {
-  let apiController: ApiController;
+  let apiController: ApiController
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -25,14 +26,14 @@ describe("ApiController", () => {
         {
           provide: ApiService,
           useValue: {
-            listUsers: jest.fn(),
+            listUsers: vi.fn(),
           },
         },
       ],
-    }).compile();
+    }).compile()
 
-    apiController = app.get<ApiController>(ApiController);
-  });
+    apiController = app.get<ApiController>(ApiController)
+  })
 
   describe("info", () => {
     it("should return backend info", () => {
@@ -42,7 +43,7 @@ describe("ApiController", () => {
           issuer: "https://issuer.example.com",
           client_id: "client-123",
         },
-      });
-    });
-  });
-});
+      })
+    })
+  })
+})

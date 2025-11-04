@@ -52,7 +52,7 @@ export default defineConfig([
     files: ["apps/backend/**/*.spec.ts", "apps/backend/**/*.e2e-spec.ts"],
     extends: configBase,
     languageOptions: {
-      globals: { ...globals.node, ...globals.jest },
+      globals: { ...globals.node, ...globals.vitest },
       parserOptions: {
         project: "./apps/backend/tsconfig.json",
         tsconfigRootDir: import.meta.dirname,
@@ -83,7 +83,11 @@ export default defineConfig([
     },
   },
   {
-    files: ["apps/frontend/vite.config.ts", "apps/frontend/lingui.config.ts"],
+    files: [
+      "apps/frontend/vite.config.ts",
+      "apps/frontend/vitest.config.ts",
+      "apps/frontend/lingui.config.ts",
+    ],
     extends: configBase,
     languageOptions: {
       globals: { ...globals.node },
