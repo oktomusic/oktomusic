@@ -15,7 +15,6 @@ export default defineConfig({
       },
     }),
     lingui(),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     manifestSRIPlugin(),
   ],
   server: {

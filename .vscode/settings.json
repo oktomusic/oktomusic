@@ -24,9 +24,8 @@
     "certification": "bibliography",
     "artifacthub": "container"
   },
-  "jest.enable": true,
-  "jest.jestCommandLine": "NODE_OPTIONS=\"\" pnpm jest",
-  "jest.rootPath": ".",
+  "vitest.enable": true,
+  "vitest.commandLine": "pnpm vitest",
   "chat.agent.enabled": true,
   "chat.tools.terminal.autoApprove": {
     // Approved project-specific commands
