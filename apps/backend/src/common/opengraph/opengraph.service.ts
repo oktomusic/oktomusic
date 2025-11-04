@@ -79,7 +79,6 @@ type PairsFromMap<T extends Record<string, string>> = {
 
 export type MetaTag = PairsFromMap<KnownMetaValueMap>;
 
-// 5) Convenience: arrays of tags
 export type MetaTags = MetaTag[];
 
 @Injectable()
