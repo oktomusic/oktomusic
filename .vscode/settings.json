@@ -40,6 +40,10 @@
       "approve": true,
       "matchCommandLine": true
     },
+    "pnpm run test": {
+      "approve": true,
+      "matchCommandLine": true
+    },
     // @oktomusic/backend
     "pnpm --filter @oktomusic/backend build": {
       "approve": true,
