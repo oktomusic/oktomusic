@@ -3,7 +3,21 @@
     "ESLint": {
       "type": "stdio",
       "command": "pnpm",
-      "args": ["dlx", "@eslint/mcp@latest"]
-    }
+      "args": [
+        "dlx",
+        "@eslint/mcp@latest"
+      ]
+    },
+    "playwright": {
+      "command": "pnpm",
+      "args": [
+        "dlx",
+        "@playwright/mcp@latest"
+      ]
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
   }
 }
