@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [viteTsconfigPaths()],
   test: {
     name: "@oktomusic/backend:e2e",
-    root: "./apps/backend",
+    root: ".",
     globals: true,
     environment: "node",
     include: ["test/**/*.e2e-spec.ts"],

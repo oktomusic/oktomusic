@@ -12,7 +12,7 @@ export default defineConfig({
   ],
   test: {
     name: "@oktomusic/frontend",
-    root: "./apps/frontend",
+    root: ".",
     globals: true,
     environment: "jsdom",
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
