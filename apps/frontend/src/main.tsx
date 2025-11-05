@@ -13,6 +13,9 @@ import { getLanguage } from "./utils/get_language.ts";
 import "./index.css";
 import App from "./pages/App/App.tsx";
 import AppInfo from "./pages/AppInfo/AppInfo.tsx";
+import Login from "./pages/Auth/Login.tsx";
+import Callback from "./pages/Auth/Callback.tsx";
+import Dashboard from "./pages/Auth/Dashboard.tsx";
 
 // Determine and activate the user's language
 const selectedLanguage = getLanguage();
@@ -31,6 +34,9 @@ createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route index element={<App />} />
           <Route path="/appinfo" element={<AppInfo />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/auth/callback" element={<Callback />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<span>404</span>} />
         </Routes>
       </BrowserRouter>
