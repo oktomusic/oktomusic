@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@lingui/babel-plugin-lingui-macro": "^5.5.1",
-    "@lingui/cli": "^5.5.1",
+    "@lingui/cli": "^5.5.2",
     "@lingui/core": "^5.5.1",
     "@lingui/react": "^5.5.1",
     "@lingui/vite-plugin": "^5.5.1",
