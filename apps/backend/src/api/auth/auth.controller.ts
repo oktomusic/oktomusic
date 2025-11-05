@@ -297,10 +297,11 @@ export class AuthController {
   }
 
   private generateSessionId(): string {
-    // Generate a random session ID
-    return (
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15)
+    // Generate a cryptographically secure random session ID
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join(
+      "",
     );
   }
 }
