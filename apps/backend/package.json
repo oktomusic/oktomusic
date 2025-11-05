@@ -40,7 +40,7 @@
     "@oktomusic/api-schemas": "workspace:^",
     "@prisma/client": "6.18.0",
     "@types/hbs": "^4.0.5",
-    "graphql": "^16.11.0",
+    "graphql": "^16.12.0",
     "handlebars": "^4.7.8",
     "hbs": "^4.2.0",
     "http-proxy": "^1.18.1",
