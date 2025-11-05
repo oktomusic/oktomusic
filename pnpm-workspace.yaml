@@ -25,6 +25,6 @@ catalogs:
   default:
     "@types/node": ^24.9.2
     typescript: ^5.9.3
-    tsdown: ^0.15.9
+    tsdown: ^0.16.0
 
 sharedWorkspaceLockfile: true
