@@ -215,4 +215,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
 # End of https://www.toptal.com/developers/gitignore/api/node,linux,windows,macos

@@ -17,7 +17,10 @@
     "test:backend:e2e": "vitest run --project=@oktomusic/backend:e2e",
     "test:frontend": "vitest run --project=@oktomusic/frontend",
     "test:frontend:watch": "vitest --project=@oktomusic/frontend",
-    "test:frontend:cov": "vitest run --project=@oktomusic/frontend --coverage"
+    "test:frontend:cov": "vitest run --project=@oktomusic/frontend --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed"
   },
   "keywords": [],
   "packageManager": "pnpm@10.20.0",
@@ -26,6 +29,7 @@
     "@commitlint/config-conventional": "^20.0.0",
     "@commitlint/types": "^20.0.0",
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.56.1",
     "@types/node": "catalog:default",
     "@vitest/coverage-v8": "^4.0.7",
     "@vitest/ui": "^4.0.7",
