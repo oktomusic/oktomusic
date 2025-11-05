@@ -1,10 +1,10 @@
 import path from "node:path";
 
 import { defineConfig } from "vitest/config";
-import viteTsconfigPaths from "vite-tsconfig-paths";
+// import viteTsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [viteTsconfigPaths()],
+  // plugins: [viteTsconfigPaths()],
   resolve: {
     alias: {
       "@oktomusic/api-schemas": path.resolve(
@@ -16,7 +16,7 @@ export default defineConfig({
   },
   test: {
     name: "@oktomusic/backend",
-    root: ".",
+    root: __dirname,
     globals: true,
     environment: "node",
     include: ["src/**/*.spec.ts"],

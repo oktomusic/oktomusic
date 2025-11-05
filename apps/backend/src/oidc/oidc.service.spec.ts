@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, beforeAll, vi } from "vitest";
 import { Logger } from "@nestjs/common";
 import { OidcService } from "./oidc.service";
-import type { OidcConfig } from "src/config/definitions/oidc.config";
-import oidcConfig from "src/config/definitions/oidc.config";
+import type { OidcConfig } from "../config/definitions/oidc.config";
+import oidcConfig from "../config/definitions/oidc.config";
 import { Test, TestingModule } from "@nestjs/testing";
 import * as client from "openid-client";
 

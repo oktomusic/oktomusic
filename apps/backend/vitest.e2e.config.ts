@@ -1,11 +1,11 @@
 import { defineConfig } from "vitest/config";
-import viteTsconfigPaths from "vite-tsconfig-paths";
+//import viteTsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [viteTsconfigPaths()],
+  //plugins: [viteTsconfigPaths()],
   test: {
     name: "@oktomusic/backend:e2e",
-    root: ".",
+    root: __dirname,
     globals: true,
     environment: "node",
     include: ["test/**/*.e2e-spec.ts"],
