@@ -11,7 +11,11 @@
     "lint": "pnpm -w exec eslint -c eslint.config.ts apps/frontend",
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix apps/frontend",
     "po:extract": "lingui extract",
-    "po:compile": "lingui compile --typescript"
+    "po:compile": "lingui compile --typescript",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage",
+    "test:debug": "vitest --inspect-brk --inspect --single-thread --no-file-parallelism"
   },
   "dependencies": {
     "@lingui/detect-locale": "^5.5.1",

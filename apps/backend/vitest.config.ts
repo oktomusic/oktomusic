@@ -16,7 +16,7 @@ export default defineConfig({
   },
   test: {
     name: "@oktomusic/backend",
-    root: "./apps/backend",
+    root: ".",
     globals: true,
     environment: "node",
     include: ["src/**/*.spec.ts"],
