@@ -1,3 +1,5 @@
+import path from "node:path";
+
 import { defineConfig } from "vitest/config";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 
@@ -5,10 +7,11 @@ export default defineConfig({
   plugins: [viteTsconfigPaths()],
   resolve: {
     alias: {
-      "@oktomusic/api-schemas":
-        "/home/runner/work/oktomusic/oktomusic/apps/backend/test/mocks/api-schemas.ts",
-      "openid-client":
-        "/home/runner/work/oktomusic/oktomusic/apps/backend/test/mocks/openid-client.ts",
+      "@oktomusic/api-schemas": path.resolve(
+        __dirname,
+        "./test/mocks/api-schemas.ts",
+      ),
+      "openid-client": path.resolve(__dirname, "./test/mocks/openid-client.ts"),
     },
   },
   test: {

@@ -4,22 +4,6 @@ import { OidcService } from "./oidc.service";
 import type { OidcConfig } from "src/config/definitions/oidc.config";
 import oidcConfig from "src/config/definitions/oidc.config";
 import { Test, TestingModule } from "@nestjs/testing";
-
-// Mock openid-client module
-vi.mock("openid-client", () => {
-  return {
-    discovery: vi.fn(),
-    randomPKCECodeVerifier: vi.fn(),
-    calculatePKCECodeChallenge: vi.fn(),
-    randomState: vi.fn(),
-    buildAuthorizationUrl: vi.fn(),
-    authorizationCodeGrant: vi.fn(),
-    fetchUserInfo: vi.fn(),
-    refreshTokenGrant: vi.fn(),
-    buildEndSessionUrl: vi.fn(),
-  };
-});
-
 import * as client from "openid-client";
 
 // Silence Nest logger output during tests
@@ -49,7 +33,7 @@ describe("OidcService", () => {
     }) as unknown as client.Configuration;
 
   beforeEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   async function makeService(conf: OidcConfig): Promise<OidcService> {
@@ -60,7 +44,7 @@ describe("OidcService", () => {
   }
 
   it("discovers configuration on init", async () => {
-    vi.mocked(client.discovery).mockResolvedValueOnce(makeConfig(true));
+    vi.spyOn(client, "discovery").mockResolvedValueOnce(makeConfig(true));
 
     const svc = await makeService(baseConf);
     await svc.onModuleInit();
@@ -73,13 +57,13 @@ describe("OidcService", () => {
   });
 
   it("generateAuthUrl with PKCE support does not include state", async () => {
-    vi.mocked(client.discovery).mockResolvedValueOnce(makeConfig(true));
-    vi.mocked(client.randomPKCECodeVerifier).mockReturnValue("verifier-123");
-    vi.mocked(client.calculatePKCECodeChallenge).mockResolvedValue(
+    vi.spyOn(client, "discovery").mockResolvedValueOnce(makeConfig(true));
+    vi.spyOn(client, "randomPKCECodeVerifier").mockReturnValue("verifier-123");
+    vi.spyOn(client, "calculatePKCECodeChallenge").mockResolvedValue(
       "challenge-abc",
     );
 
-    const buildSpy = vi.mocked(client.buildAuthorizationUrl);
+    const buildSpy = vi.spyOn(client, "buildAuthorizationUrl");
     buildSpy.mockImplementation((_cfg, params: Record<string, string>) => {
       // Assert parameters here
       expect(params).toEqual({
@@ -107,14 +91,14 @@ describe("OidcService", () => {
   });
 
   it("generateAuthUrl without PKCE support includes state", async () => {
-    vi.mocked(client.discovery).mockResolvedValueOnce(makeConfig(false));
-    vi.mocked(client.randomPKCECodeVerifier).mockReturnValue("verifier-xyz");
-    vi.mocked(client.calculatePKCECodeChallenge).mockResolvedValue(
+    vi.spyOn(client, "discovery").mockResolvedValueOnce(makeConfig(false));
+    vi.spyOn(client, "randomPKCECodeVerifier").mockReturnValue("verifier-xyz");
+    vi.spyOn(client, "calculatePKCECodeChallenge").mockResolvedValue(
       "challenge-xyz",
     );
-    vi.mocked(client.randomState).mockReturnValue("state-789");
+    vi.spyOn(client, "randomState").mockReturnValue("state-789");
 
-    const buildSpy = vi.mocked(client.buildAuthorizationUrl);
+    const buildSpy = vi.spyOn(client, "buildAuthorizationUrl");
     buildSpy.mockImplementation((_cfg, params: Record<string, string>) => {
       expect(params).toEqual({
         redirect_uri: baseConf.redirectUri,
@@ -136,11 +120,11 @@ describe("OidcService", () => {
   });
 
   it("buildAuthUrl builds with provided state and verifier", async () => {
-    vi.mocked(client.discovery).mockResolvedValueOnce(makeConfig(true));
-    vi.mocked(client.calculatePKCECodeChallenge).mockResolvedValue(
+    vi.spyOn(client, "discovery").mockResolvedValueOnce(makeConfig(true));
+    vi.spyOn(client, "calculatePKCECodeChallenge").mockResolvedValue(
       "challenge-123",
     );
-    const buildSpy = vi.mocked(client.buildAuthorizationUrl);
+    const buildSpy = vi.spyOn(client, "buildAuthorizationUrl");
     buildSpy.mockImplementation((_cfg, params: Record<string, string>) => {
       expect(params).toEqual({
         redirect_uri: baseConf.redirectUri,
@@ -163,9 +147,15 @@ describe("OidcService", () => {
   });
 
   it("handleCallback exchanges code using authorizationCodeGrant", async () => {
-    vi.mocked(client.discovery).mockResolvedValueOnce(makeConfig(true));
-    const grantSpy = vi.mocked(client.authorizationCodeGrant);
-    grantSpy.mockResolvedValue({ access_token: "at", refresh_token: "rt" });
+    vi.spyOn(client, "discovery").mockResolvedValueOnce(makeConfig(true));
+    const grantSpy = vi.spyOn(client, "authorizationCodeGrant");
+    type AuthGrantReturn = Awaited<
+      ReturnType<typeof client.authorizationCodeGrant>
+    >;
+    grantSpy.mockResolvedValue({
+      access_token: "at",
+      refresh_token: "rt",
+    } as AuthGrantReturn);
 
     const svc = await makeService(baseConf);
     await svc.onModuleInit();
@@ -178,8 +168,11 @@ describe("OidcService", () => {
   });
 
   it("getUserInfo returns user claims", async () => {
-    vi.mocked(client.discovery).mockResolvedValueOnce(makeConfig(true));
-    vi.mocked(client.fetchUserInfo).mockResolvedValue({ sub: "123" });
+    vi.spyOn(client, "discovery").mockResolvedValueOnce(makeConfig(true));
+    type UserInfoReturn = Awaited<ReturnType<typeof client.fetchUserInfo>>;
+    vi.spyOn(client, "fetchUserInfo").mockResolvedValue({
+      sub: "123",
+    } as UserInfoReturn);
 
     const svc = await makeService(baseConf);
     await svc.onModuleInit();
@@ -190,11 +183,12 @@ describe("OidcService", () => {
   });
 
   it("refreshTokens exchanges refresh token", async () => {
-    vi.mocked(client.discovery).mockResolvedValueOnce(makeConfig(true));
-    vi.mocked(client.refreshTokenGrant).mockResolvedValue({
+    vi.spyOn(client, "discovery").mockResolvedValueOnce(makeConfig(true));
+    type RefreshReturn = Awaited<ReturnType<typeof client.refreshTokenGrant>>;
+    vi.spyOn(client, "refreshTokenGrant").mockResolvedValue({
       access_token: "new-at",
       refresh_token: "new-rt",
-    });
+    } as RefreshReturn);
 
     const svc = await makeService(baseConf);
     await svc.onModuleInit();
@@ -208,8 +202,8 @@ describe("OidcService", () => {
   });
 
   it("buildLogoutUrl includes optional post_logout_redirect_uri when provided", async () => {
-    vi.mocked(client.discovery).mockResolvedValueOnce(makeConfig(true));
-    const endSessionSpy = vi.mocked(client.buildEndSessionUrl);
+    vi.spyOn(client, "discovery").mockResolvedValueOnce(makeConfig(true));
+    const endSessionSpy = vi.spyOn(client, "buildEndSessionUrl");
     endSessionSpy.mockImplementation((_cfg, params: Record<string, string>) => {
       expect(params).toEqual({
         id_token_hint: "id-token",
