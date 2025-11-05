@@ -4,21 +4,20 @@ import {
   BadRequestException,
   Logger,
 } from "@nestjs/common";
-import { ZodObject } from "zod";
-import { $ZodError, $ZodIssue } from "zod/v4/core";
+import { z, type ZodObject, ZodError } from "zod";
 
 export class ZodValidationPipe implements PipeTransform {
   private readonly logger = new Logger(ZodValidationPipe.name);
 
-  constructor(private schema: ZodObject) {}
+  constructor(private schema: ZodObject<z.ZodRawShape>) {}
 
   transform(value: unknown, metadata: ArgumentMetadata) {
     try {
       const parsedValue = this.schema.parse(value);
       return parsedValue;
     } catch (err) {
-      if (err instanceof $ZodError) {
-        const issues = err.issues.map((e: $ZodIssue) => ({
+      if (err instanceof ZodError) {
+        const issues = err.issues.map((e) => ({
           path: e.path.map(String).join("."),
           message: e.message,
           code: e.code,
