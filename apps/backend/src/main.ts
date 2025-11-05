@@ -4,6 +4,7 @@ import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import type { Request, Response, NextFunction } from "express";
+import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
@@ -15,6 +16,9 @@ import { HttpConfig } from "./config/definitions/http.config";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Enable cookie parser
+  app.use(cookieParser());
 
   // Get Configuration
   const configService = app.get(ConfigService);
