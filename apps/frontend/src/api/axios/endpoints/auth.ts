@@ -1,5 +1,3 @@
-import axios from "../client";
-
 import type {
   AuthLoginRes,
   AuthCallbackRes,
@@ -8,11 +6,13 @@ import type {
   AuthLogoutRes,
 } from "@oktomusic/api-schemas";
 
+import { apiClient } from "../client";
+
 /**
  * Initiate OIDC login flow
  */
 export async function login(): Promise<AuthLoginRes> {
-  const response = await axios.get<AuthLoginRes>("/api/auth/login");
+  const response = await apiClient.get<AuthLoginRes>("/auth/login");
   return response.data;
 }
 
@@ -28,7 +28,7 @@ export async function callback(
     params.append("state", state);
   }
 
-  const response = await axios.get<AuthCallbackRes>(
+  const response = await apiClient.get<AuthCallbackRes>(
     `/api/auth/callback?${params.toString()}`,
   );
   return response.data;
@@ -38,7 +38,7 @@ export async function callback(
  * Get current session status
  */
 export async function getSession(): Promise<AuthSessionRes> {
-  const response = await axios.get<AuthSessionRes>("/api/auth/session");
+  const response = await apiClient.get<AuthSessionRes>("/auth/session");
   return response.data;
 }
 
@@ -46,7 +46,7 @@ export async function getSession(): Promise<AuthSessionRes> {
  * Refresh access token
  */
 export async function refreshToken(): Promise<AuthRefreshRes> {
-  const response = await axios.get<AuthRefreshRes>("/api/auth/refresh");
+  const response = await apiClient.get<AuthRefreshRes>("/auth/refresh");
   return response.data;
 }
 
@@ -54,6 +54,6 @@ export async function refreshToken(): Promise<AuthRefreshRes> {
  * Logout user
  */
 export async function logout(): Promise<AuthLogoutRes> {
-  const response = await axios.get<AuthLogoutRes>("/api/auth/logout");
+  const response = await apiClient.get<AuthLogoutRes>("/auth/logout");
   return response.data;
 }
