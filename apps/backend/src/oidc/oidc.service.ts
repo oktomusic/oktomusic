@@ -93,6 +93,20 @@ export class OidcService implements OnModuleInit {
       },
     );
 
-    console.log("Received tokens:", tokens);
+    const claims = tokens.claims();
+
+    console.log("Availlable claims:", claims);
+
+    if (!claims?.sub) {
+      throw new Error("ID token does not contain 'sub' claim");
+    }
+
+    const profile = await client.fetchUserInfo(
+      this.config,
+      tokens.access_token,
+      claims.sub,
+    );
+
+    console.log("User profile:", profile);
   }
 }
