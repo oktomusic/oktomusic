@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  HttpRedirectResponse,
   HttpStatus,
   InternalServerErrorException,
   Redirect,
@@ -26,7 +27,7 @@ export class AuthController {
       "Generates an authorization URL and stores necessary state for the OIDC callback",
   })
   @Redirect()
-  async login(@Req() req: Request) {
+  async login(@Req() req: Request): Promise<HttpRedirectResponse> {
     const generated = await this.oidcService.generateAuthUrl();
 
     req.session.oidc = {
@@ -35,7 +36,7 @@ export class AuthController {
       nonce: generated.nonce,
     };
 
-    return { url: generated.url, code: HttpStatus.FOUND };
+    return { url: generated.url.toString(), statusCode: HttpStatus.FOUND };
   }
 
   @Get("callback")
@@ -44,7 +45,8 @@ export class AuthController {
     description:
       "Receives the authorization code from the OIDC provider and exchanges it for tokens",
   })
-  async callback(@Req() req: Request) {
+  @Redirect()
+  async callback(@Req() req: Request): Promise<HttpRedirectResponse> {
     const currentUrl = new URL(
       req.protocol + "://" + req.get("host") + req.originalUrl,
     );
@@ -56,6 +58,8 @@ export class AuthController {
     const { code_verifier, state, nonce } = req.session.oidc;
 
     await this.oidcService.callback(currentUrl, state, code_verifier, nonce);
+
+    return { url: "/", statusCode: HttpStatus.FOUND };
   }
 
   @Get("session")
