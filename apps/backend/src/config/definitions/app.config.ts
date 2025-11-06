@@ -10,6 +10,7 @@ const AppConfigSchema = z.object({
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
+  SESSION_SECRET: z.string().min(1),
 });
 
 export interface AppConfig {
@@ -17,6 +18,7 @@ export interface AppConfig {
   isDev: boolean;
   isProd: boolean;
   isTest: boolean;
+  sessionSecret: string;
 }
 
 export default registerAs("app", (): AppConfig => {
@@ -27,5 +29,6 @@ export default registerAs("app", (): AppConfig => {
     isDev: parsed.NODE_ENV === "development",
     isProd: parsed.NODE_ENV === "production",
     isTest: parsed.NODE_ENV === "test",
+    sessionSecret: parsed.SESSION_SECRET,
   } as const;
 });

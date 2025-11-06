@@ -4,6 +4,7 @@ import { ViewsModule } from "./views/views.module";
 import { OpenGraphModule } from "./common/opengraph/opengraph.module";
 import { AppConfigModule } from "./config/app-config.module";
 import { HealthModule } from "./api/health/health.module";
+import { SessionModule } from './session/session.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { HealthModule } from "./api/health/health.module";
     OpenGraphModule,
     HealthModule,
     ViewsModule,
+    SessionModule,
   ],
 })
 export class AppModule {}

@@ -29,7 +29,6 @@
     "@commitlint/config-conventional": "^20.0.0",
     "@commitlint/types": "^20.0.0",
     "@eslint/js": "^9.39.1",
-    "@playwright/test": "^1.56.1",
     "@types/node": "catalog:default",
     "@vitest/coverage-v8": "^4.0.7",
     "@vitest/ui": "^4.0.7",
