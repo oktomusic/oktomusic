@@ -38,6 +38,12 @@ export class OidcService implements OnModuleInit {
       this.oidcConf.clientSecret,
     );
 
+    const serverMetadatadata = this.config.serverMetadata();
+
+    if (serverMetadatadata.userinfo_endpoint === undefined) {
+      throw new Error("OIDC provider does not support userinfo endpoint");
+    }
+
     this.logger.log("OIDC configuration successfully loaded");
   }
 
