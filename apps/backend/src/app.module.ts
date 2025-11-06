@@ -11,8 +11,8 @@ import { OidcService } from "./oidc/oidc.service";
     AppConfigModule,
     ApiModule,
     OpenGraphModule,
-    ViewsModule,
     HealthModule,
+    ViewsModule,
   ],
   providers: [OidcService],
 })
