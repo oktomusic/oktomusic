@@ -116,7 +116,8 @@ describe("SessionService", () => {
       expect(result).toEqual({
         accessToken: "new-at",
         refreshToken: "rt123",
-        expiresAt: expect.any(Number),
+        // Cast to satisfy TS ESLint: asymmetric matcher is typed as `any`
+        expiresAt: expect.any(Number) as unknown as number,
       });
       expect(result!.accessToken).toBe("new-at");
     });

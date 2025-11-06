@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+import type { AuthSessionRes } from "@oktomusic/api-schemas";
 
 export interface SessionData {
   accessToken: string;
@@ -7,7 +8,7 @@ export interface SessionData {
   expiresAt: number; // Unix timestamp
   codeVerifier?: string;
   state?: string;
-  userInfo?: Record<string, unknown>;
+  userInfo?: NonNullable<AuthSessionRes["userInfo"]>;
 }
 
 /**

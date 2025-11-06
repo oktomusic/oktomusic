@@ -8,11 +8,11 @@
     "assets": [
       {
         "include": "**/*.hbs",
-        "outDir": "dist/src"
+        "outDir": "dist"
       },
       {
         "include": "generated/prisma/**",
-        "outDir": "dist/src"
+        "outDir": "dist"
       }
     ]
   }

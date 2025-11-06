@@ -14,26 +14,28 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import type { Request, Response } from "express";
-import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import type { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 
-import {
+import type {
   AuthCallbackQuery,
   AuthCallbackRes,
-  AuthCallbackResJSONSchema,
   AuthLoginRes,
-  AuthLoginResJSONSchema,
   AuthLogoutRes,
-  AuthLogoutResJSONSchema,
   AuthRefreshRes,
-  AuthRefreshResJSONSchema,
   AuthSessionRes,
+} from "@oktomusic/api-schemas";
+import {
+  AuthCallbackResJSONSchema,
+  AuthLoginResJSONSchema,
+  AuthLogoutResJSONSchema,
+  AuthRefreshResJSONSchema,
   AuthSessionResJSONSchema,
+  AuthCallbackQuerySchema,
 } from "@oktomusic/api-schemas";
 
 import { OidcService } from "../../oidc/oidc.service";
 import { SessionService } from "./session.service";
 import { ZodValidationPipe } from "../zod.pipe";
-import { AuthCallbackQuerySchema } from "@oktomusic/api-schemas";
 
 const SESSION_COOKIE_NAME = "oktomusic_session";
 const SESSION_COOKIE_OPTIONS = {
@@ -43,6 +45,51 @@ const SESSION_COOKIE_OPTIONS = {
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   path: "/",
 };
+
+// Safe cookie accessor to satisfy no-unsafe-member-access
+function getCookie(req: Request, name: string): string | undefined {
+  const cookies = (req as unknown as { cookies?: Record<string, unknown> })
+    .cookies;
+  const value = cookies?.[name];
+  return typeof value === "string" ? value : undefined;
+}
+
+// Sanitize unknown userinfo object into the expected schema shape
+function sanitizeUserInfo(raw: unknown):
+  | {
+      sub: string;
+      preferred_username?: string;
+      email?: string;
+      name?: string;
+    }
+  | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const rec = raw as Record<string, unknown>;
+  const subVal = rec.sub;
+  if (typeof subVal !== "string") return undefined;
+
+  const out: {
+    sub: string;
+    preferred_username?: string;
+    email?: string;
+    name?: string;
+  } = { sub: subVal };
+
+  const preferredUsername = rec.preferred_username;
+  if (typeof preferredUsername === "string") {
+    out.preferred_username = preferredUsername;
+  }
+  const email = rec.email;
+  if (typeof email === "string") {
+    out.email = email;
+  }
+  const name = rec.name;
+  if (typeof name === "string") {
+    out.name = name;
+  }
+
+  return out;
+}
 
 @Controller("api/auth")
 @ApiTags("Auth")
@@ -67,7 +114,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<AuthLoginRes> {
     // Generate session ID if not exists
-    let sessionId = req.cookies[SESSION_COOKIE_NAME] as string | undefined;
+    let sessionId = getCookie(req, SESSION_COOKIE_NAME);
     if (!sessionId) {
       sessionId = this.generateSessionId();
       res.cookie(SESSION_COOKIE_NAME, sessionId, SESSION_COOKIE_OPTIONS);
@@ -110,7 +157,7 @@ export class AuthController {
     query: AuthCallbackQuery,
     @Req() req: Request,
   ): Promise<AuthCallbackRes> {
-    const sessionId = req.cookies[SESSION_COOKIE_NAME] as string | undefined;
+    const sessionId = getCookie(req, SESSION_COOKIE_NAME);
     if (!sessionId) {
       throw new HttpException(
         "No session cookie found",
@@ -119,8 +166,7 @@ export class AuthController {
     }
 
     // Retrieve stored code verifier and state
-    const tempAuthState =
-      this.sessionService.retrieveTempAuthState(sessionId);
+    const tempAuthState = this.sessionService.retrieveTempAuthState(sessionId);
     if (!tempAuthState) {
       throw new HttpException(
         "Invalid or expired session state",
@@ -129,25 +175,24 @@ export class AuthController {
     }
 
     // Verify state if present
-    if (tempAuthState.state && query.state !== tempAuthState.state) {
-      throw new HttpException("State mismatch", HttpStatus.UNAUTHORIZED);
-    }
+    const expectedState: string | undefined = tempAuthState
+      ? tempAuthState.state
+      : undefined;
 
     try {
       // Exchange authorization code for tokens
       const tokens = await this.oidcService.handleCallback(
-        () =>
-          new URL(
-            `${req.protocol}://${req.get("host")}${req.originalUrl}`,
-          ),
+        () => new URL(`${req.protocol}://${req.get("host")}${req.originalUrl}`),
         tempAuthState.codeVerifier,
-        tempAuthState.state,
+        expectedState,
       );
 
       // Get user info
-      const userInfo = await this.oidcService.getUserInfo(
+      const userInfoRaw = await this.oidcService.getUserInfo(
         tokens.access_token,
       );
+      // Ensure at least sub is present as string; otherwise, omit userInfo
+      const userInfo = sanitizeUserInfo(userInfoRaw);
 
       // Calculate token expiration (use expires_in if provided, otherwise default to 1 hour)
       const expiresIn = tokens.expires_in || 3600;
@@ -159,7 +204,7 @@ export class AuthController {
         refreshToken: tokens.refresh_token,
         idToken: tokens.id_token,
         expiresAt,
-        userInfo,
+        ...(userInfo ? { userInfo } : {}),
       });
 
       return { success: true };
@@ -182,7 +227,7 @@ export class AuthController {
     description: "Current session status",
   })
   session(@Req() req: Request): AuthSessionRes {
-    const sessionId = req.cookies[SESSION_COOKIE_NAME] as string | undefined;
+    const sessionId = getCookie(req, SESSION_COOKIE_NAME);
     if (!sessionId) {
       return { authenticated: false };
     }
@@ -192,9 +237,10 @@ export class AuthController {
       return { authenticated: false };
     }
 
+    const userInfo = sanitizeUserInfo(session.userInfo);
     return {
       authenticated: true,
-      userInfo: session.userInfo,
+      ...(userInfo ? { userInfo } : {}),
     };
   }
 
@@ -209,7 +255,7 @@ export class AuthController {
     description: "Token refresh result",
   })
   async refresh(@Req() req: Request): Promise<AuthRefreshRes> {
-    const sessionId = req.cookies[SESSION_COOKIE_NAME] as string | undefined;
+    const sessionId = getCookie(req, SESSION_COOKIE_NAME);
     if (!sessionId) {
       throw new HttpException("No session found", HttpStatus.UNAUTHORIZED);
     }
@@ -224,9 +270,7 @@ export class AuthController {
 
     try {
       // Refresh tokens
-      const tokens = await this.oidcService.refreshTokens(
-        session.refreshToken,
-      );
+      const tokens = await this.oidcService.refreshTokens(session.refreshToken);
 
       // Calculate new expiration
       const expiresIn = tokens.expires_in || 3600;
@@ -241,10 +285,13 @@ export class AuthController {
       });
 
       // Refresh user info with new access token
-      const userInfo = await this.oidcService.getUserInfo(
+      const userInfoRaw = await this.oidcService.getUserInfo(
         tokens.access_token,
       );
-      this.sessionService.updateSession(sessionId, { userInfo });
+      const userInfo = sanitizeUserInfo(userInfoRaw);
+      if (userInfo) {
+        this.sessionService.updateSession(sessionId, { userInfo });
+      }
 
       return { success: true };
     } catch (error) {
@@ -269,7 +316,7 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ): Promise<AuthLogoutRes> {
-    const sessionId = req.cookies[SESSION_COOKIE_NAME] as string | undefined;
+    const sessionId = getCookie(req, SESSION_COOKIE_NAME);
 
     let logoutUrl: string | undefined;
 
@@ -305,4 +352,3 @@ export class AuthController {
     );
   }
 }
-
