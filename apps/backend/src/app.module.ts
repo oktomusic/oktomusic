@@ -4,7 +4,6 @@ import { ViewsModule } from "./views/views.module";
 import { OpenGraphModule } from "./common/opengraph/opengraph.module";
 import { AppConfigModule } from "./config/app-config.module";
 import { HealthModule } from "./api/health/health.module";
-import { OidcService } from "./oidc/oidc.service";
 
 @Module({
   imports: [
@@ -14,6 +13,5 @@ import { OidcService } from "./oidc/oidc.service";
     HealthModule,
     ViewsModule,
   ],
-  providers: [OidcService],
 })
 export class AppModule {}

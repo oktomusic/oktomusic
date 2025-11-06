@@ -10,6 +10,7 @@ import { ApiResolver } from "./api.resolver";
 import { PrismaModule } from "../db/prisma.module";
 import { AuthController } from "./auth/auth.controller";
 import { SessionService } from "./auth/session.service";
+import { OidcService } from "../oidc/oidc.service";
 
 @Module({
   imports: [
@@ -24,6 +25,6 @@ import { SessionService } from "./auth/session.service";
     }),
   ],
   controllers: [ApiController, AuthController],
-  providers: [ApiService, ApiResolver, SessionService],
+  providers: [ApiService, ApiResolver, SessionService, OidcService],
 })
 export class ApiModule {}
