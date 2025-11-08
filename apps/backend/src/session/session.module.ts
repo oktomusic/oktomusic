@@ -23,9 +23,10 @@ export class SessionModule implements NestModule {
           secret: sessionSecret,
           resave: false,
           saveUninitialized: false,
+          rolling: true, // Extend session on each request
           cookie: {
             secure: this.appConf.isProd,
-            maxAge: 1000 * 60 * 60, // 1 hour
+            maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
           },
         }),
       )
