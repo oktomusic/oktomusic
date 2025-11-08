@@ -126,4 +126,32 @@ export class OidcService implements OnModuleInit {
       profile,
     };
   }
+
+  async refresh(oidcSession: OidcCallbackResult): Promise<OidcCallbackResult> {
+    if (!oidcSession.tokens.refresh_token) {
+      throw new Error("No refresh token available in the session");
+    }
+
+    const newTokens = await client.refreshTokenGrant(
+      this.config,
+      oidcSession.tokens.refresh_token,
+    );
+
+    const claims = newTokens.claims();
+
+    if (!claims?.sub) {
+      throw new Error("ID token does not contain 'sub' claim");
+    }
+
+    const newProfile = await client.fetchUserInfo(
+      this.config,
+      newTokens.access_token,
+      claims.sub,
+    );
+
+    return {
+      tokens: newTokens,
+      profile: newProfile,
+    };
+  }
 }

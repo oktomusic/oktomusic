@@ -87,7 +87,17 @@ export class AuthController {
     description:
       "Uses the refresh token to obtain a new access token without requiring re-authentication",
   })
-  async refresh() {}
+  async refresh(@Req() req: Request) {
+    if (!req.session.oidc?.session) {
+      throw new InternalServerErrorException("OIDC session data not found");
+    }
+
+    req.session.oidc.session = await this.oidcService.refresh(
+      req.session.oidc.session,
+    );
+
+    return {};
+  }
 
   @Get("logout")
   @ApiOperation({
