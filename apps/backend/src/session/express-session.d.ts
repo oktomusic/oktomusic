@@ -13,6 +13,7 @@ declare module "express-session" {
       session?: {
         tokens: client.TokenEndpointResponse;
         profile: client.UserInfoResponse;
+        userId: string;
       };
     };
   }
