@@ -97,6 +97,13 @@ export class OidcService implements OnModuleInit {
 
     console.log("Availlable claims:", claims);
 
+    const introspection = await client.tokenIntrospection(
+      this.config,
+      tokens.access_token,
+    );
+
+    console.log("Access Token Introspection:", introspection.resource_access);
+
     if (!claims?.sub) {
       throw new Error("ID token does not contain 'sub' claim");
     }
