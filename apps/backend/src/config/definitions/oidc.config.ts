@@ -37,9 +37,10 @@ const OidcConfigSchema = z.object({
 
   /**
    * Scopes to request during authentication.
-   * Default: "openid profile"
+   * Default: "openid profile offline_access"
+   * offline_access enables refresh token support for persistent login
    */
-  OIDC_SCOPES: z.string().default("openid profile"),
+  OIDC_SCOPES: z.string().default("openid profile offline_access"),
 
   /**
    * OIDC response type used during authorization.
