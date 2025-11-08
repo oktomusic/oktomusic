@@ -18,6 +18,7 @@ interface OidcCallbackResult {
   tokens: client.TokenEndpointResponse;
   profile: client.UserInfoResponse;
   userId: string;
+  tokenIssuedAt: number;
 }
 
 @Injectable()
@@ -193,6 +194,7 @@ export class OidcService implements OnModuleInit {
       tokens,
       profile,
       userId,
+      tokenIssuedAt: Math.floor(Date.now() / 1000),
     };
   }
 
@@ -238,6 +240,7 @@ export class OidcService implements OnModuleInit {
       tokens: newTokens,
       profile: newProfile,
       userId,
+      tokenIssuedAt: Math.floor(Date.now() / 1000),
     };
   }
 
