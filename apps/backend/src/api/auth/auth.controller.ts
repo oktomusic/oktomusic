@@ -91,6 +91,7 @@ export class AuthController {
       tokens: result.tokens,
       profile: result.profile,
       userId: result.userId,
+      tokenIssuedAt: result.tokenIssuedAt,
     };
 
     return { url: "/", statusCode: HttpStatus.FOUND };

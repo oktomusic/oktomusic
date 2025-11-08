@@ -26,25 +26,23 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException("Not authenticated");
     }
 
-    const { userId, tokens } = request.session.oidc.session;
+    const { userId, tokens, tokenIssuedAt } = request.session.oidc.session;
 
     if (!userId) {
       throw new UnauthorizedException("User ID not found in session");
     }
 
     // Check if access token is expired or about to expire (within 5 minutes)
-    // tokens.claims() is available when tokens contain an ID token
-    if ("claims" in tokens && typeof tokens.claims === "function") {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
-      const claims = (tokens as any).claims();
+    // Use expires_in from token response and tokenIssuedAt timestamp
+    if (tokens.expires_in && tokenIssuedAt) {
       const now = Math.floor(Date.now() / 1000);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const expiresAt = claims?.exp as number | undefined;
+      const expiresAt = tokenIssuedAt + tokens.expires_in;
+      const secondsUntilExpiry = expiresAt - now;
 
-      if (expiresAt && expiresAt - now < 300) {
+      if (secondsUntilExpiry < 300) {
         // Token expires in less than 5 minutes
         this.logger.log(
-          `Access token expires in ${expiresAt - now} seconds, refreshing...`,
+          `Access token expires in ${secondsUntilExpiry} seconds, refreshing...`,
         );
 
         try {

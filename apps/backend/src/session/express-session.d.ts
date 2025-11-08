@@ -14,6 +14,11 @@ declare module "express-session" {
         tokens: client.TokenEndpointResponse;
         profile: client.UserInfoResponse;
         userId: string;
+        /**
+         * Unix timestamp (seconds) when the tokens were issued or last refreshed.
+         * Used with tokens.expires_in to determine token expiration.
+         */
+        tokenIssuedAt: number;
       };
     };
   }
