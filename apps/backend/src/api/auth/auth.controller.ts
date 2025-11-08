@@ -30,7 +30,8 @@ export class AuthController {
   async login(@Req() req: Request): Promise<HttpRedirectResponse> {
     const generated = await this.oidcService.generateAuthUrl();
 
-    req.session.oidc = {
+    if (!req.session.oidc) req.session.oidc = {};
+    req.session.oidc.login = {
       code_verifier: generated.code_verifier,
       state: generated.state,
       nonce: generated.nonce,
@@ -51,13 +52,23 @@ export class AuthController {
       req.protocol + "://" + req.get("host") + req.originalUrl,
     );
 
-    if (!req.session.oidc) {
+    if (!req.session.oidc?.login) {
       throw new InternalServerErrorException("OIDC session data not found");
     }
 
-    const { code_verifier, state, nonce } = req.session.oidc;
+    const { code_verifier, state, nonce } = req.session.oidc.login;
 
-    await this.oidcService.callback(currentUrl, state, code_verifier, nonce);
+    const result = await this.oidcService.callback(
+      currentUrl,
+      state,
+      code_verifier,
+      nonce,
+    );
+
+    req.session.oidc.session = {
+      tokens: result.tokens,
+      profile: result.profile,
+    };
 
     return { url: "/", statusCode: HttpStatus.FOUND };
   }

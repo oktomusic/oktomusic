@@ -12,6 +12,11 @@ interface OidcGeneratedUrl {
   nonce: string;
 }
 
+interface OidcCallbackResult {
+  tokens: client.TokenEndpointResponse;
+  profile: client.UserInfoResponse;
+}
+
 @Injectable()
 export class OidcService implements OnModuleInit {
   private readonly logger = new Logger(OidcService.name);
@@ -82,7 +87,7 @@ export class OidcService implements OnModuleInit {
     state: string,
     code_verifier: string,
     nonce: string,
-  ) {
+  ): Promise<OidcCallbackResult> {
     const tokens = await client.authorizationCodeGrant(
       this.config,
       currentUrl,
@@ -115,5 +120,10 @@ export class OidcService implements OnModuleInit {
     );
 
     console.log("User profile:", profile);
+
+    return {
+      tokens,
+      profile,
+    };
   }
 }
