@@ -10,6 +10,8 @@ import { ApiResolver } from "./api.resolver";
 import { PrismaModule } from "../db/prisma.module";
 import { AuthController } from "./auth/auth.controller";
 import { OidcService } from "../oidc/oidc.service";
+import { AuthGuard } from "../common/guards/auth.guard";
+import { AdminGuard } from "../common/guards/admin.guard";
 
 @Module({
   imports: [
@@ -24,6 +26,7 @@ import { OidcService } from "../oidc/oidc.service";
     }),
   ],
   controllers: [ApiController, AuthController],
-  providers: [ApiService, ApiResolver, OidcService],
+  providers: [ApiService, ApiResolver, OidcService, AuthGuard, AdminGuard],
+  exports: [AuthGuard, AdminGuard],
 })
 export class ApiModule {}
