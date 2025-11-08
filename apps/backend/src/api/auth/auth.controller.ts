@@ -7,7 +7,12 @@ import {
   Redirect,
   Req,
 } from "@nestjs/common";
-import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import type { Request } from "express";
 
@@ -25,6 +30,14 @@ export class AuthController {
     summary: "Initiate OIDC login flow",
     description:
       "Generates an authorization URL and stores necessary state for the OIDC callback",
+  })
+  @ApiResponse({
+    status: HttpStatus.FOUND,
+    description: "Redirects to the OIDC provider's authorization endpoint",
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: "Missing or invalid session state for OIDC flow",
   })
   @Redirect()
   async login(@Req() req: Request): Promise<HttpRedirectResponse> {
@@ -44,7 +57,16 @@ export class AuthController {
   @ApiOperation({
     summary: "Handle OIDC callback",
     description:
-      "Receives the authorization code from the OIDC provider and exchanges it for tokens",
+      "Receives the authorization code from the OIDC provider and exchanges it for tokens.",
+  })
+  @ApiResponse({
+    status: HttpStatus.FOUND,
+    description:
+      "Redirects to application root after successful authentication",
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: "Missing or invalid session state for OIDC flow",
   })
   @Redirect()
   async callback(@Req() req: Request): Promise<HttpRedirectResponse> {
