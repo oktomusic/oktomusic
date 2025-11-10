@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-FROM --platform=$BUILDPLATFORM node:22-alpine AS builder
+FROM --platform=$BUILDPLATFORM node:24-alpine AS builder
 
 LABEL org.opencontainers.image.title="Oktomusic"
 LABEL org.opencontainers.image.description="Music streaming server"
@@ -52,7 +52,7 @@ RUN pnpm run --filter @oktomusic/backend build
 RUN mkdir -p apps/backend/dist/public && \
     cp -r apps/frontend/dist/. apps/backend/dist/public/
 
-FROM node:22-alpine AS production
+FROM node:24-alpine AS production
 
 RUN corepack enable pnpm
 

@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-FROM --platform=$BUILDPLATFORM node:22-alpine AS builder
+FROM --platform=$BUILDPLATFORM node:24-alpine AS builder
 
 LABEL org.opencontainers.image.title="Oktomusic Website"
 LABEL org.opencontainers.image.description="Music streaming server"
