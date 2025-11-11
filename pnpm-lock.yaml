@@ -124,6 +124,9 @@ importers:
       '@types/hbs':
         specifier: ^4.0.5
         version: 4.0.5
+      '@valkey/valkey-glide':
+        specifier: ^2.1.2
+        version: 2.1.2
       cookie-parser:
         specifier: ^1.4.7
         version: 1.4.7
@@ -2501,6 +2504,40 @@ packages:
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
 
+  '@valkey/valkey-glide-darwin-arm64@2.1.2':
+    resolution: {integrity: sha512-y5YORuqFivs+CMIEvAE1NHYqkga67dAE0+6h4a+w5MHhHAGK6qCI+8aBKQGC5nWBGGcze2uvFIckwFK3Ml+o1Q==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@valkey/valkey-glide-darwin-x64@2.1.2':
+    resolution: {integrity: sha512-CZLrKDKg+KC0WwvRXa3E7HXib/8KM506iTQKCkrH6rpL6lEa2b4Ljd3brWXhr6dRJEW3HcTOFSnUxpzKjFtV/Q==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@valkey/valkey-glide-linux-arm64-gnu@2.1.2':
+    resolution: {integrity: sha512-0oyFEPLlhyCpQBJqvQEOqMmiGFCY0PjOZtcObB98hAaBljhxGYodxoLYkJsEJ7CilXW4mbiNyDRjLFxk78/Gng==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@valkey/valkey-glide-linux-arm64-musl@2.1.2':
+    resolution: {integrity: sha512-kQBT5QsIxGxYE1+gO5rOrk9eDo836XoWJcrAzWQP2TwTRn/2SMbGNUWP2sqAHUZ+hZX4gjdHaPemI73IJCaciw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@valkey/valkey-glide-linux-x64-gnu@2.1.2':
+    resolution: {integrity: sha512-nbgRXChmFze1u7tKXwg3vyeoQpwKw/UgcEHEnr4xX8xa54AS0lLs98zhz7NC+xInxEOX94/PYumiCR2ANXoDNw==}
+    cpu: [x64]
+    os: [linux]
+
+  '@valkey/valkey-glide-linux-x64-musl@2.1.2':
+    resolution: {integrity: sha512-niY2wI+7y2//qWEK59TER6GaS4k6SJPqwZA6AMG3Vnw8IRXaDwdsqdeBKvQzyeE4juU2m1g42+UJqInYYhinJQ==}
+    cpu: [x64]
+    os: [linux]
+
+  '@valkey/valkey-glide@2.1.2':
+    resolution: {integrity: sha512-PQoTWxapmLVBz8PwxHCwfMb9flJB6r0nyqlpDYo9gBMNoPU2tdHEPAlQm126GCuLCGFp67M89qEUh711KEoGFw==}
+    engines: {node: '>=16'}
+
   '@vitejs/plugin-react@5.1.0':
     resolution: {integrity: sha512-4LuWrg7EKWgQaMJfnN+wcmbAW+VSsCmqGohftWjuct47bv8uE4n/nPpq4XjJPsxgq00GGG5J8dvBczp8uxScew==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -4503,6 +4540,9 @@ packages:
   long@4.0.0:
     resolution: {integrity: sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==}
 
+  long@5.3.2:
+    resolution: {integrity: sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA==}
+
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -5005,6 +5045,10 @@ packages:
 
   property-information@7.1.0:
     resolution: {integrity: sha512-TwEZ+X+yCJmYfL7TPUOcvBZ4QfoT5YenQiJuX//0th53DE6w0xxLEtfK3iyryQFddXuvkIk51EEgrJQ0WJkOmQ==}
+
+  protobufjs@7.5.4:
+    resolution: {integrity: sha512-CvexbZtbov6jW2eXAvLukXjXUW1TzFaivC46BpWc/3BpcCysb5Vffu+B3XHMm8lVEuy2Mm4XGex8hBSg1yapPg==}
+    engines: {node: '>=12.0.0'}
 
   proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
@@ -8502,6 +8546,36 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
+  '@valkey/valkey-glide-darwin-arm64@2.1.2':
+    optional: true
+
+  '@valkey/valkey-glide-darwin-x64@2.1.2':
+    optional: true
+
+  '@valkey/valkey-glide-linux-arm64-gnu@2.1.2':
+    optional: true
+
+  '@valkey/valkey-glide-linux-arm64-musl@2.1.2':
+    optional: true
+
+  '@valkey/valkey-glide-linux-x64-gnu@2.1.2':
+    optional: true
+
+  '@valkey/valkey-glide-linux-x64-musl@2.1.2':
+    optional: true
+
+  '@valkey/valkey-glide@2.1.2':
+    dependencies:
+      long: 5.3.2
+      protobufjs: 7.5.4
+    optionalDependencies:
+      '@valkey/valkey-glide-darwin-arm64': 2.1.2
+      '@valkey/valkey-glide-darwin-x64': 2.1.2
+      '@valkey/valkey-glide-linux-arm64-gnu': 2.1.2
+      '@valkey/valkey-glide-linux-arm64-musl': 2.1.2
+      '@valkey/valkey-glide-linux-x64-gnu': 2.1.2
+      '@valkey/valkey-glide-linux-x64-musl': 2.1.2
+
   '@vitejs/plugin-react@5.1.0(vite@7.2.0(@types/node@24.9.2)(jiti@2.6.1)(terser@5.44.0)(yaml@2.8.1))':
     dependencies:
       '@babel/core': 7.28.4
@@ -10751,6 +10825,8 @@ snapshots:
 
   long@4.0.0: {}
 
+  long@5.3.2: {}
+
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
@@ -11186,6 +11262,21 @@ snapshots:
       react-is: 16.13.1
 
   property-information@7.1.0: {}
+
+  protobufjs@7.5.4:
+    dependencies:
+      '@protobufjs/aspromise': 1.1.2
+      '@protobufjs/base64': 1.1.2
+      '@protobufjs/codegen': 2.0.4
+      '@protobufjs/eventemitter': 1.1.0
+      '@protobufjs/fetch': 1.1.0
+      '@protobufjs/float': 1.0.2
+      '@protobufjs/inquire': 1.1.0
+      '@protobufjs/path': 1.1.2
+      '@protobufjs/pool': 1.1.0
+      '@protobufjs/utf8': 1.1.0
+      '@types/node': 24.9.2
+      long: 5.3.2
 
   proxy-addr@2.0.7:
     dependencies:
