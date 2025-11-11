@@ -35,10 +35,6 @@ async function bootstrap() {
     .setDescription("Oktomusic API")
     .setVersion("0.0.1")
     .setOpenAPIVersion("3.1.0")
-    .addSecurity("oidc", {
-      type: "openIdConnect",
-      openIdConnectUrl: `${configService.getOrThrow<string>("oidc.issuer")}/.well-known/openid-configuration`,
-    })
     .addSecurity("session", {
       type: "apiKey",
       in: "cookie",
