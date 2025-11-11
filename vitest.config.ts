@@ -6,6 +6,7 @@ export default defineConfig({
       "./apps/backend/vitest.config.ts",
       "./apps/backend/vitest.e2e.config.ts",
       "./apps/frontend/vitest.config.ts",
+      "./packages/metaflac-parser/vitest.config.ts",
     ],
   },
 });

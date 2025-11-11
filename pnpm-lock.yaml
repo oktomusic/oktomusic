@@ -335,6 +335,15 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/metaflac-parser:
+    devDependencies:
+      '@types/node':
+        specifier: ^24.9.2
+        version: 24.9.2
+      tsdown:
+        specifier: ^0.15.9
+        version: 0.15.10(typescript@5.9.3)
+
   packages/vite-sri-manifest:
     devDependencies:
       '@types/node':
@@ -4443,6 +4452,7 @@ packages:
     resolution: {integrity: sha512-Quz3MvAwHxVYNXsOByL7xI5EB2WYOeFswqaHIA3qOK3isRWTxiplBEocmmru6XmxDB2L7jDNYtYA4FyimoAFEw==}
     engines: {node: '>=8.17.0'}
     hasBin: true
+    bundledDependencies: []
 
   jsonfile@6.2.0:
     resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}

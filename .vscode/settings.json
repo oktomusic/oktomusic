@@ -26,6 +26,7 @@
   },
   "vitest.enable": true,
   "vitest.commandLine": "pnpm vitest",
+  "vitest.maximumConfigs": 10,
   "chat.agent.enabled": true,
   "chat.tools.terminal.autoApprove": {
     // Approved project-specific commands

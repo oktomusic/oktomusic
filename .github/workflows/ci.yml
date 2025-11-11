@@ -29,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - pkg-lyrics
+      - pkg-metaflac-parser
       - pkg-api-schemas
     steps:
       - name: Checkout repository
@@ -118,6 +119,27 @@ jobs:
       - name: Lint
         run: |
           pnpm --filter "@oktomusic/lyrics" run lint
+
+  pkg-metaflac-parser:
+    name: "@oktomusic/metaflac-parser"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build
+        run: pnpm --filter "@oktomusic/metaflac-parser" build
+
+      - name: Lint
+        run: |
+          pnpm --filter "@oktomusic/metaflac-parser" run lint
+
+      - name: Tests
+        run: |
+          pnpm --filter "@oktomusic/metaflac-parser" run test
 
   pkg-api-schemas:
     name: "@oktomusic/api-schemas"

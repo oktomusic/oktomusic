@@ -32,6 +32,7 @@ export default defineConfig([
     "**/dist",
     "**/cache",
     "**/tsdown.config.ts",
+    "packages/**/vitest.config.ts",
     "**/generated/prisma",
     "coverage",
   ]),
@@ -126,6 +127,22 @@ export default defineConfig([
     languageOptions: {
       parserOptions: {
         project: "./packages/lyrics/tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+
+  // @oktomusic/metaflac-parser (tsdown)
+  {
+    files: ["packages/metaflac-parser/**/*.ts"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
+      prettier,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: "./packages/metaflac-parser/tsconfig.json",
         tsconfigRootDir: import.meta.dirname,
       },
     },
