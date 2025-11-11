@@ -38,6 +38,11 @@ async function bootstrap() {
     .addSecurity("oidc", {
       type: "openIdConnect",
       openIdConnectUrl: `${configService.getOrThrow<string>("oidc.issuer")}/.well-known/openid-configuration`,
+    })
+    .addSecurity("session", {
+      type: "apiKey",
+      in: "cookie",
+      name: "connect.sid",
     });
 
   const document = SwaggerModule.createDocument(app, swaggerConfig.build());
