@@ -4,21 +4,24 @@ layout: home
 
 hero:
   name: "Oktomusic"
-  text: "A VitePress Site"
-  tagline: WIP documentation
+  text: "WIP"
+  tagline: Opinionated self-hosted music streaming server
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Get Started
+      link: /guide/installation
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Design
+      link: /design
+    - theme: alt
+      text: GitHub
+      link: https://github.com/oktomusic/oktomusic
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Open Source
+    details: AGPL-licensed, exclusively relying on state of the art open-source software and codecs
+  - title: Web Based
+    details: Web client, will all features from a desktop app, running in your browser
   - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
