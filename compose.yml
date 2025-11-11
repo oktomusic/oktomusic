@@ -16,6 +16,34 @@ services:
       timeout: 5s
       retries: 5
 
+  valkey:
+    image: valkey/valkey:9-alpine
+    container_name: oktomusic-valkey
+    environment:
+      - VALKEY_PASSWORD=oktomusic
+    command:
+      - valkey-server
+      - "--port"
+      - "6379"
+      - "--requirepass"
+      - "oktomusic"
+      - "--dir"
+      - "/data"
+      - "--appendonly"
+      - "yes"
+      - "--appendfilename"
+      - "appendonly.aof"
+    ports:
+      - "6379:6379"
+    volumes:
+      - valkey_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli -a $VALKEY_PASSWORD ping | grep PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.7
     container_name: oktomusic-keycloak
@@ -44,10 +72,15 @@ services:
       DATABASE_URL: postgresql://oktomusic:oktomusic@postgres:5432/oktomusic
       NODE_ENV: production
       PORT: 3000
+      VALKEY_HOST: valkey
+      VALKEY_PORT: 6379
+      VALKEY_PASSWORD: oktomusic
     ports:
       - "3000:3000"
     depends_on:
       postgres:
+        condition: service_healthy
+      valkey:
         condition: service_healthy
     healthcheck:
       test:
@@ -62,3 +95,4 @@ services:
 
 volumes:
   postgres_data:
+  valkey_data:

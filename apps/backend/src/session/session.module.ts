@@ -1,20 +1,37 @@
-import { Inject, MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import {
+  Inject,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  Optional,
+} from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
 import session from "express-session";
 
 import appConfig from "../config/definitions/app.config";
+import { ValkeyModule } from "../db/valkey.module";
+import { ValkeyService } from "../db/valkey.service";
 
-@Module({})
+import { ValkeyStore } from "./valkey-store";
+
+// Toggle whether sessions are stored in Valkey via Glide or in-memory.
+// In production you typically want Valkey enabled for horizontal scalability.
+const useValkeyStore = true;
+
+@Module({ imports: useValkeyStore ? [ValkeyModule] : [] })
 export class SessionModule implements NestModule {
   constructor(
     @Inject(appConfig.KEY)
     private readonly appConf: ConfigType<typeof appConfig>,
+    @Optional() private readonly valkeyService?: ValkeyService,
   ) {}
 
   configure(consumer: MiddlewareConsumer) {
     const sessionSecret = this.appConf.sessionSecret;
-
-    const store: session.Store = new session.MemoryStore();
+    const store: session.Store =
+      useValkeyStore && this.valkeyService
+        ? new ValkeyStore(this.valkeyService.getClient())
+        : new session.MemoryStore();
 
     consumer
       .apply(

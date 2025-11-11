@@ -40,6 +40,7 @@
     "@oktomusic/api-schemas": "workspace:^",
     "@prisma/client": "6.18.0",
     "@types/hbs": "^4.0.5",
+    "@valkey/valkey-glide": "^2.1.2",
     "cookie-parser": "^1.4.7",
     "express-session": "^1.18.2",
     "graphql": "^16.12.0",
