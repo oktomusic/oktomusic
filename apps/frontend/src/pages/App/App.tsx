@@ -50,10 +50,15 @@ function App() {
 
         <div style={{ marginTop: "20px" }}>
           {authSession.authenticated ? (
-            <div>
-              <p style={{ color: "green" }}>✓ Logged in</p>
-              <Link to="/dashboard">Go to Dashboard</Link>
-            </div>
+            <>
+              <div>
+                <p style={{ color: "green" }}>✓ Logged in</p>
+                <Link to="/dashboard">Go to Dashboard</Link>
+              </div>
+              <div>
+                <a href="/api/auth/logout">Logout</a>
+              </div>
+            </>
           ) : (
             <div>
               <p>Not logged in</p>
