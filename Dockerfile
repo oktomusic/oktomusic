@@ -52,7 +52,7 @@ RUN pnpm run --filter @oktomusic/backend build
 RUN mkdir -p apps/backend/dist/public && \
   cp -r apps/frontend/dist/. apps/backend/dist/public/
 
-FROM ghcr.io/oktomusic/ffmpeg-custom:0.1.0 AS ffmpeg
+FROM ghcr.io/oktomusic/ffmpeg-custom:0.2.0 AS ffmpeg
 
 FROM node:24-alpine AS production
 
@@ -66,6 +66,7 @@ WORKDIR /usr/src/app
 
 COPY --from=ffmpeg /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
 COPY --from=ffmpeg /usr/local/bin/ffprobe /usr/local/bin/ffprobe
+COPY --from=ffmpeg /usr/local/bin/metaflac /usr/local/bin/metaflac
 
 # Copy package files for production dependencies
 COPY --from=builder /usr/src/app/pnpm-workspace.yaml /usr/src/app/package.json /usr/src/app/pnpm-lock.yaml ./
