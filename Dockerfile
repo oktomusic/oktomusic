@@ -50,7 +50,9 @@ RUN pnpm run --filter @oktomusic/backend build
 
 # Copy frontend dist to backend's public directory (including hidden .vite directory)
 RUN mkdir -p apps/backend/dist/public && \
-    cp -r apps/frontend/dist/. apps/backend/dist/public/
+  cp -r apps/frontend/dist/. apps/backend/dist/public/
+
+FROM ghcr.io/oktomusic/ffmpeg-custom:0.1.0 AS ffmpeg
 
 FROM node:24-alpine AS production
 
@@ -62,6 +64,9 @@ EXPOSE 3000
 
 WORKDIR /usr/src/app
 
+COPY --from=ffmpeg /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
+COPY --from=ffmpeg /usr/local/bin/ffprobe /usr/local/bin/ffprobe
+
 # Copy package files for production dependencies
 COPY --from=builder /usr/src/app/pnpm-workspace.yaml /usr/src/app/package.json /usr/src/app/pnpm-lock.yaml ./
 COPY --from=builder /usr/src/app/apps/backend/package.json ./apps/backend/
@@ -69,9 +74,9 @@ COPY --from=builder /usr/src/app/packages/api-schemas/package.json ./packages/ap
 
 # Install production dependencies only
 RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
-    pnpm install --frozen-lockfile --prod \
-    --filter @oktomusic/api-schemas... \
-    --filter @oktomusic/backend...
+  pnpm install --frozen-lockfile --prod \
+  --filter @oktomusic/api-schemas... \
+  --filter @oktomusic/backend...
 
 # Copy Prisma schema and migrations for runtime migration
 COPY --from=builder /usr/src/app/apps/backend/prisma ./apps/backend/prisma
@@ -101,5 +106,5 @@ EOF
 ENTRYPOINT ["/entrypoint.sh"]
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=5 \
-    CMD wget -qO- http://localhost:3000/api/health >/dev/null 2>&1 || exit 1
+  CMD wget -qO- http://localhost:3000/api/health >/dev/null 2>&1 || exit 1
 
