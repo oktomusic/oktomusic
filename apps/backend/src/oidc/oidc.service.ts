@@ -6,6 +6,7 @@ import * as client from "openid-client";
 import oidcConfig from "../config/definitions/oidc.config";
 import { PrismaService } from "../db/prisma.service";
 import { Role } from "../generated/prisma";
+import getByPath from "../utils/json_path";
 
 interface OidcGeneratedUrl {
   url: URL;
@@ -64,16 +65,15 @@ export class OidcService implements OnModuleInit {
   private extractRoleFromIntrospection(
     introspection: client.IntrospectionResponse,
   ): Role {
-    const resourceAccess = introspection.resource_access as Record<
-      string,
-      { roles?: string[] }
-    >;
+    const roles = getByPath(
+      introspection as unknown as Record<string, unknown>,
+      this.oidcConf.rolesPath,
+      { client_id: this.oidcConf.clientId },
+    );
 
-    if (!resourceAccess) {
-      return Role.USER;
-    }
+    const clientRoles = Array.isArray(roles) ? roles : [];
 
-    const clientRoles = resourceAccess[this.oidcConf.clientId]?.roles || [];
+    console.log("Extracted client roles:", clientRoles);
 
     // Admin role inherits from user, so check admin first
     if (clientRoles.includes("admin")) {
@@ -229,9 +229,7 @@ export class OidcService implements OnModuleInit {
     const role = this.extractRoleFromIntrospection(introspection);
 
     const username =
-      (newProfile.preferred_username as string) ||
-      newProfile.sub ||
-      claims.sub;
+      (newProfile.preferred_username as string) || newProfile.sub || claims.sub;
 
     // Update user in database with potentially new role/username
     const userId = await this.syncUser(claims.sub, username, role);

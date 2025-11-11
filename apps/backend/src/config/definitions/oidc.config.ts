@@ -59,6 +59,16 @@ const OidcConfigSchema = z.object({
    * Helps avoid excessive requests to the OIDC provider.
    */
   OIDC_JWKS_CACHE_TTL: z.coerce.number().default(3600),
+
+  /**
+   * JSON path to extract user roles from the access token response.
+   *
+   * Support template placeholders like <client_id> to dynamically
+   * insert the client ID into the path.
+   *
+   * - Keycloak example: "resource_access.<client_id>.roles"
+   */
+  OIDC_ROLES_PATH: z.string().default("resource_access.<client_id>.roles"),
 });
 
 export interface OidcConfig {
@@ -80,6 +90,8 @@ export interface OidcConfig {
   autoDiscovery: boolean;
   /** JWKS cache time-to-live, in seconds */
   jwksCacheTtl: number;
+  /** JSON path to extract user roles from token response */
+  rolesPath: string;
 }
 
 export default registerAs("oidc", (): OidcConfig => {
@@ -94,5 +106,6 @@ export default registerAs("oidc", (): OidcConfig => {
     responseType: parsed.OIDC_RESPONSE_TYPE,
     autoDiscovery: parsed.OIDC_AUTO_DISCOVERY,
     jwksCacheTtl: parsed.OIDC_JWKS_CACHE_TTL,
+    rolesPath: parsed.OIDC_ROLES_PATH,
   } as const;
 });
