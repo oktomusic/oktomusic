@@ -1,6 +1,11 @@
 import { Controller, Get, Inject, Req, UseGuards } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
-import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import {
+  ApiOkResponse,
+  ApiSecurity,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
 import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import type { Request } from "express";
 
@@ -39,14 +44,18 @@ export class ApiController {
 
   @Get("users")
   @UseGuards(AdminGuard)
+  @ApiSecurity("session")
   @ApiOkResponse({ description: "List users" })
+  @ApiUnauthorizedResponse({ description: "Not authenticated" })
   getUsers(): Promise<User[]> {
     return this.apiService.listUsers();
   }
 
   @Get("me")
   @UseGuards(AuthGuard)
+  @ApiSecurity("session")
   @ApiOkResponse({ description: "Get current user profile" })
+  @ApiUnauthorizedResponse({ description: "Not authenticated" })
   getMe(@Req() req: Request): User | undefined {
     return req.user;
   }
