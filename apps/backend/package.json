@@ -50,7 +50,7 @@
     "hbs": "^4.2.0",
     "http-proxy": "^1.18.1",
     "openid-client": "^6.8.1",
-    "prisma": "^6.18.0",
+    "prisma": "^6.19.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "valkey-glide-ioredis-adapter": "^0.4.0",
