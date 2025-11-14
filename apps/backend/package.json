@@ -39,7 +39,7 @@
     "@nestjs/swagger": "^11.2.1",
     "@nestjs/terminus": "^11.0.0",
     "@oktomusic/api-schemas": "workspace:^",
-    "@prisma/client": "6.18.0",
+    "@prisma/client": "6.19.0",
     "@types/hbs": "^4.0.5",
     "@valkey/valkey-glide": "^2.1.2",
     "bullmq": "^5.63.1",
