@@ -2,29 +2,30 @@ packages:
   - apps/*
   - packages/*
 
+catalogs:
+  default:
+    '@types/node': ^24.9.2
+    tsdown: ^0.15.9
+    typescript: ^5.9.3
+
 linkWorkspacePackages: true
 
 onlyBuiltDependencies:
-  - "@apollo/protobufjs"
-  - "@nestjs/core"
-  - "@prisma/client"
-  - "@prisma/engines"
-  - "@scarf/scarf"
+  - '@apollo/protobufjs'
+  - '@nestjs/core'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@scarf/scarf'
   - esbuild
+  - msgpackr-extract
   - prisma
   - sharp
   - unrs-resolver
   - workerd
 
 overrides:
-  "@types/node": catalog:default
+  '@types/node': catalog:default
   tsdown: catalog:default
   typescript: catalog:default
-
-catalogs:
-  default:
-    "@types/node": ^24.9.2
-    typescript: ^5.9.3
-    tsdown: ^0.15.9
 
 sharedWorkspaceLockfile: true
