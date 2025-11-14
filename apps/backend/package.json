@@ -30,6 +30,7 @@
     "@apollo/server": "^5.1.0",
     "@as-integrations/express5": "^1.1.2",
     "@nestjs/apollo": "^13.2.1",
+    "@nestjs/bullmq": "^11.0.4",
     "@nestjs/common": "^11.1.8",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.1.8",
@@ -41,6 +42,7 @@
     "@prisma/client": "6.18.0",
     "@types/hbs": "^4.0.5",
     "@valkey/valkey-glide": "^2.1.2",
+    "bullmq": "^5.63.1",
     "cookie-parser": "^1.4.7",
     "express-session": "^1.18.2",
     "graphql": "^16.12.0",
@@ -51,6 +53,7 @@
     "prisma": "^6.18.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
+    "valkey-glide-ioredis-adapter": "^0.4.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
