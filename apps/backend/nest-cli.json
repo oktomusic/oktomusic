@@ -17,6 +17,14 @@
         "include": "generated/prisma/**",
         "outDir": "dist"
       }
+    ],
+    "plugins": [
+      {
+        "name": "@nestjs/graphql",
+        "options": {
+          "introspectComments": true
+        }
+      }
     ]
   }
 }
