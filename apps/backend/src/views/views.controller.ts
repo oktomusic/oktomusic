@@ -1,6 +1,6 @@
-import { Controller, Get, Render, Res } from "@nestjs/common";
+import { Controller, Get, Req, Res, Next } from "@nestjs/common";
 import { ApiOperation } from "@nestjs/swagger";
-import type { Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 import { buildViewModel } from "./view-model";
 import { OpenGraphService } from "../common/opengraph/opengraph.service";
@@ -11,21 +11,27 @@ export class ViewsController {
   constructor(private readonly og: OpenGraphService) {}
 
   @Get("*")
-  @Render("index")
   @ApiOperation({
     summary: "Serve SPA",
     description:
       "Serves the Single Page Application with appropriate Open Graph tags. Further routing is handled client-side by react-router.",
   })
-  spa(@Res({ passthrough: true }) res: Response) {
+  spa(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+    if (req.path.startsWith("/api")) {
+      return next();
+    }
+
     const viteManifest = res.locals.viteManifest as ViteManifest | null;
     const assetTags = viteManifest
       ? getAssetTags(viteManifest, "src/main.tsx")
       : undefined;
 
-    return buildViewModel({
-      ogp: this.og.getDefaultTags(),
-      assetTags,
-    });
+    res.render(
+      "index",
+      buildViewModel({
+        ogp: this.og.getDefaultTags(),
+        assetTags,
+      }),
+    );
   }
 }
