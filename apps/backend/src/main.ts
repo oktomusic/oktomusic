@@ -39,7 +39,8 @@ async function bootstrap() {
       type: "apiKey",
       in: "cookie",
       name: "connect.sid",
-    });
+    })
+    .setExternalDoc("GraphQL Playground", "/api/graphql");
 
   const document = SwaggerModule.createDocument(app, swaggerConfig.build());
   SwaggerModule.setup("api/docs", app, document, {
