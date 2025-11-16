@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [
-    // @ts-expect-error Why is this needed????
     react({
       babel: {
         plugins: ["babel-plugin-react-compiler"],

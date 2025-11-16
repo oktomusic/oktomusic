@@ -18,32 +18,32 @@
     "test:debug": "vitest --inspect-brk --inspect --single-thread --no-file-parallelism"
   },
   "dependencies": {
-    "@lingui/detect-locale": "^5.5.2",
+    "@lingui/detect-locale": "^5.6.0",
     "@oktomusic/api-schemas": "workspace:^",
     "axios": "^1.13.2",
     "jotai": "^2.15.1",
     "jotai-devtools": "^0.13.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router": "^7.9.5"
+    "react-router": "^7.9.6"
   },
   "devDependencies": {
-    "@lingui/babel-plugin-lingui-macro": "^5.5.2",
-    "@lingui/cli": "^5.5.2",
-    "@lingui/core": "^5.5.2",
-    "@lingui/react": "^5.5.2",
-    "@lingui/vite-plugin": "^5.5.2",
+    "@lingui/babel-plugin-lingui-macro": "^5.6.0",
+    "@lingui/cli": "^5.6.0",
+    "@lingui/core": "^5.6.0",
+    "@lingui/react": "^5.6.0",
+    "@lingui/vite-plugin": "^5.6.0",
     "@oktomusic/vite-sri-manifest": "workspace:^",
     "@types/node": "catalog:default",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.1.0",
-    "@vitest/coverage-v8": "^4.0.7",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "@vitest/coverage-v8": "^4.0.9",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",
     "globals": "^16.5.0",
-    "jsdom": "^27.1.0",
+    "jsdom": "^27.2.0",
     "typescript": "catalog:default",
-    "vite": "^7.2.0",
-    "vitest": "^4.0.7"
+    "vite": "^7.2.2",
+    "vitest": "^4.0.9"
   }
 }
