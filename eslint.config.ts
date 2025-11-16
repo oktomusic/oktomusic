@@ -64,7 +64,10 @@ export default defineConfig([
   // @oktomusic/frontend (Vite)
   {
     files: ["apps/frontend/**/*.{ts,tsx}"],
-    ignores: ["apps/frontend/src/locales/**"],
+    ignores: [
+      "apps/frontend/src/locales/**",
+      "apps/frontend/src/api/graphql/gql/**",
+    ],
     extends: configsReact,
     languageOptions: {
       globals: { ...globals.node },
@@ -88,6 +91,7 @@ export default defineConfig([
       "apps/frontend/vite.config.ts",
       "apps/frontend/vitest.config.ts",
       "apps/frontend/lingui.config.ts",
+      "apps/frontend/codegen.ts",
     ],
     extends: configBase,
     languageOptions: {

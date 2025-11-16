@@ -2,6 +2,7 @@ apps/backend/dist
 apps/backend/src/generated
 apps/frontend/dist
 apps/frontend/src/locales/**/*.ts
+apps/frontend/src/api/graphql/__generated__
 apps/website/.vitepress/dist
 apps/website/.vitepress/cache
 **/node_modules
