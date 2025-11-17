@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+
 import { registerAs } from "@nestjs/config";
 import z from "zod";
 
@@ -11,6 +14,21 @@ const AppConfigSchema = z.object({
     .enum(["development", "production", "test"])
     .default("development"),
   SESSION_SECRET: z.string().min(1),
+  LIBRARY_PATH: z.string().transform((arg, ctx) => {
+    const libPath = path.resolve(arg);
+    const exist = fs.existsSync(libPath);
+
+    if (!exist) {
+      ctx.issues.push({
+        code: "custom",
+        message: "Not a number",
+        input: libPath,
+      });
+      return z.NEVER;
+    }
+
+    return libPath;
+  }),
 });
 
 export interface AppConfig {
