@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { BullModule } from "@nestjs/bullmq";
 import { ConfigService } from "@nestjs/config";
+import { Redis } from "ioredis";
 import type { RedisClient } from "bullmq";
-import Redis from "valkey-glide-ioredis-adapter";
 
 import type { ValkeyConfig } from "../config/definitions/valkey.config";
 import { IndexingModule } from "./queues/indexing/indexing.module";
@@ -15,14 +15,13 @@ import { IndexingModule } from "./queues/indexing/indexing.module";
         const { valkeyHost, valkeyPort, valkeyPassword } =
           configService.getOrThrow<ValkeyConfig>("valkey");
 
-        const redisOptions = {
-          host: valkeyHost,
-          port: valkeyPort,
-          ...(valkeyPassword ? { password: valkeyPassword } : {}),
-        };
-
         return {
-          connection: new Redis(redisOptions) as unknown as RedisClient,
+          connection: new Redis({
+            host: valkeyHost,
+            port: valkeyPort,
+            password: valkeyPassword ?? undefined,
+            maxRetriesPerRequest: null,
+          }) as unknown as RedisClient,
         };
       },
     }),

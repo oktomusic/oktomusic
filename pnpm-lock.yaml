@@ -151,6 +151,9 @@ importers:
       http-proxy:
         specifier: ^1.18.1
         version: 1.18.1(debug@4.4.3)
+      ioredis:
+        specifier: ^5.8.2
+        version: 5.8.2
       openid-client:
         specifier: ^6.8.1
         version: 6.8.1
