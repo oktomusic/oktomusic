@@ -37,6 +37,7 @@ export interface AppConfig {
   isProd: boolean;
   isTest: boolean;
   sessionSecret: string;
+  libraryPath: string;
 }
 
 export default registerAs("app", (): AppConfig => {
@@ -48,5 +49,6 @@ export default registerAs("app", (): AppConfig => {
     isProd: parsed.NODE_ENV === "production",
     isTest: parsed.NODE_ENV === "test",
     sessionSecret: parsed.SESSION_SECRET,
+    libraryPath: parsed.LIBRARY_PATH,
   } as const;
 });
