@@ -10,7 +10,7 @@ export class IndexingService implements OnModuleInit {
 
   constructor(@InjectQueue("indexing") private indexingQueue: Queue<IndexingJobData>) {}
 
-  async onModuleInit() {
+  onModuleInit() {
     // Add an initial indexing job when the module starts (don't await to avoid blocking)
     this.addFullIndexingJob().catch((error) => {
       this.logger.error(`Failed to add initial indexing job: ${error}`);
