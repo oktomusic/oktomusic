@@ -1,0 +1,12 @@
+{
+  "name": "bullmq-glide-adapter-example",
+  "version": "1.0.0",
+  "description": "Minimal example showing authentication issue with valkey-glide-ioredis-adapter and BullMQ",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bullmq": "^5.63.2",
+    "valkey-glide-ioredis-adapter": "^0.4.0"
+  }
+}
