@@ -1,18 +1,22 @@
 import path from "node:path";
 import fs from "node:fs";
 import { NestFactory } from "@nestjs/core";
+import { ConfigService } from "@nestjs/config";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import type { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
 import { AppModule } from "./app.module";
-import { ConfigService } from "@nestjs/config";
 import { loadManifest, type ViteManifest } from "./utils/vite_manifest";
 
 import { registerViteAssetTagsHelper } from "./views/helpers/viteAssetTags.helper";
 import { registerAssetHelper } from "./views/helpers/asset.helper";
+import { AppConfig } from "./config/definitions/app.config";
 import { HttpConfig } from "./config/definitions/http.config";
+import { ViteConfig } from "./config/definitions/vite.config";
+import { getHelmetConfig } from "./utils/helmet_config";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -22,8 +26,11 @@ async function bootstrap() {
 
   // Get Configuration
   const configService = app.get(ConfigService);
-  const isDev = Boolean(configService.get("app.isDev"));
-  const viteOrigin = configService.get<string | undefined>("vite.origin");
+  const isDev = configService.getOrThrow<AppConfig>("app").isDev;
+  const viteOrigin = configService.getOrThrow<ViteConfig>("vite").origin;
+
+  // Use helmet for security headers
+  app.use(helmet(getHelmetConfig(isDev, viteOrigin)));
 
   // Setup Swagger
   const swaggerConfig = new DocumentBuilder()
