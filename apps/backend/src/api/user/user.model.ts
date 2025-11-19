@@ -1,7 +1,7 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { GraphQLISODateTime } from "@nestjs/graphql";
 
-import { Role } from "../../generated/prisma";
+import { Role } from "../../generated/client";
 
 registerEnumType(Role, { name: "Role" });
 

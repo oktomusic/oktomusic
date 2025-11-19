@@ -6,7 +6,7 @@ import {
 } from "@nestjs/common";
 import type { Request } from "express";
 
-import { Role } from "../../generated/prisma";
+import { Role } from "../../generated/client";
 
 import { AuthGuard } from "./auth.guard";
 
