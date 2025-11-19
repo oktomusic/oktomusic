@@ -49,7 +49,6 @@
     "handlebars": "^4.7.8",
     "hbs": "^4.2.0",
     "http-proxy": "^1.18.1",
-    "ioredis": "^5.8.2",
     "openid-client": "^6.8.1",
     "prisma": "^6.19.0",
     "reflect-metadata": "^0.2.2",
