@@ -56,6 +56,9 @@ function App() {
                 <Link to="/dashboard">Go to Dashboard</Link>
               </div>
               <div>
+                <Link to="/player">Player</Link>
+              </div>
+              <div>
                 <a href="/api/auth/logout">Logout</a>
               </div>
             </>
