@@ -15,11 +15,16 @@ import { IndexingModule } from "./queues/indexing/indexing.module";
         const { valkeyHost, valkeyPort, valkeyPassword } =
           configService.getOrThrow<ValkeyConfig>("valkey");
 
-        const redisOptions = {
+        const redisOptions: Record<string, unknown> = {
           host: valkeyHost,
           port: valkeyPort,
-          ...(valkeyPassword ? { password: valkeyPassword } : {}),
+          maxRetriesPerRequest: null,
         };
+
+        // Only add password if it's set (not null/undefined)
+        if (valkeyPassword) {
+          redisOptions.password = valkeyPassword;
+        }
 
         return {
           connection: new Redis(redisOptions) as unknown as RedisClient,
