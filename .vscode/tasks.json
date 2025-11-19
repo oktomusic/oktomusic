@@ -18,6 +18,20 @@
       "group": "build"
     },
     {
+      "label": "backend: dev",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/backend start:dev",
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "frontend: dev",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/frontend dev",
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    },
+    {
       "label": "docker: start",
       "type": "shell",
       "command": "docker compose start postgres valkey",
