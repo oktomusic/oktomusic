@@ -16,6 +16,12 @@
       "isBackground": false,
       "problemMatcher": ["$tsc"],
       "group": "build"
+    },
+    {
+      "label": "docker: start",
+      "type": "shell",
+      "command": "docker compose start postgres valkey",
+      "problemMatcher": []
     }
   ]
 }
