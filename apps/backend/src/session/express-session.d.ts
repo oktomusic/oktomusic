@@ -19,6 +19,11 @@ declare module "express-session" {
          * Used with tokens.expires_in to determine token expiration.
          */
         tokenIssuedAt: number;
+        /**
+         * Unix timestamp (seconds) when the last refresh was attempted.
+         * Used to prevent multiple rapid refresh attempts.
+         */
+        lastRefreshAt?: number;
       };
     };
   }

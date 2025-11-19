@@ -40,16 +40,37 @@ export class GraphqlAuthGuard implements CanActivate {
       const expiresAt = tokenIssuedAt + tokens.expires_in;
       const secondsUntilExpiry = expiresAt - now;
 
-      if (secondsUntilExpiry < 300) {
+      // Check if we recently refreshed (within last 60 seconds)
+      const sessionData = req.session.oidc.session;
+      const lastRefreshAt = sessionData.lastRefreshAt ?? 0;
+      const timeSinceLastRefresh = now - lastRefreshAt;
+
+      if (secondsUntilExpiry < 300 && timeSinceLastRefresh > 60) {
         this.logger.log(
           `Access token expires in ${secondsUntilExpiry} seconds, refreshing...`,
         );
 
         try {
+          // Mark that we're refreshing now to prevent concurrent refreshes
+          req.session.oidc.session.lastRefreshAt = now;
+
           const refreshed = await this.oidcService.refresh(
             req.session.oidc.session,
           );
-          req.session.oidc.session = refreshed;
+          req.session.oidc.session = {
+            ...refreshed,
+            lastRefreshAt: now,
+          };
+
+          // Explicitly save the session to persist the refreshed token
+          // This is necessary because resave: false in session config
+          await new Promise<void>((resolve, reject) => {
+            req.session.save((err) => {
+              if (err) reject(new Error(String(err)));
+              else resolve();
+            });
+          });
+
           this.logger.log("Access token refreshed successfully");
         } catch (error) {
           this.logger.error("Failed to refresh access token", error);

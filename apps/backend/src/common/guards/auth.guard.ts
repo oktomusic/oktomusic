@@ -39,18 +39,39 @@ export class AuthGuard implements CanActivate {
       const expiresAt = tokenIssuedAt + tokens.expires_in;
       const secondsUntilExpiry = expiresAt - now;
 
-      if (secondsUntilExpiry < 300) {
-        // Token expires in less than 5 minutes
+      // Check if we recently refreshed (within last 60 seconds)
+      const sessionData = request.session.oidc.session;
+      const lastRefreshAt = sessionData.lastRefreshAt ?? 0;
+      const timeSinceLastRefresh = now - lastRefreshAt;
+
+      if (secondsUntilExpiry < 300 && timeSinceLastRefresh > 60) {
+        // Token expires in less than 5 minutes and we haven't refreshed recently
         this.logger.log(
           `Access token expires in ${secondsUntilExpiry} seconds, refreshing...`,
         );
 
         try {
+          // Mark that we're refreshing now to prevent concurrent refreshes
+          request.session.oidc.session.lastRefreshAt = now;
+
           // Attempt to refresh the token
           const refreshed = await this.oidcService.refresh(
             request.session.oidc.session,
           );
-          request.session.oidc.session = refreshed;
+          request.session.oidc.session = {
+            ...refreshed,
+            lastRefreshAt: now,
+          };
+
+          // Explicitly save the session to persist the refreshed token
+          // This is necessary because resave: false in session config
+          await new Promise<void>((resolve, reject) => {
+            request.session.save((err) => {
+              if (err) reject(new Error(String(err)));
+              else resolve();
+            });
+          });
+
           this.logger.log("Access token refreshed successfully");
         } catch (error) {
           this.logger.error("Failed to refresh access token", error);
