@@ -56,6 +56,7 @@ RUN pnpm run --filter @oktomusic/api-schemas build
 RUN pnpm run --filter @oktomusic/frontend build
 
 # Build the backend
+ENV DATABASE_URL="postgresql://localhost:5432/oktomusic"
 RUN pnpm run --filter @oktomusic/backend db:generate
 RUN pnpm run --filter @oktomusic/backend build
 
