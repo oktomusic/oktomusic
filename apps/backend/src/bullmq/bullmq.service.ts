@@ -35,4 +35,3 @@ export class BullmqService {
     return this.libraryScanQueue;
   }
 }
-
