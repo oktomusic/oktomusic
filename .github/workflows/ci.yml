@@ -43,6 +43,8 @@ jobs:
 
       - name: Prisma generate
         run: pnpm --filter "@oktomusic/backend" run db:generate
+        env:
+          DATABASE_URL: "postgresql://localhost:5432/oktomusic"
 
       - name: Build
         run: pnpm --filter "@oktomusic/backend" build

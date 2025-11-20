@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { PrismaService } from "../db/prisma.service";
-import type { HelloWorld } from "../generated/prisma";
+import type { HelloWorld } from "../generated/client";
 
 @Injectable()
 export class ApiService {

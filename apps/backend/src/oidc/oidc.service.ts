@@ -5,7 +5,7 @@ import * as client from "openid-client";
 
 import oidcConfig from "../config/definitions/oidc.config";
 import { PrismaService } from "../db/prisma.service";
-import { Role } from "../generated/prisma";
+import { Role } from "../generated/client";
 import getByPath from "../utils/json_path";
 
 interface OidcGeneratedUrl {
