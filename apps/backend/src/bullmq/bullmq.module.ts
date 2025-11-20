@@ -1,10 +1,13 @@
 import { Module } from "@nestjs/common";
 import { BullModule } from "@nestjs/bullmq";
 import { ConfigService } from "@nestjs/config";
-import type { RedisClient } from "bullmq";
-import Redis from "valkey-glide-ioredis-adapter";
+
+import type { ConnectionOptions } from "bullmq";
+import { Redis } from "iovalkey";
 
 import type { ValkeyConfig } from "../config/definitions/valkey.config";
+
+import { LibraryScanProcessor } from "./processors/library-scan.processor";
 
 @Module({
   imports: [
@@ -19,11 +22,15 @@ import type { ValkeyConfig } from "../config/definitions/valkey.config";
             host: valkeyHost,
             port: valkeyPort,
             password: valkeyPassword ?? undefined,
-          }) as unknown as RedisClient,
+          }) as unknown as ConnectionOptions,
         };
       },
     }),
+    BullModule.registerQueue({
+      name: "library-scan",
+    }),
   ],
+  providers: [LibraryScanProcessor],
   exports: [BullModule],
 })
 export class BullmqModule {}
