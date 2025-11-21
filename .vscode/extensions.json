@@ -12,6 +12,7 @@
     "myriad-dreamin.tinymist",
     "graphql.vscode-graphql",
     "prisma.prisma",
-    "pomdtr.excalidraw-editor"
+    "pomdtr.excalidraw-editor",
+    "bradlc.vscode-tailwindcss"
   ]
 }

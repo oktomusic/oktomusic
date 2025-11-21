@@ -11,7 +11,7 @@ import Player from "./pages/Player/Player.tsx";
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
   return (
-    <>
+    <div className="">
       {!supported ? <UnsupportedOverlay missing={missing} /> : null}
       <BrowserRouter>
         <Routes>
@@ -22,6 +22,6 @@ export default function Router() {
           <Route path="*" element={<span>404</span>} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }

@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { lingui } from "@lingui/vite-plugin";
 import manifestSRIPlugin from "@oktomusic/vite-sri-manifest";
 
@@ -14,6 +15,7 @@ export default defineConfig({
         presets: ["jotai/babel/preset"],
       },
     }),
+    tailwindcss(),
     lingui(),
     manifestSRIPlugin(),
   ],

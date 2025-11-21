@@ -92,6 +92,7 @@ export default defineConfig([
       "apps/frontend/vitest.config.ts",
       "apps/frontend/lingui.config.ts",
       "apps/frontend/codegen.ts",
+      "apps/frontend/pwa-assets.config.ts",
     ],
     extends: configBase,
     languageOptions: {

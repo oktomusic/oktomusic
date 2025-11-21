@@ -28,6 +28,7 @@
     "vite.config.ts",
     "vitest.config.ts",
     "lingui.config.ts",
-    "codegen.ts"
+    "codegen.ts",
+    "pwa-assets.config.ts"
   ]
 }
