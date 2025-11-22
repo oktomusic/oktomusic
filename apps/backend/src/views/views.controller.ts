@@ -1,5 +1,5 @@
 import { Controller, Get, Req, Res, Next, Inject } from "@nestjs/common";
-import { ApiOperation } from "@nestjs/swagger";
+import { ApiOkResponse, ApiOperation, ApiProduces } from "@nestjs/swagger";
 import type { NextFunction, Request, Response } from "express";
 
 import { buildViewModel } from "./view-model";
@@ -19,6 +19,15 @@ export class ViewsController {
   ) {}
 
   @Get("/manifest.webmanifest")
+  @ApiOperation({
+    summary: "Get Web App Manifest",
+    description:
+      "Returns the Web App Manifest for PWA support. Customised based on configuration.",
+  })
+  @ApiOkResponse({
+    description:
+      "Manifest JSON used by browsers to install the Oktomusic Progressive Web App.",
+  })
   manifest(): Partial<ManifestOptions> {
     const isDev = this.appConf.isDev;
     const viteOrigin = this.viteConf.origin;
@@ -76,13 +85,36 @@ export class ViewsController {
     };
   }
 
+  @Get("/robots.txt")
+  @ApiOperation({
+    summary: "Get robots.txt",
+    description: "Returns the robots.txt file to disallow all web crawlers.",
+  })
+  @ApiProduces("text/plain")
+  @ApiOkResponse({
+    description: "Plain-text rules instructing crawlers to avoid every path.",
+    schema: {
+      type: "string",
+      example: "User-agent: *\nDisallow: /\n",
+    },
+  })
+  robots(@Res() res: Response) {
+    res.type("text/plain");
+    res.send("User-agent: *\nDisallow: /\n");
+  }
+
   @Get("*")
   @ApiOperation({
     summary: "Serve SPA",
     description:
       "Serves the Single Page Application with appropriate Open Graph tags. Further routing is handled client-side by react-router.",
   })
+  @ApiProduces("text/html")
+  @ApiOkResponse({
+    description: "HTML entrypoint that bootstraps the Oktomusic SPA.",
+  })
   spa(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+    // Hack for GraphQL Playground
     if (req.path.startsWith("/api")) {
       return next();
     }
