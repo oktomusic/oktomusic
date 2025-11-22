@@ -7,6 +7,7 @@
   background-color: var(--color-black);
   -webkit-app-region: drag;
   /* app-region: drag; */
+  user-select: none;
 
   h1 {
     color: var(--color-white);

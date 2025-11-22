@@ -14,7 +14,7 @@ export default function Router() {
   return (
     <>
       <WindowControls />
-      <div className="">
+      <main id="app-shell">
         {!supported ? <UnsupportedOverlay missing={missing} /> : null}
         <BrowserRouter>
           <Routes>
@@ -25,7 +25,7 @@ export default function Router() {
             <Route path="*" element={<span>404</span>} />
           </Routes>
         </BrowserRouter>
-      </div>
+      </main>
     </>
   );
 }

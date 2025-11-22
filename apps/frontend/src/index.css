@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@layer components {
+  #app-shell {
+    box-sizing: border-box;
+    min-height: 100dvh;
+    width: 100%;
+    padding-top: env(titlebar-area-height, 0px);
+    overflow: hidden;
+  }
+}
