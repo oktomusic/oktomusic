@@ -17,8 +17,8 @@ import { AdminGuard } from "../common/guards/admin.guard";
 import { GraphqlAuthGuard } from "../common/guards/graphql-auth.guard";
 import { UserResolver } from "./user/user.resolver";
 import { type AppConfig } from "src/config/definitions/app.config";
-import { MediaController } from './media/media.controller';
-import { MediaService } from './media/media.service';
+import { MediaController } from "./media/media.controller";
+import { MediaService } from "./media/media.service";
 
 @Module({
   imports: [
@@ -30,7 +30,7 @@ import { MediaService } from './media/media.service';
         const isProd = config.getOrThrow<AppConfig>("app").isProd;
         return {
           driver: ApolloDriver,
-          graphiql: true,
+          graphiql: !isProd,
           introspection: true,
           path: "/api/graphql",
           context: ({ req, res }: { req: Request; res: Response }) => ({

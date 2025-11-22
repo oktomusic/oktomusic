@@ -1,43 +1,33 @@
-import { HelmetOptions } from "helmet";
+import type { HelmetOptions } from "helmet";
 
-export function getHelmetConfig(
-  isDev: boolean,
-  viteOrigin?: string,
-): Readonly<HelmetOptions> {
+export function getHelmetConfig(isDev: boolean): Readonly<HelmetOptions> {
+  const contentSecurityPolicy: HelmetOptions["contentSecurityPolicy"] = isDev
+    ? false
+    : {
+        directives: {
+          defaultSrc: ["'none'"],
+          baseUri: ["'none'"],
+          blockAllMixedContent: [],
+          childSrc: ["'none'"],
+          connectSrc: ["'self'"],
+          fontSrc: ["'self'"],
+          formAction: ["'self'"],
+          frameAncestors: ["'none'"],
+          frameSrc: ["'none'"],
+          imgSrc: ["'self'", "data:", "blob:"],
+          manifestSrc: ["'self'"],
+          mediaSrc: ["'self'"],
+          objectSrc: ["'none'"],
+          requireTrustedTypesFor: ["'script'"],
+          scriptSrc: ["'self'"],
+          styleSrc: ["'self'"],
+          upgradeInsecureRequests: [],
+          workerSrc: ["'self'"],
+        },
+      };
+
   return {
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          ...(isDev ? ["'unsafe-inline'"] : []),
-          ...(isDev && viteOrigin ? [viteOrigin] : []),
-        ],
-        styleSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          ...(isDev && viteOrigin ? [viteOrigin] : []),
-        ],
-        connectSrc: [
-          "'self'",
-          ...(isDev && viteOrigin
-            ? [viteOrigin, viteOrigin.replace("http://", "ws://")]
-            : []),
-        ],
-        imgSrc: [
-          "'self'",
-          "data:",
-          "blob:",
-          ...(isDev && viteOrigin ? [viteOrigin] : []),
-        ],
-        fontSrc: ["'self'", ...(isDev ? ["data:"] : [])],
-        objectSrc: ["'none'"],
-        baseUri: ["'self'"],
-        formAction: ["'self'"],
-        frameAncestors: ["'none'"],
-        upgradeInsecureRequests: isDev ? [] : null,
-      },
-    },
+    contentSecurityPolicy,
     strictTransportSecurity: {
       maxAge: 63072000, // 2 years in seconds
       includeSubDomains: true,

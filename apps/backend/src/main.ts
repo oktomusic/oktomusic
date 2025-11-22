@@ -30,7 +30,7 @@ async function bootstrap() {
   const viteOrigin = configService.getOrThrow<ViteConfig>("vite").origin;
 
   // Use helmet for security headers
-  app.use(helmet(getHelmetConfig(isDev, viteOrigin)));
+  app.use(helmet(getHelmetConfig(isDev)));
 
   // Setup Swagger
   const swaggerConfig = new DocumentBuilder()
@@ -51,7 +51,10 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, swaggerConfig.build());
   SwaggerModule.setup("api/docs", app, document, {
-    swaggerOptions: {},
+    ui: isDev,
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
   });
 
   app.enableCors({ origin: false });
