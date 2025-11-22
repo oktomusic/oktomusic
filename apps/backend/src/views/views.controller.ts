@@ -28,8 +28,8 @@ export class ViewsController {
     };
 
     return {
-      name: "Oktomusic",
-      short_name: "Oktomusic",
+      name: "Oktomusic" + (isDev ? " (Dev)" : ""),
+      short_name: "Oktomusic" + (isDev ? " (Dev)" : ""),
       description: "Your personal music streaming server",
       categories: ["music", "entertainment"],
       start_url: "/",
