@@ -10,3 +10,5 @@ If no semantic element is suitable for the content, think about adding a suitabl
 The project aims to follow WCAG 2.2 AAA standards for accessibility. Make sure to test your components with screen readers and keyboard navigation.
 
 Provide alt texts for images, as well as labels for inputs and icon buttons.
+
+The goal is to be able to harden the Content Security Policy (CSP) as much as possible. Avoid using `unsafe-inline` styles and scripts. Use external stylesheets and scripts instead.
