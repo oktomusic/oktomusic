@@ -4,12 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    '@types/node':
-      specifier: ^24.9.2
-      version: 24.9.2
-
 overrides:
   '@types/node': ^24.9.2
   tsdown: ^0.15.9
@@ -341,7 +335,7 @@ importers:
         version: 3.5.24(typescript@5.9.3)
     devDependencies:
       '@types/node':
-        specifier: 'catalog:'
+        specifier: ^24.9.2
         version: 24.9.2
       '@vite-pwa/assets-generator':
         specifier: ^1.0.2
@@ -5719,6 +5713,7 @@ packages:
     resolution: {integrity: sha512-Quz3MvAwHxVYNXsOByL7xI5EB2WYOeFswqaHIA3qOK3isRWTxiplBEocmmru6XmxDB2L7jDNYtYA4FyimoAFEw==}
     engines: {node: '>=8.17.0'}
     hasBin: true
+    bundledDependencies: []
 
   jsonfile@6.2.0:
     resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}
