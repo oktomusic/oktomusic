@@ -3,6 +3,7 @@ import type { ConfigType } from "@nestjs/config";
 
 import * as client from "openid-client";
 
+import appConfig from "../config/definitions/app.config";
 import oidcConfig from "../config/definitions/oidc.config";
 import { PrismaService } from "../db/prisma.service";
 import { Role } from "../generated/prisma";
@@ -30,6 +31,8 @@ export class OidcService implements OnModuleInit {
   constructor(
     @Inject(oidcConfig.KEY)
     private readonly oidcConf: ConfigType<typeof oidcConfig>,
+    @Inject(appConfig.KEY)
+    private readonly appConf: ConfigType<typeof appConfig>,
     private readonly prisma: PrismaService,
   ) {}
 
@@ -39,23 +42,44 @@ export class OidcService implements OnModuleInit {
    * OpenID Connect Discovery: https://openid.net/specs/openid-connect-discovery-1_0.html
    */
   async onModuleInit() {
-    this.logger.log(
-      `Discovering OIDC configuration from ${this.oidcConf.issuer}`,
-    );
+    try {
+      this.logger.log(
+        `Discovering OIDC configuration from ${this.oidcConf.issuer}`,
+      );
 
-    this.config = await client.discovery(
-      new URL(this.oidcConf.issuer + "/.well-known/openid-configuration"),
-      this.oidcConf.clientId,
-      this.oidcConf.clientSecret,
-    );
+      const discoveryUrl = new URL(
+        this.oidcConf.issuer + "/.well-known/openid-configuration",
+      );
 
-    const serverMetadatadata = this.config.serverMetadata();
+      // Allow insecure HTTP requests in development mode
+      const options = this.appConf.isDev
+        ? { execute: [client.allowInsecureRequests] }
+        : undefined;
 
-    if (serverMetadatadata.userinfo_endpoint === undefined) {
-      throw new Error("OIDC provider does not support userinfo endpoint");
+      this.config = await client.discovery(
+        discoveryUrl,
+        this.oidcConf.clientId,
+        this.oidcConf.clientSecret,
+        undefined, // clientAuthentication
+        options,
+      );
+
+      const serverMetadatadata = this.config.serverMetadata();
+
+      if (serverMetadatadata.userinfo_endpoint === undefined) {
+        throw new Error("OIDC provider does not support userinfo endpoint");
+      }
+
+      this.logger.log("OIDC configuration successfully loaded");
+    } catch (error) {
+      this.logger.warn(
+        `Failed to discover OIDC configuration: ${error.message}. Authentication features will not be available.`,
+      );
+      // In development mode, continue without OIDC
+      if (!this.appConf.isDev) {
+        throw error;
+      }
     }
-
-    this.logger.log("OIDC configuration successfully loaded");
   }
 
   /**
