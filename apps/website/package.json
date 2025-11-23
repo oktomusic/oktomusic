@@ -12,6 +12,15 @@
   "license": "AGPL-3.0-only",
   "packageManager": "pnpm@10.23.0",
   "devDependencies": {
-    "vitepress": "2.0.0-alpha.12"
+    "@types/node": "catalog:",
+    "@vite-pwa/assets-generator": "^1.0.2",
+    "@vite-pwa/vitepress": "^1.0.1",
+    "vite": "^7.2.4",
+    "vite-plugin-pwa": "^1.1.0",
+    "vitepress": "2.0.0-alpha.12",
+    "workbox-window": "^7.4.0"
+  },
+  "dependencies": {
+    "vue": "^3.5.24"
   }
 }
