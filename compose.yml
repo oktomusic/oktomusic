@@ -38,7 +38,7 @@ services:
     volumes:
       - valkey_data:/data
     healthcheck:
-      test: ["CMD-SHELL", "valkey-cli -a $VALKEY_PASSWORD ping | grep PONG"]
+      test: ["CMD-SHELL", "valkey-cli -a $$VALKEY_PASSWORD ping | grep PONG"]
       interval: 5s
       timeout: 5s
       retries: 10
