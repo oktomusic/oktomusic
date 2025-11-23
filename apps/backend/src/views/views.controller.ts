@@ -82,6 +82,9 @@ export class ViewsController {
           url: "/appinfo",
         },
       ],
+      launch_handler: {
+        client_mode: "navigate-existing",
+      },
     };
   }
 
