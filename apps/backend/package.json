@@ -50,6 +50,7 @@
     "hbs": "^4.2.0",
     "helmet": "^8.1.0",
     "http-proxy": "^1.18.1",
+    "iovalkey": "^0.3.3",
     "openid-client": "^6.8.1",
     "prisma": "^6.19.0",
     "reflect-metadata": "^0.2.2",
