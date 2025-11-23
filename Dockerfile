@@ -68,8 +68,10 @@ FROM ghcr.io/oktomusic/ffmpeg-custom:0.2.0 AS ffmpeg
 FROM node:24-alpine AS production
 
 RUN corepack enable pnpm
+RUN apk add --no-cache ca-certificates
 
 ENV NODE_ENV=production
+ENV UPDATE_CA=
 
 EXPOSE 3000
 
@@ -108,12 +110,18 @@ RUN <<'EOF'
 cat > /entrypoint.sh <<'SH'
 #!/bin/sh
 set -e
+
+if [ -n "$UPDATE_CA" ]; then
+  echo "Updating CA certificates..."
+  update-ca-certificates
+fi
+
 cd /usr/src/app/apps/backend
 echo "Running Prisma migrations..."
 npx prisma migrate deploy
 echo "Migrations completed successfully"
 cd /usr/src/app
-exec node apps/backend/dist/src/main.js
+exec node --use-system-ca apps/backend/dist/main.js
 SH
 chmod +x /entrypoint.sh
 EOF
