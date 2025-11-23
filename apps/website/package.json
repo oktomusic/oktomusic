@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build",
+    "build": "pnpm generate:pwa-assets && vitepress build",
     "preview": "vitepress preview",
+    "generate:pwa-assets": "pwa-assets-generator --config pwa-assets.config.ts",
     "lint": "pnpm -w exec eslint -c eslint.config.ts --no-error-on-unmatched-pattern apps/website",
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --no-error-on-unmatched-pattern --fix apps/website"
   },

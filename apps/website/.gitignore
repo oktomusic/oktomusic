@@ -1,2 +1,7 @@
 .vitepress/dist
 .vitepress/cache
+.vitepress/docs
+
+# PWA Assets (generated)
+docs/public/*.png
+docs/public/*.ico
