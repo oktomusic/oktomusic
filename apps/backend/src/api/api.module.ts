@@ -15,13 +15,14 @@ import { OidcService } from "../oidc/oidc.service";
 import { AuthGuard } from "../common/guards/auth.guard";
 import { AdminGuard } from "../common/guards/admin.guard";
 import { GraphqlAuthGuard } from "../common/guards/graphql-auth.guard";
+import { GraphqlAdminGuard } from "../common/guards/graphql-admin.guard";
 import { UserResolver } from "./user/user.resolver";
 import { UserService } from "./user/user.service";
 import { type AppConfig } from "src/config/definitions/app.config";
 import { MediaController } from "./media/media.controller";
 import { MediaService } from "./media/media.service";
 import { BullmqModule } from "../bullmq/bullmq.module";
-import { IndexingController } from "./indexing/indexing.controller";
+import { IndexingResolver } from "./indexing/indexing.resolver";
 import { IndexingService } from "./indexing/indexing.service";
 
 @Module({
@@ -53,19 +54,21 @@ import { IndexingService } from "./indexing/indexing.service";
       },
     }),
   ],
-  controllers: [ApiController, AuthController, MediaController, IndexingController],
+  controllers: [ApiController, AuthController, MediaController],
   providers: [
     ApiService,
     ApiResolver,
     UserResolver,
     UserService,
+    IndexingResolver,
     OidcService,
     AuthGuard,
     AdminGuard,
     GraphqlAuthGuard,
+    GraphqlAdminGuard,
     MediaService,
     IndexingService,
   ],
-  exports: [AuthGuard, AdminGuard, GraphqlAuthGuard],
+  exports: [AuthGuard, AdminGuard, GraphqlAuthGuard, GraphqlAdminGuard],
 })
 export class ApiModule {}

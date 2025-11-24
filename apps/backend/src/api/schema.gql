@@ -6,22 +6,54 @@
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+enum IndexingJobStatus {
+  ACTIVE
+  COMPLETED
+  FAILED
+  QUEUED
+}
+
+type IndexingJob {
+  completedAt: DateTime
+  error: String
+  jobId: String!
+  progress: Float
+  status: IndexingJobStatus!
+}
 
 type Mutation {
-  """Update a user profile as an administrator"""
+  """
+  Trigger a new library indexing job
+  """
+  triggerIndexing: IndexingJob!
+
+  """
+  Update a user profile as an administrator
+  """
   adminUpdateUserProfile(input: UpdateUserProfileInput!, userId: String!): User!
 
-  """Update the current user's profile"""
+  """
+  Update the current user's profile
+  """
   updateMyProfile(input: UpdateUserProfileInput!): User!
 }
 
 type Query {
   hello: String!
 
-  """Current logged-in user"""
+  """
+  Get the status of an indexing job
+  """
+  indexingJobStatus(jobId: String!): IndexingJob!
+
+  """
+  Current logged-in user
+  """
   me: User!
 
-  """User profile by identifier (admin access only)"""
+  """
+  User profile by identifier (admin access only)
+  """
   userProfile(userId: String!): User!
 }
 
@@ -36,7 +68,9 @@ enum Sex {
 }
 
 input UpdateUserProfileInput {
-  """User sex chosen during profile setup"""
+  """
+  User sex chosen during profile setup
+  """
   sex: Sex
 }
 
