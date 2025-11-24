@@ -20,6 +20,8 @@ export default function IndexingControl() {
   useEffect(() => {
     if (!jobData?.jobId) return;
 
+    let intervalId: number | null = null;
+
     const fetchStatus = async () => {
       try {
         const status = await getIndexingStatus(jobData.jobId);
@@ -27,6 +29,9 @@ export default function IndexingControl() {
 
         // Stop polling if job is completed or failed
         if (status.status === "completed" || status.status === "failed") {
+          if (intervalId !== null) {
+            clearInterval(intervalId);
+          }
           return;
         }
       } catch (err) {
@@ -38,11 +43,15 @@ export default function IndexingControl() {
     void fetchStatus();
 
     // Poll every 2 seconds
-    const intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
       void fetchStatus();
     }, 2000);
 
-    return () => clearInterval(intervalId);
+    return () => {
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+      }
+    };
   }, [jobData?.jobId]);
 
   const handleTriggerIndexing = async () => {

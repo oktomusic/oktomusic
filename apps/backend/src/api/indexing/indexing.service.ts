@@ -33,7 +33,7 @@ export class IndexingService {
     return {
       jobId: job.id ?? "unknown",
       status,
-      progress: job.progress as number | undefined,
+      progress: typeof job.progress === "number" ? job.progress : undefined,
       error: job.failedReason,
       completedAt: job.finishedOn ? new Date(job.finishedOn).toISOString() : undefined,
     };
