@@ -8,12 +8,14 @@ import App from "./pages/App/App.tsx";
 import AppInfo from "./pages/AppInfo/AppInfo.tsx";
 import Login from "./pages/Auth/Login.tsx";
 import Player from "./pages/Player/Player.tsx";
+import PipControls from "./components/PipControls.tsx";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
   return (
     <>
       <WindowControls />
+      <PipControls />
       <main id="app-shell">
         {!supported ? <UnsupportedOverlay missing={missing} /> : null}
         <BrowserRouter>

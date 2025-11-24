@@ -18,3 +18,28 @@ interface Navigator {
     ): void;
   };
 }
+
+// https://developer.mozilla.org/en-US/docs/Web/API/DocumentPictureInPicture
+interface PictureInPictureOptions {
+  disallowReturnToOpener: boolean;
+  height: number;
+  width: number;
+  preferInitialWindowPlacement: boolean;
+}
+
+interface Window {
+  documentPictureInPicture?: {
+    window: Window;
+    requestWindow(options?: PictureInPictureOptions): Promise<Window>;
+    addEventListener(
+      type: "enter",
+      listener: (this: unknown, ev: Event) => unknown,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    removeEventListener(
+      type: "enter",
+      listener: (this: unknown, ev: Event) => unknown,
+      options?: boolean | EventListenerOptions,
+    ): void;
+  };
+}
