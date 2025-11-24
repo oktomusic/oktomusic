@@ -7,6 +7,7 @@ import Valkey from "iovalkey";
 
 import type { ValkeyConfig } from "../config/definitions/valkey.config";
 import { PrismaModule } from "../db/prisma.module";
+import { BullmqService } from "./bullmq.service";
 import { IndexingProcessor } from "./processors/indexing.processor";
 
 @Module({
@@ -32,7 +33,7 @@ import { IndexingProcessor } from "./processors/indexing.processor";
     }),
     PrismaModule,
   ],
-  exports: [BullModule],
-  providers: [IndexingProcessor],
+  exports: [BullModule, BullmqService],
+  providers: [BullmqService, IndexingProcessor],
 })
 export class BullmqModule {}

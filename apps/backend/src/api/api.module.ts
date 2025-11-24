@@ -20,10 +20,14 @@ import { UserService } from "./user/user.service";
 import { type AppConfig } from "src/config/definitions/app.config";
 import { MediaController } from "./media/media.controller";
 import { MediaService } from "./media/media.service";
+import { BullmqModule } from "../bullmq/bullmq.module";
+import { IndexingController } from "./indexing/indexing.controller";
+import { IndexingService } from "./indexing/indexing.service";
 
 @Module({
   imports: [
     PrismaModule,
+    BullmqModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       inject: [ConfigService],
@@ -49,7 +53,7 @@ import { MediaService } from "./media/media.service";
       },
     }),
   ],
-  controllers: [ApiController, AuthController, MediaController],
+  controllers: [ApiController, AuthController, MediaController, IndexingController],
   providers: [
     ApiService,
     ApiResolver,
@@ -60,6 +64,7 @@ import { MediaService } from "./media/media.service";
     AdminGuard,
     GraphqlAuthGuard,
     MediaService,
+    IndexingService,
   ],
   exports: [AuthGuard, AdminGuard, GraphqlAuthGuard],
 })
