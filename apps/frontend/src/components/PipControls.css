@@ -1,0 +1,9 @@
+@layer components {
+  #pip-shell {
+    box-sizing: border-box;
+    min-height: 100dvh;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--color-blue-200);
+  }
+}

@@ -7,6 +7,7 @@ import type { ApiInfoRes } from "@oktomusic/api-schemas";
 import { getInfo } from "../../api/axios/endpoints/info";
 import { getSession } from "../../api/axios/endpoints/auth";
 import { authSessionAtom } from "../../atoms/auth/atoms";
+import { pipOpenAtom } from "../../atoms/player/pip";
 
 import "./App.css";
 
@@ -15,6 +16,8 @@ function App() {
 
   const [status, setStatus] = useState<ApiInfoRes | undefined>(undefined);
   const [authSession, setAuthSession] = useAtom(authSessionAtom);
+
+  const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
 
   useEffect(() => {
     getInfo()
@@ -47,6 +50,16 @@ function App() {
               </div>
               <div>
                 <Link to="/appinfo">App Info</Link>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    setPipOpen(!pipOpen);
+                  }}
+                  className="bg-blue-300"
+                >
+                  {pipOpen ? "Close PiP Controls" : "Open PiP Controls"}
+                </button>
               </div>
             </>
           ) : (
