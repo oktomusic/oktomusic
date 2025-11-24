@@ -1,10 +1,13 @@
 import { Module } from "@nestjs/common";
 import { BullModule } from "@nestjs/bullmq";
 import { ConfigService } from "@nestjs/config";
-import type { RedisClient } from "bullmq";
-import Redis from "valkey-glide-ioredis-adapter";
+import type { ConnectionOptions } from "bullmq";
+// import Redis from "valkey-glide-ioredis-adapter";
+import Valkey from "iovalkey";
 
 import type { ValkeyConfig } from "../config/definitions/valkey.config";
+import { PrismaModule } from "../db/prisma.module";
+import { IndexingProcessor } from "./processors/indexing.processor";
 
 @Module({
   imports: [
@@ -15,15 +18,21 @@ import type { ValkeyConfig } from "../config/definitions/valkey.config";
           configService.getOrThrow<ValkeyConfig>("valkey");
 
         return {
-          connection: new Redis({
+          connection: new Valkey({
             host: valkeyHost,
             port: valkeyPort,
             password: valkeyPassword ?? undefined,
-          }) as unknown as RedisClient,
+            maxRetriesPerRequest: null,
+          }) as unknown as ConnectionOptions,
         };
       },
     }),
+    BullModule.registerQueue({
+      name: "library-indexing",
+    }),
+    PrismaModule,
   ],
   exports: [BullModule],
+  providers: [IndexingProcessor],
 })
 export class BullmqModule {}
