@@ -1,14 +1,13 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
-import type { IndexingTriggerRes, IndexingStatusRes } from "@oktomusic/api-schemas";
-
 import { BullmqService } from "../../bullmq/bullmq.service";
+import { IndexingJobModel, IndexingJobStatus } from "./indexing.model";
 
 @Injectable()
 export class IndexingService {
   constructor(private readonly bullmqService: BullmqService) {}
 
-  async triggerIndexing(): Promise<IndexingTriggerRes> {
+  async triggerIndexing(): Promise<IndexingJobModel> {
     const job = await this.bullmqService.triggerIndexing();
     
     const state = await job.getState();
@@ -20,7 +19,7 @@ export class IndexingService {
     };
   }
 
-  async getJobStatus(jobId: string): Promise<IndexingStatusRes> {
+  async getJobStatus(jobId: string): Promise<IndexingJobModel> {
     const job = await this.bullmqService.getJobStatus(jobId);
 
     if (!job) {
@@ -39,21 +38,19 @@ export class IndexingService {
     };
   }
 
-  private mapJobStateToStatus(
-    state: string,
-  ): "queued" | "active" | "completed" | "failed" {
+  private mapJobStateToStatus(state: string): IndexingJobStatus {
     switch (state) {
       case "waiting":
       case "delayed":
-        return "queued";
+        return IndexingJobStatus.QUEUED;
       case "active":
-        return "active";
+        return IndexingJobStatus.ACTIVE;
       case "completed":
-        return "completed";
+        return IndexingJobStatus.COMPLETED;
       case "failed":
-        return "failed";
+        return IndexingJobStatus.FAILED;
       default:
-        return "queued";
+        return IndexingJobStatus.QUEUED;
     }
   }
 }

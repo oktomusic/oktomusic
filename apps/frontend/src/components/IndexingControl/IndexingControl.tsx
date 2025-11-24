@@ -1,103 +1,94 @@
 import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client/react";
 
-import type {
-  IndexingTriggerRes,
-  IndexingStatusRes,
-} from "@oktomusic/api-schemas";
-
-import {
-  triggerIndexing,
-  getIndexingStatus,
-} from "../../api/axios/endpoints/indexing";
+import { TRIGGER_INDEXING_MUTATION } from "../../api/graphql/mutations/triggerIndexing";
+import { INDEXING_JOB_STATUS_QUERY } from "../../api/graphql/queries/indexingJobStatus";
+import { IndexingJobStatus } from "../../api/graphql/gql/graphql";
 
 export default function IndexingControl() {
-  const [jobData, setJobData] = useState<IndexingTriggerRes | null>(null);
-  const [statusData, setStatusData] = useState<IndexingStatusRes | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const [triggerIndexing, { loading: triggerLoading }] =
+    useMutation(TRIGGER_INDEXING_MUTATION);
+
+  const { data: statusData, startPolling, stopPolling } = useQuery(
+    INDEXING_JOB_STATUS_QUERY,
+    {
+      variables: { jobId: currentJobId ?? "" },
+      skip: !currentJobId,
+      fetchPolicy: "network-only",
+    },
+  );
 
   // Poll for job status when a job is active
   useEffect(() => {
-    if (!jobData?.jobId) return;
+    if (!currentJobId) return;
 
-    let intervalId: number | null = null;
-
-    const fetchStatus = async () => {
-      try {
-        const status = await getIndexingStatus(jobData.jobId);
-        setStatusData(status);
-
-        // Stop polling if job is completed or failed
-        if (status.status === "completed" || status.status === "failed") {
-          if (intervalId !== null) {
-            clearInterval(intervalId);
-          }
-          return;
-        }
-      } catch (err) {
-        console.error("Error fetching job status:", err);
-      }
-    };
-
-    // Initial fetch
-    void fetchStatus();
-
-    // Poll every 2 seconds
-    intervalId = setInterval(() => {
-      void fetchStatus();
-    }, 2000);
+    // Start polling every 2 seconds
+    startPolling(2000);
 
     return () => {
-      if (intervalId !== null) {
-        clearInterval(intervalId);
-      }
+      stopPolling();
     };
-  }, [jobData?.jobId]);
+  }, [currentJobId, startPolling, stopPolling]);
+
+  // Stop polling when job is completed or failed
+  useEffect(() => {
+    if (!statusData?.indexingJobStatus) return;
+
+    const status = statusData.indexingJobStatus.status;
+    if (status === IndexingJobStatus.Completed || status === IndexingJobStatus.Failed) {
+      stopPolling();
+    }
+  }, [statusData?.indexingJobStatus, stopPolling]);
 
   const handleTriggerIndexing = async () => {
-    setLoading(true);
     setError(null);
     try {
       const result = await triggerIndexing();
-      setJobData(result);
+      const jobId = result.data?.triggerIndexing?.jobId;
+      if (jobId) {
+        setCurrentJobId(jobId);
+      }
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to trigger indexing",
       );
-    } finally {
-      setLoading(false);
     }
   };
 
-  const getStatusColor = (status?: string) => {
+  const getStatusColor = (status?: IndexingJobStatus) => {
     switch (status) {
-      case "queued":
+      case IndexingJobStatus.Queued:
         return "text-blue-500";
-      case "active":
+      case IndexingJobStatus.Active:
         return "text-yellow-500";
-      case "completed":
+      case IndexingJobStatus.Completed:
         return "text-green-500";
-      case "failed":
+      case IndexingJobStatus.Failed:
         return "text-red-500";
       default:
         return "text-gray-500";
     }
   };
 
-  const getStatusEmoji = (status?: string) => {
+  const getStatusEmoji = (status?: IndexingJobStatus) => {
     switch (status) {
-      case "queued":
+      case IndexingJobStatus.Queued:
         return "⏳";
-      case "active":
+      case IndexingJobStatus.Active:
         return "⚙️";
-      case "completed":
+      case IndexingJobStatus.Completed:
         return "✅";
-      case "failed":
+      case IndexingJobStatus.Failed:
         return "❌";
       default:
         return "❓";
     }
   };
+
+  const jobStatus = statusData?.indexingJobStatus;
 
   return (
     <section
@@ -111,11 +102,11 @@ export default function IndexingControl() {
         onClick={() => {
           void handleTriggerIndexing();
         }}
-        disabled={loading || statusData?.status === "active"}
+        disabled={triggerLoading || jobStatus?.status === IndexingJobStatus.Active}
         className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white px-4 py-2 rounded mb-4"
         aria-label="Trigger library indexing"
       >
-        {loading ? "Triggering..." : "Trigger Indexing"}
+        {triggerLoading ? "Triggering..." : "Trigger Indexing"}
       </button>
 
       {error ? (
@@ -124,41 +115,41 @@ export default function IndexingControl() {
         </div>
       ) : null}
 
-      {statusData ? (
+      {jobStatus ? (
         <div className="space-y-2">
           <div>
-            <strong>Job ID:</strong> {statusData.jobId}
+            <strong>Job ID:</strong> {jobStatus.jobId}
           </div>
           <div>
             <strong>Status:</strong>{" "}
-            <span className={getStatusColor(statusData.status)}>
-              {getStatusEmoji(statusData.status)} {statusData.status}
+            <span className={getStatusColor(jobStatus.status)}>
+              {getStatusEmoji(jobStatus.status)} {jobStatus.status}
             </span>
           </div>
-          {statusData.progress !== undefined ? (
+          {jobStatus.progress !== null && jobStatus.progress !== undefined ? (
             <div>
-              <strong>Progress:</strong> {statusData.progress}%
+              <strong>Progress:</strong> {jobStatus.progress}%
               <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
                 <div
                   className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                  style={{ width: `${statusData.progress}%` }}
+                  style={{ width: `${jobStatus.progress}%` }}
                   role="progressbar"
-                  aria-valuenow={statusData.progress}
+                  aria-valuenow={jobStatus.progress}
                   aria-valuemin={0}
                   aria-valuemax={100}
                 />
               </div>
             </div>
           ) : null}
-          {statusData.error ? (
+          {jobStatus.error ? (
             <div className="text-red-500">
-              <strong>Error:</strong> {statusData.error}
+              <strong>Error:</strong> {jobStatus.error}
             </div>
           ) : null}
-          {statusData.completedAt ? (
+          {jobStatus.completedAt ? (
             <div>
               <strong>Completed:</strong>{" "}
-              {new Date(statusData.completedAt).toLocaleString()}
+              {new Date(jobStatus.completedAt as string).toLocaleString()}
             </div>
           ) : null}
         </div>
