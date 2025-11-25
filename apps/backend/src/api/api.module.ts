@@ -41,6 +41,9 @@ import { MediaService } from "./media/media.service";
             ? true
             : path.resolve(process.cwd(), "src/api/schema.gql"),
           sortSchema: true,
+          subscriptions: {
+            "graphql-ws": true,
+          },
         };
       },
     }),
