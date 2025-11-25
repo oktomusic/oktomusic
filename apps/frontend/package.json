@@ -43,6 +43,8 @@
     "@lingui/react": "^5.6.0",
     "@lingui/vite-plugin": "^5.6.0",
     "@oktomusic/vite-sri-manifest": "workspace:^",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
     "@types/node": "catalog:default",
     "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.3",
