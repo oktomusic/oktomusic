@@ -8,6 +8,7 @@ import appConfig from "../../config/definitions/app.config";
 import { PrismaService } from "../../db/prisma.service";
 import { PUB_SUB } from "../../common/pubsub/pubsub.module";
 import { INDEXING_JOB_UPDATED } from "../../api/indexing/indexing.constants";
+import { IndexingJobStatus } from "../../api/indexing/indexing.model";
 
 @Processor("library_indexing")
 export class IndexingProcessor extends WorkerHost {
@@ -29,7 +30,7 @@ export class IndexingProcessor extends WorkerHost {
     this.logger.log(`Processing job ${job.id} - libraryPath: ${libraryPath}`);
 
     // Publish initial active status
-    await this.publishJobStatus(job, "active", 0);
+    await this.publishJobStatus(job, IndexingJobStatus.ACTIVE, 0);
 
     // Simulate work with progress updates (10 second delay with progress)
     const totalSteps = 10;
@@ -37,21 +38,21 @@ export class IndexingProcessor extends WorkerHost {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const progress = Math.round((i / totalSteps) * 100);
       await job.updateProgress(progress);
-      await this.publishJobStatus(job, "active", progress);
+      await this.publishJobStatus(job, IndexingJobStatus.ACTIVE, progress);
       this.logger.log(`Job ${job.id} progress: ${progress}%`);
     }
 
     this.logger.log(`Completed job ${job.id}`);
 
     // Publish completed status
-    await this.publishJobStatus(job, "completed", 100);
+    await this.publishJobStatus(job, IndexingJobStatus.COMPLETED, 100);
 
     return { ok: true };
   }
 
   private async publishJobStatus(
     job: Job,
-    status: "queued" | "active" | "completed" | "failed",
+    status: IndexingJobStatus,
     progress: number,
   ) {
     await this.pubSub.publish(INDEXING_JOB_UPDATED, {
@@ -61,7 +62,9 @@ export class IndexingProcessor extends WorkerHost {
         progress,
         error: job.failedReason,
         completedAt:
-          status === "completed" ? new Date().toISOString() : undefined,
+          status === IndexingJobStatus.COMPLETED
+            ? new Date().toISOString()
+            : undefined,
       },
     });
   }
