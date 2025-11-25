@@ -21,6 +21,7 @@ export default function RequireAuth({ children }: RequireAuthProps) {
 
   useEffect(() => {
     // Check session status on mount
+    // Note: setAuthSession is a stable function from jotai's useAtom
     getSession()
       .then((session) => {
         setAuthSession(session)
