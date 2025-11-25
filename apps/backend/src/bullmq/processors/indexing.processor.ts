@@ -10,7 +10,7 @@ import { PUB_SUB } from "../../common/pubsub/pubsub.module";
 import { INDEXING_JOB_UPDATED } from "../../api/indexing/indexing.constants";
 import { IndexingJobStatus } from "../../api/indexing/indexing.model";
 
-@Processor("library_indexing")
+@Processor("library-indexing")
 export class IndexingProcessor extends WorkerHost {
   private readonly logger = new Logger(IndexingProcessor.name);
 
