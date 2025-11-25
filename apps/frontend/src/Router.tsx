@@ -9,6 +9,7 @@ import AppInfo from "./pages/AppInfo/AppInfo.tsx";
 import Login from "./pages/Auth/Login.tsx";
 import Player from "./pages/Player/Player.tsx";
 import PipControls from "./components/PipControls.tsx";
+import SettingsAccount from "./pages/SettingsAccount/SettingsAccount.tsx";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
@@ -24,6 +25,7 @@ export default function Router() {
             <Route path="/appinfo" element={<AppInfo />} />
             <Route path="/player" element={<Player />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/settings/account" element={<SettingsAccount />} />
             <Route path="*" element={<span>404</span>} />
           </Routes>
         </BrowserRouter>

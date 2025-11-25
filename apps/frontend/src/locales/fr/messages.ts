@@ -1,1 +1,1 @@
-/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages=JSON.parse("{\"UNWX+z\":[\"Cliquez sur les logos Vite et React pour en savoir plus\"]}")as Messages;
+/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages=JSON.parse("{\"+DHRWw\":[\"Non Spécifié\"],\"OPLQQT\":[\"Femme\"],\"UNWX+z\":[\"Cliquez sur les logos Vite et React pour en savoir plus\"],\"VLGMKv\":[\"Homme\"],\"r4/aIi\":[\"Sexe :\"]}")as Messages;

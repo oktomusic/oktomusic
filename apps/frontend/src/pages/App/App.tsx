@@ -52,6 +52,9 @@ function App() {
                 <Link to="/appinfo">App Info</Link>
               </div>
               <div>
+                <Link to="/settings/account">Account Settings</Link>
+              </div>
+              <div>
                 <button
                   onClick={() => {
                     setPipOpen(!pipOpen);
