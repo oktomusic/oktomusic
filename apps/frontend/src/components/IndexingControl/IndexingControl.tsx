@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useMutation, useSubscription } from "@apollo/client/react";
 
 import { TRIGGER_INDEXING_MUTATION } from "../../api/graphql/mutations/triggerIndexing";
-import { INDEXING_JOB_STATUS_QUERY } from "../../api/graphql/queries/indexingJobStatus";
+import { INDEXING_JOB_UPDATED_SUBSCRIPTION } from "../../api/graphql/subscriptions/indexingJobUpdated";
 import { IndexingJobStatus } from "../../api/graphql/gql/graphql";
 
 export default function IndexingControl() {
@@ -12,36 +12,26 @@ export default function IndexingControl() {
   const [triggerIndexing, { loading: triggerLoading }] =
     useMutation(TRIGGER_INDEXING_MUTATION);
 
-  const { data: statusData, startPolling, stopPolling } = useQuery(
-    INDEXING_JOB_STATUS_QUERY,
+  const { data: subscriptionData } = useSubscription(
+    INDEXING_JOB_UPDATED_SUBSCRIPTION,
     {
       variables: { jobId: currentJobId ?? "" },
       skip: !currentJobId,
-      fetchPolicy: "network-only",
     },
   );
 
-  // Poll for job status when a job is active
+  // Clear jobId when job completes to allow triggering another
   useEffect(() => {
-    if (!currentJobId) return;
+    if (!subscriptionData?.indexingJobUpdated) return;
 
-    // Start polling every 2 seconds
-    startPolling(2000);
-
-    return () => {
-      stopPolling();
-    };
-  }, [currentJobId, startPolling, stopPolling]);
-
-  // Stop polling when job is completed or failed
-  useEffect(() => {
-    if (!statusData?.indexingJobStatus) return;
-
-    const status = statusData.indexingJobStatus.status;
-    if (status === IndexingJobStatus.Completed || status === IndexingJobStatus.Failed) {
-      stopPolling();
+    const status = subscriptionData.indexingJobUpdated.status;
+    if (
+      status === IndexingJobStatus.Completed ||
+      status === IndexingJobStatus.Failed
+    ) {
+      // Keep the status displayed but allow re-triggering
     }
-  }, [statusData?.indexingJobStatus, stopPolling]);
+  }, [subscriptionData?.indexingJobUpdated]);
 
   const handleTriggerIndexing = async () => {
     setError(null);
@@ -88,7 +78,7 @@ export default function IndexingControl() {
     }
   };
 
-  const jobStatus = statusData?.indexingJobStatus;
+  const jobStatus = subscriptionData?.indexingJobUpdated;
 
   return (
     <section

@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+
 import { ApiModule } from "./api/api.module";
 import { ViewsModule } from "./views/views.module";
 import { OpenGraphModule } from "./common/opengraph/opengraph.module";
@@ -7,10 +8,12 @@ import { HealthModule } from "./api/health/health.module";
 import { SessionModule } from "./session/session.module";
 import { BullmqService } from "./bullmq/bullmq.service";
 import { BullmqModule } from "./bullmq/bullmq.module";
+import { PubSubModule } from "./common/pubsub/pubsub.module";
 
 @Module({
   imports: [
     AppConfigModule,
+    PubSubModule,
     ApiModule,
     OpenGraphModule,
     HealthModule,

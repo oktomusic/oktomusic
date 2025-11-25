@@ -6,12 +6,6 @@
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
-enum IndexingJobStatus {
-  ACTIVE
-  COMPLETED
-  FAILED
-  QUEUED
-}
 
 type IndexingJob {
   completedAt: DateTime
@@ -21,39 +15,34 @@ type IndexingJob {
   status: IndexingJobStatus!
 }
 
-type Mutation {
-  """
-  Trigger a new library indexing job
-  """
-  triggerIndexing: IndexingJob!
+enum IndexingJobStatus {
+  ACTIVE
+  COMPLETED
+  FAILED
+  QUEUED
+}
 
-  """
-  Update a user profile as an administrator
-  """
+type Mutation {
+  """Update a user profile as an administrator"""
   adminUpdateUserProfile(input: UpdateUserProfileInput!, userId: String!): User!
 
-  """
-  Update the current user's profile
-  """
+  """Trigger a new library indexing job"""
+  triggerIndexing: IndexingJob!
+
+  """Update the current user's profile"""
   updateMyProfile(input: UpdateUserProfileInput!): User!
 }
 
 type Query {
   hello: String!
 
-  """
-  Get the status of an indexing job
-  """
+  """Get the status of an indexing job"""
   indexingJobStatus(jobId: String!): IndexingJob!
 
-  """
-  Current logged-in user
-  """
+  """Current logged-in user"""
   me: User!
 
-  """
-  User profile by identifier (admin access only)
-  """
+  """User profile by identifier (admin access only)"""
   userProfile(userId: String!): User!
 }
 
@@ -67,10 +56,13 @@ enum Sex {
   XY
 }
 
+type Subscription {
+  """Subscribe to indexing job status updates"""
+  indexingJobUpdated(jobId: String!): IndexingJob!
+}
+
 input UpdateUserProfileInput {
-  """
-  User sex chosen during profile setup
-  """
+  """User sex chosen during profile setup"""
   sex: Sex
 }
 
