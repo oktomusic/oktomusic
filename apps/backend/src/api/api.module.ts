@@ -16,6 +16,7 @@ import { AuthGuard } from "../common/guards/auth.guard";
 import { AdminGuard } from "../common/guards/admin.guard";
 import { GraphqlAuthGuard } from "../common/guards/graphql-auth.guard";
 import { UserResolver } from "./user/user.resolver";
+import { UserService } from "./user/user.service";
 import { type AppConfig } from "src/config/definitions/app.config";
 import { MediaController } from "./media/media.controller";
 import { MediaService } from "./media/media.service";
@@ -53,6 +54,7 @@ import { MediaService } from "./media/media.service";
     ApiService,
     ApiResolver,
     UserResolver,
+    UserService,
     OidcService,
     AuthGuard,
     AdminGuard,

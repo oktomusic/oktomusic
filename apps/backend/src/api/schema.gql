@@ -7,11 +7,22 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Mutation {
+  """Update a user profile as an administrator"""
+  adminUpdateUserProfile(input: UpdateUserProfileInput!, userId: String!): User!
+
+  """Update the current user's profile"""
+  updateMyProfile(input: UpdateUserProfileInput!): User!
+}
+
 type Query {
   hello: String!
 
   """Current logged-in user"""
   me: User!
+
+  """User profile by identifier (admin access only)"""
+  userProfile(userId: String!): User!
 }
 
 enum Role {
@@ -19,11 +30,22 @@ enum Role {
   USER
 }
 
+enum Sex {
+  XX
+  XY
+}
+
+input UpdateUserProfileInput {
+  """User sex chosen during profile setup"""
+  sex: Sex
+}
+
 type User {
   createdAt: DateTime!
   id: String!
   oidcSub: String!
   role: Role!
+  sex: Sex
   updatedAt: DateTime!
   username: String!
 }
