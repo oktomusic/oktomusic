@@ -1,11 +1,17 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { PubSub } from "graphql-subscriptions";
 
 import { BullmqService } from "../../bullmq/bullmq.service";
+import { PUB_SUB } from "../../common/pubsub/pubsub.module";
 import { IndexingJobModel, IndexingJobStatus } from "./indexing.model";
+import { INDEXING_JOB_UPDATED } from "./indexing.constants";
 
 @Injectable()
 export class IndexingService {
-  constructor(private readonly bullmqService: BullmqService) {}
+  constructor(
+    private readonly bullmqService: BullmqService,
+    @Inject(PUB_SUB) private readonly pubSub: PubSub,
+  ) {}
 
   async triggerIndexing(): Promise<IndexingJobModel> {
     const job = await this.bullmqService.triggerIndexing();
@@ -13,10 +19,17 @@ export class IndexingService {
     const state = await job.getState();
     const status = this.mapJobStateToStatus(state);
 
-    return {
+    const jobModel: IndexingJobModel = {
       jobId: job.id ?? "unknown",
       status,
     };
+
+    // Publish the initial job status
+    await this.pubSub.publish(INDEXING_JOB_UPDATED, {
+      indexingJobUpdated: jobModel,
+    });
+
+    return jobModel;
   }
 
   async getJobStatus(jobId: string): Promise<IndexingJobModel> {
