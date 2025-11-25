@@ -16,7 +16,7 @@ import {
 import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import type { Request } from "express";
 
-import { AuthLogoutResJSONSchema, AuthSessionResJSONSchema } from "@oktomusic/api-schemas";
+import { AuthSessionResJSONSchema } from "@oktomusic/api-schemas";
 
 import { OidcService } from "../../oidc/oidc.service";
 
@@ -141,18 +141,18 @@ export class AuthController {
   @Get("logout")
   @ApiOperation({
     summary: "Logout user",
-    description:
-      "Clears the session and optionally provides the OIDC end session URL for complete logout",
+    description: "Clears the session and redirects to the login page",
   })
-  @ApiOkResponse({
-    schema: AuthLogoutResJSONSchema as SchemaObject,
-    description: "Logout result with optional end session URL",
+  @ApiResponse({
+    status: HttpStatus.FOUND,
+    description: "Redirects to application to login page after logout",
   })
+  @Redirect()
   async logout(@Req() req: Request) {
-    const idToken = req.session.oidc?.session?.tokens.id_token;
+    // const idToken = req.session.oidc?.session?.tokens.id_token;
 
     // Build end session URL before destroying session
-    const logoutUrl = this.oidcService.buildEndSessionUrl(idToken);
+    // const logoutUrl = this.oidcService.buildEndSessionUrl(idToken);
 
     // Destroy the session
     await new Promise<void>((resolve, reject) => {
@@ -165,9 +165,6 @@ export class AuthController {
       });
     });
 
-    return {
-      success: true,
-      logoutUrl,
-    };
+    return { url: "/login", statusCode: HttpStatus.FOUND };
   }
 }
