@@ -14,10 +14,16 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query Me {\n    me {\n      id\n      username\n      role\n    }\n  }\n": typeof types.MeDocument,
+    "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n": typeof types.AdminUpdateUserProfileDocument,
+    "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n": typeof types.UpdateMyProfileDocument,
+    "\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.MeDocument,
+    "\n  query UserProfile($userId: String!) {\n    userProfile(userId: $userId) {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.UserProfileDocument,
 };
 const documents: Documents = {
-    "\n  query Me {\n    me {\n      id\n      username\n      role\n    }\n  }\n": types.MeDocument,
+    "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n": types.AdminUpdateUserProfileDocument,
+    "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n": types.UpdateMyProfileDocument,
+    "\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": types.MeDocument,
+    "\n  query UserProfile($userId: String!) {\n    userProfile(userId: $userId) {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": types.UserProfileDocument,
 };
 
 /**
@@ -37,7 +43,19 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Me {\n    me {\n      id\n      username\n      role\n    }\n  }\n"): (typeof documents)["\n  query Me {\n    me {\n      id\n      username\n      role\n    }\n  }\n"];
+export function graphql(source: "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query UserProfile($userId: String!) {\n    userProfile(userId: $userId) {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  query UserProfile($userId: String!) {\n    userProfile(userId: $userId) {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

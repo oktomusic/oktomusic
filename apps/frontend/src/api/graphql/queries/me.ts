@@ -6,6 +6,9 @@ export const ME_QUERY = graphql(/* GraphQL */ `
       id
       username
       role
+      sex
+      createdAt
+      updatedAt
     }
   }
 `);
