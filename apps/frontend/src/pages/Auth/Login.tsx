@@ -1,4 +1,15 @@
+import { useAtomValue } from "jotai";
+import { Navigate } from "react-router";
+
+import { authSessionAtom } from "../../atoms/auth/atoms";
+
 export default function Login() {
+  const authSession = useAtomValue(authSessionAtom);
+
+  if (authSession.status === "authenticated" && authSession.user) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
     <div
       style={{
