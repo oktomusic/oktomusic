@@ -3,12 +3,12 @@ import { isrcRegex, parseOutput } from "./utils";
 
 const trackNumberRegex = /^(\d+)\/(\d+)$/;
 
-interface TrackNumber {
+export interface MetaflacTrackNumber {
   readonly track: number;
   readonly total: number;
 }
 
-function parseTrackNumber(value: string): TrackNumber {
+function parseTrackNumber(value: string): MetaflacTrackNumber {
   const match = trackNumberRegex.exec(value);
   if (!match) {
     throw new Error("Invalid track number format, expected <track>/<total>");
@@ -49,11 +49,16 @@ const IntermediateMetaflacSchema = z.object({
     ])
     .describe(
       "The track number of this piece if part of a specific larger collection or album",
-    ), // todo handle number parsing
+    ),
   ARTIST: z
     .array(z.string())
     .describe(
       "The artist generally considered responsible for the work. In popular music this is usually the performing band or singer. For classical music it would be the composer. For an audio book it would be the author of the original text.",
+    ),
+  ALBUMARTIST: z
+    .array(z.string())
+    .describe(
+      "Non standard. The artist(s) primarily responsible for the album as a whole. Often the same as ARTIST.",
     ),
   PERFORMER: z
     .array(z.string())
@@ -105,12 +110,25 @@ const IntermediateMetaflacSchema = z.object({
     .tuple([z.string().regex(isrcRegex, "Invalid ISRC format")])
     .optional()
     .describe("ISRC number for the track; see https://isrc.ifpi.org"),
+  DISCNUMBER: z
+    .tuple([
+      z
+        .string()
+        .regex(
+          trackNumberRegex,
+          "Invalid disc number format, expected <disc>/<total>",
+        ),
+    ])
+    .describe(
+      "The disc number of this piece if part of a multi-disc collection",
+    ),
 });
 
 export const MetaflacSchema = IntermediateMetaflacSchema.transform((val) => ({
   TITLE: val.TITLE[0],
   ARTIST: val.ARTIST,
   ALBUM: val.ALBUM[0],
+  ALBUMARTIST: val.ALBUMARTIST,
   TRACKNUMBER: parseTrackNumber(val.TRACKNUMBER[0]),
   VERSION: val.VERSION?.[0],
   PERFORMER: val.PERFORMER,
@@ -123,6 +141,7 @@ export const MetaflacSchema = IntermediateMetaflacSchema.transform((val) => ({
   LOCATION: val.LOCATION?.[0],
   CONTACT: val.CONTACT?.[0],
   ISRC: val.ISRC?.[0],
+  DISCNUMBER: parseTrackNumber(val.DISCNUMBER[0]),
 }));
 
 export type MetaflacTags = z.output<typeof MetaflacSchema>;
