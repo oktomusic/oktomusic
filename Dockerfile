@@ -81,6 +81,10 @@ COPY --from=ffmpeg /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
 COPY --from=ffmpeg /usr/local/bin/ffprobe /usr/local/bin/ffprobe
 COPY --from=ffmpeg /usr/local/bin/metaflac /usr/local/bin/metaflac
 
+ENV FFMPEG_PATH=/usr/local/bin/ffmpeg
+ENV FFPROBE_PATH=/usr/local/bin/ffprobe
+ENV METAFLAC_PATH=/usr/local/bin/metaflac
+
 # Copy package files for production dependencies
 COPY --from=builder /usr/src/app/pnpm-workspace.yaml /usr/src/app/package.json /usr/src/app/pnpm-lock.yaml ./
 COPY --from=builder /usr/src/app/apps/backend/package.json ./apps/backend/

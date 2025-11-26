@@ -3,6 +3,7 @@ import path from "node:path";
 
 import { registerAs } from "@nestjs/config";
 import z from "zod";
+import { zBinaryPath } from "src/utils/zod";
 
 const AppConfigSchema = z.object({
   /**
@@ -30,6 +31,9 @@ const AppConfigSchema = z.object({
 
     return libPath;
   }),
+  FFMPEG_PATH: zBinaryPath("FFMpeg", ["-version"]).optional(),
+  FFPROBE_PATH: zBinaryPath("FFProbe", ["-version"]).optional(),
+  METAFLAC_PATH: zBinaryPath("Metaflac", ["--version"]).optional(),
 });
 
 export interface AppConfig {
@@ -39,6 +43,9 @@ export interface AppConfig {
   isTest: boolean;
   sessionSecret: string;
   libraryPath: string;
+  ffmpegPath: string | undefined;
+  ffprobePath: string | undefined;
+  metaflacPath: string | undefined;
 }
 
 export default registerAs("app", (): AppConfig => {
@@ -51,5 +58,8 @@ export default registerAs("app", (): AppConfig => {
     isTest: parsed.NODE_ENV === "test",
     sessionSecret: parsed.SESSION_SECRET,
     libraryPath: parsed.LIBRARY_PATH,
+    ffmpegPath: parsed.FFMPEG_PATH,
+    ffprobePath: parsed.FFPROBE_PATH,
+    metaflacPath: parsed.METAFLAC_PATH,
   } as const;
 });
