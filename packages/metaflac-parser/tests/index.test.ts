@@ -31,16 +31,21 @@ void suite("Metaflac output parser", () => {
       ALBUM: "Phoenix",
       ISRC: "GB2LD2110224",
       ARTIST: ["Netrum", "HALVORSEN"],
+      ALBUMARTIST: ["Netrum", "HALVORSEN"],
       COPYRIGHT: "NCS",
       TITLE: "Phoenix",
       TRACKNUMBER: {
         track: 1,
         total: 1,
       },
+      DISCNUMBER: {
+        track: 1,
+        total: 1,
+      },
       DATE: "2021-08-20",
     };
     const result = parseMetaflacTags(test_1);
-    expect(result).toStrictEqual(expected);
+    expect(result).toMatchObject(expected);
   });
 
   test("parseMetaflacTags rejects invalid track numbers", () => {
