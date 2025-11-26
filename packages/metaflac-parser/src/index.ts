@@ -1,6 +1,26 @@
 import z from "zod";
 import { isrcRegex, parseOutput } from "./utils";
 
+const trackNumberRegex = /^(\d+)\/(\d+)$/;
+
+interface TrackNumber {
+  readonly track: number;
+  readonly total: number;
+}
+
+function parseTrackNumber(value: string): TrackNumber {
+  const match = trackNumberRegex.exec(value);
+  if (!match) {
+    throw new Error("Invalid track number format, expected <track>/<total>");
+  }
+
+  const [, track, total] = match;
+  return {
+    track: Number(track),
+    total: Number(total),
+  };
+}
+
 /**
  * Tags are Vorbis comments, which are key-value pairs.
  *
@@ -19,7 +39,14 @@ const IntermediateMetaflacSchema = z.object({
     .tuple([z.string()])
     .describe("The collection name to which this track belongs"),
   TRACKNUMBER: z
-    .tuple([z.string()])
+    .tuple([
+      z
+        .string()
+        .regex(
+          trackNumberRegex,
+          "Invalid track number format, expected <track>/<total>",
+        ),
+    ])
     .describe(
       "The track number of this piece if part of a specific larger collection or album",
     ), // todo handle number parsing
@@ -84,7 +111,7 @@ export const MetaflacSchema = IntermediateMetaflacSchema.transform((val) => ({
   TITLE: val.TITLE[0],
   ARTIST: val.ARTIST,
   ALBUM: val.ALBUM[0],
-  TRACKNUMBER: val.TRACKNUMBER[0],
+  TRACKNUMBER: parseTrackNumber(val.TRACKNUMBER[0]),
   VERSION: val.VERSION?.[0],
   PERFORMER: val.PERFORMER,
   COPYRIGHT: val.COPYRIGHT?.[0],
