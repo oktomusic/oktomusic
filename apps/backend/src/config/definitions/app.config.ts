@@ -17,11 +17,12 @@ const AppConfigSchema = z.object({
   LIBRARY_PATH: z.string().transform((arg, ctx) => {
     const libPath = path.resolve(arg);
     const exist = fs.existsSync(libPath);
+    const isDir = exist && fs.lstatSync(libPath).isDirectory();
 
-    if (!exist) {
+    if (!isDir) {
       ctx.issues.push({
         code: "custom",
-        message: "Not a number",
+        message: "Library path must exist and be a directory",
         input: libPath,
       });
       return z.NEVER;
