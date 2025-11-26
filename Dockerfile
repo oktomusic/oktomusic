@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-FROM --platform=$BUILDPLATFORM node:24-alpine AS builder
+FROM --platform=$BUILDPLATFORM node:25-alpine AS builder
 
 LABEL org.opencontainers.image.title="Oktomusic"
 LABEL org.opencontainers.image.description="Music streaming server"
@@ -65,7 +65,7 @@ RUN mkdir -p apps/backend/dist/public && \
 
 FROM ghcr.io/oktomusic/ffmpeg-custom:0.2.0 AS ffmpeg
 
-FROM node:24-alpine AS production
+FROM node:25-alpine AS production
 
 RUN corepack enable pnpm
 RUN apk add --no-cache ca-certificates
