@@ -1,7 +1,10 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+
+import type { Job } from "bullmq";
 import { PubSub } from "graphql-subscriptions";
 
 import { BullmqService } from "../../bullmq/bullmq.service";
+import type { IndexingJobData } from "../../bullmq/processors/errors";
 import { PUB_SUB } from "../../common/pubsub/pubsub.module";
 import { IndexingJobModel, IndexingJobStatus } from "./indexing.model";
 import { INDEXING_JOB_UPDATED } from "./indexing.constants";
@@ -15,14 +18,11 @@ export class IndexingService {
 
   async triggerIndexing(): Promise<IndexingJobModel> {
     const job = await this.bullmqService.triggerIndexing();
-    
+
     const state = await job.getState();
     const status = this.mapJobStateToStatus(state);
 
-    const jobModel: IndexingJobModel = {
-      jobId: job.id ?? "unknown",
-      status,
-    };
+    const jobModel = this.buildJobModel(job, status);
 
     // Publish the initial job status
     await this.pubSub.publish(INDEXING_JOB_UPDATED, {
@@ -42,13 +42,7 @@ export class IndexingService {
     const state = await job.getState();
     const status = this.mapJobStateToStatus(state);
 
-    return {
-      jobId: job.id ?? "unknown",
-      status,
-      progress: typeof job.progress === "number" ? job.progress : undefined,
-      error: job.failedReason,
-      completedAt: job.finishedOn ? new Date(job.finishedOn).toISOString() : undefined,
-    };
+    return this.buildJobModel(job, status);
   }
 
   private mapJobStateToStatus(state: string): IndexingJobStatus {
@@ -65,5 +59,21 @@ export class IndexingService {
       default:
         return IndexingJobStatus.QUEUED;
     }
+  }
+
+  private buildJobModel(
+    job: Job<IndexingJobData>,
+    status: IndexingJobStatus,
+  ): IndexingJobModel {
+    return {
+      jobId: job.id ?? "unknown",
+      status,
+      progress: typeof job.progress === "number" ? job.progress : undefined,
+      error: job.failedReason,
+      completedAt: job.finishedOn
+        ? new Date(job.finishedOn).toISOString()
+        : undefined,
+      warnings: job.data?.warnings ?? [],
+    };
   }
 }
