@@ -8,6 +8,23 @@ export const INDEXING_JOB_UPDATED_SUBSCRIPTION = graphql(/* GraphQL */ `
       progress
       error
       completedAt
+      warnings {
+        __typename
+        ... on IndexingErrorMetaflacParsing {
+          type
+          filePath
+          errorMessage
+        }
+        ... on IndexingWarningSubdirectories {
+          type
+          dirPath
+        }
+        ... on IndexingWarningFolderMetadata {
+          type
+          folderPath
+          messages
+        }
+      }
     }
   }
 `);

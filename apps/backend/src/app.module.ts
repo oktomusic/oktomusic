@@ -9,6 +9,7 @@ import { SessionModule } from "./session/session.module";
 import { BullmqService } from "./bullmq/bullmq.service";
 import { BullmqModule } from "./bullmq/bullmq.module";
 import { PubSubModule } from "./common/pubsub/pubsub.module";
+import { NativeModule } from './native/native.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PubSubModule } from "./common/pubsub/pubsub.module";
     ViewsModule,
     SessionModule,
     BullmqModule,
+    NativeModule,
   ],
   providers: [BullmqService],
 })

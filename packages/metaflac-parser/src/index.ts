@@ -19,14 +19,30 @@ const IntermediateMetaflacSchema = z.object({
     .tuple([z.string()])
     .describe("The collection name to which this track belongs"),
   TRACKNUMBER: z
-    .tuple([z.string()])
+    .tuple([z.coerce.number()])
     .describe(
       "The track number of this piece if part of a specific larger collection or album",
-    ), // todo handle number parsing
+    ),
+  DISCNUMBER: z
+    .tuple([z.coerce.number()])
+    .describe(
+      "The disc number of this piece if part of a multi-disc collection",
+    ),
+  TOTALTRACKS: z
+    .tuple([z.coerce.number()])
+    .describe("Total number of tracks in the album"),
+  TOTALDISCS: z
+    .tuple([z.coerce.number()])
+    .describe("Total number of discs in the album"),
   ARTIST: z
     .array(z.string())
     .describe(
       "The artist generally considered responsible for the work. In popular music this is usually the performing band or singer. For classical music it would be the composer. For an audio book it would be the author of the original text.",
+    ),
+  ALBUMARTIST: z
+    .array(z.string())
+    .describe(
+      "Non standard. The artist(s) primarily responsible for the album as a whole. Often the same as ARTIST.",
     ),
   PERFORMER: z
     .array(z.string())
@@ -44,7 +60,7 @@ const IntermediateMetaflacSchema = z.object({
     .tuple([z.string()])
     .optional()
     .describe(
-      "License information, for example, 'All Rights Reserved', 'Any Use Permitted', a URL to a license such as a Creative Commons license (e.g. \"creativecommons.org/licenses/by/4.0/\"), or similar.",
+      "License information, for example, 'All Rights Reserved', 'Any Use Permitted', a URL to a license such as a Creative Commons license (e.g. 'creativecommons.org/licenses/by/4.0/'), or similar.",
     ),
   ORGANIZATION: z
     .array(z.string())
@@ -84,7 +100,11 @@ export const MetaflacSchema = IntermediateMetaflacSchema.transform((val) => ({
   TITLE: val.TITLE[0],
   ARTIST: val.ARTIST,
   ALBUM: val.ALBUM[0],
+  ALBUMARTIST: val.ALBUMARTIST,
   TRACKNUMBER: val.TRACKNUMBER[0],
+  DISCNUMBER: val.DISCNUMBER[0],
+  TOTALTRACKS: val.TOTALTRACKS?.[0],
+  TOTALDISCS: val.TOTALDISCS?.[0],
   VERSION: val.VERSION?.[0],
   PERFORMER: val.PERFORMER,
   COPYRIGHT: val.COPYRIGHT?.[0],

@@ -7,12 +7,19 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type IndexingErrorMetaflacParsing {
+  errorMessage: String!
+  filePath: String!
+  type: IndexingReportType!
+}
+
 type IndexingJob {
   completedAt: DateTime
   error: String
   jobId: String!
   progress: Float
   status: IndexingJobStatus!
+  warnings: [IndexingWarning!]
 }
 
 enum IndexingJobStatus {
@@ -20,6 +27,25 @@ enum IndexingJobStatus {
   COMPLETED
   FAILED
   QUEUED
+}
+
+enum IndexingReportType {
+  ERROR_METAFLAC_PARSING
+  WARNING_FOLDER_METADATA
+  WARNING_SUBDIRECTORIES
+}
+
+union IndexingWarning = IndexingErrorMetaflacParsing | IndexingWarningFolderMetadata | IndexingWarningSubdirectories
+
+type IndexingWarningFolderMetadata {
+  folderPath: String!
+  messages: [String!]!
+  type: IndexingReportType!
+}
+
+type IndexingWarningSubdirectories {
+  dirPath: String!
+  type: IndexingReportType!
 }
 
 type Mutation {

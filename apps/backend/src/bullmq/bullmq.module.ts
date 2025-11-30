@@ -9,6 +9,7 @@ import type { ValkeyConfig } from "../config/definitions/valkey.config";
 import { PrismaModule } from "../db/prisma.module";
 import { BullmqService } from "./bullmq.service";
 import { IndexingProcessor } from "./processors/indexing.processor";
+import { NativeModule } from "src/native/native.module";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { IndexingProcessor } from "./processors/indexing.processor";
       name: "library-indexing",
     }),
     PrismaModule,
+    NativeModule,
   ],
   exports: [BullModule, BullmqService],
   providers: [BullmqService, IndexingProcessor],

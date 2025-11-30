@@ -41,6 +41,9 @@ jobs:
       - name: Build @oktomusic/api-schemas
         run: pnpm --filter "@oktomusic/api-schemas" build
 
+      - name: Build @oktomusic/metaflac-parser
+        run: pnpm --filter "@oktomusic/metaflac-parser" build
+
       - name: Prisma generate
         run: pnpm --filter "@oktomusic/backend" run db:generate
 
