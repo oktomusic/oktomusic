@@ -1,26 +1,6 @@
 import z from "zod";
 import { isrcRegex, parseOutput } from "./utils";
 
-const trackNumberRegex = /^(\d+)\/(\d+)$/;
-
-export interface MetaflacTrackNumber {
-  readonly track: number;
-  readonly total: number;
-}
-
-function parseTrackNumber(value: string): MetaflacTrackNumber {
-  const match = trackNumberRegex.exec(value);
-  if (!match) {
-    throw new Error("Invalid track number format, expected <track>/<total>");
-  }
-
-  const [, track, total] = match;
-  return {
-    track: Number(track),
-    total: Number(total),
-  };
-}
-
 /**
  * Tags are Vorbis comments, which are key-value pairs.
  *
@@ -39,17 +19,21 @@ const IntermediateMetaflacSchema = z.object({
     .tuple([z.string()])
     .describe("The collection name to which this track belongs"),
   TRACKNUMBER: z
-    .tuple([
-      z
-        .string()
-        .regex(
-          trackNumberRegex,
-          "Invalid track number format, expected <track>/<total>",
-        ),
-    ])
+    .tuple([z.coerce.number()])
     .describe(
       "The track number of this piece if part of a specific larger collection or album",
     ),
+  DISCNUMBER: z
+    .tuple([z.coerce.number()])
+    .describe(
+      "The disc number of this piece if part of a multi-disc collection",
+    ),
+  TOTALTRACKS: z
+    .tuple([z.coerce.number()])
+    .describe("Total number of tracks in the album"),
+  TOTALDISCS: z
+    .tuple([z.coerce.number()])
+    .describe("Total number of discs in the album"),
   ARTIST: z
     .array(z.string())
     .describe(
@@ -76,7 +60,7 @@ const IntermediateMetaflacSchema = z.object({
     .tuple([z.string()])
     .optional()
     .describe(
-      "License information, for example, 'All Rights Reserved', 'Any Use Permitted', a URL to a license such as a Creative Commons license (e.g. \"creativecommons.org/licenses/by/4.0/\"), or similar.",
+      "License information, for example, 'All Rights Reserved', 'Any Use Permitted', a URL to a license such as a Creative Commons license (e.g. 'creativecommons.org/licenses/by/4.0/'), or similar.",
     ),
   ORGANIZATION: z
     .array(z.string())
@@ -110,18 +94,6 @@ const IntermediateMetaflacSchema = z.object({
     .tuple([z.string().regex(isrcRegex, "Invalid ISRC format")])
     .optional()
     .describe("ISRC number for the track; see https://isrc.ifpi.org"),
-  DISCNUMBER: z
-    .tuple([
-      z
-        .string()
-        .regex(
-          trackNumberRegex,
-          "Invalid disc number format, expected <disc>/<total>",
-        ),
-    ])
-    .describe(
-      "The disc number of this piece if part of a multi-disc collection",
-    ),
 });
 
 export const MetaflacSchema = IntermediateMetaflacSchema.transform((val) => ({
@@ -129,7 +101,10 @@ export const MetaflacSchema = IntermediateMetaflacSchema.transform((val) => ({
   ARTIST: val.ARTIST,
   ALBUM: val.ALBUM[0],
   ALBUMARTIST: val.ALBUMARTIST,
-  TRACKNUMBER: parseTrackNumber(val.TRACKNUMBER[0]),
+  TRACKNUMBER: val.TRACKNUMBER[0],
+  DISCNUMBER: val.DISCNUMBER[0],
+  TOTALTRACKS: val.TOTALTRACKS?.[0],
+  TOTALDISCS: val.TOTALDISCS?.[0],
   VERSION: val.VERSION?.[0],
   PERFORMER: val.PERFORMER,
   COPYRIGHT: val.COPYRIGHT?.[0],
@@ -141,7 +116,6 @@ export const MetaflacSchema = IntermediateMetaflacSchema.transform((val) => ({
   LOCATION: val.LOCATION?.[0],
   CONTACT: val.CONTACT?.[0],
   ISRC: val.ISRC?.[0],
-  DISCNUMBER: parseTrackNumber(val.DISCNUMBER[0]),
 }));
 
 export type MetaflacTags = z.output<typeof MetaflacSchema>;
