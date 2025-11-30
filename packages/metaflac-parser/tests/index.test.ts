@@ -34,28 +34,28 @@ void suite("Metaflac output parser", () => {
       ALBUMARTIST: ["Netrum", "HALVORSEN"],
       COPYRIGHT: "NCS",
       TITLE: "Phoenix",
-      TRACKNUMBER: {
-        track: 1,
-        total: 1,
-      },
-      DISCNUMBER: {
-        track: 1,
-        total: 1,
-      },
+      TRACKNUMBER: 1,
+      DISCNUMBER: 1,
+      TOTALDISCS: 1,
+      TOTALTRACKS: 1,
       DATE: "2021-08-20",
     };
     const result = parseMetaflacTags(test_1);
-    expect(result).toMatchObject(expected);
+    expect(result).toStrictEqual(expected);
   });
 
   test("parseMetaflacTags rejects invalid track numbers", () => {
     const invalidTrackOutput = `TITLE=Track
 ALBUM=Album
 TRACKNUMBER=5
-ARTIST=Artist`;
+DISCNUMBER=1
+ARTIST=Artist
+ARTIST=Artist2
+ALBUMARTIST=Artist
+ALBUMARTIST=Artist2`;
 
     expect(() => parseMetaflacTags(invalidTrackOutput)).toThrowError(
-      /track number/i,
+      /invalid/i,
     );
   });
 });
