@@ -281,5 +281,8 @@
   },
   "[typst]": {
     "editor.defaultFormatter": "myriad-dreamin.tinymist"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   }
 }
