@@ -20,22 +20,32 @@ const ffprobeArgs = [
 // Partial FFProbe output types
 
 interface FFProbeStream {
-  index: number;
-  sample_rate: string;
-  bits_per_raw_sample: string;
-  [key: string]: unknown;
+  readonly index: number;
+  readonly sample_rate: string;
+  readonly bits_per_raw_sample: string;
+  readonly [key: string]: unknown;
 }
 
 interface FFProbeFormat {
-  streams: FFProbeStream[];
-  format: unknown;
+  readonly duration: string;
+  readonly size: string;
+  readonly bit_rate: string;
+  readonly [key: string]: unknown;
+}
+
+interface FFProbeFormat {
+  readonly streams: FFProbeStream[];
+  readonly format: FFProbeFormat;
 }
 
 // Extracted FFProbe information
 
 export interface FFProbeOutput {
-  sampleRate: number;
-  bitsPerRawSample: number;
+  readonly sampleRate: number;
+  readonly bitsPerRawSample: number;
+  readonly durationMs: number;
+  readonly fileSize: number;
+  readonly bitRate: number;
 }
 
 @Injectable()
@@ -66,10 +76,16 @@ export class FFmpegService {
 
       const sampleRate = parseInt(audioStream.sample_rate, 10);
       const bitsPerRawSample = parseInt(audioStream.bits_per_raw_sample, 10);
+      const durationMs = Math.floor(parseFloat(parsed.format.duration) * 1000);
+      const fileSize = parseInt(parsed.format.size, 10);
+      const bitRate = parseInt(parsed.format.bit_rate, 10);
 
       return {
         sampleRate,
         bitsPerRawSample,
+        durationMs,
+        fileSize,
+        bitRate,
       };
     } catch (error) {
       throw new Error(
