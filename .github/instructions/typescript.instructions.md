@@ -15,3 +15,9 @@ Imports must be ordered as follows:
 4. Relative imports from the current package
 
 Each of these groups must be separated by a single blank line.
+
+# Interfaces, Types and objects
+
+When defining interfaces, always use the `readonly` modifier when possible.
+
+When defining objects that should typically not be modified in their lifetime, use `as const` to ensure immutability.
