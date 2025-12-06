@@ -34,6 +34,8 @@ export function getBrowserSupport(): BrowserSupport {
     ["LocalStorage", "localStorage" in window],
     ["WebAudio", "AudioContext" in window],
     ["MediaSource", "MediaSource" in window],
+    ["Media Session API", "mediaSession" in navigator],
+    ["Background Fetch API", "BackgroundFetchManager" in window],
     ["FLAC support", flacSupport],
     ["Opus support", opusSupport],
   ];
