@@ -208,6 +208,7 @@ export class IndexingProcessor extends WorkerHost {
     for (const [folderPath] of Object.entries(context.sourceData)) {
       const coverPath = path.resolve(folderPath, "cover.jpg");
 
+      // https://developer.mozilla.org/en-US/docs/Web/API/MediaMetadata/artwork
       const resolutions = [64, 128, 256, 512, 1024];
 
       const quality = 60; // 0–100 but usually 30–60 is best

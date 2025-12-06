@@ -24,6 +24,8 @@ import { MediaService } from "./media/media.service";
 import { BullmqModule } from "../bullmq/bullmq.module";
 import { IndexingResolver } from "./indexing/indexing.resolver";
 import { IndexingService } from "./indexing/indexing.service";
+import { AlbumService } from "./album/album.service";
+import { AlbumController } from "./album/album.controller";
 
 @Module({
   imports: [
@@ -54,7 +56,12 @@ import { IndexingService } from "./indexing/indexing.service";
       },
     }),
   ],
-  controllers: [ApiController, AuthController, MediaController],
+  controllers: [
+    ApiController,
+    AuthController,
+    MediaController,
+    AlbumController,
+  ],
   providers: [
     ApiService,
     ApiResolver,
@@ -67,6 +74,7 @@ import { IndexingService } from "./indexing/indexing.service";
     GraphqlAuthGuard,
     GraphqlAdminGuard,
     MediaService,
+    AlbumService,
     IndexingService,
   ],
   exports: [AuthGuard, AdminGuard, GraphqlAuthGuard, GraphqlAdminGuard],

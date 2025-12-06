@@ -8,17 +8,17 @@ import {
 
 export interface ApiRangeStreamOptions {
   /** Content type (MIME type) of the streamed file */
-  contentType: string;
+  readonly contentType: string;
   /** Example content type for documentation */
-  contentTypeExample?: string;
+  readonly contentTypeExample?: string;
   /** Example file size for documentation */
-  fileSizeExample?: string;
+  readonly fileSizeExample?: string;
   /** Example filename for documentation */
-  filenameExample?: string;
+  readonly filenameExample?: string;
   /** Success response description */
-  successDescription?: string;
+  readonly successDescription?: string;
   /** Partial content response description */
-  partialDescription?: string;
+  readonly partialDescription?: string;
 }
 
 /**
