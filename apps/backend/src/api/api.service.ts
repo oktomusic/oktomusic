@@ -1,29 +1,19 @@
 import { Injectable } from "@nestjs/common";
 
 import { PrismaService } from "../db/prisma.service";
-import type { HelloWorld } from "../generated/prisma";
+import type { User } from "../generated/prisma";
 
 @Injectable()
 export class ApiService {
   constructor(private readonly prisma: PrismaService) {}
 
-  getHello(): string {
-    return "Hello World!";
-  }
-
-  listHelloWorld(): Promise<HelloWorld[]> {
-    return this.prisma.helloWorld.findMany({
-      orderBy: { id: "asc" },
-    });
-  }
-
-  listUsers() {
+  listUsers(): Promise<User[]> {
     return this.prisma.user.findMany({
       orderBy: { id: "asc" },
     });
   }
 
-  getUserById(id: string) {
+  getUserById(id: string): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: { id },
     });
