@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/node": "catalog:default",
     "tsdown": "catalog:default",
-    "vite": "^7.2.4"
+    "vite": "^7.2.6"
   },
   "peerDependencies": {
     "vite": "^7.1.12"

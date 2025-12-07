@@ -27,7 +27,7 @@
     "test:e2e": "vitest run --config vitest.e2e.config.ts"
   },
   "dependencies": {
-    "@apollo/server": "^5.1.0",
+    "@apollo/server": "^5.2.0",
     "@as-integrations/express5": "^1.1.2",
     "@nestjs/apollo": "^13.2.1",
     "@nestjs/bullmq": "^11.0.4",
@@ -42,8 +42,8 @@
     "@oktomusic/metaflac-parser": "workspace:^",
     "@prisma/client": "6.19.0",
     "@types/hbs": "^4.0.5",
-    "@valkey/valkey-glide": "^2.1.2",
-    "bullmq": "^5.64.1",
+    "@valkey/valkey-glide": "^2.2.1",
+    "bullmq": "^5.65.1",
     "cookie-parser": "^1.4.7",
     "express-session": "^1.18.2",
     "graphql": "^16.12.0",
@@ -59,18 +59,18 @@
     "rxjs": "^7.8.2",
     "sharp": "^0.34.5",
     "valkey-glide-ioredis-adapter": "^0.4.0",
-    "zod": "^4.1.12"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.12",
+    "@nestjs/cli": "^11.0.14",
     "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^11.1.9",
     "@types/cookie-parser": "^1.4.10",
-    "@types/express": "^5.0.5",
+    "@types/express": "^5.0.6",
     "@types/express-session": "^1.18.2",
     "@types/node": "catalog:default",
     "@types/supertest": "^6.0.3",
-    "@vitest/coverage-v8": "^4.0.13",
+    "@vitest/coverage-v8": "^4.0.15",
     "http-proxy-middleware": "^3.0.5",
     "source-map-support": "^0.5.21",
     "supertest": "^7.1.4",
@@ -78,6 +78,6 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "catalog:default",
-    "vitest": "^4.0.13"
+    "vitest": "^4.0.15"
   }
 }

@@ -37,11 +37,11 @@
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/api-schemas"
   },
   "dependencies": {
-    "zod": "^4.1.12"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@types/node": "catalog:default",
-    "bumpp": "^10.3.1",
+    "bumpp": "^10.3.2",
     "install": "^0.13.0",
     "tsdown": "caatalog:default",
     "typescript": "^5.9.3"
