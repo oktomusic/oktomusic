@@ -20,3 +20,7 @@ Metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc/v-comment.
 | `TOTALTRACKS` | Yes      | Integer (1-based) | No     | No               |
 | `DISCNUMBER`  | Yes      | Integer (1-based) | No     | No               |
 | `TOTALDISCS`  | Yes      | Integer (1-based) | No     | No               |
+
+Additionally, the cover of the album must be present as a file in the folder, named either `cover.png`, `cover.avif`, `cover.jpg` or `cover.jpeg`, taken by this order of preference.
+
+These will be converted to lossy AVIF images of various sizes, so the ideal would be to use a lossless PNG or AVIF image as source.
