@@ -7,7 +7,6 @@ import { Inject, Logger } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
 import { Job } from "bullmq";
 import { PubSub } from "graphql-subscriptions";
-import sharp from "sharp";
 
 import type { MetaflacTags } from "@oktomusic/metaflac-parser";
 
@@ -24,6 +23,7 @@ import {
   IndexingReportType,
   type IndexingWarning,
 } from "./errors";
+import { pickAndConvertAlbumCover } from "../../common/utils/sharp-utils";
 
 interface FlacFolder {
   path: string;
@@ -206,47 +206,9 @@ export class IndexingProcessor extends WorkerHost {
     //
     // Typical 1280x1280 cover.jpg file
     for (const [folderPath] of Object.entries(context.sourceData)) {
-      const coverPath = path.resolve(folderPath, "cover.jpg");
-
-      // https://developer.mozilla.org/en-US/docs/Web/API/MediaMetadata/artwork
-      const resolutions = [64, 128, 256, 512, 1024];
-
-      const quality = 60; // 0–100 but usually 30–60 is best
-      const effort = 9; // 0–9 encoding effort (higher = slower)
-      const chromaSubsampling = "4:4:4"; // best quality
-
-      try {
-        await fs.access(coverPath, fs.constants.R_OK);
-        console.log(`Folder ${folderPath} has a cover.jpg file`);
-
-        const image = sharp(coverPath);
-
-        for (const res of resolutions) {
-          const outputPath = path.resolve(folderPath, `cover_${res}x.avif`);
-          await image
-            .clone()
-            .resize({ height: res, width: res, fit: sharp.fit.cover })
-            .avif({
-              quality: quality,
-              effort: effort,
-              chromaSubsampling: chromaSubsampling,
-            })
-            .toFile(outputPath);
-          console.log(`  - generated ${outputPath}`);
-        }
-
-        await image
-          .clone()
-          .avif({
-            quality: quality,
-            effort: effort,
-            chromaSubsampling: chromaSubsampling,
-          })
-          .toFile(path.resolve(folderPath, `cover_1280x.avif`));
-        console.log(`  - generated cover_1280x.avif`);
-      } catch {
-        console.log(`Folder ${folderPath} does not have a cover.jpg file`);
-      }
+      console.log(`Converting covers: ${folderPath}`);
+      await pickAndConvertAlbumCover(folderPath);
+      console.log(`Converted covers`);
     }
 
     console.log("Indexing completed");
