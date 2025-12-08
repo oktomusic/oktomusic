@@ -14,7 +14,7 @@ import type { ApiInfoRes } from "@oktomusic/api-schemas";
 
 import oidcConfig from "../config/definitions/oidc.config";
 import { ApiService } from "./api.service";
-import type { User } from "../generated/prisma";
+import type { User } from "../generated/prisma/client";
 import { AuthGuard } from "../common/guards/auth.guard";
 import { AdminGuard } from "../common/guards/admin.guard";
 

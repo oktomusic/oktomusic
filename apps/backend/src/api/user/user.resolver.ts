@@ -3,7 +3,7 @@ import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
 import type { Request } from "express";
 
 import { GraphqlAuthGuard } from "../../common/guards/graphql-auth.guard";
-import { Role } from "../../generated/prisma";
+import { Role } from "../../generated/prisma/client";
 import { UpdateUserProfileInput } from "./dto/update-user-profile.input";
 import { UserModel } from "./user.model";
 import { UserService } from "./user.service";
