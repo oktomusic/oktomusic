@@ -255,7 +255,8 @@
     "iex": false
   },
   "files.associations": {
-    "_headers": "plaintext" // Cloudflare _headers file, tend to be misdetected as TypeScript
+    "_headers": "plaintext", // Cloudflare _headers file, tend to be misdetected as TypeScript
+    "*.ttml": "xml",
   },
   "[yaml]": {
     "editor.insertSpaces": true,
