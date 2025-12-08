@@ -21,3 +21,9 @@ Each of these groups must be separated by a single blank line.
 When defining interfaces, always use the `readonly` modifier when possible.
 
 When defining objects that should typically not be modified in their lifetime, use `as const` to ensure immutability.
+
+# Libraries
+
+## Zod
+
+When creating Zod schemas, always prefer usingg `z.output<>` to infer types instead of using `z.infer<>`. This makes the distinction clearer with `z.input<>`.
