@@ -123,6 +123,10 @@ jobs:
         run: |
           pnpm --filter "@oktomusic/lyrics" run lint
 
+      - name: Tests
+        run: |
+          pnpm --filter "@oktomusic/lyrics" run test
+
   pkg-metaflac-parser:
     name: "@oktomusic/metaflac-parser"
     runs-on: ubuntu-latest
