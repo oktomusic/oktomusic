@@ -26,6 +26,7 @@ COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY packages/vite-sri-manifest/package.json packages/vite-sri-manifest/
 COPY packages/api-schemas/package.json packages/api-schemas/
 COPY packages/metaflac-parser/package.json packages/metaflac-parser/
+COPY packages/lyrics/package.json packages/lyrics/
 COPY apps/backend/package.json apps/backend/
 COPY apps/frontend/package.json apps/frontend/
 
@@ -33,6 +34,7 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
   pnpm install --frozen-lockfile \
   --filter @oktomusic/vite-sri-manifest \
   --filter @oktomusic/metaflac-parser \
+  --filter @oktomusic/lyrics \
   --filter @oktomusic/api-schemas \
   --filter @oktomusic/backend \
   --filter @oktomusic/frontend
@@ -40,17 +42,21 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
 COPY packages/vite-sri-manifest/ packages/vite-sri-manifest/
 COPY packages/api-schemas/ packages/api-schemas/
 COPY packages/metaflac-parser/ packages/metaflac-parser/
+COPY packages/lyrics/ packages/lyrics/
 COPY apps/backend/ apps/backend/
 COPY apps/frontend/ apps/frontend/
 
 # Build the vite-sri-manifest package first
 RUN pnpm run --filter @oktomusic/vite-sri-manifest build
 
-# Build the api-schemas package first
+# Build the metaflac-parser package first
 RUN pnpm run --filter @oktomusic/metaflac-parser build
 
 # Build the api-schemas package first
 RUN pnpm run --filter @oktomusic/api-schemas build
+
+# Build the lyrics package first
+RUN pnpm run --filter @oktomusic/lyrics build
 
 # Build the frontend
 RUN pnpm run --filter @oktomusic/frontend build
@@ -89,6 +95,7 @@ ENV METAFLAC_PATH=/usr/local/bin/metaflac
 COPY --from=builder /usr/src/app/pnpm-workspace.yaml /usr/src/app/package.json /usr/src/app/pnpm-lock.yaml ./
 COPY --from=builder /usr/src/app/apps/backend/package.json ./apps/backend/
 COPY --from=builder /usr/src/app/packages/api-schemas/package.json ./packages/api-schemas/
+COPY --from=builder /usr/src/app/packages/lyrics/package.json ./packages/lyrics/
 COPY --from=builder /usr/src/app/packages/metaflac-parser/package.json ./packages/metaflac-parser/
 
 # Install production dependencies only
@@ -104,6 +111,7 @@ COPY --from=builder /usr/src/app/apps/backend/prisma ./apps/backend/prisma
 # Copy built backend and frontend
 COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 COPY --from=builder /usr/src/app/packages/api-schemas/dist ./packages/api-schemas/dist
+COPY --from=builder /usr/src/app/packages/lyrics/dist ./packages/lyrics/dist
 COPY --from=builder /usr/src/app/packages/metaflac-parser/dist ./packages/metaflac-parser/dist
 
 # Copy the generated Prisma client
