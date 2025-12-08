@@ -40,7 +40,7 @@
     "@nestjs/terminus": "^11.0.0",
     "@oktomusic/api-schemas": "workspace:^",
     "@oktomusic/metaflac-parser": "workspace:^",
-    "@prisma/client": "6.19.0",
+    "@prisma/client": "7.1.0",
     "@types/hbs": "^4.0.5",
     "@valkey/valkey-glide": "^2.2.1",
     "bullmq": "^5.65.1",
