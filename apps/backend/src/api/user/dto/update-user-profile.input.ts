@@ -1,6 +1,6 @@
 import { Field, InputType } from "@nestjs/graphql";
 
-import { Sex } from "../../../generated/prisma";
+import { Sex } from "../../../generated/prisma/client";
 
 @InputType()
 export class UpdateUserProfileInput {

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
-import { Prisma, Sex } from "../../generated/prisma";
+import { Prisma, Sex } from "../../generated/prisma/client";
 import { PrismaService } from "../../db/prisma.service";
 
 interface UpdateUserProfileData {
