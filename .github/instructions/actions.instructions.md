@@ -19,6 +19,9 @@ new-job-name:
   runs-on: ubuntu-latest
   needs: [other-job-if-needed]
   steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
     - name: Setup Environment
       uses: ./.github/actions/setup-node-pnpm
 
