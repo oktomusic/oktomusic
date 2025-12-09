@@ -6,7 +6,9 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/backend build",
       "isBackground": false,
-      "problemMatcher": ["$tsc"],
+      "problemMatcher": [
+        "$tsc"
+      ],
       "group": "build"
     },
     {
@@ -14,7 +16,9 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/frontend build",
       "isBackground": false,
-      "problemMatcher": ["$tsc"],
+      "problemMatcher": [
+        "$tsc"
+      ],
       "group": "build"
     },
     {
@@ -22,14 +26,45 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/backend start:dev",
       "isBackground": false,
-      "problemMatcher": ["$tsc"]
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "backend: tests",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/backend test",
+      "isBackground": false,
+      "problemMatcher": [
+        "$tsc"
+      ]
     },
     {
       "label": "frontend: dev",
       "type": "shell",
       "command": "pnpm --filter @oktomusic/frontend dev",
       "isBackground": false,
-      "problemMatcher": ["$tsc"]
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "frontend: tests",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/frontend test",
+      "isBackground": false,
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "lyrics: tests",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/lyrics test",
+      "isBackground": false,
+      "problemMatcher": [
+        "$tsc"
+      ]
     },
     {
       "label": "docker: start",
