@@ -4,6 +4,11 @@ import { performance } from "node:perf_hooks";
 
 import sharp from "sharp";
 
+import {
+  extractVibrantPalette,
+  formatPaletteForLogging,
+} from "./color/index";
+
 const albumCoverCandidates = [
   "cover.png",
   "cover.avif",
@@ -72,6 +77,15 @@ async function pickAndConvertAlbumCover(srcPath: string) {
   }
 
   const srcImage = sharp(candidatePath);
+
+  // Extract vibrant colors from the source image
+  const colorExtractionStart = performance.now();
+  const palette = await extractVibrantPalette(srcImage.clone());
+  const colorExtractionEnd = performance.now();
+  console.log(
+    `Color extraction took ${(colorExtractionEnd - colorExtractionStart).toFixed(0)} ms`,
+  );
+  console.log("Extracted vibrant colors:", formatPaletteForLogging(palette));
 
   const lossyStart = performance.now();
   await Promise.all(
