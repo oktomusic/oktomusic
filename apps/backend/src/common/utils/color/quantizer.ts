@@ -19,8 +19,25 @@ import type { RGB, HSL, Swatch, PixelData } from "./types";
  */
 const SIGBITS = 5;
 const RSHIFT = 8 - SIGBITS;
+
+/**
+ * Maximum number of iterations for the quantization algorithm.
+ * Prevents infinite loops in edge cases.
+ */
 const MAX_ITERATIONS = 1000;
+
+/**
+ * Fraction of color palette to generate using population-based priority.
+ * The remaining colors are generated using volume-based priority.
+ * Value of 0.75 means 75% of colors are selected by population weight.
+ */
 const FRACT_BY_POPULATION = 0.75;
+
+/**
+ * Size of the color histogram array.
+ * For SIGBITS=5, this is 2^(3*5) = 32768 possible colors.
+ */
+const HISTOGRAM_SIZE = 1 << (3 * SIGBITS);
 
 /**
  * A 3D color space box representing a range of colors in the RGB cube.
@@ -163,7 +180,7 @@ function getColorIndex(r: number, g: number, b: number): number {
  * @returns Histogram array where index is the quantized color and value is the count
  */
 function buildHistogram(pixels: PixelData): number[] {
-  const histo: number[] = new Array(1 << (3 * SIGBITS)).fill(0);
+  const histo: number[] = new Array(HISTOGRAM_SIZE).fill(0);
   const data = pixels.data;
 
   for (let i = 0; i < data.length; i += 4) {
@@ -330,6 +347,8 @@ function quantizeIter(pq: VBox[], target: number): void {
     }
 
     // Sort by count * volume for priority
+    // Note: For large color counts, this could be optimized using a binary heap
+    // instead of array sort, but for typical usage (maxColors ~64) this is sufficient
     pq.sort((a, b) => a.count() * a.volume() - b.count() * b.volume());
 
     if (ncolors >= target) break;
@@ -359,6 +378,8 @@ export function quantize(pixels: PixelData, maxColors = 64): Swatch[] {
   quantizeIter(pq, target1);
 
   // Sort by product of volume and count for remaining cuts
+  // Note: For large color counts, this could be optimized using a binary heap
+  // instead of array sort, but for typical usage (maxColors ~64) this is sufficient
   pq.sort((a, b) => a.count() - b.count());
 
   // Second cut to reach max colors
