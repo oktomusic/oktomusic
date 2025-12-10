@@ -4,10 +4,7 @@ import { performance } from "node:perf_hooks";
 
 import sharp from "sharp";
 
-import {
-  extractVibrantPalette,
-  formatPaletteForLogging,
-} from "./color/index";
+import { extractVibrantPalette, formatPaletteForLogging } from "./color/index";
 
 const albumCoverCandidates = [
   "cover.png",

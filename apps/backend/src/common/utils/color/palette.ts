@@ -1,14 +1,14 @@
 /**
  * Palette generation from quantized color swatches.
- * 
+ *
  * Selects the best swatches for Vibrant, Muted, Light, and Dark variations
  * based on target characteristics and scoring functions.
- * 
+ *
  * Based on the node-vibrant library algorithm.
  * Reference: https://github.com/Vibrant-Colors/node-vibrant
  */
 
-import type { Swatch, VibrantPalette, PaletteTarget } from "./types"
+import type { Swatch, VibrantPalette, PaletteTarget } from "./types";
 
 /**
  * Default target values for palette generation.
@@ -57,47 +57,52 @@ const TARGETS = {
     lightnessWeight: 1.0,
     populationWeight: 1.0,
   },
-} as const
+} as const;
 
 /**
  * Minimum saturation threshold for vibrant colors.
  */
-const MIN_VIBRANT_SATURATION = 0.35
+const MIN_VIBRANT_SATURATION = 0.35;
 
 /**
  * Minimum saturation threshold for muted colors.
  */
-const MAX_MUTED_SATURATION = 0.4
+const MAX_MUTED_SATURATION = 0.4;
 
 /**
  * Lightness range for dark colors.
  */
-const MAX_DARK_LIGHTNESS = 0.4
+const MAX_DARK_LIGHTNESS = 0.4;
 
 /**
  * Lightness range for light colors.
  */
-const MIN_LIGHT_LIGHTNESS = 0.55
+const MIN_LIGHT_LIGHTNESS = 0.55;
 
 /**
  * Calculate a weighted score for a swatch based on target values.
  * Higher scores indicate a better match for the target.
  */
-function scoreSwatchForTarget(swatch: Swatch, target: PaletteTarget, maxPopulation: number): number {
-  const saturationDiff = Math.abs(swatch.hsl.s - target.saturationTarget)
-  const lightnessDiff = Math.abs(swatch.hsl.l - target.lightnessTarget)
-  const populationRatio = maxPopulation > 0 ? swatch.population / maxPopulation : 0
+function scoreSwatchForTarget(
+  swatch: Swatch,
+  target: PaletteTarget,
+  maxPopulation: number,
+): number {
+  const saturationDiff = Math.abs(swatch.hsl.s - target.saturationTarget);
+  const lightnessDiff = Math.abs(swatch.hsl.l - target.lightnessTarget);
+  const populationRatio =
+    maxPopulation > 0 ? swatch.population / maxPopulation : 0;
 
   // Weighted score calculation
-  const saturationScore = 1 - saturationDiff
-  const lightnessScore = 1 - lightnessDiff
+  const saturationScore = 1 - saturationDiff;
+  const lightnessScore = 1 - lightnessDiff;
 
   const score =
     saturationScore * target.saturationWeight +
     lightnessScore * target.lightnessWeight +
-    populationRatio * target.populationWeight
+    populationRatio * target.populationWeight;
 
-  return score
+  return score;
 }
 
 /**
@@ -109,56 +114,56 @@ function findBestSwatch(
   maxPopulation: number,
   filter?: (swatch: Swatch) => boolean,
 ): Swatch | null {
-  let bestSwatch: Swatch | null = null
-  let bestScore = 0
+  let bestSwatch: Swatch | null = null;
+  let bestScore = 0;
 
   for (const swatch of swatches) {
     // Apply filter if provided
     if (filter && !filter(swatch)) {
-      continue
+      continue;
     }
 
-    const score = scoreSwatchForTarget(swatch, target, maxPopulation)
+    const score = scoreSwatchForTarget(swatch, target, maxPopulation);
     if (score > bestScore) {
-      bestScore = score
-      bestSwatch = swatch
+      bestScore = score;
+      bestSwatch = swatch;
     }
   }
 
-  return bestSwatch
+  return bestSwatch;
 }
 
 /**
  * Check if a swatch meets the criteria for vibrant colors.
  */
 function isVibrant(swatch: Swatch): boolean {
-  return swatch.hsl.s >= MIN_VIBRANT_SATURATION
+  return swatch.hsl.s >= MIN_VIBRANT_SATURATION;
 }
 
 /**
  * Check if a swatch meets the criteria for muted colors.
  */
 function isMuted(swatch: Swatch): boolean {
-  return swatch.hsl.s <= MAX_MUTED_SATURATION
+  return swatch.hsl.s <= MAX_MUTED_SATURATION;
 }
 
 /**
  * Check if a swatch meets the criteria for dark colors.
  */
 function isDark(swatch: Swatch): boolean {
-  return swatch.hsl.l <= MAX_DARK_LIGHTNESS
+  return swatch.hsl.l <= MAX_DARK_LIGHTNESS;
 }
 
 /**
  * Check if a swatch meets the criteria for light colors.
  */
 function isLight(swatch: Swatch): boolean {
-  return swatch.hsl.l >= MIN_LIGHT_LIGHTNESS
+  return swatch.hsl.l >= MIN_LIGHT_LIGHTNESS;
 }
 
 /**
  * Generate a complete vibrant color palette from an array of swatches.
- * 
+ *
  * This function selects the best matching swatches for each palette type:
  * - Vibrant: High saturation, medium lightness
  * - Light Vibrant: High saturation, high lightness
@@ -166,7 +171,7 @@ function isLight(swatch: Swatch): boolean {
  * - Muted: Low saturation, medium lightness
  * - Light Muted: Low saturation, high lightness
  * - Dark Muted: Low saturation, low lightness
- * 
+ *
  * @param swatches - Array of color swatches from quantization
  * @returns Complete vibrant palette with all six color variations
  */
@@ -179,44 +184,49 @@ export function generatePalette(swatches: Swatch[]): VibrantPalette {
       Muted: null,
       LightMuted: null,
       DarkMuted: null,
-    }
+    };
   }
 
   // Find max population for scoring
-  const maxPopulation = Math.max(...swatches.map((s) => s.population))
+  const maxPopulation = Math.max(...swatches.map((s) => s.population));
 
   // Generate each palette entry
-  const vibrant = findBestSwatch(swatches, TARGETS.VIBRANT, maxPopulation, isVibrant)
+  const vibrant = findBestSwatch(
+    swatches,
+    TARGETS.VIBRANT,
+    maxPopulation,
+    isVibrant,
+  );
 
   const lightVibrant = findBestSwatch(
     swatches,
     TARGETS.LIGHT_VIBRANT,
     maxPopulation,
     (s) => isVibrant(s) && isLight(s),
-  )
+  );
 
   const darkVibrant = findBestSwatch(
     swatches,
     TARGETS.DARK_VIBRANT,
     maxPopulation,
     (s) => isVibrant(s) && isDark(s),
-  )
+  );
 
-  const muted = findBestSwatch(swatches, TARGETS.MUTED, maxPopulation, isMuted)
+  const muted = findBestSwatch(swatches, TARGETS.MUTED, maxPopulation, isMuted);
 
   const lightMuted = findBestSwatch(
     swatches,
     TARGETS.LIGHT_MUTED,
     maxPopulation,
     (s) => isMuted(s) && isLight(s),
-  )
+  );
 
   const darkMuted = findBestSwatch(
     swatches,
     TARGETS.DARK_MUTED,
     maxPopulation,
     (s) => isMuted(s) && isDark(s),
-  )
+  );
 
   return {
     Vibrant: vibrant,
@@ -225,5 +235,5 @@ export function generatePalette(swatches: Swatch[]): VibrantPalette {
     Muted: muted,
     LightMuted: lightMuted,
     DarkMuted: darkMuted,
-  }
+  };
 }
