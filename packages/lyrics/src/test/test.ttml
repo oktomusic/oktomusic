@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xml:lang="en">
+  <body>
+    <div>
+      <!-- first line -->
+      <p begin="00:00:00.000" end="00:00:03.500" style="s1">
+        <span begin="00:00:00.000" end="00:00:00.500">Hello,</span>
+        <span begin="00:00:00.500" end="00:00:00.600"> </span>
+        <span begin="00:00:00.600" end="00:00:01.000">darkness,</span>
+        <span begin="00:00:01.000" end="00:00:01.100"> </span>
+        <span begin="00:00:01.100" end="00:00:01.500">my</span>
+        <span begin="00:00:01.500" end="00:00:01.600"> </span>
+        <span begin="00:00:01.600" end="00:00:02.500">old</span>
+        <span begin="00:00:02.500" end="00:00:02.600"> </span>
+        <span begin="00:00:02.600" end="00:00:03.500">friend</span>
+      </p>
+
+      <!-- second line -->
+      <p begin="00:00:04.000" end="00:00:08.500" style="s1">
+        <span begin="00:00:04.000" end="00:00:04.600">I've</span>
+        <span begin="00:00:04.600" end="00:00:04.650"> </span>
+        <span begin="00:00:04.650" end="00:00:05.200">come</span>
+        <span begin="00:00:05.200" end="00:00:05.250"> </span>
+        <span begin="00:00:05.250" end="00:00:05.800">to</span>
+        <span begin="00:00:05.800" end="00:00:05.850"> </span>
+        <span begin="00:00:05.850" end="00:00:06.400">talk</span>
+        <span begin="00:00:06.400" end="00:00:06.450"> </span>
+        <span begin="00:00:06.450" end="00:00:07.000">with</span>
+        <span begin="00:00:07.000" end="00:00:07.050"> </span>
+        <span begin="00:00:07.050" end="00:00:08.000">you</span>
+        <span begin="00:00:08.000" end="00:00:08.050"> </span>
+        <span begin="00:00:08.050" end="00:00:08.500">again</span>
+      </p>
+    </div>
+  </body>
+</tt>

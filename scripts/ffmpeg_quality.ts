@@ -1,8 +1,8 @@
 #!/usr/bin/env tsx
 
-import { spawnSync } from "child_process";
-import * as fs from "fs";
-import * as path from "path";
+import { spawnSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 
 type FFMpegFlag = [string, string?];
 type FFMpegFlagSet = FFMpegFlag[];
@@ -21,7 +21,7 @@ const defaultFFMpegFlags: FFMpegFlagSet = [
   ["-mapping_family", "0"],
   ["-max_delay", "0"],
   // -opus_header gain=0
-];
+] as const;
 
 const qualities: OpusQualityPreset[] = [
   {

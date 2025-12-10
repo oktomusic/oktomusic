@@ -1,3 +1,2 @@
-export const myFunction = () => {
-  return "Hello, world!";
-};
+export type { Lyrics } from "./model";
+export { parseTTMLtoLyrics } from "./ttml";
