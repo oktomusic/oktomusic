@@ -122,29 +122,18 @@ export function parseLRCtoLyrics(input: string): Lyrics {
 
       for (let j = 0; j < line.words.length; j++) {
         const word = line.words[j]
-        const nextWord = line.words[j + 1]
 
-        // Calculate offset from line start
-        const offset = Math.max(1, word.timestamp - lineStartMs)
+        // Calculate offset from line start, ensuring monotonic timing
+        // If word timestamp is before line start (malformed data), clamp to 1ms
+        const offset = Math.max(1, Math.round(word.timestamp - lineStartMs))
 
         // For spacing between words (except last word)
         const wordText = j < line.words.length - 1 ? word.word + " " : word.word
 
         tokens.push({
           c: wordText,
-          d: Math.max(1, Math.round(offset)),
+          d: offset,
         })
-
-        // If this is the last word and we have time left, we might want to add spacing
-        if (j === line.words.length - 1 && nextWord == null) {
-          // Last word - calculate duration until line end
-          const remainingTime = lineEndMs - word.timestamp
-          if (remainingTime > 100) {
-            // If there's significant time remaining, the word has duration
-            // The offset 'd' represents start time, not duration
-            // So we don't need to do anything special here
-          }
-        }
       }
 
       result.push({
