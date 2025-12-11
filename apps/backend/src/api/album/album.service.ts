@@ -5,6 +5,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
 
 import appConfig from "../../config/definitions/app.config";
+import { AlbumCoverSizeString } from "../../common/utils/sharp-utils";
 
 @Injectable()
 export class AlbumService {
@@ -13,7 +14,7 @@ export class AlbumService {
     private readonly appConf: ConfigType<typeof appConfig>,
   ) {}
 
-  findFirstCoverFile(): string | null {
+  findFirstCoverFile(size: AlbumCoverSizeString): string | null {
     const findCover = (dir: string): string | null => {
       try {
         const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -21,7 +22,7 @@ export class AlbumService {
         for (const entry of entries) {
           if (
             entry.isFile() &&
-            entry.name.toLowerCase().endsWith("_1280x.avif")
+            entry.name.toLowerCase().endsWith(`_${size}x.avif`)
           ) {
             return path.join(dir, entry.name);
           }

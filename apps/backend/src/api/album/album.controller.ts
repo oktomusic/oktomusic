@@ -6,6 +6,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  ParseEnumPipe,
   ParseUUIDPipe,
   StreamableFile,
   UseGuards,
@@ -15,13 +16,17 @@ import { ApiOperation, ApiParam, ApiSecurity, ApiTags } from "@nestjs/swagger";
 import { AuthGuard } from "../../common/guards/auth.guard";
 import { ApiFile } from "src/common/decorators/api-file.decorator";
 import { AlbumService } from "./album.service";
+import {
+  albumCoverSizes,
+  type AlbumCoverSizeString,
+} from "../../common/utils/sharp-utils";
 
 @ApiTags("Media")
 @Controller("api/album")
 export class AlbumController {
   constructor(private readonly albumService: AlbumService) {}
 
-  @Get(":uuid/cover")
+  @Get(":uuid/cover/:size")
   @UseGuards(AuthGuard)
   @ApiSecurity("session")
   @ApiOperation({
@@ -36,6 +41,14 @@ export class AlbumController {
       "Album UUID (currently ignored, serves first cover file found in library)",
     example: "550e8400-e29b-41d4-a716-446655440000",
   })
+  @ApiParam({
+    name: "size",
+    type: "integer",
+    enum: albumCoverSizes.map((s) => s.toString()),
+    enumName: "AlbumCoverSize",
+    description: "Requested cover image size",
+    example: "1280",
+  })
   @ApiFile({
     contentType: "image/avif",
     filenameExample: "cover.avif",
@@ -44,11 +57,12 @@ export class AlbumController {
       "Album cover image file returned successfully. Response includes Content-Length, Content-Type, and Content-Disposition headers.",
   })
   getCover(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @Param("uuid", new ParseUUIDPipe({ version: "4" })) _id: string,
+    @Param("size", new ParseEnumPipe(albumCoverSizes.map((s) => s.toString())))
+    size: AlbumCoverSizeString,
   ): StreamableFile {
     // Find first cover image in library (ignoring UUID for now)
-    const coverPath = this.albumService.findFirstCoverFile();
+    const coverPath = this.albumService.findFirstCoverFile(size);
 
     if (!coverPath) {
       throw new NotFoundException("No album cover file found in media library");

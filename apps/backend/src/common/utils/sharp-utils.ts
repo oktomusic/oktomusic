@@ -35,6 +35,9 @@ async function pickAlbumCoverCandidate(
 // https://developer.mozilla.org/en-US/docs/Web/API/MediaMetadata/artwork
 const albumCoverSizes = [96, 128, 192, 256, 384, 512, 1280] as const;
 
+type AlbumCoverSize = (typeof albumCoverSizes)[number];
+type AlbumCoverSizeString = `${AlbumCoverSize}`;
+
 const albumCoverConversionParams = {
   quality: 60, // 0–100 but usually 30–60 is best
   effort: 4, // 0–9 encoding effort (higher = slower)
@@ -96,3 +99,5 @@ export {
   convertAlbumCoverTo,
   pickAndConvertAlbumCover,
 };
+
+export type { AlbumCoverSize, AlbumCoverSizeString };
