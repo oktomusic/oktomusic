@@ -11,6 +11,9 @@ export function parseLrcTimeToMs(timeStr: string): number | undefined {
   if (!cleaned) return undefined
 
   // Match mm:ss.xx format
+  // Group 1: minutes (1-2 digits)
+  // Group 2: seconds (2 digits)
+  // Group 3: centiseconds/milliseconds (2-3 digits)
   const match = /^(\d{1,2}):(\d{2})\.(\d{2,3})$/.exec(cleaned)
   if (!match) return undefined
 
