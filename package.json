@@ -42,6 +42,7 @@
     "graphql-config": "^5.1.5",
     "husky": "^9.1.7",
     "jiti": "^2.6.1",
+    "node-vibrant": "^4.0.3",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "sharp": "^0.34.5",

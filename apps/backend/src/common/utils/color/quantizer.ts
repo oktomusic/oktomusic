@@ -92,9 +92,10 @@ class VBox {
 
   /**
    * Create a copy of this VBox.
+   * Note: Cached values are not copied as they will be recalculated for the new bounds.
    */
   clone(): VBox {
-    return new VBox(
+    const cloned = new VBox(
       this.r1,
       this.r2,
       this.g1,
@@ -103,6 +104,11 @@ class VBox {
       this.b2,
       this.histo,
     );
+    // Reset cached values since bounds will likely change
+    cloned._volume = 0;
+    cloned._count = 0;
+    cloned._avg = null;
+    return cloned;
   }
 
   /**
@@ -287,15 +293,26 @@ function medianCutApply(histo: number[], vbox: VBox): [VBox, VBox] | null {
 
   // Find the median point
   let splitPoint = -1;
-  for (let i = 0; i < partialsum.length; i++) {
-    if (partialsum[i] > total / 2) {
+  const rangeStart = maxw === rw ? vbox.r1 : maxw === gw ? vbox.g1 : vbox.b1;
+  const rangeEnd = maxw === rw ? vbox.r2 : maxw === gw ? vbox.g2 : vbox.b2;
+
+  for (let i = rangeStart; i <= rangeEnd; i++) {
+    if (partialsum[i] && partialsum[i] > total / 2) {
       splitPoint = i;
       break;
     }
   }
 
   if (splitPoint === -1) {
-    splitPoint = partialsum.length - 1;
+    splitPoint = rangeEnd;
+  }
+
+  // Ensure we don't create an invalid split
+  if (splitPoint === rangeEnd) {
+    splitPoint = rangeEnd - 1;
+  }
+  if (splitPoint < rangeStart) {
+    return null;
   }
 
   // Create two new VBoxes by splitting at the median
@@ -305,12 +322,18 @@ function medianCutApply(histo: number[], vbox: VBox): [VBox, VBox] | null {
   if (maxw === rw) {
     vbox1.r2 = splitPoint;
     vbox2.r1 = splitPoint + 1;
+    // Check if split is valid
+    if (vbox2.r1 > vbox.r2) return null;
   } else if (maxw === gw) {
     vbox1.g2 = splitPoint;
     vbox2.g1 = splitPoint + 1;
+    // Check if split is valid
+    if (vbox2.g1 > vbox.g2) return null;
   } else {
     vbox1.b2 = splitPoint;
     vbox2.b1 = splitPoint + 1;
+    // Check if split is valid
+    if (vbox2.b1 > vbox.b2) return null;
   }
 
   return [vbox1, vbox2];
@@ -323,16 +346,27 @@ function medianCutApply(histo: number[], vbox: VBox): [VBox, VBox] | null {
  * @param target - Target number of colors to generate
  */
 function quantizeIter(pq: VBox[], target: number): void {
-  let ncolors = 1;
+  let ncolors = pq.length;
   let niters = 0;
 
   while (niters < MAX_ITERATIONS) {
+    if (ncolors >= target) break;
+    if (pq.length === 0) break;
+
     const vbox = pq.pop();
     if (!vbox) break;
+
+    // If the vbox contains only 1 color, we can't split it
+    if (vbox.count() === 1) {
+      pq.push(vbox);
+      niters++;
+      continue;
+    }
 
     // Split the box
     const result = medianCutApply(vbox.histo, vbox);
     if (!result) {
+      // Can't split this box, put it back
       pq.push(vbox);
       niters++;
       continue;
@@ -346,12 +380,11 @@ function quantizeIter(pq: VBox[], target: number): void {
       ncolors++;
     }
 
-    // Sort by count * volume for priority
+    // Sort by count * volume for priority (descending - largest first)
     // Note: For large color counts, this could be optimized using a binary heap
     // instead of array sort, but for typical usage (maxColors ~64) this is sufficient
-    pq.sort((a, b) => a.count() * a.volume() - b.count() * b.volume());
+    pq.sort((a, b) => b.count() * b.volume() - a.count() * a.volume());
 
-    if (ncolors >= target) break;
     niters++;
   }
 }
@@ -377,10 +410,10 @@ export function quantize(pixels: PixelData, maxColors = 64): Swatch[] {
   const target1 = Math.floor(maxColors * FRACT_BY_POPULATION);
   quantizeIter(pq, target1);
 
-  // Sort by product of volume and count for remaining cuts
+  // Sort by count for remaining cuts (descending - largest first)
   // Note: For large color counts, this could be optimized using a binary heap
   // instead of array sort, but for typical usage (maxColors ~64) this is sufficient
-  pq.sort((a, b) => a.count() - b.count());
+  pq.sort((a, b) => b.count() - a.count());
 
   // Second cut to reach max colors
   quantizeIter(pq, maxColors - pq.length);
