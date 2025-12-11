@@ -1,20 +1,21 @@
 #!/usr/bin/env tsx
 
 /**
- * Karaoke-like CLI player for TTML lyrics.
+ * Karaoke-like CLI player for TTML and LRC lyrics.
  *
  * Usage:
- *   tsx scripts/play_lyrics.ts <path-to-file.ttml>
+ *   tsx scripts/play_lyrics.ts <path-to-file.ttml|lrc>
  *
- * Reads a TTML file, parses to Lyrics model, validates with Zod,
+ * Reads a TTML or LRC file, parses to Lyrics model, validates with Zod,
  * then plays a simple karaoke visualization in the terminal.
  */
 
 import fs from "node:fs";
 import path from "node:path";
 
-import { parseTTMLtoLyrics } from "../packages/lyrics/src/ttml";
+import { parseLRCtoLyrics } from "../packages/lyrics/src/lrc";
 import { LyricsSchema } from "../packages/lyrics/src/model";
+import { parseTTMLtoLyrics } from "../packages/lyrics/src/ttml";
 
 type Lyrics = import("../packages/lyrics/src/model").Lyrics;
 
@@ -76,7 +77,7 @@ function renderLine(
 }
 
 function usageAndExit(code = 1): never {
-  console.error("Usage: tsx scripts/play_lyrics.ts <path-to-file.ttml>");
+  console.error("Usage: tsx scripts/play_lyrics.ts <path-to-file.ttml|lrc>");
   process.exit(code);
 }
 
@@ -97,8 +98,8 @@ function validateLyrics(lyrics: unknown): Lyrics {
   const res = LyricsSchema.safeParse(lyrics);
   if (!res.success) {
     console.error("Invalid lyrics schema:");
-    const flat = res.error.flatten();
-    console.error(JSON.stringify(flat, null, 2));
+    const formatted = res.error.format();
+    console.error(JSON.stringify(formatted, null, 2));
     process.exit(3);
   }
   return res.data;
@@ -161,9 +162,22 @@ async function startKaraoke(lyrics: Lyrics, options: RenderOptions) {
 
 function main() {
   const { filePath, options } = parseArgs();
-  const xml = fs.readFileSync(filePath, "utf8");
-  const lyrics = validateLyrics(parseTTMLtoLyrics(xml));
-  void startKaraoke(lyrics, options);
+  const content = fs.readFileSync(filePath, "utf8");
+  const ext = path.extname(filePath).toLowerCase();
+
+  let lyrics: unknown;
+  if (ext === ".lrc") {
+    lyrics = parseLRCtoLyrics(content);
+  } else if (ext === ".ttml" || ext === ".xml") {
+    lyrics = parseTTMLtoLyrics(content);
+  } else {
+    console.error(
+      `Unsupported file extension: ${ext}. Supported: .ttml, .xml, .lrc`,
+    );
+    process.exit(4);
+  }
+
+  void startKaraoke(validateLyrics(lyrics), options);
 }
 
 main();
