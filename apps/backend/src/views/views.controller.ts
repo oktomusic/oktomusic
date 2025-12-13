@@ -44,7 +44,7 @@ export class ViewsController {
       start_url: "/",
       display: "standalone",
       display_override: ["window-controls-overlay"],
-      background_color: "#ffffff",
+      background_color: "#000000",
       theme_color: "#000000",
       lang: "en",
       dir: "ltr",

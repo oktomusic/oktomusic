@@ -101,7 +101,7 @@ export default function IndexingControl() {
 
   return (
     <section
-      className="rounded-lg border border-gray-300 bg-gray-50 p-4"
+      className="rounded-lg bg-sky-950 p-4"
       role="region"
       aria-label="Library Indexing Control"
     >
@@ -140,7 +140,7 @@ export default function IndexingControl() {
           {jobStatus.progress !== null && jobStatus.progress !== undefined ? (
             <div>
               <strong>Progress:</strong> {jobStatus.progress}%
-              <div className="mt-1 h-2 w-full rounded-full bg-gray-200">
+              <div className="mt-1 h-2 w-full rounded-full bg-sky-700">
                 <div
                   className="h-2 rounded-full bg-blue-600 transition-all duration-300"
                   style={{ width: `${jobStatus.progress}%` }}

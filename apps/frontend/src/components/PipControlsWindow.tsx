@@ -6,7 +6,7 @@ export default function PipControlsWindow() {
   const isOnline = useAtomValue(networkStatusAtom);
 
   return (
-    <div className="">
+    <div className="text-white">
       <strong>Network Status:</strong> {isOnline ? "Online" : "Offline"}
     </div>
   );

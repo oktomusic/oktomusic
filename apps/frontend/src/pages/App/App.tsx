@@ -68,7 +68,7 @@ function App() {
               onClick={() => {
                 setPipOpen(!pipOpen);
               }}
-              className="bg-blue-300"
+              className="bg-sky-950"
             >
               {pipOpen ? "Close PiP Controls" : "Open PiP Controls"}
             </button>
