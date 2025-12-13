@@ -10,7 +10,7 @@ describe("getMediaImages", () => {
     expect(images).toHaveLength(7);
 
     for (const image of images) {
-      expect(image.src).toContain(`/api/media/${uuid}/cover/`);
+      expect(image.src).toContain(`/api/album/${uuid}/cover/`);
       expect(image.type).toBe("image/avif");
       expect(image.sizes).toMatch(/^\d+x\d+$/);
     }
