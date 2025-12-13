@@ -42,8 +42,6 @@ function App() {
   return (
     <>
       <div className="card">
-        <p>{JSON.stringify(status, null, 2)}</p>
-
         <div className="m-4 flex flex-col gap-2">
           <div>
             <p style={{ color: "green" }}>
