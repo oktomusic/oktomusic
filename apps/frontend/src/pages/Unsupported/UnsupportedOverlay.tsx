@@ -24,9 +24,6 @@ export function UnsupportedOverlay({ missing }: Props) {
         <p style={{ opacity: 0.9, lineHeight: 1.6 }}>
           This app requires modern web features.
           <br />
-          Please update your browser or try a different one (Chrome, Edge,
-          Firefox, Safari).
-          <br />
           Only Chromium based browsers are officially supported.
           <br />
           The following capabilities are missing:
