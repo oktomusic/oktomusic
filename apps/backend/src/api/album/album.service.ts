@@ -22,7 +22,7 @@ export class AlbumService {
         for (const entry of entries) {
           if (
             entry.isFile() &&
-            entry.name.toLowerCase().endsWith(`_${size}x.avif`)
+            entry.name.toLowerCase().endsWith(`_${size}.avif`)
           ) {
             return path.join(dir, entry.name);
           }
