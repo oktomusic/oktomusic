@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/App/App.tsx:93
+#: src/pages/App/App.tsx:84
 msgid "Click on the Vite and React logos to learn more"
 msgstr "Cliquez sur les logos Vite et React pour en savoir plus"
 
@@ -21,13 +21,21 @@ msgstr "Cliquez sur les logos Vite et React pour en savoir plus"
 msgid "Man"
 msgstr "Homme"
 
-#: src/pages/SettingsAccount/SettingsAccount.tsx:17
+#: src/pages/SettingsAccount/SettingsAccount.tsx:51
 msgid "Sexe :"
 msgstr "Sexe :"
+
+#: src/pages/Unsupported/UnsupportedOverlay.tsx:64
+msgid "The following modern web features are missing:"
+msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 
 #: src/utils/constants.ts:18
 msgid "Unspecified"
 msgstr "Non Spécifié"
+
+#: src/pages/Unsupported/UnsupportedOverlay.tsx:43
+msgid "Upgrade to a supported Chromium browser"
+msgstr "Utilisez un navigateur Chromium pris en charge"
 
 #: src/utils/constants.ts:17
 msgid "Woman"

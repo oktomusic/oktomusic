@@ -21,7 +21,9 @@ export default function Router() {
       <WindowControls />
       <PipControls />
       <main id="app-shell">
-        {!supported ? <UnsupportedOverlay missing={missing} /> : null}
+        {!supported ? (
+          <UnsupportedOverlay missing={missing} />
+        ) : (
         <BrowserRouter>
           <Routes>
             <Route element={<ProtectedRoutes />}>
@@ -34,6 +36,7 @@ export default function Router() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
+        )}
       </main>
     </>
   );

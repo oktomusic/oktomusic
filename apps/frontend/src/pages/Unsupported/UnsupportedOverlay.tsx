@@ -1,51 +1,76 @@
-type Props = {
-  missing: string[];
-};
+import { useLingui } from "@lingui/react/macro";
 
-export function UnsupportedOverlay({ missing }: Props) {
+import chrome_icon from "../../assets/google_chrome_2022.svg";
+import brave_icon from "../../assets/brave_2022.svg";
+import edge_icon from "../../assets/microsoft_edge_2019.svg";
+// icons are from Wikipedia
+
+interface SupportedBrowser {
+  readonly name: string;
+  readonly icon: string;
+  readonly dlLink: string;
+}
+
+const supportedBrowsers: SupportedBrowser[] = [
+  {
+    name: "Google Chrome",
+    icon: chrome_icon,
+    dlLink: "https://www.google.com/chrome",
+  },
+  {
+    name: "Brave",
+    icon: brave_icon,
+    dlLink: "https://brave.com",
+  },
+  {
+    name: "Microsoft Edge",
+    icon: edge_icon,
+    dlLink: "https://www.microsoft.com/edge",
+  },
+] as const;
+
+interface UnsupportedOverlayProps {
+  readonly missing: string[];
+}
+
+export function UnsupportedOverlay({ missing }: UnsupportedOverlayProps) {
+  const { t } = useLingui();
+
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "#0b1020",
-        color: "#fff",
-        zIndex: 9999,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "2rem",
-      }}
-    >
-      <div style={{ maxWidth: 720, textAlign: "center" }}>
-        <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
-          Your browser isn’t supported
+    <div className="flex h-full min-h-screen w-full sm:items-center sm:justify-center">
+      <div className="rounded-md bg-sky-950 p-6">
+        <h1 className="w-full text-center text-2xl">
+          {t`Upgrade to a supported Chromium browser`}
         </h1>
-        <p style={{ opacity: 0.9, lineHeight: 1.6 }}>
-          This app requires modern web features.
-          <br />
-          Only Chromium based browsers are officially supported.
-          <br />
-          The following capabilities are missing:
-        </p>
+        <ul className="my-6 grid w-full grid-cols-1 divide-y divide-sky-900 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {supportedBrowsers.map((browser) => (
+            <li key={browser.name} className="p-4 text-center">
+              <a
+                href={browser.dlLink}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="flex h-full w-full flex-col items-center justify-center"
+              >
+                <img
+                  src={browser.icon}
+                  alt={browser.name}
+                  className="mb-2 aspect-square h-12 w-12"
+                />
+                <span>{browser.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6">{t`The following modern web features are missing:`}</p>
         {missing.length > 0 ? (
-          <ul
-            style={{
-              listStyle: "disc",
-              textAlign: "left",
-              margin: "1rem auto",
-              maxWidth: 480,
-            }}
-          >
+          <ul className="mt-2 list-disc space-y-1 pl-8">
             {missing.map((m) => (
-              <li key={m}>{m}</li>
+              <li key={m} className="wrap-break-word">
+                {m}
+              </li>
             ))}
           </ul>
         ) : null}
-        <p style={{ opacity: 0.7, fontSize: "0.9rem" }}>
-          If you believe this is a mistake, ensure JavaScript is enabled and try
-          clearing your cache.
-        </p>
       </div>
     </div>
   );
