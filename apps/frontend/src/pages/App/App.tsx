@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
 import { useLingui } from "@lingui/react/macro";
 import { useAtom, useAtomValue } from "jotai";
 import { Link } from "react-router";
 import { useQuery } from "@apollo/client/react";
 
-import type { ApiInfoRes } from "@oktomusic/api-schemas";
-
-import { getInfo } from "../../api/axios/endpoints/info";
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { pipOpenAtom } from "../../atoms/player/pip";
 import { ME_QUERY } from "../../api/graphql/queries/me";
@@ -18,7 +14,6 @@ import "./App.css";
 function App() {
   const { t } = useLingui();
 
-  const [status, setStatus] = useState<ApiInfoRes | undefined>(undefined);
   const authSession = useAtomValue(authSessionAtom);
 
   const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
@@ -28,12 +23,6 @@ function App() {
   });
 
   const isAdmin = userData?.me?.role === Role.Admin;
-
-  useEffect(() => {
-    getInfo()
-      .then((res) => setStatus(res))
-      .catch(console.error);
-  }, []);
 
   if (authSession.status !== "authenticated" || !authSession.user) {
     return null;
