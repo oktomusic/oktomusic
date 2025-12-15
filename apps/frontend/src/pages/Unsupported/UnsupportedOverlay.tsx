@@ -37,8 +37,8 @@ export function UnsupportedOverlay({ missing }: UnsupportedOverlayProps) {
   const { t } = useLingui();
 
   return (
-    <div className="flex h-full min-h-screen w-full sm:items-center sm:justify-center">
-      <div className="rounded-md bg-sky-950 p-6">
+    <div className="min-h-app-shell flex w-full sm:items-center sm:justify-center">
+      <div className="rounded-md bg-sky-950 p-6 select-none">
         <h1 className="w-full text-center text-2xl">
           {t`Upgrade to a supported Chromium browser`}
         </h1>

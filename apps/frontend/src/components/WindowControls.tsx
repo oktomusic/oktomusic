@@ -35,7 +35,7 @@ export default function WindowControls() {
         handleVisibilityChange,
       );
     };
-  });
+  }, []);
 
   return isCustomEnabled ? (
     <div id="pwa-window-controls">

@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer utilities {
+  .min-h-app-shell {
+    min-height: calc(100vh - env(titlebar-area-height, 0px));
+  }
+}
+
 #app-shell {
   box-sizing: border-box;
   min-height: 100dvh;
@@ -7,4 +13,6 @@
   padding-top: env(titlebar-area-height, 0px);
   overflow: hidden;
   background-color: var(--color-black);
+  display: flex;
+  flex-direction: column;
 }

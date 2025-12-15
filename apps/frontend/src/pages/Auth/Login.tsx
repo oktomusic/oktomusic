@@ -20,8 +20,8 @@ export default function Login() {
   }
 
   return (
-    <div className="flex h-full min-h-screen w-full sm:items-center sm:justify-center">
-      <div className="min-w-md rounded-md bg-sky-950 p-6">
+    <div className="min-h-app-shell flex w-full items-center justify-center px-4">
+      <div className="min-w-md rounded-md bg-sky-950 p-6 select-none">
         <h1 className="mb-4 w-full text-center text-2xl">{"Login"}</h1>
         <a
           role="button"
