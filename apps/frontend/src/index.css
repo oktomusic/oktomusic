@@ -2,7 +2,26 @@
 
 @layer utilities {
   .min-h-app-shell {
-    min-height: calc(100vh - env(titlebar-area-height, 0px));
+    min-height: calc(100dvh - env(titlebar-area-height, 0px));
+  }
+
+  /* Constrain an inner panel and make it the scroll container */
+  .child-scroll {
+    max-height: calc(100dvh - env(titlebar-area-height, 0px));
+    overflow: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .reserve-scrollbar {
+    scrollbar-gutter: stable;
+  }
+
+  /* Apply gutter reservation to common Tailwind overflow utilities */
+  .overflow-auto,
+  .overflow-scroll,
+  .overflow-y-auto,
+  .overflow-y-scroll {
+    scrollbar-gutter: stable;
   }
 }
 
@@ -15,4 +34,10 @@
   background-color: var(--color-black);
   display: flex;
   flex-direction: column;
+
+  /* Customize scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-sky-800) transparent;
+  }
 }
