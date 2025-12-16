@@ -75,7 +75,7 @@ services:
       VALKEY_HOST: valkey
       VALKEY_PORT: 6379
       VALKEY_PASSWORD: oktomusic
-      LIBRARY_PATH: /srv/music
+      APP_LIBRARY_PATH: /srv/music
       UPDATE_CA: "true"
     ports:
       - "3100:3000"

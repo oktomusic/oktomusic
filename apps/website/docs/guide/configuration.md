@@ -2,15 +2,15 @@ The configuration is provided with environment variables.
 
 ## App configuration
 
-| Name                | Description                                                                                                                 |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `NODE_ENV`          | Application environment. One of `development`, `production`, or `test`. Default: `development`.                             |
-| `SESSION_SECRET`    | Secret string used for session encryption. Required. Keep secret in production.                                             |
-| `LIBRARY_PATH`      | Path to the music library folder. Must exist and be a directory; the path is resolved at startup.                           |
-| `INTERMEDIATE_PATH` | Path to store intermediate files (transcoding, etc) folder. Must exist and be a directory; the path is resolved at startup. |
-| `FFMPEG_PATH`       | Optional path to the `ffmpeg` binary.                                                                                       |
-| `FFPROBE_PATH`      | Optional path to the `ffprobe` binary.                                                                                      |
-| `METAFLAC_PATH`     | Optional path to the `metaflac` binary.                                                                                     |
+| Name                    | Description                                                                                                                 |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`              | Application environment. One of `development`, `production`, or `test`. Default: `development`.                             |
+| `SESSION_SECRET`        | Secret string used for session encryption. Required. Keep secret in production.                                             |
+| `APP_LIBRARY_PATH`      | Path to the music library folder. Must exist and be a directory; the path is resolved at startup.                           |
+| `APP_INTERMEDIATE_PATH` | Path to store intermediate files (transcoding, etc) folder. Must exist and be a directory; the path is resolved at startup. |
+| `FFMPEG_PATH`           | Optional path to the `ffmpeg` binary.                                                                                       |
+| `FFPROBE_PATH`          | Optional path to the `ffprobe` binary.                                                                                      |
+| `METAFLAC_PATH`         | Optional path to the `metaflac` binary.                                                                                     |
 
 ## HTTP configuration
 
