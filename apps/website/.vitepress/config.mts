@@ -32,6 +32,7 @@ export default defineConfig({
 
     socialLinks: [
       { icon: "github", link: "https://github.com/oktomusic/oktomusic" },
+      { icon: "x", link: "https://x.com/OktomusicDev" },
     ],
   },
   cleanUrls: true,
