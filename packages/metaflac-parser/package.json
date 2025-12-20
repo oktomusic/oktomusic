@@ -40,6 +40,6 @@
     "tsdown": "catalog:default"
   },
   "dependencies": {
-    "zod": "^4.1.13"
+    "zod": "^4.2.1"
   }
 }

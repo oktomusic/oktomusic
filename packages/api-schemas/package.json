@@ -37,7 +37,7 @@
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/api-schemas"
   },
   "dependencies": {
-    "zod": "^4.1.13"
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@types/node": "catalog:default",
