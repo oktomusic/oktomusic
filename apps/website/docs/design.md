@@ -11,15 +11,16 @@ Metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc/v-comment.
 > [!INFO]
 > Sadly, the standard is very loose, so we have to define our own rules for required tags and formats.
 
-| Tag Name      | Required | Format            | Unique | Multiple Allowed |
-| ------------- | -------- | ----------------- | ------ | ---------------- |
-| `TITLE`       | Yes      | String            | No     | No               |
-| `ARTIST`      | Yes      | String            | No     | Yes              |
-| `ALBUM`       | Yes      | String            | Yes    | No               |
-| `TRACKNUMBER` | Yes      | Integer (1-based) | No     | No               |
-| `TOTALTRACKS` | Yes      | Integer (1-based) | No     | No               |
-| `DISCNUMBER`  | Yes      | Integer (1-based) | No     | No               |
-| `TOTALDISCS`  | Yes      | Integer (1-based) | No     | No               |
+| Tag Name      | Required | Format                             | Unique | Multiple Allowed |
+| ------------- | -------- | ---------------------------------- | ------ | ---------------- |
+| `TITLE`       | Yes      | String                             | No     | No               |
+| `ARTIST`      | Yes      | String                             | No     | Yes              |
+| `ALBUM`       | Yes      | String                             | Yes    | No               |
+| `TRACKNUMBER` | Yes      | Integer (1-based)                  | No     | No               |
+| `TOTALTRACKS` | Yes      | Integer (1-based)                  | No     | No               |
+| `DISCNUMBER`  | Yes      | Integer (1-based)                  | No     | No               |
+| `TOTALDISCS`  | Yes      | Integer (1-based)                  | No     | No               |
+| `ISRC`        | No       | [ISRC code](https://isrc.ifpi.org) | No     | No               |
 
 Additionally, the cover of the album must be present as a file in the folder, named either `cover.png`, `cover.avif`, `cover.jpg` or `cover.jpeg`, taken by this order of preference.
 
