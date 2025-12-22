@@ -6,6 +6,14 @@ A folder structure with a folder per album, containing only FLAC files.
 
 Each folder is validated separately, all files should have consistent metadata and the exact same album related metadata.
 
+Additionally, the cover of the album must be present as a file in the folder, named either `cover.png`, `cover.avif`, `cover.jpg` or `cover.jpeg`, taken by this order of preference.
+
+These will be converted to lossy AVIF images of various sizes, so the ideal would be to use a lossless PNG or AVIF image as source.
+
+The app support lyrics stored as separate files in the album folder, named as the track title. The supported formats are [TTML](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) `.ttml` and both [LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)>) and [Enhanced LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)#A2_extension_(Enhanced_LRC_format)>) `.lrc`.
+
+## Individual file metadata
+
 Metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc/v-comment.html) extracted using [`metaflac`](https://github.com/xiph/flac).
 
 > [!INFO]
@@ -22,11 +30,10 @@ Metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc/v-comment.
 | `TOTALDISCS`  | Yes      | Integer (1-based)                  | No     | No               |
 | `ISRC`        | No       | [ISRC code](https://isrc.ifpi.org) | No     | No               |
 
-Additionally, the cover of the album must be present as a file in the folder, named either `cover.png`, `cover.avif`, `cover.jpg` or `cover.jpeg`, taken by this order of preference.
+To allow moving/renaming files as well as modifying them (ex: replacing them with higher quality version) without breaking things like listening stats and playlists, we have to start with a stable data model that separate files from tracks.
 
-These will be converted to lossy AVIF images of various sizes, so the ideal would be to use a lossless PNG or AVIF image as source.
-
-The app support lyrics stored as separate files in the album folder, named as the track title. The supported formats are [TTML](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) `.ttml` and both [LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)>) and [Enhanced LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)#A2_extension_(Enhanced_LRC_format)>) `.lrc`.
+Albums are created on a basis of file metadata, and the indexing process will make sure to link files to album tracks properly.
+An album is considered "immutable" once indexed, to allow for such a matching process to work properly.
 
 ---
 
