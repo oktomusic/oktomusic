@@ -1,7 +1,9 @@
-import { useAtomValue } from "jotai";
+import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { useAtomValue } from "jotai";
 
 import { browserSupportAtom } from "./atoms/app/browser_support.ts";
+import { settingClientKioskMode } from "./atoms/app/settings_client.ts";
 import AuthSessionInitializer from "./components/AuthSessionInitializer.tsx";
 import PipControls from "./components/PipControls.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
@@ -16,6 +18,32 @@ import UnsupportedOverlay from "./pages/Unsupported/UnsupportedOverlay.tsx";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
+  const kioskModeEnabled = useAtomValue(settingClientKioskMode);
+
+  useEffect(() => {
+    if (!kioskModeEnabled) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      const isEscape = event.key === "Escape";
+      const isCtrlQ = event.ctrlKey && event.key.toLowerCase() === "q";
+
+      if (!isEscape && !isCtrlQ) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      window.alert("To exit kiosk mode, press Alt+F4.");
+    };
+
+    window.addEventListener("keydown", onKeyDown, { capture: true });
+    return () => {
+      window.removeEventListener("keydown", onKeyDown, { capture: true });
+    };
+  }, [kioskModeEnabled]);
+
   return (
     <>
       <AuthSessionInitializer />
