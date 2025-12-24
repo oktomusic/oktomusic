@@ -1,6 +1,8 @@
-The configuration is provided with environment variables.
+# Configuration Reference
 
-## App configuration
+Configuration for the app is provided with environment variables.
+
+## App
 
 | Name                    | Description                                                                                                                 |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------- |
@@ -12,14 +14,14 @@ The configuration is provided with environment variables.
 | `FFPROBE_PATH`          | Optional path to the `ffprobe` binary.                                                                                      |
 | `METAFLAC_PATH`         | Optional path to the `metaflac` binary.                                                                                     |
 
-## HTTP configuration
+## HTTP
 
 | Name          | Description                                                                                   |
 | ------------- | --------------------------------------------------------------------------------------------- |
 | `PORT`        | Port number for the HTTP server to listen on. Default: `3000`.                                |
 | `TRUST_PROXY` | Enable reverse proxy support (can be `true`, `false`, or specific proxies). Default: `false`. |
 
-## Valkey configuration
+## Valkey
 
 Valkey is used for session and queue storage.
 
@@ -29,9 +31,10 @@ Valkey is used for session and queue storage.
 | `VALKEY_PORT`     | Port number for Valkey. Default: `6379`.             |
 | `VALKEY_PASSWORD` | Optional password for Valkey (nullable).             |
 
-## OpenID Connect configuration
+## OpenID Connect
 
-The backend supports authenticating users via an OpenID Connect provider. The following variables configure the OIDC client used by the NestJS backend.
+The backend authenticates users with an [OpenID Connect](https://openid.net/developers/how-connect-works) provider.
+The following variables configure the OIDC client used by the NestJS backend.
 
 | Name                       | Description                                                                                                                                            |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |

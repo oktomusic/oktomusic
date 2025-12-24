@@ -1,20 +1,23 @@
 # Music collection
 
-Single read-only source of truth for your music collection.
+## File organization
 
-A folder structure with a folder per album, containing only FLAC files.
+The library is the single read-only source of truth for your music collection.
 
-Each folder is validated separately, all files should have consistent metadata and the exact same album related metadata.
+It must use a tree structure with a folder per album, containing only FLAC files.
+
+Each folder is validated separately, with all files having consistent metadata and the exact same album related metadata.
 
 Additionally, the cover of the album must be present as a file in the folder, named either `cover.png`, `cover.avif`, `cover.jpg` or `cover.jpeg`, taken by this order of preference.
 
 These will be converted to lossy AVIF images of various sizes, so the ideal would be to use a lossless PNG or AVIF image as source.
 
-The app support lyrics stored as separate files in the album folder, named as the track title. The supported formats are [TTML](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) `.ttml` and both [LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)>) and [Enhanced LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)#A2_extension_(Enhanced_LRC_format)>) `.lrc`.
+The app support lyrics stored as separate files in the album folder, named as the track title.
+The supported formats are [TTML](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) `.ttml` and both [LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)>) and [Enhanced LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)#A2_extension_(Enhanced_LRC_format)>) `.lrc`.
 
 ## Individual file metadata
 
-Metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc/v-comment.html) extracted using [`metaflac`](https://github.com/xiph/flac).
+FLAC files metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc/v-comment.html), and extracted by the server using [`metaflac`](https://github.com/xiph/flac).
 
 > [!INFO]
 > Sadly, the standard is very loose, so we have to define our own rules for required tags and formats.
@@ -29,6 +32,8 @@ Metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc/v-comment.
 | `DISCNUMBER`  | Yes      | Integer (1-based)                  | No     | No               |
 | `TOTALDISCS`  | Yes      | Integer (1-based)                  | No     | No               |
 | `ISRC`        | No       | [ISRC code](https://isrc.ifpi.org) | No     | No               |
+
+## Indexing process
 
 To allow moving/renaming files as well as modifying them (ex: replacing them with higher quality version) without breaking things like listening stats and playlists, we have to start with a stable data model that separate files from tracks.
 

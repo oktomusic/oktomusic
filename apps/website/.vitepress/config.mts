@@ -19,14 +19,12 @@ export default defineConfig({
         items: [
           { text: "Installation", link: "/guide/installation" },
           { text: "Configuration", link: "/guide/configuration" },
+          { text: "Music Collection", link: "/guide/music-collection" },
         ],
       },
       {
-        text: "Design",
-        items: [
-          { text: "Architecture", link: "/design" },
-          { text: "Auth", link: "/auth" },
-        ],
+        text: "Advanced",
+        items: [{ text: "Auth", link: "/auth" }],
       },
     ],
 

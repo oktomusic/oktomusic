@@ -12,7 +12,7 @@ hero:
       link: /guide/installation
     - theme: alt
       text: Design
-      link: /design
+      link: /guide/music-collection
     - theme: alt
       text: GitHub
       link: https://github.com/oktomusic/oktomusic
