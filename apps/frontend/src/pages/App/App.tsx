@@ -1,9 +1,11 @@
+import { Link } from "react-router";
+
 import { useLingui } from "@lingui/react/macro";
 import { useAtom, useAtomValue } from "jotai";
-import { Link } from "react-router";
 import { useQuery } from "@apollo/client/react";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
+import { settingClientKioskMode } from "../../atoms/app/settings_client";
 import { pipOpenAtom } from "../../atoms/player/pip";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role } from "../../api/graphql/gql/graphql";
@@ -15,6 +17,8 @@ function App() {
   const { t } = useLingui();
 
   const authSession = useAtomValue(authSessionAtom);
+
+  const kioskModeEnabled = useAtomValue(settingClientKioskMode);
 
   const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
 
@@ -51,6 +55,10 @@ function App() {
             <Link to="/settings/account">Account Settings</Link>
           </div>
           <div>
+            <Link to="/settings/client">Client Settings</Link>
+          </div>
+          <div>
+            {!kioskModeEnabled && (
             <button
               onClick={() => {
                 setPipOpen(!pipOpen);
@@ -59,6 +67,7 @@ function App() {
             >
               {pipOpen ? "Close PiP Controls" : "Open PiP Controls"}
             </button>
+            )}
           </div>
           {isAdmin && (
             <div className="mt-4">

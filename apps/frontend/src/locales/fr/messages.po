@@ -13,9 +13,23 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/App/App.tsx:84
+#: src/pages/App/App.tsx:95
 msgid "Click on the Vite and React logos to learn more"
 msgstr "Cliquez sur les logos Vite et React pour en savoir plus"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:15
+#: src/pages/SettingsClient/SettingsClient.tsx:40
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:16
+#: src/pages/SettingsClient/SettingsClient.tsx:40
+msgid "Enabled"
+msgstr "Activé"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:28
+msgid "Kiosk mode:"
+msgstr "Mode Kiosque :"
 
 #: src/utils/constants.ts:16
 msgid "Man"

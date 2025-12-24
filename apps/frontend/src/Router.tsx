@@ -11,6 +11,7 @@ import AppInfo from "./pages/AppInfo/AppInfo.tsx";
 import Login from "./pages/Auth/Login.tsx";
 import Player from "./pages/Player/Player.tsx";
 import SettingsAccount from "./pages/SettingsAccount/SettingsAccount.tsx";
+import SettingsClient from "./pages/SettingsClient/SettingsClient.tsx";
 import UnsupportedOverlay from "./pages/Unsupported/UnsupportedOverlay.tsx";
 
 export default function Router() {
@@ -24,18 +25,19 @@ export default function Router() {
         {!supported ? (
           <UnsupportedOverlay missing={missing} />
         ) : (
-        <BrowserRouter>
-          <Routes>
-            <Route element={<ProtectedRoutes />}>
-              <Route index element={<App />} />
-              <Route path="/appinfo" element={<AppInfo />} />
-              <Route path="/player" element={<Player />} />
-              <Route path="/settings/account" element={<SettingsAccount />} />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<ProtectedRoutes />}>
+                <Route index element={<App />} />
+                <Route path="/appinfo" element={<AppInfo />} />
+                <Route path="/player" element={<Player />} />
+                <Route path="/settings/account" element={<SettingsAccount />} />
+                <Route path="/settings/client" element={<SettingsClient />} />
+              </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
         )}
       </main>
     </>
