@@ -1,6 +1,6 @@
 import type { ChangeEvent } from "react";
 
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { t } from "@lingui/core/macro";
 
 import { settingClientKioskMode } from "../../atoms/app/settings_client.ts";
@@ -9,7 +9,6 @@ type KioskModeKey = "true" | "false";
 
 export default function SettingsClient() {
   const [kioskMode, setKioskMode] = useAtom(settingClientKioskMode);
-  const kioskEnabled = useAtomValue(settingClientKioskMode);
 
   const kioskModeLabels: Record<KioskModeKey, string> = {
     false: t`Disabled`,
@@ -37,7 +36,7 @@ export default function SettingsClient() {
             </option>
           ))}
         </select>
-        <p role="status">{kioskEnabled ? t`Enabled` : t`Disabled`}</p>
+        <p role="status">{kioskMode ? t`Enabled` : t`Disabled`}</p>
       </form>
     </section>
   );
