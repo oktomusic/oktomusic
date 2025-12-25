@@ -20,7 +20,9 @@ The supported formats are [TTML](https://en.wikipedia.org/wiki/Timed_Text_Markup
 FLAC files metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc/v-comment.html), and extracted by the server using [`metaflac`](https://github.com/xiph/flac).
 
 > [!INFO]
-> Sadly, the standard is very loose, so we have to define our own rules for required tags and formats.
+> Sadly, the Vorbis standard doesn't clearly define tag names and formats, so we have to define our own rules.
+>
+> We try to stick as close as possible to [Vorbis recommendations](https://xiph.org/vorbis/doc/v-comment.html#fieldnames), as well as names used by [MusicBrainz Picard](https://picard-docs.musicbrainz.org/en/variables/tags_basic.html).
 
 | Tag Name      | Required | Format                             | Unique | Multiple Allowed |
 | ------------- | -------- | ---------------------------------- | ------ | ---------------- |
