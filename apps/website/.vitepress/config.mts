@@ -20,6 +20,7 @@ export default defineConfig({
           { text: "Installation", link: "/guide/installation" },
           { text: "Configuration", link: "/guide/configuration" },
           { text: "Music Collection", link: "/guide/music-collection" },
+          { text: "FAQ", link: "/guide/faq" },
         ],
       },
       {

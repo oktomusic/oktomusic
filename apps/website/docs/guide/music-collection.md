@@ -4,16 +4,19 @@
 
 The library is the single read-only source of truth for your music collection.
 
-It must use a tree structure with a folder per album, containing only FLAC files.
+It must use a tree structure with a folder per album, containing only [FLAC](https://xiph.org/flac) files.
 
 Each folder is validated separately, with all files having consistent metadata and the exact same album related metadata.
 
 Additionally, the cover of the album must be present as a file in the folder, named either `cover.png`, `cover.avif`, `cover.jpg` or `cover.jpeg`, taken by this order of preference.
 
-These will be converted to lossy AVIF images of various sizes, so the ideal would be to use a lossless PNG or AVIF image as source.
+These will be converted to lossy [AVIF](https://en.wikipedia.org/wiki/AVIF) images of various sizes, so the ideal would be to use a lossless [PNG](https://en.wikipedia.org/wiki/PNG) or [AVIF](https://en.wikipedia.org/wiki/AVIF) image as source.
 
-The app support lyrics stored as separate files in the album folder, named as the track title.
-The supported formats are [TTML](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) `.ttml` and both [LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)>) and [Enhanced LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)#A2_extension_(Enhanced_LRC_format)>) `.lrc`.
+The app supports lyrics stored as separate files in the album folder.
+Supported formats are [TTML](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) `.ttml` and both [LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)>) and [Enhanced LRC](<https://en.wikipedia.org/wiki/LRC_(file_format)#A2_extension_(Enhanced_LRC_format)>) `.lrc`.
+
+To be picked up, the lyrics file must have the exact same base name as the corresponding track file, only with the relevant extension.
+If multiple matching lyric files exist, `.ttml` is preferred over `.lrc`.
 
 ## Individual file metadata
 
@@ -26,14 +29,24 @@ FLAC files metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc
 
 | Tag Name      | Required | Format                             | Unique | Multiple Allowed |
 | ------------- | -------- | ---------------------------------- | ------ | ---------------- |
-| `TITLE`       | Yes      | String                             | No     | No               |
-| `ARTIST`      | Yes      | String                             | No     | Yes              |
-| `ALBUM`       | Yes      | String                             | Yes    | No               |
-| `TRACKNUMBER` | Yes      | Integer (1-based)                  | No     | No               |
-| `TOTALTRACKS` | Yes      | Integer (1-based)                  | No     | No               |
-| `DISCNUMBER`  | Yes      | Integer (1-based)                  | No     | No               |
-| `TOTALDISCS`  | Yes      | Integer (1-based)                  | No     | No               |
-| `ISRC`        | No       | [ISRC code](https://isrc.ifpi.org) | No     | No               |
+| `TITLE`       | ✅       | String                             | ❌     | ❌               |
+| `ARTIST`      | ✅       | String                             | ❌     | ✅               |
+| `ALBUM`       | ✅       | String                             | ✅     | ❌               |
+| `TRACKNUMBER` | ✅       | Integer (1-based)                  | ❌     | ❌               |
+| `TOTALTRACKS` | ✅       | Integer (1-based)                  | ❌     | ❌               |
+| `DISCNUMBER`  | ✅       | Integer (1-based)                  | ❌     | ❌               |
+| `TOTALDISCS`  | ✅       | Integer (1-based)                  | ❌     | ❌               |
+| `ISRC`        | ❌       | [ISRC code](https://isrc.ifpi.org) | ❌     | ❌               |
+
+> [!IMPORTANT]
+>
+> - **Unique**: All files in the same album folder must have the exact same value for this tag
+> - **Multiple Allowed**: The tag may appear multiple times in the same file
+> - Splitting a tag value by separator (ex: `;`) is NOT supported and will never be
+> - `TOTALTRACKS` is the total number of tracks in the track's disc `DISCNUMBER`
+> - `TRACKNUMBER` is the number of the track in its disc `DISCNUMBER`
+> - `TOTALTRACKS`, `TOTALDISCS` are validated for consistency across all files in the album folder
+> - `DISCNUMBER` + `TRACKNUMBER` pairs are validated for uniqueness across all files in the album folder
 
 ## Indexing process
 
@@ -41,19 +54,3 @@ To allow moving/renaming files as well as modifying them (ex: replacing them wit
 
 Albums are created on a basis of file metadata, and the indexing process will make sure to link files to album tracks properly.
 An album is considered "immutable" once indexed, to allow for such a matching process to work properly.
-
----
-
-> [!INFO]
-> Why is only Chromium supported and not Firefox?
->
-> There are multiple reasons but the main one is the terrible lack of modern features in Firefox.
->
-> Here are all the APIs the project uses or will use that are not supported by Firefox:
->
-> - [Progressive Web Apps (PWA)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
-> - [Background Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Background_Fetch_API)
-> - [Document Picture-in-Picture API](https://developer.mozilla.org/en-US/docs/Web/API/Document_Picture-in-Picture_API)
-> - [AudioSession API](https://www.w3.org/TR/audio-session)
->
-> The monopoly of Chromium is sad, but until Firefox, which was once one of the most inovative browser, stop shooting itself in the foot with stupid decisions it's the only viable option for a modern web app.
