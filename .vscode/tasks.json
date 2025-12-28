@@ -67,6 +67,15 @@
       ]
     },
     {
+      "label": "website: dev",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/website dev",
+      "isBackground": false,
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
       "label": "docker: start",
       "type": "shell",
       "command": "docker compose start postgres valkey",
