@@ -4,7 +4,7 @@ packages:
 
 catalogs:
   default:
-    '@types/node': ^24.9.2
+    '@types/node': ^25.0.3
     tsdown: ^0.15.9
     typescript: ^5.9.3
 
