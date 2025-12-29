@@ -1,5 +1,5 @@
 import z from "zod";
-import { isrcRegex, parseOutput } from "./utils";
+import { isrcRegex, parseOutput, zPlainDate } from "./utils";
 
 /**
  * Tags are Vorbis comments, which are key-value pairs.
@@ -77,7 +77,7 @@ const IntermediateMetaflacSchema = z.object({
     .optional()
     .describe("A short text indication of music genre"),
   DATE: z
-    .tuple([z.string()])
+    .tuple([zPlainDate])
     .optional()
     .describe("Date the track was recorded"),
   LOCATION: z
