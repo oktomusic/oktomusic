@@ -1,9 +1,11 @@
 import { defineConfig } from "tsdown";
 
-export default defineConfig({
-  entry: ["./src/index.ts"],
-  platform: "node",
-  dts: {
-    oxc: true,
+export default defineConfig([
+  {
+    entry: ["./src/index.ts"],
+    platform: "neutral",
+    dts: {
+      sourcemap: true,
+    },
   },
-});
+]);
