@@ -90,7 +90,7 @@ type Query {
   me: User!
 
   """
-  Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types.
+  Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately.
   """
   search(input: SearchMusicInput!): SearchMusicResult!
 
