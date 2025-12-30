@@ -81,6 +81,35 @@ export class MusicService {
     return sortedDiscNumbers.map((disc) => tracksByDiscMap.get(disc)!);
   }
 
+  /**
+   * Map Prisma album to album model
+   */
+  private mapAlbum(album: {
+    id: string;
+    name: string;
+    date: Date | null;
+    artists: Array<{ order: number; artist: { id: string; name: string } }>;
+    tracks: PrismaTrack[];
+  }): AlbumModel {
+    return {
+      id: album.id,
+      name: album.name,
+      date: album.date,
+      artists: this.mapArtists(album.artists),
+      tracksByDisc: this.groupTracksByDisc(album.tracks),
+    };
+  }
+
+  /**
+   * Map standalone artist to artist model
+   */
+  private mapArtist(artist: { id: string; name: string }): ArtistModel {
+    return {
+      id: artist.id,
+      name: artist.name,
+    };
+  }
+
   async getTrack(id: string): Promise<TrackModel> {
     const track = await this.prisma.track.findUnique({
       where: { id },
@@ -135,13 +164,7 @@ export class MusicService {
       throw new NotFoundException(`Album with id ${id} not found`);
     }
 
-    return {
-      id: album.id,
-      name: album.name,
-      date: album.date,
-      artists: this.mapArtists(album.artists),
-      tracksByDisc: this.groupTracksByDisc(album.tracks),
-    };
+    return this.mapAlbum(album);
   }
 
   async getArtist(id: string): Promise<ArtistModel> {
@@ -153,10 +176,7 @@ export class MusicService {
       throw new NotFoundException(`Artist with id ${id} not found`);
     }
 
-    return {
-      id: artist.id,
-      name: artist.name,
-    };
+    return this.mapArtist(artist);
   }
 
   async searchTracks(input: SearchTracksInput): Promise<TrackModel[]> {
@@ -246,13 +266,7 @@ export class MusicService {
       skip: offset,
     });
 
-    return albums.map((album) => ({
-      id: album.id,
-      name: album.name,
-      date: album.date,
-      artists: this.mapArtists(album.artists),
-      tracksByDisc: this.groupTracksByDisc(album.tracks),
-    }));
+    return albums.map((album) => this.mapAlbum(album));
   }
 
   async searchArtists(input: SearchArtistsInput): Promise<ArtistModel[]> {
@@ -273,12 +287,14 @@ export class MusicService {
       skip: offset,
     });
 
-    return artists.map((artist) => ({
-      id: artist.id,
-      name: artist.name,
-    }));
+    return artists.map((artist) => this.mapArtist(artist));
   }
 
+  /**
+   * Search across all music entities (tracks, albums, artists) with flexible filtering.
+   * Note: The limit is applied to each entity type separately, so the total results
+   * may be up to 3x the limit value (e.g., limit=50 can return up to 150 total items).
+   */
   async searchMusic(input: SearchMusicInput): Promise<{
     tracks: TrackModel[];
     albums: AlbumModel[];
@@ -388,17 +404,8 @@ export class MusicService {
 
     return {
       tracks: tracks.map((track) => this.mapTrack(track)),
-      albums: albums.map((album) => ({
-        id: album.id,
-        name: album.name,
-        date: album.date,
-        artists: this.mapArtists(album.artists),
-        tracksByDisc: this.groupTracksByDisc(album.tracks),
-      })),
-      artists: artists.map((artist) => ({
-        id: artist.id,
-        name: artist.name,
-      })),
+      albums: albums.map((album) => this.mapAlbum(album)),
+      artists: artists.map((artist) => this.mapArtist(artist)),
     };
   }
 }

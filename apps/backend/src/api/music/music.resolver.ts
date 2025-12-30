@@ -99,7 +99,7 @@ export class MusicResolver {
   @Query(() => SearchMusicResult, {
     name: "search",
     description:
-      "Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types.",
+      "Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately.",
   })
   async search(
     @Args("input", { type: () => SearchMusicInput }) input: SearchMusicInput,
