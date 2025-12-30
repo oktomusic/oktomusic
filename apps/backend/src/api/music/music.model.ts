@@ -10,6 +10,21 @@ export class ArtistModel {
   name!: string;
 }
 
+@ObjectType("AlbumBasic")
+export class AlbumBasicModel {
+  @Field()
+  id!: string;
+
+  @Field()
+  name!: string;
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  date!: Date | null;
+
+  @Field(() => [ArtistModel])
+  artists!: ArtistModel[];
+}
+
 @ObjectType("Album")
 export class AlbumModel {
   @Field()
@@ -52,6 +67,12 @@ export class TrackModel {
 
   @Field({ nullable: true })
   albumId!: string | null;
+
+  @Field(() => AlbumBasicModel, {
+    nullable: true,
+    description: "Album metadata",
+  })
+  album!: AlbumBasicModel | null;
 
   @Field(() => Int)
   discNumber!: number;
