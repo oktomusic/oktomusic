@@ -11,9 +11,75 @@ import type {
   SearchTracksInput,
 } from "./dto/search-music.input";
 
+type PrismaTrack = {
+  id: string;
+  name: string;
+  isrc: string | null;
+  date: Date | null;
+  durationMs: number;
+  albumId: string | null;
+  discNumber: number;
+  trackNumber: number;
+  artists: {
+    order: number;
+    artist: {
+      id: string;
+      name: string;
+    };
+  }[];
+};
+
 @Injectable()
 export class MusicService {
   constructor(private readonly prisma: PrismaService) {}
+
+  /**
+   * Map artist associations to artist models
+   */
+  private mapArtists(
+    artists: Array<{ order: number; artist: { id: string; name: string } }>,
+  ): ArtistModel[] {
+    return artists.map((aa) => ({
+      id: aa.artist.id,
+      name: aa.artist.name,
+    }));
+  }
+
+  /**
+   * Map Prisma track to track model
+   */
+  private mapTrack(track: PrismaTrack): TrackModel {
+    return {
+      id: track.id,
+      name: track.name,
+      isrc: track.isrc,
+      date: track.date,
+      durationMs: track.durationMs,
+      albumId: track.albumId,
+      discNumber: track.discNumber,
+      trackNumber: track.trackNumber,
+      artists: this.mapArtists(track.artists),
+    };
+  }
+
+  /**
+   * Group tracks by disc number
+   */
+  private groupTracksByDisc(tracks: PrismaTrack[]): TrackModel[][] {
+    const tracksByDiscMap = new Map<number, TrackModel[]>();
+
+    for (const track of tracks) {
+      const discTracks = tracksByDiscMap.get(track.discNumber) ?? [];
+      discTracks.push(this.mapTrack(track));
+      tracksByDiscMap.set(track.discNumber, discTracks);
+    }
+
+    // Convert map to sorted array
+    const sortedDiscNumbers = Array.from(tracksByDiscMap.keys()).sort(
+      (a, b) => a - b,
+    );
+    return sortedDiscNumbers.map((disc) => tracksByDiscMap.get(disc)!);
+  }
 
   async getTrack(id: string): Promise<TrackModel> {
     const track = await this.prisma.track.findUnique({
@@ -34,20 +100,7 @@ export class MusicService {
       throw new NotFoundException(`Track with id ${id} not found`);
     }
 
-    return {
-      id: track.id,
-      name: track.name,
-      isrc: track.isrc,
-      date: track.date,
-      durationMs: track.durationMs,
-      albumId: track.albumId,
-      discNumber: track.discNumber,
-      trackNumber: track.trackNumber,
-      artists: track.artists.map((ta) => ({
-        id: ta.artist.id,
-        name: ta.artist.name,
-      })),
-    };
+    return this.mapTrack(track);
   }
 
   async getAlbum(id: string): Promise<AlbumModel> {
@@ -82,41 +135,12 @@ export class MusicService {
       throw new NotFoundException(`Album with id ${id} not found`);
     }
 
-    // Group tracks by disc number
-    const tracksByDisc: TrackModel[][] = [];
-    let currentDisc = -1;
-
-    for (const track of album.tracks) {
-      if (track.discNumber !== currentDisc) {
-        currentDisc = track.discNumber;
-        tracksByDisc[currentDisc - 1] = [];
-      }
-
-      tracksByDisc[currentDisc - 1].push({
-        id: track.id,
-        name: track.name,
-        isrc: track.isrc,
-        date: track.date,
-        durationMs: track.durationMs,
-        albumId: track.albumId,
-        discNumber: track.discNumber,
-        trackNumber: track.trackNumber,
-        artists: track.artists.map((ta) => ({
-          id: ta.artist.id,
-          name: ta.artist.name,
-        })),
-      });
-    }
-
     return {
       id: album.id,
       name: album.name,
       date: album.date,
-      artists: album.artists.map((aa) => ({
-        id: aa.artist.id,
-        name: aa.artist.name,
-      })),
-      tracksByDisc,
+      artists: this.mapArtists(album.artists),
+      tracksByDisc: this.groupTracksByDisc(album.tracks),
     };
   }
 
@@ -171,20 +195,7 @@ export class MusicService {
       skip: offset,
     });
 
-    return tracks.map((track) => ({
-      id: track.id,
-      name: track.name,
-      isrc: track.isrc,
-      date: track.date,
-      durationMs: track.durationMs,
-      albumId: track.albumId,
-      discNumber: track.discNumber,
-      trackNumber: track.trackNumber,
-      artists: track.artists.map((ta) => ({
-        id: ta.artist.id,
-        name: ta.artist.name,
-      })),
-    }));
+    return tracks.map((track) => this.mapTrack(track));
   }
 
   async searchAlbums(input: SearchAlbumsInput): Promise<AlbumModel[]> {
@@ -235,44 +246,13 @@ export class MusicService {
       skip: offset,
     });
 
-    return albums.map((album) => {
-      // Group tracks by disc number
-      const tracksByDisc: TrackModel[][] = [];
-      let currentDisc = -1;
-
-      for (const track of album.tracks) {
-        if (track.discNumber !== currentDisc) {
-          currentDisc = track.discNumber;
-          tracksByDisc[currentDisc - 1] = [];
-        }
-
-        tracksByDisc[currentDisc - 1].push({
-          id: track.id,
-          name: track.name,
-          isrc: track.isrc,
-          date: track.date,
-          durationMs: track.durationMs,
-          albumId: track.albumId,
-          discNumber: track.discNumber,
-          trackNumber: track.trackNumber,
-          artists: track.artists.map((ta) => ({
-            id: ta.artist.id,
-            name: ta.artist.name,
-          })),
-        });
-      }
-
-      return {
-        id: album.id,
-        name: album.name,
-        date: album.date,
-        artists: album.artists.map((aa) => ({
-          id: aa.artist.id,
-          name: aa.artist.name,
-        })),
-        tracksByDisc,
-      };
-    });
+    return albums.map((album) => ({
+      id: album.id,
+      name: album.name,
+      date: album.date,
+      artists: this.mapArtists(album.artists),
+      tracksByDisc: this.groupTracksByDisc(album.tracks),
+    }));
   }
 
   async searchArtists(input: SearchArtistsInput): Promise<ArtistModel[]> {
@@ -407,58 +387,14 @@ export class MusicService {
     ]);
 
     return {
-      tracks: tracks.map((track) => ({
-        id: track.id,
-        name: track.name,
-        isrc: track.isrc,
-        date: track.date,
-        durationMs: track.durationMs,
-        albumId: track.albumId,
-        discNumber: track.discNumber,
-        trackNumber: track.trackNumber,
-        artists: track.artists.map((ta) => ({
-          id: ta.artist.id,
-          name: ta.artist.name,
-        })),
+      tracks: tracks.map((track) => this.mapTrack(track)),
+      albums: albums.map((album) => ({
+        id: album.id,
+        name: album.name,
+        date: album.date,
+        artists: this.mapArtists(album.artists),
+        tracksByDisc: this.groupTracksByDisc(album.tracks),
       })),
-      albums: albums.map((album) => {
-        // Group tracks by disc number
-        const tracksByDisc: TrackModel[][] = [];
-        let currentDisc = -1;
-
-        for (const track of album.tracks) {
-          if (track.discNumber !== currentDisc) {
-            currentDisc = track.discNumber;
-            tracksByDisc[currentDisc - 1] = [];
-          }
-
-          tracksByDisc[currentDisc - 1].push({
-            id: track.id,
-            name: track.name,
-            isrc: track.isrc,
-            date: track.date,
-            durationMs: track.durationMs,
-            albumId: track.albumId,
-            discNumber: track.discNumber,
-            trackNumber: track.trackNumber,
-            artists: track.artists.map((ta) => ({
-              id: ta.artist.id,
-              name: ta.artist.name,
-            })),
-          });
-        }
-
-        return {
-          id: album.id,
-          name: album.name,
-          date: album.date,
-          artists: album.artists.map((aa) => ({
-            id: aa.artist.id,
-            name: aa.artist.name,
-          })),
-          tracksByDisc,
-        };
-      }),
       artists: artists.map((artist) => ({
         id: artist.id,
         name: artist.name,
