@@ -2,6 +2,21 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Album {
+  artists: [Artist!]!
+  date: DateTime
+  id: String!
+  name: String!
+
+  """Tracks grouped by disc number, ordered by track number"""
+  tracksByDisc: [[Track!]!]!
+}
+
+type Artist {
+  id: String!
+  name: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -60,6 +75,12 @@ type Mutation {
 }
 
 type Query {
+  """Get a single album by ID with tracks grouped by disc number"""
+  album(id: String!): Album!
+
+  """Get a single artist by ID"""
+  artist(id: String!): Artist!
+
   hello: String!
 
   """Get the status of an indexing job"""
@@ -67,6 +88,23 @@ type Query {
 
   """Current logged-in user"""
   me: User!
+
+  """
+  Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types.
+  """
+  search(input: SearchMusicInput!): SearchMusicResult!
+
+  """Search for albums with optional filters. Use this to get all albums by an artist."""
+  searchAlbums(input: SearchAlbumsInput!): [Album!]!
+
+  """Search for artists with optional filters"""
+  searchArtists(input: SearchArtistsInput!): [Artist!]!
+
+  """Search for tracks with optional filters"""
+  searchTracks(input: SearchTracksInput!): [Track!]!
+
+  """Get a single track by ID"""
+  track(id: String!): Track!
 
   """User profile by identifier (admin access only)"""
   userProfile(userId: String!): User!
@@ -82,9 +120,94 @@ enum Sex {
   XY
 }
 
+input SearchAlbumsInput {
+  """Filter by artist ID"""
+  artistId: String
+
+  """Maximum number of results"""
+  limit: Int = 50
+
+  """Filter by album name (case-insensitive partial match)"""
+  name: String
+
+  """Number of results to skip"""
+  offset: Int = 0
+}
+
+input SearchArtistsInput {
+  """Maximum number of results"""
+  limit: Int = 50
+
+  """Filter by artist name (case-insensitive partial match)"""
+  name: String
+
+  """Number of results to skip"""
+  offset: Int = 0
+}
+
+input SearchMusicInput {
+  """Filter by exact album ID"""
+  albumId: String
+
+  """Filter by album name (case-insensitive partial match)"""
+  albumName: String
+
+  """Filter by exact artist ID"""
+  artistId: String
+
+  """Filter by artist name (case-insensitive partial match)"""
+  artistName: String
+
+  """Maximum number of results to return"""
+  limit: Int = 50
+
+  """Number of results to skip"""
+  offset: Int = 0
+
+  """Filter by track name (case-insensitive partial match)"""
+  trackName: String
+}
+
+type SearchMusicResult {
+  albums: [Album!]!
+  artists: [Artist!]!
+  tracks: [Track!]!
+}
+
+input SearchTracksInput {
+  """Filter by album ID"""
+  albumId: String
+
+  """Filter by artist ID"""
+  artistId: String
+
+  """Maximum number of results"""
+  limit: Int = 50
+
+  """Filter by track name (case-insensitive partial match)"""
+  name: String
+
+  """Number of results to skip"""
+  offset: Int = 0
+}
+
 type Subscription {
   """Subscribe to indexing job status updates"""
   indexingJobUpdated(jobId: String!): IndexingJob!
+}
+
+type Track {
+  albumId: String
+  artists: [Artist!]!
+  date: DateTime
+  discNumber: Int!
+
+  """Duration in milliseconds"""
+  durationMs: Int!
+  id: String!
+  isrc: String
+  name: String!
+  trackNumber: Int!
 }
 
 input UpdateUserProfileInput {
