@@ -4,7 +4,7 @@ packages:
 
 catalogs:
   default:
-    "@types/node": ^24.10.4
+    '@types/node': ^24.10.4
     temporal-polyfill: ^0.3.0
     tsdown: ^0.18.3
     typescript: ^5.9.3
@@ -12,11 +12,11 @@ catalogs:
 linkWorkspacePackages: true
 
 onlyBuiltDependencies:
-  - "@apollo/protobufjs"
-  - "@nestjs/core"
-  - "@prisma/client"
-  - "@prisma/engines"
-  - "@scarf/scarf"
+  - '@apollo/protobufjs'
+  - '@nestjs/core'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@scarf/scarf'
   - esbuild
   - msgpackr-extract
   - prisma
@@ -26,7 +26,7 @@ onlyBuiltDependencies:
   - workerd
 
 overrides:
-  "@types/node": catalog:default
+  '@types/node': catalog:default
   temporal-polyfill: catalog:default
   tsdown: catalog:default
   typescript: catalog:default
