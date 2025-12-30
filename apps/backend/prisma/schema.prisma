@@ -8,7 +8,9 @@ datasource db {
   provider = "postgresql"
 }
 
+// ---------------------------------------
 // User profiles
+// ---------------------------------------
 
 enum Role {
   USER
@@ -32,4 +34,98 @@ model User {
   @@index([username])
   @@index([role])
   @@index([sex])
+}
+
+// ---------------------------------------
+// Primary Music Model
+// ---------------------------------------
+
+model Track {
+  // Track metadata
+  id         String    @id @default(cuid())
+  name       String
+  isrc       String?
+  date       DateTime? @db.Date
+  durationMs Int
+
+  artists TrackArtist[]
+
+  // Album relation
+  album       Album?  @relation(fields: [albumId], references: [id])
+  albumId     String?
+  // Ordering within album
+  discNumber  Int
+  trackNumber Int
+
+  @@unique([albumId, discNumber, trackNumber])
+  @@index([albumId])
+  @@index([albumId, discNumber, trackNumber])
+}
+
+// Track -> Album -> many-to-one
+// Album -> Track -> one-to-many
+// Album -> Artist -> many-to-many
+// Artist -> Track -> many-to-many
+
+model Album {
+  id      String        @id @default(cuid())
+  name    String
+  date    DateTime?     @db.Date
+  artists AlbumArtist[]
+  tracks  Track[]
+}
+
+model Artist {
+  id           String        @id @default(cuid())
+  name         String        @unique // Potentially fragile, but acceptable for now
+  tracks       TrackArtist[]
+  albumArtists AlbumArtist[]
+}
+
+// ---------------------------------------
+// Join Tables for music model
+// ---------------------------------------
+
+/**
+ * Join table between Track and Artist.
+ * Stores track-level artist credits and ordering.
+ */
+model TrackArtist {
+  trackId  String
+  artistId String
+
+  /**
+   * Order of appearance (0 = main artist, 1+ = feats, etc.)
+   */
+  order Int
+
+  track  Track  @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  artist Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+
+  @@id([trackId, artistId])
+  @@unique([trackId, order])
+  @@index([trackId, order])
+  @@index([artistId])
+}
+
+/**
+ * Join table between Album and Artist.
+ * Stores album-level artist credits and ordering.
+ */
+model AlbumArtist {
+  albumId  String
+  artistId String
+
+  /**
+   * Order of appearance (0 = main artist, 1+ = feats, etc.)
+   */
+  order Int
+
+  album  Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  artist Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+
+  @@id([albumId, artistId])
+  @@unique([albumId, order])
+  @@index([albumId, order])
+  @@index([artistId])
 }
