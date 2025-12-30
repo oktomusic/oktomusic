@@ -3,7 +3,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { Prisma } from "../../generated/prisma/client";
 
 import { PrismaService } from "../../db/prisma.service";
-import type { AlbumModel, ArtistModel, TrackModel } from "./music.model";
+import type {
+  AlbumBasicModel,
+  AlbumModel,
+  ArtistModel,
+  TrackModel,
+} from "./music.model";
 import type {
   SearchAlbumsInput,
   SearchArtistsInput,
@@ -27,6 +32,18 @@ type PrismaTrack = {
       name: string;
     };
   }[];
+  album?: {
+    id: string;
+    name: string;
+    date: Date | null;
+    artists: {
+      order: number;
+      artist: {
+        id: string;
+        name: string;
+      };
+    }[];
+  } | null;
 };
 
 @Injectable()
@@ -46,6 +63,23 @@ export class MusicService {
   }
 
   /**
+   * Map album basic info to album basic model
+   */
+  private mapAlbumBasic(album: {
+    id: string;
+    name: string;
+    date: Date | null;
+    artists: Array<{ order: number; artist: { id: string; name: string } }>;
+  }): AlbumBasicModel {
+    return {
+      id: album.id,
+      name: album.name,
+      date: album.date,
+      artists: this.mapArtists(album.artists),
+    };
+  }
+
+  /**
    * Map Prisma track to track model
    */
   private mapTrack(track: PrismaTrack): TrackModel {
@@ -56,6 +90,7 @@ export class MusicService {
       date: track.date,
       durationMs: track.durationMs,
       albumId: track.albumId,
+      album: track.album ? this.mapAlbumBasic(track.album) : null,
       discNumber: track.discNumber,
       trackNumber: track.trackNumber,
       artists: this.mapArtists(track.artists),
@@ -120,6 +155,18 @@ export class MusicService {
           },
           orderBy: {
             order: "asc",
+          },
+        },
+        album: {
+          include: {
+            artists: {
+              include: {
+                artist: true,
+              },
+              orderBy: {
+                order: "asc",
+              },
+            },
           },
         },
       },
@@ -209,6 +256,18 @@ export class MusicService {
             order: "asc",
           },
         },
+        album: {
+          include: {
+            artists: {
+              include: {
+                artist: true,
+              },
+              orderBy: {
+                order: "asc",
+              },
+            },
+          },
+        },
       },
       orderBy: [{ name: "asc" }],
       take: limit,
@@ -294,6 +353,7 @@ export class MusicService {
    * Search across all music entities (tracks, albums, artists) with flexible filtering.
    * Note: The limit is applied to each entity type separately, so the total results
    * may be up to 3x the limit value (e.g., limit=50 can return up to 150 total items).
+   * Entity types can be selectively included/excluded via input flags.
    */
   async searchMusic(input: SearchMusicInput): Promise<{
     tracks: TrackModel[];
@@ -302,6 +362,9 @@ export class MusicService {
   }> {
     const limit = input.limit ?? 50;
     const offset = input.offset ?? 0;
+    const includeTracks = input.includeTracks ?? true;
+    const includeAlbums = input.includeAlbums ?? true;
+    const includeArtists = input.includeArtists ?? true;
 
     // Build base where conditions
     const trackWhere: Prisma.TrackWhereInput = {};
@@ -347,59 +410,83 @@ export class MusicService {
       trackWhere.albumId = input.albumId;
     }
 
-    // Execute queries in parallel
-    const [tracks, albums, artists] = await Promise.all([
-      this.prisma.track.findMany({
-        where: trackWhere,
-        include: {
-          artists: {
-            include: {
-              artist: true,
+    // Execute queries in parallel, only for requested entity types
+    const trackPromise = includeTracks
+      ? this.prisma.track.findMany({
+          where: trackWhere,
+          include: {
+            artists: {
+              include: {
+                artist: true,
+              },
+              orderBy: {
+                order: "asc",
+              },
             },
-            orderBy: {
-              order: "asc",
-            },
-          },
-        },
-        orderBy: [{ name: "asc" }],
-        take: limit,
-        skip: offset,
-      }),
-      this.prisma.album.findMany({
-        where: albumWhere,
-        include: {
-          artists: {
-            include: {
-              artist: true,
-            },
-            orderBy: {
-              order: "asc",
-            },
-          },
-          tracks: {
-            include: {
-              artists: {
-                include: {
-                  artist: true,
-                },
-                orderBy: {
-                  order: "asc",
+            album: {
+              include: {
+                artists: {
+                  include: {
+                    artist: true,
+                  },
+                  orderBy: {
+                    order: "asc",
+                  },
                 },
               },
             },
-            orderBy: [{ discNumber: "asc" }, { trackNumber: "asc" }],
           },
-        },
-        orderBy: [{ name: "asc" }],
-        take: limit,
-        skip: offset,
-      }),
-      this.prisma.artist.findMany({
-        where: artistWhere,
-        orderBy: [{ name: "asc" }],
-        take: limit,
-        skip: offset,
-      }),
+          orderBy: [{ name: "asc" }],
+          take: limit,
+          skip: offset,
+        })
+      : Promise.resolve([]);
+
+    const albumPromise = includeAlbums
+      ? this.prisma.album.findMany({
+          where: albumWhere,
+          include: {
+            artists: {
+              include: {
+                artist: true,
+              },
+              orderBy: {
+                order: "asc",
+              },
+            },
+            tracks: {
+              include: {
+                artists: {
+                  include: {
+                    artist: true,
+                  },
+                  orderBy: {
+                    order: "asc",
+                  },
+                },
+              },
+              orderBy: [{ discNumber: "asc" }, { trackNumber: "asc" }],
+            },
+          },
+          orderBy: [{ name: "asc" }],
+          take: limit,
+          skip: offset,
+        })
+      : Promise.resolve([]);
+
+    const artistPromise = includeArtists
+      ? this.prisma.artist.findMany({
+          where: artistWhere,
+          orderBy: [{ name: "asc" }],
+          take: limit,
+          skip: offset,
+        })
+      : Promise.resolve([]);
+
+    const [tracks, albums, artists] = await Promise.all([
+      trackPromise,
+      albumPromise,
+      artistPromise,
     ]);
 
     return {

@@ -39,6 +39,27 @@ export class SearchMusicInput {
     description: "Number of results to skip",
   })
   offset?: number;
+
+  @Field({
+    nullable: true,
+    defaultValue: true,
+    description: "Include tracks in search results",
+  })
+  includeTracks?: boolean;
+
+  @Field({
+    nullable: true,
+    defaultValue: true,
+    description: "Include albums in search results",
+  })
+  includeAlbums?: boolean;
+
+  @Field({
+    nullable: true,
+    defaultValue: true,
+    description: "Include artists in search results",
+  })
+  includeArtists?: boolean;
 }
 
 @InputType()

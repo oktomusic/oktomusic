@@ -12,6 +12,13 @@ type Album {
   tracksByDisc: [[Track!]!]!
 }
 
+type AlbumBasic {
+  artists: [Artist!]!
+  date: DateTime
+  id: String!
+  name: String!
+}
+
 type Artist {
   id: String!
   name: String!
@@ -90,7 +97,7 @@ type Query {
   me: User!
 
   """
-  Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately.
+  Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately. Use include flags to restrict which entity types are searched.
   """
   search(input: SearchMusicInput!): SearchMusicResult!
 
@@ -158,6 +165,15 @@ input SearchMusicInput {
   """Filter by artist name (case-insensitive partial match)"""
   artistName: String
 
+  """Include albums in search results"""
+  includeAlbums: Boolean = true
+
+  """Include artists in search results"""
+  includeArtists: Boolean = true
+
+  """Include tracks in search results"""
+  includeTracks: Boolean = true
+
   """Maximum number of results to return"""
   limit: Int = 50
 
@@ -197,6 +213,8 @@ type Subscription {
 }
 
 type Track {
+  """Album metadata"""
+  album: AlbumBasic
   albumId: String
   artists: [Artist!]!
   date: DateTime
