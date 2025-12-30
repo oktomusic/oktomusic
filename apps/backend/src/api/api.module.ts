@@ -26,6 +26,8 @@ import { IndexingResolver } from "./indexing/indexing.resolver";
 import { IndexingService } from "./indexing/indexing.service";
 import { AlbumService } from "./album/album.service";
 import { AlbumController } from "./album/album.controller";
+import { MusicResolver } from "./music/music.resolver";
+import { MusicService } from "./music/music.service";
 
 @Module({
   imports: [
@@ -68,6 +70,7 @@ import { AlbumController } from "./album/album.controller";
     UserResolver,
     UserService,
     IndexingResolver,
+    MusicResolver,
     OidcService,
     AuthGuard,
     AdminGuard,
@@ -76,6 +79,7 @@ import { AlbumController } from "./album/album.controller";
     MediaService,
     AlbumService,
     IndexingService,
+    MusicService,
   ],
   exports: [AuthGuard, AdminGuard, GraphqlAuthGuard, GraphqlAdminGuard],
 })
