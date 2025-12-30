@@ -299,3 +299,27 @@ jobs:
           no_cache: ${{ (github.event_name == 'workflow_dispatch' && !inputs.use_cache) || startsWith(github.ref, 'refs/tags/') }}
           attestations: ${{ github.event_name != 'pull_request' }}
           cosign: ${{ github.event_name != 'pull_request' }}
+
+  typst-docs:
+    name: Typst Documents
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v4
+
+      - name: Build Project Report
+        run: typst compile docs/certification/oktomusic_project_report_fr.typ docs/certification/oktomusic_project_report_fr.pdf
+
+      - name: Build Project Presentation
+        run: typst compile docs/certification/oktomusic_project_presentation_fr.typ docs/certification/oktomusic_project_presentation_fr.pdf
+
+      - name: Upload PDFs as Artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: oktomusic_certification_documents
+          path: |
+            docs/certification/oktomusic_project_report_fr.pdf
+            docs/certification/oktomusic_project_presentation_fr.pdf
