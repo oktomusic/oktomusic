@@ -149,7 +149,6 @@ export class IndexingProcessor extends WorkerHost {
     for (const [folderPath, folderData] of Object.entries(context.sourceData)) {
       console.log(`Validating folder: ${folderPath}`);
       const errors = this.validateFlacFolder(folderData.files);
-      // TODO: extract the guessed album info and store it somewhere
 
       if (errors.length !== 0) {
         await this.addWarning(context, {
@@ -200,6 +199,43 @@ export class IndexingProcessor extends WorkerHost {
     console.log(JSON.stringify(context.sourceData, null, 2));
     for (const [, folderData] of Object.entries(context.sourceData)) {
       console.log(JSON.stringify(folderData.albumSummary, null, 2));
+    }
+
+    // 5. Match and create artists
+    const artistNames = new Set<string>();
+    for (const [folderPath] of Object.entries(context.sourceData).filter(
+      ([, data]) => !data.hasWarnings && data.albumSummary !== undefined,
+    )) {
+      // Get artist names from files
+      const fileArtists = Object.values(
+        context.sourceData[folderPath].files,
+      ).flatMap(({ tags }) => {
+        return tags.ARTIST;
+      });
+
+      // Merge with album artists
+      const mergedArtists = [
+        ...context.sourceData[folderPath].albumSummary!.artists,
+        ...fileArtists,
+      ];
+
+      for (const artistName of mergedArtists) {
+        artistNames.add(artistName);
+      }
+    }
+    this.logger.log(`Found ${artistNames.size} unique artist names`);
+
+    // Insert artists into DB if not existing already
+    const normalizedUniqueNames = Array.from(artistNames);
+    if (normalizedUniqueNames.length > 0) {
+      const { count } = await this.prisma.artist.createMany({
+        data: normalizedUniqueNames.map((name) => ({ name })),
+        skipDuplicates: true,
+      });
+
+      this.logger.log(
+        `Artists: created ${count} new (out of ${normalizedUniqueNames.length} unique names)`,
+      );
     }
 
     // WIP: covers
