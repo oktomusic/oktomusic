@@ -1,3 +1,5 @@
+[prisma_connection_url]: https://www.prisma.io/docs/orm/reference/connection-urls#postgresql
+
 # Configuration Reference
 
 Configuration for the app is provided with environment variables.
@@ -7,6 +9,7 @@ Configuration for the app is provided with environment variables.
 | Name                    | Description                                                                                                                 |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `NODE_ENV`              | Application environment. One of `development`, `production`, or `test`. Default: `development`.                             |
+| `DATABASE_URL`          | Prisma PostgreSQL [connection URL][prisma_connection_url]. Required.                                                        |
 | `SESSION_SECRET`        | Secret string used for session encryption. Required. Keep secret in production.                                             |
 | `APP_LIBRARY_PATH`      | Path to the music library folder. Must exist and be a directory; the path is resolved at startup.                           |
 | `APP_INTERMEDIATE_PATH` | Path to store intermediate files (transcoding, etc) folder. Must exist and be a directory; the path is resolved at startup. |
