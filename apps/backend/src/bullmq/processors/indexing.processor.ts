@@ -101,9 +101,30 @@ const sortByDiscAndTrack = (
   return a.track.discNumber - b.track.discNumber;
 };
 
+const assertRequiredTrackTags = (tags: MetaflacTags, filePath: string): void => {
+  if (!tags.ALBUM || !tags.TITLE) {
+    throw new Error(
+      `Missing mandatory track tags (ALBUM or TITLE) for ${filePath}`,
+    );
+  }
+
+  if (!Array.isArray(tags.ALBUMARTIST) || tags.ALBUMARTIST.length === 0) {
+    throw new Error(`Missing album artist for ${filePath}`);
+  }
+
+  if (!Number.isFinite(tags.DISCNUMBER) || !Number.isFinite(tags.TRACKNUMBER)) {
+    throw new Error(`Missing or invalid disc/track number for ${filePath}`);
+  }
+};
+
 const toRelativeLibraryPath = (root: string, target: string): string => {
-  const relative = path.relative(root, target) || ".";
-  return relative.startsWith("..") ? target : relative;
+  const normalizedRoot = path.resolve(root);
+  const normalizedTarget = path.resolve(target);
+  const relative = path.relative(normalizedRoot, normalizedTarget) || ".";
+  if (relative.startsWith("..")) {
+    throw new Error(`Path ${target} is outside of library root ${root}`);
+  }
+  return relative;
 };
 
 export const buildTrackLinksFromFiles = (
@@ -111,28 +132,32 @@ export const buildTrackLinksFromFiles = (
   fileMap: Record<string, IndexingFileData>,
 ): IndexingTrackLink[] => {
   const trackLinks: IndexingTrackLink[] = Object.entries(fileMap).map(
-    ([absolutePath, data]) => ({
-      track: {
-        album: data.tags.ALBUM,
-        albumArtists: data.tags.ALBUMARTIST,
-        title: data.tags.TITLE,
-        discNumber: data.tags.DISCNUMBER,
-        trackNumber: data.tags.TRACKNUMBER,
-        totalTracks: data.tags.TOTALTRACKS,
-        totalDiscs: data.tags.TOTALDISCS,
-        isrc: data.tags.ISRC,
-      },
-      source: {
-        absolutePath,
-        relativePath: toRelativeLibraryPath(libraryPath, absolutePath),
-        sampleRate: data.ffprobe.sampleRate,
-        bitsPerRawSample: data.ffprobe.bitsPerRawSample,
-        durationMs: data.ffprobe.durationMs,
-        fileSize: data.ffprobe.fileSize,
-        bitRate: data.ffprobe.bitRate,
-        hash: data.hash,
-      },
-    }),
+    ([absolutePath, data]) => {
+      assertRequiredTrackTags(data.tags, absolutePath);
+
+      return {
+        track: {
+          album: data.tags.ALBUM,
+          albumArtists: data.tags.ALBUMARTIST,
+          title: data.tags.TITLE,
+          discNumber: data.tags.DISCNUMBER,
+          trackNumber: data.tags.TRACKNUMBER,
+          totalTracks: data.tags.TOTALTRACKS,
+          totalDiscs: data.tags.TOTALDISCS,
+          isrc: data.tags.ISRC,
+        },
+        source: {
+          absolutePath,
+          relativePath: toRelativeLibraryPath(libraryPath, absolutePath),
+          sampleRate: data.ffprobe.sampleRate,
+          bitsPerRawSample: data.ffprobe.bitsPerRawSample,
+          durationMs: data.ffprobe.durationMs,
+          fileSize: data.ffprobe.fileSize,
+          bitRate: data.ffprobe.bitRate,
+          hash: data.hash,
+        },
+      };
+    },
   );
 
   return trackLinks.sort(sortByDiscAndTrack);
