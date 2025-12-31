@@ -617,7 +617,9 @@ export class IndexingProcessor extends WorkerHost {
       where: { trackId },
     });
 
-    if (artists.length === 0) return;
+    if (artists.length === 0) {
+      throw new Error(`No artists resolved for track ${trackId}`);
+    }
 
     await this.prisma.trackArtist.createMany({
       data: artists.map((artist, order) => ({
@@ -688,17 +690,25 @@ export class IndexingProcessor extends WorkerHost {
     }
 
     await this.prisma.trackFile.createMany({
-      data: trackLinks.map((link) => ({
-        trackId: trackMap.get(link.source.relativePath)!.id,
-        path: link.source.relativePath,
-        sampleRate: link.source.sampleRate,
-        bitsPerRawSample: link.source.bitsPerRawSample,
-        durationMs: link.source.durationMs,
-        fileSize: link.source.fileSize,
-        bitRate: link.source.bitRate,
-        hash: link.source.hash,
-      })),
-      skipDuplicates: true,
+      data: trackLinks.map((link) => {
+        const track = trackMap.get(link.source.relativePath);
+        if (!track) {
+          throw new Error(
+            `Missing track mapping for ${link.source.relativePath}`,
+          );
+        }
+
+        return {
+          trackId: track.id,
+          path: link.source.relativePath,
+          sampleRate: link.source.sampleRate,
+          bitsPerRawSample: link.source.bitsPerRawSample,
+          durationMs: link.source.durationMs,
+          fileSize: link.source.fileSize,
+          bitRate: link.source.bitRate,
+          hash: link.source.hash,
+        };
+      }),
     });
   }
 }
