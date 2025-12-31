@@ -30,7 +30,7 @@ interface FlacFolder {
   files: string[];
 }
 
-interface IndexingFileData {
+export interface IndexingFileData {
   readonly tags: MetaflacTags;
   readonly ffprobe: FFProbeOutput;
   readonly hash?: string; // TODO: implement file hashing
@@ -51,6 +51,7 @@ interface IndexingFolderData {
   readonly files: Record<string, IndexingFileData>;
   hasWarnings: boolean;
   albumSummary?: IndexingFolderAlbumSummary;
+  trackLinks?: IndexingTrackLink[];
 }
 
 type IndexingFileMap = Record<string, IndexingFileData>;
@@ -62,6 +63,80 @@ interface IndexingProcessorContext {
   readonly libraryPath: string;
   readonly sourceData: IndexingFolderMap;
 }
+
+export interface IndexingTrackMetadata {
+  readonly album: string;
+  readonly albumArtists: readonly string[];
+  readonly title: string;
+  readonly discNumber: number;
+  readonly trackNumber: number;
+  readonly totalTracks?: number;
+  readonly totalDiscs?: number;
+  readonly isrc?: string;
+}
+
+export interface IndexingTrackSource {
+  readonly absolutePath: string;
+  readonly relativePath: string;
+  readonly sampleRate: number;
+  readonly bitsPerRawSample: number;
+  readonly durationMs: number;
+  readonly fileSize: number;
+  readonly bitRate: number;
+  readonly hash?: string;
+}
+
+export interface IndexingTrackLink {
+  readonly track: IndexingTrackMetadata;
+  readonly source: IndexingTrackSource;
+}
+
+const sortByDiscAndTrack = (
+  a: IndexingTrackLink,
+  b: IndexingTrackLink,
+): number => {
+  if (a.track.discNumber === b.track.discNumber) {
+    return a.track.trackNumber - b.track.trackNumber;
+  }
+  return a.track.discNumber - b.track.discNumber;
+};
+
+const toRelativeLibraryPath = (root: string, target: string): string => {
+  const relative = path.relative(root, target) || ".";
+  return relative.startsWith("..") ? target : relative;
+};
+
+export const buildTrackLinksFromFiles = (
+  libraryPath: string,
+  fileMap: Record<string, IndexingFileData>,
+): IndexingTrackLink[] => {
+  const trackLinks: IndexingTrackLink[] = Object.entries(fileMap).map(
+    ([absolutePath, data]) => ({
+      track: {
+        album: data.tags.ALBUM,
+        albumArtists: data.tags.ALBUMARTIST,
+        title: data.tags.TITLE,
+        discNumber: data.tags.DISCNUMBER,
+        trackNumber: data.tags.TRACKNUMBER,
+        totalTracks: data.tags.TOTALTRACKS,
+        totalDiscs: data.tags.TOTALDISCS,
+        isrc: data.tags.ISRC,
+      },
+      source: {
+        absolutePath,
+        relativePath: toRelativeLibraryPath(libraryPath, absolutePath),
+        sampleRate: data.ffprobe.sampleRate,
+        bitsPerRawSample: data.ffprobe.bitsPerRawSample,
+        durationMs: data.ffprobe.durationMs,
+        fileSize: data.ffprobe.fileSize,
+        bitRate: data.ffprobe.bitRate,
+        hash: data.hash,
+      },
+    }),
+  );
+
+  return trackLinks.sort(sortByDiscAndTrack);
+};
 
 @Processor("library-indexing")
 export class IndexingProcessor extends WorkerHost {
@@ -195,6 +270,14 @@ export class IndexingProcessor extends WorkerHost {
         artists,
         trackCounts,
       };
+    }
+
+    // 5. Build a stable mapping between files and track metadata
+    for (const [folderPath, folderData] of Object.entries(context.sourceData)) {
+      context.sourceData[folderPath].trackLinks = buildTrackLinksFromFiles(
+        context.libraryPath,
+        folderData.files,
+      );
     }
 
     console.log(JSON.stringify(context.sourceData, null, 2));
@@ -357,8 +440,7 @@ export class IndexingProcessor extends WorkerHost {
   }
 
   private toRelativePath(root: string, target: string): string {
-    const relative = path.relative(root, target) || ".";
-    return relative.startsWith("..") ? target : relative;
+    return toRelativeLibraryPath(root, target);
   }
 
   private async publishJobStatus(
