@@ -15,6 +15,7 @@ import { IndexingJobStatus } from "../../api/indexing/indexing.model";
 import { PUB_SUB } from "../../common/pubsub/pubsub.module";
 import appConfig from "../../config/definitions/app.config";
 import { PrismaService } from "../../db/prisma.service";
+import type { Album, Artist, Track } from "../../generated/prisma/client";
 import { MetaflacError } from "../../native/metaflac-error";
 import { MetaflacService } from "../../native/metaflac.service";
 import { FFmpegService, FFProbeOutput } from "../../native/ffmpeg.service";
@@ -67,6 +68,7 @@ interface IndexingProcessorContext {
 export interface IndexingTrackMetadata {
   readonly album: string;
   readonly albumArtists: readonly string[];
+  readonly artists: readonly string[];
   readonly title: string;
   readonly discNumber: number;
   readonly trackNumber: number;
@@ -112,6 +114,10 @@ const assertRequiredTrackTags = (tags: MetaflacTags, filePath: string): void => 
     throw new Error(`Missing album artist for ${filePath}`);
   }
 
+  if (!Array.isArray(tags.ARTIST) || tags.ARTIST.length === 0) {
+    throw new Error(`Missing track artist for ${filePath}`);
+  }
+
   if (!Number.isFinite(tags.DISCNUMBER) || !Number.isFinite(tags.TRACKNUMBER)) {
     throw new Error(`Missing or invalid disc/track number for ${filePath}`);
   }
@@ -139,6 +145,7 @@ export const buildTrackLinksFromFiles = (
         track: {
           album: data.tags.ALBUM,
           albumArtists: data.tags.ALBUMARTIST,
+          artists: data.tags.ARTIST,
           title: data.tags.TITLE,
           discNumber: data.tags.DISCNUMBER,
           trackNumber: data.tags.TRACKNUMBER,
@@ -303,6 +310,11 @@ export class IndexingProcessor extends WorkerHost {
         context.libraryPath,
         folderData.files,
       );
+    }
+
+    // 6. Persist albums, artists, tracks and file links
+    for (const [, folderData] of Object.entries(context.sourceData)) {
+      await this.syncFolderToDatabase(folderData);
     }
 
     console.log(JSON.stringify(context.sourceData, null, 2));
@@ -486,6 +498,207 @@ export class IndexingProcessor extends WorkerHost {
             ? new Date().toISOString()
             : undefined,
       },
+    });
+  }
+
+  private async syncFolderToDatabase(
+    folderData: IndexingFolderData,
+  ): Promise<void> {
+    if (
+      !folderData.albumSummary ||
+      !folderData.trackLinks ||
+      folderData.trackLinks.length === 0
+    ) {
+      return;
+    }
+
+    const albumArtists = await Promise.all(
+      folderData.albumSummary.artists.map((artistName) =>
+        this.ensureArtist(artistName),
+      ),
+    );
+
+    const album = await this.ensureAlbum(
+      folderData.albumSummary.album,
+      albumArtists,
+    );
+
+    await this.syncAlbumArtists(album.id, albumArtists);
+
+    const trackMap = await this.syncTracks(album.id, folderData.trackLinks);
+
+    await this.recreateTrackFiles(
+      folderData.trackLinks,
+      trackMap,
+    );
+  }
+
+  private async ensureArtist(name: string): Promise<Artist> {
+    return this.prisma.artist.upsert({
+      where: { name },
+      update: {},
+      create: { name },
+    });
+  }
+
+  private async ensureAlbum(
+    albumName: string,
+    albumArtists: Artist[],
+  ): Promise<Album> {
+    const candidates = await this.prisma.album.findMany({
+      where: {
+        name: albumName,
+      },
+      include: {
+        artists: true,
+      },
+    });
+
+    const albumArtistIds = albumArtists.map((artist) => artist.id);
+    const existing = candidates.find((candidate) => {
+      const existingIds = candidate.artists.map((aa) => aa.artistId);
+      if (existingIds.length !== albumArtistIds.length) return false;
+      return albumArtistIds.every((id) => existingIds.includes(id));
+    });
+
+    if (existing) {
+      return existing;
+    }
+
+    return this.prisma.album.create({
+      data: {
+        name: albumName,
+      },
+    });
+  }
+
+  private async syncAlbumArtists(
+    albumId: string,
+    artists: Artist[],
+  ): Promise<void> {
+    const artistIds = artists.map((artist) => artist.id);
+
+    await this.prisma.albumArtist.deleteMany({
+      where: {
+        albumId,
+        artistId: { notIn: artistIds },
+      },
+    });
+
+    for (const [order, artist] of artists.entries()) {
+      await this.prisma.albumArtist.upsert({
+        where: {
+          albumId_artistId: {
+            albumId,
+            artistId: artist.id,
+          },
+        },
+        update: {
+          order,
+        },
+        create: {
+          albumId,
+          artistId: artist.id,
+          order,
+        },
+      });
+    }
+  }
+
+  private async syncTrackArtists(
+    trackId: string,
+    artistNames: readonly string[],
+  ): Promise<void> {
+    const artists = await Promise.all(
+      artistNames.map((name) => this.ensureArtist(name)),
+    );
+
+    await this.prisma.trackArtist.deleteMany({
+      where: { trackId },
+    });
+
+    if (artists.length === 0) return;
+
+    await this.prisma.trackArtist.createMany({
+      data: artists.map((artist, order) => ({
+        trackId,
+        artistId: artist.id,
+        order,
+      })),
+    });
+  }
+
+  private async syncTracks(
+    albumId: string,
+    trackLinks: IndexingTrackLink[],
+  ): Promise<Map<string, Track>> {
+    const trackByRelativePath = new Map<string, Track>();
+
+    for (const link of trackLinks) {
+      const track = await this.prisma.track.upsert({
+        where: {
+          albumId_discNumber_trackNumber: {
+            albumId,
+            discNumber: link.track.discNumber,
+            trackNumber: link.track.trackNumber,
+          },
+        },
+        update: {
+          name: link.track.title,
+          isrc: link.track.isrc ?? null,
+          durationMs: link.source.durationMs,
+          discNumber: link.track.discNumber,
+          trackNumber: link.track.trackNumber,
+        },
+        create: {
+          name: link.track.title,
+          isrc: link.track.isrc ?? null,
+          durationMs: link.source.durationMs,
+          discNumber: link.track.discNumber,
+          trackNumber: link.track.trackNumber,
+          album: {
+            connect: {
+              id: albumId,
+            },
+          },
+        },
+      });
+
+      await this.syncTrackArtists(track.id, link.track.artists);
+      trackByRelativePath.set(link.source.relativePath, track);
+    }
+
+    return trackByRelativePath;
+  }
+
+  private async recreateTrackFiles(
+    trackLinks: IndexingTrackLink[],
+    trackMap: Map<string, Track>,
+  ): Promise<void> {
+    const relativePaths = trackLinks.map(
+      (link) => link.source.relativePath,
+    );
+
+    if (relativePaths.length > 0) {
+      await this.prisma.trackFile.deleteMany({
+        where: {
+          path: { in: relativePaths },
+        },
+      });
+    }
+
+    await this.prisma.trackFile.createMany({
+      data: trackLinks.map((link) => ({
+        trackId: trackMap.get(link.source.relativePath)!.id,
+        path: link.source.relativePath,
+        sampleRate: link.source.sampleRate,
+        bitsPerRawSample: link.source.bitsPerRawSample,
+        durationMs: link.source.durationMs,
+        fileSize: link.source.fileSize,
+        bitRate: link.source.bitRate,
+        hash: link.source.hash,
+      })),
+      skipDuplicates: true,
     });
   }
 }

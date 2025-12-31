@@ -66,5 +66,6 @@ describe("buildTrackLinksFromFiles", () => {
     expect(links[1].track.title).toBe("Second");
     expect(links[0].track.isrc).toBe("US-AAA-24-12345");
     expect(links[0].source.sampleRate).toBe(44100);
+    expect(links[0].track.artists).toEqual(["Artist"]);
   });
 });

@@ -57,6 +57,8 @@ model Track {
   discNumber  Int
   trackNumber Int
 
+  trackFiles TrackFile[]
+
   @@unique([albumId, discNumber, trackNumber])
   @@index([albumId])
   @@index([albumId, discNumber, trackNumber])
@@ -128,4 +130,21 @@ model AlbumArtist {
   @@unique([albumId, order])
   @@index([albumId, order])
   @@index([artistId])
+}
+
+model TrackFile {
+  id              String @id @default(cuid())
+  trackId         String
+  path            String @unique
+  sampleRate      Int
+  bitsPerRawSample Int
+  durationMs      Int
+  fileSize        Int
+  bitRate         Int
+  hash            String?
+
+  track Track @relation(fields: [trackId], references: [id], onDelete: Cascade)
+
+  @@index([trackId])
+  @@index([path])
 }
