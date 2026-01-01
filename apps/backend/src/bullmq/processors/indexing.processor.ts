@@ -23,6 +23,18 @@ import {
   IndexingReportType,
   type IndexingWarning,
 } from "./errors";
+import {
+  getAlbumSignature,
+  getOrderedTrackKeys,
+  getTrackCountsPerDisc,
+} from "./indexing.utils";
+import {
+  getAlbumDiscTrackKey,
+  getPreferredTrackIdentity,
+  getTrackUpdatePlan,
+  normalizeIsrc,
+  normalizeTitle,
+} from "./indexing.tracks.utils";
 import { pickAndConvertAlbumCover } from "../../common/utils/sharp-utils";
 
 interface FlacFolder {
@@ -51,6 +63,7 @@ interface IndexingFolderData {
   readonly files: Record<string, IndexingFileData>;
   hasWarnings: boolean;
   albumSummary?: IndexingFolderAlbumSummary;
+  albumId?: string;
 }
 
 type IndexingFileMap = Record<string, IndexingFileData>;
@@ -237,6 +250,634 @@ export class IndexingProcessor extends WorkerHost {
         `Artists: created ${count} new (out of ${normalizedUniqueNames.length} unique names)`,
       );
     }
+
+    // 6. Match and create albums
+
+    const albumCandidates = Object.entries(context.sourceData).filter(
+      ([, data]) => !data.hasWarnings && data.albumSummary !== undefined,
+    );
+
+    if (albumCandidates.length > 0) {
+      const candidateAlbumNames = Array.from(
+        new Set(
+          albumCandidates
+            .map(([, data]) => data.albumSummary!.album)
+            .map((name) => name.trim())
+            .filter((name) => name.length > 0),
+        ),
+      );
+
+      const existingAlbums =
+        candidateAlbumNames.length > 0
+          ? await this.prisma.album.findMany({
+              where: {
+                name: {
+                  in: candidateAlbumNames,
+                },
+              },
+              include: {
+                artists: {
+                  include: {
+                    artist: {
+                      select: {
+                        name: true,
+                      },
+                    },
+                  },
+                  orderBy: {
+                    order: "asc",
+                  },
+                },
+                tracks: {
+                  select: {
+                    discNumber: true,
+                    trackNumber: true,
+                    isrc: true,
+                    name: true,
+                  },
+                },
+              },
+            })
+          : [];
+
+      const signatureToAlbumId = new Map<string, string>();
+      const partialSignatureToAlbumId = new Map<string, string>();
+      for (const album of existingAlbums) {
+        const albumArtistNames = album.artists.map(({ artist }) => artist.name);
+        const trackCounts = getTrackCountsPerDisc(album.tracks);
+        const trackKeys = getOrderedTrackKeys(
+          album.tracks.map((t) => ({
+            discNumber: t.discNumber,
+            trackNumber: t.trackNumber,
+            isrc: t.isrc,
+            title: t.name,
+          })),
+        );
+
+        signatureToAlbumId.set(
+          getAlbumSignature(
+            album.name,
+            albumArtistNames,
+            trackCounts,
+            trackKeys,
+          ),
+          album.id,
+        );
+
+        // If an album exists without tracks yet, allow a fallback match.
+        if (album.tracks.length === 0) {
+          partialSignatureToAlbumId.set(
+            getAlbumSignature(album.name, albumArtistNames, trackCounts, []),
+            album.id,
+          );
+        }
+      }
+
+      const albumsToCreateBySignature = new Map<
+        string,
+        {
+          readonly name: string;
+          readonly artists: string[];
+          readonly trackCounts: number[];
+        }
+      >();
+
+      let matchedAlbumsCount = 0;
+      for (const [folderPath, data] of albumCandidates) {
+        const summary = data.albumSummary!;
+        const trackKeys = getOrderedTrackKeys(
+          Object.values(data.files).map((f) => ({
+            discNumber: f.tags.DISCNUMBER,
+            trackNumber: f.tags.TRACKNUMBER,
+            isrc: f.tags.ISRC,
+            title: f.tags.TITLE,
+          })),
+        );
+        const signature = getAlbumSignature(
+          summary.album,
+          summary.artists,
+          summary.trackCounts,
+          trackKeys,
+        );
+
+        const existingAlbumId = signatureToAlbumId.get(signature);
+        if (existingAlbumId) {
+          context.sourceData[folderPath].albumId = existingAlbumId;
+          matchedAlbumsCount += 1;
+          continue;
+        }
+
+        const partialAlbumId = partialSignatureToAlbumId.get(
+          getAlbumSignature(
+            summary.album,
+            summary.artists,
+            summary.trackCounts,
+            [],
+          ),
+        );
+        if (partialAlbumId) {
+          context.sourceData[folderPath].albumId = partialAlbumId;
+          matchedAlbumsCount += 1;
+          continue;
+        }
+
+        if (!albumsToCreateBySignature.has(signature)) {
+          albumsToCreateBySignature.set(signature, {
+            name: summary.album,
+            artists: summary.artists,
+            trackCounts: summary.trackCounts,
+          });
+        }
+      }
+
+      const albumsToCreate = Array.from(albumsToCreateBySignature.entries());
+      if (albumsToCreate.length > 0) {
+        const createdAlbums = await this.prisma.$transaction(
+          albumsToCreate.map(([, album]) =>
+            this.prisma.album.create({
+              data: {
+                name: album.name,
+                artists: {
+                  create: album.artists.map((artistName, order) => ({
+                    order,
+                    artist: {
+                      connect: {
+                        name: artistName.trim(),
+                      },
+                    },
+                  })),
+                },
+              },
+              select: {
+                id: true,
+              },
+            }),
+          ),
+        );
+
+        for (const [index, created] of createdAlbums.entries()) {
+          const [signature] = albumsToCreate[index];
+          signatureToAlbumId.set(signature, created.id);
+        }
+
+        // Assign newly created album IDs to folders
+        let createdAssignedCount = 0;
+        for (const [folderPath, data] of albumCandidates) {
+          if (context.sourceData[folderPath].albumId) continue;
+          const summary = data.albumSummary!;
+          const signature = getAlbumSignature(
+            summary.album,
+            summary.artists,
+            summary.trackCounts,
+            getOrderedTrackKeys(
+              Object.values(data.files).map((f) => ({
+                discNumber: f.tags.DISCNUMBER,
+                trackNumber: f.tags.TRACKNUMBER,
+                isrc: f.tags.ISRC,
+                title: f.tags.TITLE,
+              })),
+            ),
+          );
+          const createdAlbumId = signatureToAlbumId.get(signature);
+          if (createdAlbumId) {
+            context.sourceData[folderPath].albumId = createdAlbumId;
+            createdAssignedCount += 1;
+          }
+        }
+
+        this.logger.log(
+          `Albums: created ${createdAlbums.length}, assigned ${createdAssignedCount} folder(s)`,
+        );
+      }
+
+      this.logger.log(
+        `Albums: matched ${matchedAlbumsCount} existing for ${albumCandidates.length} folder(s)`,
+      );
+    }
+
+    // 7. Match and create tracks + link FLAC files
+
+    const trackCandidates = Object.entries(context.sourceData).filter(
+      ([, data]) =>
+        !data.hasWarnings &&
+        data.albumSummary !== undefined &&
+        typeof data.albumId === "string" &&
+        data.albumId.length > 0,
+    );
+
+    if (trackCandidates.length > 0) {
+      const albumIds = Array.from(
+        new Set(trackCandidates.map(([, data]) => data.albumId!)),
+      );
+
+      const existingTracks = await this.prisma.track.findMany({
+        where: {
+          albumId: {
+            in: albumIds,
+          },
+        },
+        select: {
+          id: true,
+          albumId: true,
+          discNumber: true,
+          trackNumber: true,
+          name: true,
+          isrc: true,
+          durationMs: true,
+        },
+      });
+
+      const byAlbumDiscTrack = new Map<
+        string,
+        (typeof existingTracks)[number]
+      >();
+      const byAlbumIsrc = new Map<string, (typeof existingTracks)[number]>();
+      const byAlbumTitle = new Map<string, (typeof existingTracks)[number]>();
+
+      for (const t of existingTracks) {
+        const discTrackKey = getAlbumDiscTrackKey(
+          t.albumId ?? "",
+          t.discNumber,
+          t.trackNumber,
+        );
+        byAlbumDiscTrack.set(discTrackKey, t);
+
+        const isrc = normalizeIsrc(t.isrc);
+        if (isrc) {
+          byAlbumIsrc.set(`${t.albumId}::isrc:${isrc}`, t);
+        }
+
+        const title = normalizeTitle(t.name);
+        if (title) {
+          byAlbumTitle.set(`${t.albumId}::title:${title}`, t);
+        }
+      }
+
+      const allTrackArtistNames = new Set<string>();
+      for (const [, data] of trackCandidates) {
+        for (const file of Object.values(data.files)) {
+          for (const artistName of file.tags.ARTIST) {
+            const trimmed = artistName.trim();
+            if (trimmed.length > 0) allTrackArtistNames.add(trimmed);
+          }
+        }
+      }
+
+      const artistNameToId = new Map<string, string>();
+      if (allTrackArtistNames.size > 0) {
+        const artists = await this.prisma.artist.findMany({
+          where: {
+            name: {
+              in: Array.from(allTrackArtistNames),
+            },
+          },
+          select: {
+            id: true,
+            name: true,
+          },
+        });
+        for (const a of artists) {
+          artistNameToId.set(a.name, a.id);
+        }
+      }
+
+      const toInt = (value: unknown): number => {
+        const n = typeof value === "number" ? value : Number(value);
+        return Number.isFinite(n) ? Math.trunc(n) : 0;
+      };
+
+      let createdTracks = 0;
+      let updatedTracks = 0;
+      let movedTracks = 0;
+      let isrcConflicts = 0;
+      let upsertedFlacFiles = 0;
+      let deletedMissingFlacFiles = 0;
+
+      for (const [folderAbsPath, folderData] of trackCandidates) {
+        const albumId = folderData.albumId!;
+        const folderRelative = this.toRelativePath(
+          context.libraryPath,
+          folderAbsPath,
+        );
+
+        const fileEntries = Object.entries(folderData.files)
+          .map(([fileAbsPath, file]) => {
+            const relativePath = this.toRelativePath(
+              context.libraryPath,
+              fileAbsPath,
+            );
+
+            const title = file.tags.TITLE;
+            const isrc = normalizeIsrc(file.tags.ISRC);
+            const artists = file.tags.ARTIST.map((a) => a.trim()).filter(
+              (a) => a.length > 0,
+            );
+
+            return {
+              relativePath,
+              discNumber: toInt(file.tags.DISCNUMBER),
+              trackNumber: toInt(file.tags.TRACKNUMBER),
+              title,
+              isrc,
+              durationMs: toInt(file.ffprobe.durationMs),
+              artists,
+              ffprobe: file.ffprobe,
+            };
+          })
+          .sort((a, b) =>
+            a.discNumber !== b.discNumber
+              ? a.discNumber - b.discNumber
+              : a.trackNumber - b.trackNumber,
+          );
+
+        const currentRelativePaths = fileEntries.map((f) => f.relativePath);
+        const pendingFolderWarnings: string[] = [];
+
+        await this.prisma.$transaction(async (tx) => {
+          for (const f of fileEntries) {
+            const isrcKey = f.isrc ? `${albumId}::isrc:${f.isrc}` : undefined;
+            const titleKey =
+              !f.isrc && normalizeTitle(f.title)
+                ? `${albumId}::title:${normalizeTitle(f.title)}`
+                : undefined;
+
+            let matched =
+              (isrcKey ? byAlbumIsrc.get(isrcKey) : undefined) ??
+              (titleKey ? byAlbumTitle.get(titleKey) : undefined) ??
+              byAlbumDiscTrack.get(
+                getAlbumDiscTrackKey(albumId, f.discNumber, f.trackNumber),
+              );
+
+            // If we matched by ISRC/title but slot differs, try moving (if slot free)
+            if (
+              matched &&
+              (matched.discNumber !== f.discNumber ||
+                matched.trackNumber !== f.trackNumber)
+            ) {
+              const desiredKey = getAlbumDiscTrackKey(
+                albumId,
+                f.discNumber,
+                f.trackNumber,
+              );
+
+              if (!byAlbumDiscTrack.has(desiredKey)) {
+                const previousKey = getAlbumDiscTrackKey(
+                  albumId,
+                  matched.discNumber,
+                  matched.trackNumber,
+                );
+
+                const moved = await tx.track.update({
+                  where: { id: matched.id },
+                  data: {
+                    discNumber: f.discNumber,
+                    trackNumber: f.trackNumber,
+                  },
+                  select: {
+                    id: true,
+                    albumId: true,
+                    discNumber: true,
+                    trackNumber: true,
+                    name: true,
+                    isrc: true,
+                    durationMs: true,
+                  },
+                });
+
+                byAlbumDiscTrack.delete(previousKey);
+                byAlbumDiscTrack.set(desiredKey, moved);
+
+                // Update identity maps to point to the moved instance
+                const movedIdentity = getPreferredTrackIdentity({
+                  isrc: moved.isrc,
+                  title: moved.name,
+                });
+                if (movedIdentity?.startsWith("isrc:")) {
+                  byAlbumIsrc.set(`${albumId}::${movedIdentity}`, moved);
+                }
+                if (movedIdentity?.startsWith("title:")) {
+                  byAlbumTitle.set(`${albumId}::${movedIdentity}`, moved);
+                }
+
+                matched = moved;
+                movedTracks += 1;
+              }
+            }
+
+            let trackId: string;
+            if (matched) {
+              const plan = getTrackUpdatePlan(
+                {
+                  name: matched.name,
+                  isrc: matched.isrc,
+                  durationMs: matched.durationMs,
+                },
+                {
+                  title: f.title,
+                  isrc: f.isrc,
+                  durationMs: f.durationMs,
+                },
+              );
+
+              if (plan.hasIsrcConflict) {
+                isrcConflicts += 1;
+                pendingFolderWarnings.push(
+                  `ISRC conflict for disc=${f.discNumber} track=${f.trackNumber}: db=${matched.isrc ?? "<null>"} file=${f.isrc ?? "<null>"}`,
+                );
+              }
+
+              if (Object.keys(plan.patch).length > 0) {
+                const updated = await tx.track.update({
+                  where: { id: matched.id },
+                  data: {
+                    ...plan.patch,
+                    isrc: plan.patch.isrc ?? undefined,
+                  },
+                  select: {
+                    id: true,
+                    albumId: true,
+                    discNumber: true,
+                    trackNumber: true,
+                    name: true,
+                    isrc: true,
+                    durationMs: true,
+                  },
+                });
+
+                const discTrackKey = getAlbumDiscTrackKey(
+                  albumId,
+                  updated.discNumber,
+                  updated.trackNumber,
+                );
+                byAlbumDiscTrack.set(discTrackKey, updated);
+
+                const updatedIdentity = getPreferredTrackIdentity({
+                  isrc: updated.isrc,
+                  title: updated.name,
+                });
+                if (updatedIdentity?.startsWith("isrc:")) {
+                  byAlbumIsrc.set(`${albumId}::${updatedIdentity}`, updated);
+                }
+                if (updatedIdentity?.startsWith("title:")) {
+                  byAlbumTitle.set(`${albumId}::${updatedIdentity}`, updated);
+                }
+
+                matched = updated;
+                updatedTracks += 1;
+              }
+
+              trackId = matched.id;
+            } else {
+              const created = await tx.track.create({
+                data: {
+                  album: { connect: { id: albumId } },
+                  discNumber: f.discNumber,
+                  trackNumber: f.trackNumber,
+                  name: normalizeTitle(f.title) ?? f.title,
+                  isrc: f.isrc ?? null,
+                  durationMs: f.durationMs,
+                },
+                select: {
+                  id: true,
+                  albumId: true,
+                  discNumber: true,
+                  trackNumber: true,
+                  name: true,
+                  isrc: true,
+                  durationMs: true,
+                },
+              });
+
+              createdTracks += 1;
+              trackId = created.id;
+
+              byAlbumDiscTrack.set(
+                getAlbumDiscTrackKey(
+                  albumId,
+                  created.discNumber,
+                  created.trackNumber,
+                ),
+                created,
+              );
+
+              const createdIdentity = getPreferredTrackIdentity({
+                isrc: created.isrc,
+                title: created.name,
+              });
+              if (createdIdentity?.startsWith("isrc:")) {
+                byAlbumIsrc.set(`${albumId}::${createdIdentity}`, created);
+              }
+              if (createdIdentity?.startsWith("title:")) {
+                byAlbumTitle.set(`${albumId}::${createdIdentity}`, created);
+              }
+            }
+
+            // TrackArtist: reset to exactly match file ARTIST order
+            await tx.trackArtist.deleteMany({
+              where: {
+                trackId,
+              },
+            });
+
+            const uniqueArtistIds: string[] = [];
+            const seenArtistIds = new Set<string>();
+            for (const artistName of f.artists) {
+              const artistId = artistNameToId.get(artistName);
+              if (!artistId) continue;
+              if (seenArtistIds.has(artistId)) continue;
+              seenArtistIds.add(artistId);
+              uniqueArtistIds.push(artistId);
+            }
+
+            if (uniqueArtistIds.length > 0) {
+              await tx.trackArtist.createMany({
+                data: uniqueArtistIds.map((artistId, order) => ({
+                  trackId,
+                  artistId,
+                  order,
+                })),
+              });
+            }
+
+            // FlacFile: enforce 0..1 file per track
+            await tx.flacFile.deleteMany({
+              where: {
+                trackId,
+                relativePath: {
+                  not: f.relativePath,
+                },
+              },
+            });
+
+            await tx.flacFile.upsert({
+              where: {
+                relativePath: f.relativePath,
+              },
+              create: {
+                relativePath: f.relativePath,
+                sampleRate: toInt(f.ffprobe.sampleRate),
+                bitsPerRawSample: toInt(f.ffprobe.bitsPerRawSample),
+                durationMs: toInt(f.ffprobe.durationMs),
+                fileSize: toInt(f.ffprobe.fileSize),
+                bitRate: toInt(f.ffprobe.bitRate),
+                track: {
+                  connect: {
+                    id: trackId,
+                  },
+                },
+              },
+              update: {
+                sampleRate: toInt(f.ffprobe.sampleRate),
+                bitsPerRawSample: toInt(f.ffprobe.bitsPerRawSample),
+                durationMs: toInt(f.ffprobe.durationMs),
+                fileSize: toInt(f.ffprobe.fileSize),
+                bitRate: toInt(f.ffprobe.bitRate),
+                track: {
+                  connect: {
+                    id: trackId,
+                  },
+                },
+              },
+            });
+
+            upsertedFlacFiles += 1;
+          }
+
+          // Delete disappeared FLAC files from this folder
+          const deleted = await tx.flacFile.deleteMany({
+            where: {
+              AND: [
+                {
+                  relativePath: {
+                    startsWith: `${folderRelative}/`,
+                  },
+                },
+                {
+                  relativePath: {
+                    notIn: currentRelativePaths,
+                  },
+                },
+              ],
+            },
+          });
+          deletedMissingFlacFiles += deleted.count;
+        });
+
+        if (pendingFolderWarnings.length > 0) {
+          await this.addWarning(context, {
+            type: IndexingReportType.WARNING_FOLDER_METADATA,
+            folderPath: this.toRelativePath(context.libraryPath, folderAbsPath),
+            messages: pendingFolderWarnings,
+          });
+        }
+      }
+
+      this.logger.log(
+        `Tracks: created=${createdTracks} updated=${updatedTracks} moved=${movedTracks} isrcConflicts=${isrcConflicts} | FlacFile: upserted=${upsertedFlacFiles} deletedMissing=${deletedMissingFlacFiles}`,
+      );
+    }
+
+    // ------------------------------------------------
 
     // WIP: covers
     //

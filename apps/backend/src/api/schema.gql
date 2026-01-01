@@ -87,7 +87,6 @@ type Query {
 
   """Get a single artist by ID"""
   artist(id: String!): Artist!
-
   hello: String!
 
   """Get the status of an indexing job"""
@@ -97,11 +96,13 @@ type Query {
   me: User!
 
   """
-  Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately. Use include flags to restrict which entity types are searched.
+  Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately.
   """
   search(input: SearchMusicInput!): SearchMusicResult!
 
-  """Search for albums with optional filters. Use this to get all albums by an artist."""
+  """
+  Search for albums with optional filters. Use this to get all albums by an artist.
+  """
   searchAlbums(input: SearchAlbumsInput!): [Album!]!
 
   """Search for artists with optional filters"""
@@ -120,11 +121,6 @@ type Query {
 enum Role {
   ADMIN
   USER
-}
-
-enum Sex {
-  XX
-  XY
 }
 
 input SearchAlbumsInput {
@@ -207,6 +203,11 @@ input SearchTracksInput {
   offset: Int = 0
 }
 
+enum Sex {
+  XX
+  XY
+}
+
 type Subscription {
   """Subscribe to indexing job status updates"""
   indexingJobUpdated(jobId: String!): IndexingJob!
@@ -222,6 +223,9 @@ type Track {
 
   """Duration in milliseconds"""
   durationMs: Int!
+
+  """Linked FLAC file id if present"""
+  flacFileId: String
   id: String!
   isrc: String
   name: String!

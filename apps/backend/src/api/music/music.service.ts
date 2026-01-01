@@ -25,6 +25,9 @@ type PrismaTrack = {
   albumId: string | null;
   discNumber: number;
   trackNumber: number;
+  flacFile?: {
+    id: string;
+  } | null;
   artists: {
     order: number;
     artist: {
@@ -94,6 +97,7 @@ export class MusicService {
       discNumber: track.discNumber,
       trackNumber: track.trackNumber,
       artists: this.mapArtists(track.artists),
+      flacFileId: track.flacFile?.id ?? null,
     };
   }
 
@@ -149,6 +153,11 @@ export class MusicService {
     const track = await this.prisma.track.findUnique({
       where: { id },
       include: {
+        flacFile: {
+          select: {
+            id: true,
+          },
+        },
         artists: {
           include: {
             artist: true,
@@ -193,6 +202,11 @@ export class MusicService {
         },
         tracks: {
           include: {
+            flacFile: {
+              select: {
+                id: true,
+              },
+            },
             artists: {
               include: {
                 artist: true,
@@ -248,6 +262,11 @@ export class MusicService {
         }),
       },
       include: {
+        flacFile: {
+          select: {
+            id: true,
+          },
+        },
         artists: {
           include: {
             artist: true,
@@ -308,6 +327,11 @@ export class MusicService {
         },
         tracks: {
           include: {
+            flacFile: {
+              select: {
+                id: true,
+              },
+            },
             artists: {
               include: {
                 artist: true,
@@ -415,6 +439,11 @@ export class MusicService {
       ? this.prisma.track.findMany({
           where: trackWhere,
           include: {
+            flacFile: {
+              select: {
+                id: true,
+              },
+            },
             artists: {
               include: {
                 artist: true,
@@ -456,6 +485,11 @@ export class MusicService {
             },
             tracks: {
               include: {
+                flacFile: {
+                  select: {
+                    id: true,
+                  },
+                },
                 artists: {
                   include: {
                     artist: true,

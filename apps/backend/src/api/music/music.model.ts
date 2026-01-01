@@ -79,4 +79,10 @@ export class TrackModel {
 
   @Field(() => Int)
   trackNumber!: number;
+
+  @Field({
+    nullable: true,
+    description: "Linked FLAC file id if present",
+  })
+  flacFileId!: string | null;
 }

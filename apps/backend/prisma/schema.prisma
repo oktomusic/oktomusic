@@ -57,9 +57,35 @@ model Track {
   discNumber  Int
   trackNumber Int
 
+  // Source file (0..1)
+  flacFile FlacFile?
+
   @@unique([albumId, discNumber, trackNumber])
   @@index([albumId])
   @@index([albumId, discNumber, trackNumber])
+}
+
+model FlacFile {
+  id String @id @default(cuid())
+
+  /**
+   * Relative path from the library root (stable identifier for a file).
+   */
+  relativePath String @unique
+
+  // Extracted ffprobe info
+  sampleRate       Int
+  bitsPerRawSample Int
+  durationMs       Int
+  fileSize         Int
+  bitRate          Int
+
+  // Required: a flac file cannot exist without an attached track
+  trackId String @unique
+  track   Track  @relation(fields: [trackId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Track -> Album -> many-to-one
@@ -129,3 +155,15 @@ model AlbumArtist {
   @@index([albumId, order])
   @@index([artistId])
 }
+
+// Source Files
+
+/**
+ * model SourceFile {
+ * id        String   @id @default(cuid())
+ * url       String   @unique
+ * createdAt DateTime @default(now())
+ * updatedAt DateTime @updatedAt
+ * @@index([createdAt])
+ * }
+ */

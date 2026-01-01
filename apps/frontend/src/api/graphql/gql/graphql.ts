@@ -18,6 +18,30 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type Album = {
+  __typename?: 'Album';
+  artists: Array<Artist>;
+  date?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  /** Tracks grouped by disc number, ordered by track number */
+  tracksByDisc: Array<Array<Track>>;
+};
+
+export type AlbumBasic = {
+  __typename?: 'AlbumBasic';
+  artists: Array<Artist>;
+  date?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type Artist = {
+  __typename?: 'Artist';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type IndexingErrorMetaflacParsing = {
   __typename?: 'IndexingErrorMetaflacParsing';
   errorMessage: Scalars['String']['output'];
@@ -86,18 +110,67 @@ export type MutationUpdateMyProfileArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Get a single album by ID with tracks grouped by disc number */
+  album: Album;
+  /** Get a single artist by ID */
+  artist: Artist;
   hello: Scalars['String']['output'];
   /** Get the status of an indexing job */
   indexingJobStatus: IndexingJob;
   /** Current logged-in user */
   me: User;
+  /** Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately. */
+  search: SearchMusicResult;
+  /** Search for albums with optional filters. Use this to get all albums by an artist. */
+  searchAlbums: Array<Album>;
+  /** Search for artists with optional filters */
+  searchArtists: Array<Artist>;
+  /** Search for tracks with optional filters */
+  searchTracks: Array<Track>;
+  /** Get a single track by ID */
+  track: Track;
   /** User profile by identifier (admin access only) */
   userProfile: User;
 };
 
 
+export type QueryAlbumArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryArtistArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryIndexingJobStatusArgs = {
   jobId: Scalars['String']['input'];
+};
+
+
+export type QuerySearchArgs = {
+  input: SearchMusicInput;
+};
+
+
+export type QuerySearchAlbumsArgs = {
+  input: SearchAlbumsInput;
+};
+
+
+export type QuerySearchArtistsArgs = {
+  input: SearchArtistsInput;
+};
+
+
+export type QuerySearchTracksArgs = {
+  input: SearchTracksInput;
+};
+
+
+export type QueryTrackArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -109,6 +182,69 @@ export enum Role {
   Admin = 'ADMIN',
   User = 'USER'
 }
+
+export type SearchAlbumsInput = {
+  /** Filter by artist ID */
+  artistId?: InputMaybe<Scalars['String']['input']>;
+  /** Maximum number of results */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Filter by album name (case-insensitive partial match) */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Number of results to skip */
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type SearchArtistsInput = {
+  /** Maximum number of results */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Filter by artist name (case-insensitive partial match) */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Number of results to skip */
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type SearchMusicInput = {
+  /** Filter by exact album ID */
+  albumId?: InputMaybe<Scalars['String']['input']>;
+  /** Filter by album name (case-insensitive partial match) */
+  albumName?: InputMaybe<Scalars['String']['input']>;
+  /** Filter by exact artist ID */
+  artistId?: InputMaybe<Scalars['String']['input']>;
+  /** Filter by artist name (case-insensitive partial match) */
+  artistName?: InputMaybe<Scalars['String']['input']>;
+  /** Include albums in search results */
+  includeAlbums?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Include artists in search results */
+  includeArtists?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Include tracks in search results */
+  includeTracks?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Maximum number of results to return */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Number of results to skip */
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  /** Filter by track name (case-insensitive partial match) */
+  trackName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SearchMusicResult = {
+  __typename?: 'SearchMusicResult';
+  albums: Array<Album>;
+  artists: Array<Artist>;
+  tracks: Array<Track>;
+};
+
+export type SearchTracksInput = {
+  /** Filter by album ID */
+  albumId?: InputMaybe<Scalars['String']['input']>;
+  /** Filter by artist ID */
+  artistId?: InputMaybe<Scalars['String']['input']>;
+  /** Maximum number of results */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Filter by track name (case-insensitive partial match) */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Number of results to skip */
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
 
 export enum Sex {
   Xx = 'XX',
@@ -124,6 +260,24 @@ export type Subscription = {
 
 export type SubscriptionIndexingJobUpdatedArgs = {
   jobId: Scalars['String']['input'];
+};
+
+export type Track = {
+  __typename?: 'Track';
+  /** Album metadata */
+  album?: Maybe<AlbumBasic>;
+  albumId?: Maybe<Scalars['String']['output']>;
+  artists: Array<Artist>;
+  date?: Maybe<Scalars['DateTime']['output']>;
+  discNumber: Scalars['Int']['output'];
+  /** Duration in milliseconds */
+  durationMs: Scalars['Int']['output'];
+  /** Linked FLAC file id if present */
+  flacFileId?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  isrc?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  trackNumber: Scalars['Int']['output'];
 };
 
 export type UpdateUserProfileInput = {
