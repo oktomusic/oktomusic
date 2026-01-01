@@ -33,7 +33,7 @@
     {
       "label": "backend: tests",
       "type": "shell",
-      "command": "pnpm --filter @oktomusic/backend test run",
+      "command": "pnpm --filter @oktomusic/backend test",
       "isBackground": false,
       "problemMatcher": [
         "$tsc"
@@ -51,7 +51,7 @@
     {
       "label": "frontend: tests",
       "type": "shell",
-      "command": "pnpm --filter @oktomusic/frontend test run",
+      "command": "pnpm --filter @oktomusic/frontend test",
       "isBackground": false,
       "problemMatcher": [
         "$tsc"
@@ -60,7 +60,7 @@
     {
       "label": "lyrics: tests",
       "type": "shell",
-      "command": "pnpm --filter @oktomusic/lyrics test run",
+      "command": "pnpm --filter @oktomusic/lyrics test",
       "isBackground": false,
       "problemMatcher": [
         "$tsc"
