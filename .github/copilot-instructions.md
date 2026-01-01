@@ -20,13 +20,15 @@ This is a pnpm monorepo with the following structure:
 
 - **Framework**: NestJS 11.x
 - **Language**: TypeScript (CommonJS)
-- **Testing**: Jest
+- **Testing**: Vitest
 - **Build**: NestJS CLI
 
 ### Frontend
 
 - **Framework**: React 19.x
 - **Build Tool**: Vite 7.x
+- **Testing**: Vitest
+- **State Management**: Jotai
 - **Language**: TypeScript (ESM)
 - **Compiler**: React Compiler enabled
 
@@ -37,6 +39,7 @@ This is a pnpm monorepo with the following structure:
 ### Packages
 
 - **Build Tool**: tsdown
+- **Testing**: Vitest
 
 ## Code Style and Formatting
 
