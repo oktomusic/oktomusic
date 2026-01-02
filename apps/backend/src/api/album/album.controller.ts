@@ -7,7 +7,6 @@ import {
   NotFoundException,
   Param,
   ParseEnumPipe,
-  ParseUUIDPipe,
   StreamableFile,
   UseGuards,
 } from "@nestjs/common";
@@ -26,7 +25,7 @@ import {
 export class AlbumController {
   constructor(private readonly albumService: AlbumService) {}
 
-  @Get(":uuid/cover/:size")
+  @Get(":cuid/cover/:size")
   @UseGuards(AuthGuard)
   @ApiSecurity("session")
   @ApiOperation({
@@ -34,12 +33,11 @@ export class AlbumController {
     description: "",
   })
   @ApiParam({
-    name: "uuid",
+    name: "cuid",
     type: "string",
-    format: "uuid",
-    description:
-      "Album UUID (currently ignored, serves first cover file found in library)",
-    example: "550e8400-e29b-41d4-a716-446655440000",
+    schema: { maxLength: 30 },
+    description: "Album CUID",
+    example: "tz4a98xxat96iws9zmbrgj3a",
   })
   @ApiParam({
     name: "size",
@@ -57,12 +55,11 @@ export class AlbumController {
       "Album cover image file returned successfully. Response includes Content-Length, Content-Type, and Content-Disposition headers.",
   })
   getCover(
-    @Param("uuid", new ParseUUIDPipe({ version: "4" })) _id: string,
+    @Param("cuid") cuid: string,
     @Param("size", new ParseEnumPipe(albumCoverSizes.map((s) => s.toString())))
     size: AlbumCoverSizeString,
   ): StreamableFile {
-    // Find first cover image in library (ignoring UUID for now)
-    const coverPath = this.albumService.findFirstCoverFile(size);
+    const coverPath = this.albumService.findAlbumCoverPath(cuid, size);
 
     if (!coverPath) {
       throw new NotFoundException("No album cover file found in media library");

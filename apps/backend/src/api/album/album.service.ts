@@ -9,38 +9,27 @@ import { AlbumCoverSizeString } from "../../common/utils/sharp-utils";
 
 @Injectable()
 export class AlbumService {
+  private albumCoverPath: string;
+
   constructor(
     @Inject(appConfig.KEY)
     private readonly appConf: ConfigType<typeof appConfig>,
-  ) {}
+  ) {
+    this.albumCoverPath = path.resolve(this.appConf.intermediatePath, "albums");
+  }
 
-  findFirstCoverFile(size: AlbumCoverSizeString): string | null {
-    const findCover = (dir: string): string | null => {
-      try {
-        const entries = fs.readdirSync(dir, { withFileTypes: true });
+  findAlbumCoverPath(cuid: string, size: AlbumCoverSizeString) {
+    const albumDir = path.resolve(this.albumCoverPath, cuid);
 
-        for (const entry of entries) {
-          if (
-            entry.isFile() &&
-            entry.name.toLowerCase().endsWith(`_${size}.avif`)
-          ) {
-            return path.join(dir, entry.name);
-          }
-        }
-
-        for (const entry of entries) {
-          if (entry.isDirectory()) {
-            const result = findCover(path.join(dir, entry.name));
-            if (result) return result;
-          }
-        }
-      } catch {
-        return null;
-      }
-
+    if (!fs.existsSync(albumDir)) {
       return null;
-    };
+    }
 
-    return findCover(this.appConf.libraryPath);
+    const coverPath = path.resolve(albumDir, `cover_${size}.avif`);
+    if (!fs.existsSync(coverPath)) {
+      return null;
+    }
+
+    return coverPath;
   }
 }
