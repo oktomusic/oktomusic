@@ -23,7 +23,7 @@ enum Sex {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id @default(cuid(2))
   username  String   @unique
   oidcSub   String   @unique // OIDC "sub" claim
   role      Role     @default(USER)
@@ -42,7 +42,7 @@ model User {
 
 model Track {
   // Track metadata
-  id         String    @id @default(cuid())
+  id         String    @id @default(cuid(2))
   name       String
   isrc       String?
   date       DateTime? @db.Date
@@ -66,7 +66,7 @@ model Track {
 }
 
 model FlacFile {
-  id String @id @default(cuid())
+  id String @id @default(cuid(2))
 
   /**
    * Relative path from the library root (stable identifier for a file).
@@ -94,7 +94,7 @@ model FlacFile {
 // Artist -> Track -> many-to-many
 
 model Album {
-  id        String        @id @default(cuid())
+  id        String        @id @default(cuid(2))
   name      String
   date      DateTime?     @db.Date
   coverHash String
@@ -103,7 +103,7 @@ model Album {
 }
 
 model Artist {
-  id           String        @id @default(cuid())
+  id           String        @id @default(cuid(2))
   name         String        @unique // Potentially fragile, but acceptable for now
   tracks       TrackArtist[]
   albumArtists AlbumArtist[]
@@ -156,15 +156,3 @@ model AlbumArtist {
   @@index([albumId, order])
   @@index([artistId])
 }
-
-// Source Files
-
-/**
- * model SourceFile {
- * id        String   @id @default(cuid())
- * url       String   @unique
- * createdAt DateTime @default(now())
- * updatedAt DateTime @updatedAt
- * @@index([createdAt])
- * }
- */

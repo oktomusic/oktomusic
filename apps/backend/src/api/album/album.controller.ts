@@ -13,6 +13,7 @@ import {
 import { ApiOperation, ApiParam, ApiSecurity, ApiTags } from "@nestjs/swagger";
 
 import { AuthGuard } from "../../common/guards/auth.guard";
+import { ParseCuid2Pipe } from "../../common/pipes/parse-cuid2.pipe";
 import { ApiFile } from "src/common/decorators/api-file.decorator";
 import { AlbumService } from "./album.service";
 import {
@@ -55,7 +56,7 @@ export class AlbumController {
       "Album cover image file returned successfully. Response includes Content-Length, Content-Type, and Content-Disposition headers.",
   })
   getCover(
-    @Param("cuid") cuid: string,
+    @Param("cuid", ParseCuid2Pipe) cuid: string,
     @Param("size", new ParseEnumPipe(albumCoverSizes.map((s) => s.toString())))
     size: AlbumCoverSizeString,
   ): StreamableFile {
