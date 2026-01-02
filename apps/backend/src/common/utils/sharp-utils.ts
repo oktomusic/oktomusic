@@ -65,23 +65,22 @@ async function convertAlbumCoverTo(
     .toFile(outputPath);
 }
 
-async function pickAndConvertAlbumCover(srcPath: string) {
-  const candidatePath = await pickAlbumCoverCandidate(srcPath);
-
-  console.log(`Picked album cover candidate: ${candidatePath}`);
-
-  if (!candidatePath) {
-    return null;
-  }
+async function convertAlbumCoverCandidate(
+  candidatePath: string,
+  outputDir: string,
+): Promise<void> {
+  await fs.mkdir(outputDir, { recursive: true });
 
   const srcImage = sharp(candidatePath);
+  // Ensure the file is a valid image.
+  await srcImage.metadata();
 
   const lossyStart = performance.now();
   await Promise.all(
     albumCoverSizes.map((size) =>
       convertAlbumCoverTo(
         srcImage,
-        path.resolve(srcPath, `cover_${size}.avif`),
+        path.resolve(outputDir, `cover_${size}.avif`),
         size,
       ),
     ),
@@ -92,11 +91,28 @@ async function pickAndConvertAlbumCover(srcPath: string) {
   );
 }
 
+async function pickAndConvertAlbumCover(
+  srcPath: string,
+  outputDir: string,
+): Promise<AlbumCoverCandidatePath | null> {
+  const candidatePath = await pickAlbumCoverCandidate(srcPath);
+
+  console.log(`Picked album cover candidate: ${candidatePath}`);
+
+  if (!candidatePath) {
+    return null;
+  }
+
+  await convertAlbumCoverCandidate(candidatePath, outputDir);
+  return candidatePath;
+}
+
 export {
   albumCoverCandidates,
   pickAlbumCoverCandidate,
   albumCoverSizes,
   convertAlbumCoverTo,
+  convertAlbumCoverCandidate,
   pickAndConvertAlbumCover,
 };
 

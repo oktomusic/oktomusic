@@ -94,11 +94,12 @@ model FlacFile {
 // Artist -> Track -> many-to-many
 
 model Album {
-  id      String        @id @default(cuid())
-  name    String
-  date    DateTime?     @db.Date
-  artists AlbumArtist[]
-  tracks  Track[]
+  id        String        @id @default(cuid())
+  name      String
+  date      DateTime?     @db.Date
+  coverHash String
+  artists   AlbumArtist[]
+  tracks    Track[]
 }
 
 model Artist {

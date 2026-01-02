@@ -1,4 +1,5 @@
 import type { Dirent } from "node:fs";
+import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -7,6 +8,7 @@ import { Inject, Logger } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
 import { Job } from "bullmq";
 import { PubSub } from "graphql-subscriptions";
+import sharp from "sharp";
 
 import type { MetaflacTags } from "@oktomusic/metaflac-parser";
 
@@ -35,7 +37,10 @@ import {
   normalizeIsrc,
   normalizeTitle,
 } from "./indexing.tracks.utils";
-import { pickAndConvertAlbumCover } from "../../common/utils/sharp-utils";
+import {
+  convertAlbumCoverCandidate,
+  pickAlbumCoverCandidate,
+} from "../../common/utils/sharp-utils";
 
 interface FlacFolder {
   path: string;
@@ -64,6 +69,8 @@ interface IndexingFolderData {
   hasWarnings: boolean;
   albumSummary?: IndexingFolderAlbumSummary;
   albumId?: string;
+  coverCandidatePath?: string;
+  coverHash?: string;
 }
 
 type IndexingFileMap = Record<string, IndexingFileData>;
@@ -209,6 +216,47 @@ export class IndexingProcessor extends WorkerHost {
       };
     }
 
+    // 4.5 Extract and validate album covers (required for creating new albums)
+    for (const [folderPath, folderData] of Object.entries(context.sourceData)) {
+      if (folderData.albumSummary === undefined) continue;
+
+      const candidatePath = await pickAlbumCoverCandidate(folderPath);
+      if (!candidatePath) {
+        await this.addWarning(context, {
+          type: IndexingReportType.WARNING_FOLDER_METADATA,
+          folderPath: this.toRelativePath(context.libraryPath, folderPath),
+          messages: [
+            "Missing album cover (expected cover.png/cover.avif/cover.jpg/cover.jpeg). Album will not be created.",
+          ],
+        });
+        continue;
+      }
+
+      try {
+        await sharp(candidatePath).metadata();
+      } catch (error) {
+        await this.addWarning(context, {
+          type: IndexingReportType.WARNING_FOLDER_METADATA,
+          folderPath: this.toRelativePath(context.libraryPath, folderPath),
+          messages: [
+            `Invalid album cover file: ${this.toRelativePath(context.libraryPath, candidatePath)}`,
+            error instanceof Error ? error.message : "Unknown error",
+            "Album will not be created.",
+          ],
+        });
+        continue;
+      }
+
+      const coverBytes = await fs.readFile(candidatePath);
+      const coverHash = crypto
+        .createHash("sha256")
+        .update(coverBytes)
+        .digest("hex");
+
+      context.sourceData[folderPath].coverCandidatePath = candidatePath;
+      context.sourceData[folderPath].coverHash = coverHash;
+    }
+
     console.log(JSON.stringify(context.sourceData, null, 2));
     for (const [, folderData] of Object.entries(context.sourceData)) {
       console.log(JSON.stringify(folderData.albumSummary, null, 2));
@@ -267,7 +315,20 @@ export class IndexingProcessor extends WorkerHost {
         ),
       );
 
-      const existingAlbums =
+      const existingAlbums: Array<{
+        readonly id: string;
+        readonly name: string;
+        readonly coverHash: string;
+        readonly artists: ReadonlyArray<{
+          readonly artist: { readonly name: string };
+        }>;
+        readonly tracks: ReadonlyArray<{
+          readonly discNumber: number;
+          readonly trackNumber: number;
+          readonly isrc: string | null;
+          readonly name: string;
+        }>;
+      }> =
         candidateAlbumNames.length > 0
           ? await this.prisma.album.findMany({
               where: {
@@ -275,9 +336,12 @@ export class IndexingProcessor extends WorkerHost {
                   in: candidateAlbumNames,
                 },
               },
-              include: {
+              select: {
+                id: true,
+                name: true,
+                coverHash: true,
                 artists: {
-                  include: {
+                  select: {
                     artist: {
                       select: {
                         name: true,
@@ -302,6 +366,7 @@ export class IndexingProcessor extends WorkerHost {
 
       const signatureToAlbumId = new Map<string, string>();
       const partialSignatureToAlbumId = new Map<string, string>();
+      const coverHashByAlbumId = new Map<string, string>();
       for (const album of existingAlbums) {
         const albumArtistNames = album.artists.map(({ artist }) => artist.name);
         const trackCounts = getTrackCountsPerDisc(album.tracks);
@@ -324,6 +389,8 @@ export class IndexingProcessor extends WorkerHost {
           album.id,
         );
 
+        coverHashByAlbumId.set(album.id, album.coverHash);
+
         // If an album exists without tracks yet, allow a fallback match.
         if (album.tracks.length === 0) {
           partialSignatureToAlbumId.set(
@@ -339,6 +406,7 @@ export class IndexingProcessor extends WorkerHost {
           readonly name: string;
           readonly artists: string[];
           readonly trackCounts: number[];
+          readonly coverHash: string;
         }
       >();
 
@@ -381,22 +449,33 @@ export class IndexingProcessor extends WorkerHost {
           continue;
         }
 
+        // A valid cover is required to create a new album.
+        if (!data.coverCandidatePath || !data.coverHash) {
+          continue;
+        }
+
         if (!albumsToCreateBySignature.has(signature)) {
           albumsToCreateBySignature.set(signature, {
             name: summary.album,
             artists: summary.artists,
             trackCounts: summary.trackCounts,
+            coverHash: data.coverHash,
           });
         }
       }
 
       const albumsToCreate = Array.from(albumsToCreateBySignature.entries());
+      const createdAlbumIds = new Set<string>();
       if (albumsToCreate.length > 0) {
-        const createdAlbums = await this.prisma.$transaction(
+        const createdAlbums: Array<{
+          readonly id: string;
+          readonly coverHash: string;
+        }> = await this.prisma.$transaction(
           albumsToCreate.map(([, album]) =>
             this.prisma.album.create({
               data: {
                 name: album.name,
+                coverHash: album.coverHash,
                 artists: {
                   create: album.artists.map((artistName, order) => ({
                     order,
@@ -410,6 +489,7 @@ export class IndexingProcessor extends WorkerHost {
               },
               select: {
                 id: true,
+                coverHash: true,
               },
             }),
           ),
@@ -418,6 +498,8 @@ export class IndexingProcessor extends WorkerHost {
         for (const [index, created] of createdAlbums.entries()) {
           const [signature] = albumsToCreate[index];
           signatureToAlbumId.set(signature, created.id);
+          coverHashByAlbumId.set(created.id, created.coverHash);
+          createdAlbumIds.add(created.id);
         }
 
         // Assign newly created album IDs to folders
@@ -453,6 +535,82 @@ export class IndexingProcessor extends WorkerHost {
       this.logger.log(
         `Albums: matched ${matchedAlbumsCount} existing for ${albumCandidates.length} folder(s)`,
       );
+
+      // 6.5 Generate/update album covers in intermediate path when needed
+      const foldersWithCovers = Object.entries(context.sourceData).filter(
+        ([, data]) =>
+          typeof data.albumId === "string" &&
+          data.albumId.length > 0 &&
+          typeof data.coverCandidatePath === "string" &&
+          typeof data.coverHash === "string" &&
+          data.coverHash.length > 0,
+      );
+
+      if (foldersWithCovers.length > 0) {
+        const coverAlbumIds = Array.from(
+          new Set(foldersWithCovers.map(([, d]) => d.albumId!)),
+        );
+
+        const dbAlbums = await this.prisma.album.findMany({
+          where: {
+            id: {
+              in: coverAlbumIds,
+            },
+          },
+          select: {
+            id: true,
+            coverHash: true,
+          },
+        });
+
+        const dbCoverHash = new Map<string, string>(
+          dbAlbums.map((a) => [a.id, a.coverHash] as const),
+        );
+
+        for (const [folderPath, data] of foldersWithCovers) {
+          const albumId = data.albumId!;
+          const desiredHash = data.coverHash!;
+          const currentHash = dbCoverHash.get(albumId) ?? "";
+
+          const isNew = createdAlbumIds.has(albumId);
+          const hasChanged = currentHash !== desiredHash;
+
+          if (!isNew && hasChanged) {
+            await this.prisma.album.update({
+              where: { id: albumId },
+              data: { coverHash: desiredHash },
+            });
+            dbCoverHash.set(albumId, desiredHash);
+          }
+
+          if (!isNew && !hasChanged) {
+            continue;
+          }
+
+          try {
+            const outputDir = path.resolve(
+              this.appConf.intermediatePath,
+              "albums",
+              albumId,
+            );
+            await (
+              convertAlbumCoverCandidate as (
+                candidatePath: string,
+                outputDir: string,
+              ) => Promise<void>
+            )(data.coverCandidatePath!, outputDir);
+          } catch (error) {
+            await this.addWarning(context, {
+              type: IndexingReportType.WARNING_FOLDER_METADATA,
+              folderPath: this.toRelativePath(context.libraryPath, folderPath),
+              messages: [
+                "Failed to generate album cover AVIF variants.",
+                error instanceof Error ? error.message : "Unknown error",
+              ],
+            });
+          }
+        }
+      }
     }
 
     // 7. Match and create tracks + link FLAC files
@@ -878,15 +1036,6 @@ export class IndexingProcessor extends WorkerHost {
     }
 
     // ------------------------------------------------
-
-    // WIP: covers
-    //
-    // Typical 1280x1280 cover.jpg file
-    for (const [folderPath] of Object.entries(context.sourceData)) {
-      console.log(`Converting covers: ${folderPath}`);
-      await pickAndConvertAlbumCover(folderPath);
-      console.log(`Converted covers`);
-    }
 
     console.log("Indexing completed");
     await job.updateProgress(100);
