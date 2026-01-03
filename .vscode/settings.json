@@ -11,6 +11,11 @@
     "source.fixAll.eslint": "always",
     "source.fixAll.ts": "always"
   },
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "on"
+  },
   "files.insertFinalNewline": true,
   "files.eol": "\n",
   "prettier.enable": true,
@@ -24,8 +29,6 @@
     "certification": "bibliography",
     "artifacthub": "container"
   },
-  "vitest.enable": true,
-  "vitest.commandLine": "pnpm vitest",
   "vitest.maximumConfigs": 10,
   "chat.agent.enabled": true,
   "chat.tools.terminal.autoApprove": {
@@ -257,6 +260,7 @@
   "files.associations": {
     "_headers": "plaintext", // Cloudflare _headers file, tend to be misdetected as TypeScript
     "*.ttml": "xml",
+    "*.css": "tailwindcss"
   },
   "[yaml]": {
     "editor.insertSpaces": true,
