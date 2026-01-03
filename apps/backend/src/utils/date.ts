@@ -10,39 +10,24 @@ import { Temporal } from "temporal-polyfill";
 export const PLAIN_DATE_STRING_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
 /**
- * Parses a strict `YYYY-MM-DD` date string into a JavaScript `Date` at UTC midnight.
+ * Parses a strict `YYYY-MM-DD` date string into a `Temporal.PlainDate`.
  *
  * Returns `null` when:
  * - input is missing (`undefined`)
  * - format is not exactly `YYYY-MM-DD`
  * - date is not a valid calendar date (e.g. `2025-02-30`)
  */
-export function parsePlainDateStringToUtcDate(
+export function parsePlainDateString(
   date: string | undefined,
-): Date | null {
+): Temporal.PlainDate | null {
   if (!date) return null;
   if (!PLAIN_DATE_STRING_REGEX.test(date)) return null;
 
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
-  if (!match) return null;
-
-  const [, yearRaw, monthRaw, dayRaw] = match;
-  const year = Number(yearRaw);
-  const month = Number(monthRaw);
-  const day = Number(dayRaw);
-
-  const utcDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
-
-  // Validate calendar correctness via round-trip.
-  if (
-    utcDate.getUTCFullYear() !== year ||
-    utcDate.getUTCMonth() + 1 !== month ||
-    utcDate.getUTCDate() !== day
-  ) {
+  try {
+    return Temporal.PlainDate.from(date, { overflow: "reject" });
+  } catch {
     return null;
   }
-
-  return utcDate;
 }
 
 /**

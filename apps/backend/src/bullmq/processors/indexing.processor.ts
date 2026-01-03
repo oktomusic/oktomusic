@@ -9,6 +9,7 @@ import { type ConfigType } from "@nestjs/config";
 import { Job } from "bullmq";
 import { PubSub } from "graphql-subscriptions";
 import sharp from "sharp";
+import { Temporal } from "temporal-polyfill";
 
 import type { MetaflacTags } from "@oktomusic/metaflac-parser";
 
@@ -42,7 +43,7 @@ import {
   convertAlbumCoverCandidate,
   pickAlbumCoverCandidate,
 } from "../../common/utils/sharp-utils";
-import { parsePlainDateStringToUtcDate } from "../../utils/date";
+import { dateToPlainDate, plainDateToDate } from "../../utils/date";
 
 interface FlacFolder {
   path: string;
@@ -410,7 +411,7 @@ export class IndexingProcessor extends WorkerHost {
           readonly name: string;
           readonly artists: string[];
           readonly trackCounts: number[];
-          readonly date: Date | null;
+          readonly date: Temporal.PlainDate | null;
           readonly coverHash: string;
         }
       >();
@@ -419,9 +420,7 @@ export class IndexingProcessor extends WorkerHost {
       for (const [folderPath, data] of albumCandidates) {
         const summary = data.albumSummary!;
         const albumDate = pickAlbumDateFromTrackDates(
-          Object.values(data.files).map((f) =>
-            parsePlainDateStringToUtcDate(f.tags.DATE),
-          ),
+          Object.values(data.files).map((f) => f.tags.DATE),
         );
         const trackKeys = getOrderedTrackKeys(
           Object.values(data.files).map((f) => ({
@@ -476,7 +475,8 @@ export class IndexingProcessor extends WorkerHost {
           const existing = albumsToCreateBySignature.get(signature);
           const existingDate = existing?.date;
           const mergedDate =
-            existingDate && existingDate.getTime() <= albumDate.getTime()
+            existingDate &&
+            Temporal.PlainDate.compare(existingDate, albumDate) <= 0
               ? existingDate
               : albumDate;
 
@@ -500,7 +500,7 @@ export class IndexingProcessor extends WorkerHost {
             this.prisma.album.create({
               data: {
                 name: album.name,
-                date: album.date,
+                date: album.date ? plainDateToDate(album.date) : null,
                 coverHash: album.coverHash,
                 artists: {
                   create: album.artists.map((artistName, order) => ({
@@ -563,20 +563,21 @@ export class IndexingProcessor extends WorkerHost {
       );
 
       // 6.4 Set album date (computed from track dates)
-      const desiredDateByAlbumId = new Map<string, Date>();
+      const desiredDateByAlbumId = new Map<string, Temporal.PlainDate>();
       for (const [folderPath, data] of albumCandidates) {
         const albumId = context.sourceData[folderPath].albumId;
         if (!albumId) continue;
 
         const desired = pickAlbumDateFromTrackDates(
-          Object.values(data.files).map((f) =>
-            parsePlainDateStringToUtcDate(f.tags.DATE),
-          ),
+          Object.values(data.files).map((f) => f.tags.DATE),
         );
         if (!desired) continue;
 
         const currentDesired = desiredDateByAlbumId.get(albumId);
-        if (!currentDesired || desired.getTime() < currentDesired.getTime()) {
+        if (
+          !currentDesired ||
+          Temporal.PlainDate.compare(desired, currentDesired) < 0
+        ) {
           desiredDateByAlbumId.set(albumId, desired);
         }
       }
@@ -599,10 +600,15 @@ export class IndexingProcessor extends WorkerHost {
           .map((a) => {
             const desired = desiredDateByAlbumId.get(a.id);
             if (!desired) return null;
-            if (a.date && a.date.getTime() === desired.getTime()) return null;
+            if (
+              a.date &&
+              Temporal.PlainDate.compare(dateToPlainDate(a.date), desired) === 0
+            ) {
+              return null;
+            }
             return this.prisma.album.update({
               where: { id: a.id },
-              data: { date: desired },
+              data: { date: plainDateToDate(desired) },
             });
           })
           .filter((u) => u !== null);
@@ -814,7 +820,7 @@ export class IndexingProcessor extends WorkerHost {
               trackNumber: toInt(file.tags.TRACKNUMBER),
               title,
               isrc,
-              date: parsePlainDateStringToUtcDate(file.tags.DATE),
+              date: file.tags.DATE,
               durationMs: toInt(file.ffprobe.durationMs),
               artists,
               ffprobe: file.ffprobe,
@@ -926,7 +932,11 @@ export class IndexingProcessor extends WorkerHost {
               const shouldUpdateDate =
                 f.date !== null &&
                 f.date !== undefined &&
-                (!matched.date || matched.date.getTime() !== f.date.getTime());
+                (!matched.date ||
+                  Temporal.PlainDate.compare(
+                    dateToPlainDate(matched.date),
+                    f.date,
+                  ) !== 0);
 
               if (Object.keys(plan.patch).length > 0 || shouldUpdateDate) {
                 const updated = await tx.track.update({
@@ -934,7 +944,9 @@ export class IndexingProcessor extends WorkerHost {
                   data: {
                     ...plan.patch,
                     isrc: plan.patch.isrc ?? undefined,
-                    date: shouldUpdateDate ? f.date : undefined,
+                    date: shouldUpdateDate
+                      ? plainDateToDate(f.date!)
+                      : undefined,
                   },
                   select: {
                     id: true,
@@ -979,7 +991,7 @@ export class IndexingProcessor extends WorkerHost {
                   trackNumber: f.trackNumber,
                   name: normalizeTitle(f.title) ?? f.title,
                   isrc: f.isrc ?? null,
-                  date: f.date,
+                  date: f.date ? plainDateToDate(f.date) : null,
                   durationMs: f.durationMs,
                 },
                 select: {

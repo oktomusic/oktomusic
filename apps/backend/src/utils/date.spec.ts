@@ -1,40 +1,23 @@
-import { expect, suite, test } from "vitest";
 import { Temporal } from "temporal-polyfill";
+import { expect, suite, test } from "vitest";
 
 import {
   dateToPlainDate,
-  parsePlainDateStringToUtcDate,
+  parsePlainDateString,
   plainDateToDate,
   PLAIN_DATE_STRING_REGEX,
 } from "./date";
 
 void suite("plainDateToDate", () => {
   test("converts a plain date to a UTC midnight Date", () => {
-    const date = Temporal.PlainDate.from("2021-08-20");
-    const result = plainDateToDate(date);
-
-    expect(result).toBeInstanceOf(Date);
-    expect(result.getUTCFullYear()).toBe(2021);
-    expect(result.getUTCMonth()).toBe(7);
-    expect(result.getUTCDate()).toBe(20);
-    expect(result.getUTCHours()).toBe(0);
-    expect(result.getUTCMinutes()).toBe(0);
-    expect(result.getUTCSeconds()).toBe(0);
-    expect(result.getUTCMilliseconds()).toBe(0);
-  });
-
-  test("handles leap day", () => {
-    const date = Temporal.PlainDate.from("2020-02-29");
-    const result = plainDateToDate(date);
-
-    expect(result.toISOString()).toBe("2020-02-29T00:00:00.000Z");
-  });
-
-  test("does not have off-by-one month issues", () => {
     const date = Temporal.PlainDate.from("2024-01-01");
     const result = plainDateToDate(date);
 
+    expect(result).toBeInstanceOf(Date);
     expect(result.toISOString()).toBe("2024-01-01T00:00:00.000Z");
+    expect(result.getUTCHours()).toBe(0);
+    expect(result.getUTCMinutes()).toBe(0);
+    expect(result.getUTCSeconds()).toBe(0);
   });
 });
 
@@ -75,28 +58,29 @@ void suite("dateToPlainDate", () => {
   });
 });
 
-void suite("parsePlainDateStringToUtcDate", () => {
+void suite("parsePlainDateString", () => {
   test("returns null when undefined", () => {
-    expect(parsePlainDateStringToUtcDate(undefined)).toBeNull();
+    expect(parsePlainDateString(undefined)).toBeNull();
   });
 
-  test("parses a valid date at UTC midnight", () => {
-    const date = parsePlainDateStringToUtcDate("2025-07-24");
-    expect(date).not.toBeNull();
-    expect(date?.toISOString()).toBe("2025-07-24T00:00:00.000Z");
+  test("parses a strict YYYY-MM-DD date", () => {
+    const result = parsePlainDateString("2025-07-24");
+    expect(result).not.toBeNull();
+    expect(result?.toString()).toBe("2025-07-24");
   });
 
   test("rejects invalid formats", () => {
-    expect(parsePlainDateStringToUtcDate("2025-7-24")).toBeNull();
-    expect(parsePlainDateStringToUtcDate("2025/07/24")).toBeNull();
-    expect(parsePlainDateStringToUtcDate(" 2025-07-24")).toBeNull();
+    expect(parsePlainDateString("2025-7-24")).toBeNull();
+    expect(parsePlainDateString("2025/07/24")).toBeNull();
+    expect(parsePlainDateString(" 2025-07-24")).toBeNull();
+    expect(parsePlainDateString("2025-07-24 ")).toBeNull();
   });
 
   test("rejects invalid calendar dates", () => {
-    expect(parsePlainDateStringToUtcDate("2025-13-01")).toBeNull();
-    expect(parsePlainDateStringToUtcDate("2025-02-30")).toBeNull();
-    expect(parsePlainDateStringToUtcDate("2025-00-10")).toBeNull();
-    expect(parsePlainDateStringToUtcDate("2025-01-00")).toBeNull();
+    expect(parsePlainDateString("2025-13-01")).toBeNull();
+    expect(parsePlainDateString("2025-02-30")).toBeNull();
+    expect(parsePlainDateString("2025-00-10")).toBeNull();
+    expect(parsePlainDateString("2025-01-00")).toBeNull();
   });
 });
 

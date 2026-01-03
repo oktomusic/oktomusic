@@ -1,3 +1,4 @@
+import { Temporal } from "temporal-polyfill";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -74,7 +75,7 @@ describe("indexing.utils", () => {
   });
 
   describe("pickAlbumDateFromTrackDates", () => {
-    const d = (isoDate: string) => new Date(`${isoDate}T00:00:00.000Z`);
+    const d = (isoDate: string) => Temporal.PlainDate.from(isoDate);
 
     it("picks the (only) majority date", () => {
       const result = pickAlbumDateFromTrackDates([
@@ -85,7 +86,7 @@ describe("indexing.utils", () => {
         null,
       ]);
 
-      expect(result?.toISOString().slice(0, 10)).toBe("2020-01-01");
+      expect(result?.toString()).toBe("2020-01-01");
     });
 
     it("picks the earliest date that appears more than once when no majority exists", () => {
@@ -96,7 +97,7 @@ describe("indexing.utils", () => {
         d("2021-01-01"),
       ]);
 
-      expect(result?.toISOString().slice(0, 10)).toBe("2020-01-01");
+      expect(result?.toString()).toBe("2020-01-01");
     });
 
     it("picks the earliest date overall when all dates are unique", () => {
@@ -106,7 +107,7 @@ describe("indexing.utils", () => {
         d("2022-02-02"),
       ]);
 
-      expect(result?.toISOString().slice(0, 10)).toBe("2020-01-01");
+      expect(result?.toString()).toBe("2020-01-01");
     });
 
     it("returns null when no dates are present", () => {

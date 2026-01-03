@@ -1,3 +1,5 @@
+import { Temporal } from "temporal-polyfill";
+
 /**
  * Minimal track information required to build a stable per-album track signature.
  */
@@ -86,27 +88,11 @@ export function getOrderedTrackKeys(
   return ordered.map(getTrackKey);
 }
 
-/**
- * Builds a stable YYYY-MM-DD key from a Date, using UTC.
- */
-function dateKeyUtc(date: Date): string {
-  return date.toISOString().slice(0, 10);
-}
-
-/**
- * Normalizes a Date into a UTC date-only value (midnight UTC).
- *
- * This helps treat track dates as day-level data and avoids time/timezone drift
- * when comparing and counting dates across tracks.
- */
-function normalizeToUtcDateOnly(date: Date): Date {
-  const key = dateKeyUtc(date);
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
-  if (!match) return date;
-
-  const [, year, month, day] = match;
-  return new Date(
-    Date.UTC(Number(year), Number(month) - 1, Number(day), 0, 0, 0, 0),
+function earliestPlainDate(
+  dates: readonly Temporal.PlainDate[],
+): Temporal.PlainDate {
+  return dates.reduce((earliest, next) =>
+    Temporal.PlainDate.compare(next, earliest) < 0 ? next : earliest,
   );
 }
 
@@ -120,22 +106,24 @@ function normalizeToUtcDateOnly(date: Date): Date {
  * - If no date is present on tracks: return null.
  */
 export function pickAlbumDateFromTrackDates(
-  trackDates: ReadonlyArray<Date | null | undefined>,
-): Date | null {
+  trackDates: ReadonlyArray<Temporal.PlainDate | null | undefined>,
+): Temporal.PlainDate | null {
   const totalTracks = trackDates.length;
   if (totalTracks === 0) return null;
 
-  const counts = new Map<string, { readonly date: Date; count: number }>();
+  const counts = new Map<
+    string,
+    { readonly date: Temporal.PlainDate; count: number }
+  >();
 
   for (const d of trackDates) {
     if (!d) continue;
-    const normalized = normalizeToUtcDateOnly(d);
-    const key = dateKeyUtc(normalized);
+    const key = d.toString();
     const current = counts.get(key);
     if (current) {
       current.count += 1;
     } else {
-      counts.set(key, { date: normalized, count: 1 });
+      counts.set(key, { date: d, count: 1 });
     }
   }
 
@@ -148,9 +136,7 @@ export function pickAlbumDateFromTrackDates(
     .map((x) => x.date);
 
   if (majorityDates.length > 0) {
-    return majorityDates.reduce((earliest, next) =>
-      next.getTime() < earliest.getTime() ? next : earliest,
-    );
+    return earliestPlainDate(majorityDates);
   }
 
   const repeatedDates = distinctDates
@@ -158,14 +144,8 @@ export function pickAlbumDateFromTrackDates(
     .map((x) => x.date);
 
   if (repeatedDates.length > 0) {
-    return repeatedDates.reduce((earliest, next) =>
-      next.getTime() < earliest.getTime() ? next : earliest,
-    );
+    return earliestPlainDate(repeatedDates);
   }
 
-  return distinctDates
-    .map((x) => x.date)
-    .reduce((earliest, next) =>
-      next.getTime() < earliest.getTime() ? next : earliest,
-    );
+  return earliestPlainDate(distinctDates.map((x) => x.date));
 }
