@@ -5,42 +5,38 @@ import { Inject, Injectable } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
 
 import appConfig from "../../config/definitions/app.config";
+import { PrismaService } from "src/db/prisma.service";
 
 @Injectable()
 export class MediaService {
   constructor(
     @Inject(appConfig.KEY)
     private readonly appConf: ConfigType<typeof appConfig>,
+    private readonly prismaService: PrismaService,
   ) {}
 
   /**
-   * Find the first FLAC file in the media library recursively
+   * @todo Valkey cache integration to prevent spamming DB
    */
-  findFirstFlacFile(): string | null {
-    const findFlac = (dir: string): string | null => {
-      try {
-        const entries = fs.readdirSync(dir, { withFileTypes: true });
+  async findFlacFile(cuid: string): Promise<string | null> {
+    const flacFile = await this.prismaService.flacFile.findUnique({
+      where: { id: cuid },
+    });
 
-        for (const entry of entries) {
-          if (entry.isFile() && entry.name.toLowerCase().endsWith(".flac")) {
-            return path.join(dir, entry.name);
-          }
-        }
-
-        for (const entry of entries) {
-          if (entry.isDirectory()) {
-            const result = findFlac(path.join(dir, entry.name));
-            if (result) return result;
-          }
-        }
-      } catch {
-        return null;
-      }
-
+    if (!flacFile) {
       return null;
-    };
+    }
 
-    return findFlac(this.appConf.libraryPath);
+    const fullPath = path.resolve(
+      this.appConf.libraryPath,
+      flacFile.relativePath,
+    );
+
+    if (!fs.existsSync(fullPath)) {
+      return null;
+    }
+
+    return fullPath;
   }
 
   /**

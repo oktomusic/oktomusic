@@ -1,7 +1,12 @@
+import { useState } from "react";
+
 export default function Player() {
+  const [id, setId] = useState("");
+
   return (
     <div>
-      <audio src="/api/media/550e8400-e29b-41d4-a716-446655440000" controls />
+      <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
+      <audio src={`/api/media/${id}`} controls />
     </div>
   );
 }
