@@ -51,7 +51,7 @@
     "@vitejs/plugin-react": "^5.1.2",
     "@vitest/coverage-v8": "^4.0.16",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "jsdom": "^27.4.0",
     "typescript": "catalog:default",
     "vite": "^7.3.0",

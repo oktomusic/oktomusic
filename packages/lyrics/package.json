@@ -43,6 +43,6 @@
   },
   "dependencies": {
     "fast-xml-parser": "^5.3.3",
-    "zod": "^4.2.1"
+    "zod": "^4.3.4"
   }
 }
