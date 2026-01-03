@@ -85,3 +85,87 @@ export function getOrderedTrackKeys(
 
   return ordered.map(getTrackKey);
 }
+
+/**
+ * Builds a stable YYYY-MM-DD key from a Date, using UTC.
+ */
+function dateKeyUtc(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+/**
+ * Normalizes a Date into a UTC date-only value (midnight UTC).
+ *
+ * This helps treat track dates as day-level data and avoids time/timezone drift
+ * when comparing and counting dates across tracks.
+ */
+function normalizeToUtcDateOnly(date: Date): Date {
+  const key = dateKeyUtc(date);
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
+  if (!match) return date;
+
+  const [, year, month, day] = match;
+  return new Date(
+    Date.UTC(Number(year), Number(month) - 1, Number(day), 0, 0, 0, 0),
+  );
+}
+
+/**
+ * Picks an album date from per-track dates.
+ *
+ * Rules:
+ * - Take the earliest date that appears on a majority of tracks.
+ * - If no majority exists: take the earliest date that appears on more than one track.
+ * - If all dates are unique: take the earliest date overall.
+ * - If no date is present on tracks: return null.
+ */
+export function pickAlbumDateFromTrackDates(
+  trackDates: ReadonlyArray<Date | null | undefined>,
+): Date | null {
+  const totalTracks = trackDates.length;
+  if (totalTracks === 0) return null;
+
+  const counts = new Map<string, { readonly date: Date; count: number }>();
+
+  for (const d of trackDates) {
+    if (!d) continue;
+    const normalized = normalizeToUtcDateOnly(d);
+    const key = dateKeyUtc(normalized);
+    const current = counts.get(key);
+    if (current) {
+      current.count += 1;
+    } else {
+      counts.set(key, { date: normalized, count: 1 });
+    }
+  }
+
+  const distinctDates = Array.from(counts.values());
+  if (distinctDates.length === 0) return null;
+
+  const majorityThreshold = Math.floor(totalTracks / 2) + 1;
+  const majorityDates = distinctDates
+    .filter((x) => x.count >= majorityThreshold)
+    .map((x) => x.date);
+
+  if (majorityDates.length > 0) {
+    return majorityDates.reduce((earliest, next) =>
+      next.getTime() < earliest.getTime() ? next : earliest,
+    );
+  }
+
+  const repeatedDates = distinctDates
+    .filter((x) => x.count > 1)
+    .map((x) => x.date);
+
+  if (repeatedDates.length > 0) {
+    return repeatedDates.reduce((earliest, next) =>
+      next.getTime() < earliest.getTime() ? next : earliest,
+    );
+  }
+
+  return distinctDates
+    .map((x) => x.date)
+    .reduce((earliest, next) =>
+      next.getTime() < earliest.getTime() ? next : earliest,
+    );
+}

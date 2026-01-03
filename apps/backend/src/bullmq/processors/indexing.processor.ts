@@ -29,6 +29,7 @@ import {
   getAlbumSignature,
   getOrderedTrackKeys,
   getTrackCountsPerDisc,
+  pickAlbumDateFromTrackDates,
 } from "./indexing.utils";
 import {
   getAlbumDiscTrackKey,
@@ -41,6 +42,7 @@ import {
   convertAlbumCoverCandidate,
   pickAlbumCoverCandidate,
 } from "../../common/utils/sharp-utils";
+import { parsePlainDateStringToUtcDate } from "../../utils/date";
 
 interface FlacFolder {
   path: string;
@@ -318,6 +320,7 @@ export class IndexingProcessor extends WorkerHost {
       const existingAlbums: Array<{
         readonly id: string;
         readonly name: string;
+        readonly date: Date | null;
         readonly coverHash: string;
         readonly artists: ReadonlyArray<{
           readonly artist: { readonly name: string };
@@ -339,6 +342,7 @@ export class IndexingProcessor extends WorkerHost {
               select: {
                 id: true,
                 name: true,
+                date: true,
                 coverHash: true,
                 artists: {
                   select: {
@@ -406,6 +410,7 @@ export class IndexingProcessor extends WorkerHost {
           readonly name: string;
           readonly artists: string[];
           readonly trackCounts: number[];
+          readonly date: Date | null;
           readonly coverHash: string;
         }
       >();
@@ -413,6 +418,11 @@ export class IndexingProcessor extends WorkerHost {
       let matchedAlbumsCount = 0;
       for (const [folderPath, data] of albumCandidates) {
         const summary = data.albumSummary!;
+        const albumDate = pickAlbumDateFromTrackDates(
+          Object.values(data.files).map((f) =>
+            parsePlainDateStringToUtcDate(f.tags.DATE),
+          ),
+        );
         const trackKeys = getOrderedTrackKeys(
           Object.values(data.files).map((f) => ({
             discNumber: f.tags.DISCNUMBER,
@@ -459,8 +469,23 @@ export class IndexingProcessor extends WorkerHost {
             name: summary.album,
             artists: summary.artists,
             trackCounts: summary.trackCounts,
+            date: albumDate,
             coverHash: data.coverHash,
           });
+        } else if (albumDate) {
+          const existing = albumsToCreateBySignature.get(signature);
+          const existingDate = existing?.date;
+          const mergedDate =
+            existingDate && existingDate.getTime() <= albumDate.getTime()
+              ? existingDate
+              : albumDate;
+
+          if (existing && mergedDate !== existingDate) {
+            albumsToCreateBySignature.set(signature, {
+              ...existing,
+              date: mergedDate,
+            });
+          }
         }
       }
 
@@ -475,6 +500,7 @@ export class IndexingProcessor extends WorkerHost {
             this.prisma.album.create({
               data: {
                 name: album.name,
+                date: album.date,
                 coverHash: album.coverHash,
                 artists: {
                   create: album.artists.map((artistName, order) => ({
@@ -535,6 +561,56 @@ export class IndexingProcessor extends WorkerHost {
       this.logger.log(
         `Albums: matched ${matchedAlbumsCount} existing for ${albumCandidates.length} folder(s)`,
       );
+
+      // 6.4 Set album date (computed from track dates)
+      const desiredDateByAlbumId = new Map<string, Date>();
+      for (const [folderPath, data] of albumCandidates) {
+        const albumId = context.sourceData[folderPath].albumId;
+        if (!albumId) continue;
+
+        const desired = pickAlbumDateFromTrackDates(
+          Object.values(data.files).map((f) =>
+            parsePlainDateStringToUtcDate(f.tags.DATE),
+          ),
+        );
+        if (!desired) continue;
+
+        const currentDesired = desiredDateByAlbumId.get(albumId);
+        if (!currentDesired || desired.getTime() < currentDesired.getTime()) {
+          desiredDateByAlbumId.set(albumId, desired);
+        }
+      }
+
+      if (desiredDateByAlbumId.size > 0) {
+        const albumIds = Array.from(desiredDateByAlbumId.keys());
+        const dbAlbums = await this.prisma.album.findMany({
+          where: {
+            id: {
+              in: albumIds,
+            },
+          },
+          select: {
+            id: true,
+            date: true,
+          },
+        });
+
+        const updates = dbAlbums
+          .map((a) => {
+            const desired = desiredDateByAlbumId.get(a.id);
+            if (!desired) return null;
+            if (a.date && a.date.getTime() === desired.getTime()) return null;
+            return this.prisma.album.update({
+              where: { id: a.id },
+              data: { date: desired },
+            });
+          })
+          .filter((u) => u !== null);
+
+        if (updates.length > 0) {
+          await this.prisma.$transaction(updates);
+        }
+      }
 
       // 6.5 Generate/update album covers in intermediate path when needed
       const foldersWithCovers = Object.entries(context.sourceData).filter(
@@ -641,6 +717,7 @@ export class IndexingProcessor extends WorkerHost {
           trackNumber: true,
           name: true,
           isrc: true,
+          date: true,
           durationMs: true,
         },
       });
@@ -737,6 +814,7 @@ export class IndexingProcessor extends WorkerHost {
               trackNumber: toInt(file.tags.TRACKNUMBER),
               title,
               isrc,
+              date: parsePlainDateStringToUtcDate(file.tags.DATE),
               durationMs: toInt(file.ffprobe.durationMs),
               artists,
               ffprobe: file.ffprobe,
@@ -798,6 +876,7 @@ export class IndexingProcessor extends WorkerHost {
                     trackNumber: true,
                     name: true,
                     isrc: true,
+                    date: true,
                     durationMs: true,
                   },
                 });
@@ -844,12 +923,18 @@ export class IndexingProcessor extends WorkerHost {
                 );
               }
 
-              if (Object.keys(plan.patch).length > 0) {
+              const shouldUpdateDate =
+                f.date !== null &&
+                f.date !== undefined &&
+                (!matched.date || matched.date.getTime() !== f.date.getTime());
+
+              if (Object.keys(plan.patch).length > 0 || shouldUpdateDate) {
                 const updated = await tx.track.update({
                   where: { id: matched.id },
                   data: {
                     ...plan.patch,
                     isrc: plan.patch.isrc ?? undefined,
+                    date: shouldUpdateDate ? f.date : undefined,
                   },
                   select: {
                     id: true,
@@ -858,6 +943,7 @@ export class IndexingProcessor extends WorkerHost {
                     trackNumber: true,
                     name: true,
                     isrc: true,
+                    date: true,
                     durationMs: true,
                   },
                 });
@@ -893,6 +979,7 @@ export class IndexingProcessor extends WorkerHost {
                   trackNumber: f.trackNumber,
                   name: normalizeTitle(f.title) ?? f.title,
                   isrc: f.isrc ?? null,
+                  date: f.date,
                   durationMs: f.durationMs,
                 },
                 select: {
@@ -902,6 +989,7 @@ export class IndexingProcessor extends WorkerHost {
                   trackNumber: true,
                   name: true,
                   isrc: true,
+                  date: true,
                   durationMs: true,
                 },
               });
@@ -1036,6 +1124,14 @@ export class IndexingProcessor extends WorkerHost {
     }
 
     // ------------------------------------------------
+
+    // TODO: split into mote testable functions
+    // TODO: extract album date
+    // TODO: convert covers
+    // TODO: switch cuid to uuid v7 (?)
+    // TODO: when an album is deleted, delete associated tracks
+
+    // Covers are generated during album matching/creation.
 
     console.log("Indexing completed");
     await job.updateProgress(100);

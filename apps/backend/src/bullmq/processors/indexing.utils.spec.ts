@@ -4,6 +4,7 @@ import {
   getAlbumSignature,
   getOrderedTrackKeys,
   getTrackCountsPerDisc,
+  pickAlbumDateFromTrackDates,
 } from "./indexing.utils";
 
 describe("indexing.utils", () => {
@@ -69,6 +70,47 @@ describe("indexing.utils", () => {
           trackKeys: ["d1t1:isrc:XX-YYY-12-34567"],
         }),
       );
+    });
+  });
+
+  describe("pickAlbumDateFromTrackDates", () => {
+    const d = (isoDate: string) => new Date(`${isoDate}T00:00:00.000Z`);
+
+    it("picks the (only) majority date", () => {
+      const result = pickAlbumDateFromTrackDates([
+        d("2020-01-01"),
+        d("2020-01-01"),
+        d("2020-01-01"),
+        d("2021-01-01"),
+        null,
+      ]);
+
+      expect(result?.toISOString().slice(0, 10)).toBe("2020-01-01");
+    });
+
+    it("picks the earliest date that appears more than once when no majority exists", () => {
+      const result = pickAlbumDateFromTrackDates([
+        d("2022-01-01"),
+        d("2020-01-01"),
+        d("2020-01-01"),
+        d("2021-01-01"),
+      ]);
+
+      expect(result?.toISOString().slice(0, 10)).toBe("2020-01-01");
+    });
+
+    it("picks the earliest date overall when all dates are unique", () => {
+      const result = pickAlbumDateFromTrackDates([
+        d("2021-06-01"),
+        d("2020-01-01"),
+        d("2022-02-02"),
+      ]);
+
+      expect(result?.toISOString().slice(0, 10)).toBe("2020-01-01");
+    });
+
+    it("returns null when no dates are present", () => {
+      expect(pickAlbumDateFromTrackDates([null, undefined])).toBeNull();
     });
   });
 });
