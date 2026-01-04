@@ -41,6 +41,6 @@
   },
   "dependencies": {
     "temporal-polyfill": "catalog:default",
-    "zod": "^4.3.4"
+    "zod": "^4.3.5"
   }
 }
