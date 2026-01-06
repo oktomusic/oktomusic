@@ -2,7 +2,7 @@ import { ReactPortal, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { useAtom } from "jotai";
 
-import { pipOpenAtom, pipSupportedAtom } from "../atoms/player/pip";
+import { pipOpenAtom, pipSupportedAtom } from "../../atoms/player/pip";
 import PipControlsWindow from "./PipControlsWindow";
 
 import "./PipControls.css";
@@ -47,6 +47,9 @@ export default function PipControls(): ReactPortal | null {
             doc.head.appendChild(link.cloneNode(true));
           },
         );
+
+        doc.title = "Oktomusic PiP";
+        doc.body.id = "pip-body";
 
         // In dev mode styles are applied via style tags
         if (import.meta.env.DEV) {

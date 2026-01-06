@@ -1,0 +1,166 @@
+#pip-body {
+  background-color: var(--color-zinc-950);
+}
+#pip-shell {
+  /*
+     * This is terribly ugly since browsers can chose a different color at any time.
+     * Edge for example follows dark/light mode.
+     * Sadly there is no way for the app to control the window borders like in PWA mode.
+     * background-color: var(--chrome-pip-color);
+     */
+  --chrome-pip-color: #202124;
+
+  box-sizing: border-box;
+  min-height: 100dvh;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  background-image: linear-gradient(
+    to bottom in oklch,
+    var(--chrome-pip-color),
+    var(--color-zinc-950)
+  );
+
+  > #pip-shell-inner {
+    /*
+     * Main layout grid (height-based breakpoints)
+     *
+     * This PiP UI is responsive based on the *window height* (not width), because the
+     * Document Picture-in-Picture window can be resized to very different aspect ratios.
+     *
+     * Layouts:
+     * - Default (height < 8rem): single-row grid: [cover] [meta] [controls]
+     * - Compact (8rem <= height < 11rem): two-row grid: top [cover + meta], bottom [controls]
+     * - Tall (height >= 11rem): two-row grid: top [cover], bottom [meta] [controls]
+     */
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: 0.5rem; /* gap-2 = 8px */
+    align-items: center;
+
+    padding-left: 0.5rem; /* px-2 */
+    padding-right: 0.5rem; /* px-2 */
+    padding-bottom: 0.5rem; /* pb-2 */
+    color: #fff;
+    user-select: none;
+
+    @media (height >= 8rem) and (height < 11rem) {
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) 3rem; /* h-12 = 48px */
+      row-gap: 0.5rem; /* gap-2 */
+      align-items: stretch;
+    }
+
+    @media (height >= 11rem) {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: minmax(0, 1fr) 3rem; /* h-12 = 48px */
+      column-gap: 0.5rem; /* gap-2 */
+      row-gap: 0.5rem; /* gap-2 */
+      align-items: stretch;
+    }
+
+    > #pip-controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 0.5rem; /* gap-2 */
+
+      @media (height >= 8rem) and (height < 11rem) {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        height: 3rem; /* h-12 = 48px */
+        justify-content: center;
+        align-items: center;
+      }
+
+      @media (height >= 11rem) {
+        grid-column: 2;
+        grid-row: 2;
+        height: 3rem; /* h-12 = 48px */
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+
+    > #pip-cover {
+      /*
+       * Colors controlled via JS to match album cover colors
+       */
+      --pip-cover-light-color: var(--chrome-pip-color);
+      --pip-cover-dark-color: var(--chrome-pip-color);
+
+      height: 100%;
+      max-height: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: var(--radius-sm) /* 0.25rem = 4px */;
+
+      @media (height >= 11rem) {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        aspect-ratio: unset;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        padding: 1rem; /* p-4 */
+        background-image: linear-gradient(
+          45deg in oklch,
+          var(--pip-cover-dark-color),
+          var(--pip-cover-light-color)
+        );
+        box-sizing: border-box;
+      }
+    }
+
+    > #pip-cover > img {
+      border-radius: var(--radius-sm) /* 0.25rem = 4px */;
+      display: block;
+      object-fit: contain;
+
+      @media (height >= 11rem) {
+        min-height: 0;
+        min-width: 0;
+        max-width: 100%;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: scale-down;
+        object-position: center;
+      }
+    }
+
+    > #pip-meta {
+      min-width: 0;
+
+      @media (height >= 8rem) and (height < 11rem) {
+        align-self: center;
+      }
+
+      @media (height >= 11rem) {
+        grid-column: 1;
+        grid-row: 2;
+        align-self: center;
+      }
+    }
+
+    > #pip-meta > a {
+      display: block;
+      overflow: hidden;
+      font-size: 0.875rem; /* text-sm */
+      font-weight: 700; /* font-bold */
+      white-space: nowrap; /* text-nowrap */
+      text-overflow: ellipsis; /* text-ellipsis */
+    }
+
+    > #pip-meta > #pip-artists {
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      font-size: 0.75rem; /* text-xs */
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}

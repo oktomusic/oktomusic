@@ -13,27 +13,47 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/App/App.tsx:95
+#: src/pages/App/App.tsx:106
 msgid "Click on the Vite and React logos to learn more"
 msgstr "Cliquez sur les logos Vite et React pour en savoir plus"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:15
-#: src/pages/SettingsClient/SettingsClient.tsx:40
+#: src/pages/SettingsClient/SettingsClient.tsx:14
+#: src/pages/SettingsClient/SettingsClient.tsx:39
 msgid "Disabled"
 msgstr "Désactivé"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:16
-#: src/pages/SettingsClient/SettingsClient.tsx:40
+#: src/pages/SettingsClient/SettingsClient.tsx:15
+#: src/pages/SettingsClient/SettingsClient.tsx:39
 msgid "Enabled"
 msgstr "Activé"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:28
+#: src/pages/SettingsClient/SettingsClient.tsx:27
 msgid "Kiosk mode:"
 msgstr "Mode Kiosque :"
 
 #: src/utils/constants.ts:16
 msgid "Man"
 msgstr "Homme"
+
+#: src/components/PipControls/PipControlsWindow.tsx:84
+msgid "Next"
+msgstr "Suivant"
+
+#: src/components/PipControls/PipControlsWindow.tsx:83
+msgid "Pause"
+msgstr "Pause"
+
+#: src/components/PipControls/PipControlsWindow.tsx:83
+msgid "Play"
+msgstr "Lecture"
+
+#: src/components/PipControls/PipControlsWindow.tsx:81
+msgid "Playback controls"
+msgstr "Commandes de lecture"
+
+#: src/components/PipControls/PipControlsWindow.tsx:82
+msgid "Previous"
+msgstr "Précédent"
 
 #: src/pages/SettingsAccount/SettingsAccount.tsx:51
 msgid "Sexe :"

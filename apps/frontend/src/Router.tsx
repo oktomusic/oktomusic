@@ -5,7 +5,7 @@ import { useAtomValue } from "jotai";
 import { browserSupportAtom } from "./atoms/app/browser_support.ts";
 import { settingClientKioskMode } from "./atoms/app/settings_client.ts";
 import AuthSessionInitializer from "./components/AuthSessionInitializer.tsx";
-import PipControls from "./components/PipControls.tsx";
+import PipControls from "./components/PipControls/PipControls.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import WindowControls from "./components/WindowControls.tsx";
 import App from "./pages/App/App.tsx";
