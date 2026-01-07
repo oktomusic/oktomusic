@@ -50,6 +50,7 @@ export default function PipControls(): ReactPortal | null {
 
         doc.title = "Oktomusic PiP";
         doc.body.id = "pip-body";
+        doc.documentElement.lang = document.documentElement.lang || "en";
 
         // In dev mode styles are applied via style tags
         if (import.meta.env.DEV) {
