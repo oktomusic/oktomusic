@@ -48,3 +48,7 @@ export const browserSupportAtom = atom<BrowserSupport>(getBrowserSupport());
 export const browserSupportedAtom = atom(
   (get) => get(browserSupportAtom).supported,
 );
+
+export const audioSessionSupportAtom = atom<boolean>(
+  navigator.audioSession !== undefined,
+);
