@@ -17,17 +17,21 @@ msgstr ""
 msgid "Click on the Vite and React logos to learn more"
 msgstr "Click on the Vite and React logos to learn more"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:14
-#: src/pages/SettingsClient/SettingsClient.tsx:39
+#: src/pages/SettingsClient/SettingsClient.tsx:62
+msgid "Crossfade (seconds):"
+msgstr "Crossfade (seconds):"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:20
+#: src/pages/SettingsClient/SettingsClient.tsx:59
 msgid "Disabled"
 msgstr "Disabled"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:15
-#: src/pages/SettingsClient/SettingsClient.tsx:39
+#: src/pages/SettingsClient/SettingsClient.tsx:21
+#: src/pages/SettingsClient/SettingsClient.tsx:59
 msgid "Enabled"
 msgstr "Enabled"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:27
+#: src/pages/SettingsClient/SettingsClient.tsx:47
 msgid "Kiosk mode:"
 msgstr "Kiosk mode:"
 
@@ -35,23 +39,23 @@ msgstr "Kiosk mode:"
 msgid "Man"
 msgstr "Man"
 
-#: src/components/PipControls/PipControlsWindow.tsx:84
+#: src/components/PipControls/PipControlsWindow.tsx:72
 msgid "Next"
 msgstr "Next"
 
-#: src/components/PipControls/PipControlsWindow.tsx:83
+#: src/components/PipControls/PipControlsWindow.tsx:71
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/PipControls/PipControlsWindow.tsx:83
+#: src/components/PipControls/PipControlsWindow.tsx:71
 msgid "Play"
 msgstr "Play"
 
-#: src/components/PipControls/PipControlsWindow.tsx:81
+#: src/components/PipControls/PipControlsWindow.tsx:69
 msgid "Playback controls"
 msgstr "Playback controls"
 
-#: src/components/PipControls/PipControlsWindow.tsx:82
+#: src/components/PipControls/PipControlsWindow.tsx:70
 msgid "Previous"
 msgstr "Previous"
 

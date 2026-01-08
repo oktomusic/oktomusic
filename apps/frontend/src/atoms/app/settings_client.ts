@@ -28,3 +28,18 @@ export const settingClientAudioSession = atomWithStorage<
 >(audioSessionLocalStorageKey, "ambient", audioSessionStorage, {
   getOnInit: true,
 });
+
+// Crossfade Setting
+
+const crossfadeLocalStorageKey = "oktomusic:crossfade_seconds";
+
+const crossfadeStorage = createJSONStorage<number>(() => window.localStorage);
+
+export const settingClientCrossfadeSeconds = atomWithStorage<number>(
+  crossfadeLocalStorageKey,
+  0,
+  crossfadeStorage,
+  {
+    getOnInit: true,
+  },
+);
