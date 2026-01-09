@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import llmstxt from "vitepress-plugin-llms";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -35,4 +36,18 @@ export default defineConfig({
     ],
   },
   cleanUrls: true,
+  vite: {
+    server: {
+      port: 5174,
+    },
+    plugins: [
+      llmstxt({
+        title: "Oktomusic Documentation",
+        generateLLMsTxt: true,
+        generateLLMsFullTxt: true,
+        injectLLMHint: true,
+        stripHTML: true,
+      }),
+    ],
+  },
 });

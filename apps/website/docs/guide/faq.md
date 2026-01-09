@@ -1,3 +1,7 @@
+---
+description: Frequently Asked Questions about Oktomusic
+---
+
 # FAQ
 
 ## Why is only Chromium supported and not Firefox?

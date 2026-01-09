@@ -1,3 +1,7 @@
+---
+description: Steps to install Oktomusic using Docker Compose
+---
+
 [pg_upgrade_docker]: https://github.com/docker-library/postgres/issues/37
 
 # Installation Guide

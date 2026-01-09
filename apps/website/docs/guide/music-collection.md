@@ -1,3 +1,7 @@
+---
+description: How to organize your music collection for use with Oktomusic
+---
+
 # Music collection
 
 ## File organization

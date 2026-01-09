@@ -1,3 +1,7 @@
+---
+description: Configuration options for Oktomusic
+---
+
 [prisma_connection_url]: https://www.prisma.io/docs/orm/reference/connection-urls#postgresql
 
 # Configuration Reference

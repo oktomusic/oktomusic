@@ -1,3 +1,7 @@
+---
+description: Authentication in Oktomusic using OpenID Connect.
+---
+
 # Authentication
 
 https://openid.net/developers/how-connect-works
