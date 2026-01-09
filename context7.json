@@ -1,0 +1,13 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Oktomusic Documentation",
+  "description": "Opinionated, self-hosted music streaming server",
+  "folders": [
+    "apps/website/docs"
+  ],
+  "excludeFolders": [],
+  "branch": "master",
+  "excludeFiles": [],
+  "rules": [],
+  "previousVersions": []
+}
