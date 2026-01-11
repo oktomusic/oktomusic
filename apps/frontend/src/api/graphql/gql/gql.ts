@@ -17,6 +17,7 @@ type Documents = {
     "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n": typeof types.AdminUpdateUserProfileDocument,
     "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n": typeof types.TriggerIndexingDocument,
     "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n": typeof types.UpdateMyProfileDocument,
+    "\n  query Album($id: String!) {\n    album(id: $id) {\n      id\n      name\n      date\n      artists {\n        id\n        name\n      }\n      tracksByDisc {\n        id\n        flacFileId\n        name\n        trackNumber\n        discNumber\n        durationMs\n        artists {\n          id\n          name\n        }\n      }\n    }\n  }\n": typeof types.AlbumDocument,
     "\n  query IndexingJobStatus($jobId: String!) {\n    indexingJobStatus(jobId: $jobId) {\n      jobId\n      status\n      progress\n      error\n      completedAt\n    }\n  }\n": typeof types.IndexingJobStatusDocument,
     "\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.MeDocument,
     "\n  query UserProfile($userId: String!) {\n    userProfile(userId: $userId) {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.UserProfileDocument,
@@ -26,6 +27,7 @@ const documents: Documents = {
     "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n": types.AdminUpdateUserProfileDocument,
     "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n": types.TriggerIndexingDocument,
     "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n": types.UpdateMyProfileDocument,
+    "\n  query Album($id: String!) {\n    album(id: $id) {\n      id\n      name\n      date\n      artists {\n        id\n        name\n      }\n      tracksByDisc {\n        id\n        flacFileId\n        name\n        trackNumber\n        discNumber\n        durationMs\n        artists {\n          id\n          name\n        }\n      }\n    }\n  }\n": types.AlbumDocument,
     "\n  query IndexingJobStatus($jobId: String!) {\n    indexingJobStatus(jobId: $jobId) {\n      jobId\n      status\n      progress\n      error\n      completedAt\n    }\n  }\n": types.IndexingJobStatusDocument,
     "\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": types.MeDocument,
     "\n  query UserProfile($userId: String!) {\n    userProfile(userId: $userId) {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": types.UserProfileDocument,
@@ -58,6 +60,10 @@ export function graphql(source: "\n  mutation TriggerIndexing {\n    triggerInde
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Album($id: String!) {\n    album(id: $id) {\n      id\n      name\n      date\n      artists {\n        id\n        name\n      }\n      tracksByDisc {\n        id\n        flacFileId\n        name\n        trackNumber\n        discNumber\n        durationMs\n        artists {\n          id\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query Album($id: String!) {\n    album(id: $id) {\n      id\n      name\n      date\n      artists {\n        id\n        name\n      }\n      tracksByDisc {\n        id\n        flacFileId\n        name\n        trackNumber\n        discNumber\n        durationMs\n        artists {\n          id\n          name\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
