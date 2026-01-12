@@ -37,7 +37,7 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "6.1.0",
+    "@graphql-codegen/cli": "6.1.1",
     "@graphql-codegen/client-preset": "5.2.2",
     "@lingui/babel-plugin-lingui-macro": "^5.7.0",
     "@lingui/cli": "^5.7.0",
