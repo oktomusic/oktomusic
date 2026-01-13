@@ -5,8 +5,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { useQuery } from "@apollo/client/react";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
-import { settingClientKioskMode } from "../../atoms/app/settings_client";
-import { pipOpenAtom } from "../../atoms/player/pip";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role } from "../../api/graphql/gql/graphql";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
@@ -57,18 +55,6 @@ function App() {
           <div>
             <Link to="/settings/client">Client Settings</Link>
           </div>
-          <div>
-            {!kioskModeEnabled && (
-            <button
-              onClick={() => {
-                setPipOpen(!pipOpen);
-              }}
-              className="bg-sky-950"
-            >
-              {pipOpen ? "Close PiP Controls" : "Open PiP Controls"}
-            </button>
-            )}
-          </div>
           {isAdmin && (
             <div className="mt-4">
               <IndexingControl />
@@ -76,9 +62,7 @@ function App() {
           )}
         </div>
       </div>
-      <p className="read-the-docs">
-        {t`Click on the Vite and React logos to learn more`}
-      </p>
+      <PlayerControls />
     </>
   );
 }

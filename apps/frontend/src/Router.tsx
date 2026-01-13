@@ -8,7 +8,7 @@ import AuthSessionInitializer from "./components/AuthSessionInitializer.tsx";
 import PipControls from "./components/PipControls/PipControls.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import WindowControls from "./components/WindowControls.tsx";
-import PlayerProvider from "./components/PlayerProvider.tsx";
+import PlayerProvider from "./components/Player/PlayerProvider.tsx";
 import App from "./pages/App/App.tsx";
 import AppInfo from "./pages/AppInfo/AppInfo.tsx";
 import Login from "./pages/Auth/Login.tsx";
