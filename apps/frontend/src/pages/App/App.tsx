@@ -1,24 +1,18 @@
 import { Link } from "react-router";
 
-import { useLingui } from "@lingui/react/macro";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { useQuery } from "@apollo/client/react";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role } from "../../api/graphql/gql/graphql";
+import PlayerControls from "../../components/Player/PlayerControls";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
 
 import "./App.css";
 
 function App() {
-  const { t } = useLingui();
-
   const authSession = useAtomValue(authSessionAtom);
-
-  const kioskModeEnabled = useAtomValue(settingClientKioskMode);
-
-  const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
 
   const { data: userData } = useQuery(ME_QUERY, {
     skip: authSession.status !== "authenticated",
