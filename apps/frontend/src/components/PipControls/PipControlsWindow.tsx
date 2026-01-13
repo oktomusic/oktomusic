@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
+import { useAtomValue } from "jotai";
 import { t } from "@lingui/core/macro";
 import { HiBackward, HiForward, HiPlay } from "react-icons/hi2";
 
 import PipButton from "./PipButton";
+import { playerQueueCurrentTrack } from "../../atoms/player/machine";
+import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 
 const albumCoverColors = {
   vibrant: "#9e4433",
@@ -23,10 +26,7 @@ export default function PipControlsWindow() {
   const figureRef = useRef<HTMLElement | null>(null);
   const isPlaying = false;
 
-  const trackTitle = "Nos vies en Lumière";
-  // const albumTitle = "";
-  const albumCUID = "tfvq5x36xnnovthoj7ele3s7";
-  const artists = ["Lorien Testard", "Alice Duport-Percier"];
+  const currentTrack = useAtomValue(playerQueueCurrentTrack);
 
   useEffect(() => {
     if (!figureRef.current) {
@@ -53,22 +53,40 @@ export default function PipControlsWindow() {
       {/* Album cover region (also hosts CSS vars for cover-based gradients). */}
       <figure id="pip-cover" ref={figureRef}>
         <img
-          src={`/api/album/${albumCUID}/cover/1280`}
+          className="pip-cover-image"
+          src={
+            currentTrack
+              ? `/api/album/${currentTrack.albumId}/cover/1280`
+              : coverPlaceHolder
+          }
           draggable={false}
-          alt="Album Cover"
+          alt={currentTrack ? "Album Cover" : t`No track playing`}
         />
+        {currentTrack ? null : (
+          <div className="pip-cover-overlay">{t`No track playing`}</div>
+        )}
       </figure>
 
       {/* Track metadata region (title + artists; both lines truncate). */}
       <div id="pip-meta">
-        <a href={`/album/${albumCUID}`}>{trackTitle}</a>
-        <div id="pip-artists">{artists.join(", ")}</div>
+        {currentTrack ? (
+          <>
+            <a href={`/album/${currentTrack.albumId}`}>{currentTrack?.name}</a>
+            <div id="pip-artists">
+              {currentTrack.artists.map((artist) => artist.name).join(", ")}
+            </div>
+          </>
+        ) : null}
       </div>
 
       {/* Playback controls cluster (layout moves based on height breakpoints). */}
       <div id="pip-controls" role="group" aria-label={t`Playback controls`}>
         <PipButton title={t`Previous`} icon={HiBackward} />
-        <PipButton title={isPlaying ? t`Pause` : t`Play`} icon={HiPlay} />
+        <PipButton
+          title={isPlaying ? t`Pause` : t`Play`}
+          icon={HiPlay}
+          disabled={!currentTrack}
+        />
         <PipButton title={t`Next`} icon={HiForward} />
       </div>
     </div>
