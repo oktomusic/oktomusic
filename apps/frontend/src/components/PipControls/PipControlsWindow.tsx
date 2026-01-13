@@ -56,7 +56,7 @@ export default function PipControlsWindow() {
           className="pip-cover-image"
           src={
             currentTrack
-              ? `/api/album/${currentTrack.albumId}/cover/1280`
+              ? `/api/album/${currentTrack.album.id}/cover/1280`
               : coverPlaceHolder
           }
           draggable={false}
@@ -71,7 +71,7 @@ export default function PipControlsWindow() {
       <div id="pip-meta">
         {currentTrack ? (
           <>
-            <a href={`/album/${currentTrack.albumId}`}>{currentTrack?.name}</a>
+            <a href={`/album/${currentTrack.album.id}`}>{currentTrack?.name}</a>
             <div id="pip-artists">
               {currentTrack.artists.map((artist) => artist.name).join(", ")}
             </div>
