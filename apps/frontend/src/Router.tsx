@@ -17,6 +17,7 @@ import Player from "./pages/Player/Player.tsx";
 import SettingsAccount from "./pages/SettingsAccount/SettingsAccount.tsx";
 import SettingsClient from "./pages/SettingsClient/SettingsClient.tsx";
 import UnsupportedOverlay from "./pages/Unsupported/UnsupportedOverlay.tsx";
+import TempLoadAlbum from "./components/TempLoadAlbum.tsx";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
@@ -58,6 +59,7 @@ export default function Router() {
           <BrowserRouter>
             <PlayerProvider />
             <MediaSessionProvider />
+            <TempLoadAlbum />
             <Routes>
               <Route element={<ProtectedRoutes />}>
                 <Route index element={<App />} />
