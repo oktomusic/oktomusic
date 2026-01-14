@@ -1,11 +1,5 @@
 import { useAtom, useAtomValue } from "jotai";
 import { t } from "@lingui/core/macro";
-
-import { playerQueueCurrentTrack } from "../../atoms/player/machine";
-import { settingClientKioskMode } from "../../atoms/app/settings_client";
-import { pipOpenAtom } from "../../atoms/player/pip";
-
-import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import {
   HiArrowTopRightOnSquare,
   HiBackward,
@@ -13,6 +7,13 @@ import {
   HiPause,
   HiPlay,
 } from "react-icons/hi2";
+
+import { playerQueueCurrentTrack } from "../../atoms/player/machine";
+import { settingClientKioskMode } from "../../atoms/app/settings_client";
+import { pipOpenAtom } from "../../atoms/player/pip";
+import { formatDuration } from "../../utils/format_duration";
+
+import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 
 export default function PlayerControls() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
@@ -82,7 +83,7 @@ export default function PlayerControls() {
           </button>
         </div>
         <div className="flex flex-row gap-2">
-          <span className="font-mono slashed-zero">0:00</span>
+          <span className="font-mono slashed-zero">{formatDuration(0)}</span>
           <label htmlFor="player-seek" className="sr-only">
             {t`Seek`}
           </label>
@@ -94,7 +95,9 @@ export default function PlayerControls() {
             step={0.1}
             className="w-full"
           />
-          <span className="font-mono slashed-zero">3:22</span>
+          <span className="font-mono slashed-zero">
+            {formatDuration(currentTrack?.durationMs ?? 0)}
+          </span>
         </div>
       </div>
       <div
