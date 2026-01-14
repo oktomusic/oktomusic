@@ -8,7 +8,11 @@ import {
   HiPlay,
 } from "react-icons/hi2";
 
-import { playerQueueCurrentTrack } from "../../atoms/player/machine";
+import {
+  handleNextTrackAtom,
+  handlePreviousTrackAtom,
+  playerQueueCurrentTrack,
+} from "../../atoms/player/machine";
 import { settingClientKioskMode } from "../../atoms/app/settings_client";
 import { pipOpenAtom } from "../../atoms/player/pip";
 import { formatDuration } from "../../utils/format_duration";
@@ -19,6 +23,9 @@ export default function PlayerControls() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
 
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
+
+  const [, handlePreviousTrack] = useAtom(handlePreviousTrackAtom);
+  const [, handleNextTrack] = useAtom(handleNextTrackAtom);
 
   const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
 
@@ -50,7 +57,9 @@ export default function PlayerControls() {
         <div className="flex flex-row justify-center gap-2">
           <button
             type="button"
-            onClick={() => undefined}
+            onClick={() => {
+              handlePreviousTrack();
+            }}
             aria-label={t`Previous`}
             title={t`Previous`}
             className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
@@ -74,7 +83,9 @@ export default function PlayerControls() {
           </button>
           <button
             type="button"
-            onClick={() => undefined}
+            onClick={() => {
+              handleNextTrack();
+            }}
             aria-label={t`Next`}
             title={t`Next`}
             className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"

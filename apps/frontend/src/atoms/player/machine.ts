@@ -16,6 +16,38 @@ export const playerQueueAtom = atom<TrackWithAlbum[]>([]);
 
 export const playerQueueIndexAtom = atom<number>(0);
 
+export const handlePreviousTrackAtom = atom(null, (get, set) => {
+  const queue = get(playerQueueAtom);
+  let index = get(playerQueueIndexAtom);
+
+  if (queue.length === 0) {
+    return;
+  }
+
+  index -= 1;
+  if (index < 0) {
+    index = queue.length - 1; // Loop back to end
+  }
+
+  set(playerQueueIndexAtom, index);
+});
+
+export const handleNextTrackAtom = atom(null, (get, set) => {
+  const queue = get(playerQueueAtom);
+  let index = get(playerQueueIndexAtom);
+
+  if (queue.length === 0) {
+    return;
+  }
+
+  index += 1;
+  if (index >= queue.length) {
+    index = 0; // Loop back to start
+  }
+
+  set(playerQueueIndexAtom, index);
+});
+
 export const playerQueueCurrentTrack = atom<TrackWithAlbum | null>((get) => {
   const queue = get(playerQueueAtom);
   const index = get(playerQueueIndexAtom);
