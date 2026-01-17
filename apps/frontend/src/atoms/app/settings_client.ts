@@ -1,15 +1,13 @@
-import { atomWithStorage, createJSONStorage } from "jotai/utils";
+import { atomWithStorage } from "jotai/utils";
 
 // Kiosk Mode Setting
 
 const kioskModeLocalStorageKey = "oktomusic:kiosk_mode";
 
-const kioskModeStorage = createJSONStorage<boolean>(() => window.localStorage);
-
 export const settingClientKioskMode = atomWithStorage<boolean>(
   kioskModeLocalStorageKey,
   false,
-  kioskModeStorage,
+  undefined,
   {
     getOnInit: true,
   },
@@ -19,13 +17,9 @@ export const settingClientKioskMode = atomWithStorage<boolean>(
 
 const audioSessionLocalStorageKey = "oktomusic:audio_session";
 
-const audioSessionStorage = createJSONStorage<"ambient" | "playback">(
-  () => window.localStorage,
-);
-
 export const settingClientAudioSession = atomWithStorage<
   "ambient" | "playback"
->(audioSessionLocalStorageKey, "ambient", audioSessionStorage, {
+>(audioSessionLocalStorageKey, "ambient", undefined, {
   getOnInit: true,
 });
 
@@ -33,12 +27,10 @@ export const settingClientAudioSession = atomWithStorage<
 
 const crossfadeLocalStorageKey = "oktomusic:crossfade_seconds";
 
-const crossfadeStorage = createJSONStorage<number>(() => window.localStorage);
-
 export const settingClientCrossfadeSeconds = atomWithStorage<number>(
   crossfadeLocalStorageKey,
   0,
-  crossfadeStorage,
+  undefined,
   {
     getOnInit: true,
   },
