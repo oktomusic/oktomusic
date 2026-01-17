@@ -1,5 +1,5 @@
-import { useAtom, useAtomValue } from "jotai";
 import { t } from "@lingui/core/macro";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   HiArrowTopRightOnSquare,
   HiBackward,
@@ -11,7 +11,13 @@ import {
 import {
   handleNextTrackAtom,
   handlePreviousTrackAtom,
+  playerIsBufferingAtom,
+  playerIsPlayingAtom,
+  playerPlaybackDurationAtom,
+  playerPlaybackPositionAtom,
   playerQueueCurrentTrack,
+  requestPlaybackToggleAtom,
+  requestSeekAtom,
 } from "../../atoms/player/machine";
 import { settingClientKioskMode } from "../../atoms/app/settings_client";
 import { pipOpenAtom } from "../../atoms/player/pip";
@@ -21,11 +27,18 @@ import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 
 export default function PlayerControls() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
+  const playbackPosition = useAtomValue(playerPlaybackPositionAtom);
+  const playbackDuration = useAtomValue(playerPlaybackDurationAtom);
+  const isPlaying = useAtomValue(playerIsPlayingAtom);
+  const isBuffering = useAtomValue(playerIsBufferingAtom);
 
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
 
-  const [, handlePreviousTrack] = useAtom(handlePreviousTrackAtom);
-  const [, handleNextTrack] = useAtom(handleNextTrackAtom);
+  const handlePreviousTrack = useSetAtom(handlePreviousTrackAtom);
+  const handleNextTrack = useSetAtom(handleNextTrackAtom);
+
+  const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
+  const requestSeek = useSetAtom(requestSeekAtom);
 
   const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
 
@@ -68,14 +81,14 @@ export default function PlayerControls() {
           </button>
           <button
             type="button"
-            onClick={() => undefined}
-            // eslint-disable-next-line no-constant-condition
-            aria-label={true ? t`Pause` : t`Play`}
-            // eslint-disable-next-line no-constant-condition
-            title={true ? t`Pause` : t`Play`}
+            onClick={() => {
+              togglePlayback();
+            }}
+            aria-label={isPlaying ? t`Pause` : t`Play`}
+            title={isPlaying ? t`Pause` : t`Play`}
             className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
           >
-            {window ? (
+            {isPlaying ? (
               <HiPause className="size-6" />
             ) : (
               <HiPlay className="size-6" />
@@ -93,8 +106,10 @@ export default function PlayerControls() {
             <HiForward className="size-6" />
           </button>
         </div>
-        <div className="flex flex-row gap-2">
-          <span className="font-mono slashed-zero">{formatDuration(0)}</span>
+        <div className="flex flex-row items-center gap-2">
+          <span className="font-mono slashed-zero">
+            {formatDuration(playbackPosition)}
+          </span>
           <label htmlFor="player-seek" className="sr-only">
             {t`Seek`}
           </label>
@@ -102,13 +117,22 @@ export default function PlayerControls() {
             id="player-seek"
             type="range"
             min={0}
-            max={100}
-            step={0.1}
+            max={Math.max(0, playbackDuration)}
+            step={250}
+            value={Math.min(playbackPosition, playbackDuration || 0)}
+            onChange={(event) => {
+              requestSeek(Number(event.target.value));
+            }}
             className="w-full"
           />
           <span className="font-mono slashed-zero">
-            {formatDuration(currentTrack?.durationMs ?? 0)}
+            {formatDuration(currentTrack?.durationMs ?? playbackDuration)}
           </span>
+          {isBuffering && (
+            <p className="text-xs text-slate-400" aria-live="polite">
+              {t`Buffering…`}
+            </p>
+          )}
         </div>
       </div>
       <div

@@ -1,10 +1,15 @@
 import { useEffect, useRef } from "react";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { t } from "@lingui/core/macro";
-import { HiBackward, HiForward, HiPlay } from "react-icons/hi2";
+import { HiBackward, HiForward, HiPause, HiPlay } from "react-icons/hi2";
 
-import PipButton from "./PipButton";
-import { playerQueueCurrentTrack } from "../../atoms/player/machine";
+import {
+  handleNextTrackAtom,
+  handlePreviousTrackAtom,
+  playerIsPlayingAtom,
+  playerQueueCurrentTrack,
+  requestPlaybackToggleAtom,
+} from "../../atoms/player/machine";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 
 const albumCoverColors = {
@@ -24,9 +29,12 @@ const albumCoverColors = {
  */
 export default function PipControlsWindow() {
   const figureRef = useRef<HTMLElement | null>(null);
-  const isPlaying = false;
 
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
+  const isPlaying = useAtomValue(playerIsPlayingAtom);
+  const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
+  const handlePreviousTrack = useSetAtom(handlePreviousTrackAtom);
+  const handleNextTrack = useSetAtom(handleNextTrackAtom);
 
   useEffect(() => {
     if (!figureRef.current) {
@@ -81,13 +89,40 @@ export default function PipControlsWindow() {
 
       {/* Playback controls cluster (layout moves based on height breakpoints). */}
       <div id="pip-controls" role="group" aria-label={t`Playback controls`}>
-        <PipButton title={t`Previous`} icon={HiBackward} />
-        <PipButton
+        <button
+          type="button"
+          title={t`Previous`}
+          aria-label={t`Previous`}
+          onClick={() => {
+            handlePreviousTrack();
+          }}
+        >
+          <HiBackward className="size-6" />
+        </button>
+        <button
+          type="button"
           title={isPlaying ? t`Pause` : t`Play`}
-          icon={HiPlay}
-          disabled={!currentTrack}
-        />
-        <PipButton title={t`Next`} icon={HiForward} />
+          aria-label={isPlaying ? t`Pause` : t`Play`}
+          onClick={() => {
+            togglePlayback();
+          }}
+        >
+          {isPlaying ? (
+            <HiPause className="size-6" />
+          ) : (
+            <HiPlay className="size-6" />
+          )}
+        </button>
+        <button
+          type="button"
+          title={t`Next`}
+          aria-label={t`Next`}
+          onClick={() => {
+            handleNextTrack();
+          }}
+        >
+          <HiForward className="size-6" />
+        </button>
       </div>
     </div>
   );

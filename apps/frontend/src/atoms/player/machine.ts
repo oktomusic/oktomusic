@@ -30,6 +30,7 @@ export const handlePreviousTrackAtom = atom(null, (get, set) => {
   }
 
   set(playerQueueIndexAtom, index);
+  set(playerShouldPlayAtom, true);
 });
 
 export const handleNextTrackAtom = atom(null, (get, set) => {
@@ -46,6 +47,7 @@ export const handleNextTrackAtom = atom(null, (get, set) => {
   }
 
   set(playerQueueIndexAtom, index);
+  set(playerShouldPlayAtom, true);
 });
 
 export const playerQueueCurrentTrack = atom<TrackWithAlbum | null>((get) => {
@@ -73,6 +75,40 @@ export const playerQueueCurrentTrackFile = atom<string | null>((get) => {
 });
 
 export const playerPlaybackPositionAtom = atom<number>(0);
+
+export const playerPlaybackDurationAtom = atom<number>(0);
+
+export type PlayerPlaybackState = "idle" | "playing" | "paused" | "buffering";
+
+export const playerPlaybackStateAtom = atom<PlayerPlaybackState>("idle");
+
+export const playerIsPlayingAtom = atom(
+  (get) => get(playerPlaybackStateAtom) === "playing",
+);
+
+export const playerIsBufferingAtom = atom(
+  (get) => get(playerPlaybackStateAtom) === "buffering",
+);
+
+export const playerShouldPlayAtom = atom<boolean>(false);
+
+export const playerSeekRequestAtom = atom<number | null>(null);
+
+export const requestPlaybackToggleAtom = atom(null, (get, set) => {
+  set(playerShouldPlayAtom, !get(playerShouldPlayAtom));
+});
+
+export const requestPlaybackPlayAtom = atom(null, (_get, set) => {
+  set(playerShouldPlayAtom, true);
+});
+
+export const requestPlaybackPauseAtom = atom(null, (_get, set) => {
+  set(playerShouldPlayAtom, false);
+});
+
+export const requestSeekAtom = atom(null, (_get, set, positionMs: number) => {
+  set(playerSeekRequestAtom, positionMs);
+});
 
 // Currently only webaudio is supported
 // We plan to allow remote control via SocketIO

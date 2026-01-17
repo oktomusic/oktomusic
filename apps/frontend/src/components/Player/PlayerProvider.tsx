@@ -1,14 +1,27 @@
-import { useEffect, useRef, useState } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useEffect, useRef } from "react";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import {
+  handleNextTrackAtom,
   playerAudioContextAtom,
+  playerPlaybackDurationAtom,
+  playerPlaybackPositionAtom,
+  playerPlaybackStateAtom,
   playerQueueCurrentTrackFile,
+  playerSeekRequestAtom,
+  playerShouldPlayAtom,
 } from "../../atoms/player/machine";
 
 export default function PlayerProvider() {
   const [audioContext, setAudioContext] = useAtom(playerAudioContextAtom);
   const currentTrackFile = useAtomValue(playerQueueCurrentTrackFile);
+  const shouldPlay = useAtomValue(playerShouldPlayAtom);
+  const [seekRequestMs, setSeekRequestMs] = useAtom(playerSeekRequestAtom);
+
+  const setPlaybackState = useSetAtom(playerPlaybackStateAtom);
+  const setPlaybackPosition = useSetAtom(playerPlaybackPositionAtom);
+  const setPlaybackDuration = useSetAtom(playerPlaybackDurationAtom);
+  const handleNextTrack = useSetAtom(handleNextTrackAtom);
 
   const audioEl1 = useRef<HTMLAudioElement | null>(null);
   const audioEl2 = useRef<HTMLAudioElement | null>(null);
@@ -17,8 +30,6 @@ export default function PlayerProvider() {
   const source2 = useRef<MediaElementAudioSourceNode | null>(null);
   const gain1 = useRef<GainNode | null>(null);
   const gain2 = useRef<GainNode | null>(null);
-
-  const [isPaused, setIsPaused] = useState(true);
 
   useEffect(() => {
     const ctx = new AudioContext({
@@ -37,23 +48,74 @@ export default function PlayerProvider() {
     const el = audioEl1.current;
     if (!el) return;
 
-    const sync = () => {
-      setIsPaused(el.paused);
+    const updatePosition = () => {
+      setPlaybackPosition(Math.max(0, Math.floor(el.currentTime * 1000)));
     };
 
-    // Sync initial state once the element ref is available
-    sync();
+    const updateDuration = () => {
+      if (Number.isFinite(el.duration)) {
+        setPlaybackDuration(Math.max(0, Math.floor(el.duration * 1000)));
+      }
+    };
 
-    el.addEventListener("play", sync);
-    el.addEventListener("pause", sync);
-    el.addEventListener("ended", sync);
+    const handlePlay = () => {
+      setPlaybackState("playing");
+    };
+
+    const handlePause = () => {
+      if (el.ended) {
+        return;
+      }
+      setPlaybackState("paused");
+    };
+
+    const handleWaiting = () => {
+      setPlaybackState("buffering");
+    };
+
+    const handlePlaying = () => {
+      setPlaybackState(el.paused ? "paused" : "playing");
+    };
+
+    const handleEnded = () => {
+      setPlaybackState("paused");
+      handleNextTrack();
+    };
+
+    updatePosition();
+    updateDuration();
+
+    el.addEventListener("timeupdate", updatePosition);
+    el.addEventListener("durationchange", updateDuration);
+    el.addEventListener("loadedmetadata", updateDuration);
+    el.addEventListener("play", handlePlay);
+    el.addEventListener("pause", handlePause);
+    el.addEventListener("waiting", handleWaiting);
+    el.addEventListener("stalled", handleWaiting);
+    el.addEventListener("seeking", handleWaiting);
+    el.addEventListener("playing", handlePlaying);
+    el.addEventListener("canplay", handlePlaying);
+    el.addEventListener("ended", handleEnded);
 
     return () => {
-      el.removeEventListener("play", sync);
-      el.removeEventListener("pause", sync);
-      el.removeEventListener("ended", sync);
+      el.removeEventListener("timeupdate", updatePosition);
+      el.removeEventListener("durationchange", updateDuration);
+      el.removeEventListener("loadedmetadata", updateDuration);
+      el.removeEventListener("play", handlePlay);
+      el.removeEventListener("pause", handlePause);
+      el.removeEventListener("waiting", handleWaiting);
+      el.removeEventListener("stalled", handleWaiting);
+      el.removeEventListener("seeking", handleWaiting);
+      el.removeEventListener("playing", handlePlaying);
+      el.removeEventListener("canplay", handlePlaying);
+      el.removeEventListener("ended", handleEnded);
     };
-  }, []);
+  }, [
+    handleNextTrack,
+    setPlaybackDuration,
+    setPlaybackPosition,
+    setPlaybackState,
+  ]);
 
   useEffect(() => {
     if (!audioContext) return;
@@ -111,32 +173,63 @@ export default function PlayerProvider() {
     };
   }, [audioContext]);
 
+  useEffect(() => {
+    const el = audioEl1.current;
+    if (!el) return;
+
+    if (!currentTrackFile) {
+      el.pause();
+      setPlaybackState("idle");
+      setPlaybackDuration(0);
+      setPlaybackPosition(0);
+      return;
+    }
+
+    if (!shouldPlay) {
+      el.pause();
+      setPlaybackState("paused");
+      return;
+    }
+
+    void (async () => {
+      const ctx = audioContext;
+      if (!ctx) return;
+
+      if (ctx.state !== "running") {
+        await ctx.resume();
+      }
+
+      try {
+        await el.play();
+      } catch {
+        setPlaybackState("paused");
+      }
+    })();
+  }, [
+    audioContext,
+    currentTrackFile,
+    setPlaybackDuration,
+    setPlaybackPosition,
+    setPlaybackState,
+    shouldPlay,
+  ]);
+
+  useEffect(() => {
+    const el = audioEl1.current;
+    if (!el) return;
+
+    if (seekRequestMs === null) {
+      return;
+    }
+
+    const targetSeconds = Math.max(0, seekRequestMs / 1000);
+    el.currentTime = targetSeconds;
+    setPlaybackPosition(Math.max(0, Math.floor(targetSeconds * 1000)));
+    setSeekRequestMs(null);
+  }, [seekRequestMs, setPlaybackPosition, setSeekRequestMs]);
+
   return (
     <section aria-label="Player">
-      <button
-        type="button"
-        onClick={() => {
-          void (async () => {
-            const el = audioEl1.current;
-            if (!el) return;
-
-            if (el.paused) {
-              const ctx = audioContext;
-              if (!ctx) return;
-
-              if (ctx.state !== "running") {
-                await ctx.resume();
-              }
-
-              await el.play();
-            } else {
-              el.pause();
-            }
-          })();
-        }}
-      >
-        {isPaused ? "Play" : "Pause"}
-      </button>
       <audio
         id="oktomusic:player:audio1"
         ref={audioEl1}

@@ -1,13 +1,12 @@
-import { Link } from "react-router";
-
 import { useAtomValue } from "jotai";
+import { Link } from "react-router";
 import { useQuery } from "@apollo/client/react";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role } from "../../api/graphql/gql/graphql";
-import PlayerControls from "../../components/Player/PlayerControls";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
+import PlayerControls from "../../components/Player/PlayerControls";
 
 import "./App.css";
 
