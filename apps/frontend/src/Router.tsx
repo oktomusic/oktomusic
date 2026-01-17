@@ -19,10 +19,13 @@ import SettingsAccount from "./pages/SettingsAccount/SettingsAccount.tsx";
 import SettingsClient from "./pages/SettingsClient/SettingsClient.tsx";
 import UnsupportedOverlay from "./pages/Unsupported/UnsupportedOverlay.tsx";
 import TempLoadAlbum from "./components/TempLoadAlbum.tsx";
+import { useScreenWakeLock } from "./hooks/wake_lock.ts";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
+
+  useScreenWakeLock();
 
   useEffect(() => {
     if (!kioskModeEnabled) {
