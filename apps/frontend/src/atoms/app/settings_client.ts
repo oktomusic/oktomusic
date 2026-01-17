@@ -35,3 +35,13 @@ export const settingClientCrossfadeSeconds = atomWithStorage<number>(
     getOnInit: true,
   },
 );
+
+// Wake Lock Setting
+
+const wakeLockLocalStorageKey = "oktomusic:wake_lock";
+
+export const settingClientWakeLock = atomWithStorage<
+  "always" | "playback" | "never"
+>(wakeLockLocalStorageKey, "never", undefined, {
+  getOnInit: true,
+});

@@ -8,16 +8,19 @@ import {
   settingClientAudioSession,
   settingClientCrossfadeSeconds,
   settingClientKioskMode,
+  settingClientWakeLock,
 } from "../../atoms/app/settings_client.ts";
 
 type KioskModeKey = "true" | "false";
 type AudioSessionKey = "ambient" | "playback";
+type WakeLockKey = "always" | "playback" | "never";
 
 export default function SettingsClient() {
   const [kioskMode, setKioskMode] = useAtom(settingClientKioskMode);
   const [audioSessionType, setAudioSessionType] = useAtom(
     settingClientAudioSession,
   );
+  const [wakeLockMode, setWakeLockMode] = useAtom(settingClientWakeLock);
   const [crossfadeSeconds, setCrossfadeSeconds] = useAtom(
     settingClientCrossfadeSeconds,
   );
@@ -31,6 +34,12 @@ export default function SettingsClient() {
   const audioSessionLabels: Record<AudioSessionKey, string> = {
     ambient: t`Ambient`,
     playback: t`Playback`,
+  } as const;
+
+  const wakeLockLabels: Record<WakeLockKey, string> = {
+    always: t`Always`,
+    playback: t`Playback`,
+    never: t`Never`,
   } as const;
 
   const handleKioskModeChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -55,6 +64,11 @@ export default function SettingsClient() {
   const handleAudioSessionChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value as AudioSessionKey;
     setAudioSessionType(value);
+  };
+
+  const handleWakeLockChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value as WakeLockKey;
+    setWakeLockMode(value);
   };
 
   return (
@@ -99,6 +113,22 @@ export default function SettingsClient() {
             ? t`Controls how Oktomusic mixes with other audio.`
             : t`Audio Session API is not supported in this browser.`}
         </p>
+
+        <label htmlFor="settings:client:wake-lock" className="mt-4">
+          {t`Wake lock:`}
+        </label>
+        <select
+          id="settings:client:wake-lock"
+          value={wakeLockMode}
+          onChange={handleWakeLockChange}
+          aria-describedby="settings:client:wake-lock:help"
+        >
+          {(Object.keys(wakeLockLabels) as WakeLockKey[]).map((key) => (
+            <option key={key} value={key}>
+              {wakeLockLabels[key]}
+            </option>
+          ))}
+        </select>
 
         <label htmlFor="settings:client:crossfade-seconds" className="mt-4">
           {t`Crossfade (seconds):`}

@@ -36,6 +36,7 @@ export function getBrowserSupport(): BrowserSupport {
     ["MediaSource", "MediaSource" in window],
     ["Media Session API", "mediaSession" in navigator],
     ["Background Fetch API", "BackgroundFetchManager" in window],
+    ["WakeLock", "wakeLock" in navigator],
     ["FLAC support", flacSupport],
     ["Opus support", opusSupport],
   ];
