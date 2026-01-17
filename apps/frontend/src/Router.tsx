@@ -8,6 +8,7 @@ import AuthSessionInitializer from "./components/AuthSessionInitializer.tsx";
 import PipControls from "./components/PipControls/PipControls.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import WindowControls from "./components/WindowControls.tsx";
+import AudioSessionProvider from "./components/Player/AudioSessionProvider.tsx";
 import PlayerProvider from "./components/Player/PlayerProvider.tsx";
 import MediaSessionProvider from "./components/Player/MediaSessionProvider.tsx";
 import App from "./pages/App/App.tsx";
@@ -59,6 +60,7 @@ export default function Router() {
           <BrowserRouter>
             <PlayerProvider />
             <MediaSessionProvider />
+            <AudioSessionProvider />
             <TempLoadAlbum />
             <Routes>
               <Route element={<ProtectedRoutes />}>

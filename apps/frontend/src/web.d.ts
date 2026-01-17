@@ -45,20 +45,15 @@ interface Window {
 }
 
 // https://github.com/w3c/audio-session/blob/main/explainer.md
-enum AudioSessionState {
-  "inactive",
-  "active",
-  "interrupted",
-}
+type AudioSessionState = "inactive" | "active" | "interrupted";
 
-enum AudioSessionType {
-  "auto",
-  "playback",
-  "transient",
-  "transient-solo",
-  "ambient",
-  "play-and-record",
-}
+type AudioSessionType =
+  | "auto"
+  | "playback"
+  | "transient"
+  | "transient-solo"
+  | "ambient"
+  | "play-and-record";
 
 interface Navigator {
   // The default audio session that the user agent will use when media elements start/stop playing.
@@ -69,5 +64,5 @@ interface AudioSession extends EventTarget {
   type: AudioSessionType;
 
   readonly state: AudioSessionState;
-  onstatechange: () => void;
+  onstatechange: ((this: AudioSession, event: Event) => void) | null;
 }
