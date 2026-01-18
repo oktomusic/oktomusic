@@ -32,6 +32,7 @@ export function getBrowserSupport(): BrowserSupport {
     ["WebAssembly", "WebAssembly" in window],
     ["IndexedDB", "indexedDB" in window],
     ["LocalStorage", "localStorage" in window],
+    ["Persistent Storage", typeof navigator.storage?.persisted === "function"],
     ["WebAudio", "AudioContext" in window],
     ["MediaSource", "MediaSource" in window],
     ["Media Session API", "mediaSession" in navigator],

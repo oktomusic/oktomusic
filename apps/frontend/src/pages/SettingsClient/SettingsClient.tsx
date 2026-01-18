@@ -1,7 +1,7 @@
 import type { ChangeEvent } from "react";
 
 import { t } from "@lingui/core/macro";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import { audioSessionSupportAtom } from "../../atoms/app/browser_support.ts";
 import {
@@ -10,6 +10,10 @@ import {
   settingClientKioskMode,
   settingClientWakeLock,
 } from "../../atoms/app/settings_client.ts";
+import {
+  requestStoragePersistenceAtom,
+  storagePersistenceAtom,
+} from "../../atoms/app/atoms.ts";
 
 type KioskModeKey = "true" | "false";
 type AudioSessionKey = "ambient" | "playback";
@@ -25,6 +29,8 @@ export default function SettingsClient() {
     settingClientCrossfadeSeconds,
   );
   const audioSessionSupported = useAtomValue(audioSessionSupportAtom);
+  const storagePersistence = useAtomValue(storagePersistenceAtom);
+  const requestStoragePersistence = useSetAtom(requestStoragePersistenceAtom);
 
   const kioskModeLabels: Record<KioskModeKey, string> = {
     false: t`Disabled`,
@@ -75,6 +81,20 @@ export default function SettingsClient() {
     <section>
       <h2>Client Settings Page</h2>
       <form className="flex w-60 flex-col">
+        <div role="status">
+          {storagePersistence === null && `Checking storage persistence...`}
+          {storagePersistence === true && `Persistent storage granted`}
+          {storagePersistence === false && `Persistent storage not granted`}
+          <button
+            type="button"
+            onClick={() => {
+              void requestStoragePersistence();
+            }}
+            className="ml-4 underline"
+          >
+            {`Request persistent storage`}
+          </button>
+        </div>
         <label
           htmlFor="settings:client:kiosk-mode"
           className="mt-4"
