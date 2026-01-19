@@ -17,6 +17,10 @@ import { AppConfig } from "./config/definitions/app.config";
 import { HttpConfig } from "./config/definitions/http.config";
 import { ViteConfig } from "./config/definitions/vite.config";
 import { getHelmetConfig } from "./utils/helmet_config";
+import {
+  getPermissionsPolicyString,
+  permissionsPolicy,
+} from "./utils/permissions_policy";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -31,6 +35,15 @@ async function bootstrap() {
 
   // Use helmet for security headers
   app.use(helmet(getHelmetConfig(isDev, viteOrigin)));
+
+  // Apply Permissions Policy
+  app.use((_req: Request, res: Response, next: NextFunction) => {
+    res.setHeader(
+      "Permissions-Policy",
+      getPermissionsPolicyString(permissionsPolicy),
+    );
+    next();
+  });
 
   // Setup Swagger
   const swaggerConfig = new DocumentBuilder()
