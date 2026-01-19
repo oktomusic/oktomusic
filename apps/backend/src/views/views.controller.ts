@@ -1,4 +1,12 @@
-import { Controller, Get, Req, Res, Next, Inject } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Req,
+  Res,
+  Next,
+  Inject,
+  Header,
+} from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiProduces } from "@nestjs/swagger";
 import type { NextFunction, Request, Response } from "express";
 
@@ -19,6 +27,7 @@ export class ViewsController {
   ) {}
 
   @Get("/manifest.webmanifest")
+  @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
   @ApiOperation({
     summary: "Get Web App Manifest",
     description:
@@ -107,6 +116,7 @@ export class ViewsController {
   }
 
   @Get("*")
+  @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
   @ApiOperation({
     summary: "Serve SPA",
     description:
