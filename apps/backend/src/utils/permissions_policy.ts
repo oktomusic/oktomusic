@@ -12,14 +12,16 @@
 type PermissionsPolicyWhitelist = "*" | "self" | "src" | [] | string[];
 
 /**
+ * Commented-out directives appears on MDN but trigger a warning in latest Chrome
+ *
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy#directives
  */
 type PermissionsPolicyDirective =
   | "accelerometer"
-  | "ambient-light-sensor"
+  // | "ambient-light-sensor"
   | "aria-notify"
   | "autoplay"
-  | "bluetooth"
+  // | "bluetooth"
   | "camera"
   | "captured-surface-control"
   | "compute-pressure"
@@ -50,7 +52,7 @@ type PermissionsPolicyDirective =
   | "publickey-credentials-get"
   | "screen-wake-lock"
   | "serial"
-  | "speaker-selection"
+  // | "speaker-selection"
   | "storage-access"
   | "translator"
   | "summarizer"
@@ -66,10 +68,10 @@ export type PermissionsPolicyMap = Record<
 
 export const permissionsPolicy: PermissionsPolicyMap = {
   accelerometer: [],
-  "ambient-light-sensor": [],
+  // "ambient-light-sensor": [],
   "aria-notify": [],
   autoplay: "self",
-  bluetooth: [],
+  // bluetooth: [],
   camera: [],
   "captured-surface-control": [],
   "compute-pressure": [],
@@ -100,7 +102,7 @@ export const permissionsPolicy: PermissionsPolicyMap = {
   "publickey-credentials-get": [],
   "screen-wake-lock": "self",
   serial: [],
-  "speaker-selection": [],
+  // "speaker-selection": [],
   "storage-access": [],
   translator: [],
   summarizer: [],
