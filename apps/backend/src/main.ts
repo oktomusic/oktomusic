@@ -30,7 +30,7 @@ async function bootstrap() {
   const viteOrigin = configService.getOrThrow<ViteConfig>("vite").origin;
 
   // Use helmet for security headers
-  app.use(helmet(getHelmetConfig(isDev)));
+  app.use(helmet(getHelmetConfig(isDev, viteOrigin)));
 
   // Setup Swagger
   const swaggerConfig = new DocumentBuilder()
