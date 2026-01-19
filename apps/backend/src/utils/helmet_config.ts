@@ -31,6 +31,7 @@ const defaultCSP: CSPDirectives = {
   scriptSrcElem: ["'self'"], // Production assets
   connectSrc: ["'self'"],
   styleSrc: ["'self'"], // Production assets
+  mediaSrc: ["'self'"],
   upgradeInsecureRequests: [],
 } as const;
 
