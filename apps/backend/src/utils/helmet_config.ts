@@ -59,8 +59,9 @@ const jotaiCSP: CSPDirectives = {
  * CSP directives for Graphiql
  */
 const graphiqlCSP: CSPDirectives = {
-  imgSrc: [],
-  fontSrc: [],
+  scriptSrcElem: ["https://unpkg.com"],
+  styleSrcElem: ["'unsafe-inline'", "https://unpkg.com"],
+  connectSrc: ["https://unpkg.com"],
 } as const;
 
 /**
