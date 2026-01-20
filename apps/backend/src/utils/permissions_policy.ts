@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from "express";
+
 /**
  * Allowed values for a Permissions-Policy directive:
  *
@@ -134,4 +136,16 @@ export function getPermissionsPolicyString(
         .join(" ")})`;
     })
     .join(", ");
+}
+
+export function permissionsPolicyMiddleware(
+  _req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  res.setHeader(
+    "Permissions-Policy",
+    getPermissionsPolicyString(permissionsPolicy),
+  );
+  next();
 }

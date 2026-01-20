@@ -17,10 +17,7 @@ import { AppConfig } from "./config/definitions/app.config";
 import { HttpConfig } from "./config/definitions/http.config";
 import { ViteConfig } from "./config/definitions/vite.config";
 import { getHelmetConfig } from "./utils/helmet_config";
-import {
-  getPermissionsPolicyString,
-  permissionsPolicy,
-} from "./utils/permissions_policy";
+import { permissionsPolicyMiddleware } from "./utils/permissions_policy";
 import { proxyMiddleware, vitePrefixes } from "./utils/vite_dev_proxy";
 
 async function bootstrap() {
@@ -38,13 +35,7 @@ async function bootstrap() {
   app.use(helmet(getHelmetConfig(isDev, viteOrigin)));
 
   // Apply Permissions Policy
-  app.use((_req: Request, res: Response, next: NextFunction) => {
-    res.setHeader(
-      "Permissions-Policy",
-      getPermissionsPolicyString(permissionsPolicy),
-    );
-    next();
-  });
+  app.use(permissionsPolicyMiddleware);
 
   if (isDev) {
     app.use(proxyMiddleware(viteOrigin, vitePrefixes));
