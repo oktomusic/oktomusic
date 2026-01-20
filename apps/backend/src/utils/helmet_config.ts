@@ -91,8 +91,8 @@ function getHelmetDirectivesCSP(
     // Vite assets
     scriptSrcElem: [viteUrl],
 
-    // WebSocket for HMR
-    connectSrc: [viteUrl.replace("http", "ws")],
+    // WebSocket for HMR, some other dev assets
+    connectSrc: [viteUrl, viteUrl.replace("http", "ws")],
   };
 
   return Object.freeze(
