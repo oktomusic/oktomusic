@@ -186,6 +186,9 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    concurrency:
+      group: deploy-website
+      cancel-in-progress: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
