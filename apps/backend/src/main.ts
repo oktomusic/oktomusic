@@ -21,6 +21,7 @@ import {
   getPermissionsPolicyString,
   permissionsPolicy,
 } from "./utils/permissions_policy";
+import { proxyMiddleware, vitePrefixes } from "./utils/vite_dev_proxy";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -44,6 +45,10 @@ async function bootstrap() {
     );
     next();
   });
+
+  if (isDev) {
+    app.use(proxyMiddleware(viteOrigin, vitePrefixes));
+  }
 
   // Setup Swagger
   const swaggerConfig = new DocumentBuilder()

@@ -56,6 +56,7 @@ export class ViewsController {
       background_color: "#000000",
       theme_color: "#000000",
       lang: "en",
+      orientation: "natural",
       dir: "ltr",
       scope: "/",
       icons: [

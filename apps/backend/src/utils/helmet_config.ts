@@ -44,6 +44,7 @@ const staticDevCSP: CSPDirectives = {
   styleSrc: ["'unsafe-inline'"],
   // React refresh
   scriptSrcElem: ["'unsafe-inline'"],
+  workerSrc: ["blob:"],
 } as const;
 
 /**
