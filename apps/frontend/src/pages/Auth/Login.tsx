@@ -3,10 +3,12 @@ import { useAtomValue } from "jotai";
 import { Navigate, useSearchParams } from "react-router";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
+import { pwaDeferredPromptAtom } from "../../atoms/app/atoms";
 
 export default function Login() {
   const [searchParams, setSearchParams] = useSearchParams();
   const authSession = useAtomValue(authSessionAtom);
+  const pwaDeferedPrompt = useAtomValue(pwaDeferredPromptAtom);
 
   useEffect(() => {
     if (searchParams.get("auto_redirect") === "true") {
@@ -30,6 +32,18 @@ export default function Login() {
         >
           {"Login with OIDC"}
         </a>
+        <button
+          id="login-install-button"
+          className="align-center mt-4 flex w-full justify-center rounded-md bg-sky-900 p-4 text-center select-none hover:bg-sky-800"
+          disabled={!pwaDeferedPrompt}
+          onClick={() => {
+            if (pwaDeferedPrompt) {
+              void pwaDeferedPrompt.prompt();
+            }
+          }}
+        >
+          Install Application
+        </button>
       </div>
     </div>
   );

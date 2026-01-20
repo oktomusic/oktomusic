@@ -41,3 +41,9 @@
     scrollbar-color: var(--color-sky-800) transparent;
   }
 }
+
+@media all and (display-mode: standalone) {
+  #login-install-button {
+    display: none;
+  }
+}

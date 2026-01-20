@@ -21,6 +21,7 @@ import UnsupportedOverlay from "./pages/Unsupported/UnsupportedOverlay.tsx";
 import TempLoadAlbum from "./components/TempLoadAlbum.tsx";
 import { useScreenWakeLock } from "./hooks/wake_lock.ts";
 import { useStoragePersistence } from "./hooks/persistant_storage.ts";
+import { usePwaDeferedPrompt } from "./hooks/pwa_prompt.ts";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
@@ -28,6 +29,7 @@ export default function Router() {
 
   useScreenWakeLock();
   useStoragePersistence();
+  usePwaDeferedPrompt();
 
   useEffect(() => {
     if (!kioskModeEnabled) {
