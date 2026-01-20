@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { useAtomValue } from "jotai";
+import { useRegisterSW } from "virtual:pwa-register/react";
 
 import { browserSupportAtom } from "./atoms/app/browser_support.ts";
 import { settingClientKioskMode } from "./atoms/app/settings_client.ts";
@@ -23,6 +24,8 @@ import { useScreenWakeLock } from "./hooks/wake_lock.ts";
 import { useStoragePersistence } from "./hooks/persistant_storage.ts";
 import { usePwaDeferedPrompt } from "./hooks/pwa_prompt.ts";
 
+const swUpdateIntervalMS = 60 * 60 * 1000; // 1 hour
+
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
@@ -30,6 +33,17 @@ export default function Router() {
   useScreenWakeLock();
   useStoragePersistence();
   usePwaDeferedPrompt();
+
+  useRegisterSW({
+    immediate: true,
+    onRegisteredSW(_, registration) {
+      if (!registration) return;
+
+      setInterval(() => {
+        void registration.update();
+      }, swUpdateIntervalMS);
+    },
+  });
 
   useEffect(() => {
     if (!kioskModeEnabled) {
