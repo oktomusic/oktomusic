@@ -32,3 +32,13 @@ export const requestStoragePersistenceAtom = atom(null, async (_get, set) => {
     set(storagePersistenceAtom, false);
   }
 });
+
+/**
+ * Holds the defered PWA `beforeinstallprompt` event
+ *
+ * @see https://web.dev/articles/customize-install
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/BeforeInstallPromptEvent
+ */
+export const pwaDeferredPromptAtom = atom<BeforeInstallPromptEvent | null>(
+  null,
+);
