@@ -19,14 +19,16 @@ export default defineConfig({
         text: "Get Started",
         items: [
           { text: "Installation", link: "/guide/installation" },
-          { text: "Configuration", link: "/guide/configuration" },
+          { text: "OpenID Connect setup", link: "/guide/openid" },
           { text: "Music Collection", link: "/guide/music-collection" },
           { text: "FAQ", link: "/guide/faq" },
         ],
       },
       {
         text: "Advanced",
-        items: [{ text: "Auth", link: "/auth" }],
+        items: [
+          { text: "Configuration Reference", link: "/advanced/configuration" },
+        ],
       },
     ],
 

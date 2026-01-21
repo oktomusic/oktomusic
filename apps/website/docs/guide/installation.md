@@ -37,6 +37,8 @@ Here we will describe the steps to get Oktomusic up and running using Docker Com
 > This example assumes you already have an OpenID Connect provider (Keycloak, Authentik, …) running and configured.
 >
 > You must create an OIDC client and set the `OIDC_*` variables accordingly.
+>
+> See the [OpenID Connect configuration guide](./openid) for more information.
 
 `.env`:
 
@@ -63,6 +65,7 @@ VALKEY_PASSWORD=change-me
 OIDC_ISSUER=https://auth.example.com/realms/my-realm-id
 OIDC_CLIENT_ID=oktomusic
 OIDC_CLIENT_SECRET=change-me
+OIDC_ROLES_PATH=resource_access.<client_id>.roles
 
 # These must match your OIDC provider client settings.
 # If you expose Oktomusic on https://music.example.com, keep the paths and change the domain.
@@ -154,7 +157,7 @@ docker compose up -d
 Then open `http://localhost:3100`.
 
 > [!IMPORTANT]
-> The app purposely do not support TLS termination directly
+> The app purposely do not support TLS termination directly, which is more or less required by OpenID Connect providers.
 >
 > To get TLS support, you must run Oktomusic behind a reverse proxy like [Traefik](https://traefik.io), [Caddy](https://caddyserver.com) or [Nginx](https://nginx.org).
 >
