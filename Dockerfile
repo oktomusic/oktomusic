@@ -108,6 +108,9 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
 # Copy Prisma schema and migrations for runtime migration
 COPY --from=builder /usr/src/app/apps/backend/prisma ./apps/backend/prisma
 
+# Copy Prisma config (required to apply migrations)
+COPY --from=builder /usr/src/app/apps/backend/prisma.config.ts ./apps/backend/prisma.config.ts
+
 # Copy built backend and frontend
 COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 COPY --from=builder /usr/src/app/packages/api-schemas/dist ./packages/api-schemas/dist
