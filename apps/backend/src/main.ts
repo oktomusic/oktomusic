@@ -23,13 +23,17 @@ import { proxyMiddleware, vitePrefixes } from "./utils/vite_dev_proxy";
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // Enable cookie parser
-  app.use(cookieParser());
-
   // Get Configuration
   const configService = app.get(ConfigService);
+  const trustProxy = configService.getOrThrow<HttpConfig>("http").trustProxy;
   const isDev = configService.getOrThrow<AppConfig>("app").isDev;
   const viteOrigin = configService.getOrThrow<ViteConfig>("vite").origin;
+
+  // Required when running behind a reverse proxy (so req.protocol/req.secure are correct)
+  app.set("trust proxy", trustProxy);
+
+  // Enable cookie parser
+  app.use(cookieParser());
 
   // Use helmet for security headers
   app.use(helmet(getHelmetConfig(isDev, viteOrigin)));
