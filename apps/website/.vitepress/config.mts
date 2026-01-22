@@ -40,7 +40,7 @@ export default defineConfig({
       { icon: "reddit", link: "https://www.reddit.com/r/oktomusic" },
     ],
   },
-  lastUpdated: true,
+  lastUpdated: process.env.VITEPRESS_HOSTNAME ? true : false,
   cleanUrls: true,
   sitemap: process.env.VITEPRESS_HOSTNAME
     ? {
