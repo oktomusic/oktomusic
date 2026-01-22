@@ -21,6 +21,7 @@ export default defineConfig({
           { text: "Installation", link: "/guide/installation" },
           { text: "OpenID Connect setup", link: "/guide/openid" },
           { text: "Music Collection", link: "/guide/music-collection" },
+          { text: "LLMs", link: "/guide/llms" },
           { text: "FAQ", link: "/guide/faq" },
         ],
       },
