@@ -42,9 +42,11 @@ export default defineConfig({
   },
   lastUpdated: true,
   cleanUrls: true,
-  sitemap: {
-    hostname: process.env.VITEPRESS_HOSTNAME!,
-  },
+  sitemap: process.env.VITEPRESS_HOSTNAME
+    ? {
+        hostname: process.env.VITEPRESS_HOSTNAME!,
+      }
+    : undefined,
   vite: {
     server: {
       port: 5174,
