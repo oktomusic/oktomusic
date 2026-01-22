@@ -70,8 +70,7 @@ const graphiqlCSP: CSPDirectives = {
  * CSP directives for Swagger
  */
 const swaggerCSP: CSPDirectives = {
-  imgSrc: [],
-  fontSrc: [],
+  styleSrcElem: ["'self'"],
 } as const;
 
 function getHelmetDirectivesCSP(
