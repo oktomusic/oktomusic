@@ -26,7 +26,7 @@ const defaultCSP: CSPDirectives = {
   defaultSrc: ["'none'"],
 
   // Individual resources whitelist
-  imgSrc: ["'self'"], // Production assets
+  imgSrc: ["'self'", "data:"], // Production assets
   manifestSrc: ["'self'"], // Manifest is built from backend
   scriptSrcElem: ["'self'"], // Production assets
   connectSrc: ["'self'"],
