@@ -40,7 +40,11 @@ export default defineConfig({
       { icon: "reddit", link: "https://www.reddit.com/r/oktomusic" },
     ],
   },
+  lastUpdated: true,
   cleanUrls: true,
+  sitemap: {
+    hostname: process.env.VITEPRESS_HOSTNAME!,
+  },
   vite: {
     server: {
       port: 5174,
