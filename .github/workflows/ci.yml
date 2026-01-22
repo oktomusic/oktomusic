@@ -22,6 +22,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME_OKTOMUSIC: ${{ github.repository_owner }}/oktomusic
   IMAGE_NAME_WEBSITE: ${{ github.repository_owner == 'oktomusic' && 'oktomusic/website' || format('{0}/oktomusic-website', github.repository_owner) }}
+  VITEPRESS_HOSTNAME: https://oktomusic.afcms.dev
 
 jobs:
   app-backend:
