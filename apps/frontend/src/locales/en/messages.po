@@ -13,25 +13,45 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/App/App.tsx:106
-msgid "Click on the Vite and React logos to learn more"
-msgstr "Click on the Vite and React logos to learn more"
+#: src/pages/SettingsClient/SettingsClient.tsx:46
+msgid "Always"
+msgstr "Always"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:62
+#: src/pages/SettingsClient/SettingsClient.tsx:41
+msgid "Ambient"
+msgstr "Ambient"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:134
+msgid "Audio Session API is not supported in this browser."
+msgstr "Audio Session API is not supported in this browser."
+
+#: src/pages/SettingsClient/SettingsClient.tsx:116
+msgid "Audio session:"
+msgstr "Audio session:"
+
+#: src/components/Player/PlayerControls.tsx:133
+msgid "Buffering…"
+msgstr "Buffering…"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:133
+msgid "Controls how Oktomusic mixes with other audio."
+msgstr "Controls how Oktomusic mixes with other audio."
+
+#: src/pages/SettingsClient/SettingsClient.tsx:154
 msgid "Crossfade (seconds):"
 msgstr "Crossfade (seconds):"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:20
-#: src/pages/SettingsClient/SettingsClient.tsx:59
+#: src/pages/SettingsClient/SettingsClient.tsx:36
+#: src/pages/SettingsClient/SettingsClient.tsx:113
 msgid "Disabled"
 msgstr "Disabled"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:21
-#: src/pages/SettingsClient/SettingsClient.tsx:59
+#: src/pages/SettingsClient/SettingsClient.tsx:37
+#: src/pages/SettingsClient/SettingsClient.tsx:113
 msgid "Enabled"
 msgstr "Enabled"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:47
+#: src/pages/SettingsClient/SettingsClient.tsx:101
 msgid "Kiosk mode:"
 msgstr "Kiosk mode:"
 
@@ -39,25 +59,57 @@ msgstr "Kiosk mode:"
 msgid "Man"
 msgstr "Man"
 
-#: src/components/PipControls/PipControlsWindow.tsx:72
+#: src/pages/SettingsClient/SettingsClient.tsx:48
+msgid "Never"
+msgstr "Never"
+
+#: src/components/PipControls/PipControlsWindow.tsx:118
+#: src/components/PipControls/PipControlsWindow.tsx:119
+#: src/components/Player/PlayerControls.tsx:102
+#: src/components/Player/PlayerControls.tsx:103
 msgid "Next"
 msgstr "Next"
 
 #: src/components/PipControls/PipControlsWindow.tsx:71
+#: src/components/PipControls/PipControlsWindow.tsx:74
+#: src/components/Player/PlayerControls.tsx:56
+msgid "No track playing"
+msgstr "No track playing"
+
+#: src/components/PipControls/PipControlsWindow.tsx:104
+#: src/components/PipControls/PipControlsWindow.tsx:105
+#: src/components/Player/PlayerControls.tsx:87
+#: src/components/Player/PlayerControls.tsx:88
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/PipControls/PipControlsWindow.tsx:71
+#: src/components/PipControls/PipControlsWindow.tsx:104
+#: src/components/PipControls/PipControlsWindow.tsx:105
+#: src/components/Player/PlayerControls.tsx:87
+#: src/components/Player/PlayerControls.tsx:88
 msgid "Play"
 msgstr "Play"
 
-#: src/components/PipControls/PipControlsWindow.tsx:69
+#: src/pages/SettingsClient/SettingsClient.tsx:42
+#: src/pages/SettingsClient/SettingsClient.tsx:47
+msgid "Playback"
+msgstr "Playback"
+
+#: src/components/PipControls/PipControlsWindow.tsx:91
+#: src/components/Player/PlayerControls.tsx:68
 msgid "Playback controls"
 msgstr "Playback controls"
 
-#: src/components/PipControls/PipControlsWindow.tsx:70
+#: src/components/PipControls/PipControlsWindow.tsx:94
+#: src/components/PipControls/PipControlsWindow.tsx:95
+#: src/components/Player/PlayerControls.tsx:76
+#: src/components/Player/PlayerControls.tsx:77
 msgid "Previous"
 msgstr "Previous"
+
+#: src/components/Player/PlayerControls.tsx:114
+msgid "Seek"
+msgstr "Seek"
 
 #: src/pages/SettingsAccount/SettingsAccount.tsx:51
 msgid "Sexe :"
@@ -74,6 +126,10 @@ msgstr "Unspecified"
 #: src/pages/Unsupported/UnsupportedOverlay.tsx:43
 msgid "Upgrade to a supported Chromium browser"
 msgstr "Upgrade to a supported Chromium browser"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:138
+msgid "Wake lock:"
+msgstr "Wake lock:"
 
 #: src/utils/constants.ts:17
 msgid "Woman"
