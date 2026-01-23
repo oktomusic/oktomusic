@@ -20,3 +20,20 @@ description: Instructions for Frontend
 
 - The project is strict by default regarding the `Permissions-Policy` header.
 - When using a new web API, update as needed the policies in `apps/backend/src/utils/permissions_policy.ts`
+
+## React and JSX/TSX Guidelines
+
+- Use functional components with hooks.
+- You MUST use interfaces for defining component props.
+- When possible, prefer `readonly` properties in props interfaces.
+- You MUST never destructure props in the function signature.
+
+```tsx
+interface MyComponentProps {
+  readonly title: string;
+}
+
+function MyComponent(props: MyComponentProps) {
+  return <h1>{props.title}</h1>;
+}
+```

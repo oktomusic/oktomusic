@@ -89,5 +89,8 @@ export default function PipControls(): ReactPortal | null {
 
   if (!pipContainer) return null;
 
-  return ReactDOM.createPortal(<PipControlsWindow />, pipContainer);
+  return ReactDOM.createPortal(
+    <PipControlsWindow pipDocument={pipContainer.ownerDocument} />,
+    pipContainer,
+  );
 }
