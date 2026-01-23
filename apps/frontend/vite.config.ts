@@ -10,7 +10,7 @@ const MB = 1024 * 1024;
 const viteConfigPWA: Partial<VitePWAOptions> = {
   // Configure our own SW
   strategies: "injectManifest",
-  srcDir: "src",
+  srcDir: "src/sw",
   filename: "sw.ts",
   injectManifest: {
     rollupFormat: "es",

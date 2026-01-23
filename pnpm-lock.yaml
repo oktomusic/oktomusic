@@ -370,7 +370,13 @@ importers:
       workbox-core:
         specifier: ^7.4.0
         version: 7.4.0
+      workbox-expiration:
+        specifier: ^7.4.0
+        version: 7.4.0
       workbox-precaching:
+        specifier: ^7.4.0
+        version: 7.4.0
+      workbox-range-requests:
         specifier: ^7.4.0
         version: 7.4.0
       workbox-window:
@@ -6356,6 +6362,7 @@ packages:
     resolution: {integrity: sha512-Quz3MvAwHxVYNXsOByL7xI5EB2WYOeFswqaHIA3qOK3isRWTxiplBEocmmru6XmxDB2L7jDNYtYA4FyimoAFEw==}
     engines: {node: '>=8.17.0'}
     hasBin: true
+    bundledDependencies: []
 
   jsonfile@6.2.0:
     resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}

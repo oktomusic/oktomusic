@@ -26,6 +26,7 @@
   "npm.packageManager": "pnpm",
   "material-icon-theme.activeIconPack": "nest",
   "material-icon-theme.folders.associations": {
+    "sw": "config",
     "certification": "bibliography",
     "artifacthub": "container"
   },

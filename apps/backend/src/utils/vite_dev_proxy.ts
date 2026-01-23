@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 
-export const vitePrefixes = ["/dev-sw.js", "/node_modules/"] as const;
+export const vitePrefixes = [
+  "/dev-sw.js",
+  "/src/sw",
+  "/node_modules/",
+] as const;
 
 export function proxyMiddleware(baseUrl: string, prefixes: readonly string[]) {
   return async (req: Request, res: Response, next: NextFunction) => {
