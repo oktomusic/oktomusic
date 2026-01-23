@@ -109,6 +109,9 @@
           var(--pip-cover-dark-color),
           var(--pip-cover-light-color)
         );
+        transition:
+          --album-color-muted 1s ease,
+          --album-color-muted-dark 1s ease;
         box-sizing: border-box;
       }
     }
