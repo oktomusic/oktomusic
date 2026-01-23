@@ -70,6 +70,28 @@ export const playerQueueCurrentTrack = atom<TrackWithAlbum | null>((get) => {
   return queue[index] ?? null;
 });
 
+export interface VibrantColors {
+  readonly vibrant: string;
+  readonly darkVibrant: string;
+  readonly lightVibrant: string;
+  readonly muted: string;
+  readonly darkMuted: string;
+  readonly lightMuted: string;
+}
+
+const albumCoverColors: VibrantColors = {
+  vibrant: "#9e4433",
+  darkVibrant: "#563614",
+  lightVibrant: "#e4b594",
+  muted: "#a06552",
+  darkMuted: "#5e3c2d",
+  lightMuted: "#d3c4b3",
+} as const;
+
+export const playerCurrentTrackColors = atom<VibrantColors | null>(
+  albumCoverColors,
+);
+
 /** Derived media URL for the current track, or null if unavailable. */
 export const playerQueueCurrentTrackFile = atom<string | null>((get) => {
   const currentTrack = get(playerQueueCurrentTrack);

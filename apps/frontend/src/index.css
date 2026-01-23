@@ -47,3 +47,41 @@
     display: none;
   }
 }
+
+/* Vibrant Colors properties */
+
+@property --album-color-vibrant {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --album-color-vibrant-dark {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --album-color-vibrant-light {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --album-color-muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --album-color-muted-dark {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --album-color-muted-light {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
