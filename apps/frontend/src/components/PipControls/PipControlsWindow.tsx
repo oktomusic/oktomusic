@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { t } from "@lingui/core/macro";
 import { HiBackward, HiForward, HiPause, HiPlay } from "react-icons/hi2";
@@ -10,16 +10,8 @@ import {
   playerQueueCurrentTrack,
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
+import { useVibrantColorsProperties } from "../../hooks/vibrant_colors";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
-
-const albumCoverColors = {
-  vibrant: "#9e4433",
-  darkVibrant: "#563614",
-  lightVibrant: "#e4b594",
-  muted: "#a06552",
-  darkMuted: "#5e3c2d",
-  lightMuted: "#d3c4b3",
-} as const;
 
 /**
  * The PiP controls window component.
@@ -36,23 +28,7 @@ export default function PipControlsWindow() {
   const handlePreviousTrack = useSetAtom(handlePreviousTrackAtom);
   const handleNextTrack = useSetAtom(handleNextTrackAtom);
 
-  useEffect(() => {
-    if (!figureRef.current) {
-      return;
-    }
-
-    const coverEl = figureRef.current;
-
-    // Set CSS variables for cover colors
-    coverEl.style.setProperty(
-      "--pip-cover-light-color",
-      albumCoverColors.muted,
-    );
-    coverEl.style.setProperty(
-      "--pip-cover-dark-color",
-      albumCoverColors.darkMuted,
-    );
-  }, []);
+  useVibrantColorsProperties();
 
   return (
     // Shell content mounted into the Document PiP window container (`#pip-shell`).

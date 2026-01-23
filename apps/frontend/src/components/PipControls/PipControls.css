@@ -87,8 +87,8 @@
       /*
        * Colors controlled via JS to match album cover colors
        */
-      --pip-cover-light-color: var(--chrome-pip-color);
-      --pip-cover-dark-color: var(--chrome-pip-color);
+      --pip-cover-light-color: var(--album-color-muted);
+      --pip-cover-dark-color: var(--album-color-muted-dark);
 
       height: 100%;
       max-height: 100%;
