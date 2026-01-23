@@ -13,13 +13,17 @@ import {
 import { useVibrantColorsProperties } from "../../hooks/vibrant_colors";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 
+interface PipControlsWindowProps {
+  readonly pipDocument: Document;
+}
+
 /**
  * The PiP controls window component.
  *
  * The window has three layouts depending on the available *window height*.
  * The grid + breakpoints are implemented in `PipControls.css` (see `#pip-shell > #pip-shell-inner`).
  */
-export default function PipControlsWindow() {
+export default function PipControlsWindow(props: PipControlsWindowProps) {
   const figureRef = useRef<HTMLElement | null>(null);
 
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
@@ -28,7 +32,7 @@ export default function PipControlsWindow() {
   const handlePreviousTrack = useSetAtom(handlePreviousTrackAtom);
   const handleNextTrack = useSetAtom(handleNextTrackAtom);
 
-  useVibrantColorsProperties();
+  useVibrantColorsProperties(props.pipDocument);
 
   return (
     // Shell content mounted into the Document PiP window container (`#pip-shell`).

@@ -23,6 +23,7 @@ import TempLoadAlbum from "./components/TempLoadAlbum.tsx";
 import { useScreenWakeLock } from "./hooks/wake_lock.ts";
 import { useStoragePersistence } from "./hooks/persistant_storage.ts";
 import { usePwaDeferedPrompt } from "./hooks/pwa_prompt.ts";
+import { useVibrantColorsProperties } from "./hooks/vibrant_colors.ts";
 
 const swUpdateIntervalMS = 60 * 60 * 1000; // 1 hour
 
@@ -33,6 +34,7 @@ export default function Router() {
   useScreenWakeLock();
   useStoragePersistence();
   usePwaDeferedPrompt();
+  useVibrantColorsProperties();
 
   useRegisterSW({
     immediate: true,
