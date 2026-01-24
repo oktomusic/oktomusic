@@ -45,3 +45,26 @@ export const settingClientWakeLock = atomWithStorage<
 >(wakeLockLocalStorageKey, "never", undefined, {
   getOnInit: true,
 });
+
+// SW Config Settings
+
+const swMediaMaxEntriesLocalStorageKey = "oktomusic:sw_media_max_entries";
+const swMediaMaxAgeLocalStorageKey = "oktomusic:sw_media_max_age";
+
+export const settingClientSWMediaMaxEntries = atomWithStorage<number | null>(
+  swMediaMaxEntriesLocalStorageKey,
+  100, // Default: 100 entries
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
+export const settingClientSWMediaMaxAge = atomWithStorage<number | null>(
+  swMediaMaxAgeLocalStorageKey,
+  7 * 24 * 60 * 60, // Default: 7 days in seconds
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
