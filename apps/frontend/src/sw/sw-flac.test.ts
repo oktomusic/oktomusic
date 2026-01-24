@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { getOPFSFileResponse } from "./sw-flac";
+import { fetchMediaHandler, getOPFSFileResponse, MEDIA_URL_PATTERN } from "./sw-flac";
 
 type StorageDirectoryHandleLike = {
   readonly getDirectoryHandle: (name: string) => Promise<unknown>;
@@ -104,5 +104,157 @@ describe("getOPFSFileResponse", () => {
     stubNavigatorStorageGetDirectory(() => Promise.resolve(root));
 
     await expect(getOPFSFileResponse("cuid_missing")).resolves.toBeNull();
+  });
+});
+
+describe("fetchMediaHandler", () => {
+  it("calls event.respondWith when URL matches /api/media/{cuid} pattern", () => {
+    const cuid = "cuid_test123";
+    const url = `https://example.com/api/media/${cuid}`;
+    const request = new Request(url);
+
+    const respondWith = vi.fn();
+    const event = {
+      request,
+      respondWith,
+    } as unknown as FetchEvent;
+
+    const mockServiceWorker = {
+      addEventListener: vi.fn(),
+    } as unknown as ServiceWorkerGlobalScope;
+
+    fetchMediaHandler.call(mockServiceWorker, event);
+
+    expect(respondWith).toHaveBeenCalledOnce();
+    expect(respondWith).toHaveBeenCalledWith(expect.any(Promise));
+  });
+
+  it("does not call event.respondWith when URL does not match pattern", () => {
+    const url = "https://example.com/api/other/resource";
+    const request = new Request(url);
+
+    const respondWith = vi.fn();
+    const event = {
+      request,
+      respondWith,
+    } as unknown as FetchEvent;
+
+    const mockServiceWorker = {
+      addEventListener: vi.fn(),
+    } as unknown as ServiceWorkerGlobalScope;
+
+    fetchMediaHandler.call(mockServiceWorker, event);
+
+    expect(respondWith).not.toHaveBeenCalled();
+  });
+
+  it("does not call event.respondWith for non-media API paths", () => {
+    const url = "https://example.com/api/tracks";
+    const request = new Request(url);
+
+    const respondWith = vi.fn();
+    const event = {
+      request,
+      respondWith,
+    } as unknown as FetchEvent;
+
+    const mockServiceWorker = {
+      addEventListener: vi.fn(),
+    } as unknown as ServiceWorkerGlobalScope;
+
+    fetchMediaHandler.call(mockServiceWorker, event);
+
+    expect(respondWith).not.toHaveBeenCalled();
+  });
+
+  it("extracts CUID correctly from the URL", () => {
+    const cuid = "cuid_abc123xyz";
+    const url = `https://example.com/api/media/${cuid}`;
+    const request = new Request(url);
+
+    const respondWith = vi.fn();
+    const event = {
+      request,
+      respondWith,
+    } as unknown as FetchEvent;
+
+    const mockServiceWorker = {
+      addEventListener: vi.fn(),
+    } as unknown as ServiceWorkerGlobalScope;
+
+    fetchMediaHandler.call(mockServiceWorker, event);
+
+    expect(respondWith).toHaveBeenCalledOnce();
+    expect(respondWith).toHaveBeenCalledWith(expect.any(Promise));
+  });
+
+  it("does not match URL with additional path segments after cuid", () => {
+    const url = "https://example.com/api/media/cuid_123/extra";
+    const request = new Request(url);
+
+    const respondWith = vi.fn();
+    const event = {
+      request,
+      respondWith,
+    } as unknown as FetchEvent;
+
+    const mockServiceWorker = {
+      addEventListener: vi.fn(),
+    } as unknown as ServiceWorkerGlobalScope;
+
+    fetchMediaHandler.call(mockServiceWorker, event);
+
+    expect(respondWith).not.toHaveBeenCalled();
+  });
+
+  it("handles URLs with query parameters", () => {
+    const cuid = "cuid_query123";
+    const url = `https://example.com/api/media/${cuid}?param=value`;
+    const request = new Request(url);
+
+    const respondWith = vi.fn();
+    const event = {
+      request,
+      respondWith,
+    } as unknown as FetchEvent;
+
+    const mockServiceWorker = {
+      addEventListener: vi.fn(),
+    } as unknown as ServiceWorkerGlobalScope;
+
+    fetchMediaHandler.call(mockServiceWorker, event);
+
+    expect(respondWith).toHaveBeenCalledOnce();
+    expect(respondWith).toHaveBeenCalledWith(expect.any(Promise));
+  });
+});
+
+describe("MEDIA_URL_PATTERN", () => {
+  it("matches valid /api/media/{cuid} paths", () => {
+    expect(MEDIA_URL_PATTERN.test("/api/media/cuid_123")).toBe(true);
+    expect(MEDIA_URL_PATTERN.test("/api/media/abc123xyz")).toBe(true);
+    expect(MEDIA_URL_PATTERN.test("/api/media/test_id_456")).toBe(true);
+  });
+
+  it("does not match paths with additional segments", () => {
+    expect(MEDIA_URL_PATTERN.test("/api/media/cuid_123/extra")).toBe(false);
+    expect(MEDIA_URL_PATTERN.test("/api/media/cuid_123/metadata")).toBe(false);
+  });
+
+  it("does not match paths missing the cuid", () => {
+    expect(MEDIA_URL_PATTERN.test("/api/media/")).toBe(false);
+    expect(MEDIA_URL_PATTERN.test("/api/media")).toBe(false);
+  });
+
+  it("does not match other API paths", () => {
+    expect(MEDIA_URL_PATTERN.test("/api/tracks")).toBe(false);
+    expect(MEDIA_URL_PATTERN.test("/api/albums")).toBe(false);
+    expect(MEDIA_URL_PATTERN.test("/media/cuid_123")).toBe(false);
+  });
+
+  it("extracts cuid from matching paths", () => {
+    const match = "/api/media/cuid_test123".match(MEDIA_URL_PATTERN);
+    expect(match).not.toBeNull();
+    expect(match?.[1]).toBe("cuid_test123");
   });
 });
