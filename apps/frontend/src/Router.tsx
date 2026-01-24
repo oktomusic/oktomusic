@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { useAtomValue } from "jotai";
-import { useRegisterSW } from "virtual:pwa-register/react";
 
 import { browserSupportAtom } from "./atoms/app/browser_support.ts";
 import AuthSessionInitializer from "./components/AuthSessionInitializer.tsx";
@@ -23,8 +22,7 @@ import { useStoragePersistence } from "./hooks/persistant_storage.ts";
 import { usePwaDeferedPrompt } from "./hooks/pwa_prompt.ts";
 import { useVibrantColorsProperties } from "./hooks/vibrant_colors.ts";
 import { useKioskExitHandler } from "./hooks/kiosk_exit_handler.ts";
-
-const swUpdateIntervalMS = 60 * 60 * 1000; // 1 hour
+import { useSWRegister } from "./hooks/sw_register.ts";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
@@ -35,16 +33,7 @@ export default function Router() {
   useVibrantColorsProperties();
   useKioskExitHandler();
 
-  useRegisterSW({
-    immediate: true,
-    onRegisteredSW(_, registration) {
-      if (!registration) return;
-
-      setInterval(() => {
-        void registration.update();
-      }, swUpdateIntervalMS);
-    },
-  });
+  useSWRegister();
 
   return (
     <>
