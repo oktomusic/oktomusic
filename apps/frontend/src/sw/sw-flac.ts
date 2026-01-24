@@ -64,3 +64,44 @@ export async function getOPFSFileResponse(
     return null;
   }
 }
+
+/**
+ * Handles a media request for FLAC streaming.
+ *
+ * 1. OPFS first (authoritative)
+ * 2. Cache fallback with a custom policy
+ * 3. Network fetch and cache
+ *
+ * Supports Range requests.
+ *
+ * TODO: Implement full logic
+ */
+export function handleMediaRequest(request: Request, cuid: string): Response {
+  // 1. OPFS first (authoritative)
+
+  return new Response(
+    JSON.stringify({
+      r: request,
+      cuid,
+    }),
+    { status: 501 },
+  );
+}
+
+/**
+ * Fetch event handler for FLAC media requests
+ */
+export function fetchMediaHandler(
+  this: ServiceWorkerGlobalScope,
+  event: FetchEvent,
+) {
+  const url = new URL(event.request.url);
+
+  // Match: /api/media/{cuid}
+  const match = url.pathname.match(MEDIA_URL_PATTERN);
+  if (!match) return;
+
+  const cuid = match[1];
+
+  event.respondWith(handleMediaRequest(event.request, cuid));
+}
