@@ -8,6 +8,8 @@ import {
   settingClientAudioSession,
   settingClientCrossfadeSeconds,
   settingClientKioskMode,
+  settingClientSWMediaMaxAge,
+  settingClientSWMediaMaxEntries,
   settingClientWakeLock,
 } from "../../atoms/app/settings_client.ts";
 import {
@@ -28,6 +30,10 @@ export default function SettingsClient() {
   const [crossfadeSeconds, setCrossfadeSeconds] = useAtom(
     settingClientCrossfadeSeconds,
   );
+  const [swMediaMaxEntries, setSwMediaMaxEntries] = useAtom(
+    settingClientSWMediaMaxEntries,
+  );
+  const [swMediaMaxAge, setSwMediaMaxAge] = useAtom(settingClientSWMediaMaxAge);
   const audioSessionSupported = useAtomValue(audioSessionSupportAtom);
   const storagePersistence = useAtomValue(storagePersistenceAtom);
   const requestStoragePersistence = useSetAtom(requestStoragePersistenceAtom);
@@ -75,6 +81,34 @@ export default function SettingsClient() {
   const handleWakeLockChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value as WakeLockKey;
     setWakeLockMode(value);
+  };
+
+  const handleSwMediaMaxEntriesChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const rawValue = Number.parseInt(event.target.value, 10);
+
+    if (Number.isNaN(rawValue)) {
+      setSwMediaMaxEntries(null);
+      return;
+    }
+
+    const clampedValue = Math.max(0, rawValue);
+    setSwMediaMaxEntries(clampedValue);
+  };
+
+  const handleSwMediaMaxAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const rawValue = Number.parseInt(event.target.value, 10);
+
+    if (Number.isNaN(rawValue)) {
+      setSwMediaMaxAge(null);
+      return;
+    }
+
+    // Convert days to seconds
+    const clampedValue = Math.max(0, rawValue);
+    const seconds = clampedValue * 24 * 60 * 60;
+    setSwMediaMaxAge(seconds);
   };
 
   return (
@@ -166,6 +200,46 @@ export default function SettingsClient() {
         <output id="settings:client:crossfade-seconds:value" aria-live="polite">
           {crossfadeSeconds.toFixed(1)}
         </output>
+
+        <label htmlFor="settings:client:sw-media-max-entries" className="mt-4">
+          {t`Service Worker max cache entries:`}
+        </label>
+        <input
+          id="settings:client:sw-media-max-entries"
+          type="number"
+          min={0}
+          step={1}
+          value={swMediaMaxEntries ?? ""}
+          onChange={handleSwMediaMaxEntriesChange}
+          disabled={swMediaMaxEntries === null}
+          aria-describedby="settings:client:sw-media-max-entries:help"
+        />
+        <p
+          id="settings:client:sw-media-max-entries:help"
+          role="status"
+        >{t`Maximum number of media files to cache.`}</p>
+
+        <label htmlFor="settings:client:sw-media-max-age" className="mt-4">
+          {t`Service Worker max cache age (days):`}
+        </label>
+        <input
+          id="settings:client:sw-media-max-age"
+          type="number"
+          min={0}
+          step={1}
+          value={
+            swMediaMaxAge === null
+              ? ""
+              : Math.round(swMediaMaxAge / (24 * 60 * 60))
+          }
+          onChange={handleSwMediaMaxAgeChange}
+          disabled={swMediaMaxAge === null}
+          aria-describedby="settings:client:sw-media-max-age:help"
+        />
+        <p
+          id="settings:client:sw-media-max-age:help"
+          role="status"
+        >{t`Maximum age of cached media in days`}</p>
       </form>
     </section>
   );

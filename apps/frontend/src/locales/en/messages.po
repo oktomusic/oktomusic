@@ -13,19 +13,19 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:46
+#: src/pages/SettingsClient/SettingsClient.tsx:52
 msgid "Always"
 msgstr "Always"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:41
+#: src/pages/SettingsClient/SettingsClient.tsx:47
 msgid "Ambient"
 msgstr "Ambient"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:134
+#: src/pages/SettingsClient/SettingsClient.tsx:168
 msgid "Audio Session API is not supported in this browser."
 msgstr "Audio Session API is not supported in this browser."
 
-#: src/pages/SettingsClient/SettingsClient.tsx:116
+#: src/pages/SettingsClient/SettingsClient.tsx:150
 msgid "Audio session:"
 msgstr "Audio session:"
 
@@ -33,75 +33,83 @@ msgstr "Audio session:"
 msgid "Buffering…"
 msgstr "Buffering…"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:133
+#: src/pages/SettingsClient/SettingsClient.tsx:167
 msgid "Controls how Oktomusic mixes with other audio."
 msgstr "Controls how Oktomusic mixes with other audio."
 
-#: src/pages/SettingsClient/SettingsClient.tsx:154
+#: src/pages/SettingsClient/SettingsClient.tsx:188
 msgid "Crossfade (seconds):"
 msgstr "Crossfade (seconds):"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:36
-#: src/pages/SettingsClient/SettingsClient.tsx:113
+#: src/pages/SettingsClient/SettingsClient.tsx:42
+#: src/pages/SettingsClient/SettingsClient.tsx:147
 msgid "Disabled"
 msgstr "Disabled"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:37
-#: src/pages/SettingsClient/SettingsClient.tsx:113
+#: src/pages/SettingsClient/SettingsClient.tsx:43
+#: src/pages/SettingsClient/SettingsClient.tsx:147
 msgid "Enabled"
 msgstr "Enabled"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:101
+#: src/pages/SettingsClient/SettingsClient.tsx:135
 msgid "Kiosk mode:"
 msgstr "Kiosk mode:"
 
-#: src/utils/constants.ts:16
+#: src/utils/constants_sexes.ts:16
 msgid "Man"
 msgstr "Man"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:48
+#: src/pages/SettingsClient/SettingsClient.tsx:242
+msgid "Maximum age of cached media in days"
+msgstr "Maximum age of cached media in days"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:220
+msgid "Maximum number of media files to cache."
+msgstr "Maximum number of media files to cache."
+
+#: src/pages/SettingsClient/SettingsClient.tsx:54
 msgid "Never"
 msgstr "Never"
 
-#: src/components/PipControls/PipControlsWindow.tsx:118
-#: src/components/PipControls/PipControlsWindow.tsx:119
+#: src/components/PipControls/PipControlsWindow.tsx:98
+#: src/components/PipControls/PipControlsWindow.tsx:99
 #: src/components/Player/PlayerControls.tsx:102
 #: src/components/Player/PlayerControls.tsx:103
 msgid "Next"
 msgstr "Next"
 
-#: src/components/PipControls/PipControlsWindow.tsx:71
-#: src/components/PipControls/PipControlsWindow.tsx:74
+#: src/components/PipControls/PipControlsWindow.tsx:51
+#: src/components/PipControls/PipControlsWindow.tsx:54
 #: src/components/Player/PlayerControls.tsx:56
 msgid "No track playing"
 msgstr "No track playing"
 
-#: src/components/PipControls/PipControlsWindow.tsx:104
-#: src/components/PipControls/PipControlsWindow.tsx:105
+#: src/components/PipControls/PipControlsWindow.tsx:84
+#: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:87
 #: src/components/Player/PlayerControls.tsx:88
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/PipControls/PipControlsWindow.tsx:104
-#: src/components/PipControls/PipControlsWindow.tsx:105
+#: src/components/PipControls/PipControlsWindow.tsx:84
+#: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:87
 #: src/components/Player/PlayerControls.tsx:88
 msgid "Play"
 msgstr "Play"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:42
-#: src/pages/SettingsClient/SettingsClient.tsx:47
+#: src/pages/SettingsClient/SettingsClient.tsx:48
+#: src/pages/SettingsClient/SettingsClient.tsx:53
 msgid "Playback"
 msgstr "Playback"
 
-#: src/components/PipControls/PipControlsWindow.tsx:91
+#: src/components/PipControls/PipControlsWindow.tsx:71
 #: src/components/Player/PlayerControls.tsx:68
 msgid "Playback controls"
 msgstr "Playback controls"
 
-#: src/components/PipControls/PipControlsWindow.tsx:94
-#: src/components/PipControls/PipControlsWindow.tsx:95
+#: src/components/PipControls/PipControlsWindow.tsx:74
+#: src/components/PipControls/PipControlsWindow.tsx:75
 #: src/components/Player/PlayerControls.tsx:76
 #: src/components/Player/PlayerControls.tsx:77
 msgid "Previous"
@@ -111,26 +119,34 @@ msgstr "Previous"
 msgid "Seek"
 msgstr "Seek"
 
+#: src/pages/SettingsClient/SettingsClient.tsx:223
+msgid "Service Worker max cache age (days):"
+msgstr "Service Worker max cache age (days):"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:205
+msgid "Service Worker max cache entries:"
+msgstr "Service Worker max cache entries:"
+
 #: src/pages/SettingsAccount/SettingsAccount.tsx:51
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Unsupported/UnsupportedOverlay.tsx:64
+#: src/pages/Unsupported/UnsupportedOverlay.tsx:36
 msgid "The following modern web features are missing:"
 msgstr "The following modern web features are missing:"
 
-#: src/utils/constants.ts:18
+#: src/utils/constants_sexes.ts:18
 msgid "Unspecified"
 msgstr "Unspecified"
 
-#: src/pages/Unsupported/UnsupportedOverlay.tsx:43
+#: src/pages/Unsupported/UnsupportedOverlay.tsx:15
 msgid "Upgrade to a supported Chromium browser"
 msgstr "Upgrade to a supported Chromium browser"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:138
+#: src/pages/SettingsClient/SettingsClient.tsx:172
 msgid "Wake lock:"
 msgstr "Wake lock:"
 
-#: src/utils/constants.ts:17
+#: src/utils/constants_sexes.ts:17
 msgid "Woman"
 msgstr "Woman"
