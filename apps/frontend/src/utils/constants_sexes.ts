@@ -9,14 +9,12 @@ interface SexesOrUnspecified extends Sexes {
   unspecified: string;
 }
 
-type SexesKeys = keyof SexesOrUnspecified;
+export type SexesKeys = keyof SexesOrUnspecified;
 
-function getSexes(): SexesOrUnspecified {
+export function getSexes(): SexesOrUnspecified {
   return {
     XY: t`Man`,
     XX: t`Woman`,
     unspecified: t`Unspecified`,
   };
 }
-
-export { getSexes, SexesKeys };

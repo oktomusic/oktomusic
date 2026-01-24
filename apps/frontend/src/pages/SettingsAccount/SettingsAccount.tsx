@@ -8,7 +8,7 @@ import { UPDATE_MY_PROFILE_MUTATION } from "../../api/graphql/mutations/updateMy
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Sex } from "../../api/graphql/gql/graphql.ts";
 import { authSessionAtom } from "../../atoms/auth/atoms";
-import { getSexes, SexesKeys } from "../../utils/constants";
+import { getSexes, SexesKeys } from "../../utils/constants_sexes.ts";
 
 function mapSexKeyToGraphql(value: SexesKeys): Sex | null {
   if (value === "unspecified") {
