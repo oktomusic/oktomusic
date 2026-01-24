@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { useAtomValue } from "jotai";
 import { useRegisterSW } from "virtual:pwa-register/react";
 
 import { browserSupportAtom } from "./atoms/app/browser_support.ts";
-import { settingClientKioskMode } from "./atoms/app/settings_client.ts";
 import AuthSessionInitializer from "./components/AuthSessionInitializer.tsx";
 import PipControls from "./components/PipControls/PipControls.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
@@ -24,17 +22,18 @@ import { useScreenWakeLock } from "./hooks/wake_lock.ts";
 import { useStoragePersistence } from "./hooks/persistant_storage.ts";
 import { usePwaDeferedPrompt } from "./hooks/pwa_prompt.ts";
 import { useVibrantColorsProperties } from "./hooks/vibrant_colors.ts";
+import { useKioskExitHandler } from "./hooks/kiosk_exit_handler.ts";
 
 const swUpdateIntervalMS = 60 * 60 * 1000; // 1 hour
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
-  const kioskModeEnabled = useAtomValue(settingClientKioskMode);
 
   useScreenWakeLock();
   useStoragePersistence();
   usePwaDeferedPrompt();
   useVibrantColorsProperties();
+  useKioskExitHandler();
 
   useRegisterSW({
     immediate: true,
@@ -46,30 +45,6 @@ export default function Router() {
       }, swUpdateIntervalMS);
     },
   });
-
-  useEffect(() => {
-    if (!kioskModeEnabled) {
-      return;
-    }
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      const isEscape = event.key === "Escape";
-      const isCtrlQ = event.ctrlKey && event.key.toLowerCase() === "q";
-
-      if (!isEscape && !isCtrlQ) {
-        return;
-      }
-
-      event.preventDefault();
-      event.stopPropagation();
-      window.alert("To exit kiosk mode, press Alt+F4.");
-    };
-
-    window.addEventListener("keydown", onKeyDown, { capture: true });
-    return () => {
-      window.removeEventListener("keydown", onKeyDown, { capture: true });
-    };
-  }, [kioskModeEnabled]);
 
   return (
     <>
