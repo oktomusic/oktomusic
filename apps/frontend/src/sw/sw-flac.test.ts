@@ -1,6 +1,23 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createPartialResponse } from "workbox-range-requests";
 
-import { fetchMediaHandler, getOPFSFileResponse, MEDIA_URL_PATTERN } from "./sw-flac";
+import {
+  fetchMediaHandler,
+  getOPFSFileResponse,
+  handleMediaRequest,
+  MEDIA_URL_PATTERN,
+} from "./sw-flac";
+
+vi.mock("workbox-range-requests", async () => {
+  const actual = await vi.importActual<typeof import("workbox-range-requests")>(
+    "workbox-range-requests",
+  );
+
+  return {
+    ...actual,
+    createPartialResponse: vi.fn(),
+  };
+});
 
 type StorageDirectoryHandleLike = {
   readonly getDirectoryHandle: (name: string) => Promise<unknown>;
@@ -13,6 +30,36 @@ type FileSystemFileHandleLike = {
 type StorageDirectoryHandleFilesLike = {
   readonly getFileHandle: (name: string) => Promise<unknown>;
 };
+
+type CacheLike = {
+  readonly match: (
+    request: Request,
+    options?: CacheQueryOptions,
+  ) => Promise<Response | undefined>;
+  readonly put: (request: Request, response: Response) => Promise<void>;
+};
+
+function stubCacheStorage(cacheImpl: CacheLike): ReturnType<typeof vi.fn> {
+  const open = vi.fn(() => Promise.resolve(cacheImpl));
+
+  Object.defineProperty(globalThis, "caches", {
+    value: { open },
+    configurable: true,
+  });
+
+  return open;
+}
+
+function stubFetch(impl: typeof fetch): ReturnType<typeof vi.fn> {
+  const fetchMock = vi.fn(impl);
+
+  Object.defineProperty(globalThis, "fetch", {
+    value: fetchMock,
+    configurable: true,
+  });
+
+  return fetchMock;
+}
 
 function stubNavigatorStorageGetDirectory(
   impl: () => Promise<unknown>,
@@ -30,6 +77,13 @@ function stubNavigatorStorageGetDirectory(
 
 afterEach(() => {
   vi.restoreAllMocks();
+});
+
+beforeEach(() => {
+  Object.defineProperty(globalThis.navigator, "storage", {
+    value: { getDirectory: vi.fn(() => Promise.reject(new Error("no opfs"))) },
+    configurable: true,
+  });
 });
 
 describe("getOPFSFileResponse", () => {
@@ -226,6 +280,81 @@ describe("fetchMediaHandler", () => {
 
     expect(respondWith).toHaveBeenCalledOnce();
     expect(respondWith).toHaveBeenCalledWith(expect.any(Promise));
+  });
+});
+
+describe("handleMediaRequest", () => {
+  it("delegates non-GET requests to the network", async () => {
+    const request = new Request("https://example.com/api/media/cuid_1", {
+      method: "POST",
+    });
+    const event = { request } as FetchEvent;
+    const fetchMock = stubFetch(() => Promise.resolve(new Response("ok")));
+
+    const response = await handleMediaRequest(event, "cuid_1");
+
+    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(fetchMock).toHaveBeenCalledWith(request);
+    await expect(response.text()).resolves.toBe("ok");
+  });
+
+  it("serves range requests from cached full responses", async () => {
+    const request = new Request("https://example.com/api/media/cuid_2", {
+      headers: { Range: "bytes=0-10" },
+    });
+    const event = { request } as FetchEvent;
+    const cacheMatch = vi.fn(() => Promise.resolve(new Response("full")));
+    const cachePut = vi.fn(() => Promise.resolve(undefined));
+    const cachesOpen = stubCacheStorage({ match: cacheMatch, put: cachePut });
+    const fetchMock = stubFetch(() => Promise.resolve(new Response("network")));
+    const createPartialResponseMock = vi.mocked(createPartialResponse);
+    createPartialResponseMock.mockResolvedValue(
+      new Response("partial", { status: 206 }),
+    );
+
+    const response = await handleMediaRequest(event, "cuid_2");
+
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(cachesOpen).toHaveBeenCalledOnce();
+    expect(cacheMatch).toHaveBeenCalledOnce();
+    const matchedRequest = (
+      cacheMatch.mock.calls as unknown as Array<[Request, CacheQueryOptions?]>
+    )[0]?.[0];
+    expect(matchedRequest).toBeInstanceOf(Request);
+    expect(matchedRequest.headers.has("range")).toBe(false);
+    await expect(response.text()).resolves.toBe("partial");
+  });
+
+  it("fetches and caches full responses on range cache miss", async () => {
+    const request = new Request("https://example.com/api/media/cuid_3", {
+      headers: { Range: "bytes=0-10" },
+    });
+    const event = { request } as FetchEvent;
+    const cacheMatch = vi.fn(() => Promise.resolve(undefined));
+    const cachePut = vi.fn(() => Promise.resolve(undefined));
+    const cachesOpen = stubCacheStorage({ match: cacheMatch, put: cachePut });
+    const fetchMock = stubFetch(() =>
+      Promise.resolve(new Response("full", { status: 200 })),
+    );
+    const createPartialResponseMock = vi.mocked(createPartialResponse);
+    createPartialResponseMock.mockResolvedValue(
+      new Response("partial", { status: 206 }),
+    );
+
+    const response = await handleMediaRequest(event, "cuid_3");
+
+    expect(cachesOpen).toHaveBeenCalledTimes(2);
+    expect(cacheMatch).toHaveBeenCalledOnce();
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const fetchedRequest = fetchMock.mock.calls[0][0] as Request;
+    expect(fetchedRequest.headers.has("range")).toBe(false);
+    expect(cachePut).toHaveBeenCalledOnce();
+    const cachedRequest = (
+      cachePut.mock.calls as unknown as Array<[Request, Response]>
+    )[0]?.[0];
+    expect(cachedRequest).toBeInstanceOf(Request);
+    expect(cachedRequest.headers.has("range")).toBe(false);
+    await expect(response.text()).resolves.toBe("partial");
   });
 });
 
