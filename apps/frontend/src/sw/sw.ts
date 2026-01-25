@@ -5,6 +5,7 @@ import { clientsClaim } from "workbox-core";
 
 import "./sw-db";
 import { fetchMediaHandler } from "./sw-flac";
+import { registerAlbumCoverRoute } from "./sw-covers";
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -16,3 +17,5 @@ void self.skipWaiting();
 clientsClaim();
 
 self.addEventListener("fetch", fetchMediaHandler);
+
+registerAlbumCoverRoute();

@@ -382,6 +382,9 @@ importers:
       workbox-range-requests:
         specifier: ^7.4.0
         version: 7.4.0
+      workbox-routing:
+        specifier: ^7.4.0
+        version: 7.4.0
       workbox-strategies:
         specifier: ^7.4.0
         version: 7.4.0
