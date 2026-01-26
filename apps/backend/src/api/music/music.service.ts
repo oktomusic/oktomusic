@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
+import type { Lyrics } from "@oktomusic/lyrics";
+
 import { Prisma } from "../../generated/prisma/client";
 
 import { PrismaService } from "../../db/prisma.service";
@@ -25,6 +27,7 @@ type PrismaTrack = {
   albumId: string | null;
   discNumber: number;
   trackNumber: number;
+  lyrics: Lyrics | null;
   flacFile?: {
     id: string;
   } | null;
@@ -86,6 +89,9 @@ export class MusicService {
    * Map Prisma track to track model
    */
   private mapTrack(track: PrismaTrack): TrackModel {
+    const lyrics = track.lyrics ?? null;
+    const hasLyrics = Array.isArray(lyrics) && lyrics.length > 0;
+
     return {
       id: track.id,
       name: track.name,
@@ -98,6 +104,8 @@ export class MusicService {
       trackNumber: track.trackNumber,
       artists: this.mapArtists(track.artists),
       flacFileId: track.flacFile?.id ?? null,
+      hasLyrics,
+      lyrics: hasLyrics ? lyrics : null,
     };
   }
 

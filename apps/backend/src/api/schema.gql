@@ -76,6 +76,40 @@ type IndexingWarningSubdirectories {
   type: IndexingReportType!
 }
 
+type LyricsChunk {
+  """
+  Word or character
+  """
+  c: String!
+
+  """
+  Duration in milliseconds since the start of the line
+  """
+  d: Int!
+}
+
+type LyricsLine {
+  """
+  Tokenized line content (word/character + duration)
+  """
+  l: [LyricsChunk!]!
+
+  """
+  Full text of the line
+  """
+  t: String!
+
+  """
+  Timestamp end in milliseconds
+  """
+  te: Int!
+
+  """
+  Timestamp start in milliseconds
+  """
+  ts: Int!
+}
+
 type Mutation {
   """
   Update a user profile as an administrator
@@ -306,8 +340,18 @@ type Track {
   Linked FLAC file id if present
   """
   flacFileId: String
+
+  """
+  Whether the track has lyrics indexed
+  """
+  hasLyrics: Boolean!
   id: String!
   isrc: String
+
+  """
+  Optional lyrics data associated with the track
+  """
+  lyrics: [LyricsLine!]
   name: String!
   trackNumber: Int!
 }

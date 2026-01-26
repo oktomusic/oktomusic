@@ -104,6 +104,26 @@ export type IndexingWarningSubdirectories = {
   type: IndexingReportType;
 };
 
+export type LyricsChunk = {
+  __typename?: "LyricsChunk";
+  /** Word or character */
+  c: Scalars["String"]["output"];
+  /** Duration in milliseconds since the start of the line */
+  d: Scalars["Int"]["output"];
+};
+
+export type LyricsLine = {
+  __typename?: "LyricsLine";
+  /** Tokenized line content (word/character + duration) */
+  l: Array<LyricsChunk>;
+  /** Full text of the line */
+  t: Scalars["String"]["output"];
+  /** Timestamp end in milliseconds */
+  te: Scalars["Int"]["output"];
+  /** Timestamp start in milliseconds */
+  ts: Scalars["Int"]["output"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   /** Update a user profile as an administrator */
@@ -279,8 +299,12 @@ export type Track = {
   durationMs: Scalars["Int"]["output"];
   /** Linked FLAC file id if present */
   flacFileId?: Maybe<Scalars["String"]["output"]>;
+  /** Whether the track has lyrics indexed */
+  hasLyrics: Scalars["Boolean"]["output"];
   id: Scalars["String"]["output"];
   isrc?: Maybe<Scalars["String"]["output"]>;
+  /** Optional lyrics data associated with the track */
+  lyrics?: Maybe<Array<LyricsLine>>;
   name: Scalars["String"]["output"];
   trackNumber: Scalars["Int"]["output"];
 };
