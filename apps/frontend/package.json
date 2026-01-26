@@ -41,7 +41,7 @@
     "@graphql-codegen/client-preset": "5.2.2",
     "@lingui/babel-plugin-lingui-macro": "^5.8.0",
     "@lingui/cli": "^5.8.0",
-    "@lingui/core": "^5.8.0",
+    "@lingui/core": "^5.9.0",
     "@lingui/react": "^5.8.0",
     "@lingui/vite-plugin": "^5.8.0",
     "@oktomusic/vite-sri-manifest": "workspace:^",
