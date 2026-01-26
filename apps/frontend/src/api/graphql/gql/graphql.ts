@@ -426,6 +426,26 @@ export type MeQuery = {
   };
 };
 
+export type TrackLyricsQueryVariables = Exact<{
+  id: Scalars["String"]["input"];
+}>;
+
+export type TrackLyricsQuery = {
+  __typename?: "Query";
+  track: {
+    __typename?: "Track";
+    id: string;
+    hasLyrics: boolean;
+    lyrics?: Array<{
+      __typename?: "LyricsLine";
+      t: string;
+      te: number;
+      ts: number;
+      l: Array<{ __typename?: "LyricsChunk"; c: string; d: number }>;
+    }> | null;
+  };
+};
+
 export type UserProfileQueryVariables = Exact<{
   userId: Scalars["String"]["input"];
 }>;
@@ -840,6 +860,84 @@ export const MeDocument = {
     },
   ],
 } as unknown as DocumentNode<MeQuery, MeQueryVariables>;
+export const TrackLyricsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "TrackLyrics" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "track" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "hasLyrics" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "lyrics" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "l" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "c" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "d" },
+                            },
+                          ],
+                        },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "t" } },
+                      { kind: "Field", name: { kind: "Name", value: "te" } },
+                      { kind: "Field", name: { kind: "Name", value: "ts" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TrackLyricsQuery, TrackLyricsQueryVariables>;
 export const UserProfileDocument = {
   kind: "Document",
   definitions: [

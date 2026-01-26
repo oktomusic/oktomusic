@@ -20,6 +20,7 @@ type Documents = {
     "\n  query Album($id: String!) {\n    album(id: $id) {\n      id\n      name\n      date\n      artists {\n        id\n        name\n      }\n      tracksByDisc {\n        id\n        flacFileId\n        hasLyrics\n        name\n        trackNumber\n        discNumber\n        durationMs\n        artists {\n          id\n          name\n        }\n      }\n    }\n  }\n": typeof types.AlbumDocument,
     "\n  query IndexingJobStatus($jobId: String!) {\n    indexingJobStatus(jobId: $jobId) {\n      jobId\n      status\n      progress\n      error\n      completedAt\n    }\n  }\n": typeof types.IndexingJobStatusDocument,
     "\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.MeDocument,
+    "\n  query TrackLyrics($id: String!) {\n    track(id: $id) {\n      id\n      hasLyrics\n      lyrics {\n        l {\n          c\n          d\n        }\n        t\n        te\n        ts\n      }\n    }\n  }\n": typeof types.TrackLyricsDocument,
     "\n  query UserProfile($userId: String!) {\n    userProfile(userId: $userId) {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.UserProfileDocument,
     "\n  subscription IndexingJobUpdated($jobId: String!) {\n    indexingJobUpdated(jobId: $jobId) {\n      jobId\n      status\n      progress\n      error\n      completedAt\n      warnings {\n        __typename\n        ... on IndexingErrorMetaflacParsing {\n          type\n          filePath\n          errorMessage\n        }\n        ... on IndexingWarningSubdirectories {\n          type\n          dirPath\n        }\n        ... on IndexingWarningFolderMetadata {\n          type\n          folderPath\n          messages\n        }\n      }\n    }\n  }\n": typeof types.IndexingJobUpdatedDocument,
 };
@@ -30,6 +31,7 @@ const documents: Documents = {
     "\n  query Album($id: String!) {\n    album(id: $id) {\n      id\n      name\n      date\n      artists {\n        id\n        name\n      }\n      tracksByDisc {\n        id\n        flacFileId\n        hasLyrics\n        name\n        trackNumber\n        discNumber\n        durationMs\n        artists {\n          id\n          name\n        }\n      }\n    }\n  }\n": types.AlbumDocument,
     "\n  query IndexingJobStatus($jobId: String!) {\n    indexingJobStatus(jobId: $jobId) {\n      jobId\n      status\n      progress\n      error\n      completedAt\n    }\n  }\n": types.IndexingJobStatusDocument,
     "\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": types.MeDocument,
+    "\n  query TrackLyrics($id: String!) {\n    track(id: $id) {\n      id\n      hasLyrics\n      lyrics {\n        l {\n          c\n          d\n        }\n        t\n        te\n        ts\n      }\n    }\n  }\n": types.TrackLyricsDocument,
     "\n  query UserProfile($userId: String!) {\n    userProfile(userId: $userId) {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n": types.UserProfileDocument,
     "\n  subscription IndexingJobUpdated($jobId: String!) {\n    indexingJobUpdated(jobId: $jobId) {\n      jobId\n      status\n      progress\n      error\n      completedAt\n      warnings {\n        __typename\n        ... on IndexingErrorMetaflacParsing {\n          type\n          filePath\n          errorMessage\n        }\n        ... on IndexingWarningSubdirectories {\n          type\n          dirPath\n        }\n        ... on IndexingWarningFolderMetadata {\n          type\n          folderPath\n          messages\n        }\n      }\n    }\n  }\n": types.IndexingJobUpdatedDocument,
 };
@@ -72,6 +74,10 @@ export function graphql(source: "\n  query IndexingJobStatus($jobId: String!) {\
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  query Me {\n    me {\n      id\n      username\n      role\n      sex\n      createdAt\n      updatedAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query TrackLyrics($id: String!) {\n    track(id: $id) {\n      id\n      hasLyrics\n      lyrics {\n        l {\n          c\n          d\n        }\n        t\n        te\n        ts\n      }\n    }\n  }\n"): (typeof documents)["\n  query TrackLyrics($id: String!) {\n    track(id: $id) {\n      id\n      hasLyrics\n      lyrics {\n        l {\n          c\n          d\n        }\n        t\n        te\n        ts\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
