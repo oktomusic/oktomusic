@@ -8,7 +8,9 @@ type Album {
   id: String!
   name: String!
 
-  """Tracks grouped by disc number, ordered by track number"""
+  """
+  Tracks grouped by disc number, ordered by track number
+  """
   tracksByDisc: [[Track!]!]!
 }
 
@@ -52,12 +54,16 @@ enum IndexingJobStatus {
 }
 
 enum IndexingReportType {
+  ERROR_LYRICS_PARSING
   ERROR_METAFLAC_PARSING
   WARNING_FOLDER_METADATA
   WARNING_SUBDIRECTORIES
 }
 
-union IndexingWarning = IndexingErrorMetaflacParsing | IndexingWarningFolderMetadata | IndexingWarningSubdirectories
+union IndexingWarning =
+  | IndexingErrorMetaflacParsing
+  | IndexingWarningFolderMetadata
+  | IndexingWarningSubdirectories
 
 type IndexingWarningFolderMetadata {
   folderPath: String!
@@ -71,28 +77,42 @@ type IndexingWarningSubdirectories {
 }
 
 type Mutation {
-  """Update a user profile as an administrator"""
+  """
+  Update a user profile as an administrator
+  """
   adminUpdateUserProfile(input: UpdateUserProfileInput!, userId: String!): User!
 
-  """Trigger a new library indexing job"""
+  """
+  Trigger a new library indexing job
+  """
   triggerIndexing: IndexingJob!
 
-  """Update the current user's profile"""
+  """
+  Update the current user's profile
+  """
   updateMyProfile(input: UpdateUserProfileInput!): User!
 }
 
 type Query {
-  """Get a single album by ID with tracks grouped by disc number"""
+  """
+  Get a single album by ID with tracks grouped by disc number
+  """
   album(id: String!): Album!
 
-  """Get a single artist by ID"""
+  """
+  Get a single artist by ID
+  """
   artist(id: String!): Artist!
   hello: String!
 
-  """Get the status of an indexing job"""
+  """
+  Get the status of an indexing job
+  """
   indexingJobStatus(jobId: String!): IndexingJob!
 
-  """Current logged-in user"""
+  """
+  Current logged-in user
+  """
   me: User!
 
   """
@@ -105,16 +125,24 @@ type Query {
   """
   searchAlbums(input: SearchAlbumsInput!): [Album!]!
 
-  """Search for artists with optional filters"""
+  """
+  Search for artists with optional filters
+  """
   searchArtists(input: SearchArtistsInput!): [Artist!]!
 
-  """Search for tracks with optional filters"""
+  """
+  Search for tracks with optional filters
+  """
   searchTracks(input: SearchTracksInput!): [Track!]!
 
-  """Get a single track by ID"""
+  """
+  Get a single track by ID
+  """
   track(id: String!): Track!
 
-  """User profile by identifier (admin access only)"""
+  """
+  User profile by identifier (admin access only)
+  """
   userProfile(userId: String!): User!
 }
 
@@ -124,59 +152,93 @@ enum Role {
 }
 
 input SearchAlbumsInput {
-  """Filter by artist ID"""
+  """
+  Filter by artist ID
+  """
   artistId: String
 
-  """Maximum number of results"""
+  """
+  Maximum number of results
+  """
   limit: Int = 50
 
-  """Filter by album name (case-insensitive partial match)"""
+  """
+  Filter by album name (case-insensitive partial match)
+  """
   name: String
 
-  """Number of results to skip"""
+  """
+  Number of results to skip
+  """
   offset: Int = 0
 }
 
 input SearchArtistsInput {
-  """Maximum number of results"""
+  """
+  Maximum number of results
+  """
   limit: Int = 50
 
-  """Filter by artist name (case-insensitive partial match)"""
+  """
+  Filter by artist name (case-insensitive partial match)
+  """
   name: String
 
-  """Number of results to skip"""
+  """
+  Number of results to skip
+  """
   offset: Int = 0
 }
 
 input SearchMusicInput {
-  """Filter by exact album ID"""
+  """
+  Filter by exact album ID
+  """
   albumId: String
 
-  """Filter by album name (case-insensitive partial match)"""
+  """
+  Filter by album name (case-insensitive partial match)
+  """
   albumName: String
 
-  """Filter by exact artist ID"""
+  """
+  Filter by exact artist ID
+  """
   artistId: String
 
-  """Filter by artist name (case-insensitive partial match)"""
+  """
+  Filter by artist name (case-insensitive partial match)
+  """
   artistName: String
 
-  """Include albums in search results"""
+  """
+  Include albums in search results
+  """
   includeAlbums: Boolean = true
 
-  """Include artists in search results"""
+  """
+  Include artists in search results
+  """
   includeArtists: Boolean = true
 
-  """Include tracks in search results"""
+  """
+  Include tracks in search results
+  """
   includeTracks: Boolean = true
 
-  """Maximum number of results to return"""
+  """
+  Maximum number of results to return
+  """
   limit: Int = 50
 
-  """Number of results to skip"""
+  """
+  Number of results to skip
+  """
   offset: Int = 0
 
-  """Filter by track name (case-insensitive partial match)"""
+  """
+  Filter by track name (case-insensitive partial match)
+  """
   trackName: String
 }
 
@@ -187,19 +249,29 @@ type SearchMusicResult {
 }
 
 input SearchTracksInput {
-  """Filter by album ID"""
+  """
+  Filter by album ID
+  """
   albumId: String
 
-  """Filter by artist ID"""
+  """
+  Filter by artist ID
+  """
   artistId: String
 
-  """Maximum number of results"""
+  """
+  Maximum number of results
+  """
   limit: Int = 50
 
-  """Filter by track name (case-insensitive partial match)"""
+  """
+  Filter by track name (case-insensitive partial match)
+  """
   name: String
 
-  """Number of results to skip"""
+  """
+  Number of results to skip
+  """
   offset: Int = 0
 }
 
@@ -209,22 +281,30 @@ enum Sex {
 }
 
 type Subscription {
-  """Subscribe to indexing job status updates"""
+  """
+  Subscribe to indexing job status updates
+  """
   indexingJobUpdated(jobId: String!): IndexingJob!
 }
 
 type Track {
-  """Album metadata"""
+  """
+  Album metadata
+  """
   album: AlbumBasic
   albumId: String
   artists: [Artist!]!
   date: DateTime
   discNumber: Int!
 
-  """Duration in milliseconds"""
+  """
+  Duration in milliseconds
+  """
   durationMs: Int!
 
-  """Linked FLAC file id if present"""
+  """
+  Linked FLAC file id if present
+  """
   flacFileId: String
   id: String!
   isrc: String
@@ -233,7 +313,9 @@ type Track {
 }
 
 input UpdateUserProfileInput {
-  """User sex chosen during profile setup"""
+  """
+  User sex chosen during profile setup
+  """
   sex: Sex
 }
 

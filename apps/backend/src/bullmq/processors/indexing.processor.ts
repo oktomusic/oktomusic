@@ -7,10 +7,12 @@ import { Processor, WorkerHost } from "@nestjs/bullmq";
 import { Inject, Logger } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
 import { Job } from "bullmq";
+import { Prisma } from "../../generated/prisma/client";
 import { PubSub } from "graphql-subscriptions";
 import sharp from "sharp";
 import { Temporal } from "temporal-polyfill";
 
+import type { Lyrics } from "@oktomusic/lyrics";
 import type { MetaflacTags } from "@oktomusic/metaflac-parser";
 
 import { INDEXING_JOB_UPDATED } from "../../api/indexing/indexing.constants";
@@ -39,6 +41,7 @@ import {
   normalizeIsrc,
   normalizeTitle,
 } from "./indexing.tracks.utils";
+import { findAndParseLyrics } from "./indexing.lyrics.utils";
 import {
   convertAlbumCoverCandidate,
   pickAlbumCoverCandidate,
@@ -54,6 +57,7 @@ interface IndexingFileData {
   readonly tags: MetaflacTags;
   readonly ffprobe: FFProbeOutput;
   readonly hash?: string; // TODO: implement file hashing
+  readonly lyrics: Lyrics | null;
 }
 
 interface IndexingFolderAlbumSummary {
@@ -145,6 +149,19 @@ export class IndexingProcessor extends WorkerHost {
           const tags = await this.metaflacService.extractTags(filePath);
           const ffprobe =
             await this.ffmpegService.ffprobeInformations(filePath);
+          const lyricsResult = await findAndParseLyrics(filePath);
+
+          // Report lyrics parsing errors
+          if (lyricsResult.error) {
+            await this.addWarning(context, {
+              type: IndexingReportType.ERROR_LYRICS_PARSING,
+              filePath: this.toRelativePath(
+                libraryPath,
+                lyricsResult.error.filePath,
+              ),
+              errorMessage: lyricsResult.error.message,
+            });
+          }
 
           if (!context.sourceData[folder.path]) {
             context.sourceData[folder.path] = {
@@ -153,7 +170,11 @@ export class IndexingProcessor extends WorkerHost {
             };
           }
 
-          context.sourceData[folder.path].files[filePath] = { tags, ffprobe };
+          context.sourceData[folder.path].files[filePath] = {
+            tags,
+            ffprobe,
+            lyrics: lyricsResult.lyrics,
+          };
         } catch (error) {
           const errorMessage =
             error instanceof MetaflacError ? error.message : "Unknown error";
@@ -725,6 +746,7 @@ export class IndexingProcessor extends WorkerHost {
           isrc: true,
           date: true,
           durationMs: true,
+          lyrics: true,
         },
       });
 
@@ -824,6 +846,7 @@ export class IndexingProcessor extends WorkerHost {
               durationMs: toInt(file.ffprobe.durationMs),
               artists,
               ffprobe: file.ffprobe,
+              lyrics: file.lyrics,
             };
           })
           .sort((a, b) =>
@@ -884,6 +907,7 @@ export class IndexingProcessor extends WorkerHost {
                     isrc: true,
                     date: true,
                     durationMs: true,
+                    lyrics: true,
                   },
                 });
 
@@ -938,7 +962,16 @@ export class IndexingProcessor extends WorkerHost {
                     f.date,
                   ) !== 0);
 
-              if (Object.keys(plan.patch).length > 0 || shouldUpdateDate) {
+              // TODO: Implement proper lyrics comparison that handles property ordering
+              // Currently always updates tracks with lyrics to ensure changes are detected
+              const shouldUpdateLyrics =
+                matched.lyrics !== null || f.lyrics !== null;
+
+              if (
+                Object.keys(plan.patch).length > 0 ||
+                shouldUpdateDate ||
+                shouldUpdateLyrics
+              ) {
                 const updated = await tx.track.update({
                   where: { id: matched.id },
                   data: {
@@ -947,6 +980,7 @@ export class IndexingProcessor extends WorkerHost {
                     date: shouldUpdateDate
                       ? plainDateToDate(f.date!)
                       : undefined,
+                    lyrics: f.lyrics ?? Prisma.JsonNull,
                   },
                   select: {
                     id: true,
@@ -957,6 +991,7 @@ export class IndexingProcessor extends WorkerHost {
                     isrc: true,
                     date: true,
                     durationMs: true,
+                    lyrics: true,
                   },
                 });
 
@@ -993,6 +1028,7 @@ export class IndexingProcessor extends WorkerHost {
                   isrc: f.isrc ?? null,
                   date: f.date ? plainDateToDate(f.date) : null,
                   durationMs: f.durationMs,
+                  lyrics: f.lyrics ?? Prisma.JsonNull,
                 },
                 select: {
                   id: true,
@@ -1003,6 +1039,7 @@ export class IndexingProcessor extends WorkerHost {
                   isrc: true,
                   date: true,
                   durationMs: true,
+                  lyrics: true,
                 },
               });
 
