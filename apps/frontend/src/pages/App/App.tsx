@@ -7,6 +7,7 @@ import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role } from "../../api/graphql/gql/graphql";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
 import PlayerControls from "../../components/Player/PlayerControls";
+import LyricsViewer from "../../components/LyricsViewer";
 
 import "./App.css";
 
@@ -55,6 +56,7 @@ function App() {
           )}
         </div>
       </div>
+      <LyricsViewer />
       <PlayerControls />
     </>
   );
