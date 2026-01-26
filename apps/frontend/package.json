@@ -46,7 +46,7 @@
     "@lingui/vite-plugin": "^5.8.0",
     "@oktomusic/vite-sri-manifest": "workspace:^",
     "@types/node": "catalog:default",
-    "@types/react": "^19.2.8",
+    "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
     "@vite-pwa/assets-generator": "^1.0.2",
     "@vitejs/plugin-react": "^5.1.2",
