@@ -13,6 +13,7 @@ export const ALBUM_QUERY = graphql(/* GraphQL */ `
       tracksByDisc {
         id
         flacFileId
+        hasLyrics
         name
         trackNumber
         discNumber

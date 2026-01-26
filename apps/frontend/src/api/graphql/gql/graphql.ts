@@ -384,6 +384,7 @@ export type AlbumQuery = {
         __typename?: "Track";
         id: string;
         flacFileId?: string | null;
+        hasLyrics: boolean;
         name: string;
         trackNumber: number;
         discNumber: number;
@@ -705,6 +706,10 @@ export const AlbumDocument = {
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "flacFileId" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "hasLyrics" },
                       },
                       { kind: "Field", name: { kind: "Name", value: "name" } },
                       {

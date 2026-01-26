@@ -41,6 +41,7 @@ describe("buildMediaMetadata", () => {
     const track: TrackWithAlbum = {
       id: "track_123",
       name: "Song A",
+      hasLyrics: false,
       artists: [
         { id: "artist_1", name: "Artist A" },
         { id: "artist_2", name: "Artist B" },
