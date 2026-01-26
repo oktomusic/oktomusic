@@ -51,7 +51,7 @@ function normalizeParagraphs(
 }
 
 export function parseTTMLtoLyrics(input: string): Lyrics {
-  const xml = parser.parse(input) as unknown;
+  const xml = parser.parse(input, true) as unknown;
   const root = pickRoot(xml);
   const pList = normalizeParagraphs(root);
 
