@@ -4,6 +4,10 @@ generator client {
   moduleFormat = "cjs"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "postgresql"
 }
@@ -59,6 +63,9 @@ model Track {
 
   // Source file (0..1)
   flacFile FlacFile?
+
+  /// [LyricsJSON] Optional lyrics data associated with the track
+  lyrics Json?
 
   @@unique([albumId, discNumber, trackNumber])
   @@index([albumId])
