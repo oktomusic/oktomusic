@@ -10,7 +10,7 @@
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --no-error-on-unmatched-pattern --fix apps/website"
   },
   "license": "AGPL-3.0-only",
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@10.28.2",
   "devDependencies": {
     "vitepress": "2.0.0-alpha.15",
     "vitepress-plugin-llms": "^1.10.0"
