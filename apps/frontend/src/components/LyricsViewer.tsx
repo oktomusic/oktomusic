@@ -1,18 +1,27 @@
-import { useAtomValue } from "jotai";
 import { useQuery } from "@apollo/client/react";
+import { useAtomValue } from "jotai";
 
 import { playerQueueCurrentTrack } from "../atoms/player/machine";
+import { translatorSupportAtom } from "../atoms/app/browser_support";
 import { TRACK_LYRICS_QUERY } from "../api/graphql/queries/trackLyrics";
+import { useLyricsLanguageDetection } from "../hooks/use_language_detector";
 
 export default function LyricsViewer() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const shouldFetchLyrics = Boolean(currentTrack && currentTrack.hasLyrics);
+  const translatorAvailable = useAtomValue(translatorSupportAtom);
 
   const queryResult = useQuery(TRACK_LYRICS_QUERY, {
     fetchPolicy: "cache-and-network",
     errorPolicy: "all",
     skip: !shouldFetchLyrics,
     variables: { id: currentTrack?.id ?? "" },
+  });
+
+  const trackData = queryResult.data?.track?.lyrics ?? [];
+  const languageDetectionState = useLyricsLanguageDetection({
+    enabled: translatorAvailable,
+    lyrics: trackData,
   });
 
   if (!currentTrack) {
@@ -31,21 +40,36 @@ export default function LyricsViewer() {
     return <div>Error loading lyrics: {queryResult.error.message}</div>;
   }
 
-  if (
-    !queryResult.data ||
-    !queryResult.data.track ||
-    !queryResult.data.track.lyrics
-  ) {
+  if (!queryResult.data?.track?.lyrics || trackData.length === 0) {
     return <div>No lyrics found for this track</div>;
   }
-
-  const trackData = queryResult.data.track.lyrics;
 
   return (
     <div>
       {trackData.map((lyricLine, index) => (
         <p key={index}>{lyricLine.t}</p>
       ))}
+      <div>
+        {translatorAvailable ? undefined : (
+          <span>Translator is not available</span>
+        )}
+        {languageDetectionState.status === "loading" && (
+          <span>Initializing language detector...</span>
+        )}
+        {languageDetectionState.status === "detecting" && (
+          <span>Detecting language...</span>
+        )}
+        <br />
+        {languageDetectionState.status === "ready" &&
+          languageDetectionState.detectedLanguage && (
+            <span>
+              Detected language: {languageDetectionState.detectedLanguage}
+            </span>
+          )}
+        {languageDetectionState.status === "error" && (
+          <span>Language detection error: {languageDetectionState.error}</span>
+        )}
+      </div>
     </div>
   );
 }

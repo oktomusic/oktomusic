@@ -51,6 +51,30 @@ export const browserSupportedAtom = atom(
   (get) => get(browserSupportAtom).supported,
 );
 
+/**
+ * @see https://www.w3.org/TR/audio-session
+ */
 export const audioSessionSupportAtom = atom<boolean>(
   navigator.audioSession !== undefined,
 );
+
+/**
+ * On-device translation and language detection APIs
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Translator_and_Language_Detector_APIs
+ */
+export const translatorSupportAtom = atom<boolean>(() => {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const globalScope = globalThis as typeof globalThis & {
+    Translator?: unknown;
+    LanguageDetector?: unknown;
+  };
+
+  return (
+    typeof globalScope.Translator !== "undefined" &&
+    typeof globalScope.LanguageDetector !== "undefined"
+  );
+});

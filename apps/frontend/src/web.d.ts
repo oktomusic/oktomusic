@@ -77,3 +77,105 @@ interface BeforeInstallPromptEvent extends Event {
   }>;
   prompt(): Promise<void>;
 }
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Translator_and_Language_Detector_APIs
+// https://webmachinelearning.github.io/translation-api
+// https://webmachinelearning.github.io/writing-assistance-apis/#shared-apis
+type Availability =
+  | "unavailable"
+  | "downloadable"
+  | "downloading"
+  | "available";
+
+interface CreateMonitor extends EventTarget {
+  ondownloadprogress:
+    | ((this: CreateMonitor, event: ProgressEvent) => void)
+    | null;
+}
+
+type CreateMonitorCallback = (monitor: CreateMonitor) => void;
+
+interface DestroyableModel {
+  destroy(): void;
+}
+
+interface Translator extends DestroyableModel {
+  readonly sourceLanguage: string;
+  readonly targetLanguage: string;
+  readonly inputQuota: number;
+
+  translate(
+    input: string,
+    options?: TranslatorTranslateOptions,
+  ): Promise<string>;
+  translateStreaming(
+    input: string,
+    options?: TranslatorTranslateOptions,
+  ): ReadableStream<string>;
+  measureInputUsage(
+    input: string,
+    options?: TranslatorTranslateOptions,
+  ): Promise<number>;
+}
+
+interface TranslatorConstructor {
+  create(options: TranslatorCreateOptions): Promise<Translator>;
+  availability(options: TranslatorCreateCoreOptions): Promise<Availability>;
+}
+
+declare const Translator: TranslatorConstructor;
+
+interface TranslatorCreateCoreOptions {
+  readonly sourceLanguage: string;
+  readonly targetLanguage: string;
+}
+
+interface TranslatorCreateOptions extends TranslatorCreateCoreOptions {
+  readonly signal?: AbortSignal;
+  readonly monitor?: CreateMonitorCallback;
+}
+
+interface TranslatorTranslateOptions {
+  readonly signal?: AbortSignal;
+}
+
+interface LanguageDetector extends DestroyableModel {
+  readonly expectedInputLanguages: readonly string[] | null;
+  readonly inputQuota: number;
+
+  detect(
+    input: string,
+    options?: LanguageDetectorDetectOptions,
+  ): Promise<LanguageDetectionResult[]>;
+  measureInputUsage(
+    input: string,
+    options?: LanguageDetectorDetectOptions,
+  ): Promise<number>;
+}
+
+interface LanguageDetectorConstructor {
+  create(options?: LanguageDetectorCreateOptions): Promise<LanguageDetector>;
+  availability(
+    options?: LanguageDetectorCreateCoreOptions,
+  ): Promise<Availability>;
+}
+
+declare const LanguageDetector: LanguageDetectorConstructor;
+
+interface LanguageDetectorCreateCoreOptions {
+  readonly expectedInputLanguages?: readonly string[];
+}
+
+interface LanguageDetectorCreateOptions extends LanguageDetectorCreateCoreOptions {
+  readonly signal?: AbortSignal;
+  readonly monitor?: CreateMonitorCallback;
+}
+
+interface LanguageDetectorDetectOptions {
+  readonly signal?: AbortSignal;
+}
+
+interface LanguageDetectionResult {
+  readonly detectedLanguage: string;
+  readonly confidence: number;
+}
