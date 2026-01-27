@@ -31,6 +31,13 @@
       ]
     },
     {
+      "label": "backend: studio",
+      "type": "shell",
+      "command": "pnpm run --filter @oktomusic/backend db:studio",
+      "isBackground": false,
+      "problemMatcher": []
+    },
+    {
       "label": "backend: tests",
       "type": "shell",
       "command": "pnpm --filter @oktomusic/backend test",
