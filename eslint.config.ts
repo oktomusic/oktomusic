@@ -153,6 +153,22 @@ export default defineConfig([
     },
   },
 
+  // @oktomusic/vibrant (tsdown)
+  {
+    files: ["packages/vibrant/**/*.ts"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
+      prettier,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: "./packages/vibrant/tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+
   // @oktomusic/vite-sri-manifest (tsdown)
   {
     files: ["packages/vite-sri-manifest/**/*.ts"],
