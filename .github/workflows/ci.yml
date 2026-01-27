@@ -32,6 +32,7 @@ jobs:
       - pkg-lyrics
       - pkg-metaflac-parser
       - pkg-api-schemas
+      - pkg-vibrant
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -168,6 +169,27 @@ jobs:
       - name: Lint
         run: |
           pnpm --filter "@oktomusic/api-schemas" run lint
+
+  pkg-vibrant:
+    name: "@oktomusic/vibrant"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build
+        run: pnpm --filter "@oktomusic/vibrant" build
+
+      - name: Lint
+        run: |
+          pnpm --filter "@oktomusic/vibrant" run lint
+
+      - name: Tests
+        run: |
+          pnpm --filter "@oktomusic/vibrant" run test
 
   website:
     name: "@oktomusic/website"

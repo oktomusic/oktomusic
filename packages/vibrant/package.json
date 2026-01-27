@@ -38,6 +38,12 @@
     "tsdown": "catalog:default"
   },
   "dependencies": {
+    "@vibrant/color": "^4.0.0",
+    "@vibrant/core": "^4.0.0",
+    "@vibrant/generator-default": "^4.0.3",
+    "@vibrant/image": "^4.0.0",
+    "@vibrant/quantizer-mmcq": "^4.0.0",
+    "sharp": "catalog:default",
     "temporal-polyfill": "catalog:default",
     "zod": "^4.3.6"
   }
