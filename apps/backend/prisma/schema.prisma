@@ -101,12 +101,21 @@ model FlacFile {
 // Artist -> Track -> many-to-many
 
 model Album {
-  id        String        @id @default(cuid(2))
-  name      String
-  date      DateTime?     @db.Date
-  coverHash String
-  artists   AlbumArtist[]
-  tracks    Track[]
+  id                     String        @id @default(cuid(2))
+  name                   String
+  date                   DateTime?     @db.Date
+  coverHash              String
+  // Precomputed dominant colors from the cover image
+  // Stored as hex strings, e.g. "#RRGGBB"
+  // https://vibrant.dev
+  coverColorVibrant      String
+  coverColorDarkVibrant  String
+  coverColorLightVibrant String
+  coverColorMuted        String
+  coverColorDarkMuted    String
+  coverColorLightMuted   String
+  artists                AlbumArtist[]
+  tracks                 Track[]
 }
 
 model Artist {

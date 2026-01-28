@@ -27,6 +27,7 @@ COPY packages/vite-sri-manifest/package.json packages/vite-sri-manifest/
 COPY packages/api-schemas/package.json packages/api-schemas/
 COPY packages/metaflac-parser/package.json packages/metaflac-parser/
 COPY packages/lyrics/package.json packages/lyrics/
+COPY packages/vibrant/package.json packages/vibrant/
 COPY apps/backend/package.json apps/backend/
 COPY apps/frontend/package.json apps/frontend/
 
@@ -36,6 +37,7 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
   --filter @oktomusic/metaflac-parser \
   --filter @oktomusic/lyrics \
   --filter @oktomusic/api-schemas \
+  --filter @oktomusic/vibrant \
   --filter @oktomusic/backend \
   --filter @oktomusic/frontend
 
@@ -43,6 +45,7 @@ COPY packages/vite-sri-manifest/ packages/vite-sri-manifest/
 COPY packages/api-schemas/ packages/api-schemas/
 COPY packages/metaflac-parser/ packages/metaflac-parser/
 COPY packages/lyrics/ packages/lyrics/
+COPY packages/vibrant/ packages/vibrant/
 COPY apps/backend/ apps/backend/
 COPY apps/frontend/ apps/frontend/
 
@@ -57,6 +60,9 @@ RUN pnpm run --filter @oktomusic/api-schemas build
 
 # Build the lyrics package first
 RUN pnpm run --filter @oktomusic/lyrics build
+
+# Build the vibrant package first
+RUN pnpm run --filter @oktomusic/vibrant build
 
 # Build the frontend
 RUN pnpm run --filter @oktomusic/frontend build
@@ -97,6 +103,7 @@ COPY --from=builder /usr/src/app/apps/backend/package.json ./apps/backend/
 COPY --from=builder /usr/src/app/packages/api-schemas/package.json ./packages/api-schemas/
 COPY --from=builder /usr/src/app/packages/lyrics/package.json ./packages/lyrics/
 COPY --from=builder /usr/src/app/packages/metaflac-parser/package.json ./packages/metaflac-parser/
+COPY --from=builder /usr/src/app/packages/vibrant/package.json ./packages/vibrant/
 
 # Install production dependencies only
 RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
@@ -116,6 +123,7 @@ COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 COPY --from=builder /usr/src/app/packages/api-schemas/dist ./packages/api-schemas/dist
 COPY --from=builder /usr/src/app/packages/lyrics/dist ./packages/lyrics/dist
 COPY --from=builder /usr/src/app/packages/metaflac-parser/dist ./packages/metaflac-parser/dist
+COPY --from=builder /usr/src/app/packages/vibrant/dist ./packages/vibrant/dist
 
 # Copy the generated Prisma client
 COPY --from=builder /usr/src/app/apps/backend/src/generated ./apps/backend/src/generated

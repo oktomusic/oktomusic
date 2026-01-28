@@ -42,6 +42,12 @@ type PrismaTrack = {
     id: string;
     name: string;
     date: Date | null;
+    coverColorVibrant: string;
+    coverColorDarkVibrant: string;
+    coverColorLightVibrant: string;
+    coverColorMuted: string;
+    coverColorDarkMuted: string;
+    coverColorLightMuted: string;
     artists: {
       order: number;
       artist: {
@@ -75,6 +81,12 @@ export class MusicService {
     id: string;
     name: string;
     date: Date | null;
+    coverColorVibrant: string;
+    coverColorDarkVibrant: string;
+    coverColorLightVibrant: string;
+    coverColorMuted: string;
+    coverColorDarkMuted: string;
+    coverColorLightMuted: string;
     artists: Array<{ order: number; artist: { id: string; name: string } }>;
   }): AlbumBasicModel {
     return {
@@ -82,6 +94,12 @@ export class MusicService {
       name: album.name,
       date: album.date,
       artists: this.mapArtists(album.artists),
+      coverColorVibrant: album.coverColorVibrant,
+      coverColorDarkVibrant: album.coverColorDarkVibrant,
+      coverColorLightVibrant: album.coverColorLightVibrant,
+      coverColorMuted: album.coverColorMuted,
+      coverColorDarkMuted: album.coverColorDarkMuted,
+      coverColorLightMuted: album.coverColorLightMuted,
     };
   }
 
@@ -135,6 +153,12 @@ export class MusicService {
     id: string;
     name: string;
     date: Date | null;
+    coverColorVibrant: string;
+    coverColorDarkVibrant: string;
+    coverColorLightVibrant: string;
+    coverColorMuted: string;
+    coverColorDarkMuted: string;
+    coverColorLightMuted: string;
     artists: Array<{ order: number; artist: { id: string; name: string } }>;
     tracks: PrismaTrack[];
   }): AlbumModel {
@@ -143,6 +167,12 @@ export class MusicService {
       name: album.name,
       date: album.date,
       artists: this.mapArtists(album.artists),
+      coverColorVibrant: album.coverColorVibrant,
+      coverColorDarkVibrant: album.coverColorDarkVibrant,
+      coverColorLightVibrant: album.coverColorLightVibrant,
+      coverColorMuted: album.coverColorMuted,
+      coverColorDarkMuted: album.coverColorDarkMuted,
+      coverColorLightMuted: album.coverColorLightMuted,
       tracksByDisc: this.groupTracksByDisc(album.tracks),
     };
   }

@@ -6,6 +6,12 @@ export const ALBUM_QUERY = graphql(/* GraphQL */ `
       id
       name
       date
+      coverColorVibrant
+      coverColorDarkVibrant
+      coverColorLightVibrant
+      coverColorMuted
+      coverColorDarkMuted
+      coverColorLightMuted
       artists {
         id
         name

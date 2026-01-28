@@ -4,6 +4,78 @@ import { performance } from "node:perf_hooks";
 
 import sharp from "sharp";
 
+import { getPaletteFromSharp } from "@oktomusic/vibrant";
+
+/**
+ * Vibrant color palette extracted from an album cover.
+ * All values are hex strings, e.g. "#RRGGBB".
+ */
+interface AlbumCoverColors {
+  readonly vibrant: string;
+  readonly darkVibrant: string;
+  readonly lightVibrant: string;
+  readonly muted: string;
+  readonly darkMuted: string;
+  readonly lightMuted: string;
+}
+
+/**
+ * Result of processing an album cover image.
+ * Contains the extracted vibrant color palette.
+ */
+interface AlbumCoverProcessingResult {
+  readonly colors: AlbumCoverColors;
+}
+
+/**
+ * Extract vibrant colors from a sharp image instance.
+ *
+ * @param srcImage - Sharp image instance to extract colors from
+ * @returns AlbumCoverColors with all 6 vibrant color values as hex strings
+ * @throws Error if any required color cannot be extracted
+ */
+async function extractAlbumCoverColors(
+  srcImage: sharp.Sharp,
+): Promise<AlbumCoverColors> {
+  const palette = await getPaletteFromSharp(srcImage);
+
+  const vibrant = palette.Vibrant?.hex;
+  const darkVibrant = palette.DarkVibrant?.hex;
+  const lightVibrant = palette.LightVibrant?.hex;
+  const muted = palette.Muted?.hex;
+  const darkMuted = palette.DarkMuted?.hex;
+  const lightMuted = palette.LightMuted?.hex;
+
+  if (
+    vibrant === undefined ||
+    darkVibrant === undefined ||
+    lightVibrant === undefined ||
+    muted === undefined ||
+    darkMuted === undefined ||
+    lightMuted === undefined
+  ) {
+    const missing: string[] = [];
+    if (vibrant === undefined) missing.push("Vibrant");
+    if (darkVibrant === undefined) missing.push("DarkVibrant");
+    if (lightVibrant === undefined) missing.push("LightVibrant");
+    if (muted === undefined) missing.push("Muted");
+    if (darkMuted === undefined) missing.push("DarkMuted");
+    if (lightMuted === undefined) missing.push("LightMuted");
+    throw new Error(
+      `Failed to extract all required colors from album cover. Missing: ${missing.join(", ")}`,
+    );
+  }
+
+  return {
+    vibrant,
+    darkVibrant,
+    lightVibrant,
+    muted,
+    darkMuted,
+    lightMuted,
+  };
+}
+
 const albumCoverCandidates = [
   "cover.png",
   "cover.avif",
@@ -66,35 +138,42 @@ async function convertAlbumCoverTo(
 }
 
 async function convertAlbumCoverCandidate(
-  candidatePath: string,
+  srcImage: sharp.Sharp,
   outputDir: string,
-): Promise<void> {
+): Promise<AlbumCoverProcessingResult> {
   await fs.mkdir(outputDir, { recursive: true });
 
-  const srcImage = sharp(candidatePath);
-  // Ensure the file is a valid image.
-  await srcImage.metadata();
+  // Extract vibrant colors and generate AVIF variants in parallel
+  const [colors] = await Promise.all([
+    extractAlbumCoverColors(srcImage),
+    (async () => {
+      const lossyStart = performance.now();
+      await Promise.all(
+        albumCoverSizes.map((size) =>
+          convertAlbumCoverTo(
+            srcImage,
+            path.resolve(outputDir, `cover_${size}.avif`),
+            size,
+          ),
+        ),
+      );
+      const lossyEnd = performance.now();
+      console.log(
+        `Album cover lossy conversions took ${(lossyEnd - lossyStart).toFixed(0)} ms`,
+      );
+    })(),
+  ]);
 
-  const lossyStart = performance.now();
-  await Promise.all(
-    albumCoverSizes.map((size) =>
-      convertAlbumCoverTo(
-        srcImage,
-        path.resolve(outputDir, `cover_${size}.avif`),
-        size,
-      ),
-    ),
-  );
-  const lossyEnd = performance.now();
-  console.log(
-    `Album cover lossy conversions took ${(lossyEnd - lossyStart).toFixed(0)} ms`,
-  );
+  return { colors };
 }
 
 async function pickAndConvertAlbumCover(
   srcPath: string,
   outputDir: string,
-): Promise<AlbumCoverCandidatePath | null> {
+): Promise<{
+  candidatePath: AlbumCoverCandidatePath;
+  result: AlbumCoverProcessingResult;
+} | null> {
   const candidatePath = await pickAlbumCoverCandidate(srcPath);
 
   console.log(`Picked album cover candidate: ${candidatePath}`);
@@ -103,8 +182,12 @@ async function pickAndConvertAlbumCover(
     return null;
   }
 
-  await convertAlbumCoverCandidate(candidatePath, outputDir);
-  return candidatePath;
+  const srcImage = sharp(candidatePath);
+  // Ensure the file is a valid image.
+  await srcImage.metadata();
+
+  const result = await convertAlbumCoverCandidate(srcImage, outputDir);
+  return { candidatePath, result };
 }
 
 export {
@@ -113,7 +196,13 @@ export {
   albumCoverSizes,
   convertAlbumCoverTo,
   convertAlbumCoverCandidate,
+  extractAlbumCoverColors,
   pickAndConvertAlbumCover,
 };
 
-export type { AlbumCoverSize, AlbumCoverSizeString };
+export type {
+  AlbumCoverColors,
+  AlbumCoverProcessingResult,
+  AlbumCoverSize,
+  AlbumCoverSizeString,
+};

@@ -43,7 +43,9 @@ import {
 } from "./indexing.tracks.utils";
 import { findAndParseLyrics } from "./indexing.lyrics.utils";
 import {
+  type AlbumCoverColors,
   convertAlbumCoverCandidate,
+  extractAlbumCoverColors,
   pickAlbumCoverCandidate,
 } from "../../common/utils/sharp-utils";
 import { dateToPlainDate, plainDateToDate } from "../../utils/date";
@@ -78,6 +80,7 @@ interface IndexingFolderData {
   albumId?: string;
   coverCandidatePath?: string;
   coverHash?: string;
+  coverColors?: AlbumCoverColors;
 }
 
 type IndexingFileMap = Record<string, IndexingFileData>;
@@ -256,8 +259,11 @@ export class IndexingProcessor extends WorkerHost {
         continue;
       }
 
+      // Validate the cover image by loading it with sharp
+      let srcImage: sharp.Sharp;
       try {
-        await sharp(candidatePath).metadata();
+        srcImage = sharp(candidatePath);
+        await srcImage.metadata();
       } catch (error) {
         await this.addWarning(context, {
           type: IndexingReportType.WARNING_FOLDER_METADATA,
@@ -271,14 +277,33 @@ export class IndexingProcessor extends WorkerHost {
         continue;
       }
 
+      // Compute cover hash
       const coverBytes = await fs.readFile(candidatePath);
       const coverHash = crypto
         .createHash("sha256")
         .update(coverBytes)
         .digest("hex");
 
+      // Extract vibrant colors from the cover image
+      let coverColors: AlbumCoverColors;
+      try {
+        coverColors = await extractAlbumCoverColors(srcImage);
+      } catch (error) {
+        await this.addWarning(context, {
+          type: IndexingReportType.WARNING_FOLDER_METADATA,
+          folderPath: this.toRelativePath(context.libraryPath, folderPath),
+          messages: [
+            `Failed to extract vibrant colors from album cover: ${this.toRelativePath(context.libraryPath, candidatePath)}`,
+            error instanceof Error ? error.message : "Unknown error",
+            "Album will not be created.",
+          ],
+        });
+        continue;
+      }
+
       context.sourceData[folderPath].coverCandidatePath = candidatePath;
       context.sourceData[folderPath].coverHash = coverHash;
+      context.sourceData[folderPath].coverColors = coverColors;
     }
 
     console.log(JSON.stringify(context.sourceData, null, 2));
@@ -434,6 +459,7 @@ export class IndexingProcessor extends WorkerHost {
           readonly trackCounts: number[];
           readonly date: Temporal.PlainDate | null;
           readonly coverHash: string;
+          readonly coverColors: AlbumCoverColors;
         }
       >();
 
@@ -479,8 +505,8 @@ export class IndexingProcessor extends WorkerHost {
           continue;
         }
 
-        // A valid cover is required to create a new album.
-        if (!data.coverCandidatePath || !data.coverHash) {
+        // A valid cover with colors is required to create a new album.
+        if (!data.coverCandidatePath || !data.coverHash || !data.coverColors) {
           continue;
         }
 
@@ -491,6 +517,7 @@ export class IndexingProcessor extends WorkerHost {
             trackCounts: summary.trackCounts,
             date: albumDate,
             coverHash: data.coverHash,
+            coverColors: data.coverColors,
           });
         } else if (albumDate) {
           const existing = albumsToCreateBySignature.get(signature);
@@ -523,6 +550,12 @@ export class IndexingProcessor extends WorkerHost {
                 name: album.name,
                 date: album.date ? plainDateToDate(album.date) : null,
                 coverHash: album.coverHash,
+                coverColorVibrant: album.coverColors.vibrant,
+                coverColorDarkVibrant: album.coverColors.darkVibrant,
+                coverColorLightVibrant: album.coverColors.lightVibrant,
+                coverColorMuted: album.coverColors.muted,
+                coverColorDarkMuted: album.coverColors.darkMuted,
+                coverColorLightMuted: album.coverColors.lightMuted,
                 artists: {
                   create: album.artists.map((artistName, order) => ({
                     order,
@@ -646,7 +679,8 @@ export class IndexingProcessor extends WorkerHost {
           data.albumId.length > 0 &&
           typeof data.coverCandidatePath === "string" &&
           typeof data.coverHash === "string" &&
-          data.coverHash.length > 0,
+          data.coverHash.length > 0 &&
+          data.coverColors !== undefined,
       );
 
       if (foldersWithCovers.length > 0) {
@@ -673,15 +707,25 @@ export class IndexingProcessor extends WorkerHost {
         for (const [folderPath, data] of foldersWithCovers) {
           const albumId = data.albumId!;
           const desiredHash = data.coverHash!;
+          const coverColors = data.coverColors!;
           const currentHash = dbCoverHash.get(albumId) ?? "";
 
           const isNew = createdAlbumIds.has(albumId);
           const hasChanged = currentHash !== desiredHash;
 
           if (!isNew && hasChanged) {
+            // Update cover hash and colors when cover has changed
             await this.prisma.album.update({
               where: { id: albumId },
-              data: { coverHash: desiredHash },
+              data: {
+                coverHash: desiredHash,
+                coverColorVibrant: coverColors.vibrant,
+                coverColorDarkVibrant: coverColors.darkVibrant,
+                coverColorLightVibrant: coverColors.lightVibrant,
+                coverColorMuted: coverColors.muted,
+                coverColorDarkMuted: coverColors.darkMuted,
+                coverColorLightMuted: coverColors.lightMuted,
+              },
             });
             dbCoverHash.set(albumId, desiredHash);
           }
@@ -696,12 +740,10 @@ export class IndexingProcessor extends WorkerHost {
               "albums",
               albumId,
             );
-            await (
-              convertAlbumCoverCandidate as (
-                candidatePath: string,
-                outputDir: string,
-              ) => Promise<void>
-            )(data.coverCandidatePath!, outputDir);
+            // Create a fresh sharp instance for AVIF conversion
+            // Colors were already extracted in step 4.5, so we only generate AVIF files here
+            const srcImage = sharp(data.coverCandidatePath);
+            await convertAlbumCoverCandidate(srcImage, outputDir);
           } catch (error) {
             await this.addWarning(context, {
               type: IndexingReportType.WARNING_FOLDER_METADATA,

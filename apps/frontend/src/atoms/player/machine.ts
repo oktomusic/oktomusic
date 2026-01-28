@@ -79,18 +79,22 @@ export interface VibrantColors {
   readonly lightMuted: string;
 }
 
-const albumCoverColors: VibrantColors = {
-  vibrant: "#9e4433",
-  darkVibrant: "#563614",
-  lightVibrant: "#e4b594",
-  muted: "#a06552",
-  darkMuted: "#5e3c2d",
-  lightMuted: "#d3c4b3",
-} as const;
+/** Derived vibrant colors from the current track's album cover. */
+export const playerCurrentTrackColors = atom<VibrantColors | null>((get) => {
+  const currentTrack = get(playerQueueCurrentTrack);
+  if (!currentTrack) {
+    return null;
+  }
 
-export const playerCurrentTrackColors = atom<VibrantColors | null>(
-  albumCoverColors,
-);
+  return {
+    vibrant: currentTrack.album.coverColorVibrant,
+    darkVibrant: currentTrack.album.coverColorDarkVibrant,
+    lightVibrant: currentTrack.album.coverColorLightVibrant,
+    muted: currentTrack.album.coverColorMuted,
+    darkMuted: currentTrack.album.coverColorDarkMuted,
+    lightMuted: currentTrack.album.coverColorLightMuted,
+  };
+});
 
 /** Derived media URL for the current track, or null if unavailable. */
 export const playerQueueCurrentTrackFile = atom<string | null>((get) => {

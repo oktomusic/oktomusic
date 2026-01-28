@@ -132,6 +132,9 @@ importers:
       '@oktomusic/metaflac-parser':
         specifier: workspace:^
         version: link:../../packages/metaflac-parser
+      '@oktomusic/vibrant':
+        specifier: workspace:^
+        version: link:../../packages/vibrant
       '@prisma/adapter-pg':
         specifier: ^7.3.0
         version: 7.3.0

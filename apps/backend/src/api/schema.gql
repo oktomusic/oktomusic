@@ -4,6 +4,36 @@
 
 type Album {
   artists: [Artist!]!
+
+  """
+  Dark muted color from cover art (hex string)
+  """
+  coverColorDarkMuted: String!
+
+  """
+  Dark vibrant color from cover art (hex string)
+  """
+  coverColorDarkVibrant: String!
+
+  """
+  Light muted color from cover art (hex string)
+  """
+  coverColorLightMuted: String!
+
+  """
+  Light vibrant color from cover art (hex string)
+  """
+  coverColorLightVibrant: String!
+
+  """
+  Muted color from cover art (hex string)
+  """
+  coverColorMuted: String!
+
+  """
+  Vibrant color from cover art (hex string)
+  """
+  coverColorVibrant: String!
   date: DateTime
   id: String!
   name: String!
@@ -16,6 +46,36 @@ type Album {
 
 type AlbumBasic {
   artists: [Artist!]!
+
+  """
+  Dark muted color from cover art (hex string)
+  """
+  coverColorDarkMuted: String!
+
+  """
+  Dark vibrant color from cover art (hex string)
+  """
+  coverColorDarkVibrant: String!
+
+  """
+  Light muted color from cover art (hex string)
+  """
+  coverColorLightMuted: String!
+
+  """
+  Light vibrant color from cover art (hex string)
+  """
+  coverColorLightVibrant: String!
+
+  """
+  Muted color from cover art (hex string)
+  """
+  coverColorMuted: String!
+
+  """
+  Vibrant color from cover art (hex string)
+  """
+  coverColorVibrant: String!
   date: DateTime
   id: String!
   name: String!

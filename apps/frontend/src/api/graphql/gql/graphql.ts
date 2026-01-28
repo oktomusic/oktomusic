@@ -34,6 +34,18 @@ export type Scalars = {
 export type Album = {
   __typename?: "Album";
   artists: Array<Artist>;
+  /** Dark muted color from cover art (hex string) */
+  coverColorDarkMuted: Scalars["String"]["output"];
+  /** Dark vibrant color from cover art (hex string) */
+  coverColorDarkVibrant: Scalars["String"]["output"];
+  /** Light muted color from cover art (hex string) */
+  coverColorLightMuted: Scalars["String"]["output"];
+  /** Light vibrant color from cover art (hex string) */
+  coverColorLightVibrant: Scalars["String"]["output"];
+  /** Muted color from cover art (hex string) */
+  coverColorMuted: Scalars["String"]["output"];
+  /** Vibrant color from cover art (hex string) */
+  coverColorVibrant: Scalars["String"]["output"];
   date?: Maybe<Scalars["DateTime"]["output"]>;
   id: Scalars["String"]["output"];
   name: Scalars["String"]["output"];
@@ -44,6 +56,18 @@ export type Album = {
 export type AlbumBasic = {
   __typename?: "AlbumBasic";
   artists: Array<Artist>;
+  /** Dark muted color from cover art (hex string) */
+  coverColorDarkMuted: Scalars["String"]["output"];
+  /** Dark vibrant color from cover art (hex string) */
+  coverColorDarkVibrant: Scalars["String"]["output"];
+  /** Light muted color from cover art (hex string) */
+  coverColorLightMuted: Scalars["String"]["output"];
+  /** Light vibrant color from cover art (hex string) */
+  coverColorLightVibrant: Scalars["String"]["output"];
+  /** Muted color from cover art (hex string) */
+  coverColorMuted: Scalars["String"]["output"];
+  /** Vibrant color from cover art (hex string) */
+  coverColorVibrant: Scalars["String"]["output"];
   date?: Maybe<Scalars["DateTime"]["output"]>;
   id: Scalars["String"]["output"];
   name: Scalars["String"]["output"];
@@ -378,6 +402,12 @@ export type AlbumQuery = {
     id: string;
     name: string;
     date?: any | null;
+    coverColorVibrant: string;
+    coverColorDarkVibrant: string;
+    coverColorLightVibrant: string;
+    coverColorMuted: string;
+    coverColorDarkMuted: string;
+    coverColorLightMuted: string;
     artists: Array<{ __typename?: "Artist"; id: string; name: string }>;
     tracksByDisc: Array<
       Array<{
@@ -705,6 +735,30 @@ export const AlbumDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "date" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "coverColorVibrant" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "coverColorDarkVibrant" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "coverColorLightVibrant" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "coverColorMuted" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "coverColorDarkMuted" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "coverColorLightMuted" },
+                },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "artists" },

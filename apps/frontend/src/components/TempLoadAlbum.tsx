@@ -8,17 +8,12 @@ import type {
   AlbumQuery,
   AlbumQueryVariables,
 } from "../api/graphql/gql/graphql";
-import {
-  playerQueueAtom,
-  playerQueueIndexAtom,
-  type TrackWithAlbum,
-} from "../atoms/player/machine";
+import { playerQueueAtom, type TrackWithAlbum } from "../atoms/player/machine";
 
 export default function TempLoadAlbum() {
-  const [albumId, setAlbumId] = useState("nk9ibahx1zs4x76tgjlfla3y");
+  const [albumId, setAlbumId] = useState("hlh8iz7vwkwl8r4hmopu5kx8");
 
   const setQueue = useSetAtom(playerQueueAtom);
-  const setQueueIndex = useSetAtom(playerQueueIndexAtom);
 
   const [loadAlbum, { data, loading, error }] = useLazyQuery<
     AlbumQuery,
@@ -35,6 +30,12 @@ export default function TempLoadAlbum() {
       id: album.id,
       name: album.name,
       artists: album.artists,
+      coverColorVibrant: album.coverColorVibrant,
+      coverColorDarkVibrant: album.coverColorDarkVibrant,
+      coverColorLightVibrant: album.coverColorLightVibrant,
+      coverColorMuted: album.coverColorMuted,
+      coverColorDarkMuted: album.coverColorDarkMuted,
+      coverColorLightMuted: album.coverColorLightMuted,
     };
 
     const nextQueue: TrackWithAlbum[] = album.tracksByDisc.flatMap((disc) =>
@@ -45,9 +46,8 @@ export default function TempLoadAlbum() {
       })),
     );
 
-    setQueue(nextQueue);
-    setQueueIndex(0);
-  }, [data, setQueue, setQueueIndex]);
+    setQueue((prev) => [...prev, ...nextQueue]);
+  }, [data, setQueue]);
 
   return (
     <form
