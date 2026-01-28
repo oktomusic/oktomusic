@@ -49,6 +49,9 @@ jobs:
       - name: Build @oktomusic/lyrics
         run: pnpm --filter "@oktomusic/lyrics" build
 
+      - name: Build @oktomusic/vibrant
+        run: pnpm --filter "@oktomusic/vibrant" build
+
       - name: Prisma generate
         run: pnpm --filter "@oktomusic/backend" run db:generate
 
