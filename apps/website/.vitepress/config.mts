@@ -29,6 +29,7 @@ export default defineConfig({
         text: "Advanced",
         items: [
           { text: "Configuration Reference", link: "/advanced/configuration" },
+          { text: "Kiosk Mode", link: "/advanced/kiosk" },
         ],
       },
     ],
