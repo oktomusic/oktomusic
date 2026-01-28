@@ -58,7 +58,14 @@ export default function PlayerControls() {
         <div className="flex h-full flex-col justify-center">
           <span className="font-semibold">{currentTrack?.name}</span>
           <span className="">
-            {currentTrack?.artists.map((artist) => artist.name).join(", ")}
+            {currentTrack?.artists.map((artist, index) => (
+              <span key={artist.id ?? index}>
+                <a href="#" className="hover:underline">
+                  {artist.name}
+                </a>
+                {index < (currentTrack?.artists.length ?? 0) - 1 && ", "}
+              </span>
+            ))}
           </span>
         </div>
       </div>

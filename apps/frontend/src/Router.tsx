@@ -16,13 +16,13 @@ import Player from "./pages/Player/Player.tsx";
 import SettingsAccount from "./pages/SettingsAccount/SettingsAccount.tsx";
 import SettingsClient from "./pages/SettingsClient/SettingsClient.tsx";
 import UnsupportedOverlay from "./pages/Unsupported/UnsupportedOverlay.tsx";
-import TempLoadAlbum from "./components/TempLoadAlbum.tsx";
 import { useScreenWakeLock } from "./hooks/wake_lock.ts";
 import { useStoragePersistence } from "./hooks/persistant_storage.ts";
 import { usePwaDeferedPrompt } from "./hooks/pwa_prompt.ts";
 import { useVibrantColorsProperties } from "./hooks/vibrant_colors.ts";
 import { useKioskExitHandler } from "./hooks/kiosk_exit_handler.ts";
 import { useSWRegister } from "./hooks/sw_register.ts";
+import Album from "./pages/Album/Album.tsx";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
@@ -48,12 +48,12 @@ export default function Router() {
             <PlayerProvider />
             <MediaSessionProvider />
             <AudioSessionProvider />
-            <TempLoadAlbum />
             <Routes>
               <Route element={<ProtectedRoutes />}>
                 <Route index element={<App />} />
                 <Route path="/appinfo" element={<AppInfo />} />
                 <Route path="/player" element={<Player />} />
+                <Route path="/album/:cuid" element={<Album />} />
                 <Route path="/settings/account" element={<SettingsAccount />} />
                 <Route path="/settings/client" element={<SettingsClient />} />
               </Route>

@@ -8,6 +8,7 @@ import { Role } from "../../api/graphql/gql/graphql";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
 import PlayerControls from "../../components/Player/PlayerControls";
 import LyricsViewer from "../../components/LyricsViewer";
+import TempLoadAlbum from "../../components/TempLoadAlbum";
 
 import "./App.css";
 
@@ -28,6 +29,7 @@ function App() {
     <>
       <div className="card">
         <div className="m-4 flex flex-col gap-2">
+          <TempLoadAlbum />
           <div>
             <p style={{ color: "green" }}>
               ✓ Logged in as {authSession.user.username}
@@ -57,6 +59,7 @@ function App() {
         </div>
       </div>
       <LyricsViewer />
+      <div className="flex-1"></div>
       <PlayerControls />
     </>
   );

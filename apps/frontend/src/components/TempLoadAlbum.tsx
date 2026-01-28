@@ -57,8 +57,9 @@ export default function TempLoadAlbum() {
         if (!trimmed) return;
         void loadAlbum({ variables: { id: trimmed } });
       }}
+      className="flex flex-row gap-2"
     >
-      <label htmlFor="temp-load-album-id">Album ID</label>
+      <label htmlFor="temp-load-album-id">Album ID:</label>
       <input
         id="temp-load-album-id"
         type="text"
