@@ -47,7 +47,7 @@
     "@types/hbs": "^4.0.5",
     "@types/pg": "^8.16.0",
     "@valkey/valkey-glide": "^2.2.6",
-    "bullmq": "^5.67.1",
+    "bullmq": "^5.67.2",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "express-session": "^1.19.0",
