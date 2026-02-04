@@ -13,6 +13,6 @@
   "packageManager": "pnpm@10.28.2",
   "devDependencies": {
     "vitepress": "2.0.0-alpha.15",
-    "vitepress-plugin-llms": "^1.10.0"
+    "vitepress-plugin-llms": "^1.11.0"
   }
 }
