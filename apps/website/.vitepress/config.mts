@@ -43,7 +43,12 @@ export default defineConfig({
 
     search: {
       provider: "local",
-    }
+    },
+
+    editLink: {
+      pattern:
+        "https://github.com/oktomusic/oktomusic/tree/master/apps/website/docs/:path",
+    },
   },
   lastUpdated: process.env.VITEPRESS_HOSTNAME ? true : false,
   cleanUrls: true,
