@@ -7,7 +7,7 @@
 	try_files {path} {path}.html {path}/index.html /404.html
 	file_server
 	header {
-		Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://static.cloudflareinsights.com https://api.iconify.design https://github.com; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests;"
+		Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://static.cloudflareinsights.com https://api.iconify.design https://github.com https://avatars.githubusercontent.com; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests;"
 		Referrer-Policy "no-referrer"
 		Cross-Origin-Resource-Policy "same-origin"
 		X-Frame-Options "DENY"
