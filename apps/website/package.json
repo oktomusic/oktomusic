@@ -12,7 +12,7 @@
   "license": "AGPL-3.0-only",
   "packageManager": "pnpm@10.28.2",
   "devDependencies": {
-    "vitepress": "2.0.0-alpha.15",
+    "vitepress": "2.0.0-alpha.16",
     "vitepress-plugin-llms": "^1.11.0"
   }
 }
