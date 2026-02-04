@@ -40,6 +40,10 @@ export default defineConfig({
       { icon: "youtube", link: "https://www.youtube.com/@OktomusicDev" },
       { icon: "reddit", link: "https://www.reddit.com/r/oktomusic" },
     ],
+
+    search: {
+      provider: "local",
+    }
   },
   lastUpdated: process.env.VITEPRESS_HOSTNAME ? true : false,
   cleanUrls: true,
