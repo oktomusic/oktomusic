@@ -7,3 +7,6 @@
 )
 
 = Oktomusic
+
+#image("../common/interface.excalidraw.svg")
+#image("../common/project.excalidraw.svg")
