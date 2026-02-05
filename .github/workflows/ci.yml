@@ -343,10 +343,10 @@ jobs:
         uses: typst-community/setup-typst@v4
 
       - name: Build Project Report
-        run: typst compile docs/certification/oktomusic_project_report_fr.typ docs/certification/oktomusic_project_report_fr.pdf
+        run: typst compile --root . docs/certification/oktomusic_project_report_fr.typ docs/certification/oktomusic_project_report_fr.pdf
 
       - name: Build Project Presentation
-        run: typst compile docs/certification/oktomusic_project_presentation_fr.typ docs/certification/oktomusic_project_presentation_fr.pdf
+        run: typst compile --root . docs/certification/oktomusic_project_presentation_fr.typ docs/certification/oktomusic_project_presentation_fr.pdf
 
       - name: Upload PDFs as Artifacts
         uses: actions/upload-artifact@v6
