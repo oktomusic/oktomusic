@@ -20,5 +20,16 @@
       "type": "http",
       "url": "https://api.githubcopilot.com/mcp/"
     },
-  }
+    "io.github.ChromeDevTools/chrome-devtools-mcp": {
+      "command": "pnpm",
+      "args": [
+        "dlx",
+        "chrome-devtools-mcp@latest",
+        "--no-usage-statistics"
+      ],
+      "env": {},
+      "type": "stdio"
+    }
+  },
+  "inputs": []
 }
