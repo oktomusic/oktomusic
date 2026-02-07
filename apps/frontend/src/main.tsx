@@ -24,7 +24,7 @@ createRoot(document.getElementById("root")!).render(
     {import.meta.env.DEV ? (
       <>
         <style>{jotaiCSS}</style>
-        <DevTools position="top-right" />
+        <DevTools position="top-left" />
       </>
     ) : null}
     <ApolloProvider client={apolloClient}>

@@ -27,7 +27,7 @@
 
 #app-shell {
   box-sizing: border-box;
-  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
   padding-top: env(titlebar-area-height, 0px);
   overflow: hidden;
@@ -38,7 +38,7 @@
   /* Customize scrollbars */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-sky-800) transparent;
+    scrollbar-color: var(--color-zinc-700) transparent;
   }
 }
 
@@ -46,6 +46,77 @@
   #login-install-button {
     display: none;
   }
+}
+
+/* PWA Utilities */
+
+@media (display-mode: standalone) {
+  .hide-in-standalone {
+    display: none !important;
+  }
+}
+
+/* Content grid layout */
+
+#oktomusic\:content-grid {
+  --panel-left-expanded: 16rem; /* 64 * 0.25rem */
+  --panel-left-collapsed: 3.5rem; /* 14 * 0.25rem */
+  --panel-right-width: 20rem; /* 80 * 0.25rem */
+
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 0.5rem;
+  padding-inline: 0.5rem;
+  min-height: 0;
+  flex: 1 1 0%;
+}
+
+#oktomusic\:content-grid[data-left="expanded"][data-right="visible"] {
+  grid-template-columns: var(--panel-left-expanded) 1fr var(--panel-right-width);
+}
+
+#oktomusic\:content-grid[data-left="expanded"][data-right="hidden"] {
+  grid-template-columns: var(--panel-left-expanded) 1fr;
+}
+
+#oktomusic\:content-grid[data-left="collapsed"][data-right="visible"] {
+  grid-template-columns: var(--panel-left-collapsed) 1fr var(
+      --panel-right-width
+    );
+}
+
+#oktomusic\:content-grid[data-left="collapsed"][data-right="hidden"] {
+  grid-template-columns: var(--panel-left-collapsed) 1fr;
+}
+
+/* Main area and overlay occupy the same grid cell */
+#oktomusic\:panel-center {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 0;
+}
+
+#oktomusic\:panel-overlay {
+  grid-column: 2;
+  grid-row: 1;
+  z-index: 10;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Panels must never cause global scroll */
+#oktomusic\:panel-left {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#oktomusic\:panel-right {
+  grid-column: 3;
+  grid-row: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* Vibrant Colors properties */

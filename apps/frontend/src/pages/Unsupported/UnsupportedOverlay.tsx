@@ -10,11 +10,11 @@ export function UnsupportedOverlay({ missing }: UnsupportedOverlayProps) {
 
   return (
     <div className="min-h-app-shell flex w-full sm:items-center sm:justify-center">
-      <div className="child-scroll bg-sky-950 p-6 select-none sm:rounded-md">
+      <div className="child-scroll bg-zinc-900 p-6 select-none sm:rounded-md">
         <h1 className="w-full text-center text-2xl">
           {t`Upgrade to a supported Chromium browser`}
         </h1>
-        <ul className="my-6 grid w-full grid-cols-1 divide-y divide-sky-900 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+        <ul className="my-6 grid w-full grid-cols-1 divide-y divide-zinc-600 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {supportedBrowsers.map((browser) => (
             <li key={browser.name} className="p-4 text-center">
               <a

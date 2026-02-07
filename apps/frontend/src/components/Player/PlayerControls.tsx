@@ -4,6 +4,8 @@ import {
   HiArrowTopRightOnSquare,
   HiBackward,
   HiForward,
+  HiOutlineQueueList,
+  HiOutlineSquare2Stack,
   HiPause,
   HiPlay,
 } from "react-icons/hi2";
@@ -20,10 +22,15 @@ import {
   requestSeekAtom,
 } from "../../atoms/player/machine";
 import { settingClientKioskMode } from "../../atoms/app/settings_client";
+import {
+  panelOverlayVisibleAtom,
+  panelRightVisibleAtom,
+} from "../../atoms/app/panels";
 import { pipOpenAtom } from "../../atoms/player/pip";
 import { formatDuration } from "../../utils/format_duration";
 
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
+import { OktoSlider } from "../Base/OktoSlider";
 
 export default function PlayerControls() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
@@ -41,6 +48,8 @@ export default function PlayerControls() {
   const requestSeek = useSetAtom(requestSeekAtom);
 
   const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
+  const [rightVisible, setRightVisible] = useAtom(panelRightVisibleAtom);
+  const [overlayVisible, setOverlayVisible] = useAtom(panelOverlayVisibleAtom);
 
   return (
     <div className="flex h-24 w-full flex-row justify-between p-2">
@@ -120,15 +129,14 @@ export default function PlayerControls() {
           <label htmlFor="player-seek" className="sr-only">
             {t`Seek`}
           </label>
-          <input
+          <OktoSlider
             id="player-seek"
-            type="range"
             min={0}
             max={Math.max(0, playbackDuration)}
             step={250}
             value={Math.min(playbackPosition, playbackDuration || 0)}
-            onChange={(event) => {
-              requestSeek(Number(event.target.value));
+            onChange={(v) => {
+              requestSeek(v);
             }}
             className="w-full"
           />
@@ -144,8 +152,34 @@ export default function PlayerControls() {
       </div>
       <div
         id="oktomusic:player:additional"
-        className="mr-2 flex h-full w-full flex-row place-content-end justify-end gap-2"
+        className="mr-2 flex h-full w-full flex-row items-center justify-end gap-2"
       >
+        <button
+          type="button"
+          onClick={() => {
+            setOverlayVisible((prev) => !prev);
+          }}
+          aria-label={overlayVisible ? t`Hide overlay` : t`Show overlay`}
+          title={overlayVisible ? t`Hide overlay` : t`Show overlay`}
+          className={`rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2 ${
+            overlayVisible ? "text-white" : "text-slate-500"
+          }`}
+        >
+          <HiOutlineSquare2Stack className="size-6" />
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setRightVisible((prev) => !prev);
+          }}
+          aria-label={rightVisible ? t`Hide queue` : t`Show queue`}
+          title={rightVisible ? t`Hide queue` : t`Show queue`}
+          className={`rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2 ${
+            rightVisible ? "text-white" : "text-slate-500"
+          }`}
+        >
+          <HiOutlineQueueList className="size-6" />
+        </button>
         {!kioskModeEnabled && (
           <button
             onClick={() => {

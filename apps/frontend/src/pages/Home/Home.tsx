@@ -6,13 +6,12 @@ import { authSessionAtom } from "../../atoms/auth/atoms";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role } from "../../api/graphql/gql/graphql";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
-import PlayerControls from "../../components/Player/PlayerControls";
 import LyricsViewer from "../../components/LyricsViewer";
 import TempLoadAlbum from "../../components/TempLoadAlbum";
 
-import "./App.css";
+import "./Home.css";
 
-function App() {
+function Home() {
   const authSession = useAtomValue(authSessionAtom);
 
   const { data: userData } = useQuery(ME_QUERY, {
@@ -40,9 +39,6 @@ function App() {
             <Link to="/player">Player</Link>
           </div>
           <div>
-            <a href="/api/auth/logout">Logout</a>
-          </div>
-          <div>
             <Link to="/appinfo">App Info</Link>
           </div>
           <div>
@@ -60,9 +56,8 @@ function App() {
       </div>
       <LyricsViewer />
       <div className="flex-1"></div>
-      <PlayerControls />
     </>
   );
 }
 
-export default App;
+export default Home;
