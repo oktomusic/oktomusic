@@ -1,11 +1,17 @@
 import { useAtomValue } from "jotai";
 
-import { playerQueueAtom } from "../atoms/player/machine";
+import { playerQueueAtom, playerQueueIndexAtom } from "../atoms/player/machine";
 import { panelRightVisibleAtom } from "../atoms/app/panels";
+import { QueueTrack } from "../components/QueueTrack/QueueTrack";
 
 export function PanelRight() {
   const visible = useAtomValue(panelRightVisibleAtom);
+  const queueIndex = useAtomValue(playerQueueIndexAtom);
   const queue = useAtomValue(playerQueueAtom);
+
+  // const currentTrack = queue[queueIndex];
+
+  const nextQueue = queue.slice(queueIndex + 1);
 
   if (!visible) {
     return null;
@@ -18,13 +24,11 @@ export function PanelRight() {
       aria-label="Queue"
     >
       <p className="p-2 text-sm font-semibold text-white/70">Queue</p>
-      <div className="flex-1 px-2">
-        {queue.map((item) => (
-          <div key={item.id} className="py-1 text-sm">
-            {item.name}
-          </div>
+      <ol className="flex-1 overflow-auto px-2">
+        {nextQueue.map((item, index) => (
+          <QueueTrack key={index} track={item} />
         ))}
-      </div>
+      </ol>
     </aside>
   );
 }

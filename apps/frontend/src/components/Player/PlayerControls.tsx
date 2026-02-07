@@ -56,6 +56,7 @@ export default function PlayerControls() {
       <div id="oktomusic:player:title" className="flex w-full flex-row gap-2">
         <img
           className="m-2 aspect-square rounded-sm"
+          fetchPriority="high"
           src={
             currentTrack
               ? `/api/album/${currentTrack.album.id}/cover/256`

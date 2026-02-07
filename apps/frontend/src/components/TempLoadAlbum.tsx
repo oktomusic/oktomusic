@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLazyQuery } from "@apollo/client/react";
 import { useSetAtom } from "jotai";
 
@@ -12,20 +12,23 @@ import { playerQueueAtom, type TrackWithAlbum } from "../atoms/player/machine";
 
 export default function TempLoadAlbum() {
   const [albumId, setAlbumId] = useState("hlh8iz7vwkwl8r4hmopu5kx8");
+  const [lastLoadedAlbum, setLastLoadedAlbum] = useState<string | null>(null);
 
   const setQueue = useSetAtom(playerQueueAtom);
 
-  const [loadAlbum, { data, loading, error }] = useLazyQuery<
+  const [loadAlbum, { loading, error }] = useLazyQuery<
     AlbumQuery,
     AlbumQueryVariables
   >(ALBUM_QUERY, { fetchPolicy: "network-only" });
 
-  useEffect(() => {
-    if (!data) {
+  const handleLoadAlbum = async (id: string) => {
+    const result = await loadAlbum({ variables: { id } });
+
+    if (!result.data) {
       return;
     }
 
-    const album = data.album;
+    const album = result.data.album;
     const albumBasic: AlbumBasic = {
       id: album.id,
       name: album.name,
@@ -47,7 +50,8 @@ export default function TempLoadAlbum() {
     );
 
     setQueue((prev) => [...prev, ...nextQueue]);
-  }, [data, setQueue]);
+    setLastLoadedAlbum(album.name);
+  };
 
   return (
     <form
@@ -55,7 +59,7 @@ export default function TempLoadAlbum() {
         e.preventDefault();
         const trimmed = albumId.trim();
         if (!trimmed) return;
-        void loadAlbum({ variables: { id: trimmed } });
+        void handleLoadAlbum(trimmed);
       }}
       className="flex flex-row gap-2"
     >
@@ -70,11 +74,8 @@ export default function TempLoadAlbum() {
         {loading ? "Loading…" : "Load"}
       </button>
       {error ? <div role="alert">{error.message}</div> : null}
-      {data ? (
-        <div aria-live="polite">
-          Queue replaced with: {data.album.name} (
-          {data.album.tracksByDisc.flat().length} tracks)
-        </div>
+      {lastLoadedAlbum ? (
+        <div aria-live="polite">Added {lastLoadedAlbum} to queue</div>
       ) : null}
     </form>
   );

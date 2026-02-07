@@ -1,0 +1,4 @@
+.queue-track {
+  display: flex;
+  flex-direction: row;
+}
