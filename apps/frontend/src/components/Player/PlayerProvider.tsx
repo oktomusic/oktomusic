@@ -8,6 +8,7 @@ import {
   playerPlaybackPositionAtom,
   playerPlaybackStateAtom,
   playerQueueCurrentTrackFile,
+  playerQueueIndexAtom,
   playerSeekRequestAtom,
   playerShouldPlayAtom,
 } from "../../atoms/player/machine";
@@ -15,6 +16,7 @@ import {
 export default function PlayerProvider() {
   const [audioContext, setAudioContext] = useAtom(playerAudioContextAtom);
   const currentTrackFile = useAtomValue(playerQueueCurrentTrackFile);
+  const queueIndex = useAtomValue(playerQueueIndexAtom);
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
   const [seekRequestMs, setSeekRequestMs] = useAtom(playerSeekRequestAtom);
 
@@ -185,6 +187,10 @@ export default function PlayerProvider() {
       return;
     }
 
+    // Reset playback position when queue index changes (even if URL is the same)
+    el.currentTime = 0;
+    setPlaybackPosition(0);
+
     if (!shouldPlay) {
       el.pause();
       setPlaybackState("paused");
@@ -208,6 +214,7 @@ export default function PlayerProvider() {
   }, [
     audioContext,
     currentTrackFile,
+    queueIndex,
     setPlaybackDuration,
     setPlaybackPosition,
     setPlaybackState,
