@@ -187,9 +187,20 @@ export default function PlayerProvider() {
       return;
     }
 
-    // Reset playback position when queue index changes (even if URL is the same)
+    // Reset playback position when track changes
     el.currentTime = 0;
     setPlaybackPosition(0);
+  }, [
+    currentTrackFile,
+    queueIndex,
+    setPlaybackDuration,
+    setPlaybackPosition,
+    setPlaybackState,
+  ]);
+
+  useEffect(() => {
+    const el = audioEl1.current;
+    if (!el || !currentTrackFile) return;
 
     if (!shouldPlay) {
       el.pause();
@@ -211,15 +222,7 @@ export default function PlayerProvider() {
         setPlaybackState("paused");
       }
     })();
-  }, [
-    audioContext,
-    currentTrackFile,
-    queueIndex,
-    setPlaybackDuration,
-    setPlaybackPosition,
-    setPlaybackState,
-    shouldPlay,
-  ]);
+  }, [audioContext, currentTrackFile, setPlaybackState, shouldPlay]);
 
   useEffect(() => {
     const el = audioEl1.current;
