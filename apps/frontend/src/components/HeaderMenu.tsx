@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 import { useAtomValue } from "jotai";
 import {
+  HiChevronLeft,
+  HiChevronRight,
   HiOutlineArrowDownCircle,
   HiOutlineArrowRightOnRectangle,
   HiOutlineCog6Tooth,
@@ -10,10 +12,12 @@ import {
 import { t } from "@lingui/core/macro";
 
 import { pwaDeferredPromptAtom } from "../atoms/app/atoms";
+import { useNavigationHistory } from "../hooks/use_navigation_history";
 import { OktoMenu, OktoMenuItem } from "./Base/OktoMenu";
 
 export function HeaderMenu() {
   const pwaDeferedPrompt = useAtomValue(pwaDeferredPromptAtom);
+  const { canGoBack, canGoForward, goBack, goForward } = useNavigationHistory();
   const menuItems: OktoMenuItem[] = [
     {
       type: "button",
@@ -43,6 +47,26 @@ export function HeaderMenu() {
 
   return (
     <div className="flex h-14 flex-row gap-2 p-2">
+      <div className="ml-40 flex flex-row items-center gap-2">
+        <button
+          className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+          onClick={goBack}
+          disabled={!canGoBack}
+          aria-label={t`Go back`}
+          title={t`Go back`}
+        >
+          <HiChevronLeft className="size-6" />
+        </button>
+        <button
+          className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+          onClick={goForward}
+          disabled={!canGoForward}
+          aria-label={t`Go forward`}
+          title={t`Go forward`}
+        >
+          <HiChevronRight className="size-6" />
+        </button>
+      </div>
       <div className="flex w-full grow"></div>
       <div className="mr-2 flex flex-row items-center justify-end gap-2">
         {pwaDeferedPrompt && (
