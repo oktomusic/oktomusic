@@ -36,9 +36,6 @@ function Home() {
             <Link to="/dashboard">Go to Dashboard</Link>
           </div>
           <div>
-            <Link to="/player">Player</Link>
-          </div>
-          <div>
             <Link to="/appinfo">App Info</Link>
           </div>
           <div>
