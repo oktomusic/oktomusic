@@ -23,7 +23,7 @@
     "test:e2e:headed": "playwright test --headed"
   },
   "keywords": [],
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.29.2",
   "devDependencies": {
     "@commitlint/cli": "^20.4.1",
     "@commitlint/config-conventional": "^20.4.1",
@@ -45,9 +45,9 @@
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tsx": "^4.21.0",
-    "typescript-eslint": "^8.54.0",
-    "vite-tsconfig-paths": "^6.0.5",
+    "typescript-eslint": "^8.55.0",
+    "vite-tsconfig-paths": "^6.1.0",
     "vitest": "^4.0.18",
-    "wrangler": "^4.62.0"
+    "wrangler": "^4.64.0"
   }
 }
