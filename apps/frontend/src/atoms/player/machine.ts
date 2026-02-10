@@ -54,6 +54,21 @@ export const handleNextTrackAtom = atom(null, (get, set) => {
   set(playerShouldPlayAtom, true);
 });
 
+/** Move to a specific track in the queue by index. */
+export const handleSeekToQueueIndexAtom = atom(
+  null,
+  (get, set, targetIndex: number) => {
+    const queue = get(playerQueueAtom);
+
+    if (queue.length === 0 || targetIndex < 0 || targetIndex >= queue.length) {
+      return;
+    }
+
+    set(playerQueueIndexAtom, targetIndex);
+    set(playerShouldPlayAtom, true);
+  },
+);
+
 /** Derived current track from queue + index, safe for empty queues. */
 export const playerQueueCurrentTrack = atom<TrackWithAlbum | null>((get) => {
   const queue = get(playerQueueAtom);
