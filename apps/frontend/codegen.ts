@@ -8,6 +8,18 @@ const config: CodegenConfig = {
     "src/api/graphql/gql/": {
       preset: "client",
       plugins: [],
+      config: {
+        scalars: {
+          DateTime: "Date",
+        },
+        nonOptionalTypename: true,
+        avoidOptionals: {
+          field: true,
+          inputValue: false,
+          object: false,
+          defaultValue: false,
+        },
+      },
     },
   },
 };

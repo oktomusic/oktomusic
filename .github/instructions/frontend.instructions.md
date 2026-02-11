@@ -37,3 +37,12 @@ function MyComponent(props: MyComponentProps) {
   return <h1>{props.title}</h1>;
 }
 ```
+
+## GraphQL
+
+- Queries MUST be defined in `apps/frontend/src/api/graphql/queries`
+- Mutations MUST be defined in `apps/frontend/src/api/graphql/mutations`
+- Subscriptions MUST be defined in `apps/frontend/src/api/graphql/subscriptions`
+- Codegen MUST be used after any change to the GraphQL schema or queries/mutations/subscriptions, with the command `pnpm --filter @oktomusic/frontend codegen`
+- Dates are sent by the backend as ISO strings, codegen give them type `Date` but that won't work unless the Apollo Client in `apps/frontend/src/api/graphql/client.ts` is configured to parse it from string
+- Do not EVER use `new Date()` on a type that is already supposed to be a `Date`

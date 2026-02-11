@@ -4,6 +4,8 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { Kind, OperationTypeNode } from "graphql";
 import { createClient } from "graphql-ws";
 
+import { parseDateTime } from "../../utils/parse_datetime";
+
 export function createApolloClient() {
   const httpLink = new HttpLink({ uri: "/api/graphql" });
 
@@ -29,6 +31,59 @@ export function createApolloClient() {
 
   return new ApolloClient({
     link: splitLink,
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        User: {
+          fields: {
+            createdAt: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+            updatedAt: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+          },
+        },
+        Album: {
+          fields: {
+            date: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+          },
+        },
+        AlbumBasic: {
+          fields: {
+            date: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+          },
+        },
+        Track: {
+          fields: {
+            date: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+          },
+        },
+        IndexingJob: {
+          fields: {
+            completedAt: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+          },
+        },
+      },
+    }),
   });
 }
