@@ -6,6 +6,7 @@ import {
   HiOutlineArrowDownCircle,
   HiOutlineArrowRightOnRectangle,
   HiOutlineCog6Tooth,
+  HiOutlineHome,
   HiOutlineInformationCircle,
   HiOutlineUser,
 } from "react-icons/hi2";
@@ -66,6 +67,12 @@ export function HeaderMenu() {
         >
           <HiChevronRight className="size-6" />
         </button>
+        <Link
+          to="/"
+          className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <HiOutlineHome className="size-6" />
+        </Link>
       </div>
       <div className="flex w-full grow"></div>
       <div className="mr-2 flex flex-row items-center justify-end gap-2">
