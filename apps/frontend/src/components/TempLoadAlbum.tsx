@@ -30,8 +30,10 @@ export default function TempLoadAlbum() {
 
     const album = result.data.album;
     const albumBasic: AlbumBasic = {
+      __typename: "AlbumBasic",
       id: album.id,
       name: album.name,
+      date: album.date,
       artists: album.artists,
       coverColorVibrant: album.coverColorVibrant,
       coverColorDarkVibrant: album.coverColorDarkVibrant,
@@ -46,6 +48,9 @@ export default function TempLoadAlbum() {
         ...track,
         albumId: album.id,
         album: albumBasic,
+        date: null,
+        lyrics: null,
+        isrc: null,
       })),
     );
 

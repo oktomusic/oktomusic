@@ -160,7 +160,7 @@ export default function IndexingControl() {
           {jobStatus.completedAt ? (
             <div>
               <strong>Completed:</strong>{" "}
-              {new Date(jobStatus.completedAt as string).toLocaleString()}
+              {new Date(jobStatus.completedAt).toLocaleString()}
             </div>
           ) : null}
           {jobStatus.warnings && jobStatus.warnings.length > 0 ? (

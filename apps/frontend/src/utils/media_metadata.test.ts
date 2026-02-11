@@ -39,16 +39,23 @@ describe("buildMediaMetadata", () => {
     vi.mocked(getMediaImages).mockReturnValue(artwork);
 
     const track: TrackWithAlbum = {
+      __typename: "Track",
       id: "track_123",
       name: "Song A",
       hasLyrics: false,
+      date: null,
+      lyrics: null,
+      isrc: null,
+      flacFileId: null,
       artists: [
-        { id: "artist_1", name: "Artist A" },
-        { id: "artist_2", name: "Artist B" },
+        { __typename: "Artist", id: "artist_1", name: "Artist A" },
+        { __typename: "Artist", id: "artist_2", name: "Artist B" },
       ],
       album: {
+        __typename: "AlbumBasic",
         id: "alb_123",
         name: "Album A",
+        date: null,
         artists: [],
         coverColorVibrant: "#000000",
         coverColorDarkVibrant: "#000000",
@@ -60,6 +67,7 @@ describe("buildMediaMetadata", () => {
       discNumber: 1,
       trackNumber: 1,
       durationMs: 210_000,
+      albumId: "alb_123",
     };
     const metadata = buildMediaMetadata(track);
 
