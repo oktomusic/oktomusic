@@ -25,7 +25,7 @@ export function OktoListbox<T extends string>(props: OktoListboxProps<T>) {
       <ListboxButton
         id={props.id}
         aria-describedby={props["aria-describedby"]}
-        className="relative flex min-w-32 items-center justify-between gap-2 rounded-lg bg-zinc-800 px-3 py-1.5 text-sm/6 text-white focus:not-data-focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
+        className="relative flex min-w-44 items-center justify-between gap-2 rounded-lg bg-zinc-800 px-3 py-1.5 text-sm/6 text-white focus:not-data-focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
       >
         {props.options[props.value]}
         <HiChevronDown
