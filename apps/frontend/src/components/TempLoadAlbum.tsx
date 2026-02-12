@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import { useLazyQuery } from "@apollo/client/react";
 import { useSetAtom } from "jotai";
 
@@ -75,13 +76,20 @@ export default function TempLoadAlbum() {
         value={albumId}
         onChange={(e) => setAlbumId(e.target.value)}
       />
-      <button type="submit" disabled={!albumId.trim() || loading}>
+      <button
+        className="rounded-lg bg-zinc-700"
+        type="submit"
+        disabled={!albumId.trim() || loading}
+      >
         {loading ? "Loading…" : "Load"}
       </button>
       {error ? <div role="alert">{error.message}</div> : null}
       {lastLoadedAlbum ? (
         <div aria-live="polite">Added {lastLoadedAlbum} to queue</div>
       ) : null}
+      <Link to={`/album/${albumId.trim()}`} className="rounded-lg bg-zinc-700">
+        View Album
+      </Link>
     </form>
   );
 }
