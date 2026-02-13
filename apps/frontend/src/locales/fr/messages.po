@@ -13,9 +13,29 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/HeaderMenu.tsx:66
+#: src/pages/Album/Album.tsx:70
+msgid "{count, plural, one {# track} other {# tracks}}"
+msgstr "{count, plural, one {# titre} other {# titres}}"
+
+#: src/components/DurationLong.tsx:15
+msgid "{hours}h {minutes}min"
+msgstr "{hours}h {minutes}min"
+
+#: src/components/DurationLong.tsx:21
+msgid "{minutes}min {seconds}s"
+msgstr "{minutes}min {seconds}s"
+
+#: src/components/DurationLong.tsx:25
+msgid "{seconds}s"
+msgstr "{seconds}s"
+
+#: src/components/HeaderMenu.tsx:32
 msgid "About"
 msgstr "À propos"
+
+#: src/pages/SettingsAccount/SettingsAccount.tsx:44
+msgid "Account Settings"
+msgstr ""
 
 #: src/pages/SettingsClient/SettingsClient.tsx:51
 msgid "Always"
@@ -33,7 +53,7 @@ msgstr ""
 msgid "Audio session:"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:148
+#: src/components/Player/PlayerControls.tsx:149
 msgid "Buffering…"
 msgstr ""
 
@@ -71,17 +91,27 @@ msgstr "Fondu enchaîné (secondes) :"
 #~ msgid "Enabled"
 #~ msgstr "Activé"
 
-#: src/components/Player/PlayerControls.tsx:162
+#: src/components/HeaderMenu.tsx:56
+#: src/components/HeaderMenu.tsx:57
+msgid "Go back"
+msgstr ""
+
+#: src/components/HeaderMenu.tsx:65
+#: src/components/HeaderMenu.tsx:66
+msgid "Go forward"
+msgstr ""
+
 #: src/components/Player/PlayerControls.tsx:163
+#: src/components/Player/PlayerControls.tsx:164
 msgid "Hide overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:175
 #: src/components/Player/PlayerControls.tsx:176
+#: src/components/Player/PlayerControls.tsx:177
 msgid "Hide queue"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:25
+#: src/components/HeaderMenu.tsx:82
 #: src/pages/Auth/Login.tsx:46
 msgid "Install Application"
 msgstr ""
@@ -90,7 +120,7 @@ msgstr ""
 msgid "Kiosk mode:"
 msgstr "Mode Kiosque :"
 
-#: src/components/HeaderMenu.tsx:76
+#: src/components/HeaderMenu.tsx:43
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -112,21 +142,21 @@ msgstr "Jamais"
 
 #: src/components/PipControls/PipControlsWindow.tsx:98
 #: src/components/PipControls/PipControlsWindow.tsx:99
-#: src/components/Player/PlayerControls.tsx:118
 #: src/components/Player/PlayerControls.tsx:119
+#: src/components/Player/PlayerControls.tsx:120
 msgid "Next"
 msgstr "Suivant"
 
 #: src/components/PipControls/PipControlsWindow.tsx:51
 #: src/components/PipControls/PipControlsWindow.tsx:54
-#: src/components/Player/PlayerControls.tsx:65
+#: src/components/Player/PlayerControls.tsx:66
 msgid "No track playing"
 msgstr ""
 
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
-#: src/components/Player/PlayerControls.tsx:103
 #: src/components/Player/PlayerControls.tsx:104
+#: src/components/Player/PlayerControls.tsx:105
 msgid "Pause"
 msgstr "Pause"
 
@@ -140,8 +170,8 @@ msgstr ""
 
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
-#: src/components/Player/PlayerControls.tsx:103
 #: src/components/Player/PlayerControls.tsx:104
+#: src/components/Player/PlayerControls.tsx:105
 msgid "Play"
 msgstr "Lecture"
 
@@ -151,14 +181,14 @@ msgid "Playback"
 msgstr ""
 
 #: src/components/PipControls/PipControlsWindow.tsx:71
-#: src/components/Player/PlayerControls.tsx:84
+#: src/components/Player/PlayerControls.tsx:85
 msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/PipControls/PipControlsWindow.tsx:74
 #: src/components/PipControls/PipControlsWindow.tsx:75
-#: src/components/Player/PlayerControls.tsx:92
 #: src/components/Player/PlayerControls.tsx:93
+#: src/components/Player/PlayerControls.tsx:94
 msgid "Previous"
 msgstr "Précédent"
 
@@ -166,7 +196,7 @@ msgstr "Précédent"
 msgid "Request"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:130
+#: src/components/Player/PlayerControls.tsx:131
 msgid "Seek"
 msgstr ""
 
@@ -178,17 +208,17 @@ msgstr ""
 #~ msgid "Service Worker max cache entries:"
 #~ msgstr ""
 
-#: src/pages/SettingsAccount/SettingsAccount.tsx:51
+#: src/pages/SettingsAccount/SettingsAccount.tsx:79
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/components/Player/PlayerControls.tsx:162
 #: src/components/Player/PlayerControls.tsx:163
+#: src/components/Player/PlayerControls.tsx:164
 msgid "Show overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:175
 #: src/components/Player/PlayerControls.tsx:176
+#: src/components/Player/PlayerControls.tsx:177
 msgid "Show queue"
 msgstr ""
 
