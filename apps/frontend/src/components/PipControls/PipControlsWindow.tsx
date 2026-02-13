@@ -41,7 +41,7 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
       {/* Album cover region (also hosts CSS vars for cover-based gradients). */}
       <figure id="pip-cover" ref={figureRef}>
         <img
-          className="pip-cover-image"
+          className="pip-cover-image shadow-2xl/60"
           src={
             currentTrack
               ? `/api/album/${currentTrack.album.id}/cover/1280`
