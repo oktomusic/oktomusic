@@ -5,11 +5,11 @@ import { useSetAtom } from "jotai";
 
 import { ALBUM_QUERY } from "../api/graphql/queries/album";
 import type {
-  AlbumBasic,
   AlbumQuery,
   AlbumQueryVariables,
 } from "../api/graphql/gql/graphql";
-import { playerQueueAtom, type TrackWithAlbum } from "../atoms/player/machine";
+import { playerQueueAtom } from "../atoms/player/machine";
+import { mapTracksWithAlbum } from "../utils/album_tracks";
 
 export default function TempLoadAlbum() {
   const [albumId, setAlbumId] = useState("hlh8iz7vwkwl8r4hmopu5kx8");
@@ -30,30 +30,7 @@ export default function TempLoadAlbum() {
     }
 
     const album = result.data.album;
-    const albumBasic: AlbumBasic = {
-      __typename: "AlbumBasic",
-      id: album.id,
-      name: album.name,
-      date: album.date,
-      artists: album.artists,
-      coverColorVibrant: album.coverColorVibrant,
-      coverColorDarkVibrant: album.coverColorDarkVibrant,
-      coverColorLightVibrant: album.coverColorLightVibrant,
-      coverColorMuted: album.coverColorMuted,
-      coverColorDarkMuted: album.coverColorDarkMuted,
-      coverColorLightMuted: album.coverColorLightMuted,
-    };
-
-    const nextQueue: TrackWithAlbum[] = album.tracksByDisc.flatMap((disc) =>
-      disc.map((track) => ({
-        ...track,
-        albumId: album.id,
-        album: albumBasic,
-        date: null,
-        lyrics: null,
-        isrc: null,
-      })),
-    );
+    const nextQueue = mapTracksWithAlbum(album).flat();
 
     setQueue((prev) => [...prev, ...nextQueue]);
     setLastLoadedAlbum(album.name);
