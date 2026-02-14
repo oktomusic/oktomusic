@@ -15,10 +15,14 @@ import { t } from "@lingui/core/macro";
 import { pwaDeferredPromptAtom } from "../atoms/app/atoms";
 import { useNavigationHistory } from "../hooks/use_navigation_history";
 import { OktoMenu, OktoMenuItem } from "./Base/OktoMenu";
+import { settingClientKioskMode } from "../atoms/app/settings_client";
 
 export function HeaderMenu() {
   const pwaDeferedPrompt = useAtomValue(pwaDeferredPromptAtom);
+  const kioskModeEnabled = useAtomValue(settingClientKioskMode);
+
   const { canGoBack, canGoForward, goBack, goForward } = useNavigationHistory();
+
   const menuItems: OktoMenuItem[] = [
     {
       type: "button",
@@ -34,6 +38,7 @@ export function HeaderMenu() {
       target: "_blank",
       rel: "noreferrer",
       icon: <HiOutlineInformationCircle className="size-4" />,
+      hidden: kioskModeEnabled,
     },
     {
       type: "separator",
