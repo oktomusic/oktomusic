@@ -32,5 +32,6 @@ overrides:
   tsdown: catalog:default
   typescript: catalog:default
   sharp: catalog:default
+  "@typescript-eslint/utils": ">=8.55.0"
 
 sharedWorkspaceLockfile: true
