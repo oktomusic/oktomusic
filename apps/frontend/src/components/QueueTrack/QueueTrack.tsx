@@ -1,4 +1,6 @@
+import { Link } from "react-router";
 import { HiEllipsisHorizontal, HiPause, HiPlay } from "react-icons/hi2";
+
 import { TrackWithAlbum } from "../../atoms/player/machine";
 
 import "./QueueTrack.css";
@@ -47,9 +49,9 @@ export function QueueTrack(props: QueueTrackProps) {
         <span className="text-sm text-zinc-400">
           {props.track.artists.map((artist, index) => (
             <span key={artist.id ?? index}>
-              <a href="#" className="hover:underline">
+              <Link to={`/artist/${artist.id}`} className="hover:underline">
                 {artist.name}
-              </a>
+              </Link>
               {index < (props.track.artists.length ?? 0) - 1 && ", "}
             </span>
           ))}

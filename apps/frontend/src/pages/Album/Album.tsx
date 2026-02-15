@@ -1,13 +1,18 @@
 import { useParams } from "react-router";
 import { useQuery } from "@apollo/client/react";
-import { plural } from "@lingui/core/macro";
+import { plural, t } from "@lingui/core/macro";
+import { HiEllipsisHorizontal, HiOutlineShare, HiPlay } from "react-icons/hi2";
 
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";
 import { DurationLong } from "../../components/DurationLong";
+import { OktoMenu, OktoMenuItem } from "../../components/Base/OktoMenu";
+import { formatDuration } from "../../utils/format_duration";
 
 import "./Album.css";
+import { TrackList } from "../../components/TrackList/TrackList";
+import { mapTracksWithAlbum } from "../../utils/album_tracks";
 
-export default function Album() {
+export function Album() {
   const { cuid } = useParams();
 
   const { data, loading, error } = useQuery(ALBUM_QUERY, {
@@ -37,6 +42,41 @@ export default function Album() {
   const albumDurationMs = data!.album.tracksByDisc
     .flat()
     .reduce((acc, track) => acc + track.durationMs, 0);
+
+  const albumHasMultipleDiscs = data!.album.tracksByDisc.length > 1;
+  const tracksWithAlbum = mapTracksWithAlbum(data!.album);
+
+  const menuItems: OktoMenuItem[] = [
+    {
+      type: "button",
+      label: t`Share`,
+      icon: <HiOutlineShare className="size-4" />,
+      onClick: () => {
+        if (!data) {
+          return;
+        }
+
+        const albumUrl = `${window.location.origin}/album/${data.album.id}`;
+
+        // TODO: handle promise failure + feedback to user
+        if (navigator.share !== undefined) {
+          void navigator.share({
+            title: data.album.name,
+            url: albumUrl,
+          });
+        } else {
+          void navigator.clipboard.writeText(albumUrl);
+        }
+      },
+    },
+    {
+      type: "button",
+      label: `Add to Queue`,
+      onClick: () => {
+        // TODO
+      },
+    },
+  ];
 
   return (
     <div className="w-full">
@@ -80,6 +120,49 @@ export default function Album() {
               </span>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-4 px-6 py-4">
+        <div className="flex flex-row gap-4">
+          <button className="size-12 rounded-full bg-blue-500" title={t`Play`}>
+            <HiPlay className="m-auto size-6" />
+          </button>
+          <OktoMenu
+            button={<HiEllipsisHorizontal className="size-6" />}
+            items={menuItems}
+            anchor="bottom start"
+          />
+        </div>
+        <TrackList tracks={tracksWithAlbum} />
+        <div className="grid grid-cols-3">
+          <div>#</div>
+          <div>Title</div>
+          <div className="">Duration</div>
+        </div>
+        <div className="flex flex-col gap-2">
+          {data!.album.tracksByDisc.map((disc, discIndex) => (
+            <div key={discIndex} className="flex flex-col gap-2">
+              {albumHasMultipleDiscs && (
+                <h3 className="text-sm font-bold">{`Disc ${discIndex + 1}`}</h3>
+              )}
+              <div className="flex flex-col">
+                {disc.map((track, trackIndex) => (
+                  <div
+                    key={track.id}
+                    className="flex h-14 flex-row items-center gap-4 rounded-lg p-2 hover:bg-white/10"
+                  >
+                    <span className="w-6 text-right text-sm text-white/50">
+                      {trackIndex + 1}
+                    </span>
+                    <span>{track.name}</span>
+                    <span className="ml-auto text-sm text-white/50">
+                      {formatDuration(track.durationMs)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <pre>{JSON.stringify(data, null, 2)}</pre>

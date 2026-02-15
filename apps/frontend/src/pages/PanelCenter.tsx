@@ -4,9 +4,11 @@ import ProtectedRoutes from "../components/ProtectedRoutes";
 
 import Home from "./Home/Home";
 import AppInfo from "./AppInfo/AppInfo";
-import Album from "./Album/Album";
 import SettingsAccount from "./SettingsAccount/SettingsAccount";
 import SettingsClient from "./SettingsClient/SettingsClient";
+import { Search } from "./Center/Search";
+import { Album } from "./Album/Album";
+import { Artist } from "./Center/Artist";
 
 export function PanelCenter() {
   return (
@@ -17,8 +19,10 @@ export function PanelCenter() {
       <Routes>
         <Route element={<ProtectedRoutes />}>
           <Route index element={<Home />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/appinfo" element={<AppInfo />} />
           <Route path="/album/:cuid" element={<Album />} />
+          <Route path="/artist/:cuid" element={<Artist />} />
           <Route path="/settings/account" element={<SettingsAccount />} />
           <Route path="/settings/client" element={<SettingsClient />} />
         </Route>
