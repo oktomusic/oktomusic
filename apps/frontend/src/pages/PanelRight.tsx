@@ -51,7 +51,9 @@ export function PanelRight() {
             onClickPlay={() => handleTrackClick(queueIndex)}
           />
         )}
-        <hr className="my-1 border-zinc-700" />
+        <li>
+          <hr className="my-1 border-zinc-700" />
+        </li>
         {nextQueue.map((item, index) => (
           <QueueTrack
             key={index}

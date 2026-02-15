@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import {
   HiChevronLeft,
   HiChevronRight,
+  HiMagnifyingGlass,
   HiOutlineArrowDownCircle,
   HiOutlineArrowRightOnRectangle,
   HiOutlineCog6Tooth,
@@ -74,9 +75,17 @@ export function HeaderMenu() {
         </button>
         <Link
           to="/"
+          aria-label={t`Home`}
           className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
         >
           <HiOutlineHome className="size-6" />
+        </Link>
+        <Link
+          to="/search"
+          aria-label={t`Search`}
+          className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <HiMagnifyingGlass className="size-6" />
         </Link>
       </div>
       <div className="flex w-full grow"></div>

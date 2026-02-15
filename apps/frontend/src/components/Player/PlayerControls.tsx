@@ -187,6 +187,9 @@ export default function PlayerControls() {
               setPipOpen(!pipOpen);
             }}
             className={pipOpen ? "text-blue-600" : "text-slate-600"}
+            title={
+              pipOpen ? t`Close Picture-in-Picture` : t`Open Picture-in-Picture`
+            }
           >
             <HiArrowTopRightOnSquare className="size-6" />
           </button>
