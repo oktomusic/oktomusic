@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:70
+#: src/pages/Album/Album.tsx:115
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -29,12 +29,16 @@ msgstr "{minutes}min {seconds}s"
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
-#: src/components/HeaderMenu.tsx:32
+#: src/components/HeaderMenu.tsx:37
 msgid "About"
 msgstr "À propos"
 
 #: src/pages/SettingsAccount/SettingsAccount.tsx:44
 msgid "Account Settings"
+msgstr ""
+
+#: src/pages/Album/Album.tsx:80
+msgid "Add to Queue"
 msgstr ""
 
 #: src/pages/SettingsClient/SettingsClient.tsx:51
@@ -73,6 +77,10 @@ msgstr ""
 msgid "Client Settings"
 msgstr ""
 
+#: src/components/Player/PlayerControls.tsx:191
+msgid "Close Picture-in-Picture"
+msgstr ""
+
 #: src/pages/SettingsClient/SettingsClient.tsx:167
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
@@ -91,13 +99,13 @@ msgstr "Fondu enchaîné (secondes) :"
 #~ msgid "Enabled"
 #~ msgstr "Activé"
 
-#: src/components/HeaderMenu.tsx:56
-#: src/components/HeaderMenu.tsx:57
+#: src/components/HeaderMenu.tsx:62
+#: src/components/HeaderMenu.tsx:63
 msgid "Go back"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:65
-#: src/components/HeaderMenu.tsx:66
+#: src/components/HeaderMenu.tsx:71
+#: src/components/HeaderMenu.tsx:72
 msgid "Go forward"
 msgstr ""
 
@@ -111,7 +119,11 @@ msgstr ""
 msgid "Hide queue"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:82
+#: src/components/HeaderMenu.tsx:78
+msgid "Home"
+msgstr ""
+
+#: src/components/HeaderMenu.tsx:96
 #: src/pages/Auth/Login.tsx:46
 msgid "Install Application"
 msgstr ""
@@ -120,7 +132,7 @@ msgstr ""
 msgid "Kiosk mode:"
 msgstr "Mode Kiosque :"
 
-#: src/components/HeaderMenu.tsx:43
+#: src/components/HeaderMenu.tsx:49
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -153,6 +165,10 @@ msgstr "Suivant"
 msgid "No track playing"
 msgstr ""
 
+#: src/components/Player/PlayerControls.tsx:191
+msgid "Open Picture-in-Picture"
+msgstr ""
+
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:104
@@ -172,6 +188,7 @@ msgstr ""
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:104
 #: src/components/Player/PlayerControls.tsx:105
+#: src/pages/Album/Album.tsx:135
 msgid "Play"
 msgstr "Lecture"
 
@@ -196,6 +213,10 @@ msgstr "Précédent"
 msgid "Request"
 msgstr ""
 
+#: src/components/HeaderMenu.tsx:85
+msgid "Search"
+msgstr ""
+
 #: src/components/Player/PlayerControls.tsx:131
 msgid "Seek"
 msgstr ""
@@ -211,6 +232,10 @@ msgstr ""
 #: src/pages/SettingsAccount/SettingsAccount.tsx:79
 msgid "Sexe :"
 msgstr "Sexe :"
+
+#: src/pages/Album/Album.tsx:58
+msgid "Share"
+msgstr ""
 
 #: src/components/Player/PlayerControls.tsx:163
 #: src/components/Player/PlayerControls.tsx:164

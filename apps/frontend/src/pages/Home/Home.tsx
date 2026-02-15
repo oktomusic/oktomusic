@@ -6,7 +6,6 @@ import { authSessionAtom } from "../../atoms/auth/atoms";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role } from "../../api/graphql/gql/graphql";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
-import LyricsViewer from "../../components/LyricsViewer";
 import TempLoadAlbum from "../../components/TempLoadAlbum";
 
 import "./Home.css";
@@ -51,7 +50,6 @@ function Home() {
           )}
         </div>
       </div>
-      <LyricsViewer />
       <div className="flex-1"></div>
     </>
   );

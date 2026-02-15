@@ -69,6 +69,25 @@ export const handleSeekToQueueIndexAtom = atom(
   },
 );
 
+/** Action: Replace the queue with new tracks and start playing from the first track. */
+export const replaceQueueAtom = atom(
+  null,
+  (_get, set, tracks: TrackWithAlbum[]) => {
+    set(playerQueueAtom, tracks);
+    set(playerQueueIndexAtom, 0);
+    set(playerShouldPlayAtom, true);
+  },
+);
+
+/** Action: Add tracks to the end of the queue. */
+export const addToQueueAtom = atom(
+  null,
+  (get, set, tracks: TrackWithAlbum[]) => {
+    const currentQueue = get(playerQueueAtom);
+    set(playerQueueAtom, [...currentQueue, ...tracks]);
+  },
+);
+
 /** Derived current track from queue + index, safe for empty queues. */
 export const playerQueueCurrentTrack = atom<TrackWithAlbum | null>((get) => {
   const queue = get(playerQueueAtom);

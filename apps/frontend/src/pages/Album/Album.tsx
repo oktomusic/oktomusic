@@ -2,15 +2,17 @@ import { useParams } from "react-router";
 import { useQuery } from "@apollo/client/react";
 import { plural, t } from "@lingui/core/macro";
 import { HiEllipsisHorizontal, HiOutlineShare, HiPlay } from "react-icons/hi2";
+import { useSetAtom } from "jotai";
 
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";
 import { DurationLong } from "../../components/DurationLong";
 import { OktoMenu, OktoMenuItem } from "../../components/Base/OktoMenu";
 import { formatDuration } from "../../utils/format_duration";
+import { addToQueueAtom, replaceQueueAtom } from "../../atoms/player/machine";
+import { mapTracksWithAlbum } from "../../utils/album_tracks";
 
 import "./Album.css";
 import { TrackList } from "../../components/TrackList/TrackList";
-import { mapTracksWithAlbum } from "../../utils/album_tracks";
 
 export function Album() {
   const { cuid } = useParams();
@@ -19,6 +21,9 @@ export function Album() {
     variables: { id: cuid! },
     skip: !cuid,
   });
+
+  const replaceQueue = useSetAtom(replaceQueueAtom);
+  const addToQueue = useSetAtom(addToQueueAtom);
 
   if (!cuid) {
     return null;
@@ -45,6 +50,7 @@ export function Album() {
 
   const albumHasMultipleDiscs = data!.album.tracksByDisc.length > 1;
   const tracksWithAlbum = mapTracksWithAlbum(data!.album);
+  const flatTracks = tracksWithAlbum.flat();
 
   const menuItems: OktoMenuItem[] = [
     {
@@ -71,9 +77,9 @@ export function Album() {
     },
     {
       type: "button",
-      label: `Add to Queue`,
+      label: t`Add to Queue`,
       onClick: () => {
-        // TODO
+        addToQueue(flatTracks);
       },
     },
   ];
@@ -85,7 +91,7 @@ export function Album() {
           <img
             src={`/api/album/${data!.album.id}/cover/1280`}
             alt={data!.album.name}
-            className="max-h-56 max-w-56 rounded-lg shadow-2xl/50"
+            className="aspect-square h-full max-h-56 w-full max-w-56 rounded-lg shadow-2xl/50"
           />
           <div className="flex flex-col justify-end gap-2">
             <h2 className="text-7xl font-bold">{data!.album.name}</h2>
@@ -124,7 +130,11 @@ export function Album() {
       </div>
       <div className="flex flex-col gap-4 px-6 py-4">
         <div className="flex flex-row gap-4">
-          <button className="size-12 rounded-full bg-blue-500" title={t`Play`}>
+          <button
+            className="size-12 rounded-full bg-blue-500"
+            title={t`Play`}
+            onClick={() => replaceQueue(flatTracks)}
+          >
             <HiPlay className="m-auto size-6" />
           </button>
           <OktoMenu

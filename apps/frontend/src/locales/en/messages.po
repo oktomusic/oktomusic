@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:70
+#: src/pages/Album/Album.tsx:115
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# track} other {# tracks}}"
 
@@ -29,13 +29,17 @@ msgstr "{minutes}min {seconds}s"
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
-#: src/components/HeaderMenu.tsx:32
+#: src/components/HeaderMenu.tsx:37
 msgid "About"
 msgstr "About"
 
 #: src/pages/SettingsAccount/SettingsAccount.tsx:44
 msgid "Account Settings"
 msgstr "Account Settings"
+
+#: src/pages/Album/Album.tsx:80
+msgid "Add to Queue"
+msgstr "Add to Queue"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:51
 msgid "Always"
@@ -73,6 +77,10 @@ msgstr "Checking storage persistence..."
 msgid "Client Settings"
 msgstr "Client Settings"
 
+#: src/components/Player/PlayerControls.tsx:191
+msgid "Close Picture-in-Picture"
+msgstr "Close Picture-in-Picture"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:167
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr "Controls how Oktomusic mixes with other audio."
@@ -91,13 +99,13 @@ msgstr "Crossfade (seconds):"
 #~ msgid "Enabled"
 #~ msgstr "Enabled"
 
-#: src/components/HeaderMenu.tsx:56
-#: src/components/HeaderMenu.tsx:57
+#: src/components/HeaderMenu.tsx:62
+#: src/components/HeaderMenu.tsx:63
 msgid "Go back"
 msgstr "Go back"
 
-#: src/components/HeaderMenu.tsx:65
-#: src/components/HeaderMenu.tsx:66
+#: src/components/HeaderMenu.tsx:71
+#: src/components/HeaderMenu.tsx:72
 msgid "Go forward"
 msgstr "Go forward"
 
@@ -111,7 +119,11 @@ msgstr "Hide overlay"
 msgid "Hide queue"
 msgstr "Hide queue"
 
-#: src/components/HeaderMenu.tsx:82
+#: src/components/HeaderMenu.tsx:78
+msgid "Home"
+msgstr "Home"
+
+#: src/components/HeaderMenu.tsx:96
 #: src/pages/Auth/Login.tsx:46
 msgid "Install Application"
 msgstr "Install Application"
@@ -120,7 +132,7 @@ msgstr "Install Application"
 msgid "Kiosk mode:"
 msgstr "Kiosk mode:"
 
-#: src/components/HeaderMenu.tsx:43
+#: src/components/HeaderMenu.tsx:49
 msgid "Logout"
 msgstr "Logout"
 
@@ -153,6 +165,10 @@ msgstr "Next"
 msgid "No track playing"
 msgstr "No track playing"
 
+#: src/components/Player/PlayerControls.tsx:191
+msgid "Open Picture-in-Picture"
+msgstr "Open Picture-in-Picture"
+
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:104
@@ -172,6 +188,7 @@ msgstr "Persistent storage not granted"
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:104
 #: src/components/Player/PlayerControls.tsx:105
+#: src/pages/Album/Album.tsx:135
 msgid "Play"
 msgstr "Play"
 
@@ -196,6 +213,10 @@ msgstr "Previous"
 msgid "Request"
 msgstr "Request"
 
+#: src/components/HeaderMenu.tsx:85
+msgid "Search"
+msgstr "Search"
+
 #: src/components/Player/PlayerControls.tsx:131
 msgid "Seek"
 msgstr "Seek"
@@ -211,6 +232,10 @@ msgstr "Seek"
 #: src/pages/SettingsAccount/SettingsAccount.tsx:79
 msgid "Sexe :"
 msgstr "Sexe :"
+
+#: src/pages/Album/Album.tsx:58
+msgid "Share"
+msgstr "Share"
 
 #: src/components/Player/PlayerControls.tsx:163
 #: src/components/Player/PlayerControls.tsx:164
