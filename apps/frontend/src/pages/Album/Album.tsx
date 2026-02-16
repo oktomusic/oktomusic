@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useQuery } from "@apollo/client/react";
 import { plural, t } from "@lingui/core/macro";
 import { HiEllipsisHorizontal, HiOutlineShare, HiPlay } from "react-icons/hi2";
@@ -99,9 +99,12 @@ export function Album() {
               <span className="font-bold">
                 {data!.album.artists.map((artist, index) => (
                   <span key={artist.id ?? index}>
-                    <a href="#" className="hover:underline">
+                    <Link
+                      to={`/artist/${artist.id}`}
+                      className="hover:underline"
+                    >
                       {artist.name}
-                    </a>
+                    </Link>
                     {index < (data!.album.artists.length ?? 0) - 1 && ", "}
                   </span>
                 ))}
