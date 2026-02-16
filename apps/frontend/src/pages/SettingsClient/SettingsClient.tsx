@@ -25,7 +25,7 @@ import { OktoButton } from "../../components/Base/OktoButton.tsx";
 type AudioSessionKey = "ambient" | "playback";
 type WakeLockKey = "always" | "playback" | "never";
 
-export default function SettingsClient() {
+export function SettingsClient() {
   const [kioskMode, setKioskMode] = useAtom(settingClientKioskMode);
   const [audioSessionType, setAudioSessionType] = useAtom(
     settingClientAudioSession,

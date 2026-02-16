@@ -17,10 +17,14 @@ import { pwaDeferredPromptAtom } from "../atoms/app/atoms";
 import { useNavigationHistory } from "../hooks/use_navigation_history";
 import { OktoMenu, OktoMenuItem } from "./Base/OktoMenu";
 import { settingClientKioskMode } from "../atoms/app/settings_client";
+import { authSessionAtom } from "../atoms/auth/atoms";
+import { Role } from "../api/graphql/gql/graphql";
 
 export function HeaderMenu() {
   const pwaDeferedPrompt = useAtomValue(pwaDeferredPromptAtom);
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
+
+  const authSession = useAtomValue(authSessionAtom);
 
   const { canGoBack, canGoForward, goBack, goForward } = useNavigationHistory();
 
@@ -51,6 +55,15 @@ export function HeaderMenu() {
       icon: <HiOutlineArrowRightOnRectangle className="size-4" />,
     },
   ];
+
+  if (authSession.user?.role === Role.Admin) {
+    menuItems.splice(1, 0, {
+      type: "router-link",
+      label: t`Admin Settings`,
+      to: "/settings/admin",
+      icon: <HiOutlineCog6Tooth className="size-4" />,
+    });
+  }
 
   return (
     <div className="flex h-14 flex-row gap-2 p-2">

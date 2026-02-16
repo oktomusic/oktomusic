@@ -17,7 +17,7 @@ function mapSexKeyToGraphql(value: SexesKeys): Sex | null {
   return value === "XX" ? Sex.Xx : Sex.Xy;
 }
 
-export default function SettingsAccount() {
+export function SettingsAccount() {
   const { user } = useAtomValue(authSessionAtom);
   const { data, loading, error } = useQuery(ME_QUERY, {
     fetchPolicy: "cache-and-network",

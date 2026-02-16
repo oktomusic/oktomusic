@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:115
+#: src/pages/Album/Album.tsx:118
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -29,7 +29,7 @@ msgstr "{minutes}min {seconds}s"
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
-#: src/components/HeaderMenu.tsx:37
+#: src/components/HeaderMenu.tsx:41
 msgid "About"
 msgstr "À propos"
 
@@ -39,6 +39,11 @@ msgstr ""
 
 #: src/pages/Album/Album.tsx:80
 msgid "Add to Queue"
+msgstr ""
+
+#: src/components/HeaderMenu.tsx:62
+#: src/pages/SettingsAdmin/SettingsAdmin.tsx:18
+msgid "Admin Settings"
 msgstr ""
 
 #: src/pages/SettingsClient/SettingsClient.tsx:51
@@ -99,13 +104,13 @@ msgstr "Fondu enchaîné (secondes) :"
 #~ msgid "Enabled"
 #~ msgstr "Activé"
 
-#: src/components/HeaderMenu.tsx:62
-#: src/components/HeaderMenu.tsx:63
+#: src/components/HeaderMenu.tsx:75
+#: src/components/HeaderMenu.tsx:76
 msgid "Go back"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:71
-#: src/components/HeaderMenu.tsx:72
+#: src/components/HeaderMenu.tsx:84
+#: src/components/HeaderMenu.tsx:85
 msgid "Go forward"
 msgstr ""
 
@@ -119,11 +124,11 @@ msgstr ""
 msgid "Hide queue"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:78
+#: src/components/HeaderMenu.tsx:91
 msgid "Home"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:96
+#: src/components/HeaderMenu.tsx:109
 #: src/pages/Auth/Login.tsx:46
 msgid "Install Application"
 msgstr ""
@@ -132,7 +137,7 @@ msgstr ""
 msgid "Kiosk mode:"
 msgstr "Mode Kiosque :"
 
-#: src/components/HeaderMenu.tsx:49
+#: src/components/HeaderMenu.tsx:53
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -188,7 +193,7 @@ msgstr ""
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:104
 #: src/components/Player/PlayerControls.tsx:105
-#: src/pages/Album/Album.tsx:135
+#: src/pages/Album/Album.tsx:138
 msgid "Play"
 msgstr "Lecture"
 
@@ -213,7 +218,7 @@ msgstr "Précédent"
 msgid "Request"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:85
+#: src/components/HeaderMenu.tsx:98
 msgid "Search"
 msgstr ""
 

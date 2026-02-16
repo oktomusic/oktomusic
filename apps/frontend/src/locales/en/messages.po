@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:115
+#: src/pages/Album/Album.tsx:118
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# track} other {# tracks}}"
 
@@ -29,7 +29,7 @@ msgstr "{minutes}min {seconds}s"
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
-#: src/components/HeaderMenu.tsx:37
+#: src/components/HeaderMenu.tsx:41
 msgid "About"
 msgstr "About"
 
@@ -40,6 +40,11 @@ msgstr "Account Settings"
 #: src/pages/Album/Album.tsx:80
 msgid "Add to Queue"
 msgstr "Add to Queue"
+
+#: src/components/HeaderMenu.tsx:62
+#: src/pages/SettingsAdmin/SettingsAdmin.tsx:18
+msgid "Admin Settings"
+msgstr "Admin Settings"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:51
 msgid "Always"
@@ -99,13 +104,13 @@ msgstr "Crossfade (seconds):"
 #~ msgid "Enabled"
 #~ msgstr "Enabled"
 
-#: src/components/HeaderMenu.tsx:62
-#: src/components/HeaderMenu.tsx:63
+#: src/components/HeaderMenu.tsx:75
+#: src/components/HeaderMenu.tsx:76
 msgid "Go back"
 msgstr "Go back"
 
-#: src/components/HeaderMenu.tsx:71
-#: src/components/HeaderMenu.tsx:72
+#: src/components/HeaderMenu.tsx:84
+#: src/components/HeaderMenu.tsx:85
 msgid "Go forward"
 msgstr "Go forward"
 
@@ -119,11 +124,11 @@ msgstr "Hide overlay"
 msgid "Hide queue"
 msgstr "Hide queue"
 
-#: src/components/HeaderMenu.tsx:78
+#: src/components/HeaderMenu.tsx:91
 msgid "Home"
 msgstr "Home"
 
-#: src/components/HeaderMenu.tsx:96
+#: src/components/HeaderMenu.tsx:109
 #: src/pages/Auth/Login.tsx:46
 msgid "Install Application"
 msgstr "Install Application"
@@ -132,7 +137,7 @@ msgstr "Install Application"
 msgid "Kiosk mode:"
 msgstr "Kiosk mode:"
 
-#: src/components/HeaderMenu.tsx:49
+#: src/components/HeaderMenu.tsx:53
 msgid "Logout"
 msgstr "Logout"
 
@@ -188,7 +193,7 @@ msgstr "Persistent storage not granted"
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:104
 #: src/components/Player/PlayerControls.tsx:105
-#: src/pages/Album/Album.tsx:135
+#: src/pages/Album/Album.tsx:138
 msgid "Play"
 msgstr "Play"
 
@@ -213,7 +218,7 @@ msgstr "Previous"
 msgid "Request"
 msgstr "Request"
 
-#: src/components/HeaderMenu.tsx:85
+#: src/components/HeaderMenu.tsx:98
 msgid "Search"
 msgstr "Search"
 
