@@ -8,6 +8,7 @@ import { Role, Sex } from "../../api/graphql/gql/graphql.ts";
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { getSexes, SexesKeys } from "../../utils/constants_sexes.ts";
 import { OktoListbox } from "../../components/Base/OktoListbox.tsx";
+import { OktoBadge } from "../../components/Base/OktoBadge.tsx";
 
 function mapSexKeyToGraphql(value: SexesKeys): Sex | null {
   if (value === "unspecified") {
@@ -65,14 +66,9 @@ export function SettingsAccount() {
               </time>
             </p>
           </div>
-          <span
-            className={
-              "rounded-full px-3 py-1 text-xs font-semibold text-white" +
-              (user?.role === Role.Admin ? " bg-green-600" : " bg-blue-600")
-            }
-          >
+          <OktoBadge color={user?.role === Role.Admin ? "green" : "blue"}>
             {user?.role === Role.Admin ? "Admin" : "User"}
-          </span>
+          </OktoBadge>
         </div>
         <form className="flex flex-col" aria-busy={loading || isUpdating}>
           <div className="flex h-14 flex-row items-center justify-between py-2">

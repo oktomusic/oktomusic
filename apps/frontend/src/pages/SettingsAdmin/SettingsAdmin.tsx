@@ -3,8 +3,8 @@ import { OktoButton } from "../../components/Base/OktoButton";
 
 function IndexingReportItem() {
   return (
-    <li className="rounded-lg border border-amber-500/50 bg-amber-500/10 p-2">
-      <h4 className="text-amber-500">WARNING</h4>
+    <li className="rounded-lg border border-yellow-500/50 bg-yellow-500/10 p-2">
+      <h4 className="text-yellow-500">WARNING</h4>
     </li>
   );
 }
