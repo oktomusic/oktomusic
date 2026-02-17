@@ -87,6 +87,14 @@
       "type": "shell",
       "command": "docker compose start postgres valkey",
       "problemMatcher": []
+    },
+    {
+      "label": "app: dev",
+      "dependsOn": [
+        "docker: start",
+        "backend: dev",
+        "frontend: dev",
+      ]
     }
   ]
 }
