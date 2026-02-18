@@ -6,6 +6,15 @@
 	root * /srv
 	try_files {path} {path}.html {path}/index.html /404.html
 	file_server
+	@assets {
+		path /assets/*
+	}
+	@staticAssets {
+		path /*.png /*.ico /*.svg /*.txt
+	}
+	@manifest {
+		path /manifest.webmanifest
+	}
 	header {
 		Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://static.cloudflareinsights.com https://api.iconify.design https://github.com https://avatars.githubusercontent.com; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests;"
 		Referrer-Policy "no-referrer"
@@ -13,5 +22,9 @@
 		X-Frame-Options "DENY"
 		X-Content-Type-Options "nosniff"
 		Permissions-Policy "geolocation=(), microphone=(), camera=()"
+		Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
 	}
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+	header @staticAssets Cache-Control "public, max-age=604800"
+	header @manifest Content-Type "application/manifest+json"
 }

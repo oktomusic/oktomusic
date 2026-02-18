@@ -5,3 +5,22 @@
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=604800
+
+/*.ico
+  Cache-Control: public, max-age=604800
+
+/*.svg
+  Cache-Control: public, max-age=604800
+
+/*.txt
+  Cache-Control: public, max-age=604800
