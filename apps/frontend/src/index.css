@@ -64,11 +64,28 @@
   --panel-right-width: 20rem; /* 80 * 0.25rem */
 
   display: grid;
+  position: relative;
   grid-template-rows: 1fr;
   gap: 0.5rem;
   padding-inline: 0.5rem;
   min-height: 0;
   flex: 1 1 0%;
+}
+
+.okto-toast-container {
+  position: absolute !important;
+  top: auto !important;
+  bottom: 0.5rem !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 0 !important;
+}
+
+.okto-toast {
+  background-color: var(--color-zinc-950);
+  color: var(--color-zinc-100);
+  border: 1px solid var(--color-zinc-800);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 #oktomusic\:content-grid[data-left="expanded"][data-right="visible"] {

@@ -16,6 +16,7 @@ import { PanelOverlay } from "./pages/PanelOverlay";
 import { PanelRight } from "./pages/PanelRight";
 import PlayerControls from "./components/Player/PlayerControls";
 import { PanelCenter } from "./pages/PanelCenter";
+import { ToasterProvider } from "./components/ToasterProvider";
 
 export function App() {
   useVibrantColorsProperties();
@@ -40,6 +41,7 @@ export function App() {
         <PanelCenter />
         {overlayVisible && <PanelOverlay />}
         <PanelRight />
+        <ToasterProvider />
       </div>
       <PlayerControls />
     </>

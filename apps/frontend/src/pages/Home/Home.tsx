@@ -9,6 +9,7 @@ import IndexingControl from "../../components/IndexingControl/IndexingControl";
 import TempLoadAlbum from "../../components/TempLoadAlbum";
 
 import "./Home.css";
+import toast from "react-hot-toast";
 
 function Home() {
   const authSession = useAtomValue(authSessionAtom);
@@ -48,6 +49,14 @@ function Home() {
               <IndexingControl />
             </div>
           )}
+          <button
+            className="bg-zinc-700"
+            onClick={() => {
+              toast.success("Hello World", { duration: 10000 });
+            }}
+          >
+            Toast
+          </button>
         </div>
       </div>
       <div className="flex-1"></div>
