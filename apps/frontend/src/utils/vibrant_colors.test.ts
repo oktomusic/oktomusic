@@ -4,9 +4,11 @@ import type { VibrantColors } from "../atoms/player/machine";
 
 describe("applyColorProperties", () => {
   let doc: Document;
+  let elem: HTMLElement;
 
   beforeEach(() => {
     doc = document.implementation.createHTMLDocument("test");
+    elem = doc.documentElement;
   });
 
   it("sets all CSS variables when colors are provided", () => {
@@ -19,9 +21,9 @@ describe("applyColorProperties", () => {
       lightMuted: "#66ff66",
     };
 
-    applyColorProperties(doc, colors);
+    applyColorProperties(elem, colors);
 
-    const style = doc.documentElement.style;
+    const style = elem.style;
 
     expect(style.getPropertyValue("--album-color-vibrant")).toBe("#ff0000");
     expect(style.getPropertyValue("--album-color-vibrant-dark")).toBe(
@@ -37,11 +39,11 @@ describe("applyColorProperties", () => {
 
   it("clears all CSS variables when colors is null", () => {
     // Pre-populate styles
-    doc.documentElement.style.setProperty("--album-color-vibrant", "#123456");
+    elem.style.setProperty("--album-color-vibrant", "#123456");
 
-    applyColorProperties(doc, null);
+    applyColorProperties(elem, null);
 
-    const style = doc.documentElement.style;
+    const style = elem.style;
 
     expect(style.getPropertyValue("--album-color-vibrant")).toBe("");
     expect(style.getPropertyValue("--album-color-vibrant-dark")).toBe("");
@@ -52,6 +54,6 @@ describe("applyColorProperties", () => {
   });
 
   it("does not throw when called with null colors", () => {
-    expect(() => applyColorProperties(doc, null)).not.toThrow();
+    expect(() => applyColorProperties(elem, null)).not.toThrow();
   });
 });

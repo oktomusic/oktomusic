@@ -1,11 +1,9 @@
 import { VibrantColors } from "../atoms/player/machine";
 
 export default function applyColorProperties(
-  doc: Document,
+  elem: HTMLElement,
   colors: VibrantColors | null,
 ) {
-  const elem = doc.documentElement;
-
   elem.style.setProperty("--album-color-vibrant", colors?.vibrant || null);
   elem.style.setProperty(
     "--album-color-vibrant-dark",

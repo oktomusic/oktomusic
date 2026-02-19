@@ -16,6 +16,6 @@ export function useVibrantColorsProperties(targetDocument?: Document | null) {
 
   useEffect(() => {
     const doc = targetDocument ?? document;
-    applyColorProperties(doc, colors);
+    applyColorProperties(doc.documentElement, colors);
   }, [colors, targetDocument]);
 }
