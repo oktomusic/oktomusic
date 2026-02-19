@@ -10,7 +10,7 @@ import {
   playerQueueCurrentTrack,
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
-import { useVibrantColorsProperties } from "../../hooks/vibrant_colors";
+import { useVibrantColorsPlaying } from "../../hooks/vibrant_colors";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 
 interface PipControlsWindowProps {
@@ -32,7 +32,7 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
   const handlePreviousTrack = useSetAtom(handlePreviousTrackAtom);
   const handleNextTrack = useSetAtom(handleNextTrackAtom);
 
-  useVibrantColorsProperties(props.pipDocument);
+  useVibrantColorsPlaying(props.pipDocument);
 
   return (
     // Shell content mounted into the Document PiP window container (`#pip-shell`).

@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai";
 
-import { useVibrantColorsProperties } from "./hooks/vibrant_colors";
+import { useVibrantColorsPlaying } from "./hooks/vibrant_colors";
 import {
   panelLeftExpandedAtom,
   panelOverlayVisibleAtom,
@@ -18,7 +18,7 @@ import PlayerControls from "./components/Player/PlayerControls";
 import { PanelCenter } from "./pages/PanelCenter";
 
 export function App() {
-  useVibrantColorsProperties();
+  useVibrantColorsPlaying();
 
   const leftExpanded = useAtomValue(panelLeftExpandedAtom);
   const rightVisible = useAtomValue(panelRightVisibleAtom);

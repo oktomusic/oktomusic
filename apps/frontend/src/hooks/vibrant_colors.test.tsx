@@ -1,4 +1,4 @@
-import { act } from "react";
+import { act, useRef } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import {
   afterEach,
@@ -31,10 +31,10 @@ vi.mock("jotai", async (importOriginal) => {
   };
 });
 
-import { useVibrantColorsProperties } from "./vibrant_colors";
+import { useVibrantColors, useVibrantColorsPlaying } from "./vibrant_colors";
 
 function TestComponent() {
-  useVibrantColorsProperties();
+  useVibrantColorsPlaying();
   return null;
 }
 
@@ -43,11 +43,23 @@ interface TestComponentWithDocumentProps {
 }
 
 function TestComponentWithDocument(props: TestComponentWithDocumentProps) {
-  useVibrantColorsProperties(props.targetDocument);
+  useVibrantColorsPlaying(props.targetDocument);
   return null;
 }
 
-describe("useVibrantColorsProperties", () => {
+interface TestComponentWithRefProps {
+  readonly colors?: VibrantColors;
+}
+
+function TestComponentWithRef(props: TestComponentWithRefProps) {
+  const targetRef = useRef<HTMLDivElement>(null);
+
+  useVibrantColors(targetRef, props.colors);
+
+  return <div ref={targetRef} />;
+}
+
+describe("useVibrantColorsPlaying", () => {
   let container: HTMLDivElement;
   let root: Root;
 
@@ -82,7 +94,10 @@ describe("useVibrantColorsProperties", () => {
     });
 
     expect(applyColorPropertiesMock).toHaveBeenCalledTimes(1);
-    expect(applyColorPropertiesMock).toHaveBeenCalledWith(document, null);
+    expect(applyColorPropertiesMock).toHaveBeenCalledWith(
+      document.documentElement,
+      null,
+    );
   });
 
   it("re-applies color properties when colors change", async () => {
@@ -119,12 +134,12 @@ describe("useVibrantColorsProperties", () => {
     expect(applyColorPropertiesMock).toHaveBeenCalledTimes(2);
     expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
       1,
-      document,
+      document.documentElement,
       colorsA,
     );
     expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
       2,
-      document,
+      document.documentElement,
       colorsB,
     );
   });
@@ -147,6 +162,145 @@ describe("useVibrantColorsProperties", () => {
     });
 
     expect(applyColorPropertiesMock).toHaveBeenCalledTimes(1);
-    expect(applyColorPropertiesMock).toHaveBeenCalledWith(customDoc, colors);
+    expect(applyColorPropertiesMock).toHaveBeenCalledWith(
+      customDoc.documentElement,
+      colors,
+    );
+  });
+});
+
+describe("useVibrantColors", () => {
+  let container: HTMLDivElement;
+  let root: Root;
+
+  beforeAll(() => {
+    (
+      globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT?: boolean }
+    ).IS_REACT_ACT_ENVIRONMENT = true;
+  });
+
+  beforeEach(() => {
+    container = document.createElement("div");
+    document.body.appendChild(container);
+    root = createRoot(container);
+  });
+
+  afterEach(() => {
+    act(() => {
+      root.unmount();
+    });
+
+    container.remove();
+    vi.clearAllMocks();
+  });
+
+  it("applies color properties on mount", async () => {
+    const colors: VibrantColors = {
+      vibrant: "#111111",
+      darkVibrant: "#222222",
+      lightVibrant: "#333333",
+      muted: "#444444",
+      darkMuted: "#555555",
+      lightMuted: "#666666",
+    };
+
+    await act(async () => {
+      root.render(<TestComponentWithRef colors={colors} />);
+      await Promise.resolve();
+    });
+
+    const targetElement = container.querySelector("div");
+
+    expect(targetElement).not.toBeNull();
+    expect(applyColorPropertiesMock).toHaveBeenCalledTimes(1);
+    expect(applyColorPropertiesMock).toHaveBeenCalledWith(
+      targetElement,
+      colors,
+    );
+  });
+
+  it("re-applies color properties when colors change", async () => {
+    const colorsA: VibrantColors = {
+      vibrant: "#111111",
+      darkVibrant: "#222222",
+      lightVibrant: "#333333",
+      muted: "#444444",
+      darkMuted: "#555555",
+      lightMuted: "#666666",
+    };
+
+    const colorsB: VibrantColors = {
+      vibrant: "#aaaaaa",
+      darkVibrant: "#bbbbbb",
+      lightVibrant: "#cccccc",
+      muted: "#dddddd",
+      darkMuted: "#eeeeee",
+      lightMuted: "#ffffff",
+    };
+
+    await act(async () => {
+      root.render(<TestComponentWithRef colors={colorsA} />);
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      root.render(<TestComponentWithRef colors={colorsB} />);
+      await Promise.resolve();
+    });
+
+    const targetElement = container.querySelector("div");
+
+    expect(targetElement).not.toBeNull();
+    expect(applyColorPropertiesMock).toHaveBeenCalledTimes(3);
+    expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
+      1,
+      targetElement,
+      colorsA,
+    );
+    expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
+      2,
+      targetElement,
+      null,
+    );
+    expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
+      3,
+      targetElement,
+      colorsB,
+    );
+  });
+
+  it("clears color properties on unmount", async () => {
+    const colors: VibrantColors = {
+      vibrant: "#111111",
+      darkVibrant: "#222222",
+      lightVibrant: "#333333",
+      muted: "#444444",
+      darkMuted: "#555555",
+      lightMuted: "#666666",
+    };
+
+    await act(async () => {
+      root.render(<TestComponentWithRef colors={colors} />);
+      await Promise.resolve();
+    });
+
+    const targetElement = container.querySelector("div");
+
+    act(() => {
+      root.unmount();
+    });
+
+    expect(targetElement).not.toBeNull();
+    expect(applyColorPropertiesMock).toHaveBeenCalledTimes(2);
+    expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
+      1,
+      targetElement,
+      colors,
+    );
+    expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
+      2,
+      targetElement,
+      null,
+    );
   });
 });

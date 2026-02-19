@@ -1,18 +1,24 @@
-import { Link, useParams } from "react-router";
+import { useRef } from "react";
 import { useQuery } from "@apollo/client/react";
 import { plural, t } from "@lingui/core/macro";
-import { HiEllipsisHorizontal, HiOutlineShare, HiPlay } from "react-icons/hi2";
 import { useSetAtom } from "jotai";
+import { HiEllipsisHorizontal, HiOutlineShare, HiPlay } from "react-icons/hi2";
+import { Link, useParams } from "react-router";
 
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";
 import { DurationLong } from "../../components/DurationLong";
 import { OktoMenu, OktoMenuItem } from "../../components/Base/OktoMenu";
+import { TrackList } from "../../components/TrackList/TrackList";
 import { formatDuration } from "../../utils/format_duration";
-import { addToQueueAtom, replaceQueueAtom } from "../../atoms/player/machine";
+import {
+  addToQueueAtom,
+  replaceQueueAtom,
+  VibrantColors,
+} from "../../atoms/player/machine";
 import { mapTracksWithAlbum } from "../../utils/album_tracks";
+import { useVibrantColors } from "../../hooks/vibrant_colors";
 
 import "./Album.css";
-import { TrackList } from "../../components/TrackList/TrackList";
 
 export function Album() {
   const { cuid } = useParams();
@@ -21,6 +27,19 @@ export function Album() {
     variables: { id: cuid! },
     skip: !cuid,
   });
+
+  const mainDivRef = useRef<HTMLDivElement>(null);
+
+  const albumColors: VibrantColors = {
+    vibrant: data?.album.coverColorVibrant ?? "#ffffff",
+    darkVibrant: data?.album.coverColorDarkVibrant ?? "#ffffff",
+    lightVibrant: data?.album.coverColorLightVibrant ?? "#ffffff",
+    muted: data?.album.coverColorMuted ?? "#ffffff",
+    darkMuted: data?.album.coverColorDarkMuted ?? "#ffffff",
+    lightMuted: data?.album.coverColorLightMuted ?? "#ffffff",
+  };
+
+  useVibrantColors(mainDivRef, albumColors);
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
@@ -85,7 +104,7 @@ export function Album() {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full" ref={mainDivRef}>
       <div className="album-banner flex h-80 w-full items-end p-6">
         <div className="flex flex-row gap-6">
           <img
