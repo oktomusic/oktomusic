@@ -93,8 +93,9 @@
       "dependsOn": [
         "docker: start",
         "backend: dev",
-        "frontend: dev",
-      ]
+        "frontend: dev"
+      ],
+      "problemMatcher": []
     }
   ]
 }
