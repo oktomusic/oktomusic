@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:118
+#: src/pages/Album/Album.tsx:137
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -33,11 +33,11 @@ msgstr "{seconds}s"
 msgid "About"
 msgstr "À propos"
 
-#: src/pages/SettingsAccount/SettingsAccount.tsx:44
+#: src/pages/SettingsAccount/SettingsAccount.tsx:45
 msgid "Account Settings"
 msgstr ""
 
-#: src/pages/Album/Album.tsx:80
+#: src/pages/Album/Album.tsx:99
 msgid "Add to Queue"
 msgstr ""
 
@@ -107,12 +107,12 @@ msgstr "Fondu enchaîné (secondes) :"
 #: src/components/HeaderMenu.tsx:75
 #: src/components/HeaderMenu.tsx:76
 msgid "Go back"
-msgstr ""
+msgstr "Reculer"
 
 #: src/components/HeaderMenu.tsx:84
 #: src/components/HeaderMenu.tsx:85
 msgid "Go forward"
-msgstr ""
+msgstr "Avancer"
 
 #: src/components/Player/PlayerControls.tsx:163
 #: src/components/Player/PlayerControls.tsx:164
@@ -125,8 +125,9 @@ msgid "Hide queue"
 msgstr ""
 
 #: src/components/HeaderMenu.tsx:91
+#: src/pages/Center/Generic404.tsx:12
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #: src/components/HeaderMenu.tsx:109
 #: src/pages/Auth/Login.tsx:46
@@ -174,6 +175,10 @@ msgstr ""
 msgid "Open Picture-in-Picture"
 msgstr ""
 
+#: src/pages/Center/Generic404.tsx:7
+msgid "Page not found"
+msgstr "Page introuvable"
+
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:104
@@ -193,7 +198,7 @@ msgstr ""
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:104
 #: src/components/Player/PlayerControls.tsx:105
-#: src/pages/Album/Album.tsx:138
+#: src/pages/Album/Album.tsx:157
 msgid "Play"
 msgstr "Lecture"
 
@@ -234,13 +239,13 @@ msgstr ""
 #~ msgid "Service Worker max cache entries:"
 #~ msgstr ""
 
-#: src/pages/SettingsAccount/SettingsAccount.tsx:79
+#: src/pages/SettingsAccount/SettingsAccount.tsx:75
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:58
+#: src/pages/Album/Album.tsx:77
 msgid "Share"
-msgstr ""
+msgstr "Partager"
 
 #: src/components/Player/PlayerControls.tsx:163
 #: src/components/Player/PlayerControls.tsx:164

@@ -11,6 +11,7 @@ import { SettingsAdmin } from "./SettingsAdmin/SettingsAdmin";
 import { Search } from "./Center/Search";
 import { Album } from "./Album/Album";
 import { Artist } from "./Center/Artist";
+import { Generic404 } from "./Center/Generic404";
 
 export function PanelCenter() {
   return (
@@ -30,6 +31,7 @@ export function PanelCenter() {
           <Route element={<AdminRoute />}>
             <Route path="/settings/admin" element={<SettingsAdmin />} />
           </Route>
+          <Route path="*" element={<Generic404 />} />
         </Route>
       </Routes>
     </main>

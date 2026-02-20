@@ -89,6 +89,7 @@ export function HeaderMenu() {
         <Link
           to="/"
           aria-label={t`Home`}
+          title={t`Home`}
           className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
         >
           <HiOutlineHome className="size-6" />
