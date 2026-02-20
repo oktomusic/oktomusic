@@ -1,10 +1,12 @@
 import path from "node:path";
 
-import { Module } from "@nestjs/common";
+import { HttpException, HttpStatus, Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { ApolloDriver, type ApolloDriverConfig } from "@nestjs/apollo";
+import { unwrapResolverError } from "@apollo/server/errors";
 import type { Request, Response } from "express";
+import { GraphQLError } from "graphql";
 
 import { ApiController } from "./api.controller";
 import { ApiService } from "./api.service";
@@ -28,6 +30,57 @@ import { AlbumService } from "./album/album.service";
 import { AlbumController } from "./album/album.controller";
 import { MusicResolver } from "./music/music.resolver";
 import { MusicService } from "./music/music.service";
+
+const graphqlCodeByStatus: Record<number, string> = {
+  [HttpStatus.BAD_REQUEST]: "BAD_USER_INPUT",
+  [HttpStatus.UNAUTHORIZED]: "UNAUTHENTICATED",
+  [HttpStatus.FORBIDDEN]: "FORBIDDEN",
+  [HttpStatus.NOT_FOUND]: "NOT_FOUND",
+  [HttpStatus.CONFLICT]: "CONFLICT",
+  [HttpStatus.UNPROCESSABLE_ENTITY]: "UNPROCESSABLE_ENTITY",
+  [HttpStatus.TOO_MANY_REQUESTS]: "RATE_LIMITED",
+};
+
+const resolveHttpExceptionMessage = (exception: HttpException): string => {
+  const response = exception.getResponse();
+
+  if (typeof response === "string") {
+    return response;
+  }
+
+  if (response && typeof response === "object") {
+    const message = (response as { message?: string | string[] }).message;
+
+    if (Array.isArray(message)) {
+      return message.join(", ");
+    }
+
+    if (typeof message === "string") {
+      return message;
+    }
+  }
+
+  return exception.message;
+};
+
+const mapHttpExceptionToGraphqlError = (exception: HttpException) => {
+  const status = exception.getStatus();
+  const httpStatus = status as HttpStatus;
+  const code =
+    graphqlCodeByStatus[httpStatus] ??
+    (httpStatus >= HttpStatus.INTERNAL_SERVER_ERROR
+      ? "INTERNAL_SERVER_ERROR"
+      : "BAD_REQUEST");
+
+  return new GraphQLError(resolveHttpExceptionMessage(exception), {
+    extensions: {
+      code,
+      http: {
+        status,
+      },
+    },
+  });
+};
 
 @Module({
   imports: [
@@ -53,6 +106,25 @@ import { MusicService } from "./music/music.service";
           sortSchema: true,
           subscriptions: {
             "graphql-ws": true,
+          },
+          formatError: (formattedError, error) => {
+            const originalError = unwrapResolverError(error);
+
+            if (originalError instanceof HttpException) {
+              const graphqlError =
+                mapHttpExceptionToGraphqlError(originalError);
+
+              return {
+                ...formattedError,
+                message: graphqlError.message,
+                extensions: {
+                  ...(formattedError.extensions ?? {}),
+                  ...graphqlError.extensions,
+                },
+              };
+            }
+
+            return formattedError;
           },
         };
       },

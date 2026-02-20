@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router";
 
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";
 import { DurationLong } from "../../components/DurationLong";
+import { GenericGraphQLError } from "../Center/GenericGraphQLError";
 import { OktoMenu, OktoMenuItem } from "../../components/Base/OktoMenu";
 import { TrackList } from "../../components/TrackList/TrackList";
 import { formatDuration } from "../../utils/format_duration";
@@ -19,6 +20,7 @@ import { mapTracksWithAlbum } from "../../utils/album_tracks";
 import { useVibrantColors } from "../../hooks/vibrant_colors";
 
 import "./Album.css";
+import { GenericLoading } from "../Center/GenericLoading";
 
 export function Album() {
   const { cuid } = useParams();
@@ -48,15 +50,13 @@ export function Album() {
     return null;
   }
 
+  // TODO: handle loading as a placeholder skeleton instead of blocking the entire page with a spinner
   if (loading) {
-    return <div>Loading...</div>;
+    return <GenericLoading />;
   }
 
-  // TODO: 404 if no album found
-  // TODO: album colors
-
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <GenericGraphQLError error={error} />;
   }
 
   const albumTracksTotal = data!.album.tracksByDisc.reduce(
