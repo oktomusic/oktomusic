@@ -16,6 +16,7 @@ export function PanelOverlay() {
         <button
           type="button"
           className="rounded bg-purple-900 p-2 hover:bg-purple-800"
+          title="Close"
           onClick={() => {
             closeOverlay(false);
           }}

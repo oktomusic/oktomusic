@@ -55,7 +55,7 @@ export default function PlayerControls() {
     <div className="flex h-24 w-full flex-row justify-between p-2">
       <div id="oktomusic:player:title" className="flex w-full flex-row gap-2">
         <img
-          className="m-2 aspect-square rounded-sm"
+          className="m-2 aspect-square size-16 rounded-sm"
           fetchPriority="high"
           src={
             currentTrack

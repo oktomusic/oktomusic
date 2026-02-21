@@ -18,7 +18,7 @@ Open the app once normally to login and configure it as needed.
 
 The app provide a kiosk interface mode that can be enabled from the client settings.
 
-It provides help to quit the app by alerting the user to press `Alt+F4` when `Escape` or `Ctrl+Q` are pressed, and disables popup windows such as the Picture-in-Picture mode.
+It provides help to quit the app by alerting the user to press `Alt+F4` when `Escape` or `Ctrl+Q` are pressed, and disables popup windows such as the Picture-in-Picture mode, as well as any external links.
 
 ### Launching the browser in Kiosk Mode
 

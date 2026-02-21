@@ -17,11 +17,16 @@ export const settingClientKioskMode = atomWithStorage<boolean>(
 
 const audioSessionLocalStorageKey = "oktomusic:audio_session";
 
-export const settingClientAudioSession = atomWithStorage<
-  "ambient" | "playback"
->(audioSessionLocalStorageKey, "ambient", undefined, {
-  getOnInit: true,
-});
+export type AudioSessionKey = "ambient" | "playback";
+
+export const settingClientAudioSession = atomWithStorage<AudioSessionKey>(
+  audioSessionLocalStorageKey,
+  "ambient",
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
 
 // Crossfade Setting
 
@@ -40,11 +45,16 @@ export const settingClientCrossfadeSeconds = atomWithStorage<number>(
 
 const wakeLockLocalStorageKey = "oktomusic:wake_lock";
 
-export const settingClientWakeLock = atomWithStorage<
-  "always" | "playback" | "never"
->(wakeLockLocalStorageKey, "never", undefined, {
-  getOnInit: true,
-});
+export type WakeLockKey = "always" | "playback" | "never";
+
+export const settingClientWakeLock = atomWithStorage<WakeLockKey>(
+  wakeLockLocalStorageKey,
+  "never",
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
 
 // SW Config Settings
 
@@ -68,3 +78,26 @@ export const settingClientSWMediaMaxAge = atomWithStorage<number | null>(
     getOnInit: true,
   },
 );
+
+// Lyrics display mode
+
+const lyricsDisplayModeLocalStorageKey = "oktomusic:lyrics_display_mode";
+
+/**
+ * Defines the mode for displaying lyrics in the application.
+ *
+ * - "word": Displays lyrics word by word, highlighting the current word being sung. A non-word-synced line will be treated as a single word and highlighted as a whole.
+ * - "line": Displays lyrics line by line, highlighting the current line being sung.
+ * - "static": Displays the entire lyrics without any highlighting or synchronization.
+ */
+export type LyricsDisplayModeKey = "word" | "line" | "static";
+
+export const settingClientLyricsDisplayMode =
+  atomWithStorage<LyricsDisplayModeKey>(
+    lyricsDisplayModeLocalStorageKey,
+    "word",
+    undefined,
+    {
+      getOnInit: true,
+    },
+  );

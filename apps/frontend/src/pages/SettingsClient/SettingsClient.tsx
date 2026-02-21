@@ -5,12 +5,16 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import { audioSessionSupportAtom } from "../../atoms/app/browser_support.ts";
 import {
+  AudioSessionKey,
   settingClientAudioSession,
   settingClientCrossfadeSeconds,
   settingClientKioskMode,
+  settingClientLyricsDisplayMode,
   settingClientSWMediaMaxAge,
   settingClientSWMediaMaxEntries,
   settingClientWakeLock,
+  WakeLockKey,
+  type LyricsDisplayModeKey,
 } from "../../atoms/app/settings_client.ts";
 import {
   requestStoragePersistenceAtom,
@@ -22,15 +26,15 @@ import { OktoSlider } from "../../components/Base/OktoSlider.tsx";
 import { OktoInput } from "../../components/Base/OktoInput.tsx";
 import { OktoButton } from "../../components/Base/OktoButton.tsx";
 
-type AudioSessionKey = "ambient" | "playback";
-type WakeLockKey = "always" | "playback" | "never";
-
 export function SettingsClient() {
   const [kioskMode, setKioskMode] = useAtom(settingClientKioskMode);
   const [audioSessionType, setAudioSessionType] = useAtom(
     settingClientAudioSession,
   );
   const [wakeLockMode, setWakeLockMode] = useAtom(settingClientWakeLock);
+  const [lyricsDisplayMode, setLyricsDisplayMode] = useAtom(
+    settingClientLyricsDisplayMode,
+  );
   const [crossfadeSeconds, setCrossfadeSeconds] = useAtom(
     settingClientCrossfadeSeconds,
   );
@@ -53,13 +57,11 @@ export function SettingsClient() {
     never: t`Never`,
   } as const;
 
-  const handleAudioSessionChange = (value: AudioSessionKey) => {
-    setAudioSessionType(value);
-  };
-
-  const handleWakeLockChange = (value: WakeLockKey) => {
-    setWakeLockMode(value);
-  };
+  const lyricsDisplayModeLabels: Record<LyricsDisplayModeKey, string> = {
+    word: t`Word by word`,
+    line: t`Line by line`,
+    static: t`Static`,
+  } as const;
 
   const handleCrossfadeChange = (value: number) => {
     const roundedValue = Math.round(value * 10) / 10;
@@ -118,7 +120,7 @@ export function SettingsClient() {
             <OktoListbox
               id="settings:client:audio-session"
               value={audioSessionType}
-              onChange={handleAudioSessionChange}
+              onChange={setAudioSessionType}
               options={audioSessionLabels}
               disabled={!audioSessionSupported}
               aria-describedby="settings:client:audio-session:help"
@@ -130,9 +132,20 @@ export function SettingsClient() {
             <OktoListbox
               id="settings:client:wake-lock"
               value={wakeLockMode}
-              onChange={handleWakeLockChange}
+              onChange={setWakeLockMode}
               options={wakeLockLabels}
               aria-describedby="settings:client:wake-lock:help"
+            />
+          </div>
+
+          <div className="flex h-14 flex-row items-center justify-between py-2">
+            <label htmlFor="settings:client:lyrics-display-mode">{t`Lyrics display mode:`}</label>
+            <OktoListbox
+              id="settings:client:lyrics-display-mode"
+              value={lyricsDisplayMode}
+              onChange={setLyricsDisplayMode}
+              options={lyricsDisplayModeLabels}
+              aria-describedby="settings:client:lyrics-display-mode:help"
             />
           </div>
 
