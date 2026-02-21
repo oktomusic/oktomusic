@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { t } from "@lingui/core/macro";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
@@ -70,9 +71,9 @@ export default function PlayerControls() {
           <span className="">
             {currentTrack?.artists.map((artist, index) => (
               <span key={artist.id ?? index}>
-                <a href="#" className="hover:underline">
+                <Link to={`/artist/${artist.id}`} className="hover:underline">
                   {artist.name}
-                </a>
+                </Link>
                 {index < (currentTrack?.artists.length ?? 0) - 1 && ", "}
               </span>
             ))}
