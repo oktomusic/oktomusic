@@ -42,7 +42,7 @@
     "typescript": "catalog:default"
   },
   "dependencies": {
-    "fast-xml-parser": "^5.3.6",
+    "fast-xml-parser": "^5.3.7",
     "zod": "^4.3.6"
   }
 }

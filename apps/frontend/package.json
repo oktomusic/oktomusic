@@ -20,27 +20,27 @@
     "pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
-    "@apollo/client": "^4.1.4",
+    "@apollo/client": "^4.1.5",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@headlessui/react": "^2.2.9",
     "@headlessui/tailwindcss": "^0.2.2",
     "@lingui/detect-locale": "^5.9.1",
     "@oktomusic/api-schemas": "workspace:^",
-    "@tailwindcss/vite": "^4.1.18",
+    "@tailwindcss/vite": "^4.2.0",
     "axios": "^1.13.5",
     "graphql": "^16.12.0",
     "graphql-ws": "6.0.7",
-    "jotai": "^2.17.1",
+    "jotai": "^2.18.0",
     "jotai-devtools": "^0.13.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-icons": "^5.5.0",
     "react-router": "^7.13.0",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.2.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "6.1.1",
-    "@graphql-codegen/client-preset": "5.2.2",
+    "@graphql-codegen/cli": "6.1.2",
+    "@graphql-codegen/client-preset": "5.2.3",
     "@lingui/babel-plugin-lingui-macro": "^5.9.1",
     "@lingui/cli": "^5.9.1",
     "@lingui/core": "^5.9.1",
