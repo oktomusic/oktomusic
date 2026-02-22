@@ -16,6 +16,7 @@ import {
   replaceQueueAtom,
   VibrantColors,
 } from "../../atoms/player/machine";
+import { panelToastAtom } from "../../atoms/app/panels";
 import { mapTracksWithAlbum } from "../../utils/album_tracks";
 import { useVibrantColors } from "../../hooks/vibrant_colors";
 
@@ -45,6 +46,8 @@ export function Album() {
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
+
+  const setToast = useSetAtom(panelToastAtom);
 
   if (!cuid) {
     return null;
@@ -91,6 +94,10 @@ export function Album() {
           });
         } else {
           void navigator.clipboard.writeText(albumUrl);
+          setToast({
+            type: "success",
+            message: t`Link copied to clipboard`,
+          });
         }
       },
     },

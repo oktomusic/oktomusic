@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:137
+#: src/pages/Album/Album.tsx:144
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -37,7 +37,7 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
-#: src/pages/Album/Album.tsx:99
+#: src/pages/Album/Album.tsx:106
 msgid "Add to Queue"
 msgstr ""
 
@@ -46,11 +46,11 @@ msgstr ""
 msgid "Admin Settings"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:51
+#: src/pages/SettingsClient/SettingsClient.tsx:55
 msgid "Always"
 msgstr "Toujours"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:46
+#: src/pages/SettingsClient/SettingsClient.tsx:50
 msgid "Ambient"
 msgstr ""
 
@@ -58,31 +58,31 @@ msgstr ""
 #~ msgid "Audio Session API is not supported in this browser."
 #~ msgstr "L'API Audio Session n'est pas supportée dans ce navigateur"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:116
+#: src/pages/SettingsClient/SettingsClient.tsx:118
 msgid "Audio session:"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:149
+#: src/components/Player/PlayerControls.tsx:150
 msgid "Buffering…"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:173
+#: src/pages/SettingsClient/SettingsClient.tsx:186
 msgid "Cache max age (days):"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:158
+#: src/pages/SettingsClient/SettingsClient.tsx:171
 msgid "Cache max entries:"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:195
+#: src/pages/SettingsClient/SettingsClient.tsx:208
 msgid "Checking storage persistence..."
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:100
+#: src/pages/SettingsClient/SettingsClient.tsx:102
 msgid "Client Settings"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:191
+#: src/components/Player/PlayerControls.tsx:192
 msgid "Close Picture-in-Picture"
 msgstr ""
 
@@ -90,7 +90,7 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:141
+#: src/pages/SettingsClient/SettingsClient.tsx:154
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
 
@@ -114,33 +114,46 @@ msgstr "Reculer"
 msgid "Go forward"
 msgstr "Avancer"
 
-#: src/components/Player/PlayerControls.tsx:163
 #: src/components/Player/PlayerControls.tsx:164
+#: src/components/Player/PlayerControls.tsx:165
 msgid "Hide overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:176
 #: src/components/Player/PlayerControls.tsx:177
+#: src/components/Player/PlayerControls.tsx:178
 msgid "Hide queue"
 msgstr ""
 
 #: src/components/HeaderMenu.tsx:91
+#: src/components/HeaderMenu.tsx:92
 #: src/pages/Center/Generic404.tsx:12
 msgid "Home"
 msgstr "Accueil"
 
-#: src/components/HeaderMenu.tsx:109
+#: src/components/HeaderMenu.tsx:110
 #: src/pages/Auth/Login.tsx:46
 msgid "Install Application"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:106
+#: src/pages/SettingsClient/SettingsClient.tsx:108
 msgid "Kiosk mode:"
 msgstr "Mode Kiosque :"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:62
+msgid "Line by line"
+msgstr "Ligne par ligne"
+
+#: src/pages/Album/Album.tsx:99
+msgid "Link copied to clipboard"
+msgstr "Lien copié dans le presse-papiers"
 
 #: src/components/HeaderMenu.tsx:53
 msgid "Logout"
 msgstr "Déconnexion"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:142
+msgid "Lyrics display mode:"
+msgstr "Mode d'affichage des paroles :"
 
 #: src/utils/constants_sexes.ts:16
 msgid "Man"
@@ -154,24 +167,24 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:53
+#: src/pages/SettingsClient/SettingsClient.tsx:57
 msgid "Never"
 msgstr "Jamais"
 
 #: src/components/PipControls/PipControlsWindow.tsx:98
 #: src/components/PipControls/PipControlsWindow.tsx:99
-#: src/components/Player/PlayerControls.tsx:119
 #: src/components/Player/PlayerControls.tsx:120
+#: src/components/Player/PlayerControls.tsx:121
 msgid "Next"
 msgstr "Suivant"
 
 #: src/components/PipControls/PipControlsWindow.tsx:51
 #: src/components/PipControls/PipControlsWindow.tsx:54
-#: src/components/Player/PlayerControls.tsx:66
+#: src/components/Player/PlayerControls.tsx:67
 msgid "No track playing"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:191
+#: src/components/Player/PlayerControls.tsx:192
 msgid "Open Picture-in-Picture"
 msgstr ""
 
@@ -181,53 +194,53 @@ msgstr "Page introuvable"
 
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
-#: src/components/Player/PlayerControls.tsx:104
 #: src/components/Player/PlayerControls.tsx:105
+#: src/components/Player/PlayerControls.tsx:106
 msgid "Pause"
 msgstr "Pause"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:196
+#: src/pages/SettingsClient/SettingsClient.tsx:209
 msgid "Persistent storage granted"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:198
+#: src/pages/SettingsClient/SettingsClient.tsx:211
 msgid "Persistent storage not granted"
 msgstr ""
 
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
-#: src/components/Player/PlayerControls.tsx:104
 #: src/components/Player/PlayerControls.tsx:105
-#: src/pages/Album/Album.tsx:157
+#: src/components/Player/PlayerControls.tsx:106
+#: src/pages/Album/Album.tsx:164
 msgid "Play"
 msgstr "Lecture"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:47
-#: src/pages/SettingsClient/SettingsClient.tsx:52
+#: src/pages/SettingsClient/SettingsClient.tsx:51
+#: src/pages/SettingsClient/SettingsClient.tsx:56
 msgid "Playback"
 msgstr ""
 
 #: src/components/PipControls/PipControlsWindow.tsx:71
-#: src/components/Player/PlayerControls.tsx:85
+#: src/components/Player/PlayerControls.tsx:86
 msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/PipControls/PipControlsWindow.tsx:74
 #: src/components/PipControls/PipControlsWindow.tsx:75
-#: src/components/Player/PlayerControls.tsx:93
 #: src/components/Player/PlayerControls.tsx:94
+#: src/components/Player/PlayerControls.tsx:95
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:207
+#: src/pages/SettingsClient/SettingsClient.tsx:220
 msgid "Request"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:98
+#: src/components/HeaderMenu.tsx:99
 msgid "Search"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:131
+#: src/components/Player/PlayerControls.tsx:132
 msgid "Seek"
 msgstr ""
 
@@ -243,21 +256,25 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:77
+#: src/pages/Album/Album.tsx:80
 msgid "Share"
 msgstr "Partager"
 
-#: src/components/Player/PlayerControls.tsx:163
 #: src/components/Player/PlayerControls.tsx:164
+#: src/components/Player/PlayerControls.tsx:165
 msgid "Show overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:176
 #: src/components/Player/PlayerControls.tsx:177
+#: src/components/Player/PlayerControls.tsx:178
 msgid "Show queue"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:191
+#: src/pages/SettingsClient/SettingsClient.tsx:63
+msgid "Static"
+msgstr "Statique"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:204
 msgid "Storage Persistence:"
 msgstr ""
 
@@ -273,10 +290,14 @@ msgstr "Non Spécifié"
 msgid "Upgrade to a supported Chromium browser"
 msgstr "Utilisez un navigateur Chromium pris en charge"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:129
+#: src/pages/SettingsClient/SettingsClient.tsx:131
 msgid "Wake lock:"
 msgstr "Verrouillage de la mise en veille :"
 
 #: src/utils/constants_sexes.ts:17
 msgid "Woman"
 msgstr "Femme"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:61
+msgid "Word by word"
+msgstr "Mot à mot"

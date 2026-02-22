@@ -104,6 +104,15 @@
   background-color: var(--album-color-vibrant-dark);
 }
 
+#oktomusic\:panel-toast-provider {
+  grid-column: 2;
+  grid-row: 1;
+  z-index: 20;
+  min-height: 0;
+  position: relative;
+  pointer-events: none;
+}
+
 /* Panels must never cause global scroll */
 #oktomusic\:panel-left {
   grid-column: 1;

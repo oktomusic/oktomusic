@@ -17,3 +17,10 @@ export const panelRightVisibleAtom = atom<boolean>(true);
  * When `true`, it covers the main content area (e.g. lyrics view).
  */
 export const panelOverlayVisibleAtom = atom<boolean>(false);
+
+export interface PanelToast {
+  readonly message: string;
+  readonly type: "success" | "error" | "info";
+}
+
+export const panelToastAtom = atom<PanelToast | null>(null);
