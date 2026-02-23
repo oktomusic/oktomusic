@@ -46,3 +46,12 @@ function MyComponent(props: MyComponentProps) {
 - Codegen MUST be used after any change to the GraphQL schema or queries/mutations/subscriptions, with the command `pnpm --filter @oktomusic/frontend codegen`
 - Dates are sent by the backend as ISO strings, codegen give them type `Date` but that won't work unless the Apollo Client in `apps/frontend/src/api/graphql/client.ts` is configured to parse it from string
 - Do not EVER use `new Date()` on a type that is already supposed to be a `Date`
+
+## Images
+
+For all image elements, you must explicitly provide `fetchPriority` and `loading` attributes, based on the intended use of the image.
+
+Adding new images to the project require proper optimisation.
+
+- SVG images must be run through SVGO with the default configuration.
+- PNG images must be optimised with Oxipng with `oxipng --opt max --strip all --zopfli`.
