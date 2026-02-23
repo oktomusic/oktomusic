@@ -1,3 +1,50 @@
 .track-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+
+  --track-list-index-width: 1rem;
+  --track-list-options-width: 1rem;
+
+  --track-list-template: var(--track-list-index-width) minmax(180px, 1fr) 60px
+    var(--track-list-options-width);
+
+  > .track-list__nav {
+    display: grid;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    grid-template-columns: var(--track-list-template);
+    column-gap: 1rem;
+  }
+
+  > .track-list__disc {
+    display: flex;
+    flex-direction: column;
+
+    > .track-list__tracks {
+      display: flex;
+      flex-direction: column;
+
+      > .track-list__track {
+        display: grid;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        grid-template-columns: var(--track-list-template);
+        column-gap: 1rem;
+
+        .track-list__track__cover {
+          display: flex;
+          flex-shrink: 0;
+        }
+
+        .track-list__track_info {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
 }

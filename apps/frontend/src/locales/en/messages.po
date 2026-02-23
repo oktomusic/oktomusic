@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:144
+#: src/pages/Album/Album.tsx:146
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# track} other {# tracks}}"
 
@@ -37,9 +37,14 @@ msgstr "About"
 msgid "Account Settings"
 msgstr "Account Settings"
 
+#: src/components/TrackList/TrackElement.tsx:25
 #: src/pages/Album/Album.tsx:106
-msgid "Add to Queue"
-msgstr "Add to Queue"
+msgid "Add to queue"
+msgstr "Add to queue"
+
+#: src/pages/Album/Album.tsx:106
+#~ msgid "Add to Queue"
+#~ msgstr "Add to Queue"
 
 #: src/components/HeaderMenu.tsx:62
 #: src/pages/SettingsAdmin/SettingsAdmin.tsx:18
@@ -114,6 +119,10 @@ msgstr "Go back"
 msgid "Go forward"
 msgstr "Go forward"
 
+#: src/components/TrackList/TrackElement.tsx:33
+msgid "Go to album"
+msgstr "Go to album"
+
 #: src/components/Player/PlayerControls.tsx:164
 #: src/components/Player/PlayerControls.tsx:165
 msgid "Hide overlay"
@@ -143,7 +152,7 @@ msgstr "Kiosk mode:"
 msgid "Line by line"
 msgstr "Line by line"
 
-#: src/pages/Album/Album.tsx:99
+#: src/pages/Album/Album.tsx:98
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
@@ -166,6 +175,14 @@ msgstr "Man"
 #: src/pages/SettingsClient/SettingsClient.tsx:220
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr "Maximum number of media files to cache."
+
+#: src/pages/Album/Album.tsx:175
+msgid "More options for {albumName}"
+msgstr "More options for {albumName}"
+
+#: src/components/TrackList/TrackElement.tsx:81
+msgid "More options for {trackName}"
+msgstr "More options for {trackName}"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:57
 msgid "Never"
@@ -211,7 +228,7 @@ msgstr "Persistent storage not granted"
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:105
 #: src/components/Player/PlayerControls.tsx:106
-#: src/pages/Album/Album.tsx:164
+#: src/pages/Album/Album.tsx:166
 msgid "Play"
 msgstr "Play"
 
@@ -256,7 +273,7 @@ msgstr "Seek"
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:80
+#: src/pages/Album/Album.tsx:79
 msgid "Share"
 msgstr "Share"
 

@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:144
+#: src/pages/Album/Album.tsx:146
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -37,8 +37,9 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
+#: src/components/TrackList/TrackElement.tsx:25
 #: src/pages/Album/Album.tsx:106
-msgid "Add to Queue"
+msgid "Add to queue"
 msgstr ""
 
 #: src/components/HeaderMenu.tsx:62
@@ -114,6 +115,10 @@ msgstr "Reculer"
 msgid "Go forward"
 msgstr "Avancer"
 
+#: src/components/TrackList/TrackElement.tsx:33
+msgid "Go to album"
+msgstr "Accéder à l'album"
+
 #: src/components/Player/PlayerControls.tsx:164
 #: src/components/Player/PlayerControls.tsx:165
 msgid "Hide overlay"
@@ -143,7 +148,7 @@ msgstr "Mode Kiosque :"
 msgid "Line by line"
 msgstr "Ligne par ligne"
 
-#: src/pages/Album/Album.tsx:99
+#: src/pages/Album/Album.tsx:98
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
@@ -166,6 +171,14 @@ msgstr "Homme"
 #: src/pages/SettingsClient/SettingsClient.tsx:220
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
+
+#: src/pages/Album/Album.tsx:175
+msgid "More options for {albumName}"
+msgstr "Plus d'options pour {albumName}"
+
+#: src/components/TrackList/TrackElement.tsx:81
+msgid "More options for {trackName}"
+msgstr "Plus d'options pour {trackName}"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:57
 msgid "Never"
@@ -211,7 +224,7 @@ msgstr ""
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:105
 #: src/components/Player/PlayerControls.tsx:106
-#: src/pages/Album/Album.tsx:164
+#: src/pages/Album/Album.tsx:166
 msgid "Play"
 msgstr "Lecture"
 
@@ -256,7 +269,7 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:80
+#: src/pages/Album/Album.tsx:79
 msgid "Share"
 msgstr "Partager"
 

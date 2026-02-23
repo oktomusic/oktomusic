@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client/react";
 import { plural, t } from "@lingui/core/macro";
 import { useSetAtom } from "jotai";
 import { HiEllipsisHorizontal, HiOutlineShare, HiPlay } from "react-icons/hi2";
+import { LuListPlus } from "react-icons/lu";
 import { Link, useParams } from "react-router";
 
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";
@@ -10,7 +11,6 @@ import { DurationLong } from "../../components/DurationLong";
 import { GenericGraphQLError } from "../Center/GenericGraphQLError";
 import { OktoMenu, OktoMenuItem } from "../../components/Base/OktoMenu";
 import { TrackList } from "../../components/TrackList/TrackList";
-import { formatDuration } from "../../utils/format_duration";
 import {
   addToQueueAtom,
   replaceQueueAtom,
@@ -70,7 +70,6 @@ export function Album() {
     .flat()
     .reduce((acc, track) => acc + track.durationMs, 0);
 
-  const albumHasMultipleDiscs = data!.album.tracksByDisc.length > 1;
   const tracksWithAlbum = mapTracksWithAlbum(data!.album);
   const flatTracks = tracksWithAlbum.flat();
 
@@ -103,12 +102,15 @@ export function Album() {
     },
     {
       type: "button",
-      label: t`Add to Queue`,
+      icon: <LuListPlus className="size-4" />,
+      label: t`Add to queue`,
       onClick: () => {
         addToQueue(flatTracks);
       },
     },
   ];
+
+  const albumName = data!.album.name;
 
   return (
     <div className="w-full" ref={mainDivRef}>
@@ -170,41 +172,14 @@ export function Album() {
             button={<HiEllipsisHorizontal className="size-6" />}
             items={menuItems}
             anchor="bottom start"
+            buttonAriaLabel={t`More options for ${albumName}`}
           />
         </div>
-        <TrackList tracks={tracksWithAlbum} />
-        <div className="grid grid-cols-3">
-          <div>#</div>
-          <div>Title</div>
-          <div className="">Duration</div>
-        </div>
-        <div className="flex flex-col gap-2">
-          {data!.album.tracksByDisc.map((disc, discIndex) => (
-            <div key={discIndex} className="flex flex-col gap-2">
-              {albumHasMultipleDiscs && (
-                <h3 className="text-sm font-bold">{`Disc ${discIndex + 1}`}</h3>
-              )}
-              <div className="flex flex-col">
-                {disc.map((track, trackIndex) => (
-                  <div
-                    key={track.id}
-                    className="flex h-14 flex-row items-center gap-4 rounded-lg p-2 hover:bg-white/10"
-                  >
-                    <span className="w-6 text-right text-sm text-white/50">
-                      {trackIndex + 1}
-                    </span>
-                    <span>{track.name}</span>
-                    <span className="ml-auto text-sm text-white/50">
-                      {formatDuration(track.durationMs)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <TrackList
+          tracks={tracksWithAlbum}
+          displayCover={true} /* TODO: remove cover */
+        />
       </div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }
