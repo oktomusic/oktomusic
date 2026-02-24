@@ -37,7 +37,7 @@ msgstr "About"
 msgid "Account Settings"
 msgstr "Account Settings"
 
-#: src/components/TrackList/TrackElement.tsx:25
+#: src/components/TrackList/TrackElement.tsx:46
 #: src/pages/Album/Album.tsx:106
 msgid "Add to queue"
 msgstr "Add to queue"
@@ -67,7 +67,7 @@ msgstr "Ambient"
 msgid "Audio session:"
 msgstr "Audio session:"
 
-#: src/components/Player/PlayerControls.tsx:150
+#: src/components/Player/PlayerControls.tsx:152
 msgid "Buffering…"
 msgstr "Buffering…"
 
@@ -87,7 +87,7 @@ msgstr "Checking storage persistence..."
 msgid "Client Settings"
 msgstr "Client Settings"
 
-#: src/components/Player/PlayerControls.tsx:192
+#: src/components/Player/PlayerControls.tsx:194
 msgid "Close Picture-in-Picture"
 msgstr "Close Picture-in-Picture"
 
@@ -119,17 +119,17 @@ msgstr "Go back"
 msgid "Go forward"
 msgstr "Go forward"
 
-#: src/components/TrackList/TrackElement.tsx:33
+#: src/components/TrackList/TrackElement.tsx:54
 msgid "Go to album"
 msgstr "Go to album"
 
-#: src/components/Player/PlayerControls.tsx:164
-#: src/components/Player/PlayerControls.tsx:165
+#: src/components/Player/PlayerControls.tsx:166
+#: src/components/Player/PlayerControls.tsx:167
 msgid "Hide overlay"
 msgstr "Hide overlay"
 
-#: src/components/Player/PlayerControls.tsx:177
-#: src/components/Player/PlayerControls.tsx:178
+#: src/components/Player/PlayerControls.tsx:179
+#: src/components/Player/PlayerControls.tsx:180
 msgid "Hide queue"
 msgstr "Hide queue"
 
@@ -180,7 +180,7 @@ msgstr "Man"
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:81
+#: src/components/TrackList/TrackElement.tsx:123
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"
 
@@ -190,18 +190,18 @@ msgstr "Never"
 
 #: src/components/PipControls/PipControlsWindow.tsx:98
 #: src/components/PipControls/PipControlsWindow.tsx:99
-#: src/components/Player/PlayerControls.tsx:120
-#: src/components/Player/PlayerControls.tsx:121
+#: src/components/Player/PlayerControls.tsx:122
+#: src/components/Player/PlayerControls.tsx:123
 msgid "Next"
 msgstr "Next"
 
 #: src/components/PipControls/PipControlsWindow.tsx:51
 #: src/components/PipControls/PipControlsWindow.tsx:54
-#: src/components/Player/PlayerControls.tsx:67
+#: src/components/Player/PlayerControls.tsx:69
 msgid "No track playing"
 msgstr "No track playing"
 
-#: src/components/Player/PlayerControls.tsx:192
+#: src/components/Player/PlayerControls.tsx:194
 msgid "Open Picture-in-Picture"
 msgstr "Open Picture-in-Picture"
 
@@ -211,10 +211,14 @@ msgstr "Page not found"
 
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
-#: src/components/Player/PlayerControls.tsx:105
-#: src/components/Player/PlayerControls.tsx:106
+#: src/components/Player/PlayerControls.tsx:107
+#: src/components/Player/PlayerControls.tsx:108
 msgid "Pause"
 msgstr "Pause"
+
+#: src/components/TrackList/TrackElement.tsx:75
+msgid "Pause {trackName}"
+msgstr "Pause {trackName}"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:209
 msgid "Persistent storage granted"
@@ -226,11 +230,15 @@ msgstr "Persistent storage not granted"
 
 #: src/components/PipControls/PipControlsWindow.tsx:84
 #: src/components/PipControls/PipControlsWindow.tsx:85
-#: src/components/Player/PlayerControls.tsx:105
-#: src/components/Player/PlayerControls.tsx:106
+#: src/components/Player/PlayerControls.tsx:107
+#: src/components/Player/PlayerControls.tsx:108
 #: src/pages/Album/Album.tsx:166
 msgid "Play"
 msgstr "Play"
+
+#: src/components/TrackList/TrackElement.tsx:77
+msgid "Play {trackName}"
+msgstr "Play {trackName}"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:51
 #: src/pages/SettingsClient/SettingsClient.tsx:56
@@ -238,14 +246,14 @@ msgid "Playback"
 msgstr "Playback"
 
 #: src/components/PipControls/PipControlsWindow.tsx:71
-#: src/components/Player/PlayerControls.tsx:86
+#: src/components/Player/PlayerControls.tsx:88
 msgid "Playback controls"
 msgstr "Playback controls"
 
 #: src/components/PipControls/PipControlsWindow.tsx:74
 #: src/components/PipControls/PipControlsWindow.tsx:75
-#: src/components/Player/PlayerControls.tsx:94
-#: src/components/Player/PlayerControls.tsx:95
+#: src/components/Player/PlayerControls.tsx:96
+#: src/components/Player/PlayerControls.tsx:97
 msgid "Previous"
 msgstr "Previous"
 
@@ -253,11 +261,15 @@ msgstr "Previous"
 msgid "Request"
 msgstr "Request"
 
+#: src/components/TrackList/TrackElement.tsx:76
+msgid "Resume {trackName}"
+msgstr "Resume {trackName}"
+
 #: src/components/HeaderMenu.tsx:99
 msgid "Search"
 msgstr "Search"
 
-#: src/components/Player/PlayerControls.tsx:132
+#: src/components/Player/PlayerControls.tsx:134
 msgid "Seek"
 msgstr "Seek"
 
@@ -277,13 +289,13 @@ msgstr "Sexe :"
 msgid "Share"
 msgstr "Share"
 
-#: src/components/Player/PlayerControls.tsx:164
-#: src/components/Player/PlayerControls.tsx:165
+#: src/components/Player/PlayerControls.tsx:166
+#: src/components/Player/PlayerControls.tsx:167
 msgid "Show overlay"
 msgstr "Show overlay"
 
-#: src/components/Player/PlayerControls.tsx:177
-#: src/components/Player/PlayerControls.tsx:178
+#: src/components/Player/PlayerControls.tsx:179
+#: src/components/Player/PlayerControls.tsx:180
 msgid "Show queue"
 msgstr "Show queue"
 

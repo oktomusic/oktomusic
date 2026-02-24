@@ -30,6 +30,7 @@
         padding-right: 1rem;
         grid-template-columns: var(--track-list-template);
         column-gap: 1rem;
+        align-items: center;
 
         .track-list__track__cover {
           display: flex;

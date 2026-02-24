@@ -11,6 +11,7 @@ import { DurationLong } from "../../components/DurationLong";
 import { GenericGraphQLError } from "../Center/GenericGraphQLError";
 import { OktoMenu, OktoMenuItem } from "../../components/Base/OktoMenu";
 import { TrackList } from "../../components/TrackList/TrackList";
+import { GenericLoading } from "../Center/GenericLoading";
 import {
   addToQueueAtom,
   replaceQueueAtom,
@@ -21,7 +22,6 @@ import { mapTracksWithAlbum } from "../../utils/album_tracks";
 import { useVibrantColors } from "../../hooks/vibrant_colors";
 
 import "./Album.css";
-import { GenericLoading } from "../Center/GenericLoading";
 
 export function Album() {
   const { cuid } = useParams();
@@ -119,7 +119,7 @@ export function Album() {
           <img
             src={`/api/album/${data!.album.id}/cover/1280`}
             alt={data!.album.name}
-            className="aspect-square h-full max-h-56 w-full max-w-56 rounded-lg shadow-2xl/50"
+            className="aspect-square h-full max-h-56 w-full max-w-56 rounded-lg shadow-2xl/50 select-none"
           />
           <div className="flex flex-col justify-end gap-2">
             <h2 className="text-7xl font-bold">{data!.album.name}</h2>

@@ -1,22 +1,42 @@
 import { Link } from "react-router";
-import { HiEllipsisHorizontal } from "react-icons/hi2";
+import { HiEllipsisHorizontal, HiPlay, HiPause } from "react-icons/hi2";
 import { LuDisc3, LuListPlus } from "react-icons/lu";
-import { useSetAtom } from "jotai";
+import { useSetAtom, useAtomValue } from "jotai";
 import { t } from "@lingui/core/macro";
 
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
 import { formatDuration } from "../../utils/format_duration";
-import { TrackWithAlbum } from "../../atoms/player/machine";
-import { addToQueueAtom } from "../../atoms/player/machine";
+import {
+  TrackWithAlbum,
+  addToQueueAtom,
+  playerQueueCurrentTrack,
+  playerShouldPlayAtom,
+  requestPlaybackToggleAtom,
+} from "../../atoms/player/machine";
 
 interface TrackElementProps {
   readonly track: TrackWithAlbum;
   readonly index: number;
   readonly displayCover: boolean;
+  readonly onPlay: () => void;
 }
 
 export function TrackElement(props: TrackElementProps) {
   const addToQueue = useSetAtom(addToQueueAtom);
+  const currentTrack = useAtomValue(playerQueueCurrentTrack);
+  const shouldPlay = useAtomValue(playerShouldPlayAtom);
+  const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
+
+  const isCurrentTrack = currentTrack?.id === props.track.id;
+  const showPauseIcon = isCurrentTrack && shouldPlay;
+
+  const handleButtonClick = () => {
+    if (isCurrentTrack) {
+      togglePlayback();
+    } else {
+      props.onPlay();
+    }
+  };
 
   const menuItems: OktoMenuItem[] = [
     {
@@ -40,14 +60,35 @@ export function TrackElement(props: TrackElementProps) {
   return (
     <li
       key={props.index}
-      className="track-list__track group grid h-14 w-full items-center rounded-lg hover:bg-white/10"
+      className="track-list__track group h-14 w-full rounded-lg hover:bg-white/10"
     >
-      <span>{props.index + 1}</span>
+      <div className="relative flex items-center justify-center">
+        <span className="select-none group-hover:opacity-0">
+          {props.index + 1}
+        </span>
+        <button
+          className="absolute inset-0 flex items-center justify-center opacity-0 select-none group-hover:opacity-100"
+          aria-label={
+            isCurrentTrack
+              ? shouldPlay
+                ? t`Pause ${trackName}`
+                : t`Resume ${trackName}`
+              : t`Play ${trackName}`
+          }
+          onClick={handleButtonClick}
+        >
+          {showPauseIcon ? (
+            <HiPause className="size-4" />
+          ) : (
+            <HiPlay className="size-4" />
+          )}
+        </button>
+      </div>
       <div className="flex flex-row content-between justify-center overflow-hidden align-middle whitespace-nowrap">
         {props.displayCover && (
-          <div className="track-list__track__cover mr-3 flex shrink-0 items-center justify-center">
+          <div className="track-list__track__cover mr-3 items-center justify-center">
             <img
-              className="block size-10 rounded"
+              className="block size-10 rounded select-none"
               fetchPriority="low"
               loading="lazy"
               draggable={false}

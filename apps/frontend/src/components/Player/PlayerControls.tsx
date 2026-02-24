@@ -19,6 +19,7 @@ import {
   playerPlaybackDurationAtom,
   playerPlaybackPositionAtom,
   playerQueueCurrentTrack,
+  playerShouldPlayAtom,
   requestPlaybackToggleAtom,
   requestSeekAtom,
 } from "../../atoms/player/machine";
@@ -39,6 +40,7 @@ export default function PlayerControls() {
   const playbackDuration = useAtomValue(playerPlaybackDurationAtom);
   const isPlaying = useAtomValue(playerIsPlayingAtom);
   const isBuffering = useAtomValue(playerIsBufferingAtom);
+  const shouldPlay = useAtomValue(playerShouldPlayAtom);
 
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
 
@@ -106,7 +108,7 @@ export default function PlayerControls() {
             title={isPlaying ? t`Pause` : t`Play`}
             className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
           >
-            {isPlaying ? (
+            {shouldPlay ? (
               <HiPause className="size-6" />
             ) : (
               <HiPlay className="size-6" />
