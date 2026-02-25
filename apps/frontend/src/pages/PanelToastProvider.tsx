@@ -28,17 +28,25 @@ export function PanelToastProvider() {
           <li
             className="flex flex-row gap-2 rounded-lg bg-zinc-800 p-3 shadow-md shadow-black/50"
             onClick={() => setToast(null)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setToast(null);
+              }
+            }}
           >
-            {toast?.type === "success" && (
+            {toast.type === "success" && (
               <HiCheckCircle className="size-6 text-green-400" />
             )}
-            {toast?.type === "error" && (
+            {toast.type === "error" && (
               <HiXCircle className="size-6 text-red-400" />
             )}
-            {toast?.type === "info" && (
+            {toast.type === "info" && (
               <HiInformationCircle className="size-6 text-blue-400" />
             )}
-            <span className="ml-2">{toast?.message}</span>
+            <span className="ml-2">{toast.message}</span>
           </li>
         )}
       </ul>
