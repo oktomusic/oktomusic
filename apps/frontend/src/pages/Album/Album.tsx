@@ -19,6 +19,7 @@ import {
 } from "../../atoms/player/machine";
 import { panelToastAtom } from "../../atoms/app/panels";
 import { mapTracksWithAlbum } from "../../utils/album_tracks";
+import { useFitText } from "../../hooks/fit_text";
 import { useVibrantColors } from "../../hooks/vibrant_colors";
 
 import "./Album.css";
@@ -32,6 +33,9 @@ export function Album() {
   });
 
   const mainDivRef = useRef<HTMLDivElement>(null);
+  const titleContainerRef = useRef<HTMLDivElement>(null);
+  const titleContentRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   const albumColors: VibrantColors = {
     vibrant: data?.album.coverColorVibrant ?? "#ffffff",
@@ -43,6 +47,7 @@ export function Album() {
   };
 
   useVibrantColors(mainDivRef, albumColors);
+  useFitText(titleContainerRef, titleContentRef, titleRef);
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
@@ -114,47 +119,57 @@ export function Album() {
 
   return (
     <div className="w-full" ref={mainDivRef}>
-      <div className="album-banner flex h-80 w-full items-end p-6">
-        <div className="flex flex-row gap-6">
+      <div className="album-banner w-full p-6">
+        <div className="relative flex w-full flex-row gap-6">
           <img
             src={`/api/album/${data!.album.id}/cover/1280`}
             alt={data!.album.name}
-            className="aspect-square h-full max-h-56 w-full max-w-56 rounded-lg shadow-2xl/50 select-none"
+            className="aspect-square w-56 shrink-0 rounded-lg shadow-2xl/50 select-none"
           />
-          <div className="flex flex-col justify-end gap-2">
-            <h2 className="text-7xl font-bold">{data!.album.name}</h2>
-            <div className="text-sm">
-              <span className="font-bold">
-                {data!.album.artists.map((artist, index) => (
-                  <span key={artist.id ?? index}>
-                    <Link
-                      to={`/artist/${artist.id}`}
-                      className="hover:underline"
-                    >
-                      {artist.name}
-                    </Link>
-                    {index < (data!.album.artists.length ?? 0) - 1 && ", "}
-                  </span>
-                ))}
-              </span>
-              <span className="mx-2">•</span>
-              <span title={data!.album.date?.toLocaleDateString() ?? ""}>
-                {data!.album.date?.getFullYear()}
-              </span>
-              <span className="mx-2">•</span>
-              <span>
-                {plural(
-                  { count: albumTracksTotal },
-                  {
-                    one: "# track",
-                    other: "# tracks",
-                  },
-                )}
-              </span>
-              <span>, </span>
-              <span>
-                <DurationLong durationMs={albumDurationMs} />
-              </span>
+          <div
+            ref={titleContainerRef}
+            className="absolute inset-y-0 right-0 left-62 flex flex-col justify-end overflow-hidden"
+          >
+            <div ref={titleContentRef} className="flex flex-col gap-2">
+              <h2
+                ref={titleRef}
+                className="album-banner__title w-full font-bold"
+              >
+                {data!.album.name}
+              </h2>
+              <div className="text-sm">
+                <span className="font-bold">
+                  {data!.album.artists.map((artist, index) => (
+                    <span key={artist.id ?? index}>
+                      <Link
+                        to={`/artist/${artist.id}`}
+                        className="hover:underline"
+                      >
+                        {artist.name}
+                      </Link>
+                      {index < (data!.album.artists.length ?? 0) - 1 && ", "}
+                    </span>
+                  ))}
+                </span>
+                <span className="mx-2">•</span>
+                <span title={data!.album.date?.toLocaleDateString() ?? ""}>
+                  {data!.album.date?.getFullYear()}
+                </span>
+                <span className="mx-2">•</span>
+                <span>
+                  {plural(
+                    { count: albumTracksTotal },
+                    {
+                      one: "# track",
+                      other: "# tracks",
+                    },
+                  )}
+                </span>
+                <span>, </span>
+                <span>
+                  <DurationLong durationMs={albumDurationMs} />
+                </span>
+              </div>
             </div>
           </div>
         </div>

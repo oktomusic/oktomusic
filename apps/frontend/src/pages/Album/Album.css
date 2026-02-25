@@ -1,3 +1,14 @@
 .album-banner {
   background-color: var(--album-color-vibrant-dark);
+
+  .album-banner__title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+    line-height: 1.15;
+  }
 }
