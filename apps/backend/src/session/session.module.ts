@@ -49,7 +49,7 @@ export class SessionModule implements NestModule {
           cookie: {
             // Behind a reverse proxy, Express needs trust proxy to correctly infer req.secure.
             // Using "auto" avoids breaking non-TLS deployments while still marking cookies Secure on HTTPS.
-            secure: this.appConf.isProd ? "auto" : false,
+            secure: "auto",
             sameSite: "lax",
             maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
           },
