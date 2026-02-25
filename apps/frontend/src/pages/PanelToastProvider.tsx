@@ -31,7 +31,11 @@ export function PanelToastProvider() {
             role="button"
             tabIndex={0}
             onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
+              if (
+                event.key === "Enter" ||
+                event.key === " " ||
+                event.key === "Escape"
+              ) {
                 event.preventDefault();
                 setToast(null);
               }

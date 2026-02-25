@@ -91,13 +91,13 @@ export function Album() {
         const albumUrl = `${window.location.origin}/album/${data.album.id}`;
 
         // TODO: handle promise failure + feedback to user
-        if (navigator.share !== undefined) {
+        if ("share" in navigator) {
           void navigator.share({
             title: data.album.name,
             url: albumUrl,
           });
         } else {
-          void navigator.clipboard.writeText(albumUrl);
+          void (navigator as Navigator).clipboard.writeText(albumUrl);
           setToast({
             type: "success",
             message: t`Link copied to clipboard`,
@@ -147,7 +147,7 @@ export function Album() {
                       >
                         {artist.name}
                       </Link>
-                      {index < (data!.album.artists.length ?? 0) - 1 && ", "}
+                      {index < data!.album.artists.length - 1 && ", "}
                     </span>
                   ))}
                 </span>
