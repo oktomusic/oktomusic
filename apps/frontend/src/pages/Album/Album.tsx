@@ -91,7 +91,7 @@ export function Album() {
         const albumUrl = `${window.location.origin}/album/${data.album.id}`;
 
         // TODO: handle promise failure + feedback to user
-        if (navigator.share !== undefined) {
+        if (navigator.share && typeof navigator.share === "function") {
           void navigator.share({
             title: data.album.name,
             url: albumUrl,
@@ -147,7 +147,7 @@ export function Album() {
                       >
                         {artist.name}
                       </Link>
-                      {index < (data!.album.artists.length ?? 0) - 1 && ", "}
+                      {index < data!.album.artists.length - 1 && ", "}
                     </span>
                   ))}
                 </span>

@@ -6,6 +6,9 @@ import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 import manifestSRIPlugin from "@oktomusic/vite-sri-manifest";
 
 const MB = 1024 * 1024;
+// Maximum size of a single asset to be cached by the service worker.
+// Adjust this value if you expect larger bundles or static assets.
+const MAX_SW_CACHED_FILE_SIZE = 10 * MB;
 
 const viteConfigPWA: Partial<VitePWAOptions> = {
   // Configure our own SW
@@ -15,7 +18,7 @@ const viteConfigPWA: Partial<VitePWAOptions> = {
   injectManifest: {
     rollupFormat: "es",
     globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
-    maximumFileSizeToCacheInBytes: 10 * MB,
+    maximumFileSizeToCacheInBytes: MAX_SW_CACHED_FILE_SIZE,
   },
 
   // SW injection
