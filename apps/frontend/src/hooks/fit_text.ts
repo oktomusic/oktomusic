@@ -62,5 +62,5 @@ export function useFitText(
     observer.observe(container);
 
     return () => observer.disconnect();
-  }, [containerRef, contentRef, targetRef, fontSizesRem]);
+  });
 }

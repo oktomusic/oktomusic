@@ -91,13 +91,13 @@ export function Album() {
         const albumUrl = `${window.location.origin}/album/${data.album.id}`;
 
         // TODO: handle promise failure + feedback to user
-        if ("share" in navigator) {
+        if (navigator.share && typeof navigator.share === "function") {
           void navigator.share({
             title: data.album.name,
             url: albumUrl,
           });
         } else {
-          void (navigator as Navigator).clipboard.writeText(albumUrl);
+          void navigator.clipboard.writeText(albumUrl);
           setToast({
             type: "success",
             message: t`Link copied to clipboard`,
