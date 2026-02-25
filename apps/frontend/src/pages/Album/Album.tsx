@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client/react";
 import { plural, t } from "@lingui/core/macro";
 import { useSetAtom } from "jotai";
 import { HiEllipsisHorizontal, HiOutlineShare, HiPlay } from "react-icons/hi2";
-import { LuListPlus } from "react-icons/lu";
+import { LuCircleArrowDown, LuCirclePlus, LuListPlus } from "react-icons/lu";
 import { Link, useParams } from "react-router";
 
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";
@@ -175,7 +175,7 @@ export function Album() {
         </div>
       </div>
       <div className="flex flex-col gap-4 px-6 py-4">
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row items-center gap-4">
           <button
             className="size-12 rounded-full bg-blue-500"
             title={t`Play`}
@@ -183,8 +183,18 @@ export function Album() {
           >
             <HiPlay className="m-auto size-6" />
           </button>
+          <button
+            className="size-8"
+            title={t`Save to library`}
+            onClick={undefined}
+          >
+            <LuCirclePlus className="m-auto size-8" />
+          </button>
+          <button className="size-8" title={t`Download`} onClick={undefined}>
+            <LuCircleArrowDown className="m-auto size-8" />
+          </button>
           <OktoMenu
-            button={<HiEllipsisHorizontal className="size-6" />}
+            button={<HiEllipsisHorizontal className="size-8" />}
             items={menuItems}
             anchor="bottom start"
             buttonAriaLabel={t`More options for ${albumName}`}

@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:146
+#: src/pages/Album/Album.tsx:160
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -37,8 +37,8 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:46
-#: src/pages/Album/Album.tsx:106
+#: src/components/TrackList/TrackElement.tsx:45
+#: src/pages/Album/Album.tsx:111
 msgid "Add to queue"
 msgstr ""
 
@@ -100,6 +100,10 @@ msgstr "Fondu enchaîné (secondes) :"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
+#: src/pages/Album/Album.tsx:193
+msgid "Download"
+msgstr "Télécharger"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:43
 #: src/pages/SettingsClient/SettingsClient.tsx:147
 #~ msgid "Enabled"
@@ -115,7 +119,7 @@ msgstr "Reculer"
 msgid "Go forward"
 msgstr "Avancer"
 
-#: src/components/TrackList/TrackElement.tsx:54
+#: src/components/TrackList/TrackElement.tsx:53
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
@@ -148,7 +152,7 @@ msgstr "Mode Kiosque :"
 msgid "Line by line"
 msgstr "Ligne par ligne"
 
-#: src/pages/Album/Album.tsx:98
+#: src/pages/Album/Album.tsx:103
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
@@ -172,11 +176,11 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/pages/Album/Album.tsx:175
+#: src/pages/Album/Album.tsx:200
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:123
+#: src/components/TrackList/TrackElement.tsx:126
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
@@ -212,7 +216,7 @@ msgstr "Page introuvable"
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/TrackList/TrackElement.tsx:75
+#: src/components/TrackList/TrackElement.tsx:78
 msgid "Pause {trackName}"
 msgstr ""
 
@@ -228,11 +232,11 @@ msgstr ""
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:107
 #: src/components/Player/PlayerControls.tsx:108
-#: src/pages/Album/Album.tsx:166
+#: src/pages/Album/Album.tsx:181
 msgid "Play"
 msgstr "Lecture"
 
-#: src/components/TrackList/TrackElement.tsx:77
+#: src/components/TrackList/TrackElement.tsx:80
 msgid "Play {trackName}"
 msgstr ""
 
@@ -257,9 +261,13 @@ msgstr "Précédent"
 msgid "Request"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:76
+#: src/components/TrackList/TrackElement.tsx:79
 msgid "Resume {trackName}"
 msgstr ""
+
+#: src/pages/Album/Album.tsx:188
+msgid "Save to library"
+msgstr "Sauvegarder dans la bibliothèque"
 
 #: src/components/HeaderMenu.tsx:99
 msgid "Search"
@@ -281,7 +289,7 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:79
+#: src/pages/Album/Album.tsx:84
 msgid "Share"
 msgstr "Partager"
 

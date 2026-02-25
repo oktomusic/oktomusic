@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { HiEllipsisHorizontal, HiPlay, HiPause } from "react-icons/hi2";
-import { LuDisc3, LuListPlus } from "react-icons/lu";
+import { LuAudioLines, LuDisc3, LuListPlus } from "react-icons/lu";
 import { useSetAtom, useAtomValue } from "jotai";
 import { t } from "@lingui/core/macro";
 
@@ -63,8 +63,17 @@ export function TrackElement(props: TrackElementProps) {
       className="track-list__track group h-14 w-full rounded-lg hover:bg-white/10"
     >
       <div className="relative flex items-center justify-center">
-        <span className="select-none group-hover:opacity-0">
-          {props.index + 1}
+        <span
+          className={
+            "select-none group-hover:opacity-0" +
+            (isCurrentTrack ? " text-blue-500" : "")
+          }
+        >
+          {isCurrentTrack && shouldPlay ? (
+            <LuAudioLines className="size-4" />
+          ) : (
+            props.index + 1
+          )}
         </span>
         <button
           className="absolute inset-0 flex items-center justify-center opacity-0 select-none group-hover:opacity-100"
@@ -98,7 +107,11 @@ export function TrackElement(props: TrackElementProps) {
           </div>
         )}
         <div className="track-list__track_info">
-          <span className="text-base">{props.track.name}</span>
+          <span
+            className={"text-base" + (isCurrentTrack ? " text-blue-500" : "")}
+          >
+            {props.track.name}
+          </span>
           <span className="text-sm text-zinc-400">
             {props.track.artists.map((artist, index) => (
               <span key={artist.id ?? index}>
