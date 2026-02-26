@@ -1,3 +1,7 @@
+.album-sticky-header__bar {
+  background-color: var(--album-color-vibrant-dark);
+}
+
 .album-banner {
   background-color: var(--album-color-vibrant-dark);
 

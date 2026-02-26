@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@apollo/client/react";
 import { plural, t } from "@lingui/core/macro";
 import { useSetAtom } from "jotai";
@@ -36,6 +36,9 @@ export function Album() {
   const titleContainerRef = useRef<HTMLDivElement>(null);
   const titleContentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const actionButtonsRef = useRef<HTMLDivElement>(null);
+
+  const [showStickyHeader, setShowStickyHeader] = useState(false);
 
   const albumColors: VibrantColors = {
     vibrant: data?.album.coverColorVibrant ?? "#ffffff",
@@ -48,6 +51,28 @@ export function Album() {
 
   useVibrantColors(mainDivRef, albumColors);
   useFitText(titleContainerRef, titleContentRef, titleRef);
+
+  useEffect(() => {
+    const sentinel = actionButtonsRef.current;
+    if (!sentinel) {
+      return undefined;
+    }
+
+    const scrollContainer = document.getElementById("oktomusic:panel-center");
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStickyHeader(!entry.isIntersecting);
+      },
+      {
+        root: scrollContainer,
+        threshold: 0,
+      },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [data]);
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
@@ -119,6 +144,26 @@ export function Album() {
 
   return (
     <div className="w-full" ref={mainDivRef}>
+      <div className="album-sticky-header sticky top-0 z-10 h-0">
+        <div
+          className={
+            "album-sticky-header__bar flex h-16 items-center gap-4 px-4 transition-opacity duration-200" +
+            (showStickyHeader
+              ? " opacity-100"
+              : " pointer-events-none opacity-0")
+          }
+        >
+          <button
+            className="size-12 shrink-0 rounded-full bg-blue-500"
+            title={t`Play`}
+            aria-label={t`Play ${albumName}`}
+            onClick={() => replaceQueue(flatTracks)}
+          >
+            <HiPlay className="m-auto size-6" />
+          </button>
+          <h2 className="truncate text-2xl font-bold">{albumName}</h2>
+        </div>
+      </div>
       <div className="album-banner w-full p-6">
         <div className="relative flex w-full flex-row gap-6">
           <img
@@ -175,7 +220,10 @@ export function Album() {
         </div>
       </div>
       <div className="flex flex-col gap-4 px-6 py-4">
-        <div className="flex flex-row items-center gap-4">
+        <div
+          ref={actionButtonsRef}
+          className="flex flex-row items-center gap-4"
+        >
           <button
             className="size-12 rounded-full bg-blue-500"
             title={t`Play`}
