@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:160
+#: src/pages/Album/Album.tsx:205
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# track} other {# tracks}}"
 
@@ -38,7 +38,7 @@ msgid "Account Settings"
 msgstr "Account Settings"
 
 #: src/components/TrackList/TrackElement.tsx:45
-#: src/pages/Album/Album.tsx:111
+#: src/pages/Album/Album.tsx:136
 msgid "Add to queue"
 msgstr "Add to queue"
 
@@ -104,7 +104,7 @@ msgstr "Crossfade (seconds):"
 #~ msgid "Disabled"
 #~ msgstr "Disabled"
 
-#: src/pages/Album/Album.tsx:193
+#: src/pages/Album/Album.tsx:241
 msgid "Download"
 msgstr "Download"
 
@@ -156,7 +156,7 @@ msgstr "Kiosk mode:"
 msgid "Line by line"
 msgstr "Line by line"
 
-#: src/pages/Album/Album.tsx:103
+#: src/pages/Album/Album.tsx:128
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
@@ -180,11 +180,11 @@ msgstr "Man"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr "Maximum number of media files to cache."
 
-#: src/pages/Album/Album.tsx:200
+#: src/pages/Album/Album.tsx:248
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:126
+#: src/components/TrackList/TrackElement.tsx:135
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"
 
@@ -220,7 +220,7 @@ msgstr "Page not found"
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/TrackList/TrackElement.tsx:78
+#: src/components/TrackList/TrackElement.tsx:83
 msgid "Pause {trackName}"
 msgstr "Pause {trackName}"
 
@@ -236,11 +236,16 @@ msgstr "Persistent storage not granted"
 #: src/components/PipControls/PipControlsWindow.tsx:85
 #: src/components/Player/PlayerControls.tsx:107
 #: src/components/Player/PlayerControls.tsx:108
-#: src/pages/Album/Album.tsx:181
+#: src/pages/Album/Album.tsx:158
+#: src/pages/Album/Album.tsx:229
 msgid "Play"
 msgstr "Play"
 
-#: src/components/TrackList/TrackElement.tsx:80
+#: src/pages/Album/Album.tsx:159
+msgid "Play {albumName}"
+msgstr "Play {albumName}"
+
+#: src/components/TrackList/TrackElement.tsx:85
 msgid "Play {trackName}"
 msgstr "Play {trackName}"
 
@@ -265,11 +270,11 @@ msgstr "Previous"
 msgid "Request"
 msgstr "Request"
 
-#: src/components/TrackList/TrackElement.tsx:79
+#: src/components/TrackList/TrackElement.tsx:84
 msgid "Resume {trackName}"
 msgstr "Resume {trackName}"
 
-#: src/pages/Album/Album.tsx:188
+#: src/pages/Album/Album.tsx:236
 msgid "Save to library"
 msgstr "Save to library"
 
@@ -293,7 +298,7 @@ msgstr "Seek"
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:84
+#: src/pages/Album/Album.tsx:109
 msgid "Share"
 msgstr "Share"
 

@@ -219,7 +219,7 @@ export function Album() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-4 px-6 py-4">
+      <div className="album-content flex flex-col gap-4 px-6 py-4">
         <div
           ref={actionButtonsRef}
           className="flex flex-row items-center gap-4"
