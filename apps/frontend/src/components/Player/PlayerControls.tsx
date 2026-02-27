@@ -59,6 +59,7 @@ export default function PlayerControls() {
       <div id="oktomusic:player:title" className="flex w-full flex-row gap-2">
         <img
           className="m-2 aspect-square size-16 rounded-sm"
+          loading="eager"
           fetchPriority="high"
           src={
             currentTrack

@@ -26,6 +26,8 @@ export function UnsupportedOverlay({ missing }: UnsupportedOverlayProps) {
                 <img
                   src={browser.icon}
                   alt={browser.name}
+                  loading="eager"
+                  fetchPriority="high"
                   className="mb-2 aspect-square h-12 w-12"
                 />
                 <span>{browser.name}</span>

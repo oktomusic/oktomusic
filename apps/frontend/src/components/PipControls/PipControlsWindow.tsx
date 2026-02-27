@@ -49,6 +49,8 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
           }
           draggable={false}
           alt={currentTrack ? "Album Cover" : t`No track playing`}
+          loading="eager"
+          fetchPriority="high"
         />
         {currentTrack ? null : (
           <div className="pip-cover-overlay">{t`No track playing`}</div>

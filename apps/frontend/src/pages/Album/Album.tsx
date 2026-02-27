@@ -169,6 +169,8 @@ export function Album() {
           <img
             src={`/api/album/${data!.album.id}/cover/1280`}
             alt={data!.album.name}
+            loading="eager"
+            fetchPriority="high"
             className="aspect-square w-56 shrink-0 rounded-lg shadow-2xl/50 select-none"
           />
           <div
