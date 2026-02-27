@@ -23,6 +23,13 @@
   .overflow-y-scroll {
     scrollbar-gutter: stable;
   }
+
+  /* Scrollable container with no visible scrollbar */
+  .scrollbar-hidden {
+    overflow-y: auto !important;
+    scrollbar-gutter: auto !important;
+    scrollbar-width: none !important;
+  }
 }
 
 #app-shell {
@@ -59,8 +66,8 @@
 /* Content grid layout */
 
 #oktomusic\:content-grid {
-  --panel-left-expanded: 16rem; /* 64 * 0.25rem */
-  --panel-left-collapsed: 3.5rem; /* 14 * 0.25rem */
+  --panel-left-expanded: 17.5rem; /* 70 * 0.25rem */
+  --panel-left-collapsed: 5rem; /* 20 * 0.25rem */
   --panel-right-width: 20rem; /* 80 * 0.25rem */
 
   display: grid;
