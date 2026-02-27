@@ -143,7 +143,7 @@ export function Album() {
   const albumName = data!.album.name;
 
   return (
-    <div className="w-full" ref={mainDivRef}>
+    <div className="flex min-h-full w-full flex-col" ref={mainDivRef}>
       <div className="album-sticky-header sticky top-0 z-10 h-0">
         <div
           className={
@@ -219,7 +219,7 @@ export function Album() {
           </div>
         </div>
       </div>
-      <div className="album-content flex flex-col gap-4 px-6 py-4">
+      <div className="album-content flex flex-1 flex-col gap-4 px-6 py-4">
         <div
           ref={actionButtonsRef}
           className="flex flex-row items-center gap-4"
