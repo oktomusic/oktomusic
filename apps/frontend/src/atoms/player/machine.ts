@@ -169,11 +169,20 @@ export const playerSeekRequestAtom = atom<number | null>(null);
 
 /** Action: toggle the user playback intent. */
 export const requestPlaybackToggleAtom = atom(null, (get, set) => {
+  const queue = get(playerQueueAtom);
+  if (queue.length === 0) {
+    set(playerShouldPlayAtom, false);
+    return;
+  }
   set(playerShouldPlayAtom, !get(playerShouldPlayAtom));
 });
 
 /** Action: set playback intent to play. */
-export const requestPlaybackPlayAtom = atom(null, (_get, set) => {
+export const requestPlaybackPlayAtom = atom(null, (get, set) => {
+  const queue = get(playerQueueAtom);
+  if (queue.length === 0) {
+    return;
+  }
   set(playerShouldPlayAtom, true);
 });
 
