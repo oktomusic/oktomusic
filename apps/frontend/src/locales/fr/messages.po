@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:205
+#: src/pages/Album/Album.tsx:214
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -38,13 +38,21 @@ msgid "Account Settings"
 msgstr ""
 
 #: src/components/TrackList/TrackElement.tsx:45
-#: src/pages/Album/Album.tsx:136
+#: src/pages/Album/Album.tsx:139
 msgid "Add to queue"
 msgstr ""
 
 #: src/components/HeaderMenu.tsx:62
 #: src/pages/SettingsAdmin/SettingsAdmin.tsx:18
 msgid "Admin Settings"
+msgstr ""
+
+#: src/components/LibraryRow/LibraryRow.tsx:100
+msgid "Album"
+msgstr "Album"
+
+#: src/components/Dialogs/DialogCover.tsx:40
+msgid "Album cover"
 msgstr ""
 
 #: src/pages/SettingsClient/SettingsClient.tsx:55
@@ -55,6 +63,10 @@ msgstr "Toujours"
 msgid "Ambient"
 msgstr ""
 
+#: src/components/LibraryRow/LibraryRow.tsx:98
+msgid "Artist"
+msgstr "Artiste"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:168
 #~ msgid "Audio Session API is not supported in this browser."
 #~ msgstr "L'API Audio Session n'est pas supportée dans ce navigateur"
@@ -63,7 +75,7 @@ msgstr ""
 msgid "Audio session:"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:152
+#: src/components/Player/PlayerControls.tsx:153
 msgid "Buffering…"
 msgstr ""
 
@@ -83,7 +95,11 @@ msgstr ""
 msgid "Client Settings"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:194
+#: src/components/Dialogs/DialogCover.tsx:49
+msgid "Close"
+msgstr "Fermer"
+
+#: src/components/Player/PlayerControls.tsx:195
 msgid "Close Picture-in-Picture"
 msgstr ""
 
@@ -100,7 +116,7 @@ msgstr "Fondu enchaîné (secondes) :"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/pages/Album/Album.tsx:241
+#: src/pages/Album/Album.tsx:250
 msgid "Download"
 msgstr "Télécharger"
 
@@ -123,13 +139,13 @@ msgstr "Avancer"
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
-#: src/components/Player/PlayerControls.tsx:166
 #: src/components/Player/PlayerControls.tsx:167
+#: src/components/Player/PlayerControls.tsx:168
 msgid "Hide overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:179
 #: src/components/Player/PlayerControls.tsx:180
+#: src/components/Player/PlayerControls.tsx:181
 msgid "Hide queue"
 msgstr ""
 
@@ -152,7 +168,7 @@ msgstr "Mode Kiosque :"
 msgid "Line by line"
 msgstr "Ligne par ligne"
 
-#: src/pages/Album/Album.tsx:128
+#: src/pages/Album/Album.tsx:131
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
@@ -176,7 +192,7 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/pages/Album/Album.tsx:248
+#: src/pages/Album/Album.tsx:257
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
@@ -188,20 +204,20 @@ msgstr "Plus d'options pour {trackName}"
 msgid "Never"
 msgstr "Jamais"
 
-#: src/components/PipControls/PipControlsWindow.tsx:98
-#: src/components/PipControls/PipControlsWindow.tsx:99
-#: src/components/Player/PlayerControls.tsx:122
+#: src/components/PipControls/PipControlsWindow.tsx:100
+#: src/components/PipControls/PipControlsWindow.tsx:101
 #: src/components/Player/PlayerControls.tsx:123
+#: src/components/Player/PlayerControls.tsx:124
 msgid "Next"
 msgstr "Suivant"
 
 #: src/components/PipControls/PipControlsWindow.tsx:51
-#: src/components/PipControls/PipControlsWindow.tsx:54
-#: src/components/Player/PlayerControls.tsx:69
+#: src/components/PipControls/PipControlsWindow.tsx:56
+#: src/components/Player/PlayerControls.tsx:70
 msgid "No track playing"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:194
+#: src/components/Player/PlayerControls.tsx:195
 msgid "Open Picture-in-Picture"
 msgstr ""
 
@@ -209,10 +225,10 @@ msgstr ""
 msgid "Page not found"
 msgstr "Page introuvable"
 
-#: src/components/PipControls/PipControlsWindow.tsx:84
-#: src/components/PipControls/PipControlsWindow.tsx:85
-#: src/components/Player/PlayerControls.tsx:107
+#: src/components/PipControls/PipControlsWindow.tsx:86
+#: src/components/PipControls/PipControlsWindow.tsx:87
 #: src/components/Player/PlayerControls.tsx:108
+#: src/components/Player/PlayerControls.tsx:109
 msgid "Pause"
 msgstr "Pause"
 
@@ -228,16 +244,16 @@ msgstr ""
 msgid "Persistent storage not granted"
 msgstr ""
 
-#: src/components/PipControls/PipControlsWindow.tsx:84
-#: src/components/PipControls/PipControlsWindow.tsx:85
-#: src/components/Player/PlayerControls.tsx:107
+#: src/components/PipControls/PipControlsWindow.tsx:86
+#: src/components/PipControls/PipControlsWindow.tsx:87
 #: src/components/Player/PlayerControls.tsx:108
-#: src/pages/Album/Album.tsx:158
-#: src/pages/Album/Album.tsx:229
+#: src/components/Player/PlayerControls.tsx:109
+#: src/pages/Album/Album.tsx:161
+#: src/pages/Album/Album.tsx:238
 msgid "Play"
 msgstr "Lecture"
 
-#: src/pages/Album/Album.tsx:159
+#: src/pages/Album/Album.tsx:162
 msgid "Play {albumName}"
 msgstr ""
 
@@ -250,15 +266,19 @@ msgstr ""
 msgid "Playback"
 msgstr ""
 
-#: src/components/PipControls/PipControlsWindow.tsx:71
-#: src/components/Player/PlayerControls.tsx:88
+#: src/components/PipControls/PipControlsWindow.tsx:73
+#: src/components/Player/PlayerControls.tsx:89
 msgid "Playback controls"
 msgstr "Commandes de lecture"
 
-#: src/components/PipControls/PipControlsWindow.tsx:74
-#: src/components/PipControls/PipControlsWindow.tsx:75
-#: src/components/Player/PlayerControls.tsx:96
+#: src/components/LibraryRow/LibraryRow.tsx:102
+msgid "Playlist"
+msgstr ""
+
+#: src/components/PipControls/PipControlsWindow.tsx:76
+#: src/components/PipControls/PipControlsWindow.tsx:77
 #: src/components/Player/PlayerControls.tsx:97
+#: src/components/Player/PlayerControls.tsx:98
 msgid "Previous"
 msgstr "Précédent"
 
@@ -270,7 +290,7 @@ msgstr ""
 msgid "Resume {trackName}"
 msgstr ""
 
-#: src/pages/Album/Album.tsx:236
+#: src/pages/Album/Album.tsx:245
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
@@ -278,7 +298,7 @@ msgstr "Sauvegarder dans la bibliothèque"
 msgid "Search"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:134
+#: src/components/Player/PlayerControls.tsx:135
 msgid "Seek"
 msgstr ""
 
@@ -294,17 +314,17 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:109
+#: src/pages/Album/Album.tsx:112
 msgid "Share"
 msgstr "Partager"
 
-#: src/components/Player/PlayerControls.tsx:166
 #: src/components/Player/PlayerControls.tsx:167
+#: src/components/Player/PlayerControls.tsx:168
 msgid "Show overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:179
 #: src/components/Player/PlayerControls.tsx:180
+#: src/components/Player/PlayerControls.tsx:181
 msgid "Show queue"
 msgstr ""
 
@@ -316,7 +336,7 @@ msgstr "Statique"
 msgid "Storage Persistence:"
 msgstr ""
 
-#: src/pages/Unsupported/UnsupportedOverlay.tsx:36
+#: src/pages/Unsupported/UnsupportedOverlay.tsx:38
 msgid "The following modern web features are missing:"
 msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 

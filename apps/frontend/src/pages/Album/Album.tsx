@@ -18,6 +18,7 @@ import {
   VibrantColors,
 } from "../../atoms/player/machine";
 import { panelToastAtom } from "../../atoms/app/panels";
+import { dialogCoverId } from "../../atoms/app/dialogs";
 import { mapTracksWithAlbum } from "../../utils/album_tracks";
 import { useFitText } from "../../hooks/fit_text";
 import { useVibrantColors } from "../../hooks/vibrant_colors";
@@ -78,6 +79,8 @@ export function Album() {
   const addToQueue = useSetAtom(addToQueueAtom);
 
   const setToast = useSetAtom(panelToastAtom);
+
+  const setDialogCoverId = useSetAtom(dialogCoverId);
 
   if (!cuid) {
     return null;
@@ -171,7 +174,11 @@ export function Album() {
             alt={data!.album.name}
             loading="eager"
             fetchPriority="high"
-            className="aspect-square w-56 shrink-0 rounded-lg shadow-2xl/50 select-none"
+            draggable={false}
+            className="aspect-square w-56 shrink-0 rounded-lg shadow-2xl/50 select-none hover:cursor-pointer"
+            onClick={() => {
+              setDialogCoverId(data!.album.id);
+            }}
           />
           <div
             ref={titleContainerRef}

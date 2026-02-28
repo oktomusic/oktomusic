@@ -11,6 +11,7 @@ import MediaSessionProvider from "./components/Player/MediaSessionProvider";
 import AudioSessionProvider from "./components/Player/AudioSessionProvider";
 import { HeaderMenu } from "./components/HeaderMenu";
 import PipControls from "./components/PipControls/PipControls";
+import { DialogCover } from "./components/Dialogs/DialogCover";
 import { PanelLeft } from "./pages/PanelLeft";
 import { PanelOverlay } from "./pages/PanelOverlay";
 import { PanelRight } from "./pages/PanelRight";
@@ -32,6 +33,7 @@ export function App() {
       <AudioSessionProvider />
       <HeaderMenu />
       <PipControls />
+      <DialogCover />
       <div
         id="oktomusic:content-grid"
         data-left={leftExpanded ? "expanded" : "collapsed"}
