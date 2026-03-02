@@ -42,7 +42,7 @@ Here we will describe the steps to get Oktomusic up and running using Docker Com
 
 `.env`:
 
-```ini
+```ini [.env]
 # PostgreSQL (Prisma connection URL)
 DATABASE_URL=postgresql://oktomusic:oktomusic@postgres:5432/oktomusic
 
@@ -79,7 +79,7 @@ OIDC_LOGOUT_REDIRECT_URI=https://music.example.com/
 
 `compose.yml`:
 
-```yaml
+```yaml [compose.yml]
 ---
 name: Oktomusic
 services:

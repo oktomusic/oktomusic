@@ -1,5 +1,9 @@
 import { defineConfig } from "vitepress";
 import { withPwa } from "@vite-pwa/vitepress";
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from "vitepress-plugin-group-icons";
 import llmstxt from "vitepress-plugin-llms";
 
 // https://vitepress.dev/reference/site-config
@@ -77,11 +81,21 @@ export default withPwa(
           hostname: process.env.VITEPRESS_HOSTNAME!,
         }
       : undefined,
+    markdown: {
+      config(md) {
+        md.use(groupIconMdPlugin);
+      },
+    },
     vite: {
       server: {
         port: 5174,
       },
       plugins: [
+        groupIconVitePlugin({
+          customIcon: {
+            "compose.yml": "logos:docker-icon",
+          },
+        }),
         llmstxt({
           title: "Oktomusic Documentation",
           generateLLMsTxt: true,

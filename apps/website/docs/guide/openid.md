@@ -83,7 +83,7 @@ You can create mappers to automatically assign client roles based on user attrib
 
 ### Configure Oktomusic
 
-```ini
+```ini [.env]
 # URL of the Keycloak realm
 # Constructed from your Keycloak domain and realm name
 OIDC_ISSUER=https://<keycloak-domain>/realms/<realm-name>
