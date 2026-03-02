@@ -18,6 +18,7 @@
     "vite": "^7.3.1",
     "vite-plugin-pwa": "^1.2.0",
     "vitepress": "2.0.0-alpha.16",
+    "vitepress-plugin-group-icons": "^1.7.1",
     "vitepress-plugin-llms": "^1.11.0",
     "vue": "^3.5.29",
     "workbox-window": "^7.4.0"

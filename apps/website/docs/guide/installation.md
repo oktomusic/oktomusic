@@ -40,9 +40,7 @@ Here we will describe the steps to get Oktomusic up and running using Docker Com
 >
 > See the [OpenID Connect configuration guide](./openid) for more information.
 
-`.env`:
-
-```ini
+```ini [.env]
 # PostgreSQL (Prisma connection URL)
 DATABASE_URL=postgresql://oktomusic:oktomusic@postgres:5432/oktomusic
 
@@ -77,9 +75,7 @@ OIDC_LOGOUT_REDIRECT_URI=https://music.example.com/
 # TRUST_PROXY=false
 ```
 
-`compose.yml`:
-
-```yaml
+```yaml [compose.yml]
 ---
 name: Oktomusic
 services:
