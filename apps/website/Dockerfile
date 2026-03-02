@@ -23,11 +23,16 @@ WORKDIR /app
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 
+COPY packages/meta-tags/package.json packages/meta-tags/
 COPY apps/website/package.json apps/website/
 
-RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfile --filter @oktomusic/website...
+RUN --mount=type=cache,id=pnpm,target="/pnpm/store" pnpm install --frozen-lockfile --filter @oktomusic/meta-tags --filter @oktomusic/website...
 
+COPY packages/meta-tags/ packages/meta-tags/
 COPY apps/website/ apps/website/
+
+WORKDIR /app
+RUN pnpm run --filter @oktomusic/meta-tags build
 
 WORKDIR /app/apps/website
 RUN pnpm build
