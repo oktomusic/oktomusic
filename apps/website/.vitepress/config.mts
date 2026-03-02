@@ -1,10 +1,33 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, HeadConfig } from "vitepress";
 import { withPwa } from "@vite-pwa/vitepress";
 import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from "vitepress-plugin-group-icons";
 import llmstxt from "vitepress-plugin-llms";
+
+import { CompiledMetaTags, compileMetaTags } from "@oktomusic/meta-tags";
+
+const metaTags = compileMetaTags({
+  "og:type": "website",
+  "og:locale": "en_US",
+  "og:locale:alternate": ["en_US"],
+  "daiu:origin": "HM",
+  "daiu:level": "assist",
+  "daiu:verification": "DAIU 1.0",
+  "daiu:description":
+    "LLMs have beend used for syntax fixes, plugin setup and other tasks to assist in the creation of this documentation.",
+});
+
+function metaTagsToHead(metaTags: CompiledMetaTags): HeadConfig[] {
+  return metaTags.map((tag) => [
+    "meta",
+    {
+      property: tag.property,
+      content: tag.content,
+    },
+  ]);
+}
 
 // https://vitepress.dev/reference/site-config
 export default withPwa(
@@ -27,6 +50,7 @@ export default withPwa(
         "link",
         { rel: "apple-touch-icon", href: "/apple-touch-icon-180x180.png" },
       ],
+      ...metaTagsToHead(metaTags),
     ],
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config

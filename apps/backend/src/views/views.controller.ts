@@ -11,7 +11,7 @@ import { ApiOkResponse, ApiOperation, ApiProduces } from "@nestjs/swagger";
 import type { NextFunction, Request, Response } from "express";
 
 import { buildViewModel } from "./view-model";
-import { OpenGraphService } from "../common/opengraph/opengraph.service";
+import { MetaTagsService } from "../common/metatags/metatags.service";
 import { getAssetTags, type ViteManifest } from "../utils/vite_manifest";
 import viteConfig, { type ViteConfig } from "../config/definitions/vite.config";
 import appConfig, { type AppConfig } from "src/config/definitions/app.config";
@@ -19,7 +19,7 @@ import appConfig, { type AppConfig } from "src/config/definitions/app.config";
 @Controller()
 export class ViewsController {
   constructor(
-    private readonly og: OpenGraphService,
+    private readonly og: MetaTagsService,
     @Inject(appConfig.KEY)
     private readonly appConf: AppConfig,
     @Inject(viteConfig.KEY)
@@ -141,7 +141,7 @@ export class ViewsController {
     res.render(
       "index",
       buildViewModel({
-        ogp: this.og.getDefaultTags(),
+        metaTags: this.og.getDefaultTags(),
         assetTags,
       }),
     );

@@ -9,6 +9,7 @@ export default defineConfig({
       "./packages/lyrics/vitest.config.ts",
       "./packages/metaflac-parser/vitest.config.ts",
       "./packages/vibrant/vitest.config.ts",
+      "./packages/meta-tags/vitest.config.ts",
     ],
   },
 });

@@ -129,6 +129,9 @@ importers:
       '@oktomusic/lyrics':
         specifier: workspace:^
         version: link:../../packages/lyrics
+      '@oktomusic/meta-tags':
+        specifier: workspace:^
+        version: link:../../packages/meta-tags
       '@oktomusic/metaflac-parser':
         specifier: workspace:^
         version: link:../../packages/metaflac-parser
@@ -413,6 +416,9 @@ importers:
 
   apps/website:
     devDependencies:
+      '@oktomusic/meta-tags':
+        specifier: workspace:^
+        version: link:../../packages/meta-tags
       '@vite-pwa/assets-generator':
         specifier: ^1.0.2
         version: 1.0.2
@@ -484,6 +490,19 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+
+  packages/meta-tags:
+    dependencies:
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.13
+        version: 24.10.13
+      tsdown:
+        specifier: ^0.20.3
+        version: 0.20.3(typescript@5.9.3)
 
   packages/metaflac-parser:
     dependencies:

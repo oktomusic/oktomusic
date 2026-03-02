@@ -33,6 +33,7 @@ jobs:
       - pkg-metaflac-parser
       - pkg-api-schemas
       - pkg-vibrant
+      - pkg-meta-tags
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -51,6 +52,9 @@ jobs:
 
       - name: Build @oktomusic/vibrant
         run: pnpm --filter "@oktomusic/vibrant" build
+
+      - name: Build @oktomusic/meta-tags
+        run: pnpm --filter "@oktomusic/meta-tags" build
 
       - name: Prisma generate
         run: pnpm --filter "@oktomusic/backend" run db:generate
@@ -194,8 +198,8 @@ jobs:
         run: |
           pnpm --filter "@oktomusic/vibrant" run test
 
-  website:
-    name: "@oktomusic/website"
+  pkg-meta-tags:
+    name: "@oktomusic/meta-tags"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -203,6 +207,32 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
+
+      - name: Build
+        run: pnpm --filter "@oktomusic/meta-tags" build
+
+      - name: Lint
+        run: |
+          pnpm --filter "@oktomusic/meta-tags" run lint
+
+      - name: Tests
+        run: |
+          pnpm --filter "@oktomusic/meta-tags" run test
+
+  website:
+    name: "@oktomusic/website"
+    runs-on: ubuntu-latest
+    needs:
+      - pkg-meta-tags
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build @oktomusic/meta-tags
+        run: pnpm --filter "@oktomusic/meta-tags" build
 
       - name: Build website
         run: pnpm --filter "@oktomusic/website" run build
@@ -224,6 +254,9 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
+
+      - name: Build @oktomusic/meta-tags
+        run: pnpm --filter "@oktomusic/meta-tags" build
 
       - name: Build website
         run: pnpm --filter "@oktomusic/website" run build

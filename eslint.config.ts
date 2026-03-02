@@ -169,6 +169,22 @@ export default defineConfig([
     },
   },
 
+  // @oktomusic/meta-tags (tsdown)
+  {
+    files: ["packages/meta-tags/**/*.ts"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
+      prettier,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: "./packages/meta-tags/tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+
   // @oktomusic/vite-sri-manifest (tsdown)
   {
     files: ["packages/vite-sri-manifest/**/*.ts"],

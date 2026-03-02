@@ -28,6 +28,7 @@ COPY packages/api-schemas/package.json packages/api-schemas/
 COPY packages/metaflac-parser/package.json packages/metaflac-parser/
 COPY packages/lyrics/package.json packages/lyrics/
 COPY packages/vibrant/package.json packages/vibrant/
+COPY packages/meta-tags/package.json packages/meta-tags/
 COPY apps/backend/package.json apps/backend/
 COPY apps/frontend/package.json apps/frontend/
 
@@ -38,6 +39,7 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
   --filter @oktomusic/lyrics \
   --filter @oktomusic/api-schemas \
   --filter @oktomusic/vibrant \
+  --filter @oktomusic/meta-tags \
   --filter @oktomusic/backend \
   --filter @oktomusic/frontend
 
@@ -46,6 +48,7 @@ COPY packages/api-schemas/ packages/api-schemas/
 COPY packages/metaflac-parser/ packages/metaflac-parser/
 COPY packages/lyrics/ packages/lyrics/
 COPY packages/vibrant/ packages/vibrant/
+COPY packages/meta-tags/ packages/meta-tags/
 COPY apps/backend/ apps/backend/
 COPY apps/frontend/ apps/frontend/
 
@@ -63,6 +66,9 @@ RUN pnpm run --filter @oktomusic/lyrics build
 
 # Build the vibrant package first
 RUN pnpm run --filter @oktomusic/vibrant build
+
+# Build the meta-tags package
+RUN pnpm run --filter @oktomusic/meta-tags build
 
 # Build the frontend
 RUN pnpm run --filter @oktomusic/frontend build
@@ -104,13 +110,15 @@ COPY --from=builder /usr/src/app/packages/api-schemas/package.json ./packages/ap
 COPY --from=builder /usr/src/app/packages/lyrics/package.json ./packages/lyrics/
 COPY --from=builder /usr/src/app/packages/metaflac-parser/package.json ./packages/metaflac-parser/
 COPY --from=builder /usr/src/app/packages/vibrant/package.json ./packages/vibrant/
+COPY --from=builder /usr/src/app/packages/meta-tags/package.json ./packages/meta-tags/
 
 # Install production dependencies only
 RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
   pnpm install --frozen-lockfile --prod \
   --filter @oktomusic/api-schemas... \
   --filter @oktomusic/metaflac-parser... \
-  --filter @oktomusic/backend...
+  --filter @oktomusic/backend... \
+  --filter @oktomusic/meta-tags...
 
 # Copy Prisma schema and migrations for runtime migration
 COPY --from=builder /usr/src/app/apps/backend/prisma ./apps/backend/prisma
@@ -124,6 +132,7 @@ COPY --from=builder /usr/src/app/packages/api-schemas/dist ./packages/api-schema
 COPY --from=builder /usr/src/app/packages/lyrics/dist ./packages/lyrics/dist
 COPY --from=builder /usr/src/app/packages/metaflac-parser/dist ./packages/metaflac-parser/dist
 COPY --from=builder /usr/src/app/packages/vibrant/dist ./packages/vibrant/dist
+COPY --from=builder /usr/src/app/packages/meta-tags/dist ./packages/meta-tags/dist
 
 # Copy the generated Prisma client
 COPY --from=builder /usr/src/app/apps/backend/src/generated ./apps/backend/src/generated

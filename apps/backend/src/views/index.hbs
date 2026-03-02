@@ -10,7 +10,7 @@
     <meta name="color-scheme" content="only dark" />
     <title>Oktomusic{{#if dev}} (Dev){{/if}}</title>
     <meta name="description" content="Your personal music streaming server">
-    {{#each ogp}}
+    {{#each metaTags}}
     <meta property="{{this.property}}" content="{{this.content}}" />
     {{/each}}
     <link rel="manifest" href="/manifest.webmanifest" />

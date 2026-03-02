@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { ViewsController } from "./views.controller";
-import { OpenGraphModule } from "../common/opengraph/opengraph.module";
+import { MetaTagsModule } from "../common/metatags/metatags.module";
 
 @Module({
-  imports: [OpenGraphModule],
+  imports: [MetaTagsModule],
   controllers: [ViewsController],
 })
 export class ViewsModule {}
