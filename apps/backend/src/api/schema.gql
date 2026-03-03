@@ -60,6 +60,17 @@ type Artist {
   name: String!
 }
 
+input CreatePlaylistInput {
+  """Optional playlist description"""
+  description: String
+
+  """Whether the playlist is publicly visible"""
+  isPublic: Boolean = false
+
+  """Playlist name"""
+  name: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -133,11 +144,33 @@ type Mutation {
   """Update a user profile as an administrator"""
   adminUpdateUserProfile(input: UpdateUserProfileInput!, userId: String!): User!
 
+  """Create a new empty playlist for the current user"""
+  createPlaylist(input: CreatePlaylistInput!): Playlist!
+
   """Trigger a new library indexing job"""
   triggerIndexing: IndexingJob!
 
   """Update the current user's profile"""
   updateMyProfile(input: UpdateUserProfileInput!): User!
+}
+
+type Playlist {
+  createdAt: DateTime!
+  description: String
+  id: String!
+  isPublic: Boolean!
+  name: String!
+  tracks: [PlaylistTrack!]!
+  updatedAt: DateTime!
+}
+
+type PlaylistTrack {
+  """When the track was added"""
+  addedAt: DateTime!
+
+  """Position in the playlist (0-based)"""
+  position: Int!
+  track: Track!
 }
 
 type Query {
@@ -153,6 +186,9 @@ type Query {
 
   """Current logged-in user"""
   me: User!
+
+  """Get the current user's playlist with tracks grouped by disc number"""
+  playlist(id: String!): Playlist!
 
   """
   Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately.

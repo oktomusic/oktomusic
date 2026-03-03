@@ -1,9 +1,24 @@
-import { UseGuards } from "@nestjs/common";
-import { Args, ObjectType, Field, Query, Resolver } from "@nestjs/graphql";
+import { ForbiddenException, UseGuards } from "@nestjs/common";
+import {
+  Args,
+  Context,
+  Mutation,
+  ObjectType,
+  Field,
+  Query,
+  Resolver,
+} from "@nestjs/graphql";
+import type { Request } from "express";
 
 import { GraphqlAuthGuard } from "../../common/guards/graphql-auth.guard";
-import { AlbumModel, ArtistModel, TrackModel } from "./music.model";
+import {
+  AlbumModel,
+  ArtistModel,
+  PlaylistModel,
+  TrackModel,
+} from "./music.model";
 import { MusicService } from "./music.service";
+import { CreatePlaylistInput } from "./dto/create-playlist.input";
 import {
   SearchAlbumsInput,
   SearchArtistsInput,
@@ -58,6 +73,34 @@ export class MusicResolver {
     @Args("id", { type: () => String }) id: string,
   ): Promise<ArtistModel> {
     return this.musicService.getArtist(id);
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Query(() => PlaylistModel, {
+    name: "playlist",
+    description:
+      "Get the current user's playlist with tracks grouped by disc number",
+  })
+  async playlist(
+    @Args("id", { type: () => String }) id: string,
+  ): Promise<PlaylistModel> {
+    return this.musicService.getPlaylist(id);
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation(() => PlaylistModel, {
+    name: "createPlaylist",
+    description: "Create a new empty playlist for the current user",
+  })
+  async createPlaylist(
+    @Args("input", { type: () => CreatePlaylistInput })
+    input: CreatePlaylistInput,
+    @Context("req") req: Request,
+  ): Promise<PlaylistModel> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+    return this.musicService.createPlaylist(req.user.id, input);
   }
 
   @UseGuards(GraphqlAuthGuard)

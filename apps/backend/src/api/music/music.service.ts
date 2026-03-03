@@ -9,8 +9,11 @@ import type {
   AlbumBasicModel,
   AlbumModel,
   ArtistModel,
+  PlaylistModel,
+  PlaylistTrackModel,
   TrackModel,
 } from "./music.model";
+import type { CreatePlaylistInput } from "./dto/create-playlist.input";
 import type {
   SearchAlbumsInput,
   SearchArtistsInput,
@@ -276,6 +279,97 @@ export class MusicService {
     }
 
     return this.mapArtist(artist);
+  }
+
+  async getPlaylist(id: string): Promise<PlaylistModel> {
+    const playlist = await this.prisma.playlist.findUnique({
+      where: { id },
+      include: {
+        playlistTracks: {
+          include: {
+            track: {
+              include: {
+                flacFile: {
+                  select: {
+                    id: true,
+                  },
+                },
+                artists: {
+                  include: {
+                    artist: true,
+                  },
+                  orderBy: {
+                    order: "asc",
+                  },
+                },
+                album: {
+                  include: {
+                    artists: {
+                      include: {
+                        artist: true,
+                      },
+                      orderBy: {
+                        order: "asc",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          orderBy: {
+            position: "asc",
+          },
+        },
+      },
+    });
+
+    if (!playlist) {
+      throw new NotFoundException(`Playlist with id ${id} not found`);
+    }
+
+    const tracks: PlaylistTrackModel[] = playlist.playlistTracks.map((pt) => ({
+      position: pt.position,
+      addedAt: pt.addedAt,
+      track: this.mapTrack(pt.track),
+    }));
+
+    return {
+      id: playlist.id,
+      name: playlist.name,
+      description: playlist.description,
+      isPublic: playlist.isPublic,
+      createdAt: playlist.createdAt,
+      updatedAt: playlist.updatedAt,
+      tracks,
+    };
+  }
+
+  async createPlaylist(
+    userId: string,
+    input: CreatePlaylistInput,
+  ): Promise<PlaylistModel> {
+    const playlist = await this.prisma.playlist.create({
+      data: {
+        name: input.name,
+        description: input.description ?? null,
+        isPublic: input.isPublic ?? false,
+        userId,
+      },
+      include: {
+        playlistTracks: true,
+      },
+    });
+
+    return {
+      id: playlist.id,
+      name: playlist.name,
+      description: playlist.description,
+      isPublic: playlist.isPublic,
+      createdAt: playlist.createdAt,
+      updatedAt: playlist.updatedAt,
+      tracks: [],
+    };
   }
 
   async searchTracks(input: SearchTracksInput): Promise<TrackModel[]> {
