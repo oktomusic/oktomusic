@@ -66,6 +66,15 @@ export type Artist = {
   name: Scalars['String']['output'];
 };
 
+export type CreatePlaylistInput = {
+  /** Optional playlist description */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Whether the playlist is publicly visible */
+  isPublic?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Playlist name */
+  name: Scalars['String']['input'];
+};
+
 export type IndexingErrorMetaflacParsing = {
   __typename: 'IndexingErrorMetaflacParsing';
   errorMessage: Scalars['String']['output'];
@@ -136,6 +145,8 @@ export type Mutation = {
   __typename: 'Mutation';
   /** Update a user profile as an administrator */
   adminUpdateUserProfile: User;
+  /** Create a new empty playlist for the current user */
+  createPlaylist: Playlist;
   /** Trigger a new library indexing job */
   triggerIndexing: IndexingJob;
   /** Update the current user's profile */
@@ -149,8 +160,33 @@ export type MutationAdminUpdateUserProfileArgs = {
 };
 
 
+export type MutationCreatePlaylistArgs = {
+  input: CreatePlaylistInput;
+};
+
+
 export type MutationUpdateMyProfileArgs = {
   input: UpdateUserProfileInput;
+};
+
+export type Playlist = {
+  __typename: 'Playlist';
+  createdAt: Scalars['DateTime']['output'];
+  description: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  isPublic: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  tracks: Array<PlaylistTrack>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type PlaylistTrack = {
+  __typename: 'PlaylistTrack';
+  /** When the track was added */
+  addedAt: Scalars['DateTime']['output'];
+  /** Position in the playlist (0-based) */
+  position: Scalars['Int']['output'];
+  track: Track;
 };
 
 export type Query = {
@@ -164,6 +200,8 @@ export type Query = {
   indexingJobStatus: IndexingJob;
   /** Current logged-in user */
   me: User;
+  /** Get the current user's playlist with tracks grouped by disc number */
+  playlist: Playlist;
   /** Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately. */
   search: SearchMusicResult;
   /** Search for albums with optional filters. Use this to get all albums by an artist. */
@@ -191,6 +229,11 @@ export type QueryArtistArgs = {
 
 export type QueryIndexingJobStatusArgs = {
   jobId: Scalars['String']['input'];
+};
+
+
+export type QueryPlaylistArgs = {
+  id: Scalars['String']['input'];
 };
 
 
