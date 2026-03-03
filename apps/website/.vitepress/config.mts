@@ -149,7 +149,7 @@ export default withPwa(
         start_url: "/",
         display: "standalone",
         background_color: "#ffffff",
-        theme_color: "#42b883",
+        theme_color: "#ffffff",
         lang: "en",
         scope: "/",
         categories: [],
