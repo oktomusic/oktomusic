@@ -7,9 +7,10 @@ import {
 
 import z, { type ZodType } from "zod";
 
-export class ZodValidationPipe<T extends ZodType>
-  implements PipeTransform<unknown, z.output<T>>
-{
+export class ZodValidationPipe<T extends ZodType> implements PipeTransform<
+  unknown,
+  z.output<T>
+> {
   private readonly logger = new Logger(ZodValidationPipe.name);
 
   constructor(private readonly schema: T) {}

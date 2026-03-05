@@ -9,12 +9,9 @@ export const AuthCallbackResSchema = z
   })
   .strict();
 
-export const AuthCallbackResJSONSchema = z.toJSONSchema(
-  AuthCallbackResSchema,
-  {
-    unrepresentable: "throw",
-  },
-);
+export const AuthCallbackResJSONSchema = z.toJSONSchema(AuthCallbackResSchema, {
+  unrepresentable: "throw",
+});
 
 export type AuthCallbackResInput = z.input<typeof AuthCallbackResSchema>;
 export type AuthCallbackRes = z.output<typeof AuthCallbackResSchema>;

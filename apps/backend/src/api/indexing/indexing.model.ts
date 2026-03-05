@@ -25,9 +25,7 @@ registerEnumType(IndexingJobStatus, { name: "IndexingJobStatus" });
 registerEnumType(IndexingReportType, { name: "IndexingReportType" });
 
 @ObjectType("IndexingErrorMetaflacParsing")
-export class IndexingErrorMetaflacParsingModel
-  implements IndexingErrorMetaflacParsing
-{
+export class IndexingErrorMetaflacParsingModel implements IndexingErrorMetaflacParsing {
   @Field(() => IndexingReportType)
   type!: IndexingReportType.ERROR_METAFLAC_PARSING;
 
@@ -39,9 +37,7 @@ export class IndexingErrorMetaflacParsingModel
 }
 
 @ObjectType("IndexingWarningSubdirectories")
-export class IndexingWarningSubdirectoriesModel
-  implements IndexingWarningSubdirectories
-{
+export class IndexingWarningSubdirectoriesModel implements IndexingWarningSubdirectories {
   @Field(() => IndexingReportType)
   type!: IndexingReportType.WARNING_SUBDIRECTORIES;
 
@@ -50,9 +46,7 @@ export class IndexingWarningSubdirectoriesModel
 }
 
 @ObjectType("IndexingWarningFolderMetadata")
-export class IndexingWarningFolderMetadataModel
-  implements IndexingWarningFolderMetadata
-{
+export class IndexingWarningFolderMetadataModel implements IndexingWarningFolderMetadata {
   @Field(() => IndexingReportType)
   type!: IndexingReportType.WARNING_FOLDER_METADATA;
 

@@ -1,56 +1,56 @@
-import type { Lyrics } from "./model"
-import { parseLrcTimeToMs } from "./lrc/time"
+import type { Lyrics } from "./model";
+import { parseLrcTimeToMs } from "./lrc/time";
 
 interface LrcLine {
-  readonly timestamp: number
-  readonly text: string
+  readonly timestamp: number;
+  readonly text: string;
 }
 
 interface EnhancedLrcWord {
-  readonly timestamp: number
-  readonly word: string
+  readonly timestamp: number;
+  readonly word: string;
 }
 
 function parseStandardLrcLine(line: string): LrcLine | null {
   // Match [mm:ss.xx]lyrics text
-  const match = /^\[(\d{1,2}:\d{2}\.\d{2,3})\](.*)$/.exec(line.trim())
-  if (!match) return null
+  const match = /^\[(\d{1,2}:\d{2}\.\d{2,3})\](.*)$/.exec(line.trim());
+  if (!match) return null;
 
-  const timestamp = parseLrcTimeToMs(match[1])
-  if (timestamp == null) return null
+  const timestamp = parseLrcTimeToMs(match[1]);
+  if (timestamp == null) return null;
 
   return {
     timestamp,
     text: match[2].trim(),
-  }
+  };
 }
 
 function parseEnhancedLrcLine(line: string): {
-  readonly timestamp: number | null
-  readonly words: readonly EnhancedLrcWord[]
+  readonly timestamp: number | null;
+  readonly words: readonly EnhancedLrcWord[];
 } | null {
   // First, check if line starts with [mm:ss.xx] for line timestamp
   const lineTimestampMatch = /^\[(\d{1,2}:\d{2}\.\d{2,3})\](.*)$/.exec(
     line.trim(),
-  )
-  if (!lineTimestampMatch) return null
+  );
+  if (!lineTimestampMatch) return null;
 
-  const lineTimestamp = parseLrcTimeToMs(lineTimestampMatch[1])
-  if (lineTimestamp == null) return null
+  const lineTimestamp = parseLrcTimeToMs(lineTimestampMatch[1]);
+  if (lineTimestamp == null) return null;
 
-  const content = lineTimestampMatch[2].trim()
+  const content = lineTimestampMatch[2].trim();
 
   // Parse word-level timestamps: <mm:ss.xx>word
-  const words: EnhancedLrcWord[] = []
-  const wordPattern = /<(\d{1,2}:\d{2}\.\d{2,3})>([^<]*)/g
-  let wordMatch: RegExpExecArray | null
+  const words: EnhancedLrcWord[] = [];
+  const wordPattern = /<(\d{1,2}:\d{2}\.\d{2,3})>([^<]*)/g;
+  let wordMatch: RegExpExecArray | null;
 
   while ((wordMatch = wordPattern.exec(content)) !== null) {
-    const wordTimestamp = parseLrcTimeToMs(wordMatch[1])
+    const wordTimestamp = parseLrcTimeToMs(wordMatch[1]);
     if (wordTimestamp != null) {
-      const word = wordMatch[2].trim()
+      const word = wordMatch[2].trim();
       if (word) {
-        words.push({ timestamp: wordTimestamp, word })
+        words.push({ timestamp: wordTimestamp, word });
       }
     }
   }
@@ -58,82 +58,83 @@ function parseEnhancedLrcLine(line: string): {
   return {
     timestamp: lineTimestamp,
     words: words.length > 0 ? words : [],
-  }
+  };
 }
 
 function isMetadataLine(line: string): boolean {
   // Metadata lines: [ar:artist], [ti:title], [al:album], etc.
-  return /^\[[a-z]+:/.test(line.trim())
+  return /^\[[a-z]+:/.test(line.trim());
 }
 
 export function parseLRCtoLyrics(input: string): Lyrics {
-  const lines = input.split("\n")
-  const lrcLines: LrcLine[] = []
+  const lines = input.split("\n");
+  const lrcLines: LrcLine[] = [];
   const enhancedLines: {
-    readonly timestamp: number
-    readonly words: readonly EnhancedLrcWord[]
-  }[] = []
+    readonly timestamp: number;
+    readonly words: readonly EnhancedLrcWord[];
+  }[] = [];
 
   // First pass: detect format and parse lines
-  let isEnhancedFormat = false
+  let isEnhancedFormat = false;
 
   for (const line of lines) {
-    const trimmed = line.trim()
-    if (!trimmed || isMetadataLine(trimmed)) continue
+    const trimmed = line.trim();
+    if (!trimmed || isMetadataLine(trimmed)) continue;
 
     // Try enhanced format first
-    const enhanced = parseEnhancedLrcLine(trimmed)
+    const enhanced = parseEnhancedLrcLine(trimmed);
     if (enhanced && enhanced.words.length > 0) {
-      isEnhancedFormat = true
+      isEnhancedFormat = true;
       enhancedLines.push({
         timestamp: enhanced.timestamp,
         words: enhanced.words,
-      })
-      continue
+      });
+      continue;
     }
 
     // Try standard format
-    const standard = parseStandardLrcLine(trimmed)
+    const standard = parseStandardLrcLine(trimmed);
     if (standard) {
-      lrcLines.push(standard)
+      lrcLines.push(standard);
     }
   }
 
   // Convert to Lyrics format
-  const result: Lyrics = []
+  const result: Lyrics = [];
 
   if (isEnhancedFormat && enhancedLines.length > 0) {
     // Enhanced LRC: has word-level timestamps
     for (let i = 0; i < enhancedLines.length; i++) {
-      const line = enhancedLines[i]
-      const nextLine = enhancedLines[i + 1]
-      const lineStartMs = Math.max(1, line.timestamp)
+      const line = enhancedLines[i];
+      const nextLine = enhancedLines[i + 1];
+      const lineStartMs = Math.max(1, line.timestamp);
 
       // Build full text from words
-      const fullText = line.words.map((w) => w.word).join(" ")
+      const fullText = line.words.map((w) => w.word).join(" ");
 
       // Calculate end time: use next line's timestamp or estimate
       const lineEndMs = nextLine
         ? nextLine.timestamp
-        : lineStartMs + Math.max(2000, fullText.length * 100)
+        : lineStartMs + Math.max(2000, fullText.length * 100);
 
       // Build tokens with offsets from line start
-      const tokens: { c: string; d: number }[] = []
+      const tokens: { c: string; d: number }[] = [];
 
       for (let j = 0; j < line.words.length; j++) {
-        const word = line.words[j]
+        const word = line.words[j];
 
         // Calculate offset from line start, ensuring monotonic timing
         // If word timestamp is before line start (malformed data), clamp to 1ms
-        const offset = Math.max(1, Math.round(word.timestamp - lineStartMs))
+        const offset = Math.max(1, Math.round(word.timestamp - lineStartMs));
 
         // For spacing between words (except last word)
-        const wordText = j < line.words.length - 1 ? word.word + " " : word.word
+        const wordText =
+          j < line.words.length - 1 ? word.word + " " : word.word;
 
         tokens.push({
           c: wordText,
           d: offset,
-        })
+        });
       }
 
       result.push({
@@ -141,37 +142,37 @@ export function parseLRCtoLyrics(input: string): Lyrics {
         te: Math.round(lineEndMs),
         l: tokens,
         t: fullText,
-      })
+      });
     }
   } else if (lrcLines.length > 0) {
     // Standard LRC: only line-level timestamps
     for (let i = 0; i < lrcLines.length; i++) {
-      const line = lrcLines[i]
-      const nextLine = lrcLines[i + 1]
-      const startMs = Math.max(1, line.timestamp)
+      const line = lrcLines[i];
+      const nextLine = lrcLines[i + 1];
+      const startMs = Math.max(1, line.timestamp);
 
       // Calculate end time: use next line's timestamp or estimate
       const endMs = nextLine
         ? nextLine.timestamp
-        : startMs + Math.max(2000, line.text.length * 100)
+        : startMs + Math.max(2000, line.text.length * 100);
 
       // For standard LRC, we treat the entire line as one token
       // since we don't have word-level timing
       const tokens: { c: string; d: number }[] = line.text
         ? [{ c: line.text, d: 1 }]
-        : []
+        : [];
 
       result.push({
         ts: Math.round(startMs),
         te: Math.round(endMs),
         l: tokens,
         t: line.text,
-      })
+      });
     }
   }
 
   // Sort by timestamp
-  result.sort((a, b) => a.ts - b.ts)
+  result.sort((a, b) => a.ts - b.ts);
 
-  return result
+  return result;
 }

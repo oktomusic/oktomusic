@@ -200,7 +200,7 @@ export type Query = {
   indexingJobStatus: IndexingJob;
   /** Current logged-in user */
   me: User;
-  /** Get the current user's playlist with tracks grouped by disc number */
+  /** Get a playlist by ID with its tracks in order */
   playlist: Playlist;
   /** Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately. */
   search: SearchMusicResult;

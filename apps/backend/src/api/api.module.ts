@@ -28,8 +28,15 @@ import { IndexingResolver } from "./indexing/indexing.resolver";
 import { IndexingService } from "./indexing/indexing.service";
 import { AlbumService } from "./album/album.service";
 import { AlbumController } from "./album/album.controller";
-import { MusicResolver } from "./music/music.resolver";
-import { MusicService } from "./music/music.service";
+import { AlbumResolver } from "./album/album.resolver";
+import { TrackService } from "./track/track.service";
+import { TrackResolver } from "./track/track.resolver";
+import { ArtistService } from "./artist/artist.service";
+import { ArtistResolver } from "./artist/artist.resolver";
+import { PlaylistService } from "./playlist/playlist.service";
+import { PlaylistResolver } from "./playlist/playlist.resolver";
+import { SearchService } from "./search/search.service";
+import { SearchResolver } from "./search/search.resolver";
 
 const graphqlCodeByStatus: Record<number, string> = {
   [HttpStatus.BAD_REQUEST]: "BAD_USER_INPUT",
@@ -142,7 +149,7 @@ const mapHttpExceptionToGraphqlError = (exception: HttpException) => {
     UserResolver,
     UserService,
     IndexingResolver,
-    MusicResolver,
+    IndexingService,
     OidcService,
     AuthGuard,
     AdminGuard,
@@ -150,8 +157,15 @@ const mapHttpExceptionToGraphqlError = (exception: HttpException) => {
     GraphqlAdminGuard,
     MediaService,
     AlbumService,
-    IndexingService,
-    MusicService,
+    AlbumResolver,
+    TrackService,
+    TrackResolver,
+    ArtistService,
+    ArtistResolver,
+    PlaylistService,
+    PlaylistResolver,
+    SearchService,
+    SearchResolver,
   ],
   exports: [AuthGuard, AdminGuard, GraphqlAuthGuard, GraphqlAdminGuard],
 })

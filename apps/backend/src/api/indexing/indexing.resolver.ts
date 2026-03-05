@@ -43,10 +43,7 @@ export class IndexingResolver {
 
   @Subscription(() => IndexingJobModel, {
     description: "Subscribe to indexing job status updates",
-    filter: (
-      payload: IndexingJobPayload,
-      variables: SubscriptionVariables,
-    ) => {
+    filter: (payload: IndexingJobPayload, variables: SubscriptionVariables) => {
       return payload.indexingJobUpdated.jobId === variables.jobId;
     },
   })
