@@ -20,7 +20,7 @@ import viteConfig from "./definitions/vite.config";
         "apps/backend/.env.local",
       ],
       load: [appConfig, httpConfig, oidcConfig, valkeyConfig, viteConfig],
-    }),
+    } as const),
   ],
   exports: [NestConfigModule],
 })

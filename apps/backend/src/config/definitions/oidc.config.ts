@@ -69,29 +69,29 @@ const OidcConfigSchema = z.object({
    * - Keycloak example: "resource_access.<client_id>.roles"
    */
   OIDC_ROLES_PATH: z.string().default("resource_access.<client_id>.roles"),
-});
+} as const);
 
 export interface OidcConfig {
   /** Base URL of the OIDC issuer */
-  issuer: string;
+  readonly issuer: string;
   /** Client ID registered with the OIDC provider */
-  clientId: string;
+  readonly clientId: string;
   /** Client secret for token exchange */
-  clientSecret: string;
+  readonly clientSecret: string;
   /** Redirect URI after login */
-  redirectUri: string;
+  readonly redirectUri: string;
   /** Post-logout redirect URI (optional) */
-  logoutRedirectUri?: string;
+  readonly logoutRedirectUri?: string;
   /** Scopes requested during authorization */
-  scopes: string;
+  readonly scopes: string;
   /** OAuth2 response type, e.g. "code" */
-  responseType: string;
+  readonly responseType: string;
   /** Whether to use OIDC auto-discovery */
-  autoDiscovery: boolean;
+  readonly autoDiscovery: boolean;
   /** JWKS cache time-to-live, in seconds */
-  jwksCacheTtl: number;
+  readonly jwksCacheTtl: number;
   /** JSON path to extract user roles from token response */
-  rolesPath: string;
+  readonly rolesPath: string;
 }
 
 export default registerAs("oidc", (): OidcConfig => {

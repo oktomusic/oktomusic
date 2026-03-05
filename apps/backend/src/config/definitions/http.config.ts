@@ -13,11 +13,11 @@ const HttpConfigSchema = z.object({
    * Default: "false"
    */
   TRUST_PROXY: z.coerce.boolean().default(false),
-});
+} as const);
 
 export interface HttpConfig {
-  port: number;
-  trustProxy: boolean;
+  readonly port: number;
+  readonly trustProxy: boolean;
 }
 
 export default registerAs("http", (): HttpConfig => {

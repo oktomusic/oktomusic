@@ -5,12 +5,12 @@ const ValkeyConfigSchema = z.object({
   VALKEY_HOST: z.string().default("localhost"),
   VALKEY_PORT: z.coerce.number().int().positive().max(65535).default(6379),
   VALKEY_PASSWORD: z.string().nullable().default(null),
-});
+} as const);
 
 export interface ValkeyConfig {
-  valkeyHost: string;
-  valkeyPort: number;
-  valkeyPassword: string | null;
+  readonly valkeyHost: string;
+  readonly valkeyPort: number;
+  readonly valkeyPassword: string | null;
 }
 
 export default registerAs("valkey", (): ValkeyConfig => {

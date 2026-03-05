@@ -1,5 +1,6 @@
 import { registerAs } from "@nestjs/config";
 import z from "zod";
+
 import { zBinaryPath, zFolderPath } from "../../utils/zod";
 
 const AppConfigSchema = z.object({
@@ -18,20 +19,20 @@ const AppConfigSchema = z.object({
   FFMPEG_PATH: zBinaryPath("FFMpeg", ["-version"]).optional(),
   FFPROBE_PATH: zBinaryPath("FFProbe", ["-version"]).optional(),
   METAFLAC_PATH: zBinaryPath("Metaflac", ["--version"]).optional(),
-});
+} as const);
 
 export interface AppConfig {
-  env: "development" | "production" | "test";
-  databaseUrl: string;
-  isDev: boolean;
-  isProd: boolean;
-  isTest: boolean;
-  sessionSecret: string;
-  libraryPath: string;
-  intermediatePath: string;
-  ffmpegPath: string | undefined;
-  ffprobePath: string | undefined;
-  metaflacPath: string | undefined;
+  readonly env: "development" | "production" | "test";
+  readonly databaseUrl: string;
+  readonly isDev: boolean;
+  readonly isProd: boolean;
+  readonly isTest: boolean;
+  readonly sessionSecret: string;
+  readonly libraryPath: string;
+  readonly intermediatePath: string;
+  readonly ffmpegPath: string | undefined;
+  readonly ffprobePath: string | undefined;
+  readonly metaflacPath: string | undefined;
 }
 
 export default registerAs("app", (): AppConfig => {

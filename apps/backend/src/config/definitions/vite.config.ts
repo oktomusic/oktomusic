@@ -15,13 +15,13 @@ const ViteConfigSchema = z.object({
    * Should match the `base` option in Vite config.
    */
   VITE_BASE: z.string().default("/"),
-});
+} as const);
 
 export interface ViteConfig {
   /** Origin URL for the Vite server */
-  origin: string;
+  readonly origin: string;
   /** Base path for the Vite application */
-  base: string;
+  readonly base: string;
 }
 
 export default registerAs("vite", () => {
