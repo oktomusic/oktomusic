@@ -85,7 +85,7 @@ export default function PlayerControls() {
       </div>
       <div
         id="oktomusic:player:controls"
-        className="flex h-full w-full flex-col"
+        className="flex h-full w-full flex-col justify-center"
         aria-label={t`Playback controls`}
       >
         <div className="flex flex-row justify-center gap-2">

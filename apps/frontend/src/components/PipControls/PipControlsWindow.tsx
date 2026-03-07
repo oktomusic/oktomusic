@@ -7,12 +7,13 @@ import { LuCircleSlash } from "react-icons/lu";
 import {
   handleNextTrackAtom,
   handlePreviousTrackAtom,
-  playerIsPlayingAtom,
   playerQueueCurrentTrack,
+  playerShouldPlayAtom,
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
 import { useVibrantColorsPlaying } from "../../hooks/vibrant_colors";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
+import { PipControlsOverlay } from "./PipControlsOverlay";
 
 interface PipControlsWindowProps {
   readonly pipDocument: Document;
@@ -28,7 +29,7 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
   const figureRef = useRef<HTMLElement | null>(null);
 
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
-  const isPlaying = useAtomValue(playerIsPlayingAtom);
+  const shouldPlay = useAtomValue(playerShouldPlayAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
   const handlePreviousTrack = useSetAtom(handlePreviousTrackAtom);
   const handleNextTrack = useSetAtom(handleNextTrackAtom);
@@ -66,6 +67,9 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
         )}
       </figure>
 
+      {/* Hover controls for biggest layout (hidden otherwise) */}
+      <PipControlsOverlay />
+
       {/* Track metadata region (title + artists; both lines truncate). */}
       <div id="pip-meta">
         {currentTrack ? (
@@ -92,13 +96,13 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
         </button>
         <button
           type="button"
-          title={isPlaying ? t`Pause` : t`Play`}
-          aria-label={isPlaying ? t`Pause` : t`Play`}
+          title={shouldPlay ? t`Pause` : t`Play`}
+          aria-label={shouldPlay ? t`Pause` : t`Play`}
           onClick={() => {
             togglePlayback();
           }}
         >
-          {isPlaying ? (
+          {shouldPlay ? (
             <HiPause className="size-6" />
           ) : (
             <HiPlay className="size-6" />

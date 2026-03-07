@@ -1,5 +1,7 @@
 import type { ChangeEvent } from "react";
 
+import "./OktoSlider.css";
+
 interface OktoSliderProps {
   readonly id: string;
   readonly value: number;
@@ -42,7 +44,7 @@ export function OktoSlider(props: OktoSliderProps) {
         value={props.value}
         onChange={handleChange}
         aria-describedby={props["aria-describedby"]}
-        className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-zinc-700 accent-zinc-400 disabled:cursor-not-allowed disabled:opacity-50"
+        className="okto-slider h-1 w-full cursor-pointer appearance-none rounded-lg bg-zinc-700 accent-zinc-400 disabled:cursor-not-allowed disabled:opacity-50"
       />
       {props.showOutput && (
         <output
