@@ -1,8 +1,10 @@
+import { Button } from "@headlessui/react";
+
 export function OktoButton(
   props: React.ButtonHTMLAttributes<HTMLButtonElement>,
 ) {
   return (
-    <button
+    <Button
       {...props}
       className={
         "rounded-lg bg-zinc-800 px-3 py-1.5 text-sm hover:bg-zinc-700 focus:bg-zinc-700" +
@@ -10,6 +12,6 @@ export function OktoButton(
       }
     >
       {props.children}
-    </button>
+    </Button>
   );
 }

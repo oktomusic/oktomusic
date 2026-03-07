@@ -55,7 +55,8 @@ msgstr "Admin Settings"
 msgid "Album"
 msgstr "Album"
 
-#: src/components/Dialogs/DialogCover.tsx:40
+#: src/components/Dialogs/DialogCover.tsx:27
+#: src/components/Dialogs/DialogCover.tsx:33
 msgid "Album cover"
 msgstr "Album cover"
 
@@ -99,7 +100,7 @@ msgstr "Checking storage persistence..."
 msgid "Client Settings"
 msgstr "Client Settings"
 
-#: src/components/Dialogs/DialogCover.tsx:49
+#: src/components/Dialogs/DialogCover.tsx:42
 msgid "Close"
 msgstr "Close"
 
@@ -208,15 +209,17 @@ msgstr "More options for {trackName}"
 msgid "Never"
 msgstr "Never"
 
-#: src/components/PipControls/PipControlsWindow.tsx:100
-#: src/components/PipControls/PipControlsWindow.tsx:101
+#: src/components/PipControls/PipControlsOverlay.tsx:61
+#: src/components/PipControls/PipControlsOverlay.tsx:62
+#: src/components/PipControls/PipControlsWindow.tsx:113
+#: src/components/PipControls/PipControlsWindow.tsx:114
 #: src/components/Player/PlayerControls.tsx:123
 #: src/components/Player/PlayerControls.tsx:124
 msgid "Next"
 msgstr "Next"
 
-#: src/components/PipControls/PipControlsWindow.tsx:51
 #: src/components/PipControls/PipControlsWindow.tsx:56
+#: src/components/PipControls/PipControlsWindow.tsx:64
 #: src/components/Player/PlayerControls.tsx:70
 msgid "No track playing"
 msgstr "No track playing"
@@ -229,8 +232,10 @@ msgstr "Open Picture-in-Picture"
 msgid "Page not found"
 msgstr "Page not found"
 
-#: src/components/PipControls/PipControlsWindow.tsx:86
-#: src/components/PipControls/PipControlsWindow.tsx:87
+#: src/components/PipControls/PipControlsOverlay.tsx:50
+#: src/components/PipControls/PipControlsOverlay.tsx:51
+#: src/components/PipControls/PipControlsWindow.tsx:99
+#: src/components/PipControls/PipControlsWindow.tsx:100
 #: src/components/Player/PlayerControls.tsx:108
 #: src/components/Player/PlayerControls.tsx:109
 msgid "Pause"
@@ -248,8 +253,10 @@ msgstr "Persistent storage granted"
 msgid "Persistent storage not granted"
 msgstr "Persistent storage not granted"
 
-#: src/components/PipControls/PipControlsWindow.tsx:86
-#: src/components/PipControls/PipControlsWindow.tsx:87
+#: src/components/PipControls/PipControlsOverlay.tsx:50
+#: src/components/PipControls/PipControlsOverlay.tsx:51
+#: src/components/PipControls/PipControlsWindow.tsx:99
+#: src/components/PipControls/PipControlsWindow.tsx:100
 #: src/components/Player/PlayerControls.tsx:108
 #: src/components/Player/PlayerControls.tsx:109
 #: src/pages/Album/Album.tsx:161
@@ -270,7 +277,8 @@ msgstr "Play {trackName}"
 msgid "Playback"
 msgstr "Playback"
 
-#: src/components/PipControls/PipControlsWindow.tsx:73
+#: src/components/PipControls/PipControlsOverlay.tsx:36
+#: src/components/PipControls/PipControlsWindow.tsx:86
 #: src/components/Player/PlayerControls.tsx:89
 msgid "Playback controls"
 msgstr "Playback controls"
@@ -279,8 +287,10 @@ msgstr "Playback controls"
 msgid "Playlist"
 msgstr "Playlist"
 
-#: src/components/PipControls/PipControlsWindow.tsx:76
-#: src/components/PipControls/PipControlsWindow.tsx:77
+#: src/components/PipControls/PipControlsOverlay.tsx:40
+#: src/components/PipControls/PipControlsOverlay.tsx:41
+#: src/components/PipControls/PipControlsWindow.tsx:89
+#: src/components/PipControls/PipControlsWindow.tsx:90
 #: src/components/Player/PlayerControls.tsx:97
 #: src/components/Player/PlayerControls.tsx:98
 msgid "Previous"
