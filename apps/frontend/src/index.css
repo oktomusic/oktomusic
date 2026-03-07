@@ -108,7 +108,13 @@
   grid-row: 1;
   z-index: 10;
   min-height: 0;
-  background-color: var(--album-color-vibrant-dark);
+
+  /* This way, when --album-color-vibrant-dark is transparent, the background-color fallback will show */
+  background-color: var(--color-zinc-900);
+  background-image: linear-gradient(
+    var(--album-color-vibrant-dark),
+    var(--album-color-vibrant-dark)
+  );
 }
 
 #oktomusic\:panel-toast-provider {
