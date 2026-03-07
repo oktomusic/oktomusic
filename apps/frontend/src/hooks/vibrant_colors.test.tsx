@@ -19,7 +19,7 @@ const state = vi.hoisted(() => ({
 const applyColorPropertiesMock = vi.hoisted(() => vi.fn());
 
 vi.mock("../utils/vibrant_colors", () => ({
-  default: applyColorPropertiesMock,
+  applyColorProperties: applyColorPropertiesMock,
 }));
 
 vi.mock("jotai", async (importOriginal) => {
@@ -96,7 +96,7 @@ describe("useVibrantColorsPlaying", () => {
     expect(applyColorPropertiesMock).toHaveBeenCalledTimes(1);
     expect(applyColorPropertiesMock).toHaveBeenCalledWith(
       document.documentElement,
-      null,
+      {},
     );
   });
 
@@ -260,7 +260,7 @@ describe("useVibrantColors", () => {
     expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
       2,
       targetElement,
-      null,
+      {},
     );
     expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
       3,
@@ -300,7 +300,7 @@ describe("useVibrantColors", () => {
     expect(applyColorPropertiesMock).toHaveBeenNthCalledWith(
       2,
       targetElement,
-      null,
+      {},
     );
   });
 });

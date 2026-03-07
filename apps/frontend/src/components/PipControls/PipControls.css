@@ -90,6 +90,7 @@
       --pip-cover-light-color: var(--album-color-muted);
       --pip-cover-dark-color: var(--album-color-muted-dark);
 
+      position: relative;
       height: 100%;
       max-height: 100%;
       aspect-ratio: 1 / 1;
@@ -137,14 +138,16 @@
 
     > #pip-cover > .pip-cover-overlay {
       position: absolute;
-      inset: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       display: grid;
       place-items: center;
-      padding: 0.5rem;
-      text-align: center;
+      height: calc(var(--spacing) * 10) /* 2.5rem = 40px */;
+      width: calc(var(--spacing) * 10) /* 2.5rem = 40px */;
+      overflow: hidden;
       color: var(--color-zinc-100);
       background: transparent;
-      text-shadow: 0 1px 2px rgb(0 0 0 / 60%);
     }
 
     > #pip-meta {

@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { t } from "@lingui/core/macro";
 import { HiBackward, HiForward, HiPause, HiPlay } from "react-icons/hi2";
+import { LuCircleSlash } from "react-icons/lu";
 
 import {
   handleNextTrackAtom,
@@ -32,7 +33,10 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
   const handlePreviousTrack = useSetAtom(handlePreviousTrackAtom);
   const handleNextTrack = useSetAtom(handleNextTrackAtom);
 
-  useVibrantColorsPlaying(props.pipDocument);
+  useVibrantColorsPlaying(props.pipDocument, {
+    muted: "#777787", // Vibrant
+    darkMuted: "#474751", // Light Muted
+  });
 
   return (
     // Shell content mounted into the Document PiP window container (`#pip-shell`).
@@ -53,7 +57,12 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
           fetchPriority="high"
         />
         {currentTrack ? null : (
-          <div className="pip-cover-overlay">{t`No track playing`}</div>
+          <div className="pip-cover-overlay">
+            <LuCircleSlash
+              className="h-full max-h-10 w-full max-w-10"
+              aria-label={t`No track playing`}
+            />
+          </div>
         )}
       </figure>
 

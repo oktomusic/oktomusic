@@ -5,8 +5,9 @@ import { useAtomValue } from "jotai";
 import {
   playerCurrentTrackColors,
   VibrantColors,
+  VibrantColorsPartial,
 } from "../atoms/player/machine";
-import applyColorProperties from "../utils/vibrant_colors";
+import { applyColorProperties } from "../utils/vibrant_colors";
 
 /**
  * Provide album colors of the playing track as CSS properties to a target document.
@@ -15,15 +16,18 @@ import applyColorProperties from "../utils/vibrant_colors";
  * React still runs in the opener context, so the global `document` refers to
  * the opener document, not the PiP window document.
  */
-export function useVibrantColorsPlaying(targetDocument?: Document | null) {
+export function useVibrantColorsPlaying(
+  targetDocument?: Document | null,
+  fallbackColors?: VibrantColorsPartial,
+) {
   const colors = useAtomValue(playerCurrentTrackColors);
 
   useEffect(() => {
     applyColorProperties(
       targetDocument?.documentElement ?? document.documentElement,
-      colors,
+      colors ? colors : fallbackColors || {},
     );
-  }, [colors, targetDocument]);
+  }, [colors, fallbackColors, targetDocument]);
 }
 
 /**
@@ -32,6 +36,7 @@ export function useVibrantColorsPlaying(targetDocument?: Document | null) {
 export function useVibrantColors(
   targetRef: RefObject<HTMLElement | null>,
   colors?: VibrantColors,
+  fallbackColors?: VibrantColorsPartial,
 ) {
   useEffect(() => {
     const target = targetRef.current;
@@ -40,10 +45,10 @@ export function useVibrantColors(
       return undefined;
     }
 
-    applyColorProperties(target, colors ?? null);
+    applyColorProperties(target, colors ? colors : fallbackColors || {});
 
     return () => {
-      applyColorProperties(target, null);
+      applyColorProperties(target, {});
     };
-  }, [colors, targetRef]);
+  }, [colors, fallbackColors, targetRef]);
 }

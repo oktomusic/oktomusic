@@ -113,6 +113,8 @@ export interface VibrantColors {
   readonly lightMuted: string;
 }
 
+export type VibrantColorsPartial = Partial<VibrantColors>;
+
 /** Derived vibrant colors from the current track's album cover. */
 export const playerCurrentTrackColors = atom<VibrantColors | null>((get) => {
   const currentTrack = get(playerQueueCurrentTrack);

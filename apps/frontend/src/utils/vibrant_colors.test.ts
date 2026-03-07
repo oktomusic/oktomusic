@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import applyColorProperties from "./vibrant_colors";
+import { applyColorProperties } from "./vibrant_colors";
 import type { VibrantColors } from "../atoms/player/machine";
 
 describe("applyColorProperties", () => {
@@ -41,7 +41,7 @@ describe("applyColorProperties", () => {
     // Pre-populate styles
     elem.style.setProperty("--album-color-vibrant", "#123456");
 
-    applyColorProperties(elem, null);
+    applyColorProperties(elem, {});
 
     const style = elem.style;
 
@@ -54,6 +54,6 @@ describe("applyColorProperties", () => {
   });
 
   it("does not throw when called with null colors", () => {
-    expect(() => applyColorProperties(elem, null)).not.toThrow();
+    expect(() => applyColorProperties(elem, {})).not.toThrow();
   });
 });
