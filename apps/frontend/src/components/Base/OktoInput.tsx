@@ -1,33 +1,16 @@
-import type { ChangeEvent } from "react";
+import type { InputHTMLAttributes } from "react";
+import { Input } from "@headlessui/react";
 
-interface OktoInputProps {
-  readonly id: string;
-  readonly type?: "text" | "number" | "email" | "password" | "tel" | "url";
-  readonly value: string | number;
-  readonly onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  readonly min?: number;
-  readonly max?: number;
-  readonly step?: number;
-  readonly disabled?: boolean;
-  readonly placeholder?: string;
-  readonly "aria-describedby"?: string;
+interface OktoInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly className?: string;
 }
 
 export function OktoInput(props: OktoInputProps) {
+  const { className, ...rest } = props;
   return (
-    <input
-      id={props.id}
-      type={props.type ?? "text"}
-      value={props.value}
-      onChange={props.onChange}
-      min={props.min}
-      max={props.max}
-      step={props.step}
-      disabled={props.disabled}
-      placeholder={props.placeholder}
-      aria-describedby={props["aria-describedby"]}
-      className={`w-32 rounded-lg bg-zinc-800 px-3 py-1.5 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50 ${props.className ?? ""}`}
+    <Input
+      {...rest}
+      className={`h-9 w-32 rounded-lg bg-zinc-800 px-3 py-1.5 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50 data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25 ${className ?? ""}`}
     />
   );
 }

@@ -37,6 +37,14 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:65
+msgid "Add a name"
+msgstr ""
+
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:76
+msgid "Add an optional description"
+msgstr ""
+
 #: src/components/TrackList/TrackElement.tsx:45
 #: src/pages/Album/Album.tsx:139
 msgid "Add to queue"
@@ -96,6 +104,7 @@ msgstr ""
 msgid "Client Settings"
 msgstr ""
 
+#: src/components/Base/OktoDialog.tsx:89
 #: src/components/Dialogs/DialogCover.tsx:42
 msgid "Close"
 msgstr "Fermer"
@@ -108,13 +117,17 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:16
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:42
 msgid "Create playlist"
 msgstr ""
 
 #: src/pages/SettingsClient/SettingsClient.tsx:154
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
+
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:71
+msgid "Description"
+msgstr "Description"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:42
 #: src/pages/SettingsClient/SettingsClient.tsx:147
@@ -125,7 +138,7 @@ msgstr "Fondu enchaîné (secondes) :"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:16
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:42
 msgid "Edit playlist details"
 msgstr ""
 
@@ -209,6 +222,10 @@ msgstr "Plus d'options pour {albumName}"
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:58
+msgid "Name"
+msgstr "Nom"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:57
 msgid "Never"
 msgstr "Jamais"
@@ -291,6 +308,10 @@ msgstr "Commandes de lecture"
 msgid "Playlist"
 msgstr ""
 
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:52
+msgid "Playlist cover"
+msgstr ""
+
 #: src/components/PipControls/PipControlsOverlay.tsx:40
 #: src/components/PipControls/PipControlsOverlay.tsx:41
 #: src/components/PipControls/PipControlsWindow.tsx:89
@@ -300,6 +321,14 @@ msgstr ""
 msgid "Previous"
 msgstr "Précédent"
 
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:27
+msgid "Private"
+msgstr "Privée"
+
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:25
+msgid "Public"
+msgstr "Publique"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:220
 msgid "Request"
 msgstr ""
@@ -307,6 +336,10 @@ msgstr ""
 #: src/components/TrackList/TrackElement.tsx:84
 msgid "Resume {trackName}"
 msgstr ""
+
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:89
+msgid "Save"
+msgstr "Sauvegarder"
 
 #: src/pages/Album/Album.tsx:245
 msgid "Save to library"
@@ -357,6 +390,10 @@ msgstr ""
 #: src/pages/Unsupported/UnsupportedOverlay.tsx:38
 msgid "The following modern web features are missing:"
 msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
+
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:26
+msgid "Unlisted"
+msgstr "Non répertoriée"
 
 #: src/utils/constants_sexes.ts:18
 msgid "Unspecified"

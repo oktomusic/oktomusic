@@ -5,6 +5,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import { t } from "@lingui/core/macro";
 import { HiXMark } from "react-icons/hi2";
 
 interface OktoDialogProps {
@@ -35,6 +36,10 @@ interface OktoDialogProps {
    */
   readonly transparentPanel?: boolean;
   /**
+   * Custom className to apply to the dialog panel.
+   */
+  readonly className?: string;
+  /**
    * The content to display inside the dialog.
    */
   readonly children: React.ReactNode;
@@ -58,7 +63,8 @@ export function OktoDialog(props: OktoDialogProps) {
           transition
           className={
             "flex max-w-lg flex-col items-center duration-300 ease-out select-none data-closed:scale-95 data-closed:opacity-0" +
-            (props.transparentPanel ? "" : " rounded-lg bg-zinc-800 p-6")
+            (props.transparentPanel ? "" : " rounded-lg bg-zinc-900 p-6") +
+            (props.className ? " " + props.className : "")
           }
         >
           <div
@@ -78,7 +84,10 @@ export function OktoDialog(props: OktoDialogProps) {
               </DialogTitle>
             )}
             {props.showHeader && (
-              <CloseButton className="flex size-8 cursor-pointer items-center justify-center text-white/80 transition-colors hover:text-white focus:text-white focus:outline-none">
+              <CloseButton
+                className="flex size-8 cursor-pointer items-center justify-center text-white/80 transition-colors hover:text-white focus:text-white focus:outline-none"
+                title={t`Close`}
+              >
                 <HiXMark className="size-6" />
               </CloseButton>
             )}

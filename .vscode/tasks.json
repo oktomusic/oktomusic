@@ -101,7 +101,6 @@
         "docker: start",
         "backend: dev",
         "frontend: dev",
-        "frontend: watch locales",
       ],
       "problemMatcher": []
     }
