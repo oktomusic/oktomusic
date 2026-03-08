@@ -1,4 +1,4 @@
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { Link } from "react-router";
 import { useQuery } from "@apollo/client/react";
 
@@ -6,7 +6,8 @@ import { authSessionAtom } from "../../atoms/auth/atoms";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role } from "../../api/graphql/gql/graphql";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
-import TempLoadAlbum from "../../components/TempLoadAlbum";
+import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
+import { OktoButton } from "../../components/Base/OktoButton";
 
 import "./Home.css";
 
@@ -16,6 +17,8 @@ function Home() {
   const { data: userData } = useQuery(ME_QUERY, {
     skip: authSession.status !== "authenticated",
   });
+
+  const setOpen = useSetAtom(dialogPlaylistOpenAtom);
 
   const isAdmin = userData?.me?.role === Role.Admin;
 
@@ -27,7 +30,6 @@ function Home() {
     <>
       <div className="card">
         <div className="m-4 flex flex-col gap-2">
-          <TempLoadAlbum />
           <div>
             <p style={{ color: "green" }}>
               ✓ Logged in as {authSession.user.username}
@@ -43,6 +45,9 @@ function Home() {
           <div>
             <Link to="/settings/client">Client Settings</Link>
           </div>
+          <OktoButton onClick={() => setOpen(true)} className="">
+            Playlist
+          </OktoButton>
           {isAdmin && (
             <div className="mt-4">
               <IndexingControl />

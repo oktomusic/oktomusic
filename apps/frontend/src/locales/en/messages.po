@@ -29,7 +29,7 @@ msgstr "{minutes}min {seconds}s"
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
-#: src/components/HeaderMenu.tsx:41
+#: src/components/HeaderMenu.tsx:42
 msgid "About"
 msgstr "About"
 
@@ -37,15 +37,15 @@ msgstr "About"
 msgid "Account Settings"
 msgstr "Account Settings"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:65
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:66
 msgid "Add a name"
 msgstr "Add a name"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:76
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:77
 msgid "Add an optional description"
 msgstr "Add an optional description"
 
-#: src/components/TrackList/TrackElement.tsx:45
+#: src/components/TrackList/TrackElement.tsx:46
 #: src/pages/Album/Album.tsx:139
 msgid "Add to queue"
 msgstr "Add to queue"
@@ -54,7 +54,7 @@ msgstr "Add to queue"
 #~ msgid "Add to Queue"
 #~ msgstr "Add to Queue"
 
-#: src/components/HeaderMenu.tsx:62
+#: src/components/HeaderMenu.tsx:63
 #: src/pages/SettingsAdmin/SettingsAdmin.tsx:18
 msgid "Admin Settings"
 msgstr "Admin Settings"
@@ -121,7 +121,7 @@ msgstr "Close Picture-in-Picture"
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr "Controls how Oktomusic mixes with other audio."
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:42
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:43
 msgid "Create playlist"
 msgstr "Create playlist"
 
@@ -129,7 +129,7 @@ msgstr "Create playlist"
 msgid "Crossfade (seconds):"
 msgstr "Crossfade (seconds):"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:71
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:72
 msgid "Description"
 msgstr "Description"
 
@@ -142,7 +142,7 @@ msgstr "Description"
 msgid "Download"
 msgstr "Download"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:42
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:43
 msgid "Edit playlist details"
 msgstr "Edit playlist details"
 
@@ -151,17 +151,17 @@ msgstr "Edit playlist details"
 #~ msgid "Enabled"
 #~ msgstr "Enabled"
 
-#: src/components/HeaderMenu.tsx:75
 #: src/components/HeaderMenu.tsx:76
+#: src/components/HeaderMenu.tsx:77
 msgid "Go back"
 msgstr "Go back"
 
-#: src/components/HeaderMenu.tsx:84
 #: src/components/HeaderMenu.tsx:85
+#: src/components/HeaderMenu.tsx:86
 msgid "Go forward"
 msgstr "Go forward"
 
-#: src/components/TrackList/TrackElement.tsx:53
+#: src/components/TrackList/TrackElement.tsx:54
 msgid "Go to album"
 msgstr "Go to album"
 
@@ -175,14 +175,14 @@ msgstr "Hide overlay"
 msgid "Hide queue"
 msgstr "Hide queue"
 
-#: src/components/HeaderMenu.tsx:91
 #: src/components/HeaderMenu.tsx:92
+#: src/components/HeaderMenu.tsx:93
 #: src/pages/Center/Generic404.tsx:12
 msgid "Home"
 msgstr "Home"
 
-#: src/components/HeaderMenu.tsx:110
-#: src/pages/Auth/Login.tsx:46
+#: src/components/HeaderMenu.tsx:111
+#: src/pages/Auth/Login.tsx:47
 msgid "Install Application"
 msgstr "Install Application"
 
@@ -198,7 +198,7 @@ msgstr "Line by line"
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
-#: src/components/HeaderMenu.tsx:53
+#: src/components/HeaderMenu.tsx:54
 msgid "Logout"
 msgstr "Logout"
 
@@ -222,11 +222,11 @@ msgstr "Man"
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:135
+#: src/components/TrackList/TrackElement.tsx:136
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:58
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:59
 msgid "Name"
 msgstr "Name"
 
@@ -236,15 +236,15 @@ msgstr "Never"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:61
 #: src/components/PipControls/PipControlsOverlay.tsx:62
-#: src/components/PipControls/PipControlsWindow.tsx:113
 #: src/components/PipControls/PipControlsWindow.tsx:114
+#: src/components/PipControls/PipControlsWindow.tsx:115
 #: src/components/Player/PlayerControls.tsx:123
 #: src/components/Player/PlayerControls.tsx:124
 msgid "Next"
 msgstr "Next"
 
-#: src/components/PipControls/PipControlsWindow.tsx:56
-#: src/components/PipControls/PipControlsWindow.tsx:64
+#: src/components/PipControls/PipControlsWindow.tsx:57
+#: src/components/PipControls/PipControlsWindow.tsx:65
 #: src/components/Player/PlayerControls.tsx:70
 msgid "No track playing"
 msgstr "No track playing"
@@ -259,14 +259,14 @@ msgstr "Page not found"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:50
 #: src/components/PipControls/PipControlsOverlay.tsx:51
-#: src/components/PipControls/PipControlsWindow.tsx:99
 #: src/components/PipControls/PipControlsWindow.tsx:100
+#: src/components/PipControls/PipControlsWindow.tsx:101
 #: src/components/Player/PlayerControls.tsx:108
 #: src/components/Player/PlayerControls.tsx:109
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/TrackList/TrackElement.tsx:83
+#: src/components/TrackList/TrackElement.tsx:84
 msgid "Pause {trackName}"
 msgstr "Pause {trackName}"
 
@@ -280,8 +280,8 @@ msgstr "Persistent storage not granted"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:50
 #: src/components/PipControls/PipControlsOverlay.tsx:51
-#: src/components/PipControls/PipControlsWindow.tsx:99
 #: src/components/PipControls/PipControlsWindow.tsx:100
+#: src/components/PipControls/PipControlsWindow.tsx:101
 #: src/components/Player/PlayerControls.tsx:108
 #: src/components/Player/PlayerControls.tsx:109
 #: src/pages/Album/Album.tsx:161
@@ -293,7 +293,7 @@ msgstr "Play"
 msgid "Play {albumName}"
 msgstr "Play {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:85
+#: src/components/TrackList/TrackElement.tsx:86
 msgid "Play {trackName}"
 msgstr "Play {trackName}"
 
@@ -303,7 +303,7 @@ msgid "Playback"
 msgstr "Playback"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:36
-#: src/components/PipControls/PipControlsWindow.tsx:86
+#: src/components/PipControls/PipControlsWindow.tsx:87
 #: src/components/Player/PlayerControls.tsx:89
 msgid "Playback controls"
 msgstr "Playback controls"
@@ -312,14 +312,14 @@ msgstr "Playback controls"
 msgid "Playlist"
 msgstr "Playlist"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:52
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:53
 msgid "Playlist cover"
 msgstr "Playlist cover"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:40
 #: src/components/PipControls/PipControlsOverlay.tsx:41
-#: src/components/PipControls/PipControlsWindow.tsx:89
 #: src/components/PipControls/PipControlsWindow.tsx:90
+#: src/components/PipControls/PipControlsWindow.tsx:91
 #: src/components/Player/PlayerControls.tsx:97
 #: src/components/Player/PlayerControls.tsx:98
 msgid "Previous"
@@ -337,11 +337,11 @@ msgstr "Public"
 msgid "Request"
 msgstr "Request"
 
-#: src/components/TrackList/TrackElement.tsx:84
+#: src/components/TrackList/TrackElement.tsx:85
 msgid "Resume {trackName}"
 msgstr "Resume {trackName}"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:89
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:90
 msgid "Save"
 msgstr "Save"
 
@@ -349,7 +349,7 @@ msgstr "Save"
 msgid "Save to library"
 msgstr "Save to library"
 
-#: src/components/HeaderMenu.tsx:99
+#: src/components/HeaderMenu.tsx:100
 msgid "Search"
 msgstr "Search"
 
