@@ -1,0 +1,1 @@
+node ./scripts/git_hook_lyrics.ts
