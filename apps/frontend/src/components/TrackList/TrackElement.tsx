@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { HiEllipsisHorizontal, HiPlay, HiPause } from "react-icons/hi2";
 import { LuAudioLines, LuDisc3, LuListPlus } from "react-icons/lu";
 import { useSetAtom, useAtomValue } from "jotai";
+import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
 
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
@@ -75,7 +76,7 @@ export function TrackElement(props: TrackElementProps) {
             props.index + 1
           )}
         </span>
-        <button
+        <Button
           className="absolute inset-0 flex items-center justify-center opacity-0 select-none group-hover:opacity-100"
           aria-label={
             isCurrentTrack
@@ -91,7 +92,7 @@ export function TrackElement(props: TrackElementProps) {
           ) : (
             <HiPlay className="size-4" />
           )}
-        </button>
+        </Button>
       </div>
       <div className="flex flex-row content-between justify-center overflow-hidden align-middle whitespace-nowrap">
         {props.displayCover && (

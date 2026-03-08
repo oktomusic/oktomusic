@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { HiPause, HiPlay } from "react-icons/hi2";
 import { t } from "@lingui/core/macro";
+import { Button } from "@headlessui/react";
 
 export interface LibraryRowArtist {
   readonly id: string;
@@ -57,7 +58,7 @@ export function LibraryRow(props: LibraryRowProps) {
 
   return (
     <li className="flex flex-row gap-3 rounded p-2 hover:bg-white/10">
-      <button
+      <Button
         className="group relative size-12 shrink-0 appearance-none rounded"
         onClick={props.onClickPlay}
         aria-label={
@@ -87,7 +88,7 @@ export function LibraryRow(props: LibraryRowProps) {
             <HiPause aria-hidden="true" className="size-8 text-white/90" />
           )}
         </span>
-      </button>
+      </Button>
       <div className="flex h-12 w-full grow flex-col content-between justify-center overflow-hidden align-middle whitespace-nowrap">
         <span>{playLabel}</span>
         <span className="text-sm text-zinc-400">

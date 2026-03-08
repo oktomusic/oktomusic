@@ -1,6 +1,12 @@
 import type { ReactNode } from "react";
 
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
 import { Link } from "react-router";
 
 export interface OktoMenuButtonItem {
@@ -174,7 +180,7 @@ export function OktoMenu(props: OktoMenuProps) {
 
             return (
               <MenuItem key={`button-${index}`}>
-                <button
+                <Button
                   type="button"
                   className="group flex w-full cursor-default items-center gap-2 rounded-lg px-3 py-1.5 text-white select-none data-focus:bg-white/10"
                   onClick={item.onClick}
@@ -183,7 +189,7 @@ export function OktoMenu(props: OktoMenuProps) {
                   {icon}
                   {item.label}
                   {shortcut}
-                </button>
+                </Button>
               </MenuItem>
             );
           })}

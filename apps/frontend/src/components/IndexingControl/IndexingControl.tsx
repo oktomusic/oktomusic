@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation, useSubscription } from "@apollo/client/react";
+import { Button } from "@headlessui/react";
 
 import { TRIGGER_INDEXING_MUTATION } from "../../api/graphql/mutations/triggerIndexing";
 import { INDEXING_JOB_UPDATED_SUBSCRIPTION } from "../../api/graphql/subscriptions/indexingJobUpdated";
@@ -107,7 +108,7 @@ export default function IndexingControl() {
     >
       <h2 className="mb-4 text-xl font-bold">Library Indexing</h2>
 
-      <button
+      <Button
         onClick={() => {
           void handleTriggerIndexing();
         }}
@@ -118,7 +119,7 @@ export default function IndexingControl() {
         aria-label="Trigger library indexing"
       >
         {triggerLoading ? "Triggering..." : "Trigger Indexing"}
-      </button>
+      </Button>
 
       {error ? (
         <div className="mb-2 text-red-500" role="alert">

@@ -1,4 +1,5 @@
 import { useSetAtom } from "jotai";
+import { Button } from "@headlessui/react";
 import { HiXMark } from "react-icons/hi2";
 
 import { panelOverlayVisibleAtom } from "../atoms/app/panels";
@@ -9,20 +10,20 @@ export function PanelOverlay() {
   return (
     <div
       id="oktomusic:panel-overlay"
-      className="flex flex-col gap-4 overflow-y-auto rounded bg-purple-950 p-4"
+      className="flex flex-col gap-4 overflow-y-auto rounded p-4"
       role="region"
     >
       <div>
-        <button
+        <Button
           type="button"
-          className="rounded bg-purple-900 p-2 hover:bg-purple-800"
+          className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
           title="Close"
           onClick={() => {
             closeOverlay(false);
           }}
         >
           <HiXMark className="size-6" />
-        </button>
+        </Button>
       </div>
 
       <LyricsViewer />

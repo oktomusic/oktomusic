@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
+import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
 import { HiBackward, HiForward, HiPause, HiPlay } from "react-icons/hi2";
 import { LuCircleSlash } from "react-icons/lu";
@@ -84,7 +85,7 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
 
       {/* Playback controls cluster (layout moves based on height breakpoints). */}
       <div id="pip-controls" role="group" aria-label={t`Playback controls`}>
-        <button
+        <Button
           type="button"
           title={t`Previous`}
           aria-label={t`Previous`}
@@ -93,8 +94,8 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
           }}
         >
           <HiBackward className="size-6" />
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           title={shouldPlay ? t`Pause` : t`Play`}
           aria-label={shouldPlay ? t`Pause` : t`Play`}
@@ -107,8 +108,8 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
           ) : (
             <HiPlay className="size-6" />
           )}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           title={t`Next`}
           aria-label={t`Next`}
@@ -117,7 +118,7 @@ export default function PipControlsWindow(props: PipControlsWindowProps) {
           }}
         >
           <HiForward className="size-6" />
-        </button>
+        </Button>
       </div>
     </div>
   );

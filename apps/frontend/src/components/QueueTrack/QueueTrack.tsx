@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { Button } from "@headlessui/react";
 import { HiEllipsisHorizontal, HiPause, HiPlay } from "react-icons/hi2";
 
 import { TrackWithAlbum } from "../../atoms/player/machine";
@@ -17,7 +18,7 @@ export function QueueTrack(props: QueueTrackProps) {
 
   return (
     <li className="queue-track gap-3 rounded p-2 hover:bg-white/10" draggable>
-      <button
+      <Button
         className="group relative size-12 shrink-0 appearance-none rounded"
         onClick={props.onClickPlay}
         aria-label={
@@ -43,7 +44,7 @@ export function QueueTrack(props: QueueTrackProps) {
             <HiPause aria-hidden="true" className="size-8 text-white/90" />
           )}
         </span>
-      </button>
+      </Button>
       <div className="flex h-12 w-full grow flex-col content-between justify-center overflow-hidden align-middle whitespace-nowrap">
         <span>{props.track.name}</span>
         <span className="text-sm text-zinc-400">

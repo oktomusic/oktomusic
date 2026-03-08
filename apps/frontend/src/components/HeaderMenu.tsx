@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { useAtomValue } from "jotai";
+import { Button } from "@headlessui/react";
 import {
   HiChevronLeft,
   HiChevronRight,
@@ -68,7 +69,7 @@ export function HeaderMenu() {
   return (
     <div className="flex h-14 flex-row gap-2 p-2">
       <div className="ml-40 flex flex-row items-center gap-2">
-        <button
+        <Button
           className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
           onClick={goBack}
           disabled={!canGoBack}
@@ -76,8 +77,8 @@ export function HeaderMenu() {
           title={t`Go back`}
         >
           <HiChevronLeft className="size-6" />
-        </button>
-        <button
+        </Button>
+        <Button
           className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
           onClick={goForward}
           disabled={!canGoForward}
@@ -85,7 +86,7 @@ export function HeaderMenu() {
           title={t`Go forward`}
         >
           <HiChevronRight className="size-6" />
-        </button>
+        </Button>
         <Link
           to="/"
           aria-label={t`Home`}
@@ -105,7 +106,7 @@ export function HeaderMenu() {
       <div className="flex w-full grow"></div>
       <div className="mr-2 flex flex-row items-center justify-end gap-2">
         {pwaDeferedPrompt && (
-          <button
+          <Button
             className="hide-in-standalone flex aspect-square size-8 items-center justify-center rounded-full"
             title={t`Install Application`}
             onClick={() => {
@@ -113,7 +114,7 @@ export function HeaderMenu() {
             }}
           >
             <HiOutlineArrowDownCircle className="size-6" />
-          </button>
+          </Button>
         )}
         <Link
           to="/settings/client"

@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:214
+#: src/pages/Album/Album.tsx:215
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -46,7 +46,7 @@ msgid "Add an optional description"
 msgstr ""
 
 #: src/components/TrackList/TrackElement.tsx:46
-#: src/pages/Album/Album.tsx:139
+#: src/pages/Album/Album.tsx:140
 msgid "Add to queue"
 msgstr ""
 
@@ -55,7 +55,7 @@ msgstr ""
 msgid "Admin Settings"
 msgstr ""
 
-#: src/components/LibraryRow/LibraryRow.tsx:100
+#: src/components/LibraryRow/LibraryRow.tsx:101
 msgid "Album"
 msgstr "Album"
 
@@ -72,7 +72,7 @@ msgstr "Toujours"
 msgid "Ambient"
 msgstr ""
 
-#: src/components/LibraryRow/LibraryRow.tsx:98
+#: src/components/LibraryRow/LibraryRow.tsx:99
 msgid "Artist"
 msgstr "Artiste"
 
@@ -84,7 +84,7 @@ msgstr "Artiste"
 msgid "Audio session:"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:153
+#: src/components/Player/PlayerControls.tsx:154
 msgid "Buffering…"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Close"
 msgstr "Fermer"
 
-#: src/components/Player/PlayerControls.tsx:195
+#: src/components/Player/PlayerControls.tsx:200
 msgid "Close Picture-in-Picture"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/pages/Album/Album.tsx:250
+#: src/pages/Album/Album.tsx:251
 msgid "Download"
 msgstr "Télécharger"
 
@@ -161,13 +161,13 @@ msgstr "Avancer"
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
-#: src/components/Player/PlayerControls.tsx:167
 #: src/components/Player/PlayerControls.tsx:168
+#: src/components/Player/PlayerControls.tsx:169
 msgid "Hide overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:180
 #: src/components/Player/PlayerControls.tsx:181
+#: src/components/Player/PlayerControls.tsx:182
 msgid "Hide queue"
 msgstr ""
 
@@ -190,7 +190,7 @@ msgstr "Mode Kiosque :"
 msgid "Line by line"
 msgstr "Ligne par ligne"
 
-#: src/pages/Album/Album.tsx:131
+#: src/pages/Album/Album.tsx:132
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
@@ -214,7 +214,7 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/pages/Album/Album.tsx:257
+#: src/pages/Album/Album.tsx:258
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
@@ -230,22 +230,22 @@ msgstr "Nom"
 msgid "Never"
 msgstr "Jamais"
 
-#: src/components/PipControls/PipControlsOverlay.tsx:61
 #: src/components/PipControls/PipControlsOverlay.tsx:62
+#: src/components/PipControls/PipControlsOverlay.tsx:63
 #: src/components/PipControls/PipControlsWindow.tsx:114
 #: src/components/PipControls/PipControlsWindow.tsx:115
-#: src/components/Player/PlayerControls.tsx:123
 #: src/components/Player/PlayerControls.tsx:124
+#: src/components/Player/PlayerControls.tsx:125
 msgid "Next"
 msgstr "Suivant"
 
 #: src/components/PipControls/PipControlsWindow.tsx:57
 #: src/components/PipControls/PipControlsWindow.tsx:65
-#: src/components/Player/PlayerControls.tsx:70
+#: src/components/Player/PlayerControls.tsx:71
 msgid "No track playing"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:195
+#: src/components/Player/PlayerControls.tsx:200
 msgid "Open Picture-in-Picture"
 msgstr ""
 
@@ -253,12 +253,12 @@ msgstr ""
 msgid "Page not found"
 msgstr "Page introuvable"
 
-#: src/components/PipControls/PipControlsOverlay.tsx:50
 #: src/components/PipControls/PipControlsOverlay.tsx:51
+#: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
 #: src/components/PipControls/PipControlsWindow.tsx:101
-#: src/components/Player/PlayerControls.tsx:108
 #: src/components/Player/PlayerControls.tsx:109
+#: src/components/Player/PlayerControls.tsx:110
 msgid "Pause"
 msgstr "Pause"
 
@@ -274,18 +274,18 @@ msgstr ""
 msgid "Persistent storage not granted"
 msgstr ""
 
-#: src/components/PipControls/PipControlsOverlay.tsx:50
 #: src/components/PipControls/PipControlsOverlay.tsx:51
+#: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
 #: src/components/PipControls/PipControlsWindow.tsx:101
-#: src/components/Player/PlayerControls.tsx:108
 #: src/components/Player/PlayerControls.tsx:109
-#: src/pages/Album/Album.tsx:161
-#: src/pages/Album/Album.tsx:238
+#: src/components/Player/PlayerControls.tsx:110
+#: src/pages/Album/Album.tsx:162
+#: src/pages/Album/Album.tsx:239
 msgid "Play"
 msgstr "Lecture"
 
-#: src/pages/Album/Album.tsx:162
+#: src/pages/Album/Album.tsx:163
 msgid "Play {albumName}"
 msgstr ""
 
@@ -298,13 +298,13 @@ msgstr ""
 msgid "Playback"
 msgstr ""
 
-#: src/components/PipControls/PipControlsOverlay.tsx:36
+#: src/components/PipControls/PipControlsOverlay.tsx:37
 #: src/components/PipControls/PipControlsWindow.tsx:87
-#: src/components/Player/PlayerControls.tsx:89
+#: src/components/Player/PlayerControls.tsx:90
 msgid "Playback controls"
 msgstr "Commandes de lecture"
 
-#: src/components/LibraryRow/LibraryRow.tsx:102
+#: src/components/LibraryRow/LibraryRow.tsx:103
 msgid "Playlist"
 msgstr ""
 
@@ -312,12 +312,12 @@ msgstr ""
 msgid "Playlist cover"
 msgstr ""
 
-#: src/components/PipControls/PipControlsOverlay.tsx:40
 #: src/components/PipControls/PipControlsOverlay.tsx:41
+#: src/components/PipControls/PipControlsOverlay.tsx:42
 #: src/components/PipControls/PipControlsWindow.tsx:90
 #: src/components/PipControls/PipControlsWindow.tsx:91
-#: src/components/Player/PlayerControls.tsx:97
 #: src/components/Player/PlayerControls.tsx:98
+#: src/components/Player/PlayerControls.tsx:99
 msgid "Previous"
 msgstr "Précédent"
 
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: src/pages/Album/Album.tsx:245
+#: src/pages/Album/Album.tsx:246
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
@@ -349,7 +349,7 @@ msgstr "Sauvegarder dans la bibliothèque"
 msgid "Search"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:135
+#: src/components/Player/PlayerControls.tsx:136
 msgid "Seek"
 msgstr ""
 
@@ -365,17 +365,17 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:112
+#: src/pages/Album/Album.tsx:113
 msgid "Share"
 msgstr "Partager"
 
-#: src/components/Player/PlayerControls.tsx:167
 #: src/components/Player/PlayerControls.tsx:168
+#: src/components/Player/PlayerControls.tsx:169
 msgid "Show overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:180
 #: src/components/Player/PlayerControls.tsx:181
+#: src/components/Player/PlayerControls.tsx:182
 msgid "Show queue"
 msgstr ""
 

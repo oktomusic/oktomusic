@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { t } from "@lingui/core/macro";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { Button } from "@headlessui/react";
 import {
   HiArrowTopRightOnSquare,
   HiBackward,
@@ -89,7 +90,7 @@ export default function PlayerControls() {
         aria-label={t`Playback controls`}
       >
         <div className="flex flex-row justify-center gap-2">
-          <button
+          <Button
             type="button"
             onClick={() => {
               handlePreviousTrack();
@@ -99,8 +100,8 @@ export default function PlayerControls() {
             className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
           >
             <HiBackward className="size-6" />
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => {
               togglePlayback();
@@ -114,8 +115,8 @@ export default function PlayerControls() {
             ) : (
               <HiPlay className="size-6" />
             )}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => {
               handleNextTrack();
@@ -125,7 +126,7 @@ export default function PlayerControls() {
             className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
           >
             <HiForward className="size-6" />
-          </button>
+          </Button>
         </div>
         <div className="flex flex-row items-center gap-2">
           <span className="font-mono slashed-zero">
@@ -159,7 +160,7 @@ export default function PlayerControls() {
         id="oktomusic:player:additional"
         className="mr-2 flex h-full w-full flex-row items-center justify-end gap-2"
       >
-        <button
+        <Button
           type="button"
           onClick={() => {
             setOverlayVisible((prev) => !prev);
@@ -171,8 +172,8 @@ export default function PlayerControls() {
           }`}
         >
           <HiOutlineSquare2Stack className="size-6" />
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           onClick={() => {
             setRightVisible((prev) => !prev);
@@ -184,19 +185,23 @@ export default function PlayerControls() {
           }`}
         >
           <HiOutlineQueueList className="size-6" />
-        </button>
+        </Button>
         {!kioskModeEnabled && (
-          <button
+          <Button
+            type="button"
             onClick={() => {
               setPipOpen(!pipOpen);
             }}
-            className={pipOpen ? "text-blue-600" : "text-slate-600"}
+            className={
+              "rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2" +
+              (pipOpen ? " text-blue-600" : " text-slate-600")
+            }
             title={
               pipOpen ? t`Close Picture-in-Picture` : t`Open Picture-in-Picture`
             }
           >
             <HiArrowTopRightOnSquare className="size-6" />
-          </button>
+          </Button>
         )}
       </div>
     </div>

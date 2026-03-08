@@ -33,6 +33,7 @@ export function DialogPlaylistEdit() {
     e.preventDefault();
     console.log("Name:", name);
     console.log("Description:", description);
+    console.log("Visibility:", visibility);
   };
 
   return (

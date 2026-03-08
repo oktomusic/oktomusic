@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { Navigate, useSearchParams } from "react-router";
+import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
@@ -33,7 +34,7 @@ export default function Login() {
         >
           {"Login with OIDC"}
         </a>
-        <button
+        <Button
           id="login-install-button"
           className="align-center mt-4 flex w-full justify-center rounded-md bg-zinc-800 p-4 text-center select-none hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
           disabled={!pwaDeferedPrompt}
@@ -44,7 +45,7 @@ export default function Login() {
           }}
         >
           {t`Install Application`}
-        </button>
+        </Button>
       </div>
     </div>
   );

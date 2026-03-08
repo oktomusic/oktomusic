@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@apollo/client/react";
 import { plural, t } from "@lingui/core/macro";
 import { useSetAtom } from "jotai";
+import { Button } from "@headlessui/react";
 import { HiEllipsisHorizontal, HiOutlineShare, HiPlay } from "react-icons/hi2";
 import { LuCircleArrowDown, LuCirclePlus, LuListPlus } from "react-icons/lu";
 import { Link, useParams } from "react-router";
@@ -156,14 +157,14 @@ export function Album() {
               : " pointer-events-none opacity-0")
           }
         >
-          <button
+          <Button
             className="size-12 shrink-0 rounded-full bg-blue-500"
             title={t`Play`}
             aria-label={t`Play ${albumName}`}
             onClick={() => replaceQueue(flatTracks)}
           >
             <HiPlay className="m-auto size-6" />
-          </button>
+          </Button>
           <h2 className="truncate text-2xl font-bold">{albumName}</h2>
         </div>
       </div>
@@ -233,23 +234,23 @@ export function Album() {
           ref={actionButtonsRef}
           className="flex flex-row items-center gap-4"
         >
-          <button
+          <Button
             className="size-12 rounded-full bg-blue-500"
             title={t`Play`}
             onClick={() => replaceQueue(flatTracks)}
           >
             <HiPlay className="m-auto size-6" />
-          </button>
-          <button
+          </Button>
+          <Button
             className="size-8"
             title={t`Save to library`}
             onClick={undefined}
           >
             <LuCirclePlus className="m-auto size-8" />
-          </button>
-          <button className="size-8" title={t`Download`} onClick={undefined}>
+          </Button>
+          <Button className="size-8" title={t`Download`} onClick={undefined}>
             <LuCircleArrowDown className="m-auto size-8" />
-          </button>
+          </Button>
           <OktoMenu
             button={<HiEllipsisHorizontal className="size-8" />}
             items={menuItems}

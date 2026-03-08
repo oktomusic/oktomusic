@@ -1,4 +1,5 @@
 import { useAtomValue, useSetAtom } from "jotai";
+import { Button } from "@headlessui/react";
 import { HiBackward, HiForward, HiPause, HiPlay } from "react-icons/hi2";
 import { t } from "@lingui/core/macro";
 
@@ -35,7 +36,7 @@ export function PipControlsOverlay() {
           role="group"
           aria-label={t`Playback controls`}
         >
-          <button
+          <Button
             type="button"
             title={t`Previous`}
             aria-label={t`Previous`}
@@ -44,8 +45,8 @@ export function PipControlsOverlay() {
             }}
           >
             <HiBackward />
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             title={shouldPlay ? t`Pause` : t`Play`}
             aria-label={shouldPlay ? t`Pause` : t`Play`}
@@ -55,8 +56,8 @@ export function PipControlsOverlay() {
             id="pip-hover_overlay__controls__playpause"
           >
             {shouldPlay ? <HiPause /> : <HiPlay />}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             title={t`Next`}
             aria-label={t`Next`}
@@ -65,7 +66,7 @@ export function PipControlsOverlay() {
             }}
           >
             <HiForward />
-          </button>
+          </Button>
         </div>
       </div>
       <div id="pip-hover_overlay__seek">

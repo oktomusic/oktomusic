@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 import { Link } from "react-router";
+import { Button } from "@headlessui/react";
 import { LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
 
 import { panelLeftExpandedAtom } from "../atoms/app/panels";
@@ -45,7 +46,7 @@ export function PanelLeft() {
       aria-label="Library"
     >
       <div className="flex items-center justify-end p-2">
-        <button
+        <Button
           type="button"
           onClick={() => {
             setExpanded((prev) => !prev);
@@ -59,7 +60,7 @@ export function PanelLeft() {
           ) : (
             <LuPanelLeftOpen className="size-6" />
           )}
-        </button>
+        </Button>
       </div>
       {expanded ? (
         <ul className="flex w-full flex-1 flex-col overflow-y-auto px-2 pb-2">
