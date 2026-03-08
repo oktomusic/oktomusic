@@ -108,6 +108,10 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:16
+msgid "Create playlist"
+msgstr ""
+
 #: src/pages/SettingsClient/SettingsClient.tsx:154
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
@@ -120,6 +124,10 @@ msgstr "Fondu enchaîné (secondes) :"
 #: src/pages/Album/Album.tsx:250
 msgid "Download"
 msgstr "Télécharger"
+
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:16
+msgid "Edit playlist details"
+msgstr ""
 
 #: src/pages/SettingsClient/SettingsClient.tsx:43
 #: src/pages/SettingsClient/SettingsClient.tsx:147
