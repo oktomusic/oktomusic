@@ -11,6 +11,7 @@
     "lint": "pnpm -w exec eslint -c eslint.config.ts apps/frontend",
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix apps/frontend",
     "po:extract": "lingui extract",
+    "po:extract:watch": "lingui extract --watch",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",

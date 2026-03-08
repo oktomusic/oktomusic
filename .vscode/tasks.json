@@ -65,6 +65,13 @@
       ]
     },
     {
+      "label": "frontend: watch locales",
+      "type": "shell",
+      "command": "pnpm --filter @oktomusic/frontend po:extract:watch",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
       "label": "lyrics: tests",
       "type": "shell",
       "command": "pnpm --filter @oktomusic/lyrics test",
@@ -93,7 +100,8 @@
       "dependsOn": [
         "docker: start",
         "backend: dev",
-        "frontend: dev"
+        "frontend: dev",
+        "frontend: watch locales",
       ],
       "problemMatcher": []
     }
