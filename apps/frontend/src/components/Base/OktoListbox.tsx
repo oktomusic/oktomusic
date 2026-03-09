@@ -4,12 +4,11 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { IconType } from "react-icons/lib";
 import { HiChevronDown, HiCheck } from "react-icons/hi2";
 
 export interface OktoListboxOption {
   readonly label: string;
-  readonly icon?: IconType;
+  readonly icon?: (props: React.SVGAttributes<SVGElement>) => React.ReactNode;
 }
 
 export interface OktoListboxProps<T extends string> {
