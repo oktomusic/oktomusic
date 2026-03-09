@@ -1,5 +1,7 @@
 import type { HelmetOptions } from "helmet";
 
+// import { REPORTING_ENDPOINT_NAME } from "./reporting_endpoints";
+
 type CSPDirectives = Record<string, string[]>;
 
 /**
@@ -34,6 +36,7 @@ const defaultCSP: CSPDirectives = {
   mediaSrc: ["'self'"],
   workerSrc: ["'self'"],
   upgradeInsecureRequests: [],
+  // reportTo: [REPORTING_ENDPOINT_NAME],
 } as const;
 
 /**
@@ -123,5 +126,9 @@ export function getHelmetConfig(
       preload: true,
     },
     xPoweredBy: false,
+
+    crossOriginEmbedderPolicy: {
+      policy: isDev ? "unsafe-none" : "require-corp",
+    },
   };
 }

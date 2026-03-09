@@ -18,6 +18,7 @@ import { HttpConfig } from "./config/definitions/http.config";
 import { ViteConfig } from "./config/definitions/vite.config";
 import { getHelmetConfig } from "./utils/helmet_config";
 import { permissionsPolicyMiddleware } from "./utils/permissions_policy";
+// import { reportingEndpointsMiddleware } from "./utils/reporting_endpoints";
 import { proxyMiddleware, vitePrefixes } from "./utils/vite_dev_proxy";
 
 async function bootstrap() {
@@ -40,6 +41,9 @@ async function bootstrap() {
 
   // Apply Permissions Policy
   app.use(permissionsPolicyMiddleware);
+
+  // Set Reporting-Endpoints header for the Reporting API
+  // app.use(reportingEndpointsMiddleware);
 
   if (isDev) {
     app.use(proxyMiddleware(viteOrigin, vitePrefixes));

@@ -6,3 +6,4 @@ export * from "./schemas/auth_refresh_res";
 export * from "./schemas/auth_session_res";
 export * from "./schemas/indexing_status_res";
 export * from "./schemas/indexing_trigger_res";
+export * from "./schemas/reporting_body";
