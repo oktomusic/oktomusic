@@ -21,6 +21,11 @@ description: Instructions for Frontend
 - The project is strict by default regarding the `Permissions-Policy` header.
 - When using a new web API, update as needed the policies in `apps/backend/src/utils/permissions_policy.ts`
 
+## CORS
+
+- The app have a zero cross-origin policy in production. No resources should be loaded from other origins.
+- In development, a more permissive one is used for Vite dev server as well as Swagger and Graphiql.
+
 ## React and JSX/TSX Guidelines
 
 - Use functional components with hooks.
@@ -55,3 +60,15 @@ Adding new images to the project require proper optimisation.
 
 - SVG images must be run through SVGO with the default configuration.
 - PNG images must be optimised with Oxipng with `oxipng --opt max --strip all --zopfli`.
+
+## Icons
+
+Use exclusively icons from the `react-icons` library. Use the `Lu` (Lucide) icon set when possible, or `Hi` (Heroicons) as a fallback.
+
+## Inputs and Forms
+
+When availlable, use the components from `apps/frontend/src/components/Base` for inputs and forms, such as `OktoInput`, `OktoSelect`, `OktoListbox`, etc. These components are designed to be accessible and consistent with the design system.
+
+If not availlable, make sure to use **Headless UI** components from `@headlessui/react` to make accessibility and hover/focus state management easier.
+
+Refer to the Headless **UI documentation** for proper usage and accessibility guidelines.
