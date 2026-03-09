@@ -37,11 +37,11 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:66
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:77
 msgid "Add a name"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:77
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:88
 msgid "Add an optional description"
 msgstr ""
 
@@ -117,7 +117,7 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:43
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:54
 msgid "Create playlist"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:72
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:83
 msgid "Description"
 msgstr "Description"
 
@@ -138,7 +138,7 @@ msgstr "Description"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:43
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:54
 msgid "Edit playlist details"
 msgstr ""
 
@@ -222,7 +222,7 @@ msgstr "Plus d'options pour {albumName}"
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:59
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:70
 msgid "Name"
 msgstr "Nom"
 
@@ -308,7 +308,7 @@ msgstr "Commandes de lecture"
 msgid "Playlist"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:53
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:64
 msgid "Playlist cover"
 msgstr ""
 
@@ -321,11 +321,11 @@ msgstr ""
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:27
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:34
 msgid "Private"
 msgstr "Privée"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:25
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:32
 msgid "Public"
 msgstr "Publique"
 
@@ -337,7 +337,7 @@ msgstr ""
 msgid "Resume {trackName}"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:90
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:111
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -391,7 +391,7 @@ msgstr ""
 msgid "The following modern web features are missing:"
 msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:26
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:33
 msgid "Unlisted"
 msgstr "Non répertoriée"
 

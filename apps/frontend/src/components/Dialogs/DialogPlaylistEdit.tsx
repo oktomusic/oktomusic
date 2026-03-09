@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useAtom } from "jotai";
 import { Button, Field, Fieldset, Label } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
-import { LuGlobe, LuLink, LuLock, LuMusic } from "react-icons/lu";
+import {
+  LuGlobe,
+  LuLink,
+  LuLock,
+  LuMusic,
+  LuLoaderCircle,
+} from "react-icons/lu";
 
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 import { OktoDialog } from "../Base/OktoDialog";
@@ -16,6 +22,7 @@ export function DialogPlaylistEdit() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   type VisibilityOptions = "public" | "unlisted" | "private";
 
@@ -34,6 +41,10 @@ export function DialogPlaylistEdit() {
     console.log("Name:", name);
     console.log("Description:", description);
     console.log("Visibility:", visibility);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   return (
@@ -87,7 +98,19 @@ export function DialogPlaylistEdit() {
             options={visibilityOptions}
             className="w-48"
           />
-          <OktoButton type="submit">{t`Save`}</OktoButton>
+          <OktoButton type="submit" disabled={loading} className="relative">
+            <div
+              className={
+                "flex items-center justify-center" +
+                (loading ? " text-transparent!" : "")
+              }
+            >
+              {loading ? (
+                <LuLoaderCircle className="absolute mx-auto size-4 animate-spin text-white!" />
+              ) : undefined}
+              {t`Save`}
+            </div>
+          </OktoButton>
         </div>
       </form>
     </OktoDialog>
