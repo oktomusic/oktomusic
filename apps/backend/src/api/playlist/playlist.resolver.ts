@@ -4,6 +4,7 @@ import type { Request } from "express";
 
 import { GraphqlAuthGuard } from "../../common/guards/graphql-auth.guard";
 import { CreatePlaylistInput } from "./dto/create-playlist.input";
+import { UpdatePlaylistInput } from "./dto/update-playlist.input";
 import { PlaylistModel } from "./playlist.model";
 import { PlaylistService } from "./playlist.service";
 
@@ -36,5 +37,23 @@ export class PlaylistResolver {
       throw new ForbiddenException("Current user not found in request");
     }
     return this.playlistService.createPlaylist(req.user.id, input);
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation(() => PlaylistModel, {
+    name: "updatePlaylist",
+    description: "Update an existing playlist for the current user",
+  })
+  async updatePlaylist(
+    @Args("id", { type: () => String }) id: string,
+    @Args("input", { type: () => UpdatePlaylistInput })
+    input: UpdatePlaylistInput,
+    @Context("req") req: Request,
+  ): Promise<PlaylistModel> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    return this.playlistService.updatePlaylist(req.user.id, id, input);
   }
 }

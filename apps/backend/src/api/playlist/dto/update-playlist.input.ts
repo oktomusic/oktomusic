@@ -3,16 +3,18 @@ import { Field, InputType } from "@nestjs/graphql";
 import { PlaylistVisibility } from "../playlist-visibility.enum";
 
 @InputType()
-export class CreatePlaylistInput {
-  @Field({ description: "Playlist name" })
-  name!: string;
+export class UpdatePlaylistInput {
+  @Field({ nullable: true, description: "Playlist name" })
+  name?: string;
 
-  @Field({ nullable: true, description: "Optional playlist description" })
-  description?: string;
+  @Field({
+    nullable: true,
+    description: "Optional playlist description, or null to clear",
+  })
+  description?: string | null;
 
   @Field(() => PlaylistVisibility, {
     nullable: true,
-    defaultValue: PlaylistVisibility.PRIVATE,
     description: "Visibility level of the playlist",
   })
   visibility?: PlaylistVisibility;

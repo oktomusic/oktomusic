@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useAtom } from "jotai";
+import { useMutation, useQuery } from "@apollo/client/react";
 import { Button, Field, Fieldset, Label } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
 import {
@@ -11,22 +12,27 @@ import {
 } from "react-icons/lu";
 
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
+import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
+import { CREATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/create-playlist";
+import { UPDATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/update-playlist";
+import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import { OktoDialog } from "../Base/OktoDialog";
 import { OktoInput } from "../Base/OktoInput";
 import { OktoTextarea } from "../Base/OktoTextarea";
 import { OktoButton } from "../Base/OktoButton";
 import { OktoListbox, OktoListboxOption } from "../Base/OktoListbox";
 
+type VisibilityOptions = "public" | "unlisted" | "private";
+
 export function DialogPlaylistEdit() {
   const [open, setOpen] = useAtom(dialogPlaylistOpenAtom);
+  const editPlaylistId = typeof open === "string" ? open : null;
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [nameDraft, setNameDraft] = useState<string | null>(null);
+  const [descriptionDraft, setDescriptionDraft] = useState<string | null>(null);
+  const [visibilityDraft, setVisibilityDraft] =
+    useState<VisibilityOptions | null>(null);
   const [loading, setLoading] = useState(false);
-
-  type VisibilityOptions = "public" | "unlisted" | "private";
-
-  const [visibility, setVisibility] = useState<VisibilityOptions>("private");
 
   const visibilityOptions: Record<VisibilityOptions, OktoListboxOption> = {
     public: { label: t`Public`, icon: LuGlobe },
@@ -34,23 +40,102 @@ export function DialogPlaylistEdit() {
     private: { label: t`Private`, icon: LuLock },
   };
 
-  const isEdit = true;
+  const [createPlaylist] = useMutation(CREATE_PLAYLIST_MUTATION);
+  const [updatePlaylist] = useMutation(UPDATE_PLAYLIST_MUTATION);
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Name:", name);
-    console.log("Description:", description);
-    console.log("Visibility:", visibility);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
+  const { data: playlistData } = useQuery(PLAYLIST_QUERY, {
+    variables: { id: editPlaylistId ?? "" },
+    skip: editPlaylistId === null,
+  });
+
+  const isEdit = typeof open === "string";
+
+  const initialVisibility: VisibilityOptions =
+    playlistData?.playlist.visibility === PlaylistVisibility.Public
+      ? "public"
+      : playlistData?.playlist.visibility === PlaylistVisibility.Unlisted
+        ? "unlisted"
+        : "private";
+
+  const name = nameDraft ?? (isEdit ? (playlistData?.playlist.name ?? "") : "");
+  const description =
+    descriptionDraft ??
+    (isEdit ? (playlistData?.playlist.description ?? "") : "");
+  const visibility = visibilityDraft ?? initialVisibility;
+
+  const resetForm = useCallback(() => {
+    setNameDraft(null);
+    setDescriptionDraft(null);
+    setVisibilityDraft(null);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    resetForm();
+    setOpen(false);
+  }, [resetForm, setOpen]);
+
+  const handleSubmit = useCallback(
+    (e: React.SubmitEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setLoading(true);
+
+      const visibilityEnumValue =
+        visibility.toUpperCase() as PlaylistVisibility;
+
+      const payload = {
+        name,
+        description: description || null,
+        visibility: visibilityEnumValue,
+      };
+
+      const mutationPromise =
+        isEdit && editPlaylistId
+          ? updatePlaylist({
+              variables: {
+                id: editPlaylistId,
+                input: payload,
+              },
+            })
+          : createPlaylist({
+              variables: {
+                input: payload,
+              },
+            });
+
+      mutationPromise
+        .then(() => {
+          resetForm();
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.error(
+            isEdit
+              ? "Failed to update playlist:"
+              : "Failed to create playlist:",
+            error,
+          );
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+    [
+      visibility,
+      name,
+      description,
+      isEdit,
+      editPlaylistId,
+      updatePlaylist,
+      createPlaylist,
+      resetForm,
+      setOpen,
+    ],
+  );
 
   return (
     <OktoDialog
-      open={open}
-      onClose={() => setOpen(false)}
+      open={open !== false}
+      onClose={handleClose}
       title={isEdit ? t`Edit playlist details` : t`Create playlist`}
       showHeader={true}
       transparentPanel={false}
@@ -67,24 +152,34 @@ export function DialogPlaylistEdit() {
           </Button>
           <Fieldset className="flex flex-1 flex-col gap-4">
             <Field>
-              <Label className="sr-only text-sm/6 font-medium text-white">{t`Name`}</Label>
+              <Label
+                htmlFor="dialog-playlist:name"
+                className="sr-only text-sm/6 font-medium text-white"
+              >
+                {t`Name`}
+              </Label>
               <OktoInput
                 id="dialog-playlist:name"
                 type="text"
                 minLength={1}
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setNameDraft(e.target.value)}
                 placeholder={t`Add a name`}
                 className="w-full"
                 autoComplete="off"
               />
             </Field>
             <Field className="flex flex-1 flex-col">
-              <Label className="sr-only text-sm/6 font-medium text-white">{t`Description`}</Label>
+              <Label
+                htmlFor="dialog-playlist:description"
+                className="sr-only text-sm/6 font-medium text-white"
+              >
+                {t`Description`}
+              </Label>
               <OktoTextarea
                 id="dialog-playlist:description"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setDescriptionDraft(e.target.value)}
                 placeholder={t`Add an optional description`}
                 className="w-full flex-1"
               />
@@ -94,7 +189,7 @@ export function DialogPlaylistEdit() {
         <div className="flex justify-between">
           <OktoListbox
             value={visibility}
-            onChange={setVisibility}
+            onChange={setVisibilityDraft}
             options={visibilityOptions}
             className="w-48"
           />
@@ -107,7 +202,7 @@ export function DialogPlaylistEdit() {
             >
               {loading ? (
                 <LuLoaderCircle className="absolute mx-auto size-4 animate-spin text-white!" />
-              ) : undefined}
+              ) : null}
               {t`Save`}
             </div>
           </OktoButton>

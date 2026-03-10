@@ -32,6 +32,7 @@ description: Instructions for Frontend
 - You MUST use interfaces for defining component props.
 - When possible, prefer `readonly` properties in props interfaces.
 - You MUST never destructure props in the function signature.
+- NEVER EVER use `React.FormEvent`, it's deprecated.
 
 ```tsx
 interface MyComponentProps {

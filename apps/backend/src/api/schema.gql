@@ -64,11 +64,11 @@ input CreatePlaylistInput {
   """Optional playlist description"""
   description: String
 
-  """Whether the playlist is publicly visible"""
-  isPublic: Boolean = false
-
   """Playlist name"""
   name: String!
+
+  """Visibility level of the playlist"""
+  visibility: PlaylistVisibility = PRIVATE
 }
 
 """
@@ -152,16 +152,21 @@ type Mutation {
 
   """Update the current user's profile"""
   updateMyProfile(input: UpdateUserProfileInput!): User!
+
+  """Update an existing playlist for the current user"""
+  updatePlaylist(id: String!, input: UpdatePlaylistInput!): Playlist!
 }
 
 type Playlist {
   createdAt: DateTime!
   description: String
   id: String!
-  isPublic: Boolean!
   name: String!
   tracks: [PlaylistTrack!]!
   updatedAt: DateTime!
+
+  """Visibility level of the playlist"""
+  visibility: PlaylistVisibility!
 }
 
 type PlaylistTrack {
@@ -171,6 +176,13 @@ type PlaylistTrack {
   """Position in the playlist (0-based)"""
   position: Int!
   track: Track!
+}
+
+"""Visibility level of a playlist"""
+enum PlaylistVisibility {
+  PRIVATE
+  PUBLIC
+  UNLISTED
 }
 
 type Query {
@@ -331,6 +343,17 @@ type Track {
   lyrics: [LyricsLine!]
   name: String!
   trackNumber: Int!
+}
+
+input UpdatePlaylistInput {
+  """Optional playlist description, or null to clear"""
+  description: String
+
+  """Playlist name"""
+  name: String
+
+  """Visibility level of the playlist"""
+  visibility: PlaylistVisibility
 }
 
 input UpdateUserProfileInput {

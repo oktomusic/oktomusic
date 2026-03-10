@@ -179,11 +179,18 @@ model AlbumArtist {
 // Playlists
 // ---------------------------------------
 
+enum PlaylistVisibility {
+  PUBLIC
+  UNLISTED
+  PRIVATE
+}
+
 model Playlist {
   id          String  @id @default(cuid(2))
   name        String
   description String?
-  isPublic    Boolean @default(false)
+
+  visibility PlaylistVisibility @default(PRIVATE)
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
