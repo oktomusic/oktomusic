@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Link } from "react-router";
-import { useQuery } from "@apollo/client/react";
+import { useMutation, useQuery } from "@apollo/client/react";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
+import { panelToastAtom } from "../../atoms/app/panels";
 import { ME_QUERY } from "../../api/graphql/queries/me";
+import { DELETE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/deletePlaylist";
 import { Role } from "../../api/graphql/gql/graphql";
 import IndexingControl from "../../components/IndexingControl/IndexingControl";
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
@@ -21,7 +23,11 @@ function Home() {
   });
 
   const setOpen = useSetAtom(dialogPlaylistOpenAtom);
+  const setToast = useSetAtom(panelToastAtom);
   const [playlistIdInput, setPlaylistIdInput] = useState("");
+  const [deletePlaylist, { loading: deletePlaylistLoading }] = useMutation(
+    DELETE_PLAYLIST_MUTATION,
+  );
 
   const isAdmin = userData?.me?.role === Role.Admin;
 
@@ -37,6 +43,35 @@ function Home() {
   if (authSession.status !== "authenticated" || !authSession.user) {
     return null;
   }
+
+  const handleDeletePlaylist = async () => {
+    const playlistId = playlistIdInput.trim();
+
+    if (!playlistId) {
+      return;
+    }
+
+    try {
+      await deletePlaylist({
+        variables: {
+          id: playlistId,
+        },
+      });
+
+      setToast({
+        type: "success",
+        message: "Playlist deleted",
+      });
+
+      setPlaylistIdInput("");
+    } catch (error) {
+      console.error("Failed to delete playlist:", error);
+      setToast({
+        type: "error",
+        message: "Failed to delete playlist",
+      });
+    }
+  };
 
   return (
     <>
@@ -78,6 +113,15 @@ function Home() {
               />
               <OktoButton onClick={handleEditPlaylist} className="shrink-0">
                 Edit Playlist
+              </OktoButton>
+              <OktoButton
+                onClick={() => {
+                  void handleDeletePlaylist();
+                }}
+                disabled={deletePlaylistLoading}
+                className="shrink-0"
+              >
+                Delete Playlist
               </OktoButton>
             </div>
           </div>

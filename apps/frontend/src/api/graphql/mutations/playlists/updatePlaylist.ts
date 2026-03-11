@@ -1,8 +1,8 @@
-import { graphql } from "../gql";
+import { graphql } from "../../gql";
 
-export const CREATE_PLAYLIST_MUTATION = graphql(/* GraphQL */ `
-  mutation CreatePlaylist($input: CreatePlaylistInput!) {
-    createPlaylist(input: $input) {
+export const UPDATE_PLAYLIST_MUTATION = graphql(/* GraphQL */ `
+  mutation UpdatePlaylist($id: String!, $input: UpdatePlaylistInput!) {
+    updatePlaylist(id: $id, input: $input) {
       id
       name
       description

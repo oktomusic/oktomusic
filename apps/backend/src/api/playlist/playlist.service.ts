@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -8,6 +9,7 @@ import {
   PlaylistVisibility as PrismaPlaylistVisibility,
   Prisma,
   Role,
+  User,
 } from "../../generated/prisma/client";
 import { PrismaService } from "../../db/prisma.service";
 import { TrackService } from "../track/track.service";
@@ -23,11 +25,7 @@ export class PlaylistService {
     private readonly trackService: TrackService,
   ) {}
 
-  async getPlaylist(
-    userId: string,
-    id: string,
-    userRole: Role = Role.USER,
-  ): Promise<PlaylistModel> {
+  async getPlaylist(id: string, user: User | false): Promise<PlaylistModel> {
     const playlist = await this.prisma.playlist.findUnique({
       where: { id },
       include: {
@@ -60,9 +58,11 @@ export class PlaylistService {
       throw new NotFoundException(`Playlist with id ${id} not found`);
     }
 
-    if (
-      playlist.userId !== userId &&
-      userRole !== Role.ADMIN &&
+    if (user === false) {
+      // Internal/service-level bypass mode.
+    } else if (
+      playlist.userId !== user.id &&
+      user.role !== Role.ADMIN &&
       playlist.visibility === PrismaPlaylistVisibility.PRIVATE
     ) {
       throw new ForbiddenException(
@@ -88,9 +88,30 @@ export class PlaylistService {
   }
 
   async createPlaylist(
-    userId: string,
     input: CreatePlaylistInput,
+    user: User | false,
   ): Promise<PlaylistModel> {
+    const requestedOwnerId = input.userId?.trim();
+
+    const ownerId = user === false ? requestedOwnerId : user.id;
+
+    if (!ownerId) {
+      throw new BadRequestException(
+        "Playlist owner userId is required when no user context is provided",
+      );
+    }
+
+    if (
+      user !== false &&
+      requestedOwnerId !== undefined &&
+      requestedOwnerId !== user.id &&
+      user.role !== Role.ADMIN
+    ) {
+      throw new ForbiddenException(
+        "Only administrators can create playlists for other users",
+      );
+    }
+
     const playlist = await this.prisma.playlist.create({
       data: {
         name: input.name,
@@ -98,7 +119,10 @@ export class PlaylistService {
         visibility:
           (input.visibility as PrismaPlaylistVisibility | undefined) ??
           PrismaPlaylistVisibility.PRIVATE,
-        userId,
+        userId:
+          user !== false && user.role === Role.ADMIN && requestedOwnerId
+            ? requestedOwnerId
+            : ownerId,
       },
     });
 
@@ -114,8 +138,8 @@ export class PlaylistService {
   }
 
   async updatePlaylist(
-    userId: string,
     playlistId: string,
+    user: User | false,
     input: UpdatePlaylistInput,
   ): Promise<PlaylistModel> {
     const existingPlaylist = await this.prisma.playlist.findUnique({
@@ -127,7 +151,11 @@ export class PlaylistService {
       throw new NotFoundException(`Playlist with id ${playlistId} not found`);
     }
 
-    if (existingPlaylist.userId !== userId) {
+    if (
+      user !== false &&
+      existingPlaylist.userId !== user.id &&
+      user.role !== Role.ADMIN
+    ) {
       throw new ForbiddenException("You can only update your own playlists");
     }
 
@@ -146,7 +174,7 @@ export class PlaylistService {
     }
 
     if (Object.keys(data).length === 0) {
-      return this.getPlaylist(userId, playlistId);
+      return this.getPlaylist(playlistId, user);
     }
 
     await this.prisma.playlist.update({
@@ -154,6 +182,103 @@ export class PlaylistService {
       data,
     });
 
-    return this.getPlaylist(userId, playlistId);
+    return this.getPlaylist(playlistId, user);
+  }
+
+  async deletePlaylist(playlistId: string, user: User | false): Promise<void> {
+    const existingPlaylist = await this.prisma.playlist.findUnique({
+      where: { id: playlistId },
+      select: { id: true, userId: true },
+    });
+
+    if (!existingPlaylist) {
+      throw new NotFoundException(`Playlist with id ${playlistId} not found`);
+    }
+
+    if (
+      user !== false &&
+      existingPlaylist.userId !== user.id &&
+      user.role !== Role.ADMIN
+    ) {
+      throw new ForbiddenException("You can only delete your own playlists");
+    }
+
+    await this.prisma.playlist.delete({ where: { id: playlistId } });
+  }
+
+  async addTracksToPlaylist(
+    playlistId: string,
+    user: User | false,
+    trackIds: string[],
+    position?: number,
+  ): Promise<void> {
+    const existingPlaylist = await this.prisma.playlist.findUnique({
+      where: { id: playlistId },
+      select: { id: true, userId: true },
+    });
+
+    if (!existingPlaylist) {
+      throw new NotFoundException(`Playlist with id ${playlistId} not found`);
+    }
+
+    if (
+      user !== false &&
+      existingPlaylist.userId !== user.id &&
+      user.role !== Role.ADMIN
+    ) {
+      throw new ForbiddenException(
+        "You can only add tracks to your own playlists",
+      );
+    }
+
+    if (trackIds.length === 0) {
+      throw new BadRequestException("trackIds must contain at least one track");
+    }
+
+    const existingTracksCount = await this.prisma.track.count({
+      where: { id: { in: [...new Set(trackIds)] } },
+    });
+
+    if (existingTracksCount !== [...new Set(trackIds)].length) {
+      throw new NotFoundException("One or more tracks were not found");
+    }
+
+    const playlistTracksCount = await this.prisma.playlistTrack.count({
+      where: { playlistId },
+    });
+
+    const insertionPosition = position ?? playlistTracksCount;
+
+    if (insertionPosition < 0 || insertionPosition > playlistTracksCount) {
+      throw new BadRequestException(
+        `position must be between 0 and ${playlistTracksCount}`,
+      );
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      const tracksToShift = await tx.playlistTrack.findMany({
+        where: {
+          playlistId,
+          position: { gte: insertionPosition },
+        },
+        select: { id: true, position: true },
+        orderBy: { position: "desc" },
+      });
+
+      for (const track of tracksToShift) {
+        await tx.playlistTrack.update({
+          where: { id: track.id },
+          data: { position: track.position + trackIds.length },
+        });
+      }
+
+      await tx.playlistTrack.createMany({
+        data: trackIds.map((trackId, index) => ({
+          playlistId,
+          trackId,
+          position: insertionPosition + index,
+        })),
+      });
+    });
   }
 }

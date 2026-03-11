@@ -1,5 +1,5 @@
 import { ForbiddenException, UseGuards } from "@nestjs/common";
-import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Context, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import type { Request } from "express";
 
 import { GraphqlAuthGuard } from "../../common/guards/graphql-auth.guard";
@@ -25,33 +25,46 @@ export class PlaylistResolver {
       throw new ForbiddenException("Current user not found in request");
     }
 
-    return this.playlistService.getPlaylist(req.user.id, id, req.user.role);
+    return this.playlistService.getPlaylist(id, req.user);
   }
 
   @UseGuards(GraphqlAuthGuard)
   @Mutation(() => PlaylistModel, {
     name: "createPlaylist",
-    description: "Create a new empty playlist for the current user",
+    description:
+      "Create a new empty playlist for the current user, or as administrator for a specific user",
   })
   async createPlaylist(
-    @Args("input", { type: () => CreatePlaylistInput })
+    @Args("input", {
+      type: () => CreatePlaylistInput,
+      description: "Playlist creation data",
+    })
     input: CreatePlaylistInput,
     @Context("req") req: Request,
   ): Promise<PlaylistModel> {
     if (!req.user) {
       throw new ForbiddenException("Current user not found in request");
     }
-    return this.playlistService.createPlaylist(req.user.id, input);
+
+    return this.playlistService.createPlaylist(input, req.user);
   }
 
   @UseGuards(GraphqlAuthGuard)
   @Mutation(() => PlaylistModel, {
     name: "updatePlaylist",
-    description: "Update an existing playlist for the current user",
+    description:
+      "Update an existing playlist for the current user, or any playlist as administrator",
   })
   async updatePlaylist(
-    @Args("id", { type: () => String }) id: string,
-    @Args("input", { type: () => UpdatePlaylistInput })
+    @Args("id", {
+      type: () => String,
+      description: "ID of the playlist to update",
+    })
+    id: string,
+    @Args("input", {
+      type: () => UpdatePlaylistInput,
+      description: "Updated playlist details",
+    })
     input: UpdatePlaylistInput,
     @Context("req") req: Request,
   ): Promise<PlaylistModel> {
@@ -59,6 +72,67 @@ export class PlaylistResolver {
       throw new ForbiddenException("Current user not found in request");
     }
 
-    return this.playlistService.updatePlaylist(req.user.id, id, input);
+    return this.playlistService.updatePlaylist(id, req.user, input);
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation(() => Boolean, {
+    name: "deletePlaylist",
+    description:
+      "Delete an existing playlist for the current user, or as administrator",
+  })
+  async deletePlaylist(
+    @Args("id", {
+      type: () => String,
+      description: "ID of the playlist to delete",
+    })
+    id: string,
+    @Context("req") req: Request,
+  ): Promise<boolean> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    await this.playlistService.deletePlaylist(id, req.user);
+
+    return true;
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation(() => Boolean, {
+    name: "addTracksToPlaylist",
+    description: "Add one or more tracks to a playlist at a specific position",
+  })
+  async addTracksToPlaylist(
+    @Args("id", {
+      type: () => String,
+      description: "ID of the playlist to add tracks to",
+    })
+    playlistId: string,
+    @Args("position", {
+      type: () => Int,
+      nullable: true,
+      description: "Position in the playlist (0-based)",
+    })
+    position: number | null,
+    @Args("trackIds", {
+      type: () => [String],
+      description: "List of track IDs to add to the playlist",
+    })
+    trackIds: string[],
+    @Context("req") req: Request,
+  ): Promise<boolean> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    await this.playlistService.addTracksToPlaylist(
+      playlistId,
+      req.user,
+      trackIds,
+      position ?? undefined,
+    );
+
+    return true;
   }
 }

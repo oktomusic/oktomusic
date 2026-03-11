@@ -15,9 +15,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n": typeof types.AdminUpdateUserProfileDocument,
+    "\n  mutation AddTracksToPlaylist(\n    $id: String!\n    $trackIds: [String!]!\n    $position: Int\n  ) {\n    addTracksToPlaylist(id: $id, trackIds: $trackIds, position: $position)\n  }\n": typeof types.AddTracksToPlaylistDocument,
     "\n  mutation CreatePlaylist($input: CreatePlaylistInput!) {\n    createPlaylist(input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": typeof types.CreatePlaylistDocument,
-    "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n": typeof types.TriggerIndexingDocument,
+    "\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n": typeof types.DeletePlaylistDocument,
     "\n  mutation UpdatePlaylist($id: String!, $input: UpdatePlaylistInput!) {\n    updatePlaylist(id: $id, input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": typeof types.UpdatePlaylistDocument,
+    "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n": typeof types.TriggerIndexingDocument,
     "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n": typeof types.UpdateMyProfileDocument,
     "\n  query Album($id: String!) {\n    album(id: $id) {\n      id\n      name\n      date\n      coverColorVibrant\n      coverColorDarkVibrant\n      coverColorLightVibrant\n      coverColorMuted\n      coverColorDarkMuted\n      coverColorLightMuted\n      artists {\n        id\n        name\n      }\n      tracksByDisc {\n        id\n        flacFileId\n        hasLyrics\n        name\n        trackNumber\n        discNumber\n        durationMs\n        artists {\n          id\n          name\n        }\n      }\n    }\n  }\n": typeof types.AlbumDocument,
     "\n  query IndexingJobStatus($jobId: String!) {\n    indexingJobStatus(jobId: $jobId) {\n      jobId\n      status\n      progress\n      error\n      completedAt\n    }\n  }\n": typeof types.IndexingJobStatusDocument,
@@ -30,9 +32,11 @@ type Documents = {
 };
 const documents: Documents = {
     "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n": types.AdminUpdateUserProfileDocument,
+    "\n  mutation AddTracksToPlaylist(\n    $id: String!\n    $trackIds: [String!]!\n    $position: Int\n  ) {\n    addTracksToPlaylist(id: $id, trackIds: $trackIds, position: $position)\n  }\n": types.AddTracksToPlaylistDocument,
     "\n  mutation CreatePlaylist($input: CreatePlaylistInput!) {\n    createPlaylist(input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": types.CreatePlaylistDocument,
-    "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n": types.TriggerIndexingDocument,
+    "\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n": types.DeletePlaylistDocument,
     "\n  mutation UpdatePlaylist($id: String!, $input: UpdatePlaylistInput!) {\n    updatePlaylist(id: $id, input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": types.UpdatePlaylistDocument,
+    "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n": types.TriggerIndexingDocument,
     "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n": types.UpdateMyProfileDocument,
     "\n  query Album($id: String!) {\n    album(id: $id) {\n      id\n      name\n      date\n      coverColorVibrant\n      coverColorDarkVibrant\n      coverColorLightVibrant\n      coverColorMuted\n      coverColorDarkMuted\n      coverColorLightMuted\n      artists {\n        id\n        name\n      }\n      tracksByDisc {\n        id\n        flacFileId\n        hasLyrics\n        name\n        trackNumber\n        discNumber\n        durationMs\n        artists {\n          id\n          name\n        }\n      }\n    }\n  }\n": types.AlbumDocument,
     "\n  query IndexingJobStatus($jobId: String!) {\n    indexingJobStatus(jobId: $jobId) {\n      jobId\n      status\n      progress\n      error\n      completedAt\n    }\n  }\n": types.IndexingJobStatusDocument,
@@ -65,15 +69,23 @@ export function graphql(source: "\n  mutation AdminUpdateUserProfile(\n    $user
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  mutation AddTracksToPlaylist(\n    $id: String!\n    $trackIds: [String!]!\n    $position: Int\n  ) {\n    addTracksToPlaylist(id: $id, trackIds: $trackIds, position: $position)\n  }\n"): (typeof documents)["\n  mutation AddTracksToPlaylist(\n    $id: String!\n    $trackIds: [String!]!\n    $position: Int\n  ) {\n    addTracksToPlaylist(id: $id, trackIds: $trackIds, position: $position)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  mutation CreatePlaylist($input: CreatePlaylistInput!) {\n    createPlaylist(input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreatePlaylist($input: CreatePlaylistInput!) {\n    createPlaylist(input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n"): (typeof documents)["\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n"];
+export function graphql(source: "\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n"): (typeof documents)["\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation UpdatePlaylist($id: String!, $input: UpdatePlaylistInput!) {\n    updatePlaylist(id: $id, input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UpdatePlaylist($id: String!, $input: UpdatePlaylistInput!) {\n    updatePlaylist(id: $id, input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n"): (typeof documents)["\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

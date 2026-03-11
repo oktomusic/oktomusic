@@ -83,6 +83,15 @@ export function createApolloClient() {
             },
           },
         },
+        PlaylistTrack: {
+          fields: {
+            addedAt: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+          },
+        },
       },
     }),
   });

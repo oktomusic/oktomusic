@@ -67,6 +67,9 @@ input CreatePlaylistInput {
   """Playlist name"""
   name: String!
 
+  """Target user ID (admin only, defaults to current user)"""
+  userId: String
+
   """Visibility level of the playlist"""
   visibility: PlaylistVisibility = PRIVATE
 }
@@ -141,11 +144,34 @@ type LyricsLine {
 }
 
 type Mutation {
+  """Add one or more tracks to a playlist at a specific position"""
+  addTracksToPlaylist(
+    """ID of the playlist to add tracks to"""
+    id: String!
+
+    """Position in the playlist (0-based)"""
+    position: Int
+
+    """List of track IDs to add to the playlist"""
+    trackIds: [String!]!
+  ): Boolean!
+
   """Update a user profile as an administrator"""
   adminUpdateUserProfile(input: UpdateUserProfileInput!, userId: String!): User!
 
-  """Create a new empty playlist for the current user"""
-  createPlaylist(input: CreatePlaylistInput!): Playlist!
+  """
+  Create a new empty playlist for the current user, or as administrator for a specific user
+  """
+  createPlaylist(
+    """Playlist creation data"""
+    input: CreatePlaylistInput!
+  ): Playlist!
+
+  """Delete an existing playlist for the current user, or as administrator"""
+  deletePlaylist(
+    """ID of the playlist to delete"""
+    id: String!
+  ): Boolean!
 
   """Trigger a new library indexing job"""
   triggerIndexing: IndexingJob!
@@ -153,8 +179,16 @@ type Mutation {
   """Update the current user's profile"""
   updateMyProfile(input: UpdateUserProfileInput!): User!
 
-  """Update an existing playlist for the current user"""
-  updatePlaylist(id: String!, input: UpdatePlaylistInput!): Playlist!
+  """
+  Update an existing playlist for the current user, or any playlist as administrator
+  """
+  updatePlaylist(
+    """ID of the playlist to update"""
+    id: String!
+
+    """Updated playlist details"""
+    input: UpdatePlaylistInput!
+  ): Playlist!
 }
 
 type Playlist {

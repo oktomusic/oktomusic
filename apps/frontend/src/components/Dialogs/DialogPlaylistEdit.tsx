@@ -13,8 +13,8 @@ import {
 
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
-import { CREATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/create-playlist";
-import { UPDATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/update-playlist";
+import { CREATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/createPlaylist";
+import { UPDATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/updatePlaylist";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import { OktoDialog } from "../Base/OktoDialog";
 import { OktoInput } from "../Base/OktoInput";

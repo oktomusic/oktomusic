@@ -4,6 +4,12 @@ import { PlaylistVisibility } from "../playlist-visibility.enum";
 
 @InputType()
 export class CreatePlaylistInput {
+  @Field({
+    nullable: true,
+    description: "Target user ID (admin only, defaults to current user)",
+  })
+  userId?: string;
+
   @Field({ description: "Playlist name" })
   name!: string;
 
