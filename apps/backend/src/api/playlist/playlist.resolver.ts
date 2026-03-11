@@ -19,8 +19,13 @@ export class PlaylistResolver {
   })
   async playlist(
     @Args("id", { type: () => String }) id: string,
+    @Context("req") req: Request,
   ): Promise<PlaylistModel> {
-    return this.playlistService.getPlaylist(id);
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    return this.playlistService.getPlaylist(req.user.id, id, req.user.role);
   }
 
   @UseGuards(GraphqlAuthGuard)

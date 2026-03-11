@@ -4,13 +4,17 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 
-import { Prisma } from "../../generated/prisma/client";
+import {
+  PlaylistVisibility as PrismaPlaylistVisibility,
+  Prisma,
+  Role,
+} from "../../generated/prisma/client";
 import { PrismaService } from "../../db/prisma.service";
 import { TrackService } from "../track/track.service";
 import type { CreatePlaylistInput } from "./dto/create-playlist.input";
 import type { UpdatePlaylistInput } from "./dto/update-playlist.input";
-import { PlaylistVisibility } from "./playlist-visibility.enum";
 import { PlaylistModel, PlaylistTrackModel } from "./playlist.model";
+import { PlaylistVisibility } from "./playlist-visibility.enum";
 
 @Injectable()
 export class PlaylistService {
@@ -19,7 +23,11 @@ export class PlaylistService {
     private readonly trackService: TrackService,
   ) {}
 
-  async getPlaylist(id: string): Promise<PlaylistModel> {
+  async getPlaylist(
+    userId: string,
+    id: string,
+    userRole: Role = Role.USER,
+  ): Promise<PlaylistModel> {
     const playlist = await this.prisma.playlist.findUnique({
       where: { id },
       include: {
@@ -52,6 +60,16 @@ export class PlaylistService {
       throw new NotFoundException(`Playlist with id ${id} not found`);
     }
 
+    if (
+      playlist.userId !== userId &&
+      userRole !== Role.ADMIN &&
+      playlist.visibility === PrismaPlaylistVisibility.PRIVATE
+    ) {
+      throw new ForbiddenException(
+        "Only administrators can view private playlists from other users",
+      );
+    }
+
     const tracks: PlaylistTrackModel[] = playlist.playlistTracks.map((pt) => ({
       position: pt.position,
       addedAt: pt.addedAt,
@@ -77,7 +95,9 @@ export class PlaylistService {
       data: {
         name: input.name,
         description: input.description ?? null,
-        visibility: input.visibility ?? PlaylistVisibility.PRIVATE,
+        visibility:
+          (input.visibility as PrismaPlaylistVisibility | undefined) ??
+          PrismaPlaylistVisibility.PRIVATE,
         userId,
       },
     });
@@ -126,7 +146,7 @@ export class PlaylistService {
     }
 
     if (Object.keys(data).length === 0) {
-      return this.getPlaylist(playlistId);
+      return this.getPlaylist(userId, playlistId);
     }
 
     await this.prisma.playlist.update({
@@ -134,6 +154,6 @@ export class PlaylistService {
       data,
     });
 
-    return this.getPlaylist(playlistId);
+    return this.getPlaylist(userId, playlistId);
   }
 }
