@@ -135,4 +135,79 @@ export class PlaylistResolver {
 
     return true;
   }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation(() => Boolean, {
+    name: "reorderPlaylistTracks",
+    description: "Move a track from one position to another in a playlist",
+  })
+  async reorderPlaylistTracks(
+    @Args("id", {
+      type: () => String,
+      description: "ID of the playlist",
+    })
+    playlistId: string,
+    @Args("fromPosition", {
+      type: () => Int,
+      description: "Current position of the track (0-based)",
+    })
+    fromPosition: number,
+    @Args("toPosition", {
+      type: () => Int,
+      description: "Destination position of the track (0-based)",
+    })
+    toPosition: number,
+    @Args("count", {
+      type: () => Int,
+      nullable: true,
+      description: "Number of consecutive tracks to move (defaults to 1)",
+    })
+    count: number | null,
+    @Context("req") req: Request,
+  ): Promise<boolean> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    await this.playlistService.reorderPlaylistTracks(
+      playlistId,
+      req.user,
+      fromPosition,
+      toPosition,
+      count ?? undefined,
+    );
+
+    return true;
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation(() => Boolean, {
+    name: "removeTracksFromPlaylist",
+    description: "Remove one or more tracks from a playlist",
+  })
+  async removeTracksFromPlaylist(
+    @Args("id", {
+      type: () => String,
+      description: "ID of the playlist",
+    })
+    playlistId: string,
+    @Args("positions", {
+      type: () => [Int],
+      description: "List of playlist positions to remove",
+    })
+    positions: number[],
+    @Context("req") req: Request,
+  ): Promise<boolean> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    await this.playlistService.removeTracksFromPlaylist(
+      playlistId,
+      req.user,
+      positions,
+    );
+
+    return true;
+  }
 }

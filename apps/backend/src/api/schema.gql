@@ -173,6 +173,30 @@ type Mutation {
     id: String!
   ): Boolean!
 
+  """Remove one or more tracks from a playlist"""
+  removeTracksFromPlaylist(
+    """ID of the playlist"""
+    id: String!
+
+    """List of playlist positions to remove"""
+    positions: [Int!]!
+  ): Boolean!
+
+  """Move a track from one position to another in a playlist"""
+  reorderPlaylistTracks(
+    """Number of consecutive tracks to move (defaults to 1)"""
+    count: Int
+
+    """Current position of the track (0-based)"""
+    fromPosition: Int!
+
+    """ID of the playlist"""
+    id: String!
+
+    """Destination position of the track (0-based)"""
+    toPosition: Int!
+  ): Boolean!
+
   """Trigger a new library indexing job"""
   triggerIndexing: IndexingJob!
 

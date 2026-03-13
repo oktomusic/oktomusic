@@ -18,6 +18,8 @@ type Documents = {
     "\n  mutation AddTracksToPlaylist(\n    $id: String!\n    $trackIds: [String!]!\n    $position: Int\n  ) {\n    addTracksToPlaylist(id: $id, trackIds: $trackIds, position: $position)\n  }\n": typeof types.AddTracksToPlaylistDocument,
     "\n  mutation CreatePlaylist($input: CreatePlaylistInput!) {\n    createPlaylist(input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": typeof types.CreatePlaylistDocument,
     "\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n": typeof types.DeletePlaylistDocument,
+    "\n  mutation RemoveTracksFromPlaylist($id: String!, $positions: [Int!]!) {\n    removeTracksFromPlaylist(id: $id, positions: $positions)\n  }\n": typeof types.RemoveTracksFromPlaylistDocument,
+    "\n  mutation ReorderPlaylistTracks(\n    $id: String!\n    $fromPosition: Int!\n    $toPosition: Int!\n    $count: Int\n  ) {\n    reorderPlaylistTracks(\n      id: $id\n      fromPosition: $fromPosition\n      toPosition: $toPosition\n      count: $count\n    )\n  }\n": typeof types.ReorderPlaylistTracksDocument,
     "\n  mutation UpdatePlaylist($id: String!, $input: UpdatePlaylistInput!) {\n    updatePlaylist(id: $id, input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": typeof types.UpdatePlaylistDocument,
     "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n": typeof types.TriggerIndexingDocument,
     "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n": typeof types.UpdateMyProfileDocument,
@@ -35,6 +37,8 @@ const documents: Documents = {
     "\n  mutation AddTracksToPlaylist(\n    $id: String!\n    $trackIds: [String!]!\n    $position: Int\n  ) {\n    addTracksToPlaylist(id: $id, trackIds: $trackIds, position: $position)\n  }\n": types.AddTracksToPlaylistDocument,
     "\n  mutation CreatePlaylist($input: CreatePlaylistInput!) {\n    createPlaylist(input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": types.CreatePlaylistDocument,
     "\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n": types.DeletePlaylistDocument,
+    "\n  mutation RemoveTracksFromPlaylist($id: String!, $positions: [Int!]!) {\n    removeTracksFromPlaylist(id: $id, positions: $positions)\n  }\n": types.RemoveTracksFromPlaylistDocument,
+    "\n  mutation ReorderPlaylistTracks(\n    $id: String!\n    $fromPosition: Int!\n    $toPosition: Int!\n    $count: Int\n  ) {\n    reorderPlaylistTracks(\n      id: $id\n      fromPosition: $fromPosition\n      toPosition: $toPosition\n      count: $count\n    )\n  }\n": types.ReorderPlaylistTracksDocument,
     "\n  mutation UpdatePlaylist($id: String!, $input: UpdatePlaylistInput!) {\n    updatePlaylist(id: $id, input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": types.UpdatePlaylistDocument,
     "\n  mutation TriggerIndexing {\n    triggerIndexing {\n      jobId\n      status\n    }\n  }\n": types.TriggerIndexingDocument,
     "\n  mutation UpdateMyProfile($input: UpdateUserProfileInput!) {\n    updateMyProfile(input: $input) {\n      id\n      username\n      sex\n    }\n  }\n": types.UpdateMyProfileDocument,
@@ -78,6 +82,14 @@ export function graphql(source: "\n  mutation CreatePlaylist($input: CreatePlayl
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n"): (typeof documents)["\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation RemoveTracksFromPlaylist($id: String!, $positions: [Int!]!) {\n    removeTracksFromPlaylist(id: $id, positions: $positions)\n  }\n"): (typeof documents)["\n  mutation RemoveTracksFromPlaylist($id: String!, $positions: [Int!]!) {\n    removeTracksFromPlaylist(id: $id, positions: $positions)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation ReorderPlaylistTracks(\n    $id: String!\n    $fromPosition: Int!\n    $toPosition: Int!\n    $count: Int\n  ) {\n    reorderPlaylistTracks(\n      id: $id\n      fromPosition: $fromPosition\n      toPosition: $toPosition\n      count: $count\n    )\n  }\n"): (typeof documents)["\n  mutation ReorderPlaylistTracks(\n    $id: String!\n    $fromPosition: Int!\n    $toPosition: Int!\n    $count: Int\n  ) {\n    reorderPlaylistTracks(\n      id: $id\n      fromPosition: $fromPosition\n      toPosition: $toPosition\n      count: $count\n    )\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -281,4 +281,175 @@ export class PlaylistService {
       });
     });
   }
+
+  async reorderPlaylistTracks(
+    playlistId: string,
+    user: User | false,
+    fromPosition: number,
+    toPosition: number,
+    count: number = 1,
+  ): Promise<void> {
+    const existingPlaylist = await this.prisma.playlist.findUnique({
+      where: { id: playlistId },
+      select: { id: true, userId: true },
+    });
+
+    if (!existingPlaylist) {
+      throw new NotFoundException(`Playlist with id ${playlistId} not found`);
+    }
+
+    if (
+      user !== false &&
+      existingPlaylist.userId !== user.id &&
+      user.role !== Role.ADMIN
+    ) {
+      throw new ForbiddenException("You can only reorder your own playlists");
+    }
+
+    const playlistTracksCount = await this.prisma.playlistTrack.count({
+      where: { playlistId },
+    });
+
+    if (playlistTracksCount === 0) {
+      throw new BadRequestException("Playlist has no tracks to reorder");
+    }
+
+    if (count < 1) {
+      throw new BadRequestException("count must be greater than or equal to 1");
+    }
+
+    if (fromPosition + count > playlistTracksCount) {
+      throw new BadRequestException(
+        `fromPosition + count must be less than or equal to ${playlistTracksCount}`,
+      );
+    }
+
+    if (
+      fromPosition < 0 ||
+      fromPosition >= playlistTracksCount ||
+      toPosition < 0 ||
+      toPosition > playlistTracksCount - count
+    ) {
+      throw new BadRequestException(
+        `fromPosition must be between 0 and ${playlistTracksCount - 1}, and toPosition must be between 0 and ${playlistTracksCount - count}`,
+      );
+    }
+
+    if (
+      fromPosition === toPosition ||
+      (toPosition >= fromPosition && toPosition < fromPosition + count)
+    ) {
+      return;
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      const currentTracks = await tx.playlistTrack.findMany({
+        where: { playlistId },
+        select: { id: true, position: true },
+        orderBy: { position: "asc" },
+      });
+
+      if (currentTracks.length !== playlistTracksCount) {
+        throw new BadRequestException(
+          "Playlist tracks changed while reordering, please retry",
+        );
+      }
+
+      const movingBlock = currentTracks.slice(
+        fromPosition,
+        fromPosition + count,
+      );
+      const remainingTracks = [
+        ...currentTracks.slice(0, fromPosition),
+        ...currentTracks.slice(fromPosition + count),
+      ];
+
+      const reorderedTracks = [
+        ...remainingTracks.slice(0, toPosition),
+        ...movingBlock,
+        ...remainingTracks.slice(toPosition),
+      ];
+
+      for (const track of currentTracks) {
+        await tx.playlistTrack.update({
+          where: { id: track.id },
+          data: { position: track.position + playlistTracksCount },
+        });
+      }
+
+      for (const [index, track] of reorderedTracks.entries()) {
+        await tx.playlistTrack.update({
+          where: { id: track.id },
+          data: { position: index },
+        });
+      }
+    });
+  }
+
+  async removeTracksFromPlaylist(
+    playlistId: string,
+    user: User | false,
+    positions: number[],
+  ): Promise<void> {
+    const existingPlaylist = await this.prisma.playlist.findUnique({
+      where: { id: playlistId },
+      select: { id: true, userId: true },
+    });
+
+    if (!existingPlaylist) {
+      throw new NotFoundException(`Playlist with id ${playlistId} not found`);
+    }
+
+    if (
+      user !== false &&
+      existingPlaylist.userId !== user.id &&
+      user.role !== Role.ADMIN
+    ) {
+      throw new ForbiddenException("You can only edit your own playlists");
+    }
+
+    if (positions.length === 0) {
+      throw new BadRequestException(
+        "positions must contain at least one index",
+      );
+    }
+
+    const playlistTracksCount = await this.prisma.playlistTrack.count({
+      where: { playlistId },
+    });
+
+    const uniquePositions = [...new Set(positions)];
+
+    if (
+      uniquePositions.some(
+        (position) => position < 0 || position >= playlistTracksCount,
+      )
+    ) {
+      throw new BadRequestException(
+        `positions must be between 0 and ${Math.max(playlistTracksCount - 1, 0)}`,
+      );
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.playlistTrack.deleteMany({
+        where: {
+          playlistId,
+          position: { in: uniquePositions },
+        },
+      });
+
+      const remainingTracks = await tx.playlistTrack.findMany({
+        where: { playlistId },
+        select: { id: true },
+        orderBy: { position: "asc" },
+      });
+
+      for (const [index, track] of remainingTracks.entries()) {
+        await tx.playlistTrack.update({
+          where: { id: track.id },
+          data: { position: index },
+        });
+      }
+    });
+  }
 }
