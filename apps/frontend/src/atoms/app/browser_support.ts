@@ -38,6 +38,8 @@ export function getBrowserSupport(): BrowserSupport {
     ["Media Session API", "mediaSession" in navigator],
     ["Background Fetch API", "BackgroundFetchManager" in window],
     ["WakeLock", "wakeLock" in navigator],
+    // @ts-expect-error - Temporal will be in ESNext in TypeScript 6
+    ["Temporal", typeof Temporal !== "undefined"],
     ["FLAC support", flacSupport],
     ["Opus support", opusSupport],
   ];

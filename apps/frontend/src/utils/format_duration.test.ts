@@ -4,20 +4,45 @@ import { formatDuration, getDurationComponents } from "./format_duration";
 
 describe("getDurationComponents", () => {
   it("returns only seconds for durations under 60 seconds", () => {
-    expect(getDurationComponents(0)).toEqual({ seconds: 0 });
-    expect(getDurationComponents(1_000)).toEqual({ seconds: 1 });
-    expect(getDurationComponents(5_000)).toEqual({ seconds: 5 });
-    expect(getDurationComponents(45_000)).toEqual({ seconds: 45 });
-    expect(getDurationComponents(59_000)).toEqual({ seconds: 59 });
+    expect(getDurationComponents(0)).toEqual({ seconds: 0, datetime: "PT0S" });
+    expect(getDurationComponents(1_000)).toEqual({
+      seconds: 1,
+      datetime: "PT1S",
+    });
+    expect(getDurationComponents(5_000)).toEqual({
+      seconds: 5,
+      datetime: "PT5S",
+    });
+    expect(getDurationComponents(45_000)).toEqual({
+      seconds: 45,
+      datetime: "PT45S",
+    });
+    expect(getDurationComponents(59_000)).toEqual({
+      seconds: 59,
+      datetime: "PT59S",
+    });
   });
 
   it("returns minutes and seconds for durations under 1 hour", () => {
-    expect(getDurationComponents(60_000)).toEqual({ minutes: 1, seconds: 0 });
-    expect(getDurationComponents(61_000)).toEqual({ minutes: 1, seconds: 1 });
-    expect(getDurationComponents(125_000)).toEqual({ minutes: 2, seconds: 5 });
+    expect(getDurationComponents(60_000)).toEqual({
+      minutes: 1,
+      seconds: 0,
+      datetime: "PT1M",
+    });
+    expect(getDurationComponents(61_000)).toEqual({
+      minutes: 1,
+      seconds: 1,
+      datetime: "PT1M1S",
+    });
+    expect(getDurationComponents(125_000)).toEqual({
+      minutes: 2,
+      seconds: 5,
+      datetime: "PT2M5S",
+    });
     expect(getDurationComponents(3_599_000)).toEqual({
       minutes: 59,
       seconds: 59,
+      datetime: "PT59M59S",
     });
   });
 
@@ -26,16 +51,19 @@ describe("getDurationComponents", () => {
       hours: 1,
       minutes: 0,
       seconds: 0,
+      datetime: "PT1H",
     });
     expect(getDurationComponents(3_661_000)).toEqual({
       hours: 1,
       minutes: 1,
       seconds: 1,
+      datetime: "PT1H1M1S",
     });
     expect(getDurationComponents(3_723_000)).toEqual({
       hours: 1,
       minutes: 2,
       seconds: 3,
+      datetime: "PT1H2M3S",
     });
     expect(
       getDurationComponents(10 * 3_600_000 + 5 * 60_000 + 7 * 1_000),
@@ -43,16 +71,25 @@ describe("getDurationComponents", () => {
       hours: 10,
       minutes: 5,
       seconds: 7,
+      datetime: "PT10H5M7S",
     });
   });
 
   it("floors milliseconds to whole seconds", () => {
-    expect(getDurationComponents(1_999)).toEqual({ seconds: 1 });
-    expect(getDurationComponents(60_001)).toEqual({ minutes: 1, seconds: 0 });
+    expect(getDurationComponents(1_999)).toEqual({
+      seconds: 1,
+      datetime: "PT1S",
+    });
+    expect(getDurationComponents(60_001)).toEqual({
+      minutes: 1,
+      seconds: 0,
+      datetime: "PT1M",
+    });
     expect(getDurationComponents(3_661_999)).toEqual({
       hours: 1,
       minutes: 1,
       seconds: 1,
+      datetime: "PT1H1M1S",
     });
   });
 });
