@@ -8,6 +8,7 @@ description: Instructions for Frontend
 - It MUST pass all AXE checks.
 - It MUST follow all WCAG 2.2 AAA minimums, including focus management, color contrast, and ARIA attributes.
 - It SHOULD use semantic HTML elements whenever possible.
+- Time display SHOULD use the `<time>` element with a valid `datetime` attribute, generated from the `Temporal` API.
 
 ## Content Security Policy (CSP)
 
