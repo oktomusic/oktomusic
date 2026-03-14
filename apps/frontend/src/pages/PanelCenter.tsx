@@ -12,6 +12,7 @@ import { Search } from "./Center/Search";
 import { Album } from "./Center/Album";
 import { Playlist } from "./Center/Playlist";
 import { Artist } from "./Center/Artist";
+import { User } from "./Center/User";
 import { Generic404 } from "./Center/Generic404";
 
 export function PanelCenter() {
@@ -28,6 +29,7 @@ export function PanelCenter() {
           <Route path="/album/:cuid" element={<Album />} />
           <Route path="/playlist/:cuid" element={<Playlist />} />
           <Route path="/artist/:cuid" element={<Artist />} />
+          <Route path="/user/:cuid" element={<User />} />
           <Route path="/settings/account" element={<SettingsAccount />} />
           <Route path="/settings/client" element={<SettingsClient />} />
           <Route element={<AdminRoute />}>
