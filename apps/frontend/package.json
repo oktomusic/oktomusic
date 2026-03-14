@@ -28,7 +28,7 @@
     "@oktomusic/api-schemas": "workspace:^",
     "@tailwindcss/vite": "^4.2.1",
     "axios": "^1.13.6",
-    "graphql": "^16.13.0",
+    "graphql": "^16.13.1",
     "graphql-ws": "6.0.7",
     "jotai": "^2.18.0",
     "jotai-babel": "^0.1.0",
