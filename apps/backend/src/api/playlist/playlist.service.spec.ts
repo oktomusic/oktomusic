@@ -124,6 +124,10 @@ describe("PlaylistService", () => {
     prisma.playlist.findUnique.mockResolvedValue({
       id: "playlist-1",
       userId: "user-1",
+      user: {
+        id: "user-1",
+        username: "tester",
+      },
       name: "playlist",
       description: "desc",
       visibility: PrismaPlaylistVisibility.PUBLIC,
@@ -153,6 +157,10 @@ describe("PlaylistService", () => {
       visibility: PrismaPlaylistVisibility.PRIVATE,
       createdAt: new Date(),
       updatedAt: new Date(),
+      user: {
+        id: "target-user",
+        username: "target-username",
+      },
     });
 
     await service.createPlaylist(

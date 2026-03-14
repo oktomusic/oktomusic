@@ -1,0 +1,139 @@
+import { useQuery } from "@apollo/client/react";
+import { t } from "@lingui/core/macro";
+import { useSetAtom } from "jotai";
+import { HiOutlineShare } from "react-icons/hi2";
+import { LuListPlus } from "react-icons/lu";
+import { useParams } from "react-router";
+import { Temporal } from "temporal-polyfill";
+
+import { ALBUM_QUERY } from "../../api/graphql/queries/album";
+import { GenericGraphQLError } from "./GenericGraphQLError";
+import { type OktoMenuItem } from "../../components/Base/OktoMenu";
+import { CollectionView } from "../../components/CollectionView/CollectionView";
+import { TrackList } from "../../components/TrackList/TrackList";
+import { GenericLoading } from "./GenericLoading";
+import {
+  addToQueueAtom,
+  replaceQueueAtom,
+  type VibrantColorsPartial,
+} from "../../atoms/player/machine";
+import { panelToastAtom } from "../../atoms/app/panels";
+import { dialogCoverId } from "../../atoms/app/dialogs";
+import { mapTracksWithAlbum } from "../../utils/album_tracks";
+
+export function Album() {
+  const { cuid } = useParams();
+
+  const { data, loading, error } = useQuery(ALBUM_QUERY, {
+    variables: { id: cuid! },
+    skip: !cuid,
+  });
+
+  const albumColors: VibrantColorsPartial = {
+    vibrant: data?.album.coverColorVibrant ?? "#ffffff",
+    darkVibrant: data?.album.coverColorDarkVibrant ?? "#ffffff",
+    lightVibrant: data?.album.coverColorLightVibrant ?? "#ffffff",
+    muted: data?.album.coverColorMuted ?? "#ffffff",
+    darkMuted: data?.album.coverColorDarkMuted ?? "#ffffff",
+    lightMuted: data?.album.coverColorLightMuted ?? "#ffffff",
+  };
+
+  const replaceQueue = useSetAtom(replaceQueueAtom);
+  const addToQueue = useSetAtom(addToQueueAtom);
+
+  const setToast = useSetAtom(panelToastAtom);
+
+  const setDialogCoverId = useSetAtom(dialogCoverId);
+
+  if (!cuid) {
+    return null;
+  }
+
+  // TODO: handle loading as a placeholder skeleton instead of blocking the entire page with a spinner
+  if (loading) {
+    return <GenericLoading />;
+  }
+
+  if (error) {
+    return <GenericGraphQLError error={error} />;
+  }
+
+  const albumTracksTotal = data!.album.tracksByDisc.reduce(
+    (acc, disc) => acc + disc.length,
+    0,
+  );
+  const albumDurationMs = data!.album.tracksByDisc
+    .flat()
+    .reduce((acc, track) => acc + track.durationMs, 0);
+
+  const tracksWithAlbum = mapTracksWithAlbum(data!.album);
+  const flatTracks = tracksWithAlbum.flat();
+  const albumDate = data!.album.date
+    ? Temporal.PlainDate.from(data!.album.date.toISOString().slice(0, 10))
+    : undefined;
+
+  const menuItems: OktoMenuItem[] = [
+    {
+      type: "button",
+      label: t`Share`,
+      icon: <HiOutlineShare className="size-4" />,
+      onClick: () => {
+        if (!data) {
+          return;
+        }
+
+        const albumUrl = `${window.location.origin}/album/${data.album.id}`;
+
+        // TODO: handle promise failure + feedback to user
+        if (navigator.share && typeof navigator.share === "function") {
+          void navigator.share({
+            title: data.album.name,
+            url: albumUrl,
+          });
+        } else {
+          void navigator.clipboard.writeText(albumUrl);
+          setToast({
+            type: "success",
+            message: t`Link copied to clipboard`,
+          });
+        }
+      },
+    },
+    {
+      type: "button",
+      icon: <LuListPlus className="size-4" />,
+      label: t`Add to queue`,
+      onClick: () => {
+        addToQueue(flatTracks);
+      },
+    },
+  ];
+
+  return (
+    <CollectionView
+      title={data!.album.name}
+      cover={`/api/album/${data!.album.id}/cover/1280`}
+      coverOnClick={() => {
+        setDialogCoverId(data!.album.id);
+      }}
+      meta={{
+        artists: data!.album.artists,
+        date: albumDate,
+        tracksTotal: albumTracksTotal,
+        durationMs: albumDurationMs,
+      }}
+      colors={albumColors}
+      actions={{
+        onPlay: () => {
+          replaceQueue(flatTracks);
+        },
+        menuItems,
+      }}
+    >
+      <TrackList
+        tracks={tracksWithAlbum}
+        displayCover={true} /* TODO: remove cover */
+      />
+    </CollectionView>
+  );
+}

@@ -3,6 +3,15 @@ import { Field, GraphQLISODateTime, Int, ObjectType } from "@nestjs/graphql";
 import { PlaylistVisibility } from "./playlist-visibility.enum";
 import { TrackModel } from "../track/track.model";
 
+@ObjectType("PlaylistCreator")
+export class PlaylistCreatorModel {
+  @Field()
+  id!: string;
+
+  @Field()
+  username!: string;
+}
+
 @ObjectType("PlaylistTrack")
 export class PlaylistTrackModel {
   @Field(() => Int, { description: "Position in the playlist (0-based)" })
@@ -36,6 +45,9 @@ export class PlaylistModel {
 
   @Field(() => GraphQLISODateTime)
   updatedAt!: Date;
+
+  @Field(() => PlaylistCreatorModel)
+  creator!: PlaylistCreatorModel;
 
   @Field(() => [PlaylistTrackModel])
   tracks!: PlaylistTrackModel[];

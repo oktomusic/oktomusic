@@ -9,7 +9,8 @@ import { SettingsAccount } from "./SettingsAccount/SettingsAccount";
 import { SettingsClient } from "./SettingsClient/SettingsClient";
 import { SettingsAdmin } from "./SettingsAdmin/SettingsAdmin";
 import { Search } from "./Center/Search";
-import { Album } from "./Album/Album";
+import { Album } from "./Center/Album";
+import { Playlist } from "./Center/Playlist";
 import { Artist } from "./Center/Artist";
 import { Generic404 } from "./Center/Generic404";
 
@@ -25,6 +26,7 @@ export function PanelCenter() {
           <Route path="/search" element={<Search />} />
           <Route path="/appinfo" element={<AppInfo />} />
           <Route path="/album/:cuid" element={<Album />} />
+          <Route path="/playlist/:cuid" element={<Playlist />} />
           <Route path="/artist/:cuid" element={<Artist />} />
           <Route path="/settings/account" element={<SettingsAccount />} />
           <Route path="/settings/client" element={<SettingsClient />} />

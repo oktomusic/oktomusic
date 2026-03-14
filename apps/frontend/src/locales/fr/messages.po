@@ -13,19 +13,19 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/Album/Album.tsx:215
+#: src/components/CollectionView/CollectionView.tsx:204
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
-#: src/components/DurationLong.tsx:15
+#: src/components/DurationLong.tsx:16
 msgid "{hours}h {minutes}min"
 msgstr "{hours}h {minutes}min"
 
-#: src/components/DurationLong.tsx:21
+#: src/components/DurationLong.tsx:24
 msgid "{minutes}min {seconds}s"
 msgstr "{minutes}min {seconds}s"
 
-#: src/components/DurationLong.tsx:25
+#: src/components/DurationLong.tsx:29
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
@@ -46,7 +46,7 @@ msgid "Add an optional description"
 msgstr ""
 
 #: src/components/TrackList/TrackElement.tsx:46
-#: src/pages/Album/Album.tsx:140
+#: src/pages/Center/Album.tsx:105
 msgid "Add to queue"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/pages/Album/Album.tsx:251
+#: src/components/CollectionView/CollectionView.tsx:247
 msgid "Download"
 msgstr "Télécharger"
 
@@ -190,7 +190,7 @@ msgstr "Mode Kiosque :"
 msgid "Line by line"
 msgstr "Ligne par ligne"
 
-#: src/pages/Album/Album.tsx:132
+#: src/pages/Center/Album.tsx:97
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
@@ -214,7 +214,7 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/pages/Album/Album.tsx:258
+#: src/components/CollectionView/CollectionView.tsx:256
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
@@ -274,18 +274,18 @@ msgstr ""
 msgid "Persistent storage not granted"
 msgstr ""
 
+#: src/components/CollectionView/CollectionView.tsx:126
+#: src/components/CollectionView/CollectionView.tsx:233
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
 #: src/components/PipControls/PipControlsWindow.tsx:101
 #: src/components/Player/PlayerControls.tsx:109
 #: src/components/Player/PlayerControls.tsx:110
-#: src/pages/Album/Album.tsx:162
-#: src/pages/Album/Album.tsx:239
 msgid "Play"
 msgstr "Lecture"
 
-#: src/pages/Album/Album.tsx:163
+#: src/components/CollectionView/CollectionView.tsx:127
 msgid "Play {albumName}"
 msgstr ""
 
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: src/pages/Album/Album.tsx:246
+#: src/components/CollectionView/CollectionView.tsx:240
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
@@ -365,7 +365,7 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Album/Album.tsx:113
+#: src/pages/Center/Album.tsx:78
 msgid "Share"
 msgstr "Partager"
 

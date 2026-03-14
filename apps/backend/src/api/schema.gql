@@ -217,6 +217,7 @@ type Mutation {
 
 type Playlist {
   createdAt: DateTime!
+  creator: PlaylistCreator!
   description: String
   id: String!
   name: String!
@@ -225,6 +226,11 @@ type Playlist {
 
   """Visibility level of the playlist"""
   visibility: PlaylistVisibility!
+}
+
+type PlaylistCreator {
+  id: String!
+  username: String!
 }
 
 type PlaylistTrack {

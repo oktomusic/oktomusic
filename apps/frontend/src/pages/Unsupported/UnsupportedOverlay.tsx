@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { supportedBrowsers } from "../../utils/constants_browsers";
 
 interface UnsupportedOverlayProps {
-  readonly missing: string[];
+  readonly missing: readonly string[];
 }
 
 export function UnsupportedOverlay({ missing }: UnsupportedOverlayProps) {

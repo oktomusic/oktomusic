@@ -1,9 +1,10 @@
 import { atom } from "jotai";
+import { Temporal } from "temporal-polyfill";
 
-export type BrowserSupport = {
-  supported: boolean;
-  missing: string[];
-};
+export interface BrowserSupport {
+  readonly supported: boolean;
+  readonly missing: readonly string[];
+}
 
 export function getBrowserSupport(): BrowserSupport {
   if (typeof window === "undefined") {
@@ -38,7 +39,6 @@ export function getBrowserSupport(): BrowserSupport {
     ["Media Session API", "mediaSession" in navigator],
     ["Background Fetch API", "BackgroundFetchManager" in window],
     ["WakeLock", "wakeLock" in navigator],
-    // @ts-expect-error - Temporal will be in ESNext in TypeScript 6
     ["Temporal", typeof Temporal !== "undefined"],
     ["FLAC support", flacSupport],
     ["Opus support", opusSupport],

@@ -12,15 +12,19 @@ export function DurationLong(props: DurationLongProps) {
   if ("hours" in duration) {
     const hours = duration.hours;
     const minutes = duration.minutes;
-    return t`${hours}h ${minutes}min`;
+    return (
+      <time dateTime={duration.datetime}>{t`${hours}h ${minutes}min`}</time>
+    );
   }
 
   if ("minutes" in duration) {
     const minutes = duration.minutes;
     const seconds = duration.seconds;
-    return t`${minutes}min ${seconds}s`;
+    return (
+      <time dateTime={duration.datetime}>{t`${minutes}min ${seconds}s`}</time>
+    );
   }
 
   const seconds = duration.seconds;
-  return t`${seconds}s`;
+  return <time dateTime={duration.datetime}>{t`${seconds}s`}</time>;
 }

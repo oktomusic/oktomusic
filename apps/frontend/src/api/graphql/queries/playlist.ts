@@ -7,6 +7,34 @@ export const PLAYLIST_QUERY = graphql(/* GraphQL */ `
       name
       description
       visibility
+      creator {
+        id
+        username
+      }
+      tracks {
+        position
+        addedAt
+        track {
+          id
+          name
+          durationMs
+          album {
+            id
+            name
+            date
+            coverColorVibrant
+            coverColorDarkVibrant
+            coverColorLightVibrant
+            coverColorMuted
+            coverColorDarkMuted
+            coverColorLightMuted
+            artists {
+              id
+              name
+            }
+          }
+        }
+      }
     }
   }
 `);

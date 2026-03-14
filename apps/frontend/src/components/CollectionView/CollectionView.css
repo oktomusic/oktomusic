@@ -1,0 +1,50 @@
+.collection-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+
+  .collection-view__sticky-header {
+    position: sticky;
+    top: 0rem;
+    z-index: 10;
+
+    .collection-view__sticky-header__bar {
+      background-image: linear-gradient(
+        45deg in oklch,
+        var(--album-color-muted-dark),
+        var(--album-color-muted)
+      );
+    }
+  }
+
+  .collection-view__banner {
+    background-image: linear-gradient(
+      45deg in oklch,
+      var(--album-color-muted-dark),
+      var(--album-color-muted)
+    );
+
+    .collection-view__banner__title {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow-wrap: anywhere;
+      line-height: 1.15;
+      width: 100%;
+    }
+  }
+
+  .collection-view__content {
+    background-image: linear-gradient(
+      to bottom in oklch,
+      oklch(from var(--album-color-muted-dark) l c h / 0.6),
+      transparent
+    );
+    background-size: 100% 14rem;
+    background-repeat: no-repeat;
+  }
+}

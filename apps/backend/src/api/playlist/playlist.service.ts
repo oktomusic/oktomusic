@@ -29,6 +29,12 @@ export class PlaylistService {
     const playlist = await this.prisma.playlist.findUnique({
       where: { id },
       include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
         playlistTracks: {
           include: {
             track: {
@@ -39,7 +45,16 @@ export class PlaylistService {
                   orderBy: { order: "asc" },
                 },
                 album: {
-                  include: {
+                  select: {
+                    id: true,
+                    name: true,
+                    date: true,
+                    coverColorVibrant: true,
+                    coverColorDarkVibrant: true,
+                    coverColorLightVibrant: true,
+                    coverColorMuted: true,
+                    coverColorDarkMuted: true,
+                    coverColorLightMuted: true,
                     artists: {
                       include: { artist: true },
                       orderBy: { order: "asc" },
@@ -83,6 +98,10 @@ export class PlaylistService {
       visibility: playlist.visibility as PlaylistVisibility,
       createdAt: playlist.createdAt,
       updatedAt: playlist.updatedAt,
+      creator: {
+        id: playlist.user.id,
+        username: playlist.user.username,
+      },
       tracks,
     };
   }
@@ -124,6 +143,20 @@ export class PlaylistService {
             ? requestedOwnerId
             : ownerId,
       },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        visibility: true,
+        createdAt: true,
+        updatedAt: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+      },
     });
 
     return {
@@ -133,6 +166,10 @@ export class PlaylistService {
       visibility: playlist.visibility as PlaylistVisibility,
       createdAt: playlist.createdAt,
       updatedAt: playlist.updatedAt,
+      creator: {
+        id: playlist.user.id,
+        username: playlist.user.username,
+      },
       tracks: [],
     };
   }
