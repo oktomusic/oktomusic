@@ -81,7 +81,7 @@ RUN pnpm run --filter @oktomusic/backend build
 RUN mkdir -p apps/backend/dist/public && \
   cp -r apps/frontend/dist/. apps/backend/dist/public/
 
-FROM ghcr.io/oktomusic/ffmpeg-custom:0.2.0 AS ffmpeg
+FROM ghcr.io/oktomusic/ffmpeg-custom:0.3.0 AS ffmpeg
 
 FROM node:24-alpine AS production
 
