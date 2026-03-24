@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { lingui } from "@lingui/vite-plugin";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
@@ -48,14 +49,13 @@ const viteConfigPWA: Partial<VitePWAOptions> = {
 
 export default defineConfig({
   plugins: [
-    react({
-      babel: {
-        plugins: [
-          "babel-plugin-react-compiler",
-          "@lingui/babel-plugin-lingui-macro",
-        ],
-        presets: ["jotai-babel/preset"],
-      },
+    react(),
+    babel({
+      plugins: [
+        "babel-plugin-react-compiler",
+        "@lingui/babel-plugin-lingui-macro",
+      ],
+      presets: [reactCompilerPreset(), "jotai-babel/preset"],
     }),
     tailwindcss(),
     lingui(),
@@ -77,7 +77,7 @@ export default defineConfig({
   },
   build: {
     manifest: true,
-    rollupOptions: {
+    rolldownOptions: {
       input: "src/main.tsx",
     },
     outDir: "dist",
