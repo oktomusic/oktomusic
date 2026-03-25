@@ -11,7 +11,10 @@ type SRIAlgorithm = "sha256" | "sha384" | "sha512";
 /**
  * Generate a Subresource Integrity (SRI) hash for given asset content.
  */
-function generateSRI(content: Buffer, algo: SRIAlgorithm = "sha512"): string {
+function generateSRI<T extends SRIAlgorithm>(
+  content: Buffer,
+  algo: T,
+): `${T}-${string}` {
   const hash = crypto.createHash(algo).update(content).digest("base64");
   return `${algo}-${hash}`;
 }
@@ -43,7 +46,7 @@ export default function manifestSRIPlugin(): Plugin {
           const content = Buffer.from(
             asset.type === "asset" ? asset.source : asset.code,
           );
-          entry.sri = generateSRI(content);
+          entry.sri = generateSRI(content, "sha512");
         }
 
         // Generate SRI for CSS files
@@ -54,7 +57,7 @@ export default function manifestSRIPlugin(): Plugin {
               const content = Buffer.from(
                 asset.type === "asset" ? asset.source : asset.code,
               );
-              const sri = generateSRI(content);
+              const sri = generateSRI(content, "sha512");
 
               // Add CSS file as its own entry if it doesn't exist
               if (!manifest[cssFile]) {
