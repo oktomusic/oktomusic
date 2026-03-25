@@ -6,16 +6,21 @@ import crypto from "node:crypto";
 import path from "node:path";
 import type { Plugin } from "vite";
 
+type SRIAlgorithm = "sha256" | "sha384" | "sha512";
+
 /**
  * Generate a Subresource Integrity (SRI) hash for given asset content.
  */
-function generateSRI(content: Buffer, algo: string = "sha384"): string {
+function generateSRI(content: Buffer, algo: SRIAlgorithm = "sha512"): string {
   const hash = crypto.createHash(algo).update(content).digest("base64");
   return `${algo}-${hash}`;
 }
 
 /**
  * Vite plugin that adds SRI hashes to manifest entries.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity
+ * @see https://www.w3.org/TR/sri-2
  */
 export default function manifestSRIPlugin(): Plugin {
   return {
