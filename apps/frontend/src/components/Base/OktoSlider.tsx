@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react";
+import { Slider } from "@base-ui/react/slider";
 
 import "./OktoSlider.css";
 
@@ -9,53 +9,51 @@ interface OktoSliderProps {
   readonly min: number;
   readonly max: number;
   readonly step: number;
+  readonly isLoading?: boolean;
   readonly "aria-describedby"?: string;
-  readonly showOutput?: boolean;
-  readonly formatOutput?: (value: number) => string;
   readonly className?: string;
+  readonly "aria-label"?: string;
 }
 
 export function OktoSlider(props: OktoSliderProps) {
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = Number.parseFloat(event.target.value);
-    if (!Number.isNaN(value)) {
-      props.onChange(value);
-    }
-  };
-
-  const outputId = `${props.id}:output`;
-  const formattedValue = props.formatOutput
-    ? props.formatOutput(props.value)
-    : props.value.toString();
+  const loading = props.isLoading ?? false;
 
   return (
-    <div
-      className={
-        "flex items-center gap-3" +
-        (props.className ? ` ${props.className}` : "")
-      }
+    <Slider.Root
+      value={props.value}
+      min={props.min}
+      max={props.max}
+      step={props.step}
+      onValueChange={(value) => props.onChange(value)}
+      className={"w-full"}
     >
-      <input
-        id={props.id}
-        type="range"
-        min={props.min}
-        max={props.max}
-        step={props.step}
-        value={props.value}
-        onChange={handleChange}
-        aria-describedby={props["aria-describedby"]}
-        className="okto-slider h-1 w-full cursor-pointer appearance-none rounded-lg bg-zinc-700 accent-zinc-400 disabled:cursor-not-allowed disabled:opacity-50"
-      />
-      {props.showOutput && (
-        <output
-          id={outputId}
-          htmlFor={props.id}
-          aria-live="polite"
-          className="min-w-12 text-sm text-white"
+      <Slider.Control
+        className={
+          "flex w-full cursor-pointer touch-none items-center py-3 select-none"
+        }
+      >
+        <Slider.Track
+          className={
+            // full track (unfilled) — match old native input background
+            "h-1 w-full rounded-lg select-none" +
+            (loading ? " bg-zinc-700" : " bg-zinc-700") // TODO: implement a better loading style, maybe with an animated gradient or something
+          }
         >
-          {formattedValue}
-        </output>
-      )}
-    </div>
+          <Slider.Indicator
+            className={
+              // filled portion — use accent color like old input's accent-zinc-400
+              "h-1 rounded-lg bg-zinc-400 select-none"
+            }
+          />
+          <Slider.Thumb
+            aria-label={props["aria-label"] ?? "Slider"}
+            className={
+              // thumb: small white circle with subtle ring matching track
+              "size-4 rounded-full bg-white ring-1 ring-zinc-700 select-none focus-visible:ring-2 focus-visible:ring-zinc-400"
+            }
+          />
+        </Slider.Track>
+      </Slider.Control>
+    </Slider.Root>
   );
 }
