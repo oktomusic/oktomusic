@@ -153,17 +153,22 @@ export function SettingsClient() {
             <label htmlFor="settings:client:crossfade-seconds">
               {t`Crossfade (seconds):`}
             </label>
-            <OktoSlider
-              id="settings:client:crossfade-seconds"
-              value={crossfadeSeconds}
-              onChange={handleCrossfadeChange}
-              min={0}
-              max={5}
-              step={0.1}
-              showOutput
-              formatOutput={(v) => v.toFixed(1)}
-              aria-describedby="settings:client:crossfade-seconds:help"
-            />
+            <div className="flex w-56 items-center gap-3">
+              <OktoSlider
+                id="settings:client:crossfade-seconds"
+                value={crossfadeSeconds}
+                onChange={handleCrossfadeChange}
+                min={0}
+                max={5}
+                step={0.1}
+                aria-describedby="settings:client:crossfade-seconds:help"
+                aria-label={t`Crossfade (seconds)`}
+                className="flex-1"
+              />
+              <span className="min-w-12 text-right text-sm text-white tabular-nums select-none">
+                {crossfadeSeconds.toFixed(1)}
+              </span>
+            </div>
           </div>
 
           <div className="flex h-14 flex-row items-center justify-between py-2">

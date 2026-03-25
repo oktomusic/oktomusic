@@ -144,16 +144,12 @@ export default function PlayerControls() {
             onChange={(v) => {
               requestSeek(v);
             }}
+            isLoading={isBuffering}
             className="w-full"
           />
           <span className="font-mono slashed-zero">
             {formatDuration(currentTrack?.durationMs ?? playbackDuration)}
           </span>
-          {isBuffering && (
-            <p className="text-xs text-slate-400" aria-live="polite">
-              {t`Buffering…`}
-            </p>
-          )}
         </div>
       </div>
       <div

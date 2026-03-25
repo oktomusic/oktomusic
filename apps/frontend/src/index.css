@@ -32,6 +32,10 @@
   }
 }
 
+#root {
+  isolation: isolate;
+}
+
 #app-shell {
   box-sizing: border-box;
   height: 100dvh;
