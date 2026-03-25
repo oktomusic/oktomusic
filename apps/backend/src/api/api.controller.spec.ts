@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Test, TestingModule } from "@nestjs/testing";
+import type { ConfigType } from "@nestjs/config";
+
 import { ApiController } from "./api.controller";
-import { ApiService } from "./api.service";
+import type { ApiService } from "./api.service";
 import oidcConfig from "../config/definitions/oidc.config";
 
 // Mock ESM package
@@ -12,27 +13,17 @@ vi.mock("@oktomusic/api-schemas", () => ({
 describe("ApiController", () => {
   let apiController: ApiController;
 
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [ApiController],
-      providers: [
-        {
-          provide: oidcConfig.KEY,
-          useValue: {
-            issuer: "https://issuer.example.com",
-            clientId: "client-123",
-          },
-        },
-        {
-          provide: ApiService,
-          useValue: {
-            listUsers: vi.fn(),
-          },
-        },
-      ],
-    }).compile();
+  beforeEach(() => {
+    const oidcValue = {
+      issuer: "https://issuer.example.com",
+      clientId: "client-123",
+    } as ConfigType<typeof oidcConfig>;
 
-    apiController = app.get<ApiController>(ApiController);
+    const apiServiceMock = {
+      listUsers: vi.fn(),
+    } as unknown as ApiService;
+
+    apiController = new ApiController(oidcValue, apiServiceMock);
   });
 
   describe("info", () => {

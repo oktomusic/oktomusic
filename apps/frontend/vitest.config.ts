@@ -8,7 +8,7 @@ export default defineConfig({
     babel({
       plugins: [
         "babel-plugin-react-compiler",
-        "@lingui/babel-plugin-lingui-macro",
+        // "@lingui/babel-plugin-lingui-macro",
       ],
       presets: [reactCompilerPreset(), "jotai-babel/preset"],
     }),
