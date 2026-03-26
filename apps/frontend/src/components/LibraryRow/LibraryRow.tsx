@@ -81,7 +81,7 @@ export function LibraryRow(props: LibraryRowProps) {
           }
           alt={`${playLabel} cover`}
         />
-        <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-zinc-950/60 opacity-0 transition duration-150 group-hover:opacity-100">
+        <span className="pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-zinc-950/60 opacity-0 transition duration-150 group-hover:opacity-100">
           {showPlayIcon ? (
             <HiPlay aria-hidden="true" className="size-8 text-white/90" />
           ) : (
