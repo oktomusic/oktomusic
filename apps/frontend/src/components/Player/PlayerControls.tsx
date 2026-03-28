@@ -132,11 +132,9 @@ export default function PlayerControls() {
           <span className="font-mono slashed-zero">
             {formatDuration(playbackPosition)}
           </span>
-          <label htmlFor="player-seek" className="sr-only">
-            {t`Seek`}
-          </label>
           <OktoSlider
             id="player-seek"
+            aria-label={t`Seek`}
             min={0}
             max={Math.max(0, playbackDuration)}
             step={250}

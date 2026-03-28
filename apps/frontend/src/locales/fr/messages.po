@@ -88,15 +88,15 @@ msgstr ""
 #~ msgid "Buffering…"
 #~ msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:191
+#: src/pages/SettingsClient/SettingsClient.tsx:189
 msgid "Cache max age (days):"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:176
+#: src/pages/SettingsClient/SettingsClient.tsx:174
 msgid "Cache max entries:"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:213
+#: src/pages/SettingsClient/SettingsClient.tsx:211
 msgid "Checking storage persistence..."
 msgstr ""
 
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Close"
 msgstr "Fermer"
 
-#: src/components/Player/PlayerControls.tsx:196
+#: src/components/Player/PlayerControls.tsx:194
 msgid "Close Picture-in-Picture"
 msgstr ""
 
@@ -121,11 +121,11 @@ msgstr ""
 msgid "Create playlist"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:165
+#: src/pages/SettingsClient/SettingsClient.tsx:163
 msgid "Crossfade (seconds)"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:154
+#: src/pages/SettingsClient/SettingsClient.tsx:153
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
 
@@ -165,13 +165,13 @@ msgstr "Avancer"
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
-#: src/components/Player/PlayerControls.tsx:164
-#: src/components/Player/PlayerControls.tsx:165
+#: src/components/Player/PlayerControls.tsx:162
+#: src/components/Player/PlayerControls.tsx:163
 msgid "Hide overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:177
-#: src/components/Player/PlayerControls.tsx:178
+#: src/components/Player/PlayerControls.tsx:175
+#: src/components/Player/PlayerControls.tsx:176
 msgid "Hide queue"
 msgstr ""
 
@@ -249,7 +249,7 @@ msgstr "Suivant"
 msgid "No track playing"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:196
+#: src/components/Player/PlayerControls.tsx:194
 msgid "Open Picture-in-Picture"
 msgstr ""
 
@@ -270,11 +270,11 @@ msgstr "Pause"
 msgid "Pause {trackName}"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:214
+#: src/pages/SettingsClient/SettingsClient.tsx:212
 msgid "Persistent storage granted"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:216
+#: src/pages/SettingsClient/SettingsClient.tsx:214
 msgid "Persistent storage not granted"
 msgstr ""
 
@@ -333,7 +333,7 @@ msgstr "Privée"
 msgid "Public"
 msgstr "Publique"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:225
+#: src/pages/SettingsClient/SettingsClient.tsx:223
 msgid "Request"
 msgstr ""
 
@@ -353,7 +353,7 @@ msgstr "Sauvegarder dans la bibliothèque"
 msgid "Search"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:136
+#: src/components/Player/PlayerControls.tsx:137
 msgid "Seek"
 msgstr ""
 
@@ -373,13 +373,13 @@ msgstr "Sexe :"
 msgid "Share"
 msgstr "Partager"
 
-#: src/components/Player/PlayerControls.tsx:164
-#: src/components/Player/PlayerControls.tsx:165
+#: src/components/Player/PlayerControls.tsx:162
+#: src/components/Player/PlayerControls.tsx:163
 msgid "Show overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:177
-#: src/components/Player/PlayerControls.tsx:178
+#: src/components/Player/PlayerControls.tsx:175
+#: src/components/Player/PlayerControls.tsx:176
 msgid "Show queue"
 msgstr ""
 
@@ -387,7 +387,7 @@ msgstr ""
 msgid "Static"
 msgstr "Statique"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:209
+#: src/pages/SettingsClient/SettingsClient.tsx:207
 msgid "Storage Persistence:"
 msgstr ""
 
