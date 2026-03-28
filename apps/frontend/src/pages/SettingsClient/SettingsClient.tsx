@@ -150,9 +150,7 @@ export function SettingsClient() {
           </div>
 
           <div className="flex h-14 flex-row items-center justify-between py-2">
-            <label htmlFor="settings:client:crossfade-seconds">
-              {t`Crossfade (seconds):`}
-            </label>
+            <span>{t`Crossfade (seconds):`}</span>
             <div className="flex w-56 items-center gap-3">
               <OktoSlider
                 id="settings:client:crossfade-seconds"
