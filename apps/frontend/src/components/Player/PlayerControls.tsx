@@ -136,7 +136,8 @@ export default function PlayerControls() {
             id="player-seek"
             aria-label={t`Seek`}
             min={0}
-            max={Math.max(0, playbackDuration)}
+            /* Avoid max=0 which causes Base UI to complain */
+            max={Math.max(1, playbackDuration)}
             step={250}
             value={Math.min(playbackPosition, playbackDuration || 0)}
             onChange={(v) => {
