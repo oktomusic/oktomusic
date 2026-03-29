@@ -45,7 +45,11 @@ msgstr ""
 msgid "Add an optional description"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:46
+#: src/components/SubmenuPlaylistsSearch.tsx:29
+msgid "Add to playlist"
+msgstr ""
+
+#: src/components/TrackList/TrackElement.tsx:47
 #: src/pages/Center/Album.tsx:105
 msgid "Add to queue"
 msgstr ""
@@ -151,6 +155,10 @@ msgstr ""
 #~ msgid "Enabled"
 #~ msgstr "Activé"
 
+#: src/components/SubmenuPlaylistsSearch.tsx:36
+msgid "Find a playlist..."
+msgstr ""
+
 #: src/components/HeaderMenu.tsx:76
 #: src/components/HeaderMenu.tsx:77
 msgid "Go back"
@@ -161,7 +169,7 @@ msgstr "Reculer"
 msgid "Go forward"
 msgstr "Avancer"
 
-#: src/components/TrackList/TrackElement.tsx:54
+#: src/components/TrackList/TrackElement.tsx:55
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
@@ -222,7 +230,7 @@ msgstr "Homme"
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:137
+#: src/components/TrackList/TrackElement.tsx:142
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
@@ -233,6 +241,10 @@ msgstr "Nom"
 #: src/pages/SettingsClient/SettingsClient.tsx:57
 msgid "Never"
 msgstr "Jamais"
+
+#: src/components/SubmenuPlaylistsSearch.tsx:50
+msgid "New playlist"
+msgstr ""
 
 #: src/components/PipControls/PipControlsOverlay.tsx:62
 #: src/components/PipControls/PipControlsOverlay.tsx:63
@@ -266,7 +278,7 @@ msgstr "Page introuvable"
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/TrackList/TrackElement.tsx:84
+#: src/components/TrackList/TrackElement.tsx:89
 msgid "Pause {trackName}"
 msgstr ""
 
@@ -293,7 +305,7 @@ msgstr "Lecture"
 msgid "Play {albumName}"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:86
+#: src/components/TrackList/TrackElement.tsx:91
 msgid "Play {trackName}"
 msgstr ""
 
@@ -337,7 +349,7 @@ msgstr "Publique"
 msgid "Request"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:85
+#: src/components/TrackList/TrackElement.tsx:90
 msgid "Resume {trackName}"
 msgstr ""
 

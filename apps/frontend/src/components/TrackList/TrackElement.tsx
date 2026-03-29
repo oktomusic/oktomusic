@@ -14,6 +14,7 @@ import {
   playerShouldPlayAtom,
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
+import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
 
 interface TrackElementProps {
   readonly track: TrackWithAlbum;
@@ -53,6 +54,10 @@ export function TrackElement(props: TrackElementProps) {
       icon: <LuDisc3 className="size-4" />,
       label: t`Go to album`,
       to: `/album/${props.track.album.id}`,
+    },
+    {
+      type: "submenu",
+      component: <SubmenuPlaylistsSearch onClick={console.log} />,
     },
   ];
 
