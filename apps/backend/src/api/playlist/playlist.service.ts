@@ -106,6 +106,42 @@ export class PlaylistService {
     };
   }
 
+  async searchUserPlaylists(
+    nameQuery: string,
+    user: User | false,
+    limit: number = 50,
+  ) {
+    const where: Prisma.PlaylistWhereInput = {
+      name: { contains: nameQuery, mode: "insensitive" },
+    };
+
+    if (user !== false) {
+      // restrict to the current user's playlists (including private)
+      where.userId = user.id;
+    }
+
+    const playlists = await this.prisma.playlist.findMany({
+      where,
+      take: Math.max(1, Math.min(limit, 100)),
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        visibility: true,
+        user: { select: { id: true, username: true } },
+      },
+      orderBy: { updatedAt: "desc" },
+    });
+
+    return playlists.map((p) => ({
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      visibility: p.visibility,
+      creator: { id: p.user.id, username: p.user.username },
+    }));
+  }
+
   async createPlaylist(
     input: CreatePlaylistInput,
     user: User | false,

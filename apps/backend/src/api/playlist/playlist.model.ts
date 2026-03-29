@@ -52,3 +52,23 @@ export class PlaylistModel {
   @Field(() => [PlaylistTrackModel])
   tracks!: PlaylistTrackModel[];
 }
+
+@ObjectType("PlaylistBasic")
+export class PlaylistBasicModel {
+  @Field()
+  id!: string;
+
+  @Field()
+  name!: string;
+
+  @Field({ nullable: true })
+  description!: string | null;
+
+  @Field(() => PlaylistVisibility, {
+    description: "Visibility level of the playlist",
+  })
+  visibility!: PlaylistVisibility;
+
+  @Field(() => PlaylistCreatorModel)
+  creator!: PlaylistCreatorModel;
+}

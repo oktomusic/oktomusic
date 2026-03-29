@@ -45,7 +45,7 @@ msgstr "Add a name"
 msgid "Add an optional description"
 msgstr "Add an optional description"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:29
+#: src/components/SubmenuPlaylistsSearch.tsx:37
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
@@ -159,7 +159,7 @@ msgstr "Edit playlist details"
 #~ msgid "Enabled"
 #~ msgstr "Enabled"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:36
+#: src/components/SubmenuPlaylistsSearch.tsx:44
 msgid "Find a playlist..."
 msgstr "Find a playlist..."
 
@@ -246,7 +246,7 @@ msgstr "Name"
 msgid "Never"
 msgstr "Never"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:50
+#: src/components/SubmenuPlaylistsSearch.tsx:58
 msgid "New playlist"
 msgstr "New playlist"
 
