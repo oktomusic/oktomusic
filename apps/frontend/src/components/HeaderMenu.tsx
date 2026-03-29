@@ -127,6 +127,8 @@ export function HeaderMenu() {
           button="AA"
           buttonClassName="flex aspect-square size-8 items-center justify-center rounded-full bg-slate-700"
           buttonAriaLabel="User menu"
+          positionAlign="end"
+          positionSide="bottom"
           items={menuItems}
         />
       </div>
