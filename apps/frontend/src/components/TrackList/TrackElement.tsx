@@ -131,7 +131,8 @@ export function TrackElement(props: TrackElementProps) {
           button={
             <HiEllipsisHorizontal className="size-6 opacity-0 group-hover:opacity-100" />
           }
-          anchor="bottom end"
+          positionAlign="end"
+          positionSide="bottom"
           items={menuItems}
           buttonAriaLabel={t`More options for ${trackName}`}
         />
