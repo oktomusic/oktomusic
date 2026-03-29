@@ -228,6 +228,16 @@ type Playlist {
   visibility: PlaylistVisibility!
 }
 
+type PlaylistBasic {
+  creator: PlaylistCreator!
+  description: String
+  id: String!
+  name: String!
+
+  """Visibility level of the playlist"""
+  visibility: PlaylistVisibility!
+}
+
 type PlaylistCreator {
   id: String!
   username: String!
@@ -278,6 +288,9 @@ type Query {
 
   """Search for artists with optional filters"""
   searchArtists(input: SearchArtistsInput!): [Artist!]!
+
+  """Search playlists owned by the current user by name (basic data)"""
+  searchMyPlaylists(limit: Int, name: String!): [PlaylistBasic!]!
 
   """Search for tracks with optional filters"""
   searchTracks(input: SearchTracksInput!): [Track!]!

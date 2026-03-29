@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { useSetAtom } from "jotai";
+import { useQuery } from "@apollo/client/react";
 import { t } from "@lingui/core/macro";
 import { Menu } from "@base-ui/react/menu";
 import { Input } from "@base-ui/react/input";
 import { ScrollArea } from "@base-ui/react/scroll-area";
 import { LuChevronRight, LuListPlus, LuPlus } from "react-icons/lu";
 
+import { SEARCH_MY_PLAYLISTS_QUERY } from "../api/graphql/queries/searchMyPlaylists";
 import { OktoMenuButton, OktoMenuSeparator } from "./Base/OktoMenu";
 import { dialogPlaylistOpenAtom } from "../atoms/app/dialogs";
 
 interface SubmenuPlaylistsSearchProps {
-  readonly onClick: () => void;
+  readonly onClick: (playlistId: string) => void;
 }
 
 export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
@@ -19,6 +21,12 @@ export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   console.log(typeof props);
+
+  const { data, loading, error } = useQuery(SEARCH_MY_PLAYLISTS_QUERY, {
+    variables: {
+      name: searchQuery,
+    },
+  });
 
   // 7 lines of 36px + separator of 9px
 
@@ -54,23 +62,22 @@ export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
               icon={<LuPlus className="size-4" />}
             />
             <OktoMenuSeparator />
-            <ScrollArea.Root className={"h-45 w-auto"}>
+            <ScrollArea.Root className={"max-h-45 w-auto"}>
               <ScrollArea.Viewport className="h-full">
                 <ScrollArea.Content>
-                  {[
-                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-                    18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
-                    33, 34, 35, 36, 37, 38, 39, 40,
-                  ].map((i) => (
-                    <OktoMenuButton
-                      key={i}
-                      type="button"
-                      label={`Playlist ${i}`}
-                      onClick={() => {
-                        console.log(`Add to playlist ${i}`);
-                      }}
-                    />
-                  ))}
+                  {loading && <div>Loading...</div>}
+                  {error && <div>Error loading playlists</div>}
+                  {data &&
+                    data.searchMyPlaylists.map((playlist) => (
+                      <OktoMenuButton
+                        key={playlist.id}
+                        type="button"
+                        label={playlist.name}
+                        onClick={() => {
+                          props.onClick(playlist.id);
+                        }}
+                      />
+                    ))}
                 </ScrollArea.Content>
               </ScrollArea.Viewport>
               <ScrollArea.Scrollbar className="pointer-events-none flex w-1 justify-center rounded-sm bg-zinc-600 opacity-0 transition-opacity data-hovering:pointer-events-auto data-hovering:opacity-100 data-hovering:delay-0 data-scrolling:pointer-events-auto data-scrolling:opacity-100 data-scrolling:duration-0">

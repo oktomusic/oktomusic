@@ -6,6 +6,7 @@ import { GraphqlAuthGuard } from "../../common/guards/graphql-auth.guard";
 import { CreatePlaylistInput } from "./dto/create-playlist.input";
 import { UpdatePlaylistInput } from "./dto/update-playlist.input";
 import { PlaylistModel } from "./playlist.model";
+import { PlaylistBasicModel } from "./playlist.model";
 import { PlaylistService } from "./playlist.service";
 
 @Resolver()
@@ -26,6 +27,28 @@ export class PlaylistResolver {
     }
 
     return this.playlistService.getPlaylist(id, req.user);
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Query(() => [PlaylistBasicModel], {
+    name: "searchMyPlaylists",
+    description:
+      "Search playlists owned by the current user by name (basic data)",
+  })
+  async searchMyPlaylists(
+    @Args("name", { type: () => String }) name: string,
+    @Args("limit", { type: () => Int, nullable: true }) limit: number | null,
+    @Context("req") req: Request,
+  ) {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    return this.playlistService.searchUserPlaylists(
+      name,
+      req.user,
+      limit ?? 50,
+    );
   }
 
   @UseGuards(GraphqlAuthGuard)
