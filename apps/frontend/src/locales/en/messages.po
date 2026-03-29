@@ -45,7 +45,11 @@ msgstr "Add a name"
 msgid "Add an optional description"
 msgstr "Add an optional description"
 
-#: src/components/TrackList/TrackElement.tsx:46
+#: src/components/SubmenuPlaylistsSearch.tsx:29
+msgid "Add to playlist"
+msgstr "Add to playlist"
+
+#: src/components/TrackList/TrackElement.tsx:47
 #: src/pages/Center/Album.tsx:105
 msgid "Add to queue"
 msgstr "Add to queue"
@@ -155,6 +159,10 @@ msgstr "Edit playlist details"
 #~ msgid "Enabled"
 #~ msgstr "Enabled"
 
+#: src/components/SubmenuPlaylistsSearch.tsx:36
+msgid "Find a playlist..."
+msgstr "Find a playlist..."
+
 #: src/components/HeaderMenu.tsx:76
 #: src/components/HeaderMenu.tsx:77
 msgid "Go back"
@@ -165,7 +173,7 @@ msgstr "Go back"
 msgid "Go forward"
 msgstr "Go forward"
 
-#: src/components/TrackList/TrackElement.tsx:54
+#: src/components/TrackList/TrackElement.tsx:55
 msgid "Go to album"
 msgstr "Go to album"
 
@@ -226,7 +234,7 @@ msgstr "Man"
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:137
+#: src/components/TrackList/TrackElement.tsx:142
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"
 
@@ -237,6 +245,10 @@ msgstr "Name"
 #: src/pages/SettingsClient/SettingsClient.tsx:57
 msgid "Never"
 msgstr "Never"
+
+#: src/components/SubmenuPlaylistsSearch.tsx:50
+msgid "New playlist"
+msgstr "New playlist"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:62
 #: src/components/PipControls/PipControlsOverlay.tsx:63
@@ -270,7 +282,7 @@ msgstr "Page not found"
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/TrackList/TrackElement.tsx:84
+#: src/components/TrackList/TrackElement.tsx:89
 msgid "Pause {trackName}"
 msgstr "Pause {trackName}"
 
@@ -297,7 +309,7 @@ msgstr "Play"
 msgid "Play {albumName}"
 msgstr "Play {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:86
+#: src/components/TrackList/TrackElement.tsx:91
 msgid "Play {trackName}"
 msgstr "Play {trackName}"
 
@@ -341,7 +353,7 @@ msgstr "Public"
 msgid "Request"
 msgstr "Request"
 
-#: src/components/TrackList/TrackElement.tsx:85
+#: src/components/TrackList/TrackElement.tsx:90
 msgid "Resume {trackName}"
 msgstr "Resume {trackName}"
 

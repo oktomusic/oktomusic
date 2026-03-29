@@ -39,11 +39,18 @@ export interface OktoMenuSeparatorItem {
   readonly hidden?: boolean;
 }
 
+export interface OktoMenuSubmenuItem {
+  readonly type: "submenu";
+  readonly hidden?: boolean;
+  readonly component: ReactNode;
+}
+
 export type OktoMenuItem =
   | OktoMenuButtonItem
   | OktoMenuLinkItem
   | OktoMenuRouterLinkItem
-  | OktoMenuSeparatorItem;
+  | OktoMenuSeparatorItem
+  | OktoMenuSubmenuItem;
 
 export interface OktoMenuProps {
   readonly button: ReactNode;
@@ -101,7 +108,7 @@ export function OktoMenuLink(props: OktoMenuLinkItem) {
 
 export function OktoMenuRouterLink(props: OktoMenuRouterLinkItem) {
   return (
-    <Menu.Item className="group">
+    <Menu.Item className="group focus:outline-0">
       {(() => {
         const isDisabled = Boolean(props.disabled);
         return (
@@ -166,6 +173,8 @@ export function OktoMenu(props: OktoMenuProps) {
                       return <OktoMenuRouterLink key={index} {...item} />;
                     case "separator":
                       return <OktoMenuSeparator key={index} />;
+                    case "submenu":
+                      return item.component;
                   }
                 })}
             </Menu.Popup>
