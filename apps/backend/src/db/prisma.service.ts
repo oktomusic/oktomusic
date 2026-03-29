@@ -14,7 +14,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   ) {
     const connectionString = appConf.databaseUrl;
     const pool = new Pool({ connectionString });
-    // @ts-expect-error https://github.com/prisma/prisma/issues/29356
     const adapter = new PrismaPg(pool);
 
     super({ adapter });
