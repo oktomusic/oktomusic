@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { Link } from "react-router";
 import { Menu } from "@base-ui/react/menu";
 
@@ -174,7 +174,7 @@ export function OktoMenu(props: OktoMenuProps) {
                     case "separator":
                       return <OktoMenuSeparator key={index} />;
                     case "submenu":
-                      return item.component;
+                      return <Fragment key={index}>{item.component}</Fragment>;
                   }
                 })}
             </Menu.Popup>
