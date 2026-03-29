@@ -218,7 +218,7 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:256
+#: src/components/CollectionView/CollectionView.tsx:257
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 

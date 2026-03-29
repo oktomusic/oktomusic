@@ -252,7 +252,8 @@ export function CollectionView(props: CollectionViewProps) {
           <OktoMenu
             button={<HiEllipsisHorizontal className="size-8" />}
             items={menuItems}
-            anchor="bottom start"
+            positionAlign="start"
+            positionSide="bottom"
             buttonAriaLabel={t`More options for ${albumName}`}
           />
         </div>
