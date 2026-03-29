@@ -113,7 +113,7 @@ msgstr ""
 msgid "Close"
 msgstr "Fermer"
 
-#: src/components/Player/PlayerControls.tsx:194
+#: src/components/Player/PlayerControls.tsx:195
 msgid "Close Picture-in-Picture"
 msgstr ""
 
@@ -173,13 +173,13 @@ msgstr "Avancer"
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
-#: src/components/Player/PlayerControls.tsx:162
 #: src/components/Player/PlayerControls.tsx:163
+#: src/components/Player/PlayerControls.tsx:164
 msgid "Hide overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:175
 #: src/components/Player/PlayerControls.tsx:176
+#: src/components/Player/PlayerControls.tsx:177
 msgid "Hide queue"
 msgstr ""
 
@@ -261,7 +261,7 @@ msgstr "Suivant"
 msgid "No track playing"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:194
+#: src/components/Player/PlayerControls.tsx:195
 msgid "Open Picture-in-Picture"
 msgstr ""
 
@@ -385,13 +385,13 @@ msgstr "Sexe :"
 msgid "Share"
 msgstr "Partager"
 
-#: src/components/Player/PlayerControls.tsx:162
 #: src/components/Player/PlayerControls.tsx:163
+#: src/components/Player/PlayerControls.tsx:164
 msgid "Show overlay"
 msgstr ""
 
-#: src/components/Player/PlayerControls.tsx:175
 #: src/components/Player/PlayerControls.tsx:176
+#: src/components/Player/PlayerControls.tsx:177
 msgid "Show queue"
 msgstr ""
 

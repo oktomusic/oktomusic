@@ -79,7 +79,7 @@ export function PipControlsOverlay() {
         <OktoSlider
           id="pip-hover_overlay__seek__slider"
           min={0}
-          max={Math.max(0, playbackDuration)}
+          max={Math.max(1, playbackDuration)}
           step={250}
           value={Math.min(playbackPosition, playbackDuration || 0)}
           onChange={(v) => {
