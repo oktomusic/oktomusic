@@ -222,7 +222,7 @@ msgstr "Homme"
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:136
+#: src/components/TrackList/TrackElement.tsx:137
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
