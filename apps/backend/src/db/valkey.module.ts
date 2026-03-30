@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
 import { GlideClient } from "@valkey/valkey-glide";
 
-import valkeyConfig from "src/config/definitions/valkey.config";
+import valkeyConfig from "../config/definitions/valkey.config";
 import { ValkeyService } from "./valkey.service";
 
 export const VALKEY_CLIENT = Symbol("VALKEY_CLIENT");

@@ -6,12 +6,11 @@
       "DOM",
       "ESNext"
     ],
-    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "Bundler",
     "paths": {
       "~/*": [
-        "src/*"
+        "./src/*"
       ]
     },
     "resolveJsonModule": true,
@@ -26,7 +25,8 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "rootDir": "."
   },
   "include": [
     "./*.ts",

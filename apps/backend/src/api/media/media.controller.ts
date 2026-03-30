@@ -15,7 +15,7 @@ import { AuthGuard } from "../../common/guards/auth.guard";
 import { ApiRangeStream } from "../../common/decorators/api-range-stream.decorator";
 import { createRangeStream } from "../../common/utils/range-stream.util";
 import { MediaService } from "./media.service";
-import { ParseCuid2Pipe } from "src/common/pipes/parse-cuid2.pipe";
+import { ParseCuid2Pipe } from "../../common/pipes/parse-cuid2.pipe";
 
 @ApiTags("Media")
 @Controller("api/media")

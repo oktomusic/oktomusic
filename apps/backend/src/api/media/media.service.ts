@@ -5,7 +5,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
 
 import appConfig from "../../config/definitions/app.config";
-import { PrismaService } from "src/db/prisma.service";
+import { PrismaService } from "../../db/prisma.service";
 
 @Injectable()
 export class MediaService {

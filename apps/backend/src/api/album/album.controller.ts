@@ -14,7 +14,7 @@ import { ApiOperation, ApiParam, ApiSecurity, ApiTags } from "@nestjs/swagger";
 
 import { AuthGuard } from "../../common/guards/auth.guard";
 import { ParseCuid2Pipe } from "../../common/pipes/parse-cuid2.pipe";
-import { ApiFile } from "src/common/decorators/api-file.decorator";
+import { ApiFile } from "../../common/decorators/api-file.decorator";
 import { AlbumService } from "./album.service";
 import {
   albumCoverSizes,

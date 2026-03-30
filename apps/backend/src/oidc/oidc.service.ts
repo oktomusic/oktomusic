@@ -25,7 +25,7 @@ interface OidcCallbackResult {
 @Injectable()
 export class OidcService implements OnModuleInit {
   private readonly logger = new Logger(OidcService.name);
-  private config: client.Configuration;
+  private config!: client.Configuration;
 
   constructor(
     @Inject(oidcConfig.KEY)

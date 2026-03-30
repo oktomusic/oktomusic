@@ -30,6 +30,7 @@ export default defineConfig([
   globalIgnores([
     "node_modules",
     "**/dist",
+    "**/dev-dist",
     "**/cache",
     "**/tsdown.config.ts",
     "packages/**/vitest.config.ts",

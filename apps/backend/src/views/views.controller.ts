@@ -14,7 +14,7 @@ import { buildViewModel } from "./view-model";
 import { MetaTagsService } from "../common/metatags/metatags.service";
 import { getAssetTags, type ViteManifest } from "../utils/vite_manifest";
 import viteConfig, { type ViteConfig } from "../config/definitions/vite.config";
-import appConfig, { type AppConfig } from "src/config/definitions/app.config";
+import appConfig, { type AppConfig } from "../config/definitions/app.config";
 
 @Controller()
 export class ViewsController {

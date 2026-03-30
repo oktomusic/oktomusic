@@ -20,7 +20,7 @@ import { GraphqlAuthGuard } from "../common/guards/graphql-auth.guard";
 import { GraphqlAdminGuard } from "../common/guards/graphql-admin.guard";
 import { UserResolver } from "./user/user.resolver";
 import { UserService } from "./user/user.service";
-import { type AppConfig } from "src/config/definitions/app.config";
+import { type AppConfig } from "../config/definitions/app.config";
 import { MediaController } from "./media/media.controller";
 import { MediaService } from "./media/media.service";
 import { BullmqModule } from "../bullmq/bullmq.module";

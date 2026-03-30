@@ -290,5 +290,6 @@
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
-  }
+  },
+  "js/ts.tsdk.path": "node_modules/typescript/lib"
 }
