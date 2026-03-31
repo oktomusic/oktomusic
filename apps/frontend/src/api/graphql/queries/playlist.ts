@@ -16,8 +16,16 @@ export const PLAYLIST_QUERY = graphql(/* GraphQL */ `
         addedAt
         track {
           id
+          flacFileId
+          hasLyrics
           name
+          trackNumber
+          discNumber
           durationMs
+          artists {
+            id
+            name
+          }
           album {
             id
             name
