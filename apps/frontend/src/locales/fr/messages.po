@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/CollectionView/CollectionView.tsx:204
+#: src/components/CollectionView/CollectionView.tsx:225
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -60,6 +60,7 @@ msgid "Admin Settings"
 msgstr ""
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
+#: src/pages/Center/Album.tsx:114
 msgid "Album"
 msgstr "Album"
 
@@ -142,9 +143,13 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/CollectionView/CollectionView.tsx:247
+#: src/components/CollectionView/CollectionView.tsx:268
 msgid "Download"
 msgstr "Télécharger"
+
+#: src/pages/Center/Playlist.tsx:104
+msgid "Edit details"
+msgstr ""
 
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:139
 msgid "Edit playlist details"
@@ -226,7 +231,7 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:257
+#: src/components/CollectionView/CollectionView.tsx:278
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
@@ -290,8 +295,8 @@ msgstr ""
 msgid "Persistent storage not granted"
 msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:126
-#: src/components/CollectionView/CollectionView.tsx:233
+#: src/components/CollectionView/CollectionView.tsx:133
+#: src/components/CollectionView/CollectionView.tsx:254
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -301,7 +306,7 @@ msgstr ""
 msgid "Play"
 msgstr "Lecture"
 
-#: src/components/CollectionView/CollectionView.tsx:127
+#: src/components/CollectionView/CollectionView.tsx:134
 msgid "Play {albumName}"
 msgstr ""
 
@@ -321,6 +326,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
+#: src/pages/Center/Playlist.tsx:88
 msgid "Playlist"
 msgstr ""
 
@@ -357,7 +363,7 @@ msgstr ""
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: src/components/CollectionView/CollectionView.tsx:240
+#: src/components/CollectionView/CollectionView.tsx:261
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 

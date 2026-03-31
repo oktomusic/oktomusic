@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/CollectionView/CollectionView.tsx:204
+#: src/components/CollectionView/CollectionView.tsx:225
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# track} other {# tracks}}"
 
@@ -64,6 +64,7 @@ msgid "Admin Settings"
 msgstr "Admin Settings"
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
+#: src/pages/Center/Album.tsx:114
 msgid "Album"
 msgstr "Album"
 
@@ -146,9 +147,13 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Disabled"
 
-#: src/components/CollectionView/CollectionView.tsx:247
+#: src/components/CollectionView/CollectionView.tsx:268
 msgid "Download"
 msgstr "Download"
+
+#: src/pages/Center/Playlist.tsx:104
+msgid "Edit details"
+msgstr "Edit details"
 
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:139
 msgid "Edit playlist details"
@@ -230,7 +235,7 @@ msgstr "Man"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr "Maximum number of media files to cache."
 
-#: src/components/CollectionView/CollectionView.tsx:257
+#: src/components/CollectionView/CollectionView.tsx:278
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
@@ -294,8 +299,8 @@ msgstr "Persistent storage granted"
 msgid "Persistent storage not granted"
 msgstr "Persistent storage not granted"
 
-#: src/components/CollectionView/CollectionView.tsx:126
-#: src/components/CollectionView/CollectionView.tsx:233
+#: src/components/CollectionView/CollectionView.tsx:133
+#: src/components/CollectionView/CollectionView.tsx:254
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -305,7 +310,7 @@ msgstr "Persistent storage not granted"
 msgid "Play"
 msgstr "Play"
 
-#: src/components/CollectionView/CollectionView.tsx:127
+#: src/components/CollectionView/CollectionView.tsx:134
 msgid "Play {albumName}"
 msgstr "Play {albumName}"
 
@@ -325,6 +330,7 @@ msgid "Playback controls"
 msgstr "Playback controls"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
+#: src/pages/Center/Playlist.tsx:88
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -361,7 +367,7 @@ msgstr "Resume {trackName}"
 msgid "Save"
 msgstr "Save"
 
-#: src/components/CollectionView/CollectionView.tsx:240
+#: src/components/CollectionView/CollectionView.tsx:261
 msgid "Save to library"
 msgstr "Save to library"
 

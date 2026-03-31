@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { Button } from "@headlessui/react";
 import { HiEllipsisHorizontal, HiPlay } from "react-icons/hi2";
-import { LuCircleArrowDown, LuCirclePlus } from "react-icons/lu";
+import {
+  LuCircleArrowDown,
+  LuCirclePlus,
+  LuGlobe,
+  LuLink,
+  LuLock,
+} from "react-icons/lu";
 import { plural, t } from "@lingui/core/macro";
 import { Temporal } from "temporal-polyfill";
 
@@ -52,6 +58,7 @@ interface CollectionViewProps {
   readonly subtitle?: string;
   readonly cover: string;
   readonly coverOnClick?: () => void;
+  readonly visibility?: "PRIVATE" | "PUBLIC" | "UNLISTED";
   readonly meta: CollectionViewMeta;
   readonly colors?: VibrantColorsPartial;
   readonly actions?: CollectionViewActions;
@@ -149,13 +156,27 @@ export function CollectionView(props: CollectionViewProps) {
             className="absolute inset-y-0 right-0 left-62 flex flex-col justify-end overflow-hidden"
           >
             <div ref={titleContentRef} className="flex flex-col gap-2">
+              <span className="">{props.type}</span>
               <h2
                 ref={titleRef}
                 className="collection-view__banner__title font-bold"
               >
                 {albumName}
               </h2>
-              <div className="text-sm">
+              <div className="">{props.subtitle}</div>
+              <div className="flex flex-row items-center text-sm">
+                {props.visibility &&
+                  (() => {
+                    switch (props.visibility) {
+                      case "PRIVATE":
+                        return <LuLock className="mr-2 size-4" />;
+                      case "PUBLIC":
+                        return <LuGlobe className="mr-2 size-4" />;
+                      case "UNLISTED":
+                        return <LuLink className="mr-2 size-4" />;
+                    }
+                  })()}
+
                 {props.meta.user && (
                   <span className="font-bold">
                     <span key={props.meta.user.id}>

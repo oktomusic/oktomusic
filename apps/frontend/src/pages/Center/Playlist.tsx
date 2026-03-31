@@ -1,6 +1,9 @@
 import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
+import { useSetAtom } from "jotai";
 import { Temporal } from "temporal-polyfill";
+import { t } from "@lingui/core/macro";
+import { LuPen } from "react-icons/lu";
 
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import { GenericLoading } from "./GenericLoading";
@@ -9,9 +12,12 @@ import { CollectionView } from "../../components/CollectionView/CollectionView";
 import { TrackList } from "../../components/TrackList/TrackList";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import type { TrackWithAlbum } from "../../atoms/player/machine";
+import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 
 export function Playlist() {
   const { cuid } = useParams();
+
+  const setDialogPlaylistOpen = useSetAtom(dialogPlaylistOpenAtom);
 
   const { data, loading, error } = useQuery(PLAYLIST_QUERY, {
     variables: { id: cuid! },
@@ -79,7 +85,9 @@ export function Playlist() {
 
   return (
     <CollectionView
+      type={t`Playlist`}
       title={title}
+      subtitle={playlist.description ?? undefined}
       cover={playlistCover}
       colors={playlistColors}
       meta={{
@@ -87,6 +95,19 @@ export function Playlist() {
         date: playlistDate,
         tracksTotal: trackCount,
         durationMs: playlistDurationMs,
+      }}
+      visibility={playlist.visibility}
+      actions={{
+        menuItems: [
+          {
+            type: "button",
+            label: t`Edit details`,
+            icon: <LuPen className="size-4" />,
+            onClick: () => {
+              setDialogPlaylistOpen(cuid);
+            },
+          },
+        ],
       }}
     >
       <TrackList tracks={tracksByDisc} displayCover={true} />

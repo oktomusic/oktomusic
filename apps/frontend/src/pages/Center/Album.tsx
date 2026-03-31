@@ -111,6 +111,7 @@ export function Album() {
 
   return (
     <CollectionView
+      type={t`Album`}
       title={data!.album.name}
       cover={`/api/album/${data!.album.id}/cover/1280`}
       coverOnClick={() => {
