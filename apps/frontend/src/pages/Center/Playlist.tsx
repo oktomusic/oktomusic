@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
 import { useSetAtom } from "jotai";
-import { Temporal } from "temporal-polyfill";
 import { t } from "@lingui/core/macro";
 import { LuPen, LuShare } from "react-icons/lu";
 
@@ -56,10 +55,6 @@ export function Playlist() {
 
   const primaryAlbum = playlistTracks[0]?.album;
 
-  const playlistDate = primaryAlbum?.date
-    ? Temporal.PlainDate.from(primaryAlbum.date.toISOString().slice(0, 10))
-    : undefined;
-
   const playlistColors = primaryAlbum
     ? {
         vibrant: primaryAlbum.coverColorVibrant,
@@ -95,7 +90,6 @@ export function Playlist() {
       colors={playlistColors}
       meta={{
         user: creator,
-        date: playlistDate,
         tracksTotal: trackCount,
         durationMs: playlistDurationMs,
       }}
