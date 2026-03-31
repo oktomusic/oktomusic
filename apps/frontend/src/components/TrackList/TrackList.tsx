@@ -60,7 +60,7 @@ export function TrackList(props: TrackListProps) {
             <ol className="track-list__tracks">
               {discTracks.map((track, trackIndex) => (
                 <TrackElement
-                  key={track.id}
+                  key={`${trackIndex}-${track.id}`}
                   track={track}
                   index={trackIndex}
                   displayCover={displayCover}
