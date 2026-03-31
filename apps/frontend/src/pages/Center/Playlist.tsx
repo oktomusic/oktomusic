@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { useSetAtom } from "jotai";
 import { Temporal } from "temporal-polyfill";
 import { t } from "@lingui/core/macro";
-import { LuPen } from "react-icons/lu";
+import { LuPen, LuShare } from "react-icons/lu";
 
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import { GenericLoading } from "./GenericLoading";
@@ -13,11 +13,14 @@ import { TrackList } from "../../components/TrackList/TrackList";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import type { TrackWithAlbum } from "../../atoms/player/machine";
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
+import { panelToastAtom } from "../../atoms/app/panels";
 
 export function Playlist() {
   const { cuid } = useParams();
 
   const setDialogPlaylistOpen = useSetAtom(dialogPlaylistOpenAtom);
+
+  const setToast = useSetAtom(panelToastAtom);
 
   const { data, loading, error } = useQuery(PLAYLIST_QUERY, {
     variables: { id: cuid! },
@@ -105,6 +108,38 @@ export function Playlist() {
             icon: <LuPen className="size-4" />,
             onClick: () => {
               setDialogPlaylistOpen(cuid);
+            },
+          },
+          {
+            type: "button",
+            label: t`Share`,
+            icon: <LuShare className="size-4" />,
+            onClick: () => {
+              if (!data) {
+                return;
+              }
+
+              const playlistUrl = `${window.location.origin}/playlist/${data.playlist.id}`;
+
+              if (navigator.share && typeof navigator.share === "function") {
+                navigator
+                  .share({
+                    title: data.playlist.name,
+                    url: playlistUrl,
+                  })
+                  .catch(() => {
+                    setToast({
+                      type: "error",
+                      message: t`Failed to share`,
+                    });
+                  });
+              } else {
+                void navigator.clipboard.writeText(playlistUrl);
+                setToast({
+                  type: "success",
+                  message: t`Link copied to clipboard`,
+                });
+              }
             },
           },
         ],

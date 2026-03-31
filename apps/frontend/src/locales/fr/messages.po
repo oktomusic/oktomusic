@@ -50,7 +50,7 @@ msgid "Add to playlist"
 msgstr ""
 
 #: src/components/TrackList/TrackElement.tsx:47
-#: src/pages/Center/Album.tsx:105
+#: src/pages/Center/Album.tsx:110
 msgid "Add to queue"
 msgstr ""
 
@@ -60,7 +60,7 @@ msgid "Admin Settings"
 msgstr ""
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:114
+#: src/pages/Center/Album.tsx:119
 msgid "Album"
 msgstr "Album"
 
@@ -147,7 +147,7 @@ msgstr "Description"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:104
+#: src/pages/Center/Playlist.tsx:107
 msgid "Edit details"
 msgstr ""
 
@@ -159,6 +159,11 @@ msgstr ""
 #: src/pages/SettingsClient/SettingsClient.tsx:147
 #~ msgid "Enabled"
 #~ msgstr "Activé"
+
+#: src/pages/Center/Album.tsx:95
+#: src/pages/Center/Playlist.tsx:133
+msgid "Failed to share"
+msgstr ""
 
 #: src/components/SubmenuPlaylistsSearch.tsx:44
 msgid "Find a playlist..."
@@ -207,7 +212,8 @@ msgstr "Mode Kiosque :"
 msgid "Line by line"
 msgstr "Ligne par ligne"
 
-#: src/pages/Center/Album.tsx:97
+#: src/pages/Center/Album.tsx:102
+#: src/pages/Center/Playlist.tsx:140
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
@@ -326,7 +332,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:88
+#: src/pages/Center/Playlist.tsx:91
 msgid "Playlist"
 msgstr ""
 
@@ -387,7 +393,8 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:78
+#: src/pages/Center/Album.tsx:77
+#: src/pages/Center/Playlist.tsx:115
 msgid "Share"
 msgstr "Partager"
 

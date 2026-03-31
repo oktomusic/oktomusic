@@ -1,8 +1,7 @@
 import { useQuery } from "@apollo/client/react";
 import { t } from "@lingui/core/macro";
 import { useSetAtom } from "jotai";
-import { HiOutlineShare } from "react-icons/hi2";
-import { LuListPlus } from "react-icons/lu";
+import { LuListPlus, LuShare } from "react-icons/lu";
 import { useParams } from "react-router";
 import { Temporal } from "temporal-polyfill";
 
@@ -76,7 +75,7 @@ export function Album() {
     {
       type: "button",
       label: t`Share`,
-      icon: <HiOutlineShare className="size-4" />,
+      icon: <LuShare className="size-4" />,
       onClick: () => {
         if (!data) {
           return;
@@ -84,12 +83,18 @@ export function Album() {
 
         const albumUrl = `${window.location.origin}/album/${data.album.id}`;
 
-        // TODO: handle promise failure + feedback to user
         if (navigator.share && typeof navigator.share === "function") {
-          void navigator.share({
-            title: data.album.name,
-            url: albumUrl,
-          });
+          navigator
+            .share({
+              title: data.album.name,
+              url: albumUrl,
+            })
+            .catch(() => {
+              setToast({
+                type: "error",
+                message: t`Failed to share`,
+              });
+            });
         } else {
           void navigator.clipboard.writeText(albumUrl);
           setToast({
