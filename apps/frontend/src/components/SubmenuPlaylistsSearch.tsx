@@ -12,7 +12,7 @@ import { OktoMenuButton, OktoMenuSeparator } from "./Base/OktoMenu";
 import { dialogPlaylistOpenAtom } from "../atoms/app/dialogs";
 
 interface SubmenuPlaylistsSearchProps {
-  readonly onClick: (playlistId: string) => void;
+  readonly onClick: (playlistId: string) => Promise<void>;
 }
 
 export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
@@ -74,7 +74,7 @@ export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
                         type="button"
                         label={playlist.name}
                         onClick={() => {
-                          props.onClick(playlist.id);
+                          void props.onClick(playlist.id);
                         }}
                       />
                     ))}

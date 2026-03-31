@@ -4,6 +4,7 @@ import { LuAudioLines, LuDisc3, LuListPlus } from "react-icons/lu";
 import { useSetAtom, useAtomValue } from "jotai";
 import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
+import { useMutation } from "@apollo/client/react";
 
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
 import { formatDuration } from "../../utils/format_duration";
@@ -14,7 +15,10 @@ import {
   playerShouldPlayAtom,
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
+import { panelToastAtom } from "../../atoms/app/panels";
 import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
+import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
+import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 
 interface TrackElementProps {
   readonly track: TrackWithAlbum;
@@ -25,9 +29,12 @@ interface TrackElementProps {
 
 export function TrackElement(props: TrackElementProps) {
   const addToQueue = useSetAtom(addToQueueAtom);
+  const setToast = useSetAtom(panelToastAtom);
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
+
+  const [addTracksToPlaylist] = useMutation(ADD_TRACKS_TO_PLAYLIST_MUTATION);
 
   const isCurrentTrack = currentTrack?.id === props.track.id;
   const showPauseIcon = isCurrentTrack && shouldPlay;
@@ -57,7 +64,28 @@ export function TrackElement(props: TrackElementProps) {
     },
     {
       type: "submenu",
-      component: <SubmenuPlaylistsSearch onClick={console.log} />,
+      component: (
+        <SubmenuPlaylistsSearch
+          onClick={async (playlistId: string) => {
+            try {
+              await addTracksToPlaylist({
+                variables: { id: playlistId, trackIds: [props.track.id] },
+                refetchQueries: [
+                  { query: PLAYLIST_QUERY, variables: { id: playlistId } },
+                ],
+                awaitRefetchQueries: true,
+              });
+              setToast({ message: t`Added to playlist`, type: "success" });
+            } catch (err) {
+              console.error(err);
+              setToast({
+                message: t`Failed to add track`,
+                type: "error",
+              });
+            }
+          }}
+        />
+      ),
     },
   ];
 
