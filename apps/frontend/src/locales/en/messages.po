@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/CollectionView/CollectionView.tsx:225
+#: src/components/CollectionView/CollectionView.tsx:231
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# track} other {# tracks}}"
 
@@ -151,7 +151,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Disabled"
 
-#: src/components/CollectionView/CollectionView.tsx:268
+#: src/components/CollectionView/CollectionView.tsx:274
 msgid "Download"
 msgstr "Download"
 
@@ -249,7 +249,7 @@ msgstr "Man"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr "Maximum number of media files to cache."
 
-#: src/components/CollectionView/CollectionView.tsx:278
+#: src/components/CollectionView/CollectionView.tsx:284
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
@@ -314,7 +314,7 @@ msgid "Persistent storage not granted"
 msgstr "Persistent storage not granted"
 
 #: src/components/CollectionView/CollectionView.tsx:133
-#: src/components/CollectionView/CollectionView.tsx:254
+#: src/components/CollectionView/CollectionView.tsx:260
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -361,10 +361,12 @@ msgstr "Playlist cover"
 msgid "Previous"
 msgstr "Previous"
 
+#: src/components/CollectionView/CollectionView.tsx:173
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:40
 msgid "Private"
 msgstr "Private"
 
+#: src/components/CollectionView/CollectionView.tsx:177
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:38
 msgid "Public"
 msgstr "Public"
@@ -381,7 +383,7 @@ msgstr "Resume {trackName}"
 msgid "Save"
 msgstr "Save"
 
-#: src/components/CollectionView/CollectionView.tsx:261
+#: src/components/CollectionView/CollectionView.tsx:267
 msgid "Save to library"
 msgstr "Save to library"
 
@@ -432,6 +434,7 @@ msgstr "Storage Persistence:"
 msgid "The following modern web features are missing:"
 msgstr "The following modern web features are missing:"
 
+#: src/components/CollectionView/CollectionView.tsx:181
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:39
 msgid "Unlisted"
 msgstr "Unlisted"

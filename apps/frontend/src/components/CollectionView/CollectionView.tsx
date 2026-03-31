@@ -169,11 +169,17 @@ export function CollectionView(props: CollectionViewProps) {
                   (() => {
                     switch (props.visibility) {
                       case "PRIVATE":
-                        return <LuLock className="mr-2 size-4" />;
+                        return (
+                          <LuLock className="mr-2 size-4" title={t`Private`} />
+                        );
                       case "PUBLIC":
-                        return <LuGlobe className="mr-2 size-4" />;
+                        return (
+                          <LuGlobe className="mr-2 size-4" title={t`Public`} />
+                        );
                       case "UNLISTED":
-                        return <LuLink className="mr-2 size-4" />;
+                        return (
+                          <LuLink className="mr-2 size-4" title={t`Unlisted`} />
+                        );
                     }
                   })()}
 

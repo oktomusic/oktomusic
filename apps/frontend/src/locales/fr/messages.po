@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/CollectionView/CollectionView.tsx:225
+#: src/components/CollectionView/CollectionView.tsx:231
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -147,7 +147,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/CollectionView/CollectionView.tsx:268
+#: src/components/CollectionView/CollectionView.tsx:274
 msgid "Download"
 msgstr "Télécharger"
 
@@ -245,7 +245,7 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:278
+#: src/components/CollectionView/CollectionView.tsx:284
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
@@ -310,7 +310,7 @@ msgid "Persistent storage not granted"
 msgstr ""
 
 #: src/components/CollectionView/CollectionView.tsx:133
-#: src/components/CollectionView/CollectionView.tsx:254
+#: src/components/CollectionView/CollectionView.tsx:260
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -357,10 +357,12 @@ msgstr ""
 msgid "Previous"
 msgstr "Précédent"
 
+#: src/components/CollectionView/CollectionView.tsx:173
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:40
 msgid "Private"
 msgstr "Privée"
 
+#: src/components/CollectionView/CollectionView.tsx:177
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:38
 msgid "Public"
 msgstr "Publique"
@@ -377,7 +379,7 @@ msgstr ""
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: src/components/CollectionView/CollectionView.tsx:261
+#: src/components/CollectionView/CollectionView.tsx:267
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
@@ -428,6 +430,7 @@ msgstr ""
 msgid "The following modern web features are missing:"
 msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 
+#: src/components/CollectionView/CollectionView.tsx:181
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:39
 msgid "Unlisted"
 msgstr "Non répertoriée"
