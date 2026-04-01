@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
 import { useSetAtom } from "jotai";
 import { t } from "@lingui/core/macro";
-import { LuPen, LuShare } from "react-icons/lu";
+import { LuListPlus, LuPen, LuShare } from "react-icons/lu";
 
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import { GenericLoading } from "./GenericLoading";
@@ -10,7 +10,11 @@ import { GenericGraphQLError } from "./GenericGraphQLError";
 import { CollectionView } from "../../components/CollectionView/CollectionView";
 import { TrackList } from "../../components/TrackList/TrackList";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
-import type { TrackWithAlbum } from "../../atoms/player/machine";
+import {
+  addToQueueAtom,
+  replaceQueueAtom,
+  type TrackWithAlbum,
+} from "../../atoms/player/machine";
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 import { panelToastAtom } from "../../atoms/app/panels";
 
@@ -25,6 +29,9 @@ export function Playlist() {
     variables: { id: cuid! },
     skip: !cuid,
   });
+
+  const replaceQueue = useSetAtom(replaceQueueAtom);
+  const addToQueue = useSetAtom(addToQueueAtom);
 
   if (!cuid) {
     return null;
@@ -95,6 +102,9 @@ export function Playlist() {
       }}
       visibility={playlist.visibility}
       actions={{
+        onPlay() {
+          replaceQueue(playlistTracks);
+        },
         menuItems: [
           {
             type: "button",
@@ -102,6 +112,14 @@ export function Playlist() {
             icon: <LuPen className="size-4" />,
             onClick: () => {
               setDialogPlaylistOpen(cuid);
+            },
+          },
+          {
+            type: "button",
+            icon: <LuListPlus className="size-4" />,
+            label: t`Add to queue`,
+            onClick: () => {
+              addToQueue(playlistTracks);
             },
           },
           {

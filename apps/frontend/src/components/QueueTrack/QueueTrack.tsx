@@ -1,8 +1,19 @@
 import { Link } from "react-router";
 import { Button } from "@headlessui/react";
 import { HiEllipsisHorizontal, HiPause, HiPlay } from "react-icons/hi2";
+import { LuDisc3, LuListPlus } from "react-icons/lu";
+import { useSetAtom } from "jotai";
+import { useMutation } from "@apollo/client/react";
+import { t } from "@lingui/core/macro";
 
-import { TrackWithAlbum } from "../../atoms/player/machine";
+import { addToQueueAtom, TrackWithAlbum } from "../../atoms/player/machine";
+import { panelToastAtom } from "../../atoms/app/panels";
+
+import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
+import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
+
+import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
+import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 
 import "./QueueTrack.css";
 
@@ -14,10 +25,62 @@ interface QueueTrackProps {
 }
 
 export function QueueTrack(props: QueueTrackProps) {
+  const addToQueue = useSetAtom(addToQueueAtom);
+  const setToast = useSetAtom(panelToastAtom);
+
+  const [addTracksToPlaylist] = useMutation(ADD_TRACKS_TO_PLAYLIST_MUTATION);
+
   const showPlayIcon = !props.isCurrent || !props.isPlaying;
 
+  const trackName = props.track.name;
+
+  const menuItems = [
+    {
+      type: "button",
+      icon: <LuListPlus className="size-4" />,
+      label: t`Add to queue`,
+      onClick: () => {
+        addToQueue([props.track]);
+      },
+    },
+    {
+      type: "router-link",
+      icon: <LuDisc3 className="size-4" />,
+      label: t`Go to album`,
+      to: `/album/${props.track.album.id}`,
+    },
+    {
+      type: "submenu",
+      component: (
+        <SubmenuPlaylistsSearch
+          onClick={async (playlistId: string) => {
+            try {
+              await addTracksToPlaylist({
+                variables: { id: playlistId, trackIds: [props.track.id] },
+                refetchQueries: [
+                  { query: PLAYLIST_QUERY, variables: { id: playlistId } },
+                ],
+                awaitRefetchQueries: true,
+              });
+              setToast({ message: t`Added to playlist`, type: "success" });
+            } catch (err) {
+              console.error(err);
+              setToast({
+                message: t`Failed to add track`,
+                type: "error",
+              });
+            }
+          }}
+        />
+      ),
+    },
+  ] as const satisfies OktoMenuItem[];
+
   return (
-    <li className="queue-track gap-3 rounded p-2 hover:bg-white/10" draggable>
+    <li
+      className="queue-track group gap-3 rounded p-2 hover:bg-white/10"
+      draggable
+    >
       <Button
         className="group relative size-12 shrink-0 appearance-none rounded"
         onClick={props.onClickPlay}
@@ -59,7 +122,13 @@ export function QueueTrack(props: QueueTrackProps) {
         </span>
       </div>
       <div className="flex flex-row items-center">
-        <HiEllipsisHorizontal className="size-6 opacity-0 hover:opacity-100" />
+        <OktoMenu
+          button={
+            <HiEllipsisHorizontal className="size-6 opacity-0 group-hover:opacity-100" />
+          }
+          items={menuItems}
+          buttonAriaLabel={t`More options for ${trackName}`}
+        />
       </div>
     </li>
   );

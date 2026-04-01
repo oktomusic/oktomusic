@@ -49,8 +49,10 @@ msgstr "Add an optional description"
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
+#: src/components/QueueTrack/QueueTrack.tsx:41
 #: src/components/TrackList/TrackElement.tsx:54
 #: src/pages/Center/Album.tsx:110
+#: src/pages/Center/Playlist.tsx:120
 msgid "Add to queue"
 msgstr "Add to queue"
 
@@ -58,6 +60,7 @@ msgstr "Add to queue"
 #~ msgid "Add to Queue"
 #~ msgstr "Add to Queue"
 
+#: src/components/QueueTrack/QueueTrack.tsx:65
 #: src/components/TrackList/TrackElement.tsx:78
 msgid "Added to playlist"
 msgstr "Added to playlist"
@@ -155,7 +158,7 @@ msgstr "Description"
 msgid "Download"
 msgstr "Download"
 
-#: src/pages/Center/Playlist.tsx:101
+#: src/pages/Center/Playlist.tsx:111
 msgid "Edit details"
 msgstr "Edit details"
 
@@ -168,12 +171,13 @@ msgstr "Edit playlist details"
 #~ msgid "Enabled"
 #~ msgstr "Enabled"
 
+#: src/components/QueueTrack/QueueTrack.tsx:69
 #: src/components/TrackList/TrackElement.tsx:82
 msgid "Failed to add track"
 msgstr "Failed to add track"
 
 #: src/pages/Center/Album.tsx:95
-#: src/pages/Center/Playlist.tsx:127
+#: src/pages/Center/Playlist.tsx:145
 msgid "Failed to share"
 msgstr "Failed to share"
 
@@ -191,6 +195,7 @@ msgstr "Go back"
 msgid "Go forward"
 msgstr "Go forward"
 
+#: src/components/QueueTrack/QueueTrack.tsx:49
 #: src/components/TrackList/TrackElement.tsx:62
 msgid "Go to album"
 msgstr "Go to album"
@@ -225,7 +230,7 @@ msgid "Line by line"
 msgstr "Line by line"
 
 #: src/pages/Center/Album.tsx:102
-#: src/pages/Center/Playlist.tsx:134
+#: src/pages/Center/Playlist.tsx:152
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
@@ -253,7 +258,8 @@ msgstr "Man"
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:170
+#: src/components/QueueTrack/QueueTrack.tsx:130
+#: src/components/TrackList/TrackElement.tsx:168
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"
 
@@ -344,7 +350,7 @@ msgid "Playback controls"
 msgstr "Playback controls"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:86
+#: src/pages/Center/Playlist.tsx:93
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -408,7 +414,7 @@ msgid "Sexe :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:77
-#: src/pages/Center/Playlist.tsx:109
+#: src/pages/Center/Playlist.tsx:127
 msgid "Share"
 msgstr "Share"
 

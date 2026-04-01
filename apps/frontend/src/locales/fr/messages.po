@@ -49,11 +49,14 @@ msgstr ""
 msgid "Add to playlist"
 msgstr ""
 
+#: src/components/QueueTrack/QueueTrack.tsx:41
 #: src/components/TrackList/TrackElement.tsx:54
 #: src/pages/Center/Album.tsx:110
+#: src/pages/Center/Playlist.tsx:120
 msgid "Add to queue"
 msgstr ""
 
+#: src/components/QueueTrack/QueueTrack.tsx:65
 #: src/components/TrackList/TrackElement.tsx:78
 msgid "Added to playlist"
 msgstr ""
@@ -151,7 +154,7 @@ msgstr "Description"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:101
+#: src/pages/Center/Playlist.tsx:111
 msgid "Edit details"
 msgstr ""
 
@@ -164,12 +167,13 @@ msgstr ""
 #~ msgid "Enabled"
 #~ msgstr "Activé"
 
+#: src/components/QueueTrack/QueueTrack.tsx:69
 #: src/components/TrackList/TrackElement.tsx:82
 msgid "Failed to add track"
 msgstr ""
 
 #: src/pages/Center/Album.tsx:95
-#: src/pages/Center/Playlist.tsx:127
+#: src/pages/Center/Playlist.tsx:145
 msgid "Failed to share"
 msgstr ""
 
@@ -187,6 +191,7 @@ msgstr "Reculer"
 msgid "Go forward"
 msgstr "Avancer"
 
+#: src/components/QueueTrack/QueueTrack.tsx:49
 #: src/components/TrackList/TrackElement.tsx:62
 msgid "Go to album"
 msgstr "Accéder à l'album"
@@ -221,7 +226,7 @@ msgid "Line by line"
 msgstr "Ligne par ligne"
 
 #: src/pages/Center/Album.tsx:102
-#: src/pages/Center/Playlist.tsx:134
+#: src/pages/Center/Playlist.tsx:152
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
@@ -249,7 +254,8 @@ msgstr "Homme"
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:170
+#: src/components/QueueTrack/QueueTrack.tsx:130
+#: src/components/TrackList/TrackElement.tsx:168
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
@@ -340,7 +346,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:86
+#: src/pages/Center/Playlist.tsx:93
 msgid "Playlist"
 msgstr ""
 
@@ -404,7 +410,7 @@ msgid "Sexe :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:77
-#: src/pages/Center/Playlist.tsx:109
+#: src/pages/Center/Playlist.tsx:127
 msgid "Share"
 msgstr "Partager"
 

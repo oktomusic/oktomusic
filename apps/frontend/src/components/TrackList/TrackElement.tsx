@@ -47,7 +47,7 @@ export function TrackElement(props: TrackElementProps) {
     }
   };
 
-  const menuItems: OktoMenuItem[] = [
+  const menuItems = [
     {
       type: "button",
       icon: <LuListPlus className="size-4" />,
@@ -87,7 +87,7 @@ export function TrackElement(props: TrackElementProps) {
         />
       ),
     },
-  ];
+  ] as const satisfies readonly OktoMenuItem[];
 
   const trackName = props.track.name;
 
@@ -164,8 +164,6 @@ export function TrackElement(props: TrackElementProps) {
           button={
             <HiEllipsisHorizontal className="size-6 opacity-0 group-hover:opacity-100" />
           }
-          positionAlign="end"
-          positionSide="bottom"
           items={menuItems}
           buttonAriaLabel={t`More options for ${trackName}`}
         />
