@@ -1,12 +1,12 @@
 import { Link } from "react-router";
 import { HiEllipsisHorizontal, HiPlay, HiPause } from "react-icons/hi2";
-import { LuAudioLines, LuDisc3, LuListPlus } from "react-icons/lu";
+import { LuAudioLines, LuDisc3, LuListPlus, LuTrash2 } from "react-icons/lu";
 import { useSetAtom, useAtomValue } from "jotai";
 import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
 import { useMutation } from "@apollo/client/react";
 
-import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
+import { OktoMenu, OktoMenuItem, OktoMenuButtonItem } from "../Base/OktoMenu";
 import { formatDuration } from "../../utils/format_duration";
 import {
   TrackWithAlbum,
@@ -18,6 +18,7 @@ import {
 import { panelToastAtom } from "../../atoms/app/panels";
 import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
 import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
+import { REMOVE_TRACKS_FROM_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/removeTracksFromPlaylist";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 
 interface TrackElementProps {
@@ -25,6 +26,8 @@ interface TrackElementProps {
   readonly index: number;
   readonly displayCover: boolean;
   readonly onPlay: () => void;
+  readonly playlistId?: string;
+  readonly playlistTrackIndex?: number;
 }
 
 export function TrackElement(props: TrackElementProps) {
@@ -35,6 +38,9 @@ export function TrackElement(props: TrackElementProps) {
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
 
   const [addTracksToPlaylist] = useMutation(ADD_TRACKS_TO_PLAYLIST_MUTATION);
+  const [removeTracksFromPlaylist] = useMutation(
+    REMOVE_TRACKS_FROM_PLAYLIST_MUTATION,
+  );
 
   const isCurrentTrack = currentTrack?.id === props.track.id;
   const showPauseIcon = isCurrentTrack && shouldPlay;
@@ -46,6 +52,40 @@ export function TrackElement(props: TrackElementProps) {
       props.onPlay();
     }
   };
+
+  const removeFromPlaylistMenuItem: OktoMenuButtonItem | null =
+    props.playlistId !== undefined && props.playlistTrackIndex !== undefined
+      ? {
+          type: "button",
+          icon: <LuTrash2 className="size-4" />,
+          label: t`Remove from playlist`,
+          onClick: () => {
+            void removeTracksFromPlaylist({
+              variables: {
+                id: props.playlistId!,
+                positions: [props.playlistTrackIndex!],
+              },
+              refetchQueries: [
+                { query: PLAYLIST_QUERY, variables: { id: props.playlistId! } },
+              ],
+              awaitRefetchQueries: true,
+            })
+              .then(() => {
+                setToast({
+                  message: t`Removed from playlist`,
+                  type: "success",
+                });
+              })
+              .catch((err: unknown) => {
+                console.error(err);
+                setToast({
+                  message: t`Failed to remove track`,
+                  type: "error",
+                });
+              });
+          },
+        }
+      : null;
 
   const menuItems = [
     {
@@ -87,6 +127,7 @@ export function TrackElement(props: TrackElementProps) {
         />
       ),
     },
+    ...(removeFromPlaylistMenuItem ? [removeFromPlaylistMenuItem] : []),
   ] as const satisfies readonly OktoMenuItem[];
 
   const trackName = props.track.name;

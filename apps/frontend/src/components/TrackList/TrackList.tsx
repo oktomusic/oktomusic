@@ -14,6 +14,12 @@ interface TrackListProps {
   readonly tracks: TrackWithAlbum[][];
   readonly displayCover?: boolean;
   /**
+   * The ID of the playlist to which tracks can be added or removed.
+   *
+   * Used to conditionally render "Remove from playlist" menu item.
+   */
+  readonly playlistId?: string;
+  /**
    * TODO: implement drag-and-drop reordering of tracks when `reorderable` is true.
    */
   readonly reorderable?: boolean;
@@ -65,6 +71,8 @@ export function TrackList(props: TrackListProps) {
                   index={trackIndex}
                   displayCover={displayCover}
                   onPlay={() => handlePlay(discStartIndex + trackIndex)}
+                  playlistId={props.playlistId}
+                  playlistTrackIndex={discStartIndex + trackIndex}
                 />
               ))}
             </ol>

@@ -157,7 +157,11 @@ export function Playlist() {
         ],
       }}
     >
-      <TrackList tracks={tracksByDisc} displayCover={true} />
+      <TrackList
+        tracks={tracksByDisc}
+        displayCover={true}
+        playlistId={playlist.id}
+      />
     </CollectionView>
   );
 }

@@ -50,14 +50,14 @@ msgid "Add to playlist"
 msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:41
-#: src/components/TrackList/TrackElement.tsx:54
+#: src/components/TrackList/TrackElement.tsx:94
 #: src/pages/Center/Album.tsx:110
 #: src/pages/Center/Playlist.tsx:120
 msgid "Add to queue"
 msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:65
-#: src/components/TrackList/TrackElement.tsx:78
+#: src/components/TrackList/TrackElement.tsx:118
 msgid "Added to playlist"
 msgstr ""
 
@@ -168,8 +168,12 @@ msgstr ""
 #~ msgstr "Activé"
 
 #: src/components/QueueTrack/QueueTrack.tsx:69
-#: src/components/TrackList/TrackElement.tsx:82
+#: src/components/TrackList/TrackElement.tsx:122
 msgid "Failed to add track"
+msgstr ""
+
+#: src/components/TrackList/TrackElement.tsx:82
+msgid "Failed to remove track"
 msgstr ""
 
 #: src/pages/Center/Album.tsx:95
@@ -192,7 +196,7 @@ msgid "Go forward"
 msgstr "Avancer"
 
 #: src/components/QueueTrack/QueueTrack.tsx:49
-#: src/components/TrackList/TrackElement.tsx:62
+#: src/components/TrackList/TrackElement.tsx:102
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
@@ -255,7 +259,7 @@ msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
 #: src/components/QueueTrack/QueueTrack.tsx:130
-#: src/components/TrackList/TrackElement.tsx:168
+#: src/components/TrackList/TrackElement.tsx:209
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
@@ -303,7 +307,7 @@ msgstr "Page introuvable"
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/TrackList/TrackElement.tsx:117
+#: src/components/TrackList/TrackElement.tsx:158
 msgid "Pause {trackName}"
 msgstr ""
 
@@ -330,7 +334,7 @@ msgstr "Lecture"
 msgid "Play {albumName}"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:119
+#: src/components/TrackList/TrackElement.tsx:160
 msgid "Play {trackName}"
 msgstr ""
 
@@ -373,11 +377,19 @@ msgstr "Privée"
 msgid "Public"
 msgstr "Publique"
 
+#: src/components/TrackList/TrackElement.tsx:61
+msgid "Remove from playlist"
+msgstr ""
+
+#: src/components/TrackList/TrackElement.tsx:75
+msgid "Removed from playlist"
+msgstr ""
+
 #: src/pages/SettingsClient/SettingsClient.tsx:223
 msgid "Request"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:118
+#: src/components/TrackList/TrackElement.tsx:159
 msgid "Resume {trackName}"
 msgstr ""
 
