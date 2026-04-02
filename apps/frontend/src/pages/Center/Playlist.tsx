@@ -16,14 +16,12 @@ import {
   type TrackWithAlbum,
 } from "../../atoms/player/machine";
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
-import { panelToastAtom } from "../../atoms/app/panels";
+import { useShare } from "../../hooks/use_share";
 
 export function Playlist() {
   const { cuid } = useParams();
 
   const setDialogPlaylistOpen = useSetAtom(dialogPlaylistOpenAtom);
-
-  const setToast = useSetAtom(panelToastAtom);
 
   const { data, loading, error } = useQuery(PLAYLIST_QUERY, {
     variables: { id: cuid! },
@@ -32,6 +30,11 @@ export function Playlist() {
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
+
+  const share = useShare(
+    data ? `${window.location.origin}/playlist/${data.playlist.id}` : undefined,
+    data?.playlist.name || undefined,
+  );
 
   if (!cuid) {
     return null;
@@ -126,33 +129,7 @@ export function Playlist() {
             type: "button",
             label: t`Share`,
             icon: <LuShare className="size-4" />,
-            onClick: () => {
-              if (!data) {
-                return;
-              }
-
-              const playlistUrl = `${window.location.origin}/playlist/${data.playlist.id}`;
-
-              if (navigator.share && typeof navigator.share === "function") {
-                navigator
-                  .share({
-                    title: data.playlist.name,
-                    url: playlistUrl,
-                  })
-                  .catch(() => {
-                    setToast({
-                      type: "error",
-                      message: t`Failed to share`,
-                    });
-                  });
-              } else {
-                void navigator.clipboard.writeText(playlistUrl);
-                setToast({
-                  type: "success",
-                  message: t`Link copied to clipboard`,
-                });
-              }
-            },
+            onClick: share,
           },
         ],
       }}

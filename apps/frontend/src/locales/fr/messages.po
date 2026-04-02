@@ -51,8 +51,8 @@ msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:41
 #: src/components/TrackList/TrackElement.tsx:94
-#: src/pages/Center/Album.tsx:110
-#: src/pages/Center/Playlist.tsx:120
+#: src/pages/Center/Album.tsx:87
+#: src/pages/Center/Playlist.tsx:123
 msgid "Add to queue"
 msgstr ""
 
@@ -67,7 +67,7 @@ msgid "Admin Settings"
 msgstr ""
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:119
+#: src/pages/Center/Album.tsx:96
 msgid "Album"
 msgstr "Album"
 
@@ -154,7 +154,7 @@ msgstr "Description"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:111
+#: src/pages/Center/Playlist.tsx:114
 msgid "Edit details"
 msgstr ""
 
@@ -176,8 +176,7 @@ msgstr ""
 msgid "Failed to remove track"
 msgstr ""
 
-#: src/pages/Center/Album.tsx:95
-#: src/pages/Center/Playlist.tsx:145
+#: src/hooks/use_share.tsx:37
 msgid "Failed to share"
 msgstr ""
 
@@ -229,8 +228,7 @@ msgstr "Mode Kiosque :"
 msgid "Line by line"
 msgstr "Ligne par ligne"
 
-#: src/pages/Center/Album.tsx:102
-#: src/pages/Center/Playlist.tsx:152
+#: src/hooks/use_share.tsx:44
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
@@ -350,7 +348,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:93
+#: src/pages/Center/Playlist.tsx:96
 msgid "Playlist"
 msgstr ""
 
@@ -371,6 +369,10 @@ msgstr "Précédent"
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:40
 msgid "Private"
 msgstr "Privée"
+
+#: src/pages/Center/User.tsx:42
+msgid "Profile"
+msgstr ""
 
 #: src/components/CollectionView/CollectionView.tsx:177
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:38
@@ -421,8 +423,9 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:77
-#: src/pages/Center/Playlist.tsx:127
+#: src/pages/Center/Album.tsx:80
+#: src/pages/Center/Playlist.tsx:130
+#: src/pages/Center/User.tsx:50
 msgid "Share"
 msgstr "Partager"
 

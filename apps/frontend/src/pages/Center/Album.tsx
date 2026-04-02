@@ -16,9 +16,9 @@ import {
   replaceQueueAtom,
   type VibrantColorsPartial,
 } from "../../atoms/player/machine";
-import { panelToastAtom } from "../../atoms/app/panels";
 import { dialogCoverId } from "../../atoms/app/dialogs";
 import { mapTracksWithAlbum } from "../../utils/album_tracks";
+import { useShare } from "../../hooks/use_share";
 
 export function Album() {
   const { cuid } = useParams();
@@ -40,9 +40,12 @@ export function Album() {
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
 
-  const setToast = useSetAtom(panelToastAtom);
-
   const setDialogCoverId = useSetAtom(dialogCoverId);
+
+  const share = useShare(
+    data ? `${window.location.origin}/album/${data.album.id}` : undefined,
+    data?.album.name || undefined,
+  );
 
   if (!cuid) {
     return null;
@@ -76,33 +79,7 @@ export function Album() {
       type: "button",
       label: t`Share`,
       icon: <LuShare className="size-4" />,
-      onClick: () => {
-        if (!data) {
-          return;
-        }
-
-        const albumUrl = `${window.location.origin}/album/${data.album.id}`;
-
-        if (navigator.share && typeof navigator.share === "function") {
-          navigator
-            .share({
-              title: data.album.name,
-              url: albumUrl,
-            })
-            .catch(() => {
-              setToast({
-                type: "error",
-                message: t`Failed to share`,
-              });
-            });
-        } else {
-          void navigator.clipboard.writeText(albumUrl);
-          setToast({
-            type: "success",
-            message: t`Link copied to clipboard`,
-          });
-        }
-      },
+      onClick: share,
     },
     {
       type: "button",

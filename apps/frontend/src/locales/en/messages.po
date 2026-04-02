@@ -51,8 +51,8 @@ msgstr "Add to playlist"
 
 #: src/components/QueueTrack/QueueTrack.tsx:41
 #: src/components/TrackList/TrackElement.tsx:94
-#: src/pages/Center/Album.tsx:110
-#: src/pages/Center/Playlist.tsx:120
+#: src/pages/Center/Album.tsx:87
+#: src/pages/Center/Playlist.tsx:123
 msgid "Add to queue"
 msgstr "Add to queue"
 
@@ -71,7 +71,7 @@ msgid "Admin Settings"
 msgstr "Admin Settings"
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:119
+#: src/pages/Center/Album.tsx:96
 msgid "Album"
 msgstr "Album"
 
@@ -158,7 +158,7 @@ msgstr "Description"
 msgid "Download"
 msgstr "Download"
 
-#: src/pages/Center/Playlist.tsx:111
+#: src/pages/Center/Playlist.tsx:114
 msgid "Edit details"
 msgstr "Edit details"
 
@@ -180,8 +180,7 @@ msgstr "Failed to add track"
 msgid "Failed to remove track"
 msgstr "Failed to remove track"
 
-#: src/pages/Center/Album.tsx:95
-#: src/pages/Center/Playlist.tsx:145
+#: src/hooks/use_share.tsx:37
 msgid "Failed to share"
 msgstr "Failed to share"
 
@@ -233,8 +232,7 @@ msgstr "Kiosk mode:"
 msgid "Line by line"
 msgstr "Line by line"
 
-#: src/pages/Center/Album.tsx:102
-#: src/pages/Center/Playlist.tsx:152
+#: src/hooks/use_share.tsx:44
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
@@ -354,7 +352,7 @@ msgid "Playback controls"
 msgstr "Playback controls"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:93
+#: src/pages/Center/Playlist.tsx:96
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -375,6 +373,10 @@ msgstr "Previous"
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:40
 msgid "Private"
 msgstr "Private"
+
+#: src/pages/Center/User.tsx:42
+msgid "Profile"
+msgstr "Profile"
 
 #: src/components/CollectionView/CollectionView.tsx:177
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:38
@@ -425,8 +427,9 @@ msgstr "Seek"
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:77
-#: src/pages/Center/Playlist.tsx:127
+#: src/pages/Center/Album.tsx:80
+#: src/pages/Center/Playlist.tsx:130
+#: src/pages/Center/User.tsx:50
 msgid "Share"
 msgstr "Share"
 
