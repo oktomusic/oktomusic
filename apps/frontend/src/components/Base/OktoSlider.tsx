@@ -24,6 +24,7 @@ export function OktoSlider(props: OktoSliderProps) {
       min={props.min}
       max={props.max}
       step={props.step}
+      thumbAlignment="edge-client-only"
       onValueChange={(value) => props.onChange(value)}
       className={"w-full"}
     >
