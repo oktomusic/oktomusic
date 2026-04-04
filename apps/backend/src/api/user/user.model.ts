@@ -2,6 +2,7 @@ import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { GraphQLISODateTime } from "@nestjs/graphql";
 
 import { Role, Sex } from "../../generated/prisma/client";
+import { PlaylistBasicModel } from "../playlist/playlist.model";
 
 registerEnumType(Role, { name: "Role" });
 registerEnumType(Sex, { name: "Sex" });
@@ -28,4 +29,9 @@ export class UserModel {
 
   @Field(() => Sex, { nullable: true })
   sex!: Sex | null;
+
+  @Field(() => [PlaylistBasicModel], {
+    description: "Playlists visible to the connected user",
+  })
+  playlists?: PlaylistBasicModel[];
 }

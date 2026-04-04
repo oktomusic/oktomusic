@@ -1,7 +1,14 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
-import { Prisma, Sex } from "../../generated/prisma/client";
+import {
+  PlaylistVisibility as PrismaPlaylistVisibility,
+  Prisma,
+  Sex,
+  User,
+} from "../../generated/prisma/client";
 import { PrismaService } from "../../db/prisma.service";
+import { PlaylistBasicModel } from "../playlist/playlist.model";
+import { PlaylistVisibility } from "../playlist/playlist-visibility.enum";
 
 interface UpdateUserProfileData {
   sex?: Sex | null;
@@ -44,5 +51,45 @@ export class UserService {
 
       throw error;
     }
+  }
+
+  async getUserPlaylistsForViewer(
+    targetUserId: string,
+    viewer: User,
+  ): Promise<PlaylistBasicModel[]> {
+    const isOwnProfile = viewer.id === targetUserId;
+
+    const playlists = await this.prisma.playlist.findMany({
+      where: {
+        userId: targetUserId,
+        ...(isOwnProfile
+          ? {}
+          : { visibility: PrismaPlaylistVisibility.PUBLIC }),
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        visibility: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+      },
+      orderBy: { updatedAt: "desc" },
+    });
+
+    return playlists.map((playlist) => ({
+      id: playlist.id,
+      name: playlist.name,
+      description: playlist.description,
+      visibility: playlist.visibility as PlaylistVisibility,
+      creator: {
+        id: playlist.user.id,
+        username: playlist.user.username,
+      },
+    }));
   }
 }

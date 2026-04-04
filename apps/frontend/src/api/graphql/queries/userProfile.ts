@@ -9,6 +9,16 @@ export const USER_PROFILE_QUERY = graphql(/* GraphQL */ `
       sex
       createdAt
       updatedAt
+      playlists {
+        id
+        name
+        description
+        visibility
+        creator {
+          id
+          username
+        }
+      }
     }
   }
 `);

@@ -3,12 +3,16 @@ import { useParams } from "react-router";
 import { t } from "@lingui/core/macro";
 import { LuShare } from "react-icons/lu";
 
+import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
+import { ME_QUERY } from "../../api/graphql/queries/me";
 import { USER_PROFILE_QUERY } from "../../api/graphql/queries/userProfile";
 import { GenericLoading } from "./GenericLoading";
 import { GenericGraphQLError } from "./GenericGraphQLError";
+import { PlaylistCardList } from "../../components/Base/PlaylistCardList";
 import { CollectionView } from "../../components/CollectionView/CollectionView";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { useShare } from "../../hooks/use_share";
+import { CollectionViewToolbarUser } from "../../components/CollectionView/CollectionViewToolbarUser";
 
 export function User() {
   const { cuid } = useParams();
@@ -19,6 +23,8 @@ export function User() {
     },
     skip: !cuid,
   });
+
+  const { data: meData } = useQuery(ME_QUERY);
 
   const share = useShare(
     data ? `${window.location.origin}/user/${data.userProfile.id}` : undefined,
@@ -37,24 +43,61 @@ export function User() {
     return <GenericGraphQLError error={error} />;
   }
 
+  const playlists = data?.userProfile.playlists ?? [];
+  const isOwnProfile = meData?.me.id === data?.userProfile.id;
+
+  const publicPlaylists = playlists.filter(
+    (playlist) => playlist.visibility === PlaylistVisibility.Public,
+  );
+
+  const privateAndUnlistedPlaylists = playlists.filter(
+    (playlist) =>
+      playlist.visibility === PlaylistVisibility.Private ||
+      playlist.visibility === PlaylistVisibility.Unlisted,
+  );
+
   return (
     <CollectionView
       type={t`Profile`}
       title={data!.userProfile.username}
       cover={coverPlaceHolder}
-      meta={<></>}
-      actions={{
-        menuItems: [
-          {
-            type: "button",
-            label: t`Share`,
-            icon: <LuShare className="size-4" />,
-            onClick: share,
-          },
-        ],
-      }}
+      toolbar={
+        <CollectionViewToolbarUser
+          username={data!.userProfile.username}
+          menuItems={[
+            {
+              type: "button",
+              label: t`Share`,
+              icon: <LuShare className="size-4" />,
+              onClick: share,
+            },
+          ]}
+        />
+      }
     >
-      {JSON.stringify(data, undefined, 2)}
+      <div className="flex w-full flex-col gap-10 p-6">
+        <section aria-label={t`Public playlists`} className="space-y-4">
+          <h2 className="text-2xl font-bold">{t`Public playlists`}</h2>
+          {publicPlaylists.length === 0 ? (
+            <div className="p-6">{t`No public playlists found`}</div>
+          ) : (
+            <PlaylistCardList playlists={publicPlaylists} />
+          )}
+        </section>
+
+        {isOwnProfile ? (
+          <section aria-label={t`Private and unlisted playlists`}>
+            <h2 className="pb-4 text-2xl font-bold">
+              {t`Private and unlisted playlists`}
+            </h2>
+            {privateAndUnlistedPlaylists.length === 0 ? (
+              <div className="p-6">{t`No private or unlisted playlists found`}</div>
+            ) : (
+              <PlaylistCardList playlists={privateAndUnlistedPlaylists} />
+            )}
+          </section>
+        ) : null}
+      </div>
     </CollectionView>
   );
 }

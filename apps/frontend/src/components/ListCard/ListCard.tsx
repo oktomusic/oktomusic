@@ -5,13 +5,27 @@ interface ArtistInfo {
   readonly name: string;
 }
 
-interface ListCardProps {
+interface UserInfo {
+  readonly id: string;
+  readonly username: string;
+}
+
+type ListCardPeopleProps =
+  | {
+      readonly artists: readonly ArtistInfo[];
+      readonly users?: never;
+    }
+  | {
+      readonly artists?: never;
+      readonly users: readonly UserInfo[];
+    };
+
+type ListCardProps = ListCardPeopleProps & {
   readonly link: string;
   readonly cover: string;
   readonly title: string;
   readonly year?: number;
-  readonly artists: ArtistInfo[];
-}
+};
 
 export function ListCard(props: ListCardProps) {
   const navigate = useNavigate();
@@ -20,13 +34,23 @@ export function ListCard(props: ListCardProps) {
     void navigate(props.link);
   };
 
-  const handleArtistClick = (
+  const handlePersonClick = (
     e: React.MouseEvent<HTMLSpanElement>,
-    artistId: string,
+    personId: string,
+    routePrefix: "/artist/" | "/user/",
   ) => {
     e.stopPropagation();
-    void navigate(`/artist/${artistId}`);
+    void navigate(`${routePrefix}${personId}`);
   };
+
+  const isArtistList = props.artists !== undefined;
+  const peopleRoutePrefix: "/artist/" | "/user/" = isArtistList
+    ? "/artist/"
+    : "/user/";
+  const people: readonly { readonly id: string; readonly label: string }[] =
+    isArtistList
+      ? props.artists.map((artist) => ({ id: artist.id, label: artist.name }))
+      : props.users.map((user) => ({ id: user.id, label: user.username }));
 
   return (
     <div
@@ -46,16 +70,16 @@ export function ListCard(props: ListCardProps) {
       <h3 className="mb-1 line-clamp-2 font-semibold">{props.title}</h3>
       <p className="line-clamp-2 text-sm text-zinc-400">
         {props.year ? <span>{props.year} • </span> : null}
-        {props.artists.map((artist, index) => (
-          <span key={artist.id ?? index}>
+        {people.map((person, index) => (
+          <span key={person.id ?? index}>
             <span
-              onClick={(e) => handleArtistClick(e, artist.id)}
+              onClick={(e) => handlePersonClick(e, person.id, peopleRoutePrefix)}
               className="cursor-pointer hover:underline"
               role="link"
             >
-              {artist.name}
+              {person.label}
             </span>
-            {index < (props.artists.length ?? 0) - 1 && ", "}
+            {index < people.length - 1 && ", "}
           </span>
         ))}
       </p>

@@ -1,9 +1,18 @@
 import { ForbiddenException, UseGuards } from "@nestjs/common";
-import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from "@nestjs/graphql";
 import type { Request } from "express";
 
 import { GraphqlAuthGuard } from "../../common/guards/graphql-auth.guard";
 import { Role } from "../../generated/prisma/client";
+import { PlaylistBasicModel } from "../playlist/playlist.model";
 import { UpdateUserProfileInput } from "./dto/update-user-profile.input";
 import { UserModel } from "./user.model";
 import { UserService } from "./user.service";
@@ -21,17 +30,27 @@ export class UserResolver {
   @UseGuards(GraphqlAuthGuard)
   @Query(() => UserModel, {
     name: "userProfile",
-    description: "User profile by identifier (admin access only)",
+    description: "User profile by identifier",
   })
   async userProfile(
     @Args("userId", { type: () => String }) userId: string,
-    @Context("req") req: Request,
   ): Promise<UserModel> {
-    if (req.user?.role !== Role.ADMIN) {
-      throw new ForbiddenException("Admin access required");
+    return this.userService.getUserById(userId);
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @ResolveField(() => [PlaylistBasicModel], {
+    description: "Playlists visible to the connected user",
+  })
+  async playlists(
+    @Parent() user: UserModel,
+    @Context("req") req: Request,
+  ): Promise<PlaylistBasicModel[]> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
     }
 
-    return this.userService.getUserById(userId);
+    return this.userService.getUserPlaylistsForViewer(user.id, req.user);
   }
 
   @UseGuards(GraphqlAuthGuard)
