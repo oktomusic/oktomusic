@@ -31,9 +31,9 @@ export function HeaderMenu() {
 
   const menuItems: OktoMenuItem[] = [
     {
-      type: "button",
+      type: "router-link",
       label: "User Profile",
-      onClick: () => {},
+      to: `/user/${authSession.user?.id}`,
       icon: <HiOutlineUser className="size-4" />,
       shortcut: "⌘E",
     },
