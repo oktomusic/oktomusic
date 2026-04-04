@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@headlessui/react";
-import { HiEllipsisHorizontal, HiPlay } from "react-icons/hi2";
-import { LuCircleArrowDown, LuCirclePlus } from "react-icons/lu";
+import { HiPlay } from "react-icons/hi2";
 import { t } from "@lingui/core/macro";
-
-import { OktoMenu, type OktoMenuItem } from "../Base/OktoMenu";
 
 import { useVibrantColors } from "../../hooks/vibrant_colors";
 import { useFitText } from "../../hooks/fit_text";
@@ -15,26 +12,19 @@ import {
 
 import "./CollectionView.css";
 
-interface CollectionViewActions {
-  readonly onPlay?: () => void;
-  readonly onSaveToLibrary?: () => void;
-  readonly onDownload?: () => void;
-  readonly menuItems?: readonly OktoMenuItem[];
-}
-
 interface CollectionViewProps {
   readonly type?: string;
   readonly title: string;
   readonly subtitle?: string;
   readonly cover: string;
   readonly coverOnClick?: () => void;
+  readonly onPlay?: () => void;
   readonly colors?: VibrantColorsPartial;
-  readonly actions?: CollectionViewActions;
   /**
    * The small bits of informations about the collection, to be displayed below the subtitle.
    */
   readonly meta?: React.ReactNode;
-  readonly toolbarComponent?: React.ReactNode;
+  readonly toolbar?: React.ReactNode;
   readonly children?: React.ReactNode;
 }
 
@@ -44,7 +34,6 @@ interface CollectionViewProps {
  * Provide the cover, title, and color gradients.
  */
 export function CollectionView(props: CollectionViewProps) {
-  const menuItems = props.actions?.menuItems ?? [];
   const mainDivRef = useRef<HTMLDivElement>(null);
   const titleContainerRef = useRef<HTMLDivElement>(null);
   const titleContentRef = useRef<HTMLDivElement>(null);
@@ -101,14 +90,16 @@ export function CollectionView(props: CollectionViewProps) {
               : " pointer-events-none opacity-0")
           }
         >
-          <Button
-            className="size-12 shrink-0 rounded-full bg-blue-500"
-            title={t`Play`}
-            aria-label={t`Play ${albumName}`}
-            onClick={props.actions?.onPlay}
-          >
-            <HiPlay className="m-auto size-6" />
-          </Button>
+          {props.onPlay && (
+            <Button
+              className="size-12 shrink-0 rounded-full bg-blue-500"
+              title={t`Play`}
+              aria-label={t`Play ${albumName}`}
+              onClick={props.onPlay}
+            >
+              <HiPlay className="m-auto size-6" />
+            </Button>
+          )}
           <h2 className="truncate text-2xl font-bold">{albumName}</h2>
         </div>
       </div>
@@ -147,34 +138,16 @@ export function CollectionView(props: CollectionViewProps) {
           ref={actionButtonsRef}
           className="flex flex-row items-center gap-4"
         >
-          <Button
-            className="size-12 rounded-full bg-blue-500"
-            title={t`Play`}
-            onClick={props.actions?.onPlay}
-          >
-            <HiPlay className="m-auto size-6" />
-          </Button>
-          <Button
-            className="size-8"
-            title={t`Save to library`}
-            onClick={props.actions?.onSaveToLibrary}
-          >
-            <LuCirclePlus className="m-auto size-8" />
-          </Button>
-          <Button
-            className="size-8"
-            title={t`Download`}
-            onClick={props.actions?.onDownload}
-          >
-            <LuCircleArrowDown className="m-auto size-8" />
-          </Button>
-          <OktoMenu
-            button={<HiEllipsisHorizontal className="size-8" />}
-            items={menuItems}
-            positionAlign="start"
-            positionSide="bottom"
-            buttonAriaLabel={t`More options for ${albumName}`}
-          />
+          {props.onPlay && (
+            <Button
+              className="size-12 rounded-full bg-blue-500"
+              title={t`Play`}
+              onClick={props.onPlay}
+            >
+              <HiPlay className="m-auto size-6" />
+            </Button>
+          )}
+          {props.toolbar}
         </div>
         {props.children}
       </div>

@@ -18,6 +18,8 @@ import {
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 import { useShare } from "../../hooks/use_share";
 import { CollectionViewMetaPlaylist } from "../../components/CollectionView/CollectionViewMetaPlaylist";
+import { CollectionViewToolbarPlaylist } from "../../components/CollectionView/CollectionViewToolbarPlaylist";
+import { OktoMenuItem } from "../../components/Base/OktoMenu";
 
 export function Playlist() {
   const { cuid } = useParams();
@@ -87,6 +89,31 @@ export function Playlist() {
 
   const title = playlist.name;
 
+  const menuItems = [
+    {
+      type: "button",
+      label: t`Edit details`,
+      icon: <LuPen className="size-4" />,
+      onClick: () => {
+        setDialogPlaylistOpen(cuid);
+      },
+    },
+    {
+      type: "button",
+      icon: <LuListPlus className="size-4" />,
+      label: t`Add to queue`,
+      onClick: () => {
+        addToQueue(playlistTracks);
+      },
+    },
+    {
+      type: "button",
+      label: t`Share`,
+      icon: <LuShare className="size-4" />,
+      onClick: share,
+    },
+  ] as const satisfies readonly OktoMenuItem[];
+
   return (
     <CollectionView
       type={t`Playlist`}
@@ -94,6 +121,9 @@ export function Playlist() {
       subtitle={playlist.description ?? undefined}
       cover={playlistCover}
       colors={playlistColors}
+      onPlay={() => {
+        replaceQueue(playlistTracks);
+      }}
       meta={
         <CollectionViewMetaPlaylist
           visibility={playlist.visibility}
@@ -102,35 +132,12 @@ export function Playlist() {
           durationMs={playlistDurationMs}
         />
       }
-      actions={{
-        onPlay() {
-          replaceQueue(playlistTracks);
-        },
-        menuItems: [
-          {
-            type: "button",
-            label: t`Edit details`,
-            icon: <LuPen className="size-4" />,
-            onClick: () => {
-              setDialogPlaylistOpen(cuid);
-            },
-          },
-          {
-            type: "button",
-            icon: <LuListPlus className="size-4" />,
-            label: t`Add to queue`,
-            onClick: () => {
-              addToQueue(playlistTracks);
-            },
-          },
-          {
-            type: "button",
-            label: t`Share`,
-            icon: <LuShare className="size-4" />,
-            onClick: share,
-          },
-        ],
-      }}
+      toolbar={
+        <CollectionViewToolbarPlaylist
+          playlistName={title}
+          menuItems={menuItems}
+        />
+      }
     >
       <TrackList
         tracks={tracksByDisc}

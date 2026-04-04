@@ -13,7 +13,8 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/CollectionView/CollectionView.tsx:231
+#: src/components/CollectionView/CollectionViewMetaAlbum.tsx:44
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:42
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
 
@@ -51,8 +52,8 @@ msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:41
 #: src/components/TrackList/TrackElement.tsx:94
-#: src/pages/Center/Album.tsx:87
-#: src/pages/Center/Playlist.tsx:123
+#: src/pages/Center/Album.tsx:89
+#: src/pages/Center/Playlist.tsx:104
 msgid "Add to queue"
 msgstr ""
 
@@ -67,7 +68,7 @@ msgid "Admin Settings"
 msgstr ""
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:96
+#: src/pages/Center/Album.tsx:98
 msgid "Album"
 msgstr "Album"
 
@@ -150,11 +151,12 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/CollectionView/CollectionView.tsx:274
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:28
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:28
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:114
+#: src/pages/Center/Playlist.tsx:95
 msgid "Edit details"
 msgstr ""
 
@@ -252,7 +254,9 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:284
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:38
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:38
+#: src/components/CollectionView/CollectionViewToolbarUser.tsx:23
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
@@ -281,6 +285,14 @@ msgstr ""
 #: src/components/Player/PlayerControls.tsx:125
 msgid "Next"
 msgstr "Suivant"
+
+#: src/pages/Center/User.tsx:95
+msgid "No private or unlisted playlists found"
+msgstr ""
+
+#: src/pages/Center/User.tsx:83
+msgid "No public playlists found"
+msgstr ""
 
 #: src/components/PipControls/PipControlsWindow.tsx:57
 #: src/components/PipControls/PipControlsWindow.tsx:65
@@ -317,8 +329,8 @@ msgstr ""
 msgid "Persistent storage not granted"
 msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:133
-#: src/components/CollectionView/CollectionView.tsx:260
+#: src/components/CollectionView/CollectionView.tsx:96
+#: src/components/CollectionView/CollectionView.tsx:144
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -328,7 +340,7 @@ msgstr ""
 msgid "Play"
 msgstr "Lecture"
 
-#: src/components/CollectionView/CollectionView.tsx:134
+#: src/components/CollectionView/CollectionView.tsx:97
 msgid "Play {albumName}"
 msgstr ""
 
@@ -348,7 +360,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:96
+#: src/pages/Center/Playlist.tsx:119
 msgid "Playlist"
 msgstr ""
 
@@ -365,19 +377,29 @@ msgstr ""
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/components/CollectionView/CollectionView.tsx:173
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:26
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:40
 msgid "Private"
 msgstr "Privée"
 
-#: src/pages/Center/User.tsx:42
+#: src/pages/Center/User.tsx:90
+#: src/pages/Center/User.tsx:92
+msgid "Private and unlisted playlists"
+msgstr ""
+
+#: src/pages/Center/User.tsx:61
 msgid "Profile"
 msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:177
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:28
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:38
 msgid "Public"
 msgstr "Publique"
+
+#: src/pages/Center/User.tsx:80
+#: src/pages/Center/User.tsx:81
+msgid "Public playlists"
+msgstr ""
 
 #: src/components/TrackList/TrackElement.tsx:61
 msgid "Remove from playlist"
@@ -399,7 +421,8 @@ msgstr ""
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: src/components/CollectionView/CollectionView.tsx:267
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:21
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:21
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
@@ -423,9 +446,9 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:80
-#: src/pages/Center/Playlist.tsx:130
-#: src/pages/Center/User.tsx:50
+#: src/pages/Center/Album.tsx:82
+#: src/pages/Center/Playlist.tsx:111
+#: src/pages/Center/User.tsx:71
 msgid "Share"
 msgstr "Partager"
 
@@ -451,7 +474,7 @@ msgstr ""
 msgid "The following modern web features are missing:"
 msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 
-#: src/components/CollectionView/CollectionView.tsx:181
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:39
 msgid "Unlisted"
 msgstr "Non répertoriée"
