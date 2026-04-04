@@ -1,18 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
 import { Button } from "@headlessui/react";
 import { HiEllipsisHorizontal, HiPlay } from "react-icons/hi2";
-import {
-  LuCircleArrowDown,
-  LuCirclePlus,
-  LuGlobe,
-  LuLink,
-  LuLock,
-} from "react-icons/lu";
-import { plural, t } from "@lingui/core/macro";
-import { Temporal } from "temporal-polyfill";
+import { LuCircleArrowDown, LuCirclePlus } from "react-icons/lu";
+import { t } from "@lingui/core/macro";
 
-import { DurationLong } from "../DurationLong";
 import { OktoMenu, type OktoMenuItem } from "../Base/OktoMenu";
 
 import { useVibrantColors } from "../../hooks/vibrant_colors";
@@ -23,27 +14,6 @@ import {
 } from "../../atoms/player/machine";
 
 import "./CollectionView.css";
-
-interface CollectionViewUser {
-  readonly id: string;
-  readonly username: string;
-}
-
-interface CollectionViewArtist {
-  readonly id: string;
-  readonly name: string;
-}
-
-/**
- * The small bits of informations about the collection, to be displayed below the title.
- */
-interface CollectionViewMeta {
-  readonly user?: CollectionViewUser;
-  readonly artists?: readonly CollectionViewArtist[];
-  readonly date?: Temporal.PlainDate;
-  readonly tracksTotal?: number;
-  readonly durationMs?: number;
-}
 
 interface CollectionViewActions {
   readonly onPlay?: () => void;
@@ -58,10 +28,13 @@ interface CollectionViewProps {
   readonly subtitle?: string;
   readonly cover: string;
   readonly coverOnClick?: () => void;
-  readonly visibility?: "PRIVATE" | "PUBLIC" | "UNLISTED";
-  readonly meta: CollectionViewMeta;
   readonly colors?: VibrantColorsPartial;
   readonly actions?: CollectionViewActions;
+  /**
+   * The small bits of informations about the collection, to be displayed below the subtitle.
+   */
+  readonly meta?: React.ReactNode;
+  readonly toolbarComponent?: React.ReactNode;
   readonly children?: React.ReactNode;
 }
 
@@ -164,88 +137,7 @@ export function CollectionView(props: CollectionViewProps) {
                 {albumName}
               </h2>
               <div className="">{props.subtitle}</div>
-              <div className="flex flex-row items-center text-sm">
-                {props.visibility &&
-                  (() => {
-                    switch (props.visibility) {
-                      case "PRIVATE":
-                        return (
-                          <LuLock className="mr-2 size-4" title={t`Private`} />
-                        );
-                      case "PUBLIC":
-                        return (
-                          <LuGlobe className="mr-2 size-4" title={t`Public`} />
-                        );
-                      case "UNLISTED":
-                        return (
-                          <LuLink className="mr-2 size-4" title={t`Unlisted`} />
-                        );
-                    }
-                  })()}
-
-                {props.meta.user && (
-                  <span className="font-bold">
-                    <span key={props.meta.user.id}>
-                      <Link
-                        to={`/user/${props.meta.user.id}`}
-                        className="hover:underline"
-                      >
-                        {props.meta.user.username}
-                      </Link>
-                    </span>
-                  </span>
-                )}
-
-                {props.meta.artists && props.meta.artists.length > 0 && (
-                  <>
-                    {props.meta.user && <span className="mx-2">•</span>}
-                    <span className="font-bold">
-                      {props.meta.artists.map((artist, index) => (
-                        <span key={artist.id ?? index}>
-                          <Link
-                            to={`/artist/${artist.id}`}
-                            className="hover:underline"
-                          >
-                            {artist.name}
-                          </Link>
-                          {index < props.meta.artists!.length - 1 && ", "}
-                        </span>
-                      ))}
-                    </span>
-                  </>
-                )}
-
-                {props.meta.date && (
-                  <>
-                    {props.meta.artists && <span className="mx-2">•</span>}
-                    <span title={props.meta.date.toLocaleString() ?? ""}>
-                      {props.meta.date.year}
-                    </span>
-                  </>
-                )}
-
-                {props.meta.tracksTotal !== undefined && (
-                  <>
-                    <span className="mx-2">•</span>
-                    <span>
-                      {plural(
-                        { count: props.meta.tracksTotal },
-                        {
-                          one: "# track",
-                          other: "# tracks",
-                        },
-                      )}
-                    </span>
-                  </>
-                )}
-
-                {props.meta.durationMs !== undefined && (
-                  <>
-                    <span>, </span>
-                    <DurationLong durationMs={props.meta.durationMs} />
-                  </>
-                )}
-              </div>
+              {props.meta}
             </div>
           </div>
         </div>

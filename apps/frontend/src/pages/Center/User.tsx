@@ -42,7 +42,7 @@ export function User() {
       type={t`Profile`}
       title={data!.userProfile.username}
       cover={coverPlaceHolder}
-      meta={{}}
+      meta={<></>}
       actions={{
         menuItems: [
           {

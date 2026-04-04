@@ -19,6 +19,7 @@ import {
 import { dialogCoverId } from "../../atoms/app/dialogs";
 import { mapTracksWithAlbum } from "../../utils/album_tracks";
 import { useShare } from "../../hooks/use_share";
+import { CollectionViewMetaAlbum } from "../../components/CollectionView/CollectionViewMetaAlbum";
 
 export function Album() {
   const { cuid } = useParams();
@@ -99,13 +100,15 @@ export function Album() {
       coverOnClick={() => {
         setDialogCoverId(data!.album.id);
       }}
-      meta={{
-        artists: data!.album.artists,
-        date: albumDate,
-        tracksTotal: albumTracksTotal,
-        durationMs: albumDurationMs,
-      }}
       colors={albumColors}
+      meta={
+        <CollectionViewMetaAlbum
+          artists={data!.album.artists}
+          date={albumDate}
+          tracksTotal={albumTracksTotal}
+          durationMs={albumDurationMs}
+        />
+      }
       actions={{
         onPlay: () => {
           replaceQueue(flatTracks);

@@ -17,6 +17,7 @@ import {
 } from "../../atoms/player/machine";
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 import { useShare } from "../../hooks/use_share";
+import { CollectionViewMetaPlaylist } from "../../components/CollectionView/CollectionViewMetaPlaylist";
 
 export function Playlist() {
   const { cuid } = useParams();
@@ -86,11 +87,6 @@ export function Playlist() {
 
   const title = playlist.name;
 
-  const creator = playlist.creator as {
-    readonly id: string;
-    readonly username: string;
-  };
-
   return (
     <CollectionView
       type={t`Playlist`}
@@ -98,12 +94,14 @@ export function Playlist() {
       subtitle={playlist.description ?? undefined}
       cover={playlistCover}
       colors={playlistColors}
-      meta={{
-        user: creator,
-        tracksTotal: trackCount,
-        durationMs: playlistDurationMs,
-      }}
-      visibility={playlist.visibility}
+      meta={
+        <CollectionViewMetaPlaylist
+          visibility={playlist.visibility}
+          user={playlist.creator}
+          tracksTotal={trackCount}
+          durationMs={playlistDurationMs}
+        />
+      }
       actions={{
         onPlay() {
           replaceQueue(playlistTracks);
