@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useSetAtom } from "jotai";
+import { t } from "@lingui/core/macro";
+import { LuDisc3 } from "react-icons/lu";
 
 import {
   TrackWithAlbum,
@@ -58,10 +60,17 @@ export function TrackList(props: TrackListProps) {
           .slice(0, discIndex)
           .reduce((sum, disc) => sum + disc.length, 0);
 
+        const discNumber = discIndex + 1;
+
         return (
           <div key={discIndex} className="track-list__disc">
             {isMultiDisc && (
-              <h2 className="track-list__disc-title">Disc {discIndex + 1}</h2>
+              <div className="flex h-14 flex-row items-center gap-4 px-4">
+                <LuDisc3 />
+                <h2 className="track-list__disc-title font-bold">
+                  {t`Disc ${discNumber}`}
+                </h2>
+              </div>
             )}
             <ol className="track-list__tracks">
               {discTracks.map((track, trackIndex) => (

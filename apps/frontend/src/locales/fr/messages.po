@@ -151,6 +151,10 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
+#: src/components/TrackList/TrackList.tsx:71
+msgid "Disc {discNumber}"
+msgstr "Disque {discNumber}"
+
 #: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:28
 #: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:28
 msgid "Download"
@@ -286,11 +290,11 @@ msgstr ""
 msgid "Next"
 msgstr "Suivant"
 
-#: src/pages/Center/User.tsx:95
+#: src/pages/Center/User.tsx:94
 msgid "No private or unlisted playlists found"
 msgstr ""
 
-#: src/pages/Center/User.tsx:83
+#: src/pages/Center/User.tsx:82
 msgid "No public playlists found"
 msgstr ""
 
@@ -382,8 +386,8 @@ msgstr "Précédent"
 msgid "Private"
 msgstr "Privée"
 
-#: src/pages/Center/User.tsx:90
-#: src/pages/Center/User.tsx:92
+#: src/pages/Center/User.tsx:89
+#: src/pages/Center/User.tsx:91
 msgid "Private and unlisted playlists"
 msgstr ""
 
@@ -396,8 +400,8 @@ msgstr ""
 msgid "Public"
 msgstr "Publique"
 
+#: src/pages/Center/User.tsx:79
 #: src/pages/Center/User.tsx:80
-#: src/pages/Center/User.tsx:81
 msgid "Public playlists"
 msgstr ""
 
@@ -448,7 +452,7 @@ msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:82
 #: src/pages/Center/Playlist.tsx:111
-#: src/pages/Center/User.tsx:71
+#: src/pages/Center/User.tsx:70
 msgid "Share"
 msgstr "Partager"
 
