@@ -34,6 +34,7 @@ import { TrackResolver } from "./track/track.resolver";
 import { ArtistService } from "./artist/artist.service";
 import { ArtistResolver } from "./artist/artist.resolver";
 import { PlaylistService } from "./playlist/playlist.service";
+import { PlaylistController } from "./playlist/playlist.controller";
 import { PlaylistResolver } from "./playlist/playlist.resolver";
 import { SearchService } from "./search/search.service";
 import { SearchResolver } from "./search/search.resolver";
@@ -143,6 +144,7 @@ const mapHttpExceptionToGraphqlError = (exception: HttpException) => {
     AuthController,
     MediaController,
     AlbumController,
+    PlaylistController,
     ReportingController,
   ],
   providers: [
