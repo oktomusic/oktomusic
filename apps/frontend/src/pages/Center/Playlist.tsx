@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { t } from "@lingui/core/macro";
-import { LuListPlus, LuPen, LuShare } from "react-icons/lu";
+import { LuCircleMinus, LuListPlus, LuPen, LuShare } from "react-icons/lu";
 
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import { GenericLoading } from "./GenericLoading";
@@ -15,16 +15,27 @@ import {
   replaceQueueAtom,
   type TrackWithAlbum,
 } from "../../atoms/player/machine";
-import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
+import {
+  dialogPlaylistDeleteOpenAtom,
+  dialogPlaylistOpenAtom,
+} from "../../atoms/app/dialogs";
 import { useShare } from "../../hooks/use_share";
 import { CollectionViewMetaPlaylist } from "../../components/CollectionView/CollectionViewMetaPlaylist";
 import { CollectionViewToolbarPlaylist } from "../../components/CollectionView/CollectionViewToolbarPlaylist";
 import { OktoMenuItem } from "../../components/Base/OktoMenu";
+import { authSessionAtom } from "../../atoms/auth/atoms";
+import { Role } from "../../api/graphql/gql/graphql";
 
 export function Playlist() {
   const { cuid } = useParams();
 
+  const user = useAtomValue(authSessionAtom);
+  const userId = user.status === "authenticated" ? user.user.id : null;
+  const userIsAdmin =
+    user.status === "authenticated" && user.user.role === Role.Admin;
+
   const setDialogPlaylistOpen = useSetAtom(dialogPlaylistOpenAtom);
+  const setDialogPlaylistDeleteOpen = useSetAtom(dialogPlaylistDeleteOpenAtom);
 
   const { data, loading, error } = useQuery(PLAYLIST_QUERY, {
     variables: { id: cuid! },
@@ -112,6 +123,28 @@ export function Playlist() {
       icon: <LuShare className="size-4" />,
       onClick: share,
     },
+    ...(userId === playlist.creator.id || userIsAdmin
+      ? ([
+          {
+            type: "button",
+            label: t`Delete playlist`,
+            icon: <LuCircleMinus className="size-4" />,
+            onClick: () => {
+              if (!data.playlist) {
+                return;
+              }
+              setDialogPlaylistDeleteOpen({
+                __typename: "PlaylistBasic",
+                id: data.playlist.id,
+                name: data.playlist.name,
+                description: data.playlist.description,
+                visibility: data.playlist.visibility,
+                creator: data.playlist.creator,
+              });
+            },
+          },
+        ] as const satisfies readonly OktoMenuItem[])
+      : []),
   ] as const satisfies readonly OktoMenuItem[];
 
   return (

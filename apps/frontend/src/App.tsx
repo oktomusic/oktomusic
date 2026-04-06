@@ -12,6 +12,7 @@ import AudioSessionProvider from "./components/Player/AudioSessionProvider";
 import { HeaderMenu } from "./components/HeaderMenu";
 import PipControls from "./components/PipControls/PipControls";
 import { DialogCover } from "./components/Dialogs/DialogCover";
+import { DialogPlaylistDelete } from "./components/Dialogs/DialogPlaylistDelete";
 import { DialogPlaylistEdit } from "./components/Dialogs/DialogPlaylistEdit";
 import { PanelLeft } from "./pages/PanelLeft";
 import { PanelOverlay } from "./pages/PanelOverlay";
@@ -35,6 +36,7 @@ export function App() {
       <HeaderMenu />
       <PipControls />
       <DialogCover />
+      <DialogPlaylistDelete />
       <DialogPlaylistEdit />
       <div
         id="oktomusic:content-grid"
