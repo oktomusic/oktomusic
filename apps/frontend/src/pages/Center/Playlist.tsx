@@ -103,14 +103,6 @@ export function Playlist() {
   const menuItems = [
     {
       type: "button",
-      label: t`Edit details`,
-      icon: <LuPen className="size-4" />,
-      onClick: () => {
-        setDialogPlaylistOpen(cuid);
-      },
-    },
-    {
-      type: "button",
       icon: <LuListPlus className="size-4" />,
       label: t`Add to queue`,
       onClick: () => {
@@ -125,6 +117,14 @@ export function Playlist() {
     },
     ...(userId === playlist.creator.id || userIsAdmin
       ? ([
+          {
+            type: "button",
+            label: t`Edit details`,
+            icon: <LuPen className="size-4" />,
+            onClick: () => {
+              setDialogPlaylistOpen(cuid);
+            },
+          },
           {
             type: "button",
             label: t`Delete playlist`,

@@ -100,6 +100,7 @@ export function DialogPlaylistDelete() {
             type="button"
             onClick={handleClose}
             disabled={deletePlaylistLoading}
+            className="h-9"
           >
             {t`Cancel`}
           </OktoButton>
@@ -107,7 +108,7 @@ export function DialogPlaylistDelete() {
             type="button"
             onClick={handleDelete}
             disabled={deletePlaylistLoading || open === null}
-            className="bg-red-400/20! hover:bg-red-300/20!"
+            className="h-9 bg-red-400/20! hover:bg-red-300/20!"
           >
             {t`Delete`}
           </OktoButton>

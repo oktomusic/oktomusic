@@ -53,7 +53,7 @@ msgstr ""
 #: src/components/QueueTrack/QueueTrack.tsx:41
 #: src/components/TrackList/TrackElement.tsx:94
 #: src/pages/Center/Album.tsx:89
-#: src/pages/Center/Playlist.tsx:115
+#: src/pages/Center/Playlist.tsx:107
 msgid "Add to queue"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Cache max entries:"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:104
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:105
 msgid "Cancel"
 msgstr ""
 
@@ -146,7 +146,7 @@ msgstr ""
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:112
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:113
 msgid "Delete"
 msgstr ""
 
@@ -176,7 +176,7 @@ msgstr "Disque {discNumber}"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:106
+#: src/pages/Center/Playlist.tsx:122
 msgid "Edit details"
 msgstr ""
 
@@ -479,7 +479,7 @@ msgid "Sexe :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:82
-#: src/pages/Center/Playlist.tsx:122
+#: src/pages/Center/Playlist.tsx:114
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Partager"
