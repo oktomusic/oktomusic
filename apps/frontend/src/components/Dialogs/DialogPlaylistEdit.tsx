@@ -16,6 +16,7 @@ import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
 import { CREATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/createPlaylist";
 import { UPDATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/updatePlaylist";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
+import { USER_PROFILE_QUERY } from "../../api/graphql/queries/userProfile";
 import { OktoDialog } from "../Base/OktoDialog";
 import { OktoInput } from "../Base/OktoInput";
 import { OktoTextarea } from "../Base/OktoTextarea";
@@ -100,6 +101,15 @@ export function DialogPlaylistEdit() {
               variables: {
                 input: payload,
               },
+              refetchQueries: [
+                {
+                  query: USER_PROFILE_QUERY,
+                  variables: {
+                    userId: playlistData?.playlist.creator.id,
+                  },
+                },
+              ],
+              awaitRefetchQueries: true,
             });
 
       mutationPromise
@@ -127,6 +137,7 @@ export function DialogPlaylistEdit() {
       editPlaylistId,
       updatePlaylist,
       createPlaylist,
+      playlistData?.playlist.creator.id,
       resetForm,
       setOpen,
     ],

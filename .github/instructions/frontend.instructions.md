@@ -74,3 +74,11 @@ When availlable, use the components from `apps/frontend/src/components/Base` for
 If not availlable, make sure to use **Headless UI** components from `@headlessui/react` to make accessibility and hover/focus state management easier.
 
 Refer to the Headless **UI documentation** for proper usage and accessibility guidelines.
+
+## Authentication
+
+The app maintains an authentication context in `apps/frontend/src/atoms/auth/atoms.ts` using a Jotai atom. Using it should be done with `useAtomValue` from Jotai.
+
+The app doesn't aim to provide any functionality when not authenticated, so make sure to NOT implement authentication checking logic when accessing the authentication context outside of the authentication flow (login page, etc.) since those components won't be rendered when not authenticated.
+
+In those components, you can assume that the user is always authenticated and use TypeScript type assertion when accessing the context: `authSession.user!`.

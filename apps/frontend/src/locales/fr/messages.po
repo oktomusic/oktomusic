@@ -38,11 +38,11 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:167
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:178
 msgid "Add a name"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:183
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:194
 msgid "Add an optional description"
 msgstr ""
 
@@ -53,7 +53,7 @@ msgstr ""
 #: src/components/QueueTrack/QueueTrack.tsx:41
 #: src/components/TrackList/TrackElement.tsx:94
 #: src/pages/Center/Album.tsx:89
-#: src/pages/Center/Playlist.tsx:104
+#: src/pages/Center/Playlist.tsx:115
 msgid "Add to queue"
 msgstr ""
 
@@ -109,6 +109,10 @@ msgstr ""
 msgid "Cache max entries:"
 msgstr ""
 
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:104
+msgid "Cancel"
+msgstr ""
+
 #: src/pages/SettingsClient/SettingsClient.tsx:211
 msgid "Checking storage persistence..."
 msgstr ""
@@ -130,7 +134,7 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:139
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:150
 msgid "Create playlist"
 msgstr ""
 
@@ -142,7 +146,19 @@ msgstr ""
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:177
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:112
+msgid "Delete"
+msgstr ""
+
+#: src/pages/Center/Playlist.tsx:130
+msgid "Delete playlist"
+msgstr ""
+
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:81
+msgid "Delete playlist?"
+msgstr ""
+
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:188
 msgid "Description"
 msgstr "Description"
 
@@ -160,11 +176,11 @@ msgstr "Disque {discNumber}"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:95
+#: src/pages/Center/Playlist.tsx:106
 msgid "Edit details"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:139
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:150
 msgid "Edit playlist details"
 msgstr ""
 
@@ -176,6 +192,10 @@ msgstr ""
 #: src/components/QueueTrack/QueueTrack.tsx:69
 #: src/components/TrackList/TrackElement.tsx:122
 msgid "Failed to add track"
+msgstr ""
+
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:72
+msgid "Failed to delete playlist"
 msgstr ""
 
 #: src/components/TrackList/TrackElement.tsx:82
@@ -269,7 +289,7 @@ msgstr "Plus d'options pour {albumName}"
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:159
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:170
 msgid "Name"
 msgstr "Nom"
 
@@ -364,12 +384,16 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:119
+#: src/pages/Center/Playlist.tsx:152
 msgid "Playlist"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:149
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:160
 msgid "Playlist cover"
+msgstr ""
+
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:63
+msgid "Playlist deleted"
 msgstr ""
 
 #: src/components/PipControls/PipControlsOverlay.tsx:41
@@ -382,7 +406,7 @@ msgid "Previous"
 msgstr "Précédent"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:26
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:40
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:41
 msgid "Private"
 msgstr "Privée"
 
@@ -396,7 +420,7 @@ msgid "Profile"
 msgstr ""
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:28
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:38
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:39
 msgid "Public"
 msgstr "Publique"
 
@@ -421,7 +445,7 @@ msgstr ""
 msgid "Resume {trackName}"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:206
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:217
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -451,7 +475,7 @@ msgid "Sexe :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:82
-#: src/pages/Center/Playlist.tsx:111
+#: src/pages/Center/Playlist.tsx:122
 #: src/pages/Center/User.tsx:70
 msgid "Share"
 msgstr "Partager"
@@ -478,8 +502,12 @@ msgstr ""
 msgid "The following modern web features are missing:"
 msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:97
+msgid "This action cannot be undone."
+msgstr ""
+
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:39
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:40
 msgid "Unlisted"
 msgstr "Non répertoriée"
 
