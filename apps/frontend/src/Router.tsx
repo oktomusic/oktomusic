@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { useAtomValue } from "jotai";
 
+import { authSessionAtom } from "./atoms/auth/atoms.ts";
 import { browserSupportAtom } from "./atoms/app/browser_support.ts";
 
 import { useScreenWakeLock } from "./hooks/wake_lock.ts";
@@ -18,6 +19,8 @@ import { App } from "./App.tsx";
 
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
+
+  const authSession = useAtomValue(authSessionAtom);
 
   useScreenWakeLock();
   useStoragePersistence();
@@ -37,7 +40,12 @@ export default function Router() {
           <BrowserRouter>
             <Routes>
               <Route path="/login" element={<Login />} />
-              <Route path="*" element={<App />} />
+              <Route
+                path="*"
+                Component={
+                  authSession.status === "authenticated" ? App : undefined
+                }
+              />
             </Routes>
           </BrowserRouter>
         )}
