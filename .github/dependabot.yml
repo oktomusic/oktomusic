@@ -5,10 +5,14 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 1
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 1
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
