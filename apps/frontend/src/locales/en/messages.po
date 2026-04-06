@@ -38,11 +38,11 @@ msgstr "About"
 msgid "Account Settings"
 msgstr "Account Settings"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:178
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:197
 msgid "Add a name"
 msgstr "Add a name"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:194
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:213
 msgid "Add an optional description"
 msgstr "Add an optional description"
 
@@ -138,7 +138,7 @@ msgstr "Close Picture-in-Picture"
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr "Controls how Oktomusic mixes with other audio."
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:150
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:169
 msgid "Create playlist"
 msgstr "Create playlist"
 
@@ -162,7 +162,7 @@ msgstr "Delete playlist"
 msgid "Delete playlist?"
 msgstr "Delete playlist?"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:188
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:207
 msgid "Description"
 msgstr "Description"
 
@@ -184,7 +184,7 @@ msgstr "Download"
 msgid "Edit details"
 msgstr "Edit details"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:150
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:169
 msgid "Edit playlist details"
 msgstr "Edit playlist details"
 
@@ -297,7 +297,7 @@ msgstr "More options for {albumName}"
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:170
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:189
 msgid "Name"
 msgstr "Name"
 
@@ -396,7 +396,7 @@ msgstr "Playback controls"
 msgid "Playlist"
 msgstr "Playlist"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:160
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:179
 msgid "Playlist cover"
 msgstr "Playlist cover"
 
@@ -414,7 +414,7 @@ msgid "Previous"
 msgstr "Previous"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:26
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:41
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:44
 msgid "Private"
 msgstr "Private"
 
@@ -428,7 +428,7 @@ msgid "Profile"
 msgstr "Profile"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:28
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:39
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:42
 msgid "Public"
 msgstr "Public"
 
@@ -453,7 +453,7 @@ msgstr "Request"
 msgid "Resume {trackName}"
 msgstr "Resume {trackName}"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:217
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:236
 msgid "Save"
 msgstr "Save"
 
@@ -515,7 +515,7 @@ msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:40
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:43
 msgid "Unlisted"
 msgstr "Unlisted"
 

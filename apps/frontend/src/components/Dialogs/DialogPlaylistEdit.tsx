@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { Button, Field, Fieldset, Label } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
@@ -12,6 +12,7 @@ import {
 } from "react-icons/lu";
 
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
+import { authSessionAtom } from "../../atoms/auth/atoms";
 import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
 import { CREATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/createPlaylist";
 import { UPDATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/updatePlaylist";
@@ -27,6 +28,8 @@ type VisibilityOptions = "public" | "unlisted" | "private";
 
 export function DialogPlaylistEdit() {
   const [open, setOpen] = useAtom(dialogPlaylistOpenAtom);
+  const authSession = useAtomValue(authSessionAtom);
+  const userId = authSession.user!.id;
   const editPlaylistId = typeof open === "string" ? open : null;
 
   const [nameDraft, setNameDraft] = useState<string | null>(null);
@@ -48,6 +51,8 @@ export function DialogPlaylistEdit() {
     variables: { id: editPlaylistId ?? "" },
     skip: editPlaylistId === null,
   });
+
+  const editPlaylistCreatorId = playlistData?.playlist?.creator.id;
 
   const isEdit = typeof open === "string";
 
@@ -96,6 +101,19 @@ export function DialogPlaylistEdit() {
                 id: editPlaylistId,
                 input: payload,
               },
+              refetchQueries: [
+                {
+                  query: PLAYLIST_QUERY,
+                  variables: { id: editPlaylistId },
+                },
+                {
+                  query: USER_PROFILE_QUERY,
+                  variables: {
+                    userId: editPlaylistCreatorId,
+                  },
+                },
+              ],
+              awaitRefetchQueries: true,
             })
           : createPlaylist({
               variables: {
@@ -105,7 +123,7 @@ export function DialogPlaylistEdit() {
                 {
                   query: USER_PROFILE_QUERY,
                   variables: {
-                    userId: playlistData?.playlist.creator.id,
+                    userId,
                   },
                 },
               ],
@@ -136,8 +154,9 @@ export function DialogPlaylistEdit() {
       isEdit,
       editPlaylistId,
       updatePlaylist,
+      editPlaylistCreatorId,
       createPlaylist,
-      playlistData?.playlist.creator.id,
+      userId,
       resetForm,
       setOpen,
     ],
