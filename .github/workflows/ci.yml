@@ -373,7 +373,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Typst
-        uses: typst-community/setup-typst@v4
+        uses: typst-community/setup-typst@v5
 
       - name: Build Project Report
         run: typst compile --root . docs/certification/oktomusic_project_report_fr.typ docs/certification/oktomusic_project_report_fr.pdf
