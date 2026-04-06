@@ -184,6 +184,10 @@ msgstr ""
 msgid "Edit playlist details"
 msgstr ""
 
+#: src/pages/Center/User.tsx:73
+msgid "Edit profile"
+msgstr ""
+
 #: src/pages/SettingsClient/SettingsClient.tsx:43
 #: src/pages/SettingsClient/SettingsClient.tsx:147
 #~ msgid "Enabled"
@@ -310,11 +314,11 @@ msgstr ""
 msgid "Next"
 msgstr "Suivant"
 
-#: src/pages/Center/User.tsx:94
+#: src/pages/Center/User.tsx:105
 msgid "No private or unlisted playlists found"
 msgstr ""
 
-#: src/pages/Center/User.tsx:82
+#: src/pages/Center/User.tsx:93
 msgid "No public playlists found"
 msgstr ""
 
@@ -410,12 +414,12 @@ msgstr "Précédent"
 msgid "Private"
 msgstr "Privée"
 
-#: src/pages/Center/User.tsx:89
-#: src/pages/Center/User.tsx:91
+#: src/pages/Center/User.tsx:100
+#: src/pages/Center/User.tsx:102
 msgid "Private and unlisted playlists"
 msgstr ""
 
-#: src/pages/Center/User.tsx:61
+#: src/pages/Center/User.tsx:62
 msgid "Profile"
 msgstr ""
 
@@ -424,8 +428,8 @@ msgstr ""
 msgid "Public"
 msgstr "Publique"
 
-#: src/pages/Center/User.tsx:79
-#: src/pages/Center/User.tsx:80
+#: src/pages/Center/User.tsx:90
+#: src/pages/Center/User.tsx:91
 msgid "Public playlists"
 msgstr ""
 
@@ -476,7 +480,7 @@ msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:82
 #: src/pages/Center/Playlist.tsx:122
-#: src/pages/Center/User.tsx:70
+#: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Partager"
 

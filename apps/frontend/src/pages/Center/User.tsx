@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
 import { t } from "@lingui/core/macro";
-import { LuShare } from "react-icons/lu";
+import { LuPen, LuShare } from "react-icons/lu";
 
 import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
 import { ME_QUERY } from "../../api/graphql/queries/me";
@@ -13,6 +13,7 @@ import { CollectionView } from "../../components/CollectionView/CollectionView";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { useShare } from "../../hooks/use_share";
 import { CollectionViewToolbarUser } from "../../components/CollectionView/CollectionViewToolbarUser";
+import { OktoMenuItem } from "../../components/Base/OktoMenu";
 
 export function User() {
   const { cuid } = useParams();
@@ -65,6 +66,16 @@ export function User() {
         <CollectionViewToolbarUser
           username={data!.userProfile.username}
           menuItems={[
+            ...(isOwnProfile
+              ? ([
+                  {
+                    type: "router-link",
+                    label: t`Edit profile`,
+                    icon: <LuPen className="size-4" />,
+                    to: "/settings/account",
+                  },
+                ] as const satisfies readonly OktoMenuItem[])
+              : []),
             {
               type: "button",
               label: t`Share`,
