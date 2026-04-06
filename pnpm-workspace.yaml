@@ -4,7 +4,7 @@ packages:
 
 catalogs:
   default:
-    "@types/node": ^24.12.0
+    "@types/node": ^24.12.2
     temporal-polyfill: ^0.3.2
     tsdown: ^0.21.7
     typescript: ^5.9.3
