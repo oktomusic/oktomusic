@@ -34,7 +34,7 @@
     "@vitest/ui": "^4.1.2",
     "eslint": "^9.39.3",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-lingui": "^0.12.0",
+    "eslint-plugin-lingui": "^0.13.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
@@ -49,6 +49,6 @@
     "typescript-eslint": "^8.58.0",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.2",
-    "wrangler": "^4.78.0"
+    "wrangler": "^4.80.0"
   }
 }
