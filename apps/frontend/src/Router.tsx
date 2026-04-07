@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { useAtomValue } from "jotai";
 
 import { authSessionAtom } from "./atoms/auth/atoms.ts";
@@ -43,7 +43,9 @@ export default function Router() {
               <Route
                 path="*"
                 Component={
-                  authSession.status === "authenticated" ? App : () => undefined
+                  authSession.status === "authenticated"
+                    ? App
+                    : () => <Navigate to="/login" replace />
                 }
               />
             </Routes>
