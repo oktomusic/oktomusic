@@ -67,7 +67,11 @@ const parser = new XMLParser({
   trimValues: true,
   parseTagValue: false,
   parseAttributeValue: false,
-  isArray: (tagName: string, jPath: string) => {
+  isArray: (tagName, jPathOrMatcher) => {
+    const jPath =
+      typeof jPathOrMatcher === "string"
+        ? jPathOrMatcher
+        : jPathOrMatcher.toString();
     if (tagName === "track") return true;
     // location and identifier can be multiple inside a track
     if (tagName === "location" && jPath.includes("trackList")) return true;
