@@ -312,7 +312,7 @@ jobs:
         type=semver,pattern={{major}}
       set-meta-annotations: true
       set-meta-labels: true
-      meta-annotations: |
+      annotations: |
         org.opencontainers.image.title=Oktomusic
         org.opencontainers.image.description=Music streaming server
         org.opencontainers.image.authors=AFCMS <afcm.contact@gmail.com>
@@ -323,7 +323,7 @@ jobs:
         io.artifacthub.package.keywords=music,server,streaming
         io.artifacthub.package.license=AGPL-3.0-only
         io.artifacthub.package.maintainers=[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]
-      meta-labels: |
+      labels: |
         org.opencontainers.image.title=Oktomusic
         org.opencontainers.image.description=Music streaming server
         org.opencontainers.image.authors=AFCMS <afcm.contact@gmail.com>
