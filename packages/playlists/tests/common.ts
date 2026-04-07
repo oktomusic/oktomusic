@@ -1,4 +1,4 @@
-import type { JspfPlaylist } from "../src/jspf"
+import type { JspfPlaylist } from "../src/jspf";
 
 export const playlistM3U = {
   playlist: {
@@ -18,4 +18,4 @@ export const playlistM3U = {
       },
     ],
   },
-} as const satisfies JspfPlaylist
+} as const satisfies JspfPlaylist;
