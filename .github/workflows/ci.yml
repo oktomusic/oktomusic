@@ -301,7 +301,7 @@ jobs:
       packages: write
       id-token: write
       attestations: write
-    inputs:
+    with:
       output: image
       push: ${{ github.event_name != 'pull_request' }}
       platforms: linux/amd64,linux/arm64
