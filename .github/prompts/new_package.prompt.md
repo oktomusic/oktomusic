@@ -272,6 +272,9 @@ pkg-<package-name>:
     - name: Build
       run: pnpm --filter "@oktomusic/<package-name>" build
 
+    - name: Typecheck
+      run: pnpm --filter "@oktomusic/<package-name>" run typecheck
+
     - name: Lint
       run: |
         pnpm --filter "@oktomusic/<package-name>" run lint
