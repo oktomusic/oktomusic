@@ -291,55 +291,8 @@ jobs:
           command: pages deploy ./apps/website/.vitepress/dist --project-name=oktomusic
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-  docker-website:
-    name: Docker Website
-    runs-on: ubuntu-latest
-    needs: website
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-      attestations: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Setup Docker
-        uses: ./.github/actions/setup-docker
-        with:
-          login: ${{ github.event_name != 'pull_request' }}
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          cosign: ${{ github.event_name != 'pull_request' }}
-
-      - name: Build Docker image
-        uses: ./.github/actions/build-docker
-        with:
-          registry: ${{ env.REGISTRY }}
-          image_name: ${{ env.IMAGE_NAME_WEBSITE }}
-          context: .
-          dockerfile: apps/website/Dockerfile
-          # io.artifacthub.package.logo-url=
-          annotations: |
-            org.opencontainers.image.title=Oktomusic Website
-            org.opencontainers.image.description=Music streaming server
-            org.opencontainers.image.authors=AFCMS <afcm.contact@gmail.com>
-            org.opencontainers.image.licenses=AGPL-3.0-only
-            org.opencontainers.image.source=https://github.com/oktomusic/oktomusic
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/docs/artifacthub/website.md
-            io.artifacthub.package.category=skip-prediction
-            io.artifacthub.package.keywords=website
-            io.artifacthub.package.license=AGPL-3.0-only
-            io.artifacthub.package.maintainers=[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]
-          platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7,linux/ppc64le,linux/riscv64,linux/s390x
-          push: ${{ github.event_name != 'pull_request' }}
-          no_cache: ${{ (github.event_name == 'workflow_dispatch' && !inputs.use_cache) || startsWith(github.ref, 'refs/tags/') }}
-          attestations: ${{ github.event_name != 'pull_request' }}
-          cosign: ${{ github.event_name != 'pull_request' }}
-
-  docker-oktomusic:
-    name: Docker Oktomusic
+  docker:
+    name: Docker
     runs-on: ubuntu-latest
     needs:
       - app-backend
