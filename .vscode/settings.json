@@ -261,7 +261,9 @@
   "files.associations": {
     "_headers": "plaintext", // Cloudflare _headers file, tend to be misdetected as TypeScript
     "*.ttml": "xml",
-    "*.css": "tailwindcss"
+    "*.css": "tailwindcss",
+    "*.m3u": "plaintext",
+    "*.xspf": "xml"
   },
   "[yaml]": {
     "editor.insertSpaces": true,
