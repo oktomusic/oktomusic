@@ -1,6 +1,6 @@
 import type { JspfPlaylist, JspfTrack } from "./jspf";
 
-export function playlistToM3U(playlist: JspfPlaylist): string {
+export function generateM3U(playlist: JspfPlaylist): string {
   const lines = ["#EXTM3U"];
 
   for (const track of playlist.playlist.track ?? []) {
@@ -14,7 +14,7 @@ export function playlistToM3U(playlist: JspfPlaylist): string {
   return lines.join("\n");
 }
 
-export function m3uToPlaylist(m3u: string, name: string): JspfPlaylist {
+export function parseM3U(m3u: string, name: string): JspfPlaylist {
   const lines = m3u
     .split("\n")
     .map((line) => line.trim())

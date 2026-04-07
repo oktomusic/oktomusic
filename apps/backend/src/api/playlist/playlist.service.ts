@@ -5,6 +5,8 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 
+import type { JspfPlaylist } from "@oktomusic/playlists";
+
 import {
   PlaylistVisibility as PrismaPlaylistVisibility,
   Prisma,
@@ -524,5 +526,66 @@ export class PlaylistService {
         });
       }
     });
+  }
+
+  async getPlaylistJspf(playlistId: string): Promise<JspfPlaylist> {
+    const playlist = await this.prisma.playlist.findUnique({
+      where: { id: playlistId },
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
+        },
+        playlistTracks: {
+          include: {
+            track: {
+              include: {
+                flacFile: {
+                  select: {
+                    relativePath: true,
+                  },
+                },
+                artists: {
+                  include: { artist: true },
+                  orderBy: { order: "asc" },
+                },
+                album: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+          orderBy: { position: "asc" },
+        },
+      },
+    });
+
+    if (!playlist) {
+      throw new NotFoundException(`Playlist with id ${playlistId} not found`);
+    }
+
+    return {
+      playlist: {
+        title: playlist.name,
+        creator: playlist.user.username,
+        annotation: playlist.description ?? undefined,
+        identifier: `urn:oktomusic:playlist:${playlist.id}`,
+        date: playlist.updatedAt.toISOString(),
+        track: playlist.playlistTracks.map(({ track }) => ({
+          location: track.flacFile?.relativePath
+            ? [track.flacFile.relativePath]
+            : undefined,
+          identifier: [`urn:oktomusic:track:${track.id}`],
+          title: track.name,
+          creator: track.artists.map((artist) => artist.artist.name).join(", "),
+          album: track.album?.name ?? undefined,
+          trackNum: track.trackNumber,
+          duration: track.durationMs,
+        })),
+      },
+    };
   }
 }

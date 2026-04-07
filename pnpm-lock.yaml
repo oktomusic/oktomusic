@@ -138,6 +138,9 @@ importers:
       '@oktomusic/metaflac-parser':
         specifier: workspace:^
         version: link:../../packages/metaflac-parser
+      '@oktomusic/playlists':
+        specifier: workspace:^
+        version: link:../../packages/playlists
       '@oktomusic/vibrant':
         specifier: workspace:^
         version: link:../../packages/vibrant

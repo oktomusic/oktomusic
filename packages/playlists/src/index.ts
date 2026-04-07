@@ -16,5 +16,5 @@ export {
   generateJspf,
   parseJspf,
 } from "./jspf";
-export { m3uToPlaylist, playlistToM3U } from "./m3u";
 export { generateXspf, parseXspf } from "./xspf";
+export { generateM3U, parseM3U } from "./m3u";

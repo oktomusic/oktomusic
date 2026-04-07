@@ -42,6 +42,7 @@
     "@oktomusic/lyrics": "workspace:^",
     "@oktomusic/meta-tags": "workspace:^",
     "@oktomusic/metaflac-parser": "workspace:^",
+    "@oktomusic/playlists": "workspace:^",
     "@oktomusic/vibrant": "workspace:^",
     "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "7.6.0",

@@ -7,9 +7,8 @@ Every paths are considered relatives (to the music library root in the backend c
 It aims at supporting the following playlist formats:
 
 - XSPF (XML Shareable Playlist Format)
-- JSPF (JSON Shareable Playlist Format) (maybe in the future)
+- JSPF (JSON Shareable Playlist Format)
 - M3U/M3U8 (Moving Picture Experts Group Audio Layer 3 Uniform Resource Locator)
-- PLS (SHOUTcast Playlist)
 
 ## References
 

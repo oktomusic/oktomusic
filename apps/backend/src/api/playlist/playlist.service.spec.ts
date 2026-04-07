@@ -460,4 +460,62 @@ describe("PlaylistService", () => {
       },
     });
   });
+
+  it("getPlaylistJspf throws when playlist is missing", async () => {
+    prisma.playlist.findUnique.mockResolvedValue(null);
+
+    await expect(service.getPlaylistJspf("missing")).rejects.toBeInstanceOf(
+      NotFoundException,
+    );
+  });
+
+  it("getPlaylistJspf maps playlist to JSPF format", async () => {
+    prisma.playlist.findUnique.mockResolvedValue({
+      id: "playlist-1",
+      name: "My Playlist",
+      description: "A test playlist",
+      updatedAt: new Date("2026-01-01T00:00:00.000Z"),
+      user: {
+        username: "tester",
+      },
+      playlistTracks: [
+        {
+          track: {
+            id: "track-1",
+            name: "Track 1",
+            durationMs: 180000,
+            trackNumber: 1,
+            flacFile: {
+              relativePath: "Artist/Album/01 - Track 1.flac",
+            },
+            artists: [{ artist: { name: "Artist 1" } }],
+            album: { name: "Album 1" },
+          },
+        },
+      ],
+    });
+
+    const result = await service.getPlaylistJspf("playlist-1");
+
+    expect(result).toEqual({
+      playlist: {
+        title: "My Playlist",
+        creator: "tester",
+        annotation: "A test playlist",
+        identifier: "urn:oktomusic:playlist:playlist-1",
+        date: "2026-01-01T00:00:00.000Z",
+        track: [
+          {
+            location: ["Artist/Album/01 - Track 1.flac"],
+            identifier: ["urn:oktomusic:track:track-1"],
+            title: "Track 1",
+            creator: "Artist 1",
+            album: "Album 1",
+            trackNum: 1,
+            duration: 180000,
+          },
+        ],
+      },
+    });
+  });
 });
