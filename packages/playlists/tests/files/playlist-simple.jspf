@@ -4,13 +4,17 @@
     "creator": "MJ Fan",
     "track": [
       {
-        "location": ["http://example.com/billiejean.mp3"],
+        "location": [
+          "http://example.com/billiejean.mp3"
+        ],
         "title": "Billie Jean",
         "creator": "Michael Jackson",
         "album": "Thriller"
       },
       {
-        "location": ["http://example.com/thegirlismine.mp3"],
+        "location": [
+          "http://example.com/thegirlismine.mp3"
+        ],
         "title": "The Girl Is Mine",
         "creator": "Michael Jackson",
         "album": "Thriller"

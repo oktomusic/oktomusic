@@ -1,11 +1,11 @@
-import { z } from "zod"
+import { z } from "zod";
 
 /**
  * A link or meta item in JSPF format.
  * Each object has a single key-value pair where the key is the rel URI
  * and the value is the content URI (for link) or text value (for meta).
  */
-export const JspfLinkMetaItemSchema = z.record(z.string(), z.string())
+export const JspfLinkMetaItemSchema = z.record(z.string(), z.string());
 
 /**
  * An attribution item in JSPF format.
@@ -14,13 +14,13 @@ export const JspfLinkMetaItemSchema = z.record(z.string(), z.string())
 export const JspfAttributionItemSchema = z.object({
   location: z.string().optional(),
   identifier: z.string().optional(),
-})
+});
 
 /**
  * Extension data in JSPF format.
  * The keys are application URIs and the values are arrays of arbitrary data.
  */
-export const JspfExtensionSchema = z.record(z.string(), z.array(z.unknown()))
+export const JspfExtensionSchema = z.record(z.string(), z.array(z.unknown()));
 
 /**
  * A single track in JSPF format.
@@ -78,7 +78,7 @@ export const JspfTrackSchema = z.object({
    * Extension data.
    */
   extension: JspfExtensionSchema.optional(),
-})
+});
 
 /**
  * The playlist data in JSPF format (the inner `playlist` object).
@@ -141,7 +141,7 @@ export const JspfPlaylistDataSchema = z.object({
    * Ordered list of tracks to be rendered.
    */
   track: z.array(JspfTrackSchema).optional(),
-})
+});
 
 /**
  * Root JSPF document schema.
@@ -149,14 +149,14 @@ export const JspfPlaylistDataSchema = z.object({
  */
 export const JspfSchema = z.object({
   playlist: JspfPlaylistDataSchema,
-})
+});
 
-export type JspfLinkMetaItem = z.output<typeof JspfLinkMetaItemSchema>
-export type JspfAttributionItem = z.output<typeof JspfAttributionItemSchema>
-export type JspfExtension = z.output<typeof JspfExtensionSchema>
-export type JspfTrack = z.output<typeof JspfTrackSchema>
-export type JspfPlaylistData = z.output<typeof JspfPlaylistDataSchema>
-export type JspfPlaylist = z.output<typeof JspfSchema>
+export type JspfLinkMetaItem = z.output<typeof JspfLinkMetaItemSchema>;
+export type JspfAttributionItem = z.output<typeof JspfAttributionItemSchema>;
+export type JspfExtension = z.output<typeof JspfExtensionSchema>;
+export type JspfTrack = z.output<typeof JspfTrackSchema>;
+export type JspfPlaylistData = z.output<typeof JspfPlaylistDataSchema>;
+export type JspfPlaylist = z.output<typeof JspfSchema>;
 
 /**
  * Parses a JSPF JSON string into a validated playlist object.
@@ -166,17 +166,19 @@ export type JspfPlaylist = z.output<typeof JspfSchema>
  * @throws If the input is not valid JSON or does not conform to the JSPF schema.
  */
 export function parseJspf(input: string): JspfPlaylist {
-  let raw: unknown
+  let raw: unknown;
   try {
-    raw = JSON.parse(input)
+    raw = JSON.parse(input);
   } catch (err) {
-    throw new Error(`Invalid JSPF: failed to parse JSON: ${String(err)}`)
+    throw new Error(`Invalid JSPF: failed to parse JSON: ${String(err)}`);
   }
-  const result = JspfSchema.safeParse(raw)
+  const result = JspfSchema.safeParse(raw);
   if (!result.success) {
-    throw new Error(`Invalid JSPF: schema validation failed: ${result.error.message}`)
+    throw new Error(
+      `Invalid JSPF: schema validation failed: ${result.error.message}`,
+    );
   }
-  return result.data
+  return result.data;
 }
 
 /**
@@ -187,5 +189,5 @@ export function parseJspf(input: string): JspfPlaylist {
  * @returns A JSPF JSON string.
  */
 export function generateJspf(playlist: JspfPlaylist, indent = 2): string {
-  return JSON.stringify(playlist, null, indent)
+  return JSON.stringify(playlist, null, indent);
 }

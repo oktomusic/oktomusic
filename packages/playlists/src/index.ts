@@ -5,7 +5,7 @@ export type {
   JspfPlaylist,
   JspfPlaylistData,
   JspfTrack,
-} from "./jspf"
+} from "./jspf";
 export {
   JspfAttributionItemSchema,
   JspfExtensionSchema,
@@ -15,6 +15,6 @@ export {
   JspfTrackSchema,
   generateJspf,
   parseJspf,
-} from "./jspf"
-export { m3uToPlaylist, playlistToM3U } from "./m3u"
-export { generateXspf, parseXspf } from "./xspf"
+} from "./jspf";
+export { m3uToPlaylist, playlistToM3U } from "./m3u";
+export { generateXspf, parseXspf } from "./xspf";

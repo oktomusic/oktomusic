@@ -263,7 +263,8 @@
     "*.ttml": "xml",
     "*.css": "tailwindcss",
     "*.m3u": "plaintext",
-    "*.xspf": "xml"
+    "*.xspf": "xml",
+    "*.jspf": "json"
   },
   "[yaml]": {
     "editor.insertSpaces": true,
