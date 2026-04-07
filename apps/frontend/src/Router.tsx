@@ -43,7 +43,7 @@ export default function Router() {
               <Route
                 path="*"
                 Component={
-                  authSession.status === "authenticated" ? App : undefined
+                  authSession.status === "authenticated" ? App : () => undefined
                 }
               />
             </Routes>
