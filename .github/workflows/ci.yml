@@ -139,6 +139,27 @@ jobs:
         run: |
           pnpm --filter "@oktomusic/lyrics" run test
 
+  pkg-playlists:
+    name: "@oktomusic/playlists"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build
+        run: pnpm --filter "@oktomusic/playlists" build
+
+      - name: Lint
+        run: |
+          pnpm --filter "@oktomusic/playlists" run lint
+
+      - name: Tests
+        run: |
+          pnpm --filter "@oktomusic/playlists" run test
+
   pkg-metaflac-parser:
     name: "@oktomusic/metaflac-parser"
     runs-on: ubuntu-latest

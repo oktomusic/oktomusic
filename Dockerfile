@@ -27,6 +27,7 @@ COPY packages/vite-sri-manifest/package.json packages/vite-sri-manifest/
 COPY packages/api-schemas/package.json packages/api-schemas/
 COPY packages/metaflac-parser/package.json packages/metaflac-parser/
 COPY packages/lyrics/package.json packages/lyrics/
+COPY packages/playlists/package.json packages/playlists/
 COPY packages/vibrant/package.json packages/vibrant/
 COPY packages/meta-tags/package.json packages/meta-tags/
 COPY apps/backend/package.json apps/backend/
@@ -37,6 +38,7 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
   --filter @oktomusic/vite-sri-manifest \
   --filter @oktomusic/metaflac-parser \
   --filter @oktomusic/lyrics \
+  --filter @oktomusic/playlists \
   --filter @oktomusic/api-schemas \
   --filter @oktomusic/vibrant \
   --filter @oktomusic/meta-tags \
@@ -47,6 +49,7 @@ COPY packages/vite-sri-manifest/ packages/vite-sri-manifest/
 COPY packages/api-schemas/ packages/api-schemas/
 COPY packages/metaflac-parser/ packages/metaflac-parser/
 COPY packages/lyrics/ packages/lyrics/
+COPY packages/playlists/ packages/playlists/
 COPY packages/vibrant/ packages/vibrant/
 COPY packages/meta-tags/ packages/meta-tags/
 COPY apps/backend/ apps/backend/
@@ -63,6 +66,9 @@ RUN pnpm run --filter @oktomusic/api-schemas build
 
 # Build the lyrics package first
 RUN pnpm run --filter @oktomusic/lyrics build
+
+# Build the playlists package first
+RUN pnpm run --filter @oktomusic/playlists build
 
 # Build the vibrant package first
 RUN pnpm run --filter @oktomusic/vibrant build
@@ -108,6 +114,7 @@ COPY --from=builder /usr/src/app/pnpm-workspace.yaml /usr/src/app/package.json /
 COPY --from=builder /usr/src/app/apps/backend/package.json ./apps/backend/
 COPY --from=builder /usr/src/app/packages/api-schemas/package.json ./packages/api-schemas/
 COPY --from=builder /usr/src/app/packages/lyrics/package.json ./packages/lyrics/
+COPY --from=builder /usr/src/app/packages/playlists/package.json ./packages/playlists/
 COPY --from=builder /usr/src/app/packages/metaflac-parser/package.json ./packages/metaflac-parser/
 COPY --from=builder /usr/src/app/packages/vibrant/package.json ./packages/vibrant/
 COPY --from=builder /usr/src/app/packages/meta-tags/package.json ./packages/meta-tags/
@@ -117,6 +124,7 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
   pnpm install --frozen-lockfile --prod \
   --filter @oktomusic/api-schemas... \
   --filter @oktomusic/metaflac-parser... \
+  --filter @oktomusic/playlists... \
   --filter @oktomusic/backend... \
   --filter @oktomusic/meta-tags...
 
@@ -130,6 +138,7 @@ COPY --from=builder /usr/src/app/apps/backend/prisma.config.ts ./apps/backend/pr
 COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
 COPY --from=builder /usr/src/app/packages/api-schemas/dist ./packages/api-schemas/dist
 COPY --from=builder /usr/src/app/packages/lyrics/dist ./packages/lyrics/dist
+COPY --from=builder /usr/src/app/packages/playlists/dist ./packages/playlists/dist
 COPY --from=builder /usr/src/app/packages/metaflac-parser/dist ./packages/metaflac-parser/dist
 COPY --from=builder /usr/src/app/packages/vibrant/dist ./packages/vibrant/dist
 COPY --from=builder /usr/src/app/packages/meta-tags/dist ./packages/meta-tags/dist

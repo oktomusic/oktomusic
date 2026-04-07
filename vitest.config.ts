@@ -7,6 +7,7 @@ export default defineConfig({
       "./apps/backend/vitest.e2e.config.ts",
       "./apps/frontend/vitest.config.ts",
       "./packages/lyrics/vitest.config.ts",
+      "./packages/playlists/vitest.config.ts",
       "./packages/metaflac-parser/vitest.config.ts",
       "./packages/vibrant/vitest.config.ts",
       "./packages/meta-tags/vitest.config.ts",

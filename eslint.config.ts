@@ -138,6 +138,22 @@ export default defineConfig([
     },
   },
 
+  // @oktomusic/playlists (tsdown)
+  {
+    files: ["packages/playlists/**/*.ts"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
+      prettier,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: "./packages/playlists/tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+
   // @oktomusic/metaflac-parser (tsdown)
   {
     files: ["packages/metaflac-parser/**/*.ts"],
