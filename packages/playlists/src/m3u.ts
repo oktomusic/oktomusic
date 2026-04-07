@@ -1,45 +1,48 @@
-import type { ExtPlaylist, ExtPlaylistItem } from "./common";
+import type { JspfPlaylist, JspfTrack } from "./jspf"
 
-export function playlistToM3U(playlist: ExtPlaylist): string {
-  const lines = ["#EXTM3U"];
+export function playlistToM3U(playlist: JspfPlaylist): string {
+  const lines = ["#EXTM3U"]
 
-  for (const item of playlist.items) {
-    lines.push(`#EXTINF:${Math.round(item.durationMs / 1000)},${item.title}`);
-    lines.push(item.file);
+  for (const track of playlist.playlist.track ?? []) {
+    const durationSec = Math.round((track.duration ?? 0) / 1000)
+    const title = track.title ?? ""
+    const file = track.location?.[0] ?? ""
+    lines.push(`#EXTINF:${durationSec},${title}`)
+    lines.push(file)
   }
 
-  return lines.join("\n");
+  return lines.join("\n")
 }
 
-export function m3uToPlaylist(m3u: string, name: string): ExtPlaylist {
+export function m3uToPlaylist(m3u: string, name: string): JspfPlaylist {
   const lines = m3u
     .split("\n")
     .map((line) => line.trim())
-    .filter((line) => line.length > 0);
+    .filter((line) => line.length > 0)
 
   if (lines.length === 0 || lines[0] !== "#EXTM3U") {
-    throw new Error("Invalid M3U format: Missing #EXTM3U header");
+    throw new Error("Invalid M3U format: Missing #EXTM3U header")
   }
 
-  const items: ExtPlaylistItem[] = [];
+  const tracks: JspfTrack[] = []
   for (let i = 1; i < lines.length; i++) {
     if (lines[i].startsWith("#EXTINF:")) {
-      const match = lines[i].match(/^#EXTINF:(\d+),(.*)$/);
+      const match = lines[i].match(/^#EXTINF:(\d+),(.*)$/)
       if (!match) {
-        throw new Error(`Invalid EXTINF line: ${lines[i]}`);
+        throw new Error(`Invalid EXTINF line: ${lines[i]}`)
       }
-      const durationMs = parseInt(match[1], 10) * 1000;
-      const title = match[2];
-      i++;
+      const durationMs = parseInt(match[1], 10) * 1000
+      const title = match[2]
+      i++
       if (i >= lines.length) {
-        throw new Error("Unexpected end of M3U file after EXTINF line");
+        throw new Error("Unexpected end of M3U file after EXTINF line")
       }
-      const file = lines[i];
-      items.push({ title, durationMs, file });
+      const file = lines[i]
+      tracks.push({ title, duration: durationMs, location: [file] })
     } else {
-      throw new Error(`Unexpected line in M3U file: ${lines[i]}`);
+      throw new Error(`Unexpected line in M3U file: ${lines[i]}`)
     }
   }
 
-  return { name, items };
+  return { playlist: { title: name, track: tracks } }
 }

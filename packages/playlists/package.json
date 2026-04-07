@@ -37,5 +37,8 @@
     "@types/node": "catalog:default",
     "tsdown": "catalog:default"
   },
-  "dependencies": {}
+  "dependencies": {
+    "fast-xml-parser": "^5.5.10",
+    "zod": "^4.3.6"
+  }
 }
