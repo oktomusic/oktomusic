@@ -26,7 +26,7 @@ function parseStandardLrcLine(line: string): LrcLine | null {
 }
 
 function parseEnhancedLrcLine(line: string): {
-  readonly timestamp: number | null;
+  readonly timestamp: number;
   readonly words: readonly EnhancedLrcWord[];
 } | null {
   // First, check if line starts with [mm:ss.xx] for line timestamp
