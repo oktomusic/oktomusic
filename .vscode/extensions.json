@@ -13,6 +13,7 @@
     "graphql.vscode-graphql",
     "prisma.prisma",
     "pomdtr.excalidraw-editor",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "github.vscode-github-actions"
   ]
 }

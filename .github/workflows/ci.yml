@@ -20,8 +20,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME_OKTOMUSIC: ${{ github.repository_owner }}/oktomusic
-  IMAGE_NAME_WEBSITE: ${{ github.repository_owner == 'oktomusic' && 'oktomusic/website' || format('{0}/oktomusic-website', github.repository_owner) }}
+  IMAGE_NAME_OKTOMUSIC: ${{ github.repository }}
   VITEPRESS_HOSTNAME: https://oktomusic.afcms.dev
 
 jobs:
@@ -293,7 +292,7 @@ jobs:
 
   docker:
     name: Docker
-    runs-on: ubuntu-latest
+    uses: docker/github-builder/.github/workflows/build.yml@v1
     needs:
       - app-backend
       - app-frontend
@@ -302,43 +301,52 @@ jobs:
       packages: write
       id-token: write
       attestations: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Setup Docker
-        uses: ./.github/actions/setup-docker
-        with:
-          login: ${{ github.event_name != 'pull_request' }}
-          registry: ${{ env.REGISTRY }}
+    inputs:
+      output: image
+      push: ${{ github.event_name != 'pull_request' }}
+      platforms: linux/amd64,linux/arm64
+      meta-images: ghcr.io/${{ env.IMAGE_NAME_OKTOMUSIC }}
+      meta-tags: |
+        type=ref,event=branch
+        type=ref,event=pr
+        type=semver,pattern={{version}}
+        type=semver,pattern={{major}}.{{minor}}
+        type=semver,pattern={{major}}
+      set-meta-annotations: true
+      set-meta-labels: true
+      meta-annotations: |
+        org.opencontainers.image.title=Oktomusic
+        org.opencontainers.image.description=Music streaming server
+        org.opencontainers.image.authors=AFCMS <afcm.contact@gmail.com>
+        org.opencontainers.image.licenses=AGPL-3.0-only
+        org.opencontainers.image.source=https://github.com/oktomusic/oktomusic
+        io.artifacthub.package.readme-url=https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/docs/artifacthub/container.md
+        io.artifacthub.package.category=skip-prediction
+        io.artifacthub.package.keywords=music,server,streaming
+        io.artifacthub.package.license=AGPL-3.0-only
+        io.artifacthub.package.maintainers=[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]
+      meta-labels: |
+        org.opencontainers.image.title=Oktomusic
+        org.opencontainers.image.description=Music streaming server
+        org.opencontainers.image.authors=AFCMS <afcm.contact@gmail.com>
+        org.opencontainers.image.licenses=AGPL-3.0-only
+        org.opencontainers.image.source=https://github.com/oktomusic/oktomusic
+        io.artifacthub.package.readme-url=https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/docs/artifacthub/container.md
+        io.artifacthub.package.category=skip-prediction
+        io.artifacthub.package.keywords=music,server,streaming
+        io.artifacthub.package.license=AGPL-3.0-only
+        io.artifacthub.package.maintainers=[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]
+      sbom: true
+      sign: auto
+      cache: true
+      cache-mode: max
+      distribute: true
+      fail-fast: false
+    secrets:
+      registry-auths: |
+        - registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          cosign: ${{ github.event_name != 'pull_request' }}
-
-      - name: Build Docker image
-        uses: ./.github/actions/build-docker
-        with:
-          registry: ${{ env.REGISTRY }}
-          image_name: ${{ env.IMAGE_NAME_OKTOMUSIC }}
-          context: .
-          dockerfile: Dockerfile
-          # io.artifacthub.package.logo-url=
-          annotations: |
-            org.opencontainers.image.title=Oktomusic
-            org.opencontainers.image.description=Music streaming server
-            org.opencontainers.image.authors=AFCMS <afcm.contact@gmail.com>
-            org.opencontainers.image.licenses=AGPL-3.0-only
-            org.opencontainers.image.source=https://github.com/oktomusic/oktomusic
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/oktomusic/oktomusic/refs/heads/master/docs/artifacthub/container.md
-            io.artifacthub.package.category=skip-prediction
-            io.artifacthub.package.keywords=music,server,streaming
-            io.artifacthub.package.license=AGPL-3.0-only
-            io.artifacthub.package.maintainers=[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          no_cache: ${{ (github.event_name == 'workflow_dispatch' && !inputs.use_cache) || startsWith(github.ref, 'refs/tags/') }}
-          attestations: ${{ github.event_name != 'pull_request' }}
-          cosign: ${{ github.event_name != 'pull_request' }}
 
   typst-docs:
     name: Typst Documents
