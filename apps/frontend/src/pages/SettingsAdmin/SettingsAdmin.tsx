@@ -1,5 +1,6 @@
 import { t } from "@lingui/core/macro";
 import { OktoButton } from "../../components/Base/OktoButton";
+import { OktoScrollArea } from "../../components/Base/OktoScrollArea";
 
 function IndexingReportItem() {
   return (
@@ -23,8 +24,8 @@ export function SettingsAdmin() {
             </h3>
             <OktoButton>Index Library</OktoButton>
           </div>
-          <div className="flex h-96 max-h-96 w-full flex-1 rounded-lg border border-zinc-700">
-            <ul className="flex w-full flex-1 flex-col gap-2 overflow-auto px-4 py-4">
+          <OktoScrollArea className="h-96 max-h-96 w-full flex-1 rounded-lg border border-zinc-700">
+            <ul className="flex w-full flex-1 flex-col gap-2 px-4 py-4">
               {[
                 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
                 19, 20,
@@ -32,7 +33,7 @@ export function SettingsAdmin() {
                 <IndexingReportItem key={i} />
               ))}
             </ul>
-          </div>
+          </OktoScrollArea>
           <div className="flex rounded-lg border border-zinc-700 p-4">AAA</div>
         </div>
       </div>
