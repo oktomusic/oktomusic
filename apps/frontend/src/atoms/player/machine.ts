@@ -19,6 +19,56 @@ export const playerQueueAtom = atom<TrackWithAlbum[]>([]);
 /** Index of the current track in the queue. */
 export const playerQueueIndexAtom = atom<number>(0);
 
+// WIP REWRITE
+// TODO: handle shuffle and repeat modes in main queue
+
+/**
+ * The manual queue.
+ *
+ * This queue is actionned by the "add to queue" buttons.
+ *
+ * It's meant to take the priority over the main queue when going to the next track.
+ *
+ * When a track is played, it's removed from the manual queue. When the manual queue is empty, the main queue is used again.
+ *
+ * There is no need to use an index, since we always play the first track of the manual queue, and remove it once it's played. This simplifies the logic and avoids edge cases with index management.
+ */
+export const playerQueueManualAtom = atom<TrackWithAlbum[]>([]);
+
+export interface PlayerQueueFrom {
+  readonly type: "album" | "playlist";
+  /**
+   * Album or playlist CUID
+   */
+  readonly id: string;
+}
+
+/**
+ * The main queue's origin information.
+ *
+ * It is actionned by the "play album" and "play playlist" buttons.
+ *
+ * Which entity the current queue originates from.
+ *
+ * This will allow us to restore the queue after a page reload.
+ *
+ * @see {playerQueueFromNameAtom}
+ * @see {playerQueueFromTracksAtom}
+ */
+export const playerQueueFromAtom = atom<PlayerQueueFrom | null>(null);
+
+/**
+ *
+ */
+export const playerQueueFromNameAtom = atom<string | null>();
+
+export const playerQueueFromTracksAtom = atom<TrackWithAlbum[] | null>(null);
+
+// export const playerQueueFromIndexAtom = atom<number | null>(null);
+
+// WIP REWRITE END
+
+// TODO: reset to start of track when playback timing is not near the start of the track, with user configuration
 /** Move to previous track (wraps) and force playback. */
 export const handlePreviousTrackAtom = atom(null, (get, set) => {
   const queue = get(playerQueueAtom);
