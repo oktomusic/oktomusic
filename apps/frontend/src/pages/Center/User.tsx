@@ -20,7 +20,7 @@ export function User() {
 
   const { data, loading, error } = useQuery(USER_PROFILE_QUERY, {
     variables: {
-      userId: cuid,
+      userId: cuid ?? "",
     },
     skip: !cuid,
   });
