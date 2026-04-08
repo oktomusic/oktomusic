@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { useAtomValue } from "jotai";
+import { Avatar } from "@base-ui/react/avatar";
 import { Button } from "@headlessui/react";
 import {
   HiChevronLeft,
@@ -28,6 +29,10 @@ export function HeaderMenu() {
   const authSession = useAtomValue(authSessionAtom);
 
   const { canGoBack, canGoForward, goBack, goForward } = useNavigationHistory();
+
+  const usernameInitial = authSession.user?.username
+    ? authSession.user.username[0].toUpperCase()
+    : "";
 
   const menuItems: OktoMenuItem[] = [
     {
@@ -124,8 +129,13 @@ export function HeaderMenu() {
           <HiOutlineCog6Tooth className="size-6" />
         </Link>
         <OktoMenu
-          button="AA"
-          buttonClassName="flex aspect-square size-8 items-center justify-center rounded-full bg-slate-700"
+          button={
+            <Avatar.Root className="inline-flex size-8 items-center justify-center rounded-full bg-zinc-700">
+              {/* TODO: profile images */}
+              <Avatar.Fallback>{usernameInitial}</Avatar.Fallback>
+            </Avatar.Root>
+          }
+          buttonClassName="rounded-full"
           buttonAriaLabel="User menu"
           positionAlign="end"
           positionSide="bottom"
