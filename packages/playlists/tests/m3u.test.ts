@@ -42,6 +42,18 @@ describe("M3U parser/generator", () => {
     ).toThrow("Invalid EXTINF line: #EXTINF:not-a-number,Phoenix");
   });
 
+  it("throws when an EXTINF line is missing the comma separator", () => {
+    expect(() =>
+      parseM3U("#EXTM3U\n#EXTINF:238Phoenix\ntrack.flac", "Broken"),
+    ).toThrow("Invalid EXTINF line: #EXTINF:238Phoenix");
+  });
+
+  it("throws when an EXTINF line has a negative duration", () => {
+    expect(() =>
+      parseM3U("#EXTM3U\n#EXTINF:-238,Phoenix\ntrack.flac", "Broken"),
+    ).toThrow("Invalid EXTINF line: #EXTINF:-238,Phoenix");
+  });
+
   it("throws when the file entry is missing after EXTINF", () => {
     expect(() => parseM3U("#EXTM3U\n#EXTINF:238,Phoenix", "Broken")).toThrow(
       "Unexpected end of M3U file after EXTINF line",
@@ -52,5 +64,12 @@ describe("M3U parser/generator", () => {
     expect(() => parseM3U("#EXTM3U\ntrack.flac", "Broken")).toThrow(
       "Unexpected line in M3U file: track.flac",
     );
+  });
+
+  it("parses an empty playlist with only the header", () => {
+    const emptyM3U = "#EXTM3U";
+    const parsed = parseM3U(emptyM3U, "Empty Playlist");
+
+    expect(generateM3U(parsed)).toBe(emptyM3U);
   });
 });
