@@ -5,8 +5,8 @@ import { authSessionAtom } from "./atoms/auth/atoms.ts";
 import { browserSupportAtom } from "./atoms/app/browser_support.ts";
 
 import { useScreenWakeLock } from "./hooks/wake_lock.ts";
-import { useStoragePersistence } from "./hooks/persistant_storage.ts";
-import { usePwaDeferedPrompt } from "./hooks/pwa_prompt.ts";
+import { useStoragePersistence } from "./hooks/persistent_storage.ts";
+import { usePwaDeferredPrompt } from "./hooks/pwa_prompt.ts";
 import { useKioskExitHandler } from "./hooks/kiosk_exit_handler.ts";
 import { useSWRegister } from "./hooks/sw_register.ts";
 
@@ -33,7 +33,7 @@ export default function Router() {
 
   useScreenWakeLock();
   useStoragePersistence();
-  usePwaDeferedPrompt();
+  usePwaDeferredPrompt();
   useKioskExitHandler();
 
   useSWRegister();

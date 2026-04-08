@@ -3,7 +3,7 @@ import { useSetAtom } from "jotai";
 
 import { pwaDeferredPromptAtom } from "../atoms/app/atoms";
 
-export function usePwaDeferedPrompt() {
+export function usePwaDeferredPrompt() {
   const setDeferredPrompt = useSetAtom(pwaDeferredPromptAtom);
 
   useEffect(() => {

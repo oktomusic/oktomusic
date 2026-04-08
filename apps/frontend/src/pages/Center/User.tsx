@@ -20,7 +20,7 @@ export function User() {
 
   const { data, loading, error } = useQuery(USER_PROFILE_QUERY, {
     variables: {
-      userId: cuid!,
+      userId: cuid,
     },
     skip: !cuid,
   });
@@ -60,11 +60,11 @@ export function User() {
   return (
     <CollectionView
       type={t`Profile`}
-      title={data!.userProfile.username}
+      title={data?.userProfile.username ?? ""}
       cover={coverPlaceHolder}
       toolbar={
         <CollectionViewToolbarUser
-          username={data!.userProfile.username}
+          username={data?.userProfile.username ?? ""}
           menuItems={[
             ...(isOwnProfile
               ? ([

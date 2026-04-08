@@ -130,9 +130,6 @@ export function Playlist() {
             label: t`Delete playlist`,
             icon: <LuCircleMinus className="size-4" />,
             onClick: () => {
-              if (!data.playlist) {
-                return;
-              }
               setDialogPlaylistDeleteOpen({
                 __typename: "PlaylistBasic",
                 id: data.playlist.id,
