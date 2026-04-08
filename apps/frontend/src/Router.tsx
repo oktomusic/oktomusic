@@ -17,6 +17,15 @@ import UnsupportedOverlay from "./pages/Unsupported/UnsupportedOverlay.tsx";
 
 import { App } from "./App.tsx";
 
+function LoginRedirect() {
+  const authSession = useAtomValue(authSessionAtom);
+
+  if (authSession.status !== "unauthenticated") {
+    return undefined;
+  }
+  return <Navigate to="/login" replace />;
+}
+
 export default function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
 
@@ -43,9 +52,7 @@ export default function Router() {
               <Route
                 path="*"
                 Component={
-                  authSession.status === "authenticated"
-                    ? App
-                    : () => <Navigate to="/login" replace />
+                  authSession.status === "authenticated" ? App : LoginRedirect
                 }
               />
             </Routes>
