@@ -34,3 +34,6 @@ overrides:
   sharp: catalog:default
 
 sharedWorkspaceLockfile: true
+blockExoticSubdeps: true
+minimumReleaseAge: 1440 # 1 day
+trustPolicy: no-downgrade
