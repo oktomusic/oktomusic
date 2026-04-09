@@ -45,7 +45,7 @@ export function LyricsViewer() {
 
   if (!currentTrack) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-6">
+      <div className="flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
         <span className="text-4xl font-bold">{`No track selected`}</span>
       </div>
     );
@@ -53,7 +53,7 @@ export function LyricsViewer() {
 
   if (currentTrack.hasLyrics === false) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-6">
+      <div className="flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
         <span className="text-4xl font-bold">{`No lyrics available for this track`}</span>
       </div>
     );
@@ -70,7 +70,7 @@ export function LyricsViewer() {
   // Theorically should never happen
   if (!queryResult.data?.track?.lyrics || trackData.length === 0) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-6">
+      <div className="flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
         <span className="text-4xl font-bold">{`No lyrics available for this track`}</span>
       </div>
     );
@@ -82,49 +82,52 @@ export function LyricsViewer() {
     languageDetectionState.detectedLanguage !== TARGET_LANGUAGE;*/
 
   return (
-    <div className="w-full">
+    <div className="mt-12 mb-6 w-full">
       <div className="mx-auto flex max-w-5xl flex-col gap-4">
         <div>
           {trackData.map((lyricLine, index) => {
             switch (lyricsDisplayMode) {
               case "word":
                 return (
-                  <p
-                    className="lyrics-line text mb-7 text-5xl font-bold"
-                    key={index}
-                  >
-                    {lyricLine.l.map((word, wordIndex) => (
-                      <span
-                        key={wordIndex}
-                        className={`${
-                          isWordPassed(currentPosition, lyricLine.ts, word)
-                            ? "text-zinc-200/80"
-                            : "text-zinc-200/40"
-                        }`}
-                      >
-                        {word.c}
-                      </span>
-                    ))}
-                  </p>
+                  <div className="mb-7 flex flex-col gap-4">
+                    <p className="lyrics-line text-5xl font-bold" key={index}>
+                      {lyricLine.l.map((word, wordIndex) => (
+                        <span
+                          key={wordIndex}
+                          className={`${
+                            isWordPassed(currentPosition, lyricLine.ts, word)
+                              ? "text-zinc-200/80"
+                              : "text-zinc-200/40"
+                          }`}
+                        >
+                          {word.c}
+                        </span>
+                      ))}
+                    </p>
+                  </div>
                 );
               case "line":
                 return (
-                  <p
-                    className={`lyrics-line mb-7 text-5xl font-bold ${isCurrentLine(currentPosition, lyricLine) ? "text-zinc-200" : "text-zinc-200/50"}`}
-                    key={index}
-                  >
-                    {lyricLine.t}
-                  </p>
+                  <div className="mb-7 flex flex-col gap-4">
+                    <p
+                      className={`lyrics-line text-5xl font-bold ${isCurrentLine(currentPosition, lyricLine) ? "text-zinc-200" : "text-zinc-200/50"}`}
+                      key={index}
+                    >
+                      {lyricLine.t}
+                    </p>
+                  </div>
                 );
               case "static":
               default:
                 return (
-                  <p
-                    className="lyrics-line mb-7 text-5xl font-bold text-zinc-200"
-                    key={index}
-                  >
-                    {lyricLine.t}
-                  </p>
+                  <div className="mb-7 flex flex-col gap-4">
+                    <p
+                      className="lyrics-line text-5xl font-bold text-zinc-200"
+                      key={index}
+                    >
+                      {lyricLine.t}
+                    </p>
+                  </div>
                 );
             }
           })}

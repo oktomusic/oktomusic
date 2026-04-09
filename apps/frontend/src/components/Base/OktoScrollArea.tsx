@@ -13,7 +13,9 @@ export function OktoScrollArea(props: OktoScrollAreaProps) {
       className={`oktoscrollarea__root${props.className ? ` ${props.className}` : ""}`}
     >
       <ScrollArea.Viewport className={"oktoscrollarea__viewport"}>
-        <ScrollArea.Content>{props.children}</ScrollArea.Content>
+        <ScrollArea.Content className={"oktoscrollarea__content"}>
+          {props.children}
+        </ScrollArea.Content>
       </ScrollArea.Viewport>
       <ScrollArea.Scrollbar
         className={"oktoscrollarea__scrollbar"}
