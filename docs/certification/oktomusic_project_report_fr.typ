@@ -31,9 +31,61 @@
 
 == Générale
 
+=== Language de programmation
+
+TypeScript #footnote[https://www.typescriptlang.org] a été choisi comme language de programmation principal pour le développement de l'application, pour ses nombreux avantages :
+
+- *Typage statique* : Les types statiques de TypeScript permettent de détecter beaucoup d'erreurs à la compilation, améliorant ainsi la robustesse et la maintenabilité du code.
+- *ESLint* : TypeScript se combine parfaitement avec des outils de linting comme ESLint, permettant d'améliorer encore la robustesse du code.
+- *Partage de code* : TypeScript permet de partager facilement du code et des types entre le backend et le frontend, notamment via des packages communs.
+- *Ecosystème* : TypeScript bénéficie d'un écosystème riche de bibliothèques backend et frontend, et un support excellent dans les éditeurs de code, facilitant le développement.
+
 == Backend
 
+Le backend de l'application s'est architecturé autour du framework NestJS #footnote[https://nestjs.com], qui offre une structure standardisée et modulaire au dessus d'Espress.js, avec un très bon support natif de TypeScript.
+
+=== Base de données PostgreSQL + Prisma ORM
+
+Pour la base de donnée principale, qui stocke les données de l'application (utilisateurs, albums, playlists, etc), le choix a été fait d'utiliser PostgreSQL #footnote[https://www.postgresql.org] pour sa robustesse et ses performances.
+
+L'intégration avec la base de données est assurée par Prisma ORM #footnote[https://www.prisma.io], qui offre une définition de schéma de données simple et un générateur de client TypeScript très puissant.
+
+Le support de JSON dans PostgreSQL et la souplesse de Prisma permettent de stocker des données complexes (ex : les paroles de chansons) de manière efficace, tout en bénéficiant d'un typage TypeScript des données.
+
+=== Valkey
+
+Pour la persistance des sessions utilisateur et les queues BullMQ, le choix a été fait d'utiliser Valkey #footnote[https://valkey.io], une base de données clé-valeur distribuée et performante.
+
+Valkey est un fork de Redis 7 sous license BSD 3-clause, maintenu par la Linux Foundation après son changement de license vers une license source-availlable (avant le rajout de la license AGPL).
+
+J'ai privilégié l'utilisation de Valkey dont la license BSD 3-clause est plus permissive que la nouvelle license AGPL.
+
+Pour l'intégration, j'ai utilisé les bibliothèques officielles Valkey Glide #footnote[https://glide.valkey.io] et `iovalkey` pour la compatibilité avec BullMQ.
+
+=== Authentification OpenID Connect
+
+Le choix a été fait d'utiliser le protocole OpenID Connect #footnote[https://openid.net] pour l'authentification des utilisateurs.
+
+L'application se comporte donc comme un Relying Party (RP) dans ce protocole, en déléguant la gestion des identités à un fournisseur d'identité (IdP) tiers tel que Keycloak #footnote[https://www.keycloak.org].
+
+Elle utilise le flux d’autorisation (*Authorization Code Flow*) avec *PKCE* et des sessions côté serveur.
+Elle s’appuie sur les protocoles *OpenID Connect Core* et *OpenID Connect Discovery*.
+
+Cette approche présente plusieurs avantages applicatifs, notamment en laissant l'opérateur du serveur gérer lui même les aspects liés à la gestion des utilisateurs.
+Pas besoin de gérer en interne la gestion des comptes, politiques de mot de passe, réinitialisation, emails, 2FA, etc.
+
+De plus, elle permet de bénéficier d'une sécurité renforcée (voir section #link(<security_oidc>)[Sécurité, OpenID Connect])
+
 == Frontend
+
+Vite #footnote[https://vite.dev] est utilisé comme framework pour la partie frontend de l'application.
+
+Compte tenu de la taille de l'application, les gains de performance offerts par la toolchain native utilisée par Vite en termes de temps de compilation et de rafraîchissement à chaud sont particulièrement utiles pour le développement.
+
+- https://vite.dev
+- https://react.dev
+- https://www.apollographql.com
+- https://lingui.dev
 
 == MCD
 
@@ -135,7 +187,64 @@ Comme nous ne fournissons pas l'application sous forme de service, ni ne collect
 
 = Réalisations
 
-(captures d'écrans, etc)
+== Version customisée de FFmpeg <ffmpeg>
+
+L'application exploite les capacités de FFmpeg et metaflac pour l'extraction des métadonnées des fichiers FLAC.
+
+Pour l'inclusion de FFmpeg dans l'image Docker de l'application, le choix a été fait de compiler une version statique et customisée de FFmpeg 8 et de ces dépendances principales à partir des sources officielles.
+
+L'avantage principal de cette approche est de limiter la taille de l'image finale en n'incluant que les codecs audio FLAC et Opus.
+
+Les gains de taille sont significatifs, avec des binaires finaux d'environ 5Mo contre 140Mo pour la distribution de FFmpeg fournie par Alpine Linux.
+
+Ces binaires sont distribués sous forme d'image Docker, pour permettre une intégration facile dans l'image Docker de l'application via un layer séparé.
+
+Le fichier Dockerfile et les pipeline CI/CD de construction de cette image sont disponibles dans un repository séparé sur GitHub #footnote[https://github.com/oktomusic/ffmpeg-custom].
+
+L'image a été construite à partir des sources officielles de FFmpeg et de ses dépendances, avec un support de la cross compilation native Docker #footnote[https://docs.docker.com/build/building/multi-platform/#cross-compilation] et vérification des hash des sources pour garantir l'intégrité des composants utilisés :
+
+- libogg #footnote[https://github.com/xiph/ogg]
+- libopus #footnote[https://github.com/xiph/opus]
+- libflac #footnote[https://github.com/xiph/flac] (binaire metaflac)
+- ffmpeg #footnote[https://ffmpeg.org] (binaires ffmpeg et ffprobe)
+
+```Dockerfile
+# syntax=docker/dockerfile:1
+# check=error=true
+
+FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
+FROM --platform=$BUILDPLATFORM alpine:3.22 AS builder
+
+# (...)
+
+ENV OGG_VERSION=1.3.6
+ENV OGG_CHECKSUM=sha256:83e6704730683d004d20e21b8f7f55dcb3383cdf84c0daedf30bde175f774638
+ADD --unpack=true \
+    --checksum=${OGG_CHECKSUM} \
+    https://github.com/xiph/ogg/releases/download/v${OGG_VERSION}/libogg-${OGG_VERSION}.tar.gz \
+    /usr/local/src/
+WORKDIR /usr/local/src/libogg-${OGG_VERSION}
+RUN CC=xx-clang ./configure \
+    --host=$(xx-clang --print-target-triple) \
+    --disable-shared \
+    --enable-static \
+    --prefix=$(xx-info sysroot)usr/local \
+    && make -j$(nproc) \
+    && make install
+
+# (...)
+
+RUN xx-verify --static /usr/local/bin/ffmpeg
+RUN xx-verify --static /usr/local/bin/ffprobe
+RUN xx-verify --static /usr/local/bin/metaflac
+
+# Create minimal runtime image
+FROM scratch AS runtime
+
+COPY --from=builder /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
+COPY --from=builder /usr/local/bin/ffprobe /usr/local/bin/ffprobe
+COPY --from=builder /usr/local/bin/metaflac /usr/local/bin/metaflac
+```
 
 = Sécurité de l'application <security>
 
@@ -253,7 +362,7 @@ Chaque image est construite exclusivement via les pipelines CI/CD à partir d'un
 
 Les images sont signées avec Cosign #footnote[https://sigstore.dev], un outil open-source de signature et de vérification des artefacts container, assurant leur provenance et la détection de toute modification non autorisée.
 
-Elles sont construites à partir de bases officielles et versionnées, et toutes les dépendances externes critiques (comme le code source FFmpeg) font l’objet d’une vérification cryptographique lors de la construction (voir section #link(<security>)[FFmpeg]).
+Elles sont construites à partir de bases officielles et versionnées, et toutes les dépendances externes critiques (comme le code source FFmpeg) font l’objet d’une vérification cryptographique lors de la construction (voir section #link(<ffmpeg>)[FFmpeg]).
 
 // TODO: fix link to FFmpeg section
 
