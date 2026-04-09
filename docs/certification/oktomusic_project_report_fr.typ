@@ -24,6 +24,7 @@
 (architecture)
 
 #image("../common/project.excalidraw.svg")
+#image("../common/architecture.excalidraw.svg")
 
 = Spécifications techniques
 
