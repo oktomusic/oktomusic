@@ -1,4 +1,4 @@
-#set page(paper: "a4")
+#set page(paper: "a4", numbering: "1/1")
 #set document(title: "Rapport de projet Oktomusic", author: "Louis WALTER")
 
 #set heading(numbering: "1.")
@@ -104,6 +104,34 @@ Les packages communs utilisent `tsdown` #footnote[https://tsdown.dev].
   Utilisé par le backend pour l'analyse des couvertures d'album.
   ],
 )
+
+== Agents IA
+
+Le développement de l'application a été assisté par l'utilisation d'agents LLMs pour de nombreuses tâches, à la fois pour la génération de code, la rédaction de documentation, la création de tests unitaires, la recherche et le prototypage de fonctionnalités, etc.
+
+Un effort a été fait pour maximiser l'efficacité de ces outils, en fournissant un environment de développement complet pour les agents autonomes, ainsi que des instructions système détaillées et spécialisées pour chaque partie de l'application.
+
+Ces instructions couvrent des aspects tels que l'architecture du projet (organisation des fichiers), les conventions de code (TypeScript, CSS, nommage, etc.), les exigences de performances et d'accessibilité (CSP, respect des recommendations WCAG 2.2 AAA, etc.).
+
+Des prompts réutilisables ont été créés pour automatiser des tâches courantes, comme la création de nouveaux packages partagés, impliquant des modifications dans plusieurs parties de la base de code (CI/CD, Docker, configuration ESLint et Vitest, etc).
+L'automatisation de ces taches répétitives a permis de réduire le risque d'oublis ou d'erreurs humaines, pouvant causer des erreur CI/CD.
+
+Les Agents et LLMs utilisés proviennent principalement de la plateforme GitHub Copilot #footnote[https://github.com/features/copilot].
+Les modèles utilisés incluent les modèles _GPT-5_ de OpenAI, _Claude Sonet_ et _Claude Opus_ de Anthropic et _Grok Code Fast 1_ de xAI.
+
+== Conformité RGPD <rgpd>
+
+L'application se veut faciliter la conformité au RGPD #footnote[https://www.cnil.fr/fr/reglement-europeen-protection-donnees].
+
+Comme nous ne fournissons pas l'application sous forme de service, ni ne collectons de télémérie ou données personelles, l'opérateur du serveur est le responsable de traitement conformément au RGPD.
+
+// TODO: outils de conformité RGPD (suppression, etc)
+
+== Accessibilité <accessibility>
+
+// Lighthouse
+// WCAG 2.2 AAA
+// RGAA
 
 = Réalisations
 
