@@ -21,12 +21,89 @@
 
 = Architecture logicielle
 
-(architecture)
+#image(
+  "../common/architecture.excalidraw.svg",
+  alt: "Schéma d'architecture",
+  fit: "contain",
+  format: "svg",
+  height: auto,
+)
 
-#image("../common/project.excalidraw.svg")
-#image("../common/architecture.excalidraw.svg")
+== Générale
+
+== Backend
+
+== Frontend
+
+== MCD
+
+== MLD
+
+== MPD
 
 = Spécifications techniques
+
+== Organisation du code
+
+Le code source de l'application est organisé dans un monorepo PNPM #footnote[https://pnpm.io/workspaces] hébergé sur un repository GitHub à l'exception de la version customisée de FFmpeg gérée dans un repository séparé.
+
+Différent packages sont définis pour les différentes parties de l'application (backend, frontend, packages communs, etc).
+
+Les packages communs utilisent `tsdown` #footnote[https://tsdown.dev].
+
+#table(
+  columns: (auto, auto, auto),
+  align: horizon,
+  table.header([*Location*], [*Package*], [*Description*]),
+  // Apps
+  table.cell[`apps/`],
+  table.cell[`backend`],
+  table.cell[Backend (NestJS 11)],
+  table.cell[`apps/`],
+  table.cell[`frontend`],
+  table.cell[Frontend (Vite 8 + React)],
+  table.cell[`apps/`],
+  table.cell[`website`],
+  table.cell[
+    Site web de documentation (VitePress, Cloudflare Pages) #footnote[https://oktomusic.afcms.dev]
+  ],
+  // Packages
+  table.cell[`packages/`],
+  table.cell[`api-schemas`],
+  table.cell[
+    Schémas Zod 4 pour les endpoints REST, utilisés pour la validation côté serveur, les types TypeScript client et serveur et la génération de documentation API (via OpenAPI)
+  ],
+  table.cell[`packages/`],
+  table.cell[`lyrics`],
+  table.cell[
+    Parsing des fichiers de paroles LRC #footnote[https://en.wikipedia.org/wiki/LRC_(file_format)] et TTML #footnote[https://en.wikipedia.org/wiki/Timed_Text_Markup_Language], définition d'un modèle de données JSON commun pour les paroles.
+    Utilisé par le backend.
+  ],
+  table.cell[`packages/`],
+  table.cell[`meta-tags`],
+  table.cell[
+  Génération de tags `meta` HTML pour les pages de l'application et du site de documentation.
+  Supporte les tags Open Graph #footnote[https://ogp.me] et DAIU #footnote[https://daiu.org]
+  ],
+  table.cell[`packages/`],
+  table.cell[`metaflac-parser`],
+  table.cell[
+  Parsing et validation de métadonnées FLAC basé sur l'exécutable `metaflac`.
+  Utilisé par le backend.
+  ],
+  table.cell[`packages/`],
+  table.cell[`playlists`],
+  table.cell[
+    Parsing et génération de fichiers de playlist XSPF #footnote[https://xspf.org] et M3U #footnote[https://en.wikipedia.org/wiki/M3U], utilisant le format JSPF en modèle commun.
+    Utilisé par le backend.
+  ],
+  table.cell[`packages/`],
+  table.cell[`vibrant`],
+  table.cell[
+  Extraction de couleurs dominantes à partir d'images, basée sur les bibliothèques `sharp` et `@vibrant` (algo MMCQ).
+  Utilisé par le backend pour l'analyse des couvertures d'album.
+  ],
+)
 
 = Réalisations
 
