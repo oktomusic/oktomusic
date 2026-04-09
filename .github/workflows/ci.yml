@@ -386,10 +386,14 @@ jobs:
       - name: Build Project Presentation
         run: typst compile --root . docs/certification/oktomusic_project_presentation_fr.typ docs/certification/oktomusic_project_presentation_fr.pdf
 
-      - name: Upload PDFs as Artifacts
+      - name: Upload report PDF as Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: oktomusic_certification_documents
-          path: |
-            docs/certification/oktomusic_project_report_fr.pdf
-            docs/certification/oktomusic_project_presentation_fr.pdf
+          path: docs/certification/oktomusic_project_report_fr.pdf
+          archive: false
+
+      - name: Upload presentation PDF as Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          path: docs/certification/oktomusic_project_presentation_fr.pdf
+          archive: false
