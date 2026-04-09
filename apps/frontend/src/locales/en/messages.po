@@ -30,7 +30,7 @@ msgstr "{minutes}min {seconds}s"
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
-#: src/components/HeaderMenu.tsx:42
+#: src/components/HeaderMenu.tsx:47
 msgid "About"
 msgstr "About"
 
@@ -66,8 +66,8 @@ msgstr "Add to queue"
 msgid "Added to playlist"
 msgstr "Added to playlist"
 
-#: src/components/HeaderMenu.tsx:63
-#: src/pages/SettingsAdmin/SettingsAdmin.tsx:18
+#: src/components/HeaderMenu.tsx:68
+#: src/pages/SettingsAdmin/SettingsAdmin.tsx:19
 msgid "Admin Settings"
 msgstr "Admin Settings"
 
@@ -218,13 +218,13 @@ msgstr "Failed to share"
 msgid "Find a playlist..."
 msgstr "Find a playlist..."
 
-#: src/components/HeaderMenu.tsx:76
-#: src/components/HeaderMenu.tsx:77
+#: src/components/HeaderMenu.tsx:81
+#: src/components/HeaderMenu.tsx:82
 msgid "Go back"
 msgstr "Go back"
 
-#: src/components/HeaderMenu.tsx:85
-#: src/components/HeaderMenu.tsx:86
+#: src/components/HeaderMenu.tsx:90
+#: src/components/HeaderMenu.tsx:91
 msgid "Go forward"
 msgstr "Go forward"
 
@@ -243,13 +243,13 @@ msgstr "Hide overlay"
 msgid "Hide queue"
 msgstr "Hide queue"
 
-#: src/components/HeaderMenu.tsx:92
-#: src/components/HeaderMenu.tsx:93
+#: src/components/HeaderMenu.tsx:97
+#: src/components/HeaderMenu.tsx:98
 #: src/pages/Center/Generic404.tsx:12
 msgid "Home"
 msgstr "Home"
 
-#: src/components/HeaderMenu.tsx:111
+#: src/components/HeaderMenu.tsx:116
 #: src/pages/Auth/Login.tsx:47
 msgid "Install Application"
 msgstr "Install Application"
@@ -266,7 +266,7 @@ msgstr "Line by line"
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
-#: src/components/HeaderMenu.tsx:54
+#: src/components/HeaderMenu.tsx:59
 msgid "Logout"
 msgstr "Logout"
 
@@ -392,7 +392,7 @@ msgid "Playback controls"
 msgstr "Playback controls"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:152
+#: src/pages/Center/Playlist.tsx:149
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -462,7 +462,7 @@ msgstr "Save"
 msgid "Save to library"
 msgstr "Save to library"
 
-#: src/components/HeaderMenu.tsx:100
+#: src/components/HeaderMenu.tsx:105
 msgid "Search"
 msgstr "Search"
 

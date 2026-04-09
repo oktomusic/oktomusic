@@ -30,7 +30,7 @@ msgstr "{minutes}min {seconds}s"
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
-#: src/components/HeaderMenu.tsx:42
+#: src/components/HeaderMenu.tsx:47
 msgid "About"
 msgstr "À propos"
 
@@ -62,8 +62,8 @@ msgstr ""
 msgid "Added to playlist"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:63
-#: src/pages/SettingsAdmin/SettingsAdmin.tsx:18
+#: src/components/HeaderMenu.tsx:68
+#: src/pages/SettingsAdmin/SettingsAdmin.tsx:19
 msgid "Admin Settings"
 msgstr ""
 
@@ -214,13 +214,13 @@ msgstr ""
 msgid "Find a playlist..."
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:76
-#: src/components/HeaderMenu.tsx:77
+#: src/components/HeaderMenu.tsx:81
+#: src/components/HeaderMenu.tsx:82
 msgid "Go back"
 msgstr "Reculer"
 
-#: src/components/HeaderMenu.tsx:85
-#: src/components/HeaderMenu.tsx:86
+#: src/components/HeaderMenu.tsx:90
+#: src/components/HeaderMenu.tsx:91
 msgid "Go forward"
 msgstr "Avancer"
 
@@ -239,13 +239,13 @@ msgstr ""
 msgid "Hide queue"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:92
-#: src/components/HeaderMenu.tsx:93
+#: src/components/HeaderMenu.tsx:97
+#: src/components/HeaderMenu.tsx:98
 #: src/pages/Center/Generic404.tsx:12
 msgid "Home"
 msgstr "Accueil"
 
-#: src/components/HeaderMenu.tsx:111
+#: src/components/HeaderMenu.tsx:116
 #: src/pages/Auth/Login.tsx:47
 msgid "Install Application"
 msgstr ""
@@ -262,7 +262,7 @@ msgstr "Ligne par ligne"
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
-#: src/components/HeaderMenu.tsx:54
+#: src/components/HeaderMenu.tsx:59
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -388,7 +388,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:152
+#: src/pages/Center/Playlist.tsx:149
 msgid "Playlist"
 msgstr ""
 
@@ -458,7 +458,7 @@ msgstr "Sauvegarder"
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
-#: src/components/HeaderMenu.tsx:100
+#: src/components/HeaderMenu.tsx:105
 msgid "Search"
 msgstr ""
 

@@ -16,7 +16,7 @@ import { isCurrentLine, isWordPassed } from "../utils/lyrics";
 
 // const TARGET_LANGUAGE = "fr";
 
-export default function LyricsViewer() {
+export function LyricsViewer() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const currentPosition = useAtomValue(playerPlaybackPositionAtom);
   const shouldFetchLyrics = Boolean(currentTrack && currentTrack.hasLyrics);
