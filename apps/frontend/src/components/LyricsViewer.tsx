@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client/react";
+import { ErrorLike } from "@apollo/client";
 import { useAtomValue } from "jotai";
 
 import {
@@ -6,42 +6,25 @@ import {
   playerQueueCurrentTrack,
 } from "../atoms/player/machine";
 import { settingClientLyricsDisplayMode } from "../atoms/app/settings_client";
-// import { translatorSupportAtom } from "../atoms/app/browser_support";
-import { TRACK_LYRICS_QUERY } from "../api/graphql/queries/trackLyrics";
-// import { useLyricsLanguageDetection } from "../hooks/use_language_detector";
-// import { useLyricsTranslation } from "../hooks/use_translator";
 import { GenericLoading } from "../pages/Center/GenericLoading";
 import { GenericGraphQLError } from "../pages/Center/GenericGraphQLError";
 import { isCurrentLine, isWordPassed } from "../utils/lyrics";
+import { Locale } from "../utils/locales";
+import { LyricsLine } from "../api/graphql/gql/graphql";
 
-// const TARGET_LANGUAGE = "fr";
+export interface LyricsViewerProps {
+  readonly selectedLanguage: "original" | Locale;
+  readonly translatedLyrics: ReadonlyArray<string> | null;
+  readonly lyrics: ReadonlyArray<LyricsLine>;
+  readonly lyricsLoading: boolean;
+  readonly lyricsError: ErrorLike | undefined;
+}
 
-export function LyricsViewer() {
+export function LyricsViewer(props: LyricsViewerProps) {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const currentPosition = useAtomValue(playerPlaybackPositionAtom);
-  const shouldFetchLyrics = Boolean(currentTrack && currentTrack.hasLyrics);
   const lyricsDisplayMode = useAtomValue(settingClientLyricsDisplayMode);
-  // const translatorAvailable = useAtomValue(translatorSupportAtom);
-
-  const queryResult = useQuery(TRACK_LYRICS_QUERY, {
-    fetchPolicy: "cache-and-network",
-    errorPolicy: "all",
-    skip: !shouldFetchLyrics,
-    variables: { id: currentTrack?.id ?? "" },
-  });
-
-  const trackData = queryResult.data?.track?.lyrics ?? [];
-  /*const languageDetectionState = useLyricsLanguageDetection({
-    enabled: translatorAvailable,
-    lyrics: trackData,
-  });
-
-  const translationState = useLyricsTranslation({
-    enabled: translatorAvailable && languageDetectionState.status === "ready",
-    sourceLanguage: languageDetectionState.detectedLanguage,
-    targetLanguage: TARGET_LANGUAGE,
-    lyrics: trackData,
-  });*/
+  const trackData = props.lyrics;
 
   if (!currentTrack) {
     return (
@@ -59,16 +42,16 @@ export function LyricsViewer() {
     );
   }
 
-  if (queryResult.loading) {
+  if (props.lyricsLoading) {
     return <GenericLoading />;
   }
 
-  if (queryResult.error) {
-    return <GenericGraphQLError error={queryResult.error} />;
+  if (props.lyricsError) {
+    return <GenericGraphQLError error={props.lyricsError} />;
   }
 
   // Theorically should never happen
-  if (!queryResult.data?.track?.lyrics || trackData.length === 0) {
+  if (trackData.length === 0) {
     return (
       <div className="flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
         <span className="text-4xl font-bold">{`No lyrics available for this track`}</span>
@@ -76,21 +59,21 @@ export function LyricsViewer() {
     );
   }
 
-  /*const showTranslation =
-    translatorAvailable &&
-    languageDetectionState.detectedLanguage !== null &&
-    languageDetectionState.detectedLanguage !== TARGET_LANGUAGE;*/
+  const showTranslation =
+    props.selectedLanguage !== "original" && props.translatedLyrics !== null;
 
   return (
-    <div className="mt-12 mb-6 w-full">
+    <div className="mx-4 mt-12 mb-6 w-full">
       <div className="mx-auto flex max-w-5xl flex-col gap-4">
         <div>
           {trackData.map((lyricLine, index) => {
+            const translatedLine = props.translatedLyrics?.[index];
+
             switch (lyricsDisplayMode) {
               case "word":
                 return (
-                  <div className="mb-7 flex flex-col gap-4">
-                    <p className="lyrics-line text-5xl font-bold" key={index}>
+                  <div className="mb-7 flex flex-col gap-4" key={index}>
+                    <p className="lyrics-line text-5xl font-bold">
                       {lyricLine.l.map((word, wordIndex) => (
                         <span
                           key={wordIndex}
@@ -104,29 +87,40 @@ export function LyricsViewer() {
                         </span>
                       ))}
                     </p>
+                    {showTranslation && (
+                      <p className="text-2xl text-zinc-200/45">
+                        {translatedLine}
+                      </p>
+                    )}
                   </div>
                 );
               case "line":
                 return (
-                  <div className="mb-7 flex flex-col gap-4">
+                  <div className="mb-7 flex flex-col gap-4" key={index}>
                     <p
                       className={`lyrics-line text-5xl font-bold ${isCurrentLine(currentPosition, lyricLine) ? "text-zinc-200" : "text-zinc-200/50"}`}
-                      key={index}
                     >
                       {lyricLine.t}
                     </p>
+                    {showTranslation && (
+                      <p className="text-2xl text-zinc-200/45">
+                        {translatedLine}
+                      </p>
+                    )}
                   </div>
                 );
               case "static":
               default:
                 return (
-                  <div className="mb-7 flex flex-col gap-4">
-                    <p
-                      className="lyrics-line text-5xl font-bold text-zinc-200"
-                      key={index}
-                    >
+                  <div className="mb-7 flex flex-col gap-4" key={index}>
+                    <p className="lyrics-line text-5xl font-bold text-zinc-200">
                       {lyricLine.t}
                     </p>
+                    {showTranslation && (
+                      <p className="text-2xl text-zinc-200/45">
+                        {translatedLine}
+                      </p>
+                    )}
                   </div>
                 );
             }

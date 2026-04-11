@@ -158,6 +158,7 @@ export interface LyricsTranslationOptions {
   readonly sourceLanguage: string | null;
   readonly targetLanguage: string;
   readonly lyrics: ReadonlyArray<{ readonly t: string }>;
+  readonly preservePreviousTranslation?: boolean;
 }
 
 /**
@@ -172,6 +173,8 @@ export interface LyricsTranslationOptions {
 export function useLyricsTranslation(
   options: LyricsTranslationOptions,
 ): LyricsTranslationState {
+  const preservePreviousTranslation =
+    options.preservePreviousTranslation ?? true;
   const translatorState = useTranslator({
     enabled: options.enabled,
     sourceLanguage: options.sourceLanguage,
@@ -186,12 +189,23 @@ export function useLyricsTranslation(
   );
 
   const lyrics = options.lyrics;
+  const lyricsKey = lyrics.map((line) => line.t).join("\n");
+  const previousSourceLanguageRef = useRef<string | null>(
+    options.sourceLanguage,
+  );
+  const previousLyricsKeyRef = useRef<string>(lyricsKey);
 
   useEffect(() => {
     let isActive = true;
     const translator = translatorState.translator;
     const translatorReady =
       options.enabled && translatorState.status === "ready" && translator;
+    const inputChanged =
+      previousSourceLanguageRef.current !== options.sourceLanguage ||
+      previousLyricsKeyRef.current !== lyricsKey;
+
+    previousSourceLanguageRef.current = options.sourceLanguage;
+    previousLyricsKeyRef.current = lyricsKey;
 
     const scheduleUpdate = (update: () => void) => {
       // Queue state updates to avoid cascading renders.
@@ -206,16 +220,21 @@ export function useLyricsTranslation(
 
     // Derive state from translator readiness and input.
     scheduleUpdate(() => {
-      setTranslatedLyrics(null);
       setError(null);
 
       if (!options.enabled || !options.sourceLanguage) {
+        setTranslatedLyrics(null);
         setStatus("idle");
         return;
       }
 
+      if (!preservePreviousTranslation || inputChanged || lyrics.length === 0) {
+        setTranslatedLyrics(null);
+      }
+
       // Skip translation if source and target are the same.
       if (options.sourceLanguage === options.targetLanguage) {
+        setTranslatedLyrics(null);
         setStatus("idle");
         return;
       }
@@ -322,9 +341,11 @@ export function useLyricsTranslation(
     };
   }, [
     lyrics,
+    lyricsKey,
     options.enabled,
     options.sourceLanguage,
     options.targetLanguage,
+    preservePreviousTranslation,
     translatorState.error,
     translatorState.status,
     translatorState.translator,

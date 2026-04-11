@@ -197,6 +197,10 @@ msgstr "Edit profile"
 #~ msgid "Enabled"
 #~ msgstr "Enabled"
 
+#: src/utils/locales.ts:17
+msgid "English"
+msgstr "English"
+
 #: src/components/QueueTrack/QueueTrack.tsx:69
 #: src/components/TrackList/TrackElement.tsx:122
 msgid "Failed to add track"
@@ -217,6 +221,14 @@ msgstr "Failed to share"
 #: src/components/SubmenuPlaylistsSearch.tsx:44
 msgid "Find a playlist..."
 msgstr "Find a playlist..."
+
+#: src/utils/locales.ts:18
+msgid "French"
+msgstr "French"
+
+#: src/utils/locales.ts:19
+msgid "German"
+msgstr "German"
 
 #: src/components/HeaderMenu.tsx:81
 #: src/components/HeaderMenu.tsx:82
@@ -253,6 +265,10 @@ msgstr "Home"
 #: src/pages/Auth/Login.tsx:47
 msgid "Install Application"
 msgstr "Install Application"
+
+#: src/utils/locales.ts:20
+msgid "Italian"
+msgstr "Italian"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:108
 msgid "Kiosk mode:"
@@ -336,6 +352,10 @@ msgstr "No track playing"
 msgid "Open Picture-in-Picture"
 msgstr "Open Picture-in-Picture"
 
+#: src/hooks/use_panel_overlay_translation.tsx:106
+msgid "Original"
+msgstr "Original"
+
 #: src/pages/Center/Generic404.tsx:7
 msgid "Page not found"
 msgstr "Page not found"
@@ -404,6 +424,10 @@ msgstr "Playlist cover"
 msgid "Playlist deleted"
 msgstr "Playlist deleted"
 
+#: src/utils/locales.ts:22
+msgid "Portuguese"
+msgstr "Portuguese"
+
 #: src/components/PipControls/PipControlsOverlay.tsx:41
 #: src/components/PipControls/PipControlsOverlay.tsx:42
 #: src/components/PipControls/PipControlsWindow.tsx:90
@@ -453,6 +477,10 @@ msgstr "Request"
 msgid "Resume {trackName}"
 msgstr "Resume {trackName}"
 
+#: src/utils/locales.ts:23
+msgid "Russian"
+msgstr "Russian"
+
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:236
 msgid "Save"
 msgstr "Save"
@@ -497,6 +525,10 @@ msgstr "Show overlay"
 #: src/components/Player/PlayerControls.tsx:177
 msgid "Show queue"
 msgstr "Show queue"
+
+#: src/utils/locales.ts:21
+msgid "Spanish"
+msgstr "Spanish"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:63
 msgid "Static"
