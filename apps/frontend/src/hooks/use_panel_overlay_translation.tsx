@@ -2,12 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ErrorLike } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
 import { useAtomValue } from "jotai";
-import {
-  LuCheck,
-  LuDownload,
-  LuLanguages,
-  LuLoaderCircle,
-} from "react-icons/lu";
+import { LuCheck, LuDownload, LuLoaderCircle } from "react-icons/lu";
 import { t } from "@lingui/core/macro";
 
 import { translatorSupportAtom } from "../atoms/app/browser_support";
@@ -104,7 +99,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
     const baseOptions = {
       original: {
         label: t`Original`,
-        icon: LuLanguages,
+        icon: undefined,
       },
     } as const satisfies Record<string, OktoListboxOption>;
 
@@ -136,7 +131,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
       }
 
       if (isDownloaded || availability === "available") {
-        translatedOptions[targetLanguage] = { label, icon: LuCheck };
+        translatedOptions[targetLanguage] = { label, icon: undefined };
         continue;
       }
 
@@ -216,10 +211,16 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
     const downloadKey = `${languageDetectionState.detectedLanguage}:${language}`;
     queueMicrotask(() => {
       setDownloadedLanguages((current) =>
-        current[downloadKey] === true ? current : { ...current, [downloadKey]: true },
+        current[downloadKey] === true
+          ? current
+          : { ...current, [downloadKey]: true },
       );
     });
-  }, [language, languageDetectionState.detectedLanguage, translationState.status]);
+  }, [
+    language,
+    languageDetectionState.detectedLanguage,
+    translationState.status,
+  ]);
 
   const showTranslationSpinner =
     language !== "original" &&
