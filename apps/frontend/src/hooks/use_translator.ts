@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export interface TranslatorState {
   readonly translator: Translator | null;
@@ -189,11 +189,15 @@ export function useLyricsTranslation(
   );
 
   const lyrics = options.lyrics;
-  const lyricsKey = lyrics.map((line) => line.t).join("\n");
+  const lyricsKey = useMemo(
+    () => lyrics.map((line) => line.t).join("\n"),
+    [lyrics],
+  );
   const previousSourceLanguageRef = useRef<string | null>(
     options.sourceLanguage,
   );
   const previousLyricsKeyRef = useRef<string>(lyricsKey);
+  const previousTargetLanguageRef = useRef<string>(options.targetLanguage);
 
   useEffect(() => {
     let isActive = true;
@@ -202,10 +206,12 @@ export function useLyricsTranslation(
       options.enabled && translatorState.status === "ready" && translator;
     const inputChanged =
       previousSourceLanguageRef.current !== options.sourceLanguage ||
-      previousLyricsKeyRef.current !== lyricsKey;
+      previousLyricsKeyRef.current !== lyricsKey ||
+      previousTargetLanguageRef.current !== options.targetLanguage;
 
     previousSourceLanguageRef.current = options.sourceLanguage;
     previousLyricsKeyRef.current = lyricsKey;
+    previousTargetLanguageRef.current = options.targetLanguage;
 
     const scheduleUpdate = (update: () => void) => {
       // Queue state updates to avoid cascading renders.
