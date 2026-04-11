@@ -17,9 +17,10 @@ import { AppConfig } from "./config/definitions/app.config";
 import { HttpConfig } from "./config/definitions/http.config";
 import { ViteConfig } from "./config/definitions/vite.config";
 import { getHelmetConfig } from "./utils/helmet_config";
-import { permissionsPolicyMiddleware } from "./utils/permissions_policy";
+import { permissionsPolicyMiddleware } from "./utils/middlewares/permissions_policy";
 // import { reportingEndpointsMiddleware } from "./utils/reporting_endpoints";
 import { proxyMiddleware, vitePrefixes } from "./utils/vite_dev_proxy";
+import { integrityPolicyMiddleware } from "./utils/middlewares/integrity_policy";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -47,6 +48,8 @@ async function bootstrap() {
 
   if (isDev) {
     app.use(proxyMiddleware(viteOrigin, vitePrefixes));
+  } else {
+    app.use(integrityPolicyMiddleware);
   }
 
   // Setup Swagger

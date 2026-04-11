@@ -26,6 +26,11 @@ export interface AssetTag {
   attrs: Record<string, string | boolean>;
 }
 
+export interface EntryAssetTags {
+  readonly head: AssetTag[];
+  readonly body: AssetTag[];
+}
+
 /**
  * Load and parse the Vite manifest file
  */
@@ -48,19 +53,26 @@ export function getAssetTags(
   manifest: ViteManifest,
   entryPoint: string,
   basePath = "/",
-): AssetTag[] {
+): EntryAssetTags {
   const entry = manifest[entryPoint];
   if (!entry || !entry.isEntry) {
-    return [];
+    return {
+      head: [],
+      body: [],
+    };
   }
 
-  const tags: AssetTag[] = [];
+  const headTags: AssetTag[] = [];
+  const seenHeadFiles = new Set<string>();
 
-  // Add CSS files
-  if (entry.css) {
-    for (const cssFile of entry.css) {
+  const pushStylesheetTags = (chunk: ManifestWithSRI): void => {
+    for (const cssFile of chunk.css ?? []) {
+      if (seenHeadFiles.has(cssFile)) {
+        continue;
+      }
+      seenHeadFiles.add(cssFile);
       const cssEntry = findEntryByFile(manifest, cssFile);
-      tags.push({
+      headTags.push({
         tag: "link",
         attrs: {
           rel: "stylesheet",
@@ -70,20 +82,84 @@ export function getAssetTags(
         },
       });
     }
+  };
+
+  const importedChunks = getImportedChunks(manifest, entry);
+
+  // Add preload tags for imported JS chunks and linked CSS in <head>
+  for (const chunk of importedChunks) {
+    if (!seenHeadFiles.has(chunk.file)) {
+      seenHeadFiles.add(chunk.file);
+      headTags.push({
+        tag: "link",
+        attrs: {
+          rel: "modulepreload",
+          href: `${basePath}${chunk.file}`,
+          ...(chunk.sri && { integrity: chunk.sri }),
+          crossorigin: true,
+        },
+      });
+    }
+
+    pushStylesheetTags(chunk);
   }
 
-  // Add the main JS entry file
-  tags.push({
-    tag: "script",
-    attrs: {
-      type: "module",
-      src: `${basePath}${entry.file}`,
-      ...(entry.sri && { integrity: entry.sri }),
-      crossorigin: true,
-    },
-  });
+  // Keep entry-linked CSS in <head>
+  pushStylesheetTags(entry);
 
-  return tags;
+  const bodyTags: AssetTag[] = [
+    {
+      tag: "script",
+      attrs: {
+        type: "module",
+        src: `${basePath}${entry.file}`,
+        ...(entry.sri && { integrity: entry.sri }),
+        crossorigin: true,
+      },
+    },
+  ];
+
+  return {
+    head: headTags,
+    body: bodyTags,
+  };
+}
+
+function getImportedChunks(
+  manifest: ViteManifest,
+  entry: ManifestWithSRI,
+): ManifestWithSRI[] {
+  const chunks: ManifestWithSRI[] = [];
+  const visited = new Set<string>();
+
+  const visit = (importKey: string): void => {
+    if (visited.has(importKey)) {
+      return;
+    }
+    visited.add(importKey);
+
+    const chunk = manifest[importKey];
+    if (!chunk) {
+      return;
+    }
+
+    chunks.push(chunk);
+    for (const nextImport of [
+      ...(chunk.imports ?? []),
+      ...(chunk.dynamicImports ?? []),
+    ]) {
+      visit(nextImport);
+    }
+  };
+
+  for (const importKey of [
+    ...(entry.imports ?? []),
+    ...(entry.dynamicImports ?? []),
+  ]) {
+    visit(importKey);
+  }
+
+  return chunks;
 }
 
 /**

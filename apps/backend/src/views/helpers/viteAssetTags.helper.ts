@@ -7,23 +7,30 @@ import type { ViewModel } from "../view-model";
  * It renders precomputed asset tags (with SRI) from the view model in production.
  */
 export function registerViteAssetTagsHelper(): void {
-  hbs.registerHelper("viteAssetTags", function (this: ViewModel) {
-    if (!this.assetTags) return "";
-    return new Handlebars.SafeString(
-      this.assetTags
-        .map((tag) => {
-          const attrs = Object.entries(tag.attrs)
-            .map(([key, value]) => {
-              if (typeof value === "boolean") {
-                return value ? key : "";
-              }
-              return `${key}="${value}"`;
-            })
-            .filter(Boolean)
-            .join(" ");
-          return `<${tag.tag} ${attrs}></${tag.tag}>`;
-        })
-        .join("\n    "),
-    );
-  });
+  hbs.registerHelper(
+    "viteAssetTags",
+    function (this: ViewModel, location?: string) {
+      if (!this.assetTags) return "";
+
+      const target =
+        location === "head" ? this.assetTags.head : this.assetTags.body;
+
+      return new Handlebars.SafeString(
+        target
+          .map((tag) => {
+            const attrs = Object.entries(tag.attrs)
+              .map(([key, value]) => {
+                if (typeof value === "boolean") {
+                  return value ? key : "";
+                }
+                return `${key}="${value}"`;
+              })
+              .filter(Boolean)
+              .join(" ");
+            return `<${tag.tag} ${attrs}></${tag.tag}>`;
+          })
+          .join("\n    "),
+      );
+    },
+  );
 }
