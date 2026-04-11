@@ -352,7 +352,7 @@ msgstr "No track playing"
 msgid "Open Picture-in-Picture"
 msgstr "Open Picture-in-Picture"
 
-#: src/hooks/use_panel_overlay_translation.tsx:106
+#: src/hooks/use_panel_overlay_translation.tsx:101
 msgid "Original"
 msgstr "Original"
 
