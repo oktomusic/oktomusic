@@ -182,3 +182,12 @@
   inherits: true;
   initial-value: transparent;
 }
+
+/* Base UI Overrides */
+
+.base-ui-disable-scrollbar {
+  scrollbar-width: none;
+}
+.base-ui-disable-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+import { CSPProvider } from "@base-ui/react/csp-provider";
 
 import { useVibrantColorsPlaying } from "./hooks/vibrant_colors";
 import {
@@ -28,8 +29,10 @@ export function App() {
   const rightVisible = useAtomValue(panelRightVisibleAtom);
   const overlayVisible = useAtomValue(panelOverlayVisibleAtom);
 
+  // https://base-ui.com/react/utils/csp-provider
+
   return (
-    <>
+    <CSPProvider disableStyleElements={true}>
       <PlayerProvider />
       <MediaSessionProvider />
       <AudioSessionProvider />
@@ -50,6 +53,6 @@ export function App() {
         <PanelRight />
       </div>
       <PlayerControls />
-    </>
+    </CSPProvider>
   );
 }
