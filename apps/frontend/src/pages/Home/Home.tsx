@@ -78,7 +78,7 @@ function Home() {
       <div className="card">
         <div className="m-4 flex flex-col gap-2">
           <div>
-            <p style={{ color: "green" }}>
+            <p className="text-green-600">
               ✓ Logged in as {authSession.user.username}
             </p>
             <Link to="/dashboard">Go to Dashboard</Link>

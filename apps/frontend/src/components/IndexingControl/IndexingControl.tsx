@@ -141,16 +141,13 @@ export default function IndexingControl() {
           {jobStatus.progress !== null && jobStatus.progress !== undefined ? (
             <div>
               <strong>Progress:</strong> {jobStatus.progress}%
-              <div className="mt-1 h-2 w-full rounded-full bg-sky-700">
-                <div
-                  className="h-2 rounded-full bg-blue-600 transition-all duration-300"
-                  style={{ width: `${jobStatus.progress}%` }}
-                  role="progressbar"
-                  aria-valuenow={jobStatus.progress}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                />
-              </div>
+              <progress
+                className="mt-1 block h-2 w-full overflow-hidden rounded-full bg-sky-700 [&::-moz-progress-bar]:bg-blue-600 [&::-webkit-progress-bar]:bg-sky-700 [&::-webkit-progress-value]:bg-blue-600"
+                value={jobStatus.progress}
+                max={100}
+              >
+                {jobStatus.progress}%
+              </progress>
             </div>
           ) : null}
           {jobStatus.error ? (

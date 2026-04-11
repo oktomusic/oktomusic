@@ -17,13 +17,7 @@ function AppInfo() {
           <strong>Network Status:</strong> {isOnline ? "Online" : "Offline"}
         </li>
       </ul>
-      <div
-        style={{
-          alignItems: "start",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div className="flex flex-col items-start">
         {loading
           ? "Loading..."
           : error
