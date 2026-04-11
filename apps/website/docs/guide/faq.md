@@ -14,6 +14,7 @@ Here are all many APIs the project uses or will use that are not supported by Fi
 - [Background Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Background_Fetch_API)
 - [Document Picture-in-Picture API](https://developer.mozilla.org/en-US/docs/Web/API/Document_Picture-in-Picture_API)
 - [AudioSession API](https://www.w3.org/TR/audio-session)
+- [Translator API](https://developer.mozilla.org/en-US/docs/Web/API/Translator_and_Language_Detector_APIs)
 
 Some of the missing features are explicitly rejected by the Firefox team, like [PWA support](https://bugzilla.mozilla.org/show_bug.cgi?id=1682593) (later "replaced" by a half-baked kind of [taskbar bookmark](https://www.firefox.com/en-US/firefox/143.0/releasenotes) without actual PWA features).
 
