@@ -68,7 +68,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
   const [language, setLanguage] = useState<PanelOverlayLanguage>("original");
   const [availabilityRefreshKey, setAvailabilityRefreshKey] = useState(0);
   const [downloadedLanguages, setDownloadedLanguages] = useState<
-    Partial<Record<Locale, true>>
+    Partial<Record<string, true>>
   >({});
   const previousTranslationStatusRef =
     useRef<TranslationStatus["status"]>("idle");
@@ -128,7 +128,8 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
 
       const availability =
         availabilityState.availabilityByLocale[targetLanguage];
-      const isDownloaded = downloadedLanguages[targetLanguage] === true;
+      const downloadKey = `${languageDetectionState.detectedLanguage}:${targetLanguage}`;
+      const isDownloaded = downloadedLanguages[downloadKey] === true;
 
       if (availability === "unavailable") {
         continue;
@@ -148,9 +149,16 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
         translatedOptions[targetLanguage] = {
           label,
           icon: (props: Parameters<typeof LuLoaderCircle>[0]) => (
-            <LuLoaderCircle {...props} className="animate-spin" />
+            <LuLoaderCircle
+              {...props}
+              className={`${props.className ?? ""} animate-spin`.trim()}
+            />
           ),
         };
+        continue;
+      }
+
+      if (availability === undefined) {
         continue;
       }
 
@@ -197,16 +205,21 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
   }, [language, translationState.status]);
 
   useEffect(() => {
-    if (language === "original" || translationState.status !== "ready") {
+    if (
+      language === "original" ||
+      translationState.status !== "ready" ||
+      !languageDetectionState.detectedLanguage
+    ) {
       return;
     }
 
+    const downloadKey = `${languageDetectionState.detectedLanguage}:${language}`;
     queueMicrotask(() => {
       setDownloadedLanguages((current) =>
-        current[language] === true ? current : { ...current, [language]: true },
+        current[downloadKey] === true ? current : { ...current, [downloadKey]: true },
       );
     });
-  }, [language, translationState.status]);
+  }, [language, languageDetectionState.detectedLanguage, translationState.status]);
 
   const showTranslationSpinner =
     language !== "original" &&
