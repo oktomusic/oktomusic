@@ -28,7 +28,7 @@ export function LyricsViewer(props: LyricsViewerProps) {
 
   if (!currentTrack) {
     return (
-      <div className="flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
+      <div className="mx-4 flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
         <span className="text-4xl font-bold">{`No track selected`}</span>
       </div>
     );
@@ -36,7 +36,7 @@ export function LyricsViewer(props: LyricsViewerProps) {
 
   if (currentTrack.hasLyrics === false) {
     return (
-      <div className="flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
+      <div className="mx-4 flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
         <span className="text-4xl font-bold">{`No lyrics available for this track`}</span>
       </div>
     );
@@ -53,7 +53,7 @@ export function LyricsViewer(props: LyricsViewerProps) {
   // Theorically should never happen
   if (trackData.length === 0) {
     return (
-      <div className="flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
+      <div className="mx-4 flex min-h-full w-full flex-1 flex-col items-center justify-center gap-6">
         <span className="text-4xl font-bold">{`No lyrics available for this track`}</span>
       </div>
     );
