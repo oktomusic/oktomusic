@@ -1,8 +1,9 @@
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@headlessui/react";
 import { LuLoaderCircle } from "react-icons/lu";
 import { HiXMark } from "react-icons/hi2";
 
+import { playerQueueCurrentTrack } from "../atoms/player/machine";
 import { panelOverlayVisibleAtom } from "../atoms/app/panels";
 import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 import { LyricsViewer } from "../components/LyricsViewer";
@@ -11,7 +12,14 @@ import { usePanelOverlayTranslation } from "../hooks/use_panel_overlay_translati
 
 export function PanelOverlay() {
   const closeOverlay = useSetAtom(panelOverlayVisibleAtom);
+  const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const panelOverlayTranslation = usePanelOverlayTranslation();
+  const areLyricsDisplayed =
+    currentTrack !== null &&
+    currentTrack.hasLyrics !== false &&
+    !panelOverlayTranslation.lyricsLoading &&
+    panelOverlayTranslation.lyricsError === undefined &&
+    panelOverlayTranslation.lyrics.length > 0;
 
   return (
     <div
@@ -40,7 +48,7 @@ export function PanelOverlay() {
         />
       </OktoScrollArea>
 
-      {panelOverlayTranslation.translatorSupport && (
+      {panelOverlayTranslation.translatorSupport && areLyricsDisplayed && (
         <div className="absolute right-4 bottom-4 flex flex-row items-center justify-end gap-4">
           {panelOverlayTranslation.showTranslationSpinner && (
             <LuLoaderCircle
