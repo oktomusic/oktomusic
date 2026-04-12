@@ -11,6 +11,9 @@ catalogs:
     sharp: ^0.34.5
 
 linkWorkspacePackages: true
+injectWorkspacePackages: true
+syncInjectedDepsAfterScripts:
+  - build
 
 onlyBuiltDependencies:
   - "@apollo/protobufjs"

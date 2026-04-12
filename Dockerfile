@@ -87,11 +87,13 @@ RUN pnpm run --filter @oktomusic/backend build
 RUN mkdir -p apps/backend/dist/public && \
   cp -r apps/frontend/dist/. apps/backend/dist/public/
 
+# Create a portable, pruned backend bundle for production image
+RUN pnpm --filter @oktomusic/backend --prod deploy /prod/backend
+
 FROM ghcr.io/oktomusic/ffmpeg-custom:0.3.0 AS ffmpeg
 
 FROM node:24-alpine AS production
 
-RUN corepack enable pnpm
 RUN apk add --no-cache ca-certificates
 
 ENV NODE_ENV=production
@@ -109,42 +111,11 @@ ENV FFMPEG_PATH=/usr/local/bin/ffmpeg
 ENV FFPROBE_PATH=/usr/local/bin/ffprobe
 ENV METAFLAC_PATH=/usr/local/bin/metaflac
 
-# Copy package files for production dependencies
-COPY --from=builder /usr/src/app/pnpm-workspace.yaml /usr/src/app/package.json /usr/src/app/pnpm-lock.yaml ./
-COPY --from=builder /usr/src/app/apps/backend/package.json ./apps/backend/
-COPY --from=builder /usr/src/app/packages/api-schemas/package.json ./packages/api-schemas/
-COPY --from=builder /usr/src/app/packages/lyrics/package.json ./packages/lyrics/
-COPY --from=builder /usr/src/app/packages/playlists/package.json ./packages/playlists/
-COPY --from=builder /usr/src/app/packages/metaflac-parser/package.json ./packages/metaflac-parser/
-COPY --from=builder /usr/src/app/packages/vibrant/package.json ./packages/vibrant/
-COPY --from=builder /usr/src/app/packages/meta-tags/package.json ./packages/meta-tags/
+# Copy deployed backend artifact with isolated production dependencies
+COPY --from=builder /prod/backend/ ./
 
-# Install production dependencies only
-RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
-  pnpm install --frozen-lockfile --prod \
-  --filter @oktomusic/api-schemas... \
-  --filter @oktomusic/metaflac-parser... \
-  --filter @oktomusic/playlists... \
-  --filter @oktomusic/backend... \
-  --filter @oktomusic/meta-tags...
-
-# Copy Prisma schema and migrations for runtime migration
-COPY --from=builder /usr/src/app/apps/backend/prisma ./apps/backend/prisma
-
-# Copy Prisma config (required to apply migrations)
-COPY --from=builder /usr/src/app/apps/backend/prisma.config.ts ./apps/backend/prisma.config.ts
-
-# Copy built backend and frontend
-COPY --from=builder /usr/src/app/apps/backend/dist ./apps/backend/dist
-COPY --from=builder /usr/src/app/packages/api-schemas/dist ./packages/api-schemas/dist
-COPY --from=builder /usr/src/app/packages/lyrics/dist ./packages/lyrics/dist
-COPY --from=builder /usr/src/app/packages/playlists/dist ./packages/playlists/dist
-COPY --from=builder /usr/src/app/packages/metaflac-parser/dist ./packages/metaflac-parser/dist
-COPY --from=builder /usr/src/app/packages/vibrant/dist ./packages/vibrant/dist
-COPY --from=builder /usr/src/app/packages/meta-tags/dist ./packages/meta-tags/dist
-
-# Copy the generated Prisma client
-COPY --from=builder /usr/src/app/apps/backend/src/generated ./apps/backend/src/generated
+# Copy compiled backend output and generated Prisma client used at runtime
+COPY --from=builder /usr/src/app/apps/backend/dist ./dist
 
 # Create entrypoint script for running migrations before starting the app
 RUN <<'EOF'
@@ -157,12 +128,11 @@ if [ -n "$UPDATE_CA" ]; then
   update-ca-certificates
 fi
 
-cd /usr/src/app/apps/backend
+cd /usr/src/app
 echo "Running Prisma migrations..."
 npx prisma migrate deploy
 echo "Migrations completed successfully"
-cd /usr/src/app
-exec node --use-system-ca apps/backend/dist/main.js
+exec node --use-system-ca dist/main.js
 SH
 chmod +x /entrypoint.sh
 EOF
