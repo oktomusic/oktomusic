@@ -304,6 +304,9 @@ jobs:
       - name: Build website
         run: pnpm --filter "@oktomusic/website" run build
 
+      - name: Install Wrangler CLI
+        run: pnpm install -g wrangler
+
       - name: Build & Deploy Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
