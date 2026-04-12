@@ -10,6 +10,7 @@ import { CompiledMetaTags, compileMetaTags } from "@oktomusic/meta-tags";
 
 const metaTags = compileMetaTags({
   "og:type": "website",
+  "og:site_name": "Oktomusic Documentation",
   "og:locale": "en_US",
   "og:locale:alternate": ["en_US"],
   "daiu:origin": "HM",
@@ -34,7 +35,7 @@ export default withPwa(
   defineConfig({
     srcDir: "docs",
     title: "Oktomusic",
-    description: "A media server",
+    description: "Opinionated, self-hosted music streaming server",
     head: [
       ["link", { rel: "icon", href: "/favicon.ico", sizes: "48x48" }],
       [
@@ -52,6 +53,16 @@ export default withPwa(
       ],
       ...metaTagsToHead(metaTags),
     ],
+    transformHead(ctx) {
+      return [
+        ...metaTagsToHead(
+          compileMetaTags({
+            "og:title": ctx.pageData.title,
+            "og:description": ctx.pageData.description,
+          }),
+        ),
+      ];
+    },
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
       nav: [

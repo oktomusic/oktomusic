@@ -2,10 +2,13 @@
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
+title: Documentation
+description: Opinionated, self-hosted music streaming server
+
 hero:
   name: "Oktomusic"
   text: "WIP"
-  tagline: Opinionated self-hosted music streaming server
+  tagline: Opinionated, self-hosted music streaming server
   actions:
     - theme: brand
       text: Get Started
