@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 
+import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 import ProtectedRoutes from "../components/ProtectedRoutes";
 import AdminRoute from "../components/AdminRoute";
 
@@ -17,9 +18,10 @@ import { Generic404 } from "./Center/Generic404";
 
 export function PanelCenter() {
   return (
-    <main
+    <OktoScrollArea
+      render={<main />}
       id="oktomusic:panel-center"
-      className="overflow-y-auto rounded bg-zinc-900"
+      className="rounded bg-zinc-900"
     >
       <Routes>
         <Route element={<ProtectedRoutes />}>
@@ -38,6 +40,6 @@ export function PanelCenter() {
           <Route path="*" element={<Generic404 />} />
         </Route>
       </Routes>
-    </main>
+    </OktoScrollArea>
   );
 }

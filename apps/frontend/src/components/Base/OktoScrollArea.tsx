@@ -1,16 +1,22 @@
+import type { ReactElement, ReactNode } from "react";
+
 import { ScrollArea } from "@base-ui/react/scroll-area";
 
 import "./OktoScrollArea.css";
 
 interface OktoScrollAreaProps {
+  readonly render?: ReactElement;
+  readonly id?: string;
   readonly className?: string;
-  readonly children: React.ReactNode;
+  readonly children: ReactNode;
 }
 
 export function OktoScrollArea(props: OktoScrollAreaProps) {
   return (
     <ScrollArea.Root
+      id={props.id}
       className={`oktoscrollarea__root${props.className ? ` ${props.className}` : ""}`}
+      render={props.render}
     >
       <ScrollArea.Viewport className={"oktoscrollarea__viewport"}>
         <ScrollArea.Content className={"oktoscrollarea__content"}>
