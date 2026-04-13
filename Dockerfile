@@ -130,7 +130,7 @@ fi
 
 cd /usr/src/app
 echo "Running Prisma migrations..."
-npx prisma migrate deploy
+npx --no-install prisma migrate deploy
 echo "Migrations completed successfully"
 exec node --use-system-ca dist/main.js
 SH
