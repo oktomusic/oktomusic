@@ -55,22 +55,22 @@ COPY packages/meta-tags/ packages/meta-tags/
 COPY apps/backend/ apps/backend/
 COPY apps/frontend/ apps/frontend/
 
-# Build the vite-sri-manifest package first
+# Build the vite-sri-manifest package
 RUN pnpm run --filter @oktomusic/vite-sri-manifest build
 
-# Build the metaflac-parser package first
+# Build the metaflac-parser package
 RUN pnpm run --filter @oktomusic/metaflac-parser build
 
-# Build the api-schemas package first
+# Build the api-schemas package
 RUN pnpm run --filter @oktomusic/api-schemas build
 
-# Build the lyrics package first
+# Build the lyrics package
 RUN pnpm run --filter @oktomusic/lyrics build
 
-# Build the playlists package first
+# Build the playlists package
 RUN pnpm run --filter @oktomusic/playlists build
 
-# Build the vibrant package first
+# Build the vibrant package
 RUN pnpm run --filter @oktomusic/vibrant build
 
 # Build the meta-tags package

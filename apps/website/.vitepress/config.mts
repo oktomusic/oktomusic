@@ -17,7 +17,7 @@ const metaTags = compileMetaTags({
   "daiu:level": "assist",
   "daiu:verification": "DAIU 1.0",
   "daiu:description":
-    "LLMs have beend used for syntax fixes, plugin setup and other tasks to assist in the creation of this documentation.",
+    "LLMs have been used for syntax fixes, plugin setup and other tasks to assist in the creation of this documentation.",
 });
 
 function metaTagsToHead(metaTags: CompiledMetaTags): HeadConfig[] {

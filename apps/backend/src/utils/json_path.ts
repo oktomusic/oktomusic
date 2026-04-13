@@ -44,7 +44,7 @@ function getByPath(
       continue;
     }
 
-    if (typeof current === "object" && current !== null) {
+    if (typeof current === "object") {
       const rec = current as Record<string, unknown>;
       current = Object.prototype.hasOwnProperty.call(rec, key)
         ? rec[key]

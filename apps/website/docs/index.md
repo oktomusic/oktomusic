@@ -24,7 +24,5 @@ features:
   - title: Open Source
     details: AGPL-licensed, exclusively relying on state of the art open-source software and codecs
   - title: Web Based
-    details: Web client, will all features from a desktop app, running in your Chromium browser
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    details: Web client, with all features from a desktop app, running in your Chromium browser
 ---
