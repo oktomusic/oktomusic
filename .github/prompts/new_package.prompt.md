@@ -317,22 +317,9 @@ In the `builder` stage, apply the following changes in order:
 
 ### Production stage
 
-Update the `production` stage. You don't know if it's used at backend runtime, so keep those lines commented with `#` (to be manually uncommented later if needed).
+No package-specific changes are required in the `production` stage when adding a new package.
 
-1. **Copy package.json for production dependency installation**: Add alongside the other package.json copies in the production stage:
+If a new package must be available at runtime, ensure:
 
-   ```dockerfile
-   # COPY --from=builder /usr/src/app/packages/<package-name>/package.json ./packages/<package-name>/
-   ```
-
-2. **Add filter to production pnpm install**: Add a commented `--filter @oktomusic/<package-name>...` (note the `...` suffix which includes transitive dependencies) to the production `pnpm install` command:
-
-   ```dockerfile
-   # --filter @oktomusic/<package-name>...
-   ```
-
-3. **Copy built dist**: Add alongside the other dist copies:
-
-   ```dockerfile
-   # COPY --from=builder /usr/src/app/packages/<package-name>/dist ./packages/<package-name>/dist
-   ```
+1. The package is built in the `builder` stage.
+2. The backend package depends on it so `pnpm --filter @oktomusic/backend --prod deploy /prod/backend` includes it in the deploy output.
