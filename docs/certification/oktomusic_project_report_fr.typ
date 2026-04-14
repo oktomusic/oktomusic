@@ -281,8 +281,6 @@ Cette politique permet également :
 
 L’utilisation de Subresource Integrity (SRI)#footnote[https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity] permet de garantir l’intégrité des ressources chargées par le navigateur en vérifiant leur empreinte cryptographique.
 
-// TODO: ajouter réellement Integrity-Policy
-
 Avec le header Integrity-Policy, le navigateur requiert la présence d’attributs d’intégrité sur toutes les ressources chargées par l'application, même celles hébergées localement, assurant ainsi une protection contre tout ajout ou modification non autorisée d'un script.
 
 Ce mécanisme constitue une protection complémentaire au #link(<security_csp>)[CSP] contre les attaques de type supply chain.
@@ -306,7 +304,7 @@ Cette politique permet de réduire l’impact d’une éventuelle compromission 
 
 === Respect des bonnes pratiques de sécurité HTTP
 
-Tout au long du développement, les instances de pré-production de l'application ont été régulièrement testées à l'aide d'outils d'analyse de sécurité HTTP tels que Security Headers#footnote[https://securityheaders.com] (Snyk) et HTTP Observatory#footnote[https://developer.mozilla.org/en-US/observatory] (Mozilla), dans le but d'obtenir les meilleurs résultats possibles.
+Tout au long du développement, les instances de pré-production de l'application ont été régulièrement testées à l'aide d'outils d'analyse de sécurité HTTP tels que Security Headers #footnote[https://securityheaders.com] (Snyk), HTTP Observatory #footnote[https://developer.mozilla.org/en-US/observatory] (Mozilla) et CSP Evaluator #footnote[https://csp-evaluator.withgoogle.com] (Google), dans le but d'obtenir les meilleurs résultats possibles.
 
 Pour l'instance de pré-production (reverse proxy Traefik), les résultats obtenus sont les suivants :
 
@@ -318,6 +316,8 @@ Pour l'instance de pré-production (reverse proxy Traefik), les résultats obten
   table.cell(fill: green, "A+"),
   [HTTP Observatory],
   table.cell(fill: green, "A+ (140/100)"),
+  [CSP Evaluator],
+  table.cell(fill: green, "Green"), // TODO
 )
 
 == Supply chain <security_supply_chain>
