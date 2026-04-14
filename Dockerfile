@@ -14,7 +14,7 @@ LABEL io.artifacthub.package.keywords="music,server,streaming"
 LABEL io.artifacthub.package.license="AGPL-3.0-only"
 LABEL io.artifacthub.package.maintainers='[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]'
 
-RUN corepack enable pnpm
+RUN npm install --global pnpm@10
 
 ARG TARGETOS
 ARG TARGETARCH

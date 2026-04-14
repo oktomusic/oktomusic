@@ -10,24 +10,26 @@ catalogs:
     typescript: ^5.9.3
     sharp: ^0.34.5
 
+nodeOptions: "${NODE_OPTIONS:- } --experimental-strip-types --no-warnings=ExperimentalWarning --use-system-ca"
+
 linkWorkspacePackages: true
 injectWorkspacePackages: true
 syncInjectedDepsAfterScripts:
   - build
 
-onlyBuiltDependencies:
-  - "@apollo/protobufjs"
-  - "@nestjs/core"
-  - "@prisma/client"
-  - "@prisma/engines"
-  - "@scarf/scarf"
-  - esbuild
-  - msgpackr-extract
-  - prisma
-  - protobufjs
-  - sharp
-  - unrs-resolver
-  - workerd
+allowBuilds:
+  "@apollo/protobufjs": true
+  "@nestjs/core": true
+  "@prisma/client": true
+  "@prisma/engines": true
+  "@scarf/scarf": true
+  esbuild: true
+  msgpackr-extract: true
+  prisma: true
+  protobufjs: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
 
 overrides:
   "@types/node": catalog:default
@@ -37,6 +39,8 @@ overrides:
   sharp: catalog:default
 
 sharedWorkspaceLockfile: true
+
+# Supply chain security settings
 blockExoticSubdeps: true
 minimumReleaseAge: 1440 # 1 day
 trustPolicy: no-downgrade

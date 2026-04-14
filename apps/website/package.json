@@ -11,7 +11,6 @@
     "pwa-assets": "pwa-assets-generator --config pwa-assets.config.ts"
   },
   "license": "AGPL-3.0-only",
-  "packageManager": "pnpm@10.33.0",
   "devDependencies": {
     "@oktomusic/meta-tags": "workspace:^",
     "@vite-pwa/assets-generator": "^1.0.2",

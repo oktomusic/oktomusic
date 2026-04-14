@@ -17,6 +17,8 @@ runs:
   steps:
     - name: Setup PNPM
       uses: pnpm/action-setup@v5
+      with:
+        version: 10
 
     - name: Use NodeJS
       uses: actions/setup-node@v6
