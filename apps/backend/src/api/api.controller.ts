@@ -1,22 +1,13 @@
-import { Controller, Get, Inject, Req, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
-import {
-  ApiOkResponse,
-  ApiSecurity,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from "@nestjs/swagger";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import type { Request } from "express";
 
 import { ApiInfoResJSONSchema } from "@oktomusic/api-schemas";
 import type { ApiInfoRes } from "@oktomusic/api-schemas";
 
 import oidcConfig from "../config/definitions/oidc.config";
 import { ApiService } from "./api.service";
-import type { User } from "../generated/prisma/client";
-import { AuthGuard } from "../common/guards/auth.guard";
-import { AdminGuard } from "../common/guards/admin.guard";
 
 @Controller("api")
 @ApiTags("API")
@@ -40,23 +31,5 @@ export class ApiController {
         client_id: this.oidcConf.clientId,
       },
     };
-  }
-
-  @Get("users")
-  @UseGuards(AdminGuard)
-  @ApiSecurity("session")
-  @ApiOkResponse({ description: "List users" })
-  @ApiUnauthorizedResponse({ description: "Not authenticated" })
-  getUsers(): Promise<User[]> {
-    return this.apiService.listUsers();
-  }
-
-  @Get("me")
-  @UseGuards(AuthGuard)
-  @ApiSecurity("session")
-  @ApiOkResponse({ description: "Get current user profile" })
-  @ApiUnauthorizedResponse({ description: "Not authenticated" })
-  getMe(@Req() req: Request): User | undefined {
-    return req.user;
   }
 }

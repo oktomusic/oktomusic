@@ -23,6 +23,7 @@ export function mergeDirectivesCSP(data: CSPDirectives[]): CSPDirectives {
  */
 const defaultCSP: CSPDirectives = {
   baseUri: ["'none'"],
+  // requireTrustedTypesFor: ["'script'"],
 
   // Disallow loading any resource by default
   defaultSrc: ["'none'"],

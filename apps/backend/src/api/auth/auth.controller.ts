@@ -7,16 +7,8 @@ import {
   Redirect,
   Req,
 } from "@nestjs/common";
-import {
-  ApiOkResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from "@nestjs/swagger";
-import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import type { Request } from "express";
-
-import { AuthSessionResJSONSchema } from "@oktomusic/api-schemas";
 
 import { OidcService } from "../../oidc/oidc.service";
 
@@ -95,47 +87,6 @@ export class AuthController {
     };
 
     return { url: "/", statusCode: HttpStatus.FOUND };
-  }
-
-  @Get("session")
-  @ApiOperation({
-    summary: "Get current session status",
-    description:
-      "Returns whether the user is authenticated and their user information if available",
-  })
-  @ApiOkResponse({
-    schema: AuthSessionResJSONSchema as SchemaObject,
-    description: "Current session status and user information",
-  })
-  session(@Req() req: Request) {
-    if (!req.session.oidc?.session) {
-      return {
-        authenticated: false,
-      };
-    }
-
-    return {
-      authenticated: true,
-      userInfo: req.session.oidc.session.profile,
-    };
-  }
-
-  @Get("refresh")
-  @ApiOperation({
-    summary: "Refresh access token",
-    description:
-      "Uses the refresh token to obtain a new access token without requiring re-authentication",
-  })
-  async refresh(@Req() req: Request) {
-    if (!req.session.oidc?.session) {
-      throw new InternalServerErrorException("OIDC session data not found");
-    }
-
-    req.session.oidc.session = await this.oidcService.refresh(
-      req.session.oidc.session,
-    );
-
-    return {};
   }
 
   @Get("logout")

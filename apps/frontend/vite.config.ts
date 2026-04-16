@@ -83,4 +83,7 @@ export default defineConfig({
     outDir: "dist",
   },
   base: "/",
+  devtools: {
+    enabled: false,
+  },
 });
