@@ -18,11 +18,7 @@ import { Generic404 } from "./Center/Generic404";
 
 export function PanelCenter() {
   return (
-    <OktoScrollArea
-      render={<main />}
-      id="oktomusic:panel-center"
-      className="rounded bg-zinc-900"
-    >
+    <OktoScrollArea id="oktomusic:panel-center" className="rounded bg-zinc-900">
       <Routes>
         <Route element={<ProtectedRoutes />}>
           <Route index element={<Home />} />

@@ -9,6 +9,7 @@ import {
 } from "../atoms/player/machine";
 import { panelRightVisibleAtom } from "../atoms/app/panels";
 import { QueueTrack } from "../components/QueueTrack/QueueTrack";
+import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 
 export function PanelRight() {
   const visible = useAtomValue(panelRightVisibleAtom);
@@ -42,7 +43,11 @@ export function PanelRight() {
       aria-label="Queue"
     >
       <p className="p-4 text-sm font-semibold text-white/70">Queue</p>
-      <ol className="flex flex-1 flex-col gap-6 overflow-auto px-2">
+      <OktoScrollArea
+        render={<ol />}
+        className="mx-2 flex flex-1 flex-col gap-6"
+        noMargin={true}
+      >
         <li className="flex flex-col">
           <span className="p-2 text-sm font-semibold">Now Playing</span>
           <ol className="flex flex-col">
@@ -87,7 +92,7 @@ export function PanelRight() {
             ))}
           </ol>
         </li>*/}
-      </ol>
+      </OktoScrollArea>
     </aside>
   );
 }

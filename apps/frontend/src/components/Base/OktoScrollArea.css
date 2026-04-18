@@ -21,6 +21,7 @@
   flex-direction: column;
   min-height: 100%;
   width: 100%;
+  min-width: 0 !important; /* BaseUI override */
 }
 
 .oktoscrollarea__scrollbar {
@@ -52,8 +53,17 @@
   }
 }
 
+.oktoscrollarea__scrollbar--no-margin {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 .oktoscrollarea__scrollbar__thumb {
   width: 100%;
   border-radius: inherit;
   background-color: var(--color-zinc-500);
+}
+
+.oktoscrollarea__scrollbar__thumb--no-margin {
+  background-color: color-mix(in oklab, var(--color-zinc-500) 30%, transparent);
 }

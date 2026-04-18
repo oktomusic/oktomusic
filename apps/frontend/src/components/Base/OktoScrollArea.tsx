@@ -8,6 +8,7 @@ interface OktoScrollAreaProps {
   readonly render?: ReactElement;
   readonly id?: string;
   readonly className?: string;
+  readonly noMargin?: boolean;
   readonly children: ReactNode;
 }
 
@@ -24,10 +25,20 @@ export function OktoScrollArea(props: OktoScrollAreaProps) {
         </ScrollArea.Content>
       </ScrollArea.Viewport>
       <ScrollArea.Scrollbar
-        className={"oktoscrollarea__scrollbar"}
+        className={
+          "oktoscrollarea__scrollbar" +
+          (props.noMargin ? " oktoscrollarea__scrollbar--no-margin" : "")
+        }
         orientation="vertical"
       >
-        <ScrollArea.Thumb className={"oktoscrollarea__scrollbar__thumb"} />
+        <ScrollArea.Thumb
+          className={
+            "oktoscrollarea__scrollbar__thumb" +
+            (props.noMargin
+              ? " oktoscrollarea__scrollbar__thumb--no-margin"
+              : "")
+          }
+        />
       </ScrollArea.Scrollbar>
     </ScrollArea.Root>
   );
