@@ -35,29 +35,30 @@ export function App() {
 
   return (
     <CSPProvider disableStyleElements={true}>
-      <DragDropProvider>
-        <PlayerProvider />
-        <MediaSessionProvider />
-        <AudioSessionProvider />
-        <HeaderMenu />
-        <PipControls />
-        <DialogCover />
-        <DialogPlaylistDelete />
-        <DialogPlaylistEdit />
-        <div
-          id="oktomusic:content-grid"
-          data-left={leftExpanded ? "expanded" : "collapsed"}
-          data-right={rightVisible ? "visible" : "hidden"}
-        >
-          <PanelLeft />
-          <PanelCenter />
-          {overlayVisible && <PanelOverlay />}
-          <PanelToastProvider />
-          <PanelRight />
-        </div>
-        <PlayerControls />
-        <OktoDragOverlay />
-      </DragDropProvider>
+      <PanelToastProvider>
+        <DragDropProvider>
+          <PlayerProvider />
+          <MediaSessionProvider />
+          <AudioSessionProvider />
+          <HeaderMenu />
+          <PipControls />
+          <DialogCover />
+          <DialogPlaylistDelete />
+          <DialogPlaylistEdit />
+          <div
+            id="oktomusic:content-grid"
+            data-left={leftExpanded ? "expanded" : "collapsed"}
+            data-right={rightVisible ? "visible" : "hidden"}
+          >
+            <PanelLeft />
+            <PanelCenter />
+            {overlayVisible && <PanelOverlay />}
+            <PanelRight />
+          </div>
+          <PlayerControls />
+          <OktoDragOverlay />
+        </DragDropProvider>
+      </PanelToastProvider>
     </CSPProvider>
   );
 }

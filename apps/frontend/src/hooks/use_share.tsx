@@ -1,7 +1,6 @@
-import { useSetAtom } from "jotai";
 import { t } from "@lingui/core/macro";
 
-import { panelToastAtom } from "../atoms/app/panels";
+import { usePanelToast } from "./use_panel_toast";
 
 /**
  * Share a URL either with the Web Share API if available, or by copying it to the clipboard as a fallback.
@@ -18,7 +17,7 @@ export function useShare(
   url: string | undefined,
   title: string | undefined,
 ): () => void {
-  const setToast = useSetAtom(panelToastAtom);
+  const setToast = usePanelToast();
 
   return function () {
     if (!url || !title) {

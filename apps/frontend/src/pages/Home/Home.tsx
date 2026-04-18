@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import { useMutation, useQuery } from "@apollo/client/react";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
-import { panelToastAtom } from "../../atoms/app/panels";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { DELETE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/deletePlaylist";
 import { Role } from "../../api/graphql/gql/graphql";
@@ -12,6 +11,7 @@ import IndexingControl from "../../components/IndexingControl/IndexingControl";
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 import { OktoButton } from "../../components/Base/OktoButton";
 import { OktoInput } from "../../components/Base/OktoInput";
+import { usePanelToast } from "../../hooks/use_panel_toast";
 
 import "./Home.css";
 
@@ -23,7 +23,7 @@ function Home() {
   });
 
   const setOpen = useSetAtom(dialogPlaylistOpenAtom);
-  const setToast = useSetAtom(panelToastAtom);
+  const setToast = usePanelToast();
   const [playlistIdInput, setPlaylistIdInput] = useState("");
   const [deletePlaylist, { loading: deletePlaylistLoading }] = useMutation(
     DELETE_PLAYLIST_MUTATION,

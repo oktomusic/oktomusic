@@ -7,13 +7,12 @@ import { useMutation } from "@apollo/client/react";
 import { t } from "@lingui/core/macro";
 
 import { addToQueueAtom, TrackWithAlbum } from "../../atoms/player/machine";
-import { panelToastAtom } from "../../atoms/app/panels";
-
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
 import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
 
 import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
+import { usePanelToast } from "../../hooks/use_panel_toast";
 
 import "./QueueTrack.css";
 
@@ -26,7 +25,7 @@ interface QueueTrackProps {
 
 export function QueueTrack(props: QueueTrackProps) {
   const addToQueue = useSetAtom(addToQueueAtom);
-  const setToast = useSetAtom(panelToastAtom);
+  const setToast = usePanelToast();
 
   const [addTracksToPlaylist] = useMutation(ADD_TRACKS_TO_PLAYLIST_MUTATION);
 
