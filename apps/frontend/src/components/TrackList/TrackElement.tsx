@@ -16,11 +16,11 @@ import {
   playerShouldPlayAtom,
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
-import { panelToastAtom } from "../../atoms/app/panels";
 import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
 import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
 import { REMOVE_TRACKS_FROM_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/removeTracksFromPlaylist";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
+import { usePanelToast } from "../../hooks/use_panel_toast";
 import {
   TRACK_DND_TYPE,
   type TrackDropIndicator,
@@ -50,7 +50,7 @@ interface TrackElementProps {
 
 export function TrackElement(props: TrackElementProps) {
   const addToQueue = useSetAtom(addToQueueAtom);
-  const setToast = useSetAtom(panelToastAtom);
+  const setToast = usePanelToast();
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);

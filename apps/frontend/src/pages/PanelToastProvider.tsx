@@ -1,59 +1,61 @@
-import { useEffect } from "react";
-import { useAtom } from "jotai";
+import { type ReactNode } from "react";
+import { Toast } from "@base-ui/react/toast";
 import { HiCheckCircle, HiInformationCircle, HiXCircle } from "react-icons/hi2";
+import { LuX } from "react-icons/lu";
 
-import { panelToastAtom } from "../atoms/app/panels";
+import { type PanelToast } from "../hooks/use_panel_toast";
 
 const TOAST_DURATION: number = 3000;
 
-export function PanelToastProvider() {
-  const [toast, setToast] = useAtom(panelToastAtom);
+interface PanelToastProviderProps {
+  readonly children: ReactNode;
+}
 
-  useEffect(() => {
-    if (toast) {
-      const timer = setTimeout(() => {
-        setToast(null);
-      }, TOAST_DURATION);
-      return () => clearTimeout(timer);
-    }
-  }, [setToast, toast]);
+export function PanelToastProvider(props: PanelToastProviderProps) {
+  return (
+    <Toast.Provider timeout={TOAST_DURATION}>
+      {props.children}
+      <Toast.Portal>
+        <Toast.Viewport
+          id="oktomusic:panel-toast-provider"
+          className="pointer-events-none fixed right-4 bottom-4 z-50 flex w-[calc(100vw-2rem)] max-w-80 flex-col-reverse gap-2"
+        >
+          <PanelToastList />
+        </Toast.Viewport>
+      </Toast.Portal>
+    </Toast.Provider>
+  );
+}
+
+function PanelToastList() {
+  const { toasts } = Toast.useToastManager<PanelToast>();
 
   return (
-    <div
-      id="oktomusic:panel-toast-provider"
-      className="flex flex-col items-center justify-end"
-    >
-      <ul className="pointer-events-auto mb-4 flex w-full max-w-fit flex-col gap-4">
-        {toast && (
-          <li
-            className="flex flex-row gap-2 rounded-lg bg-zinc-800 p-3 shadow-md shadow-black/50"
-            onClick={() => setToast(null)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(event) => {
-              if (
-                event.key === "Enter" ||
-                event.key === " " ||
-                event.key === "Escape"
-              ) {
-                event.preventDefault();
-                setToast(null);
-              }
-            }}
-          >
+    <>
+      {toasts.map((toast) => (
+        <Toast.Root
+          key={toast.id}
+          toast={toast}
+          className="pointer-events-auto relative rounded-lg bg-zinc-800 p-3 pr-10 shadow-md shadow-black/50"
+        >
+          <Toast.Content className="flex items-center gap-2">
             {toast.type === "success" && (
               <HiCheckCircle className="size-6 text-green-400" />
             )}
-            {toast.type === "error" && (
-              <HiXCircle className="size-6 text-red-400" />
-            )}
-            {toast.type === "info" && (
+            {toast.type === "error" && <HiXCircle className="size-6 text-red-400" />}
+            {toast.type !== "success" && toast.type !== "error" && (
               <HiInformationCircle className="size-6 text-blue-400" />
             )}
-            <span className="ml-2">{toast.message}</span>
-          </li>
-        )}
-      </ul>
-    </div>
+            <Toast.Title className="ml-2" />
+            <Toast.Close
+              className="rounded p-1 text-zinc-300 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2"
+              aria-label="Close notification"
+            >
+              <LuX className="size-4" />
+            </Toast.Close>
+          </Toast.Content>
+        </Toast.Root>
+      ))}
+    </>
   );
 }

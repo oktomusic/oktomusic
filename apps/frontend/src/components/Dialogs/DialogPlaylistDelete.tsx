@@ -1,19 +1,19 @@
 import { useCallback } from "react";
 import { useMutation } from "@apollo/client/react";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { t } from "@lingui/core/macro";
 import { useNavigate } from "react-router";
 
 import { DELETE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/deletePlaylist";
 import { USER_PROFILE_QUERY } from "../../api/graphql/queries/userProfile";
 import { dialogPlaylistDeleteOpenAtom } from "../../atoms/app/dialogs";
-import { panelToastAtom } from "../../atoms/app/panels";
 import { OktoButton } from "../Base/OktoButton";
 import { OktoDialog } from "../Base/OktoDialog";
+import { usePanelToast } from "../../hooks/use_panel_toast";
 
 export function DialogPlaylistDelete() {
   const [open, setOpen] = useAtom(dialogPlaylistDeleteOpenAtom);
-  const setToast = useSetAtom(panelToastAtom);
+  const setToast = usePanelToast();
   const navigate = useNavigate();
 
   const [deletePlaylist, { loading: deletePlaylistLoading }] = useMutation(

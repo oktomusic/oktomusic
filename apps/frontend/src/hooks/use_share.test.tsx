@@ -12,14 +12,9 @@ import {
 
 const setToastMock = vi.hoisted(() => vi.fn());
 
-vi.mock("jotai", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("jotai")>();
-
-  return {
-    ...actual,
-    useSetAtom: () => setToastMock,
-  };
-});
+vi.mock("./use_panel_toast", () => ({
+  usePanelToast: () => setToastMock,
+}));
 
 vi.mock("@lingui/core/macro", () => ({
   t: (strings: TemplateStringsArray) => strings.join(""),
