@@ -16,6 +16,7 @@ import {
   type TrackWithAlbum,
 } from "../../atoms/player/machine";
 import {
+  dialogCoverId,
   dialogPlaylistDeleteOpenAtom,
   dialogPlaylistOpenAtom,
 } from "../../atoms/app/dialogs";
@@ -44,6 +45,8 @@ export function Playlist() {
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
+
+  const setDialogCoverId = useSetAtom(dialogCoverId);
 
   const share = useShare(
     data ? `${window.location.origin}/playlist/${data.playlist.id}` : undefined,
@@ -93,6 +96,7 @@ export function Playlist() {
   const playlistCover = primaryAlbum
     ? `/api/album/${primaryAlbum.id}/cover/1280`
     : coverPlaceHolder;
+  const playlistCoverId = primaryAlbum ? primaryAlbum.id : null;
 
   const tracksByDisc: TrackWithAlbum[][] = [playlistTracks];
 
@@ -150,6 +154,9 @@ export function Playlist() {
       title={title}
       subtitle={playlist.description ?? undefined}
       cover={playlistCover}
+      coverOnClick={() => {
+        setDialogCoverId(playlistCoverId);
+      }}
       colors={playlistColors}
       onPlay={() => {
         replaceQueue(playlistTracks);
