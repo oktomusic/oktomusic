@@ -101,3 +101,20 @@ export const settingClientLyricsDisplayMode =
       getOnInit: true,
     },
   );
+
+// Lyrics translations
+
+const lyricsTranslationEnabledLocalStorageKey =
+  "oktomusic:lyrics_translation_enabled";
+
+/**
+ * Indicates whether lyrics translations are enabled if support is available.
+ */
+export const settingClientLyricsTranslationEnabled = atomWithStorage<boolean>(
+  lyricsTranslationEnabledLocalStorageKey,
+  true,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);

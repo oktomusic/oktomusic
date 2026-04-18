@@ -77,11 +77,11 @@ msgstr "Album"
 msgid "Album cover"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:55
+#: src/pages/SettingsClient/SettingsClient.tsx:63
 msgid "Always"
 msgstr "Toujours"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:50
+#: src/pages/SettingsClient/SettingsClient.tsx:58
 msgid "Ambient"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgstr "Artiste"
 #~ msgid "Audio Session API is not supported in this browser."
 #~ msgstr "L'API Audio Session n'est pas supportée dans ce navigateur"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:118
+#: src/pages/SettingsClient/SettingsClient.tsx:126
 msgid "Audio session:"
 msgstr ""
 
@@ -101,11 +101,11 @@ msgstr ""
 #~ msgid "Buffering…"
 #~ msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:189
+#: src/pages/SettingsClient/SettingsClient.tsx:215
 msgid "Cache max age (days):"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:174
+#: src/pages/SettingsClient/SettingsClient.tsx:200
 msgid "Cache max entries:"
 msgstr ""
 
@@ -113,11 +113,11 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:211
+#: src/pages/SettingsClient/SettingsClient.tsx:237
 msgid "Checking storage persistence..."
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:102
+#: src/pages/SettingsClient/SettingsClient.tsx:110
 msgid "Client Settings"
 msgstr ""
 
@@ -138,11 +138,11 @@ msgstr ""
 msgid "Create playlist"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:163
+#: src/pages/SettingsClient/SettingsClient.tsx:189
 msgid "Crossfade (seconds)"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:153
+#: src/pages/SettingsClient/SettingsClient.tsx:179
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
 
@@ -266,11 +266,11 @@ msgstr ""
 msgid "Italian"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:108
+#: src/pages/SettingsClient/SettingsClient.tsx:116
 msgid "Kiosk mode:"
 msgstr "Mode Kiosque :"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:62
+#: src/pages/SettingsClient/SettingsClient.tsx:70
 msgid "Line by line"
 msgstr "Ligne par ligne"
 
@@ -282,9 +282,13 @@ msgstr "Lien copié dans le presse-papiers"
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:142
+#: src/pages/SettingsClient/SettingsClient.tsx:150
 msgid "Lyrics display mode:"
 msgstr "Mode d'affichage des paroles :"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:164
+msgid "Lyrics translation:"
+msgstr "Traduction des paroles :"
 
 #: src/utils/constants_sexes.ts:16
 msgid "Man"
@@ -313,7 +317,7 @@ msgstr "Plus d'options pour {trackName}"
 msgid "Name"
 msgstr "Nom"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:57
+#: src/pages/SettingsClient/SettingsClient.tsx:65
 msgid "Never"
 msgstr "Jamais"
 
@@ -348,7 +352,7 @@ msgstr ""
 msgid "Open Picture-in-Picture"
 msgstr ""
 
-#: src/hooks/use_panel_overlay_translation.tsx:101
+#: src/hooks/use_panel_overlay_translation.tsx:106
 msgid "Original"
 msgstr "Originale"
 
@@ -369,11 +373,11 @@ msgstr "Pause"
 msgid "Pause {trackName}"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:212
+#: src/pages/SettingsClient/SettingsClient.tsx:238
 msgid "Persistent storage granted"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:214
+#: src/pages/SettingsClient/SettingsClient.tsx:240
 msgid "Persistent storage not granted"
 msgstr ""
 
@@ -396,8 +400,8 @@ msgstr ""
 msgid "Play {trackName}"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:51
-#: src/pages/SettingsClient/SettingsClient.tsx:56
+#: src/pages/SettingsClient/SettingsClient.tsx:59
+#: src/pages/SettingsClient/SettingsClient.tsx:64
 msgid "Playback"
 msgstr ""
 
@@ -465,7 +469,7 @@ msgstr ""
 msgid "Removed from playlist"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:223
+#: src/pages/SettingsClient/SettingsClient.tsx:249
 msgid "Request"
 msgstr ""
 
@@ -526,11 +530,11 @@ msgstr ""
 msgid "Spanish"
 msgstr "Espagnol"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:63
+#: src/pages/SettingsClient/SettingsClient.tsx:71
 msgid "Static"
 msgstr "Statique"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:207
+#: src/pages/SettingsClient/SettingsClient.tsx:233
 msgid "Storage Persistence:"
 msgstr ""
 
@@ -555,7 +559,7 @@ msgstr "Non Spécifié"
 msgid "Upgrade to a supported Chromium browser"
 msgstr "Utilisez un navigateur Chromium pris en charge"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:131
+#: src/pages/SettingsClient/SettingsClient.tsx:139
 msgid "Wake lock:"
 msgstr "Verrouillage de la mise en veille :"
 
@@ -563,6 +567,10 @@ msgstr "Verrouillage de la mise en veille :"
 msgid "Woman"
 msgstr "Femme"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:61
+#: src/pages/SettingsClient/SettingsClient.tsx:69
 msgid "Word by word"
 msgstr "Mot à mot"
+
+#: src/pages/SettingsClient/SettingsClient.tsx:171
+msgid "Your browser does not support lyrics translation"
+msgstr "Votre navigateur ne supporte pas la traduction des paroles"

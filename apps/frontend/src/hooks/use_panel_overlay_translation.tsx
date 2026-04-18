@@ -6,6 +6,7 @@ import { LuCheck, LuDownload, LuLoaderCircle } from "react-icons/lu";
 import { t } from "@lingui/core/macro";
 
 import { translatorSupportAtom } from "../atoms/app/browser_support";
+import { settingClientLyricsTranslationEnabled } from "../atoms/app/settings_client";
 import { playerQueueCurrentTrack } from "../atoms/player/machine";
 import { TRACK_LYRICS_QUERY } from "../api/graphql/queries/trackLyrics";
 import { LyricsLine } from "../api/graphql/gql/graphql";
@@ -29,7 +30,7 @@ interface TranslationStatus {
 }
 
 export interface PanelOverlayTranslationState {
-  readonly translatorSupport: boolean;
+  readonly translationEnabled: boolean;
   readonly language: PanelOverlayLanguage;
   readonly setLanguage: (language: PanelOverlayLanguage) => void;
   readonly languageOptions: Record<string, OktoListboxOption>;
@@ -42,6 +43,10 @@ export interface PanelOverlayTranslationState {
 
 export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
   const translatorSupport = useAtomValue(translatorSupportAtom);
+  const translationEnabledSetting = useAtomValue(
+    settingClientLyricsTranslationEnabled,
+  );
+  const translationEnabled = translatorSupport && translationEnabledSetting;
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
 
   const shouldFetchLyrics = Boolean(currentTrack && currentTrack.hasLyrics);
@@ -56,7 +61,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
   const lyrics = queryResult.data?.track?.lyrics ?? [];
 
   const languageDetectionState = useLyricsLanguageDetection({
-    enabled: translatorSupport,
+    enabled: translationEnabled,
     lyrics,
   });
 
@@ -76,7 +81,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
 
   const availabilityState = useTranslatorAvailability({
     enabled:
-      translatorSupport &&
+      translationEnabled &&
       languageDetectionState.status === "ready" &&
       Boolean(languageDetectionState.detectedLanguage),
     sourceLanguage: languageDetectionState.detectedLanguage,
@@ -86,7 +91,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
 
   const translationState = useLyricsTranslation({
     enabled:
-      translatorSupport &&
+      translationEnabled &&
       language !== "original" &&
       languageDetectionState.detectedLanguage !== null,
     sourceLanguage: languageDetectionState.detectedLanguage,
@@ -104,7 +109,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
     } as const satisfies Record<string, OktoListboxOption>;
 
     if (
-      !translatorSupport ||
+      !translationEnabled ||
       languageDetectionState.status !== "ready" ||
       !languageDetectionState.detectedLanguage
     ) {
@@ -170,7 +175,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
     languageDetectionState.detectedLanguage,
     languageDetectionState.status,
     localeLabels,
-    translatorSupport,
+    translationEnabled,
   ]);
 
   useEffect(() => {
@@ -229,7 +234,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
       translationState.status === "translating");
 
   return {
-    translatorSupport,
+    translationEnabled,
     language,
     setLanguage,
     languageOptions,

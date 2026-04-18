@@ -48,7 +48,7 @@ export function PanelOverlay() {
         />
       </OktoScrollArea>
 
-      {panelOverlayTranslation.translatorSupport && areLyricsDisplayed && (
+      {panelOverlayTranslation.translationEnabled && areLyricsDisplayed && (
         <div className="absolute right-4 bottom-4 flex flex-row items-center justify-end gap-4">
           {panelOverlayTranslation.showTranslationSpinner && (
             <LuLoaderCircle
