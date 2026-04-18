@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+import { DragDropProvider } from "@dnd-kit/react";
 import { CSPProvider } from "@base-ui/react/csp-provider";
 
 import { useVibrantColorsPlaying } from "./hooks/vibrant_colors";
@@ -33,26 +34,28 @@ export function App() {
 
   return (
     <CSPProvider disableStyleElements={true}>
-      <PlayerProvider />
-      <MediaSessionProvider />
-      <AudioSessionProvider />
-      <HeaderMenu />
-      <PipControls />
-      <DialogCover />
-      <DialogPlaylistDelete />
-      <DialogPlaylistEdit />
-      <div
-        id="oktomusic:content-grid"
-        data-left={leftExpanded ? "expanded" : "collapsed"}
-        data-right={rightVisible ? "visible" : "hidden"}
-      >
-        <PanelLeft />
-        <PanelCenter />
-        {overlayVisible && <PanelOverlay />}
-        <PanelToastProvider />
-        <PanelRight />
-      </div>
-      <PlayerControls />
+      <DragDropProvider>
+        <PlayerProvider />
+        <MediaSessionProvider />
+        <AudioSessionProvider />
+        <HeaderMenu />
+        <PipControls />
+        <DialogCover />
+        <DialogPlaylistDelete />
+        <DialogPlaylistEdit />
+        <div
+          id="oktomusic:content-grid"
+          data-left={leftExpanded ? "expanded" : "collapsed"}
+          data-right={rightVisible ? "visible" : "hidden"}
+        >
+          <PanelLeft />
+          <PanelCenter />
+          {overlayVisible && <PanelOverlay />}
+          <PanelToastProvider />
+          <PanelRight />
+        </div>
+        <PlayerControls />
+      </DragDropProvider>
     </CSPProvider>
   );
 }
