@@ -1,10 +1,13 @@
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { lingui } from "@lingui/vite-plugin";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 import manifestSRIPlugin from "@oktomusic/vite-sri-manifest";
+
+const manifestSRIPluginFactory =
+  manifestSRIPlugin as unknown as () => PluginOption;
 
 const MB = 1024 * 1024;
 // Maximum size of a single asset to be cached by the service worker.
@@ -60,7 +63,7 @@ export default defineConfig({
     tailwindcss(),
     lingui(),
     VitePWA(viteConfigPWA),
-    manifestSRIPlugin(),
+    manifestSRIPluginFactory(),
   ],
   server: {
     cors: {

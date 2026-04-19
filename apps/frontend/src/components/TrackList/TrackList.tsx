@@ -7,12 +7,12 @@ import { useSetAtom } from "jotai";
 import { LuDisc3 } from "react-icons/lu";
 
 import { REORDER_PLAYLIST_TRACKS_MUTATION } from "../../api/graphql/mutations/playlists/reorderPlaylistTracks";
-import { panelToastAtom } from "../../atoms/app/panels";
 import {
   TrackWithAlbum,
   handleSeekToQueueIndexAtom,
   replaceQueueAtom,
 } from "../../atoms/player/machine";
+import { usePanelToast } from "../../hooks/use_panel_toast";
 import { TrackElement } from "./TrackElement";
 import {
   TRACK_DND_TYPE,
@@ -112,7 +112,7 @@ interface TrackListProps {
 
 export function TrackList(props: TrackListProps) {
   const [reorderPlaylistTracks] = useMutation(REORDER_PLAYLIST_TRACKS_MUTATION);
-  const setToast = useSetAtom(panelToastAtom);
+  const setToast = usePanelToast();
 
   const sourceTracks = useMemo(() => props.tracks.flat(), [props.tracks]);
 
