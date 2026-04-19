@@ -180,6 +180,8 @@ export function Playlist() {
         tracks={tracksByDisc}
         displayCover={true}
         playlistId={playlist.id}
+        reorderable={true}
+        droppableId={`playlist:${playlist.id}`}
       />
     </CollectionView>
   );

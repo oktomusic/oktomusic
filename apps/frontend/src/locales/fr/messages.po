@@ -51,14 +51,14 @@ msgid "Add to playlist"
 msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:41
-#: src/components/TrackList/TrackElement.tsx:94
+#: src/components/TrackList/TrackElement.tsx:128
 #: src/pages/Center/Album.tsx:89
-#: src/pages/Center/Playlist.tsx:107
+#: src/pages/Center/Playlist.tsx:111
 msgid "Add to queue"
 msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:65
-#: src/components/TrackList/TrackElement.tsx:118
+#: src/components/TrackList/TrackElement.tsx:152
 msgid "Added to playlist"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr "Fondu enchaîné (secondes) :"
 msgid "Delete"
 msgstr ""
 
-#: src/pages/Center/Playlist.tsx:130
+#: src/pages/Center/Playlist.tsx:134
 msgid "Delete playlist"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/TrackList/TrackList.tsx:71
+#: src/components/TrackList/TrackList.tsx:396
 msgid "Disc {discNumber}"
 msgstr "Disque {discNumber}"
 
@@ -176,7 +176,7 @@ msgstr "Disque {discNumber}"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:122
+#: src/pages/Center/Playlist.tsx:126
 msgid "Edit details"
 msgstr ""
 
@@ -198,7 +198,7 @@ msgid "English"
 msgstr "Anglais"
 
 #: src/components/QueueTrack/QueueTrack.tsx:69
-#: src/components/TrackList/TrackElement.tsx:122
+#: src/components/TrackList/TrackElement.tsx:156
 msgid "Failed to add track"
 msgstr ""
 
@@ -206,8 +206,12 @@ msgstr ""
 msgid "Failed to delete playlist"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:82
+#: src/components/TrackList/TrackElement.tsx:116
 msgid "Failed to remove track"
+msgstr ""
+
+#: src/components/TrackList/TrackList.tsx:324
+msgid "Failed to reorder playlist tracks"
 msgstr ""
 
 #: src/hooks/use_share.tsx:37
@@ -237,7 +241,7 @@ msgid "Go forward"
 msgstr "Avancer"
 
 #: src/components/QueueTrack/QueueTrack.tsx:49
-#: src/components/TrackList/TrackElement.tsx:102
+#: src/components/TrackList/TrackElement.tsx:136
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
@@ -309,7 +313,7 @@ msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
 #: src/components/QueueTrack/QueueTrack.tsx:130
-#: src/components/TrackList/TrackElement.tsx:209
+#: src/components/TrackList/TrackElement.tsx:255
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
@@ -369,7 +373,7 @@ msgstr "Page introuvable"
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/TrackList/TrackElement.tsx:158
+#: src/components/TrackList/TrackElement.tsx:204
 msgid "Pause {trackName}"
 msgstr ""
 
@@ -396,7 +400,7 @@ msgstr "Lecture"
 msgid "Play {albumName}"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:160
+#: src/components/TrackList/TrackElement.tsx:206
 msgid "Play {trackName}"
 msgstr ""
 
@@ -412,7 +416,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:149
+#: src/pages/Center/Playlist.tsx:153
 msgid "Playlist"
 msgstr ""
 
@@ -461,11 +465,11 @@ msgstr "Publique"
 msgid "Public playlists"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:61
+#: src/components/TrackList/TrackElement.tsx:95
 msgid "Remove from playlist"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:75
+#: src/components/TrackList/TrackElement.tsx:109
 msgid "Removed from playlist"
 msgstr ""
 
@@ -473,7 +477,7 @@ msgstr ""
 msgid "Request"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:159
+#: src/components/TrackList/TrackElement.tsx:205
 msgid "Resume {trackName}"
 msgstr ""
 
@@ -511,7 +515,7 @@ msgid "Sexe :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:82
-#: src/pages/Center/Playlist.tsx:114
+#: src/pages/Center/Playlist.tsx:118
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Partager"

@@ -123,6 +123,7 @@ export function Album() {
       <TrackList
         tracks={tracksWithAlbum}
         displayCover={true} /* TODO: remove cover */
+        droppableId={`album:${data!.album.id}`}
       />
     </CollectionView>
   );

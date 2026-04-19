@@ -1,10 +1,11 @@
-import { Link } from "react-router";
-import { HiEllipsisHorizontal, HiPlay, HiPause } from "react-icons/hi2";
-import { LuAudioLines, LuDisc3, LuListPlus, LuTrash2 } from "react-icons/lu";
-import { useSetAtom, useAtomValue } from "jotai";
+import { useMutation } from "@apollo/client/react";
+import { useSortable } from "@dnd-kit/react/sortable";
 import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
-import { useMutation } from "@apollo/client/react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { HiEllipsisHorizontal, HiPause, HiPlay } from "react-icons/hi2";
+import { LuAudioLines, LuDisc3, LuListPlus, LuTrash2 } from "react-icons/lu";
+import { Link } from "react-router";
 
 import { OktoMenu, OktoMenuItem, OktoMenuButtonItem } from "../Base/OktoMenu";
 import { formatDuration } from "../../utils/format_duration";
@@ -20,6 +21,11 @@ import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
 import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
 import { REMOVE_TRACKS_FROM_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/removeTracksFromPlaylist";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
+import {
+  TRACK_DND_TYPE,
+  type TrackDropIndicator,
+  type TrackSortableConfig,
+} from "./track_dnd";
 
 interface TrackElementProps {
   readonly track: TrackWithAlbum;
@@ -28,6 +34,18 @@ interface TrackElementProps {
   readonly onPlay: () => void;
   readonly playlistId?: string;
   readonly playlistTrackIndex?: number;
+  /**
+   * Stable identity and sortable placement metadata used by useSortable.
+   */
+  readonly sortable: TrackSortableConfig;
+  /**
+   * Keeps the source row highlighted while the drag overlay is moving.
+   */
+  readonly isDragSourceHighlighted: boolean;
+  /**
+   * Controls the insertion line visual (before/after this row).
+   */
+  readonly dropIndicator: TrackDropIndicator;
 }
 
 export function TrackElement(props: TrackElementProps) {
@@ -41,6 +59,22 @@ export function TrackElement(props: TrackElementProps) {
   const [removeTracksFromPlaylist] = useMutation(
     REMOVE_TRACKS_FROM_PLAYLIST_MUTATION,
   );
+
+  const { ref, isDragging } = useSortable({
+    id: props.sortable.id,
+    index: props.sortable.index,
+    type: TRACK_DND_TYPE,
+    accept: TRACK_DND_TYPE,
+    group: props.sortable.group,
+    disabled: !props.sortable.enabled,
+    data: {
+      type: TRACK_DND_TYPE,
+      trackId: props.track.id,
+      trackName: props.track.name,
+      playlistId: props.playlistId,
+      playlistTrackIndex: props.playlistTrackIndex,
+    },
+  });
 
   const isCurrentTrack = currentTrack?.id === props.track.id;
   const showPauseIcon = isCurrentTrack && shouldPlay;
@@ -134,8 +168,20 @@ export function TrackElement(props: TrackElementProps) {
 
   return (
     <li
-      key={props.index}
-      className="track-list__track group h-14 w-full rounded-lg hover:bg-white/10"
+      className={
+        "track-list__track group relative h-14 w-full rounded-lg hover:bg-white/10" +
+        (props.isDragSourceHighlighted
+          ? " track-list__track--drag-source"
+          : "") +
+        (props.dropIndicator === "before"
+          ? " track-list__track--drop-before"
+          : "") +
+        (props.dropIndicator === "after"
+          ? " track-list__track--drop-after"
+          : "") +
+        (isDragging && !props.isDragSourceHighlighted ? " opacity-50" : "")
+      }
+      ref={ref}
     >
       <div className="relative flex items-center justify-center">
         <span

@@ -16,6 +16,7 @@ import PipControls from "./components/PipControls/PipControls";
 import { DialogCover } from "./components/Dialogs/DialogCover";
 import { DialogPlaylistDelete } from "./components/Dialogs/DialogPlaylistDelete";
 import { DialogPlaylistEdit } from "./components/Dialogs/DialogPlaylistEdit";
+import { OktoDragOverlay } from "./components/OktoDragOverlay";
 import { PanelLeft } from "./pages/PanelLeft";
 import { PanelOverlay } from "./pages/PanelOverlay";
 import { PanelRight } from "./pages/PanelRight";
@@ -55,6 +56,7 @@ export function App() {
           <PanelRight />
         </div>
         <PlayerControls />
+        <OktoDragOverlay />
       </DragDropProvider>
     </CSPProvider>
   );

@@ -82,3 +82,11 @@ The app maintains an authentication context in `apps/frontend/src/atoms/auth/ato
 The app doesn't aim to provide any functionality when not authenticated, so make sure to NOT implement authentication checking logic when accessing the authentication context outside of the authentication flow (login page, etc.) since those components won't be rendered when not authenticated.
 
 In those components, you can assume that the user is always authenticated and use TypeScript type assertion when accessing the context: `authSession.user!`.
+
+## Drag and Drop
+
+When implementing drag and drop functionality, use the `@dnd-kit` library. The `DragDropProvider` is initialised globally from `apps/frontend/src/App.tsx`.
+
+More informations about implementation details can be found here `apps/frontend/src/components/TrackList/DND_IMPLEMENTATION.md`.
+
+Use context7 (library ID: `dndkit`) to get the documentation and examples for the library.

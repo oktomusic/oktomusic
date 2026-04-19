@@ -20,7 +20,7 @@ Each of these groups must be separated by a single blank line.
 
 When defining interfaces, always use the `readonly` modifier when possible.
 
-When defining objects that should typically not be modified in their lifetime, use `as const` to ensure immutability.
+When defining objects that should typically not be modified in their lifetime, use `as const` to ensure immutability (except literals like string or numbers which don't need `as const`).
 
 When definin arrays, prefer using `readonly` arrays (`readonly T[]`) over mutable arrays (`T[]`) when the array should not be modified after creation.
 
