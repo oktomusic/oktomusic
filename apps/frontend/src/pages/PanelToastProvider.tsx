@@ -15,8 +15,7 @@ export function PanelToastProvider(props: PanelToastProviderProps) {
       {props.children}
       <Toast.Portal>
         <Toast.Viewport
-          id="oktomusic:panel-toast-provider"
-          className="pointer-events-none fixed right-4 bottom-4 z-50 flex w-[calc(100vw-2rem)] max-w-80 flex-col-reverse gap-2"
+          className="pointer-events-none fixed bottom-24 left-1/2 z-50 flex w-[calc(100vw-2rem)] max-w-80 -translate-x-1/2 flex-col-reverse gap-2"
         >
           <PanelToastList />
         </Toast.Viewport>
