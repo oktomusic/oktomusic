@@ -23,3 +23,11 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
+
+      - name: Database Codegen
+        continue-on-error: true
+        run: pnpm --filter "@oktomusic/backend" run db:generate
+
+      - name: Initial Build
+        continue-on-error: true
+        run: pnpm run --filter "*" build
