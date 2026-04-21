@@ -30,4 +30,4 @@ jobs:
 
       - name: Initial Build
         continue-on-error: true
-        run: pnpm run --filter "*" build
+        run: pnpm run --filter "./packages/*" build
