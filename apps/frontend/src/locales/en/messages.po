@@ -50,7 +50,7 @@ msgstr "Add an optional description"
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/components/QueueTrack/QueueTrack.tsx:41
+#: src/components/QueueTrack/QueueTrack.tsx:40
 #: src/components/TrackList/TrackElement.tsx:128
 #: src/pages/Center/Album.tsx:89
 #: src/pages/Center/Playlist.tsx:111
@@ -61,7 +61,7 @@ msgstr "Add to queue"
 #~ msgid "Add to Queue"
 #~ msgstr "Add to Queue"
 
-#: src/components/QueueTrack/QueueTrack.tsx:65
+#: src/components/QueueTrack/QueueTrack.tsx:64
 #: src/components/TrackList/TrackElement.tsx:152
 msgid "Added to playlist"
 msgstr "Added to playlist"
@@ -201,7 +201,7 @@ msgstr "Edit profile"
 msgid "English"
 msgstr "English"
 
-#: src/components/QueueTrack/QueueTrack.tsx:69
+#: src/components/QueueTrack/QueueTrack.tsx:68
 #: src/components/TrackList/TrackElement.tsx:156
 msgid "Failed to add track"
 msgstr "Failed to add track"
@@ -218,7 +218,7 @@ msgstr "Failed to remove track"
 msgid "Failed to reorder playlist tracks"
 msgstr "Failed to reorder playlist tracks"
 
-#: src/hooks/use_share.tsx:37
+#: src/hooks/use_share.tsx:36
 msgid "Failed to share"
 msgstr "Failed to share"
 
@@ -244,7 +244,7 @@ msgstr "Go back"
 msgid "Go forward"
 msgstr "Go forward"
 
-#: src/components/QueueTrack/QueueTrack.tsx:49
+#: src/components/QueueTrack/QueueTrack.tsx:48
 #: src/components/TrackList/TrackElement.tsx:136
 msgid "Go to album"
 msgstr "Go to album"
@@ -282,7 +282,7 @@ msgstr "Kiosk mode:"
 msgid "Line by line"
 msgstr "Line by line"
 
-#: src/hooks/use_share.tsx:44
+#: src/hooks/use_share.tsx:43
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
@@ -316,7 +316,7 @@ msgstr "Man"
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
-#: src/components/QueueTrack/QueueTrack.tsx:130
+#: src/components/QueueTrack/QueueTrack.tsx:129
 #: src/components/TrackList/TrackElement.tsx:255
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"

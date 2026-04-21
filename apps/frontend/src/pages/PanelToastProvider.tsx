@@ -1,26 +1,13 @@
-import { type ReactNode } from "react";
 import { Toast } from "@base-ui/react/toast";
 import { HiCheckCircle, HiInformationCircle, HiXCircle } from "react-icons/hi2";
-import { LuX } from "react-icons/lu";
 
-import { PANEL_TOAST_DURATION } from "../constants/toast";
-
-interface PanelToastProviderProps {
-  readonly children: ReactNode;
-}
-
-export function PanelToastProvider(props: PanelToastProviderProps) {
+export function PanelToastProvider() {
   return (
-    <Toast.Provider timeout={PANEL_TOAST_DURATION}>
-      {props.children}
-      <Toast.Portal>
-        <Toast.Viewport
-          className="pointer-events-none fixed bottom-24 left-1/2 z-50 flex w-[calc(100vw-2rem)] max-w-80 -translate-x-1/2 flex-col-reverse gap-2"
-        >
-          <PanelToastList />
-        </Toast.Viewport>
-      </Toast.Portal>
-    </Toast.Provider>
+    <Toast.Portal>
+      <Toast.Viewport className="pointer-events-none fixed bottom-28 left-1/2 z-50 flex w-[calc(100vw-2rem)] max-w-96 -translate-x-1/2 flex-col-reverse gap-2">
+        <PanelToastList />
+      </Toast.Viewport>
+    </Toast.Portal>
   );
 }
 
@@ -42,7 +29,9 @@ function PanelToastList() {
             {toast.type === "success" && (
               <HiCheckCircle className="size-6 text-green-400" />
             )}
-            {toast.type === "error" && <HiXCircle className="size-6 text-red-400" />}
+            {toast.type === "error" && (
+              <HiXCircle className="size-6 text-red-400" />
+            )}
             {toast.type === "info" && (
               <HiInformationCircle className="size-6 text-blue-400" />
             )}
@@ -52,12 +41,6 @@ function PanelToastList() {
             >
               {toast.title}
             </Toast.Title>
-            <Toast.Close
-              className="absolute top-3 right-3 rounded p-1 text-zinc-300 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
-              aria-label="Close notification"
-            >
-              <LuX className="size-4" />
-            </Toast.Close>
           </Toast.Content>
         </Toast.Root>
       ))}

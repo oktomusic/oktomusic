@@ -1,6 +1,7 @@
 import { useAtomValue } from "jotai";
 import { DragDropProvider } from "@dnd-kit/react";
 import { CSPProvider } from "@base-ui/react/csp-provider";
+import { Toast } from "@base-ui/react/toast";
 
 import { useVibrantColorsPlaying } from "./hooks/vibrant_colors";
 import {
@@ -35,7 +36,7 @@ export function App() {
 
   return (
     <CSPProvider disableStyleElements={true}>
-      <PanelToastProvider>
+      <Toast.Provider timeout={5000}>
         <DragDropProvider>
           <PlayerProvider />
           <MediaSessionProvider />
@@ -53,12 +54,13 @@ export function App() {
             <PanelLeft />
             <PanelCenter />
             {overlayVisible && <PanelOverlay />}
+            <PanelToastProvider />
             <PanelRight />
           </div>
           <PlayerControls />
           <OktoDragOverlay />
         </DragDropProvider>
-      </PanelToastProvider>
+      </Toast.Provider>
     </CSPProvider>
   );
 }
