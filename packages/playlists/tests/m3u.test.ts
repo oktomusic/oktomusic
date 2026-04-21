@@ -24,7 +24,7 @@ describe("M3U parser/generator", () => {
   it("round-trips playlist data", () => {
     const parsed = parseM3U(
       generateM3U(playlistM3U),
-      playlistM3U.playlist.title as string,
+      playlistM3U.playlist.title,
     );
 
     expect(parsed).toEqual(playlistM3U);

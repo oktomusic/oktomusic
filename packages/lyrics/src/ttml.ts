@@ -23,7 +23,7 @@ function pickRoot(doc: unknown): TtmlRoot | undefined {
     const lower = key.toLowerCase();
     if (lower === "tt" || lower === "ttml") {
       const node = rec[key];
-      if (isRecord(node)) return node as TtmlRoot;
+      if (isRecord(node)) return node;
     }
   }
   return undefined;
@@ -47,7 +47,7 @@ function normalizeParagraphs(
     (isRecord(div) ? safeGet(div, "p") : undefined) ?? div;
   if (!pCandidates) return [];
   const arr = Array.isArray(pCandidates) ? pCandidates : [pCandidates];
-  return arr.filter(isRecord) as TtmlParagraph[];
+  return arr.filter(isRecord);
 }
 
 export function parseTTMLtoLyrics(input: string): Lyrics {
