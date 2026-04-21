@@ -26,7 +26,6 @@
     "rootDir": "."
   },
   "include": [
-    "src/types/vite-sri-manifest.d.ts",
     "vite.config.ts",
     "vitest.config.ts",
     "lingui.config.ts",
