@@ -10,7 +10,8 @@ catalogs:
     typescript: ^5.9.3
     sharp: ^0.34.5
 
-nodeOptions: "${NODE_OPTIONS:- } --experimental-strip-types --no-warnings=ExperimentalWarning --use-system-ca"
+nodeOptions: "${NODE_OPTIONS:- } --experimental-strip-types
+  --no-warnings=ExperimentalWarning --use-system-ca"
 
 linkWorkspacePackages: true
 injectWorkspacePackages: true
@@ -44,3 +45,8 @@ sharedWorkspaceLockfile: true
 blockExoticSubdeps: true
 minimumReleaseAge: 1440 # 1 day
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver@6.3.1
+  - reselect@5.1.1
+  - rollup@2.80.0
+  - chokidar@4.0.3
