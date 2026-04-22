@@ -39,7 +39,7 @@ export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
       </Menu.SubmenuTrigger>
       <Menu.Portal>
         <Menu.Positioner sideOffset={8} alignOffset={-12}>
-          <Menu.Popup className="mt-2 max-h-67.25 w-52 origin-(--transform-origin) overflow-hidden rounded-xl bg-zinc-800 p-1 text-sm/6 text-white transition duration-100 ease-in [--anchor-gap:--spacing(1)] focus:outline-none data-leave:data-closed:opacity-0">
+          <Menu.Popup className="mt-2 max-h-67.25 w-52 origin-(--transform-origin) overflow-hidden rounded-xl bg-zinc-800 p-1 text-sm/6 text-white transition duration-100 ease-in focus:outline-none data-ending-style:opacity-0 data-starting-style:opacity-0">
             <Input
               placeholder={t`Find a playlist...`}
               className="h-9 w-full rounded-lg bg-zinc-800 px-3 py-1.5 text-sm text-white focus:outline-2 focus:-outline-offset-2 focus:outline-white/25 disabled:cursor-not-allowed disabled:opacity-50"

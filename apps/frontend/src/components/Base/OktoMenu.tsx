@@ -141,7 +141,7 @@ export function OktoMenuSeparator() {
 
 export function OktoMenu(props: OktoMenuProps) {
   return (
-    <Menu.Root>
+    <Menu.Root modal={true}>
       <Menu.Trigger
         className={props.buttonClassName}
         title={props.buttonTitle}
@@ -150,35 +150,35 @@ export function OktoMenu(props: OktoMenuProps) {
         {props.button}
       </Menu.Trigger>
       <Menu.Portal>
-        <Menu.Backdrop />
         <Menu.Positioner
-          align={props.positionAlign || "start"}
+          align={props.positionAlign || "end"}
           side={props.positionSide || "bottom"}
+          sideOffset={8}
+          collisionPadding={8}
+          positionMethod="fixed"
         >
-          <Menu.Viewport>
-            <Menu.Popup
-              className={`mt-2 w-52 rounded-xl bg-zinc-800 p-1 text-sm/6 text-white transition duration-100 ease-in [--anchor-gap:--spacing(1)] focus:outline-none data-leave:data-closed:opacity-0 ${
-                props.menuClassName ?? ""
-              }`}
-            >
-              {props.items
-                .filter((item) => !item.hidden)
-                .map((item, index) => {
-                  switch (item.type) {
-                    case "button":
-                      return <OktoMenuButton key={index} {...item} />;
-                    case "link":
-                      return <OktoMenuLink key={index} {...item} />;
-                    case "router-link":
-                      return <OktoMenuRouterLink key={index} {...item} />;
-                    case "separator":
-                      return <OktoMenuSeparator key={index} />;
-                    case "submenu":
-                      return <Fragment key={index}>{item.component}</Fragment>;
-                  }
-                })}
-            </Menu.Popup>
-          </Menu.Viewport>
+          <Menu.Popup
+            className={`w-52 origin-(--transform-origin) rounded-xl bg-zinc-800 p-1 text-sm/6 text-white transition duration-100 ease-in focus:outline-none data-ending-style:opacity-0 data-starting-style:opacity-0 ${
+              props.menuClassName ?? ""
+            }`}
+          >
+            {props.items
+              .filter((item) => !item.hidden)
+              .map((item, index) => {
+                switch (item.type) {
+                  case "button":
+                    return <OktoMenuButton key={index} {...item} />;
+                  case "link":
+                    return <OktoMenuLink key={index} {...item} />;
+                  case "router-link":
+                    return <OktoMenuRouterLink key={index} {...item} />;
+                  case "separator":
+                    return <OktoMenuSeparator key={index} />;
+                  case "submenu":
+                    return <Fragment key={index}>{item.component}</Fragment>;
+                }
+              })}
+          </Menu.Popup>
         </Menu.Positioner>
       </Menu.Portal>
     </Menu.Root>
