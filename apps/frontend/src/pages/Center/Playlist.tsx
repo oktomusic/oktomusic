@@ -98,7 +98,7 @@ export function Playlist() {
     : coverPlaceHolder;
   const playlistCoverId = primaryAlbum ? primaryAlbum.id : null;
 
-  const tracksByDisc: TrackWithAlbum[][] = [playlistTracks];
+  const playlistTracksArray: TrackWithAlbum[][] = [playlistTracks];
 
   const trackCount = playlist.tracks.length;
 
