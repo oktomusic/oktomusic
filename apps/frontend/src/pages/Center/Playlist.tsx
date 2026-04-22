@@ -177,7 +177,7 @@ export function Playlist() {
       }
     >
       <TrackList
-        tracks={tracksByDisc}
+        tracks={playlistTracksArray}
         displayCover={true}
         playlistId={playlist.id}
         reorderable={userId === playlist.creator.id || userIsAdmin}
