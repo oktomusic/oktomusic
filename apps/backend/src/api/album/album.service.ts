@@ -10,7 +10,7 @@ import { PrismaService } from "../../db/prisma.service";
 import { AlbumCoverSizeString } from "../../common/utils/sharp-utils";
 import { AlbumModel } from "./album.model";
 import type { SearchAlbumsInput } from "./dto/search-albums.input";
-import { type LyricsLineModel, TrackModel } from "../track/track.model";
+import { TrackModel } from "../track/track.model";
 
 const albumInclude = {
   artists: {
@@ -86,7 +86,7 @@ export class AlbumService {
         })),
         flacFileId: track.flacFile?.id ?? null,
         hasLyrics,
-        lyrics: hasLyrics ? (lyrics as LyricsLineModel[]) : null,
+        lyrics: hasLyrics ? lyrics : null,
       };
       const discTracks = tracksByDiscMap.get(track.discNumber) ?? [];
       discTracks.push(mappedTrack);

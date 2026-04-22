@@ -74,10 +74,11 @@ const resolveHttpExceptionMessage = (exception: HttpException): string => {
 
 const mapHttpExceptionToGraphqlError = (exception: HttpException) => {
   const status = exception.getStatus();
-  const httpStatus = status as HttpStatus;
+  const httpStatus = status;
   const code =
     graphqlCodeByStatus[httpStatus] ??
-    (httpStatus >= HttpStatus.INTERNAL_SERVER_ERROR
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+    (httpStatus === HttpStatus.INTERNAL_SERVER_ERROR
       ? "INTERNAL_SERVER_ERROR"
       : "BAD_REQUEST");
 

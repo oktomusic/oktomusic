@@ -14,7 +14,7 @@ export type TokenEndpointResponse = {
 export const discovery = vi.fn(() => {
   return {
     serverMetadata: () => ({ supportsPKCE: () => true }),
-  } as Configuration;
+  } satisfies Configuration;
 });
 
 export const randomPKCECodeVerifier = vi.fn(() => "verifier");

@@ -6,7 +6,7 @@ import { PrismaService } from "../../db/prisma.service";
 import type { AlbumBasicModel } from "../album/album.model";
 import type { ArtistModel } from "../artist/artist.model";
 import type { SearchTracksInput } from "./dto/search-tracks.input";
-import { type LyricsLineModel, TrackModel } from "./track.model";
+import { TrackModel } from "./track.model";
 
 type PrismaArtistJoin = {
   order: number;
@@ -97,7 +97,7 @@ export class TrackService {
       artists: this.mapArtists(track.artists),
       flacFileId: track.flacFile?.id ?? null,
       hasLyrics,
-      lyrics: hasLyrics ? (lyrics as LyricsLineModel[]) : null,
+      lyrics: hasLyrics ? lyrics : null,
     };
   }
 

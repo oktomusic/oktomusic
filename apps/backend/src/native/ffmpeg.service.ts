@@ -68,9 +68,8 @@ export class FFmpegService {
         filePath,
       ]);
 
-      const parsed: FFProbeFormat = JSON.parse(
-        stdout,
-      ) as unknown as FFProbeFormat;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const parsed: FFProbeFormat = JSON.parse(stdout);
 
       const audioStream = parsed.streams[0];
 

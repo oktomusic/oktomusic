@@ -66,7 +66,7 @@ export class OidcService implements OnModuleInit {
     introspection: client.IntrospectionResponse,
   ): Role {
     const roles = getByPath(
-      introspection as unknown as Record<string, unknown>,
+      introspection,
       this.oidcConf.rolesPath,
       { client_id: this.oidcConf.clientId },
     );
