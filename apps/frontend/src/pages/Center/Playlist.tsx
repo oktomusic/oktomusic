@@ -98,7 +98,7 @@ export function Playlist() {
     : coverPlaceHolder;
   const playlistCoverId = primaryAlbum ? primaryAlbum.id : null;
 
-  const tracksByDisc: TrackWithAlbum[][] = [playlistTracks];
+  const playlistTracksArray: TrackWithAlbum[][] = [playlistTracks];
 
   const trackCount = playlist.tracks.length;
 
@@ -177,10 +177,10 @@ export function Playlist() {
       }
     >
       <TrackList
-        tracks={tracksByDisc}
+        tracks={playlistTracksArray}
         displayCover={true}
         playlistId={playlist.id}
-        reorderable={true}
+        reorderable={userId === playlist.creator.id || userIsAdmin}
         droppableId={`playlist:${playlist.id}`}
       />
     </CollectionView>
