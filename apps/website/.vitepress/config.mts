@@ -89,6 +89,10 @@ export default withPwa(
               link: "/advanced/configuration",
             },
             { text: "Kiosk Mode", link: "/advanced/kiosk" },
+            /* {
+              text: "OpenID OpenTofu setup",
+              link: "/advanced/openid-opentofu",
+            }, */
           ],
         },
       ],
@@ -129,6 +133,7 @@ export default withPwa(
         groupIconVitePlugin({
           customIcon: {
             "compose.yml": "logos:docker-icon",
+            ".tf": "logos:terraform-icon",
           },
         }),
         llmstxt({
