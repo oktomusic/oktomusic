@@ -180,7 +180,7 @@ export function Playlist() {
         tracks={tracksByDisc}
         displayCover={true}
         playlistId={playlist.id}
-        reorderable={true}
+        reorderable={userId === playlist.creator.id || userIsAdmin}
         droppableId={`playlist:${playlist.id}`}
       />
     </CollectionView>
