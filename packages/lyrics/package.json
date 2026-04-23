@@ -32,8 +32,8 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "release": "bumpp && npm publish",
-    "lint": "pnpm -w exec eslint -c eslint.config.ts packages/lyrics",
-    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/lyrics"
+    "lint": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts packages/lyrics",
+    "lint:fix": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts --fix packages/lyrics"
   },
   "devDependencies": {
     "@types/node": "catalog:default",

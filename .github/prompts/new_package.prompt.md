@@ -69,8 +69,8 @@ Inside that folder, create a `package.json` file with the following content:
     "dev": "tsdown --watch",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "lint": "pnpm -w exec eslint -c eslint.config.ts packages/<package-name>",
-    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/<package-name>"
+    "lint": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts packages/<package-name>",
+    "lint:fix": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts --fix packages/<package-name>"
   },
   "devDependencies": {
     "@types/node": "catalog:default",

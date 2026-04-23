@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint --flag unstable_native_nodejs_ts_config .",
     "commitlint": "commitlint --edit",
     "format": "prettier --check .",
     "build": "pnpm run --filter \"*\" build",
@@ -27,12 +27,12 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": "24",
+      "version": "^24.14.0",
       "onFail": "error"
     },
     "packageManager": {
       "name": "pnpm",
-      "version": "10",
+      "version": "^10.33.0",
       "onFail": "error"
     }
   },
@@ -53,13 +53,10 @@
     "globals": "^17.5.0",
     "graphql-config": "^5.1.6",
     "husky": "^9.1.7",
-    "jiti": "^2.6.1",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "tsx": "^4.21.0",
     "typescript": "catalog:default",
     "typescript-eslint": "^8.59.0",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.5"
   }
 }

@@ -6,11 +6,11 @@ catalogs:
   default:
     "@types/node": ^24.12.2
     temporal-polyfill: ^0.3.2
-    tsdown: ^0.21.7
+    tsdown: ^0.21.10
     typescript: ^5.9.3
     sharp: ^0.34.5
 
-nodeOptions: "${NODE_OPTIONS:- } --experimental-strip-types
+nodeOptions: "${NODE_OPTIONS:- } --experimental-transform-types
   --no-warnings=ExperimentalWarning --use-system-ca"
 
 linkWorkspacePackages: true
