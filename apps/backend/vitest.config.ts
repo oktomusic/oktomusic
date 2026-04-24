@@ -1,10 +1,8 @@
 import path from "node:path";
 
 import { defineConfig } from "vitest/config";
-// import viteTsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  // plugins: [viteTsconfigPaths()],
   resolve: {
     alias: {
       "@oktomusic/api-schemas": path.resolve(

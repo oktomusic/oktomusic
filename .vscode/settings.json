@@ -294,5 +294,10 @@
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
   },
-  "js/ts.tsdk.path": "node_modules/typescript/lib"
+  "tinymist.formatterMode": "typstfmt",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "eslint.enable": true,
+  "eslint.options": {
+    "flags": ["unstable_native_nodejs_ts_config"]
+  }
 }

@@ -33,8 +33,8 @@
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit",
     "release": "bumpp && npm publish",
-    "lint": "pnpm -w exec eslint -c eslint.config.ts packages/api-schemas",
-    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/api-schemas"
+    "lint": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts packages/api-schemas",
+    "lint:fix": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts --fix packages/api-schemas"
   },
   "dependencies": {
     "zod": "^4.3.6"

@@ -27,8 +27,8 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit",
-    "lint": "pnpm -w exec eslint -c eslint.config.ts packages/vite-sri-manifest",
-    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/vite-sri-manifest"
+    "lint": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts packages/vite-sri-manifest",
+    "lint:fix": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts --fix packages/vite-sri-manifest"
   },
   "devDependencies": {
     "@types/node": "catalog:default",

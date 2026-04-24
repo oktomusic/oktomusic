@@ -30,8 +30,8 @@
     "dev": "tsdown --watch",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "lint": "pnpm -w exec eslint -c eslint.config.ts packages/meta-tags",
-    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --fix packages/meta-tags"
+    "lint": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts packages/meta-tags",
+    "lint:fix": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts --fix packages/meta-tags"
   },
   "devDependencies": {
     "@types/node": "catalog:default",
