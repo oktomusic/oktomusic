@@ -130,7 +130,7 @@ fi
 
 cd /usr/src/app
 echo "Running Prisma migrations..."
-exec node ./node_modules/prisma/build/index.js migrate deploy
+node ./node_modules/prisma/build/index.js migrate deploy
 echo "Migrations completed successfully"
 exec node --use-system-ca dist/main.js
 SH
