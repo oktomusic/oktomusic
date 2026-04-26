@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@headlessui/react";
-import { HiPlay } from "react-icons/hi2";
+import { HiPause, HiPlay } from "react-icons/hi2";
 import { t } from "@lingui/core/macro";
 
 import { useVibrantColors } from "../../hooks/vibrant_colors";
@@ -19,6 +19,7 @@ interface CollectionViewProps {
   readonly cover: string;
   readonly coverOnClick?: () => void;
   readonly onPlay?: () => void;
+  readonly playButtonIsPlaying?: boolean;
   readonly colors?: VibrantColorsPartial;
   /**
    * The small bits of informations about the collection, to be displayed below the subtitle.
@@ -77,6 +78,10 @@ export function CollectionView(props: CollectionViewProps) {
   }, []);
 
   const albumName = props.title;
+  const playButtonTitle = props.playButtonIsPlaying ? t`Pause` : t`Play`;
+  const playButtonAriaLabel = props.playButtonIsPlaying
+    ? t`Pause ${albumName}`
+    : t`Play ${albumName}`;
 
   return (
     <div className="collection-view" ref={mainDivRef}>
@@ -93,11 +98,15 @@ export function CollectionView(props: CollectionViewProps) {
           {props.onPlay && (
             <Button
               className="size-12 shrink-0 rounded-full bg-blue-500"
-              title={t`Play`}
-              aria-label={t`Play ${albumName}`}
+              title={playButtonTitle}
+              aria-label={playButtonAriaLabel}
               onClick={props.onPlay}
             >
-              <HiPlay className="m-auto size-6" />
+              {props.playButtonIsPlaying ? (
+                <HiPause className="m-auto size-6" />
+              ) : (
+                <HiPlay className="m-auto size-6" />
+              )}
             </Button>
           )}
           <h2 className="truncate text-2xl font-bold">{albumName}</h2>
@@ -141,10 +150,15 @@ export function CollectionView(props: CollectionViewProps) {
           {props.onPlay && (
             <Button
               className="size-12 rounded-full bg-blue-500"
-              title={t`Play`}
+              title={playButtonTitle}
+              aria-label={playButtonAriaLabel}
               onClick={props.onPlay}
             >
-              <HiPlay className="m-auto size-6" />
+              {props.playButtonIsPlaying ? (
+                <HiPause className="m-auto size-6" />
+              ) : (
+                <HiPlay className="m-auto size-6" />
+              )}
             </Button>
           )}
           {props.toolbar}

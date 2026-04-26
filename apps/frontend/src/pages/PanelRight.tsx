@@ -1,10 +1,15 @@
 import { useAtomValue, useSetAtom } from "jotai";
+import { t } from "@lingui/core/macro";
 
 import {
   handleSeekToQueueIndexAtom,
   playerIsPlayingAtom,
   playerQueueAtom,
-  playerQueueIndexAtom,
+  playerQueueCurrentTrack,
+  playerQueueCurrentTrackSourceAtom,
+  playerQueueFromAtom,
+  playerQueueManualAtom,
+  playerQueueMainIndexAtom,
   requestPlaybackToggleAtom,
 } from "../atoms/player/machine";
 import { panelRightVisibleAtom } from "../atoms/app/panels";
@@ -13,14 +18,23 @@ import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 
 export function PanelRight() {
   const visible = useAtomValue(panelRightVisibleAtom);
-  const queueIndex = useAtomValue(playerQueueIndexAtom);
+  const queueIndex = useAtomValue(playerQueueMainIndexAtom);
   const queue = useAtomValue(playerQueueAtom);
+  const manualQueue = useAtomValue(playerQueueManualAtom);
+  const currentTrack = useAtomValue(playerQueueCurrentTrack);
+  const currentTrackSource = useAtomValue(playerQueueCurrentTrackSourceAtom);
+  const queueFrom = useAtomValue(playerQueueFromAtom);
   const isPlaying = useAtomValue(playerIsPlayingAtom);
 
   const handleSeekToQueueIndex = useSetAtom(handleSeekToQueueIndexAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
 
-  const nextQueue = queue.slice(queueIndex + 1);
+  const manualQueueUpNext =
+    currentTrackSource === "manual" ? manualQueue.slice(1) : manualQueue;
+  const hasManualQueue = manualQueueUpNext.length > 0;
+  const hasMainQueueLoaded = queueFrom !== null;
+  const mainQueueUpNext = queue.slice(queueIndex + 1);
+  const queueFromLabel = queueFrom?.meta.name ?? t`Unknown album`;
 
   if (!visible) {
     return null;
@@ -49,49 +63,53 @@ export function PanelRight() {
         noMargin={true}
       >
         <li className="flex flex-col">
-          <span className="p-2 text-sm font-semibold">Now Playing</span>
+          <span className="p-2 text-sm font-semibold">{t`Now playing`}</span>
           <ol className="flex flex-col">
-            {queue[queueIndex] && (
+            {currentTrack && (
               <QueueTrack
-                track={queue[queueIndex]}
+                track={currentTrack}
                 isCurrent={true}
                 isPlaying={isPlaying}
-                onClickPlay={() => handleTrackClick(queueIndex)}
+                onClickPlay={() => {
+                  togglePlayback();
+                }}
               />
             )}
           </ol>
         </li>
-        <li className="flex flex-col">
-          <span className="p-2 text-sm font-semibold">Up Next</span>
-          <ol className="flex flex-col">
-            {nextQueue.map((item, index) => (
-              <QueueTrack
-                key={index}
-                track={item}
-                isCurrent={false}
-                isPlaying={false}
-                onClickPlay={() => handleTrackClick(queueIndex + index + 1)}
-              />
-            ))}
-          </ol>
-        </li>
-        {/*<li className="flex flex-col">
-          <div className="flex w-full flex-row justify-between p-2">
-            <span className="text-sm font-semibold">Queue from</span>
-            <button className="text-sm">Clear queue</button>
-          </div>
-          <ol className="flex flex-col">
-            {nextQueue.map((item, index) => (
-              <QueueTrack
-                key={index}
-                track={item}
-                isCurrent={false}
-                isPlaying={false}
-                onClickPlay={() => handleTrackClick(queueIndex + index + 1)}
-              />
-            ))}
-          </ol>
-        </li>*/}
+        {hasManualQueue && (
+          <li className="flex flex-col">
+            <span className="p-2 text-sm font-semibold">{t`Next in queue`}</span>
+            <ol className="flex flex-col">
+              {manualQueueUpNext.map((item, index) => (
+                <QueueTrack
+                  key={index}
+                  track={item}
+                  isCurrent={false}
+                  isPlaying={false}
+                />
+              ))}
+            </ol>
+          </li>
+        )}
+        {hasMainQueueLoaded && (
+          <li className="flex flex-col">
+            <div className="flex w-full flex-row justify-between p-2">
+              <span className="text-sm font-semibold">{t`Next from: ${queueFromLabel}`}</span>
+            </div>
+            <ol className="flex flex-col">
+              {mainQueueUpNext.map((item, index) => (
+                <QueueTrack
+                  key={index}
+                  track={item}
+                  isCurrent={false}
+                  isPlaying={false}
+                  onClickPlay={() => handleTrackClick(queueIndex + index + 1)}
+                />
+              ))}
+            </ol>
+          </li>
+        )}
       </OktoScrollArea>
     </aside>
   );
