@@ -8,7 +8,7 @@ import {
   playerPlaybackPositionAtom,
   playerPlaybackStateAtom,
   playerQueueCurrentTrackFile,
-  playerQueueIndexAtom,
+  playerQueueMainIndexAtom,
   playerSeekRequestAtom,
   playerShouldPlayAtom,
 } from "../../atoms/player/machine";
@@ -16,7 +16,7 @@ import {
 export default function PlayerProvider() {
   const [audioContext, setAudioContext] = useAtom(playerAudioContextAtom);
   const currentTrackFile = useAtomValue(playerQueueCurrentTrackFile);
-  const queueIndex = useAtomValue(playerQueueIndexAtom);
+  const queueIndex = useAtomValue(playerQueueMainIndexAtom);
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
   const [seekRequestMs, setSeekRequestMs] = useAtom(playerSeekRequestAtom);
 

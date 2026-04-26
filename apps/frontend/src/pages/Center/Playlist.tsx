@@ -12,7 +12,12 @@ import { TrackList } from "../../components/TrackList/TrackList";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import {
   addToQueueAtom,
+  playerQueueCurrentTrackSourceAtom,
+  playerQueueFromAtom,
+  playerShouldPlayAtom,
   replaceQueueAtom,
+  requestPlaybackToggleAtom,
+  type PlayerQueueFrom,
   type TrackWithAlbum,
 } from "../../atoms/player/machine";
 import {
@@ -26,6 +31,7 @@ import { CollectionViewToolbarPlaylist } from "../../components/CollectionView/C
 import { OktoMenuItem } from "../../components/Base/OktoMenu";
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { Role } from "../../api/graphql/gql/graphql";
+import { playlistToPlaylistBasic } from "../../utils/graphql_converters";
 
 export function Playlist() {
   const { cuid } = useParams();
@@ -44,6 +50,11 @@ export function Playlist() {
   });
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
+  const currentQueueFrom = useAtomValue(playerQueueFromAtom);
+  const currentTrackSource = useAtomValue(playerQueueCurrentTrackSourceAtom);
+  const shouldPlay = useAtomValue(playerShouldPlayAtom);
+  const setQueueFrom = useSetAtom(playerQueueFromAtom);
+  const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
 
   const setDialogCoverId = useSetAtom(dialogCoverId);
@@ -99,6 +110,16 @@ export function Playlist() {
   const playlistCoverId = primaryAlbum ? primaryAlbum.id : null;
 
   const playlistTracksArray: TrackWithAlbum[][] = [playlistTracks];
+  const playlistQueueFrom = {
+    type: "playlist",
+    id: playlist.id,
+    meta: playlistToPlaylistBasic(playlist),
+  } as const satisfies PlayerQueueFrom;
+  const isCurrentPlaylistMainQueue =
+    currentTrackSource === "main" &&
+    currentQueueFrom?.type === "playlist" &&
+    currentQueueFrom.id === playlist.id;
+  const playButtonIsPlaying = isCurrentPlaylistMainQueue && shouldPlay;
 
   const trackCount = playlist.tracks.length;
 
@@ -157,8 +178,15 @@ export function Playlist() {
       coverOnClick={() => {
         setDialogCoverId(playlistCoverId);
       }}
+      playButtonIsPlaying={playButtonIsPlaying}
       colors={playlistColors}
       onPlay={() => {
+        if (isCurrentPlaylistMainQueue) {
+          togglePlayback();
+          return;
+        }
+
+        setQueueFrom(playlistQueueFrom);
         replaceQueue(playlistTracks);
       }}
       meta={
@@ -179,6 +207,7 @@ export function Playlist() {
       <TrackList
         tracks={playlistTracksArray}
         displayCover={true}
+        queueFrom={playlistQueueFrom}
         playlistId={playlist.id}
         reorderable={userId === playlist.creator.id || userIsAdmin}
         droppableId={`playlist:${playlist.id}`}

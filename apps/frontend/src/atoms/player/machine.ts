@@ -1,6 +1,10 @@
 import { atom } from "jotai";
 
-import { Track } from "../../api/graphql/gql/graphql";
+import {
+  AlbumBasic,
+  PlaylistBasic,
+  Track,
+} from "../../api/graphql/gql/graphql";
 
 /** Holds the current AudioContext instance (or null when not initialized). */
 export const playerAudioContextAtom = atom<AudioContext | null>(null);
@@ -11,15 +15,12 @@ export type TrackWithAlbum = Omit<Track, "album"> & {
   album: NonNullable<Track["album"]>;
 };
 
-// TODO: implement primaray queue and secondary queue (for next up)
-
 /** Playback queue as an ordered list of tracks. */
 export const playerQueueAtom = atom<TrackWithAlbum[]>([]);
 
-/** Index of the current track in the queue. */
-export const playerQueueIndexAtom = atom<number>(0);
+/** Index of the current track in the main queue. */
+export const playerQueueMainIndexAtom = atom<number>(0);
 
-// WIP REWRITE
 // TODO: handle shuffle and repeat modes in main queue
 
 /**
@@ -35,13 +36,26 @@ export const playerQueueIndexAtom = atom<number>(0);
  */
 export const playerQueueManualAtom = atom<TrackWithAlbum[]>([]);
 
-export interface PlayerQueueFrom {
-  readonly type: "album" | "playlist";
-  /**
-   * Album or playlist CUID
-   */
-  readonly id: string;
-}
+export type PlayerQueueCurrentTrackSource = "main" | "manual" | null;
+
+/** Indicates whether the current track is played from the main or manual queue. */
+export const playerQueueCurrentTrackSourceAtom =
+  atom<PlayerQueueCurrentTrackSource>(null);
+
+/**
+ * Information about the origin of the current queue, if available.
+ */
+export type PlayerQueueFrom =
+  | {
+      readonly type: "album";
+      readonly id: string;
+      readonly meta: AlbumBasic;
+    }
+  | {
+      readonly type: "playlist";
+      readonly id: string;
+      readonly meta: PlaylistBasic;
+    };
 
 /**
  * The main queue's origin information.
@@ -57,6 +71,14 @@ export interface PlayerQueueFrom {
  */
 export const playerQueueFromAtom = atom<PlayerQueueFrom | null>(null);
 
+export const playerQueueLoad = atom(
+  null,
+  (_, set, from: PlayerQueueFrom, tracks: TrackWithAlbum[]) => {
+    set(playerQueueFromAtom, from);
+    set(playerQueueFromTracksAtom, tracks);
+  },
+);
+
 /**
  *
  */
@@ -64,57 +86,153 @@ export const playerQueueFromNameAtom = atom<string | null>();
 
 export const playerQueueFromTracksAtom = atom<TrackWithAlbum[] | null>(null);
 
-// export const playerQueueFromIndexAtom = atom<number | null>(null);
+const getWrappedMainQueueIndex = (
+  index: number,
+  queueLength: number,
+): number => {
+  if (queueLength <= 0) {
+    return 0;
+  }
 
-// WIP REWRITE END
+  if (index < 0) {
+    return queueLength - 1;
+  }
+
+  if (index >= queueLength) {
+    return 0;
+  }
+
+  return index;
+};
 
 // TODO: reset to start of track when playback timing is not near the start of the track, with user configuration
 /** Move to previous track (wraps) and force playback. */
 export const handlePreviousTrackAtom = atom(null, (get, set) => {
-  const queue = get(playerQueueAtom);
-  let index = get(playerQueueIndexAtom);
+  const mainQueue = get(playerQueueAtom);
+  const manualQueue = get(playerQueueManualAtom);
+  const source = get(playerQueueCurrentTrackSourceAtom);
+  let index = get(playerQueueMainIndexAtom);
 
-  if (queue.length === 0) {
+  if (mainQueue.length === 0 && manualQueue.length === 0) {
+    set(playerQueueCurrentTrackSourceAtom, null);
+    set(playerShouldPlayAtom, false);
     return;
   }
 
-  index -= 1;
-  if (index < 0) {
-    index = queue.length - 1; // Loop back to end
+  if (source === "manual") {
+    const remainingManualQueue = manualQueue.slice(1);
+    set(playerQueueManualAtom, remainingManualQueue);
+
+    if (remainingManualQueue.length > 0) {
+      set(playerQueueCurrentTrackSourceAtom, "manual");
+      set(playerShouldPlayAtom, true);
+      return;
+    }
+
+    if (mainQueue.length === 0) {
+      set(playerQueueCurrentTrackSourceAtom, null);
+      set(playerShouldPlayAtom, false);
+      return;
+    }
+
+    // Returning from manual playback should resume the current main queue item.
+    set(
+      playerQueueMainIndexAtom,
+      getWrappedMainQueueIndex(index, mainQueue.length),
+    );
+    set(playerQueueCurrentTrackSourceAtom, "main");
+    set(playerShouldPlayAtom, true);
+    return;
   }
 
-  set(playerQueueIndexAtom, index);
+  if (mainQueue.length === 0) {
+    set(
+      playerQueueCurrentTrackSourceAtom,
+      manualQueue.length > 0 ? "manual" : null,
+    );
+    set(playerShouldPlayAtom, manualQueue.length > 0);
+    return;
+  }
+
+  index = getWrappedMainQueueIndex(index - 1, mainQueue.length);
+  set(playerQueueMainIndexAtom, index);
+  set(playerQueueCurrentTrackSourceAtom, "main");
   set(playerShouldPlayAtom, true);
 });
 
 export const handleNextTrackAtom = atom(null, (get, set) => {
-  const queue = get(playerQueueAtom);
-  let index = get(playerQueueIndexAtom);
+  const mainQueue = get(playerQueueAtom);
+  const manualQueue = get(playerQueueManualAtom);
+  const source = get(playerQueueCurrentTrackSourceAtom);
+  const index = get(playerQueueMainIndexAtom);
 
-  if (queue.length === 0) {
+  if (mainQueue.length === 0 && manualQueue.length === 0) {
+    set(playerQueueCurrentTrackSourceAtom, null);
+    set(playerShouldPlayAtom, false);
     return;
   }
 
-  index += 1;
-  if (index >= queue.length) {
-    index = 0; // Loop back to start
+  if (source === "manual" && manualQueue.length > 0) {
+    const remainingManualQueue = manualQueue.slice(1);
+    set(playerQueueManualAtom, remainingManualQueue);
+
+    if (remainingManualQueue.length > 0) {
+      set(playerQueueCurrentTrackSourceAtom, "manual");
+      set(playerShouldPlayAtom, true);
+      return;
+    }
+
+    if (mainQueue.length > 0) {
+      set(
+        playerQueueMainIndexAtom,
+        getWrappedMainQueueIndex(index + 1, mainQueue.length),
+      );
+      set(playerQueueCurrentTrackSourceAtom, "main");
+      set(playerShouldPlayAtom, true);
+      return;
+    }
+
+    set(playerQueueCurrentTrackSourceAtom, null);
+    set(playerShouldPlayAtom, false);
+    return;
   }
 
-  set(playerQueueIndexAtom, index);
-  set(playerShouldPlayAtom, true);
+  if (manualQueue.length > 0) {
+    set(playerQueueCurrentTrackSourceAtom, "manual");
+    set(playerShouldPlayAtom, true);
+    return;
+  }
+
+  if (mainQueue.length > 0) {
+    set(
+      playerQueueMainIndexAtom,
+      getWrappedMainQueueIndex(index + 1, mainQueue.length),
+    );
+    set(playerQueueCurrentTrackSourceAtom, "main");
+    set(playerShouldPlayAtom, true);
+    return;
+  }
+
+  set(playerQueueCurrentTrackSourceAtom, null);
+  set(playerShouldPlayAtom, false);
 });
 
 /** Move to a specific track in the queue by index. */
 export const handleSeekToQueueIndexAtom = atom(
   null,
   (get, set, targetIndex: number) => {
-    const queue = get(playerQueueAtom);
+    const mainQueue = get(playerQueueAtom);
 
-    if (queue.length === 0 || targetIndex < 0 || targetIndex >= queue.length) {
+    if (
+      mainQueue.length === 0 ||
+      targetIndex < 0 ||
+      targetIndex >= mainQueue.length
+    ) {
       return;
     }
 
-    set(playerQueueIndexAtom, targetIndex);
+    set(playerQueueMainIndexAtom, targetIndex);
+    set(playerQueueCurrentTrackSourceAtom, "main");
     set(playerShouldPlayAtom, true);
   },
 );
@@ -124,8 +242,10 @@ export const replaceQueueAtom = atom(
   null,
   (_get, set, tracks: TrackWithAlbum[]) => {
     set(playerQueueAtom, tracks);
-    set(playerQueueIndexAtom, 0);
-    set(playerShouldPlayAtom, true);
+    set(playerQueueMainIndexAtom, 0);
+    set(playerQueueManualAtom, []);
+    set(playerQueueCurrentTrackSourceAtom, tracks.length > 0 ? "main" : null);
+    set(playerShouldPlayAtom, tracks.length > 0);
   },
 );
 
@@ -133,25 +253,50 @@ export const replaceQueueAtom = atom(
 export const addToQueueAtom = atom(
   null,
   (get, set, tracks: TrackWithAlbum[]) => {
-    const currentQueue = get(playerQueueAtom);
-    set(playerQueueAtom, [...currentQueue, ...tracks]);
+    if (tracks.length === 0) {
+      return;
+    }
+
+    const mainQueue = get(playerQueueAtom);
+    const manualQueue = get(playerQueueManualAtom);
+    const source = get(playerQueueCurrentTrackSourceAtom);
+
+    const hasCurrentTrack =
+      (source === "manual" && manualQueue.length > 0) || mainQueue.length > 0;
+
+    set(playerQueueManualAtom, [...manualQueue, ...tracks]);
+
+    if (!hasCurrentTrack) {
+      set(playerQueueCurrentTrackSourceAtom, "manual");
+      set(playerShouldPlayAtom, true);
+    }
   },
 );
 
 /** Derived current track from queue + index, safe for empty queues. */
 export const playerQueueCurrentTrack = atom<TrackWithAlbum | null>((get) => {
-  const queue = get(playerQueueAtom);
-  const index = get(playerQueueIndexAtom);
+  const source = get(playerQueueCurrentTrackSourceAtom);
+  const mainQueue = get(playerQueueAtom);
+  const manualQueue = get(playerQueueManualAtom);
+  const index = get(playerQueueMainIndexAtom);
 
-  if (queue.length === 0) {
-    return null;
+  if (source === "manual" && manualQueue.length > 0) {
+    return manualQueue[0] ?? null;
   }
 
-  if (index < 0 || index >= queue.length) {
-    return queue[0] ?? null;
+  if (mainQueue.length > 0) {
+    if (index < 0 || index >= mainQueue.length) {
+      return mainQueue[0] ?? null;
+    }
+
+    return mainQueue[index] ?? null;
   }
 
-  return queue[index] ?? null;
+  if (manualQueue.length > 0) {
+    return manualQueue[0] ?? null;
+  }
+
+  return null;
 });
 
 export interface VibrantColors {
@@ -221,8 +366,8 @@ export const playerSeekRequestAtom = atom<number | null>(null);
 
 /** Action: toggle the user playback intent. */
 export const requestPlaybackToggleAtom = atom(null, (get, set) => {
-  const queue = get(playerQueueAtom);
-  if (queue.length === 0) {
+  const currentTrack = get(playerQueueCurrentTrack);
+  if (!currentTrack) {
     set(playerShouldPlayAtom, false);
     return;
   }
@@ -231,8 +376,8 @@ export const requestPlaybackToggleAtom = atom(null, (get, set) => {
 
 /** Action: set playback intent to play. */
 export const requestPlaybackPlayAtom = atom(null, (get, set) => {
-  const queue = get(playerQueueAtom);
-  if (queue.length === 0) {
+  const currentTrack = get(playerQueueCurrentTrack);
+  if (!currentTrack) {
     return;
   }
   set(playerShouldPlayAtom, true);
