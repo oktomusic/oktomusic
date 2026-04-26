@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client/react";
 import { t } from "@lingui/core/macro";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { LuListPlus, LuShare } from "react-icons/lu";
 import { useParams } from "react-router";
 import { Temporal } from "temporal-polyfill";
@@ -13,7 +13,12 @@ import { TrackList } from "../../components/TrackList/TrackList";
 import { GenericLoading } from "./GenericLoading";
 import {
   addToQueueAtom,
+  playerQueueCurrentTrackSourceAtom,
+  playerQueueFromAtom,
+  playerShouldPlayAtom,
   replaceQueueAtom,
+  requestPlaybackToggleAtom,
+  type PlayerQueueFrom,
   type VibrantColorsPartial,
 } from "../../atoms/player/machine";
 import { dialogCoverId } from "../../atoms/app/dialogs";
@@ -21,6 +26,7 @@ import { mapTracksWithAlbum } from "../../utils/album_tracks";
 import { useShare } from "../../hooks/use_share";
 import { CollectionViewMetaAlbum } from "../../components/CollectionView/CollectionViewMetaAlbum";
 import { CollectionViewToolbarAlbum } from "../../components/CollectionView/CollectionViewToolbarAlbum";
+import { albumToAlbumBasic } from "../../utils/graphql_converters";
 
 export function Album() {
   const { cuid } = useParams();
@@ -40,6 +46,11 @@ export function Album() {
   };
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
+  const currentQueueFrom = useAtomValue(playerQueueFromAtom);
+  const currentTrackSource = useAtomValue(playerQueueCurrentTrackSourceAtom);
+  const shouldPlay = useAtomValue(playerShouldPlayAtom);
+  const setQueueFrom = useSetAtom(playerQueueFromAtom);
+  const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
 
   const setDialogCoverId = useSetAtom(dialogCoverId);
@@ -72,6 +83,16 @@ export function Album() {
 
   const tracksWithAlbum = mapTracksWithAlbum(data!.album);
   const flatTracks = tracksWithAlbum.flat();
+  const albumQueueFrom = {
+    type: "album",
+    id: data!.album.id,
+    meta: albumToAlbumBasic(data!.album),
+  } as const satisfies PlayerQueueFrom;
+  const isCurrentAlbumMainQueue =
+    currentTrackSource === "main" &&
+    currentQueueFrom?.type === "album" &&
+    currentQueueFrom.id === data!.album.id;
+  const playButtonIsPlaying = isCurrentAlbumMainQueue && shouldPlay;
   const albumDate = data!.album.date
     ? Temporal.PlainDate.from(data!.album.date.toISOString().slice(0, 10))
     : undefined;
@@ -101,7 +122,14 @@ export function Album() {
       coverOnClick={() => {
         setDialogCoverId(data!.album.id);
       }}
+      playButtonIsPlaying={playButtonIsPlaying}
       onPlay={() => {
+        if (isCurrentAlbumMainQueue) {
+          togglePlayback();
+          return;
+        }
+
+        setQueueFrom(albumQueueFrom);
         replaceQueue(flatTracks);
       }}
       colors={albumColors}
@@ -123,6 +151,7 @@ export function Album() {
       <TrackList
         tracks={tracksWithAlbum}
         displayCover={true} /* TODO: remove cover */
+        queueFrom={albumQueueFrom}
         droppableId={`album:${data!.album.id}`}
       />
     </CollectionView>

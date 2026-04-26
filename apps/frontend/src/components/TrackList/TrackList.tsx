@@ -8,9 +8,11 @@ import { LuDisc3 } from "react-icons/lu";
 
 import { REORDER_PLAYLIST_TRACKS_MUTATION } from "../../api/graphql/mutations/playlists/reorderPlaylistTracks";
 import {
-  TrackWithAlbum,
   handleSeekToQueueIndexAtom,
+  playerQueueFromAtom,
   replaceQueueAtom,
+  type PlayerQueueFrom,
+  type TrackWithAlbum,
 } from "../../atoms/player/machine";
 import { usePanelToast } from "../../hooks/use_panel_toast";
 import { TrackElement } from "./TrackElement";
@@ -93,6 +95,10 @@ function hasMeaningfulInsertionSlot(
 interface TrackListProps {
   readonly tracks: readonly (readonly TrackWithAlbum[])[];
   readonly displayCover?: boolean;
+  /**
+   * Optional source metadata for the queue being started from this list.
+   */
+  readonly queueFrom?: PlayerQueueFrom | null;
   /**
    * The ID of the playlist to which tracks can be added or removed.
    *
@@ -355,16 +361,18 @@ export function TrackList(props: TrackListProps) {
   const allTracks = useMemo(() => renderedTracks.flat(), [renderedTracks]);
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
+  const setQueueFrom = useSetAtom(playerQueueFromAtom);
   const seekToQueueIndex = useSetAtom(handleSeekToQueueIndexAtom);
 
   const handlePlay = useCallback(
     (globalIndex: number) => {
+      setQueueFrom(props.queueFrom ?? null);
       replaceQueue(allTracks);
       if (globalIndex > 0) {
         seekToQueueIndex(globalIndex);
       }
     },
-    [allTracks, replaceQueue, seekToQueueIndex],
+    [allTracks, props.queueFrom, replaceQueue, seekToQueueIndex, setQueueFrom],
   );
 
   return (

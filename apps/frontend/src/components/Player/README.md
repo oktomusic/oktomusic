@@ -1,166 +1,349 @@
-# Oktomusic Player
+# Oktomusic Player State Machine Design
 
-## References
+This document explains how playback works in Oktomusic, from a user point of view and from an implementation point of view.
 
-- https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
-- https://www.w3.org/TR/webaudio-1.1
-  - https://developer.mozilla.org/en-US/docs/Web/API/MediaElementAudioSourceNode
-  - https://developer.mozilla.org/en-US/docs/Web/API/GainNode
-  - https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
-  - https://developer.mozilla.org/en-US/docs/Web/API/AudioContext
+It is written in layers:
 
-## Audio Context Diagram
+1. A plain-language model for non-technical readers.
+2. A structured state-machine model for contributors.
+3. Detailed atom responsibilities and transition rules for maintainers.
+
+---
+
+## 1) What The Player Is Doing (Plain Language)
+
+Think of the player as a train system with two lanes:
+
+- **Main lane**: the album or playlist you started from.
+- **Manual lane**: tracks you explicitly added with “Add to queue”.
+
+The manual lane has priority for **next** playback. When manual tracks are present, they are played first. Once manual tracks are exhausted, playback returns to the main lane.
+
+The player also tracks two kinds of truth:
+
+- **What the user wants**: play or pause (`playerShouldPlayAtom`).
+- **What audio is currently doing**: idle/playing/paused/buffering (`playerPlaybackStateAtom`).
+
+Keeping those separate prevents UI glitches and makes buffering transitions stable.
+
+---
+
+## 2) Design Goals
+
+The state machine is designed to be:
+
+- **Predictable**: same input action gives same result.
+- **Composable**: UI components can read derived state without mutating core state.
+- **Recoverable**: queue origin can be tracked and restored.
+- **Safe**: invalid indices and empty queues are handled explicitly.
+- **Extensible**: shuffle/repeat/crossfade can be added without rewriting the entire graph.
+
+---
+
+## 3) High-Level Architecture
+
+```mermaid
+flowchart TD
+    UI[UI Actions\nPlay/Pause/Next/Previous/Seek] --> Actions[Action Atoms]
+    Actions --> Source[Source Atoms\nQueue + Intent + Origin]
+    Source --> Derived[Derived Atoms\nCurrent Track/File/Flags]
+    Derived --> Provider[PlayerProvider\nAudio + Media Session Effects]
+    Provider --> Events[Media Element Events]
+    Events --> Playback[Playback State Atoms\nPosition/Duration/State]
+    Playback --> UI
+```
+
+Key principle: **only action atoms write** to source atoms. Most UI reads derived atoms.
+
+---
+
+## 4) Core Concepts
+
+### 4.1 Queue Types
+
+- `playerQueueAtom`: the main queue (album/playlist order).
+- `playerQueueManualAtom`: manual queue (priority queue for user-added tracks).
+
+### 4.2 Which Queue Is Active
+
+- `playerQueueCurrentTrackSourceAtom` can be:
+  - `"main"`
+  - `"manual"`
+  - `null`
+
+This atom is the machine selector for current playback source.
+
+### 4.3 Main Queue Cursor
+
+- `playerQueueMainIndexAtom`: index in main queue.
+
+Manual queue has no cursor: current manual track is always the first item (`manualQueue[0]`).
+
+### 4.4 User Intent vs Runtime State
+
+- **Intent**: `playerShouldPlayAtom`.
+- **Runtime**: `playerPlaybackStateAtom` (`idle | playing | paused | buffering`).
+
+During transitions (loading next track, buffering), intent can remain “play” while runtime temporarily changes. This is intentional and prevents icon flicker.
+
+---
+
+## 5) Atom Catalog
+
+### 5.1 Source Atoms (single source of truth)
+
+- `playerAudioContextAtom`
+- `playerQueueAtom`
+- `playerQueueMainIndexAtom`
+- `playerQueueManualAtom`
+- `playerQueueCurrentTrackSourceAtom`
+- `playerQueueFromAtom`
+- `playerQueueFromTracksAtom`
+- `playerShouldPlayAtom`
+- `playerSeekRequestAtom`
+- `playerPlaybackPositionAtom`
+- `playerPlaybackDurationAtom`
+- `playerPlaybackStateAtom`
+
+### 5.2 Derived Atoms
+
+- `playerQueueCurrentTrack`
+- `playerQueueCurrentTrackFile`
+- `playerCurrentTrackColors`
+- `playerIsPlayingAtom`
+- `playerIsBufferingAtom`
+
+### 5.3 Action Atoms
+
+- `handlePreviousTrackAtom`
+- `handleNextTrackAtom`
+- `handleSeekToQueueIndexAtom`
+- `replaceQueueAtom`
+- `addToQueueAtom`
+- `requestPlaybackToggleAtom`
+- `requestPlaybackPlayAtom`
+- `requestPlaybackPauseAtom`
+- `requestSeekAtom`
+
+---
+
+## 6) State Machine Rules
+
+### 6.1 Invariants
+
+These should always be true:
+
+1. If both queues are empty, source should be `null` and playback intent should eventually be `false`.
+2. If source is `"manual"`, current track resolves from `manualQueue[0]`.
+3. If source is `"main"`, current track resolves from `playerQueueMainIndexAtom` in `playerQueueAtom`.
+4. Main index is always wrapped/clamped to valid range before use.
+5. `replaceQueueAtom` resets manual queue.
+
+### 6.2 Next Transition
+
+When `handleNextTrackAtom` is called:
+
+1. If source is manual:
+   - consume current manual item (`slice(1)`)
+   - if manual still has items, stay on manual
+   - else fall back to main and advance main index
+2. Else if manual queue has items, jump to manual
+3. Else advance main queue index with wrapping
+4. Else no tracks remain (`source = null`, `shouldPlay = false`)
+
+### 6.3 Previous Transition
+
+When `handlePreviousTrackAtom` is called:
+
+1. If source is manual:
+   - consume current manual item
+   - if manual still has items, stay on manual
+   - else return to **current main item** (do not double-step backward)
+2. Else move main index backward with wrapping
+3. If no main but manual exists, keep/return manual
+4. If nothing exists, clear source and stop intent
+
+### 6.4 Seek-To-Main-Index
+
+`handleSeekToQueueIndexAtom` always targets main queue and sets source to `"main"`.
+
+---
+
+## 7) How Current Track Is Computed
+
+`playerQueueCurrentTrack` resolves in this order:
+
+1. If source is manual and manual has items -> first manual track.
+2. Else if main has items -> main index track (or fallback to first if index invalid).
+3. Else if manual still has items -> first manual track.
+4. Else -> `null`.
+
+This fallback order avoids crashes and guarantees a best-effort track resolution.
+
+---
+
+## 8) Playback Pipeline (Audio Layer)
+
+Audio uses two HTML `<audio>` elements connected to Web Audio nodes.
 
 ```mermaid
 flowchart LR
-    audio_1["audio 1"] --> GainNode_1
-    audio_2["audio 2"] --> GainNode_2
-    GainNode_1[GainNode 1] --> AudioContext
-    GainNode_2[GainNode 2] --> AudioContext
+    A1[audio element 1] --> G1[GainNode 1]
+    A2[audio element 2] --> G2[GainNode 2]
+    G1 --> AC[AudioContext destination]
+    G2 --> AC
 ```
 
-We rely on HTTP range streaming, so the only easy way to stream the files is to use the HTML5 `<audio>` element as the source for the audio context.
+Why this model:
 
-This allows us to take advantage of browser caching and built-in streaming capabilities.
-The `MediaElementAudioSourceNode` connects the `<audio>` element to the Web Audio API, allowing us to manipulate the audio data in real-time.
+- Uses browser-native streaming and caching.
+- Supports future crossfade/gapless patterns.
+- Keeps state machine independent from DSP details.
 
-The `GainNode` are used to control the volume of each audio source independently for crossfade effects.
+---
 
-Finally, the audio data is sent to the `AudioContext`, which handles the playback and output to the user's speakers or headphones.
+## 9) UI Contract
 
-The queue is a list of tracks with next and previously played tracks.
+### 9.1 Icons
 
-Hitting play on a playlist/album will reset this queue to the new list of tracks.
+- Controls should use **intent** (`playerShouldPlayAtom`) for stable play/pause icon during transitions.
+- Runtime state (`playerPlaybackStateAtom`) is still useful for buffering indicators.
 
-We intend to later add a priority queue like the manual queue in Spotify with derived states.
+### 9.2 Queue Screens
 
-## Atom Tree & Playback Reasoning
+- “Now Playing” reads `playerQueueCurrentTrack`.
+- Manual queue section should hide when empty.
+- Main queue section should only display when queue origin exists (`playerQueueFromAtom`).
 
-This player uses a small Jotai atom graph to keep the playback pipeline explicit, testable, and easy to reason about. The overall goal is to:
+### 9.3 Collection Blue Button
 
-- Keep “source of truth” atoms minimal and deterministic.
-- Derive UI state from those atoms rather than from DOM state.
-- Ensure side effects (audio element control, Media Session API) only depend on atoms.
+Album/playlist blue button behavior:
 
-Below is the atom map and the reasoning behind each branch.
+1. If page matches current main queue origin and source is main, button toggles play/pause.
+2. Otherwise, button loads that collection into main queue and starts playback.
 
-### Core Atoms (Source of Truth)
+---
 
-- `playerAudioContextAtom`: Holds the current `AudioContext` instance (or `null`).
-  - Created in the provider; closed on cleanup.
-  - Kept as an atom so any component can reflect audio engine readiness.
+## 10) Queue Origin Semantics
 
-- `playerQueueAtom`: The current playback queue as an ordered list of `TrackWithAlbum`.
-  - Only the queue is stored, not any derived view (e.g. current track).
+`playerQueueFromAtom` tracks where current main queue came from:
 
-- `playerQueueIndexAtom`: Index of the current track in the queue.
-  - Kept as a primitive `number` to simplify bounds and looping logic.
+- album (`id`, `meta`)
+- playlist (`id`, `meta`)
 
-- `playerShouldPlayAtom`: Boolean “intent” from UI/MediaSession.
-  - This is the desired state from the user (play vs pause), not the actual DOM state.
-  - It decouples user intent from the actual playback pipeline (buffering, loading, errors).
+This enables:
 
-- `playerSeekRequestAtom`: A one-shot seek request in milliseconds.
-  - This atom is consumed and reset by the provider once the DOM seek is applied.
+- correct labels in queue UI (“Next from ...”)
+- collection-aware play/pause toggle
+- future queue restoration across reloads
 
-### Derived Queue Atoms
+Important rule: set queue origin **before** replacing queue when starting collection playback.
 
-- `playerQueueCurrentTrack`: Derived track based on queue + index.
-  - Handles empty queue and invalid index safely.
-  - Keeps components safe from array bounds issues.
+---
 
-- `playerQueueCurrentTrackFile`: Derived media URL for the current track.
-  - Encapsulates URL building and track validation in one place.
+## 11) Edge Cases Covered
 
-### Playback State Atoms
+- Empty queues
+- Invalid main index
+- Manual queue exhaustion
+- Manual -> main return on previous/next
+- Play requested with no current track
+- Buffering transitions
+- Seek while paused or playing
 
-- `playerPlaybackPositionAtom`: Current position in milliseconds.
-  - Updated by the HTML media element `timeupdate` events.
+---
 
-- `playerPlaybackDurationAtom`: Current track duration in milliseconds.
-  - Updated by `durationchange` and `loadedmetadata` events.
+## 12) Troubleshooting Guide
 
-- `playerPlaybackStateAtom`: Canonical playback state: `idle | playing | paused | buffering`.
-  - Updated by audio element events (`play`, `pause`, `waiting`, `playing`, `canplay`).
-  - This drives UI icons and Media Session state.
+### Symptom: Play icon flickers to Play on next/previous
 
-- `playerIsPlayingAtom`: Derived boolean from `playerPlaybackStateAtom`.
-- `playerIsBufferingAtom`: Derived boolean from `playerPlaybackStateAtom`.
+Likely cause:
 
-### Control Atoms (Actions)
+- UI icon bound to runtime state (`playerPlaybackStateAtom`) instead of intent (`playerShouldPlayAtom`).
 
-- `handlePreviousTrackAtom`: Moves index backward with wrap-around.
-  - Also sets `playerShouldPlayAtom` to `true` to ensure the next track starts.
+Fix:
 
-- `handleNextTrackAtom`: Moves index forward with wrap-around.
-  - Also sets `playerShouldPlayAtom` to `true` to ensure the next track starts.
+- Use intent for icon rendering.
 
-- `requestPlaybackToggleAtom`: Toggles user intent for playback.
-- `requestPlaybackPlayAtom`: Sets user intent to play.
-- `requestPlaybackPauseAtom`: Sets user intent to pause.
-- `requestSeekAtom`: Emits a seek request in milliseconds.
+### Symptom: Queue label shows unknown source
 
-These action atoms give UI and Media Session handlers a single interface to change playback intent without touching the DOM directly.
+Likely cause:
 
-## Playback Flow (End-to-End)
+- `playerQueueFromAtom` not set before `replaceQueueAtom`.
 
-This is the typical sequence when a user plays a track:
+Fix:
 
-1. The UI (controls or Media Session) sets `playerShouldPlayAtom = true`.
-2. The `PlayerProvider` effect sees `shouldPlay` and current track file.
-3. The audio element is instructed to `play()`, and `AudioContext` is resumed if needed.
-4. The audio element emits `playing`, updating `playerPlaybackStateAtom`.
-5. `playerPlaybackPositionAtom` updates via `timeupdate` events.
-6. The seek bar and Media Session position state reflect the updated position.
+- Set origin first in album/playlist and track-list play entrypoints.
 
-When the track ends:
+### Symptom: Previous from manual lands too far back in main queue
 
-1. The audio element emits `ended`.
-2. The provider sets `playerPlaybackStateAtom = paused` and triggers `handleNextTrackAtom`.
-3. `handleNextTrackAtom` updates the index and forces `playerShouldPlayAtom = true`.
-4. The next track begins automatically if available.
+Likely cause:
 
-## Buffering Handling
+- manual -> main transition decremented main index again.
 
-- Buffering is a playback state, not a separate boolean.
-- Events `waiting`, `stalled`, and `seeking` flip state to `buffering`.
-- Events `playing` and `canplay` flip back to `playing`.
-- UI elements can show lightweight feedback (e.g. “Buffering…”) by observing `playerIsBufferingAtom`.
+Fix:
 
-## Seek Handling
+- return to current main index when manual queue is exhausted.
 
-- UI sends a seek request with `requestSeekAtom`.
-- The provider performs the actual seek on the audio element and then clears the request atom.
-- This keeps the UI stateless and avoids manipulating the media element directly in components.
+---
 
-## Media Session Integration
+## 13) Extension Plan (Advanced)
 
-Media Session is kept in sync via atoms:
+### 13.1 Shuffle
 
-- `playerPlaybackStateAtom` drives `navigator.mediaSession.playbackState`.
-- `playerPlaybackPositionAtom` + `playerPlaybackDurationAtom` drive `setPositionState`.
-- Playback actions map to atom-based requests:
-  - `play` → `requestPlaybackPlayAtom`
-  - `pause` → `requestPlaybackPauseAtom`
-  - `previoustrack` → `handlePreviousTrackAtom`
-  - `nexttrack` → `handleNextTrackAtom`
-  - `seekto` → `requestSeekAtom`
+Recommended additions:
 
-This keeps the browser media UI (OS controls and lock screen) consistent with the in-app state and seek bar.
+- `playerShuffleEnabledAtom`
+- deterministic shuffle map or permutation atom
+- keep `playerQueueAtom` immutable; derive shuffled order separately
 
-## Why This Architecture
+### 13.2 Repeat Modes
 
-The architecture makes it easy to:
+Recommended enum:
 
-- Replace the audio backend later (e.g. WebAudio vs. remote playback) without rewriting UI.
-- Keep UI reactive and minimal; controls are stateless.
-- Debug behavior from atoms rather than complex DOM state.
-- Support additional features (queue manipulation, crossfade, gapless playback) with minimal refactors.
+- `off | one | all`
 
-When adding features, prefer:
+Integrate in next/ended transitions, not in UI layer.
 
-- **New source atoms** only when truly necessary.
-- **Derived atoms** for anything computed from source atoms.
-- **Action atoms** for every user-initiated action.
+### 13.3 Crossfade
 
-That keeps the graph clean and predictable.
+Use dual-audio architecture:
+
+- preload next track on secondary element
+- schedule gain ramps on two gain nodes
+
+### 13.4 Persistence
+
+Persist minimal snapshot:
+
+- queue origin
+- queue content ids
+- main index
+- manual queue ids
+- source
+- shouldPlay flag
+
+Restore through action atoms to keep invariants intact.
+
+---
+
+## 14) External References
+
+- MDN Web Audio API: https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+- Web Audio spec: https://www.w3.org/TR/webaudio-1.1
+- MDN MediaElementAudioSourceNode: https://developer.mozilla.org/en-US/docs/Web/API/MediaElementAudioSourceNode
+- MDN GainNode: https://developer.mozilla.org/en-US/docs/Web/API/GainNode
+- MDN AudioContext: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext
+
+---
+
+## 15) Summary
+
+The player state machine is built around a simple idea:
+
+- model user intent explicitly,
+- keep queue source explicit (`main` vs `manual`),
+- derive everything else,
+- and isolate side effects in provider/event boundaries.
+
+That design keeps the system understandable for users and stable for developers, while leaving room for advanced playback features.
