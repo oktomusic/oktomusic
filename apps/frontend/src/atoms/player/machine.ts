@@ -237,6 +237,26 @@ export const handleSeekToQueueIndexAtom = atom(
   },
 );
 
+/** Move to a specific track in the manual queue by index and drop previous manual items. */
+export const handleSeekToManualQueueIndexAtom = atom(
+  null,
+  (get, set, targetIndex: number) => {
+    const manualQueue = get(playerQueueManualAtom);
+
+    if (
+      manualQueue.length === 0 ||
+      targetIndex < 0 ||
+      targetIndex >= manualQueue.length
+    ) {
+      return;
+    }
+
+    set(playerQueueManualAtom, manualQueue.slice(targetIndex));
+    set(playerQueueCurrentTrackSourceAtom, "manual");
+    set(playerShouldPlayAtom, true);
+  },
+);
+
 /** Action: Replace the queue with new tracks and start playing from the first track. */
 export const replaceQueueAtom = atom(
   null,

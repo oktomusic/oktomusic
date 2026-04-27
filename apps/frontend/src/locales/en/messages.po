@@ -342,11 +342,11 @@ msgstr "New playlist"
 msgid "Next"
 msgstr "Next"
 
-#: src/pages/PanelRight.tsx:98
+#: src/pages/PanelRight.tsx:105
 msgid "Next from: {queueFromLabel}"
 msgstr "Next from: {queueFromLabel}"
 
-#: src/pages/PanelRight.tsx:82
+#: src/pages/PanelRight.tsx:86
 msgid "Next in queue"
 msgstr "Next in queue"
 
@@ -364,7 +364,7 @@ msgstr "No public playlists found"
 msgid "No track playing"
 msgstr "No track playing"
 
-#: src/pages/PanelRight.tsx:66
+#: src/pages/PanelRight.tsx:70
 msgid "Now playing"
 msgstr "Now playing"
 
@@ -569,10 +569,6 @@ msgstr "The following modern web features are missing:"
 #: src/components/Dialogs/DialogPlaylistDelete.tsx:97
 msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
-
-#: src/pages/PanelRight.tsx:37
-msgid "Unknown album"
-msgstr "Unknown album"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:43
