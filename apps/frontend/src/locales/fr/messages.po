@@ -338,11 +338,11 @@ msgstr ""
 msgid "Next"
 msgstr "Suivant"
 
-#: src/pages/PanelRight.tsx:98
+#: src/pages/PanelRight.tsx:105
 msgid "Next from: {queueFromLabel}"
 msgstr "À suivre dans : {queueFromLabel}"
 
-#: src/pages/PanelRight.tsx:82
+#: src/pages/PanelRight.tsx:86
 msgid "Next in queue"
 msgstr "À suivre"
 
@@ -360,7 +360,7 @@ msgstr ""
 msgid "No track playing"
 msgstr ""
 
-#: src/pages/PanelRight.tsx:66
+#: src/pages/PanelRight.tsx:70
 msgid "Now playing"
 msgstr ""
 
@@ -564,10 +564,6 @@ msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 
 #: src/components/Dialogs/DialogPlaylistDelete.tsx:97
 msgid "This action cannot be undone."
-msgstr ""
-
-#: src/pages/PanelRight.tsx:37
-msgid "Unknown album"
 msgstr ""
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
