@@ -3,6 +3,7 @@ import { t } from "@lingui/core/macro";
 
 import {
   handleSeekToQueueIndexAtom,
+  handleSeekToManualQueueIndexAtom,
   playerIsPlayingAtom,
   playerQueueAtom,
   playerQueueCurrentTrack,
@@ -27,6 +28,9 @@ export function PanelRight() {
   const isPlaying = useAtomValue(playerIsPlayingAtom);
 
   const handleSeekToQueueIndex = useSetAtom(handleSeekToQueueIndexAtom);
+  const handleSeekToManualQueueIndex = useSetAtom(
+    handleSeekToManualQueueIndexAtom,
+  );
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
 
   const manualQueueUpNext =
@@ -34,7 +38,7 @@ export function PanelRight() {
   const hasManualQueue = manualQueueUpNext.length > 0;
   const hasMainQueueLoaded = queueFrom !== null;
   const mainQueueUpNext = queue.slice(queueIndex + 1);
-  const queueFromLabel = queueFrom?.meta.name ?? t`Unknown album`;
+  const queueFromLabel = queueFrom?.meta.name ?? "Unknown source";
 
   if (!visible) {
     return null;
@@ -87,6 +91,9 @@ export function PanelRight() {
                   track={item}
                   isCurrent={false}
                   isPlaying={false}
+                  onClickPlay={() => {
+                    handleSeekToManualQueueIndex(index + 1);
+                  }}
                 />
               ))}
             </ol>
