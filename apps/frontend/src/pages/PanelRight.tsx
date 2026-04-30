@@ -87,7 +87,7 @@ export function PanelRight() {
             <ol className="flex flex-col">
               {manualQueueUpNext.map((item, index) => (
                 <QueueTrack
-                  key={index}
+                  key={item.queueEntryId}
                   track={item}
                   isCurrent={false}
                   isPlaying={false}
