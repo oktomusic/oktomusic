@@ -15,6 +15,15 @@ export type TrackWithAlbum = Omit<Track, "album"> & {
   album: NonNullable<Track["album"]>;
 };
 
+/**
+ * A track in the manual queue, extended with a unique `queueEntryId` assigned
+ * when the entry is added. This ensures each queue slot has a stable identity
+ * even when the same track appears multiple times.
+ */
+export type QueuedManualTrack = TrackWithAlbum & {
+  readonly queueEntryId: string;
+};
+
 /** Playback queue as an ordered list of tracks. */
 export const playerQueueAtom = atom<TrackWithAlbum[]>([]);
 
@@ -34,7 +43,7 @@ export const playerQueueMainIndexAtom = atom<number>(0);
  *
  * There is no need to use an index, since we always play the first track of the manual queue, and remove it once it's played. This simplifies the logic and avoids edge cases with index management.
  */
-export const playerQueueManualAtom = atom<TrackWithAlbum[]>([]);
+export const playerQueueManualAtom = atom<QueuedManualTrack[]>([]);
 
 export type PlayerQueueCurrentTrackSource = "main" | "manual" | null;
 
@@ -284,7 +293,12 @@ export const addToQueueAtom = atom(
     const hasCurrentTrack =
       (source === "manual" && manualQueue.length > 0) || mainQueue.length > 0;
 
-    set(playerQueueManualAtom, [...manualQueue, ...tracks]);
+    const queuedTracks: QueuedManualTrack[] = tracks.map((track) => ({
+      ...track,
+      queueEntryId: crypto.randomUUID(),
+    }));
+
+    set(playerQueueManualAtom, [...manualQueue, ...queuedTracks]);
 
     if (!hasCurrentTrack) {
       set(playerQueueCurrentTrackSourceAtom, "manual");
