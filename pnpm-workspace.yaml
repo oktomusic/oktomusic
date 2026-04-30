@@ -2,22 +2,6 @@ packages:
   - apps/*
   - packages/*
 
-catalogs:
-  default:
-    "@types/node": ^24.12.2
-    temporal-polyfill: ^0.3.2
-    tsdown: ^0.21.10
-    typescript: ^5.9.3
-    sharp: ^0.34.5
-
-nodeOptions: "${NODE_OPTIONS:- } --experimental-transform-types
-  --no-warnings=ExperimentalWarning --use-system-ca"
-
-linkWorkspacePackages: true
-injectWorkspacePackages: true
-syncInjectedDepsAfterScripts:
-  - build
-
 allowBuilds:
   "@apollo/protobufjs": true
   "@nestjs/core": true
@@ -32,19 +16,39 @@ allowBuilds:
   unrs-resolver: true
   workerd: true
 
+blockExoticSubdeps: true
+
+catalogs:
+  default:
+    "@types/node": ^24.12.2
+    sharp: ^0.34.5
+    temporal-polyfill: ^0.3.2
+    tsdown: ^0.21.10
+    typescript: ^5.9.3
+
+injectWorkspacePackages: true
+
+linkWorkspacePackages: true
+
+minimumReleaseAge: 1440
+
+nodeOptions: ${NODE_OPTIONS:- } --experimental-transform-types
+  --no-warnings=ExperimentalWarning --use-system-ca
+
 overrides:
   "@types/node": catalog:default
+  sharp: catalog:default
   temporal-polyfill: catalog:default
   tsdown: catalog:default
   typescript: catalog:default
-  sharp: catalog:default
 
 sharedWorkspaceLockfile: true
 
-# Supply chain security settings
-blockExoticSubdeps: true
-minimumReleaseAge: 1440 # 1 day
+syncInjectedDepsAfterScripts:
+  - build
+
 trustPolicy: no-downgrade
+
 trustPolicyExclude:
   - semver@6.3.1
   - reselect@5.1.1

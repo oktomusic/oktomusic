@@ -52,8 +52,8 @@ msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:40
 #: src/components/TrackList/TrackElement.tsx:128
-#: src/pages/Center/Album.tsx:89
-#: src/pages/Center/Playlist.tsx:111
+#: src/pages/Center/Album.tsx:110
+#: src/pages/Center/Playlist.tsx:132
 msgid "Add to queue"
 msgstr ""
 
@@ -68,7 +68,7 @@ msgid "Admin Settings"
 msgstr ""
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:98
+#: src/pages/Center/Album.tsx:119
 msgid "Album"
 msgstr "Album"
 
@@ -150,7 +150,7 @@ msgstr "Fondu enchaîné (secondes) :"
 msgid "Delete"
 msgstr ""
 
-#: src/pages/Center/Playlist.tsx:134
+#: src/pages/Center/Playlist.tsx:155
 msgid "Delete playlist"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/TrackList/TrackList.tsx:396
+#: src/components/TrackList/TrackList.tsx:404
 msgid "Disc {discNumber}"
 msgstr "Disque {discNumber}"
 
@@ -176,7 +176,7 @@ msgstr "Disque {discNumber}"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:126
+#: src/pages/Center/Playlist.tsx:147
 msgid "Edit details"
 msgstr ""
 
@@ -210,7 +210,7 @@ msgstr ""
 msgid "Failed to remove track"
 msgstr ""
 
-#: src/components/TrackList/TrackList.tsx:324
+#: src/components/TrackList/TrackList.tsx:330
 msgid "Failed to reorder playlist tracks"
 msgstr ""
 
@@ -338,6 +338,14 @@ msgstr ""
 msgid "Next"
 msgstr "Suivant"
 
+#: src/pages/PanelRight.tsx:105
+msgid "Next from: {queueFromLabel}"
+msgstr "À suivre dans : {queueFromLabel}"
+
+#: src/pages/PanelRight.tsx:86
+msgid "Next in queue"
+msgstr "À suivre"
+
 #: src/pages/Center/User.tsx:105
 msgid "No private or unlisted playlists found"
 msgstr ""
@@ -352,6 +360,10 @@ msgstr ""
 msgid "No track playing"
 msgstr ""
 
+#: src/pages/PanelRight.tsx:70
+msgid "Now playing"
+msgstr ""
+
 #: src/components/Player/PlayerControls.tsx:195
 msgid "Open Picture-in-Picture"
 msgstr ""
@@ -364,6 +376,7 @@ msgstr "Originale"
 msgid "Page not found"
 msgstr "Page introuvable"
 
+#: src/components/CollectionView/CollectionView.tsx:81
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -372,6 +385,10 @@ msgstr "Page introuvable"
 #: src/components/Player/PlayerControls.tsx:110
 msgid "Pause"
 msgstr "Pause"
+
+#: src/components/CollectionView/CollectionView.tsx:83
+msgid "Pause {albumName}"
+msgstr ""
 
 #: src/components/TrackList/TrackElement.tsx:204
 msgid "Pause {trackName}"
@@ -385,8 +402,7 @@ msgstr ""
 msgid "Persistent storage not granted"
 msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:96
-#: src/components/CollectionView/CollectionView.tsx:144
+#: src/components/CollectionView/CollectionView.tsx:81
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -396,7 +412,7 @@ msgstr ""
 msgid "Play"
 msgstr "Lecture"
 
-#: src/components/CollectionView/CollectionView.tsx:97
+#: src/components/CollectionView/CollectionView.tsx:84
 msgid "Play {albumName}"
 msgstr ""
 
@@ -416,7 +432,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:153
+#: src/pages/Center/Playlist.tsx:174
 msgid "Playlist"
 msgstr ""
 
@@ -514,8 +530,8 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:82
-#: src/pages/Center/Playlist.tsx:118
+#: src/pages/Center/Album.tsx:103
+#: src/pages/Center/Playlist.tsx:139
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Partager"
