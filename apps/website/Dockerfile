@@ -17,7 +17,7 @@ LABEL io.artifacthub.package.maintainers='[{"name":"AFCMS","email":"afcm.contact
 ARG TARGETOS
 ARG TARGETARCH
 
-RUN corepack enable pnpm
+RUN npm install --global pnpm@11
 
 WORKDIR /app
 
