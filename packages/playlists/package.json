@@ -38,7 +38,7 @@
     "tsdown": "catalog:default"
   },
   "dependencies": {
-    "fast-xml-parser": "^5.7.2",
-    "zod": "^4.4.1"
+    "fast-xml-parser": "catalog:default",
+    "zod": "catalog:default"
   }
 }
