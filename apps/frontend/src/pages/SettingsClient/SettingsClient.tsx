@@ -14,6 +14,7 @@ import {
   settingClientKioskMode,
   settingClientLyricsDisplayMode,
   settingClientLyricsTranslationEnabled,
+  settingClientRestartThresholdSeconds,
   settingClientSWMediaMaxAge,
   settingClientSWMediaMaxEntries,
   settingClientWakeLock,
@@ -46,6 +47,9 @@ export function SettingsClient() {
   const [crossfadeSeconds, setCrossfadeSeconds] = useAtom(
     settingClientCrossfadeSeconds,
   );
+  const [restartThresholdSeconds, setRestartThresholdSeconds] = useAtom(
+    settingClientRestartThresholdSeconds,
+  );
   const [swMediaMaxEntries, setSwMediaMaxEntries] = useAtom(
     settingClientSWMediaMaxEntries,
   );
@@ -74,6 +78,11 @@ export function SettingsClient() {
   const handleCrossfadeChange = (value: number) => {
     const roundedValue = Math.round(value * 10) / 10;
     setCrossfadeSeconds(roundedValue);
+  };
+
+  const handleRestartThresholdChange = (value: number) => {
+    const roundedValue = Math.round(value * 10) / 10;
+    setRestartThresholdSeconds(roundedValue);
   };
 
   const handleSwMediaMaxEntriesChange = (
@@ -191,6 +200,26 @@ export function SettingsClient() {
               />
               <span className="min-w-12 text-right text-sm text-white tabular-nums select-none">
                 {crossfadeSeconds.toFixed(1)}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex h-14 flex-row items-center justify-between py-2">
+            <span>{t`Restart threshold (seconds):`}</span>
+            <div className="flex w-56 items-center gap-3">
+              <OktoSlider
+                id="settings:client:restart-threshold-seconds"
+                value={restartThresholdSeconds}
+                onChange={handleRestartThresholdChange}
+                min={0}
+                max={10}
+                step={0.1}
+                aria-describedby="settings:client:restart-threshold-seconds:help"
+                aria-label={t`Restart threshold (seconds)`}
+                className="flex-1"
+              />
+              <span className="min-w-12 text-right text-sm text-white tabular-nums select-none">
+                {restartThresholdSeconds.toFixed(1)}
               </span>
             </div>
           </div>
