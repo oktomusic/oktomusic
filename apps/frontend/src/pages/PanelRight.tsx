@@ -1,5 +1,7 @@
+import { Link } from "react-router";
 import { useAtomValue, useSetAtom } from "jotai";
 import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 
 import {
   handleSeekToQueueIndexAtom,
@@ -38,7 +40,14 @@ export function PanelRight() {
   const hasManualQueue = manualQueueUpNext.length > 0;
   const hasMainQueueLoaded = queueFrom !== null;
   const mainQueueUpNext = queue.slice(queueIndex + 1);
-  const queueFromLabel = queueFrom?.meta.name ?? "Unknown source";
+
+  const queueFromLabel = queueFrom ? (
+    <Link className="hover:underline" to={`/${queueFrom.type}/${queueFrom.id}`}>
+      {queueFrom.meta.name}
+    </Link>
+  ) : (
+    <>Unknown source</>
+  );
 
   if (!visible) {
     return null;
@@ -102,7 +111,9 @@ export function PanelRight() {
         {hasMainQueueLoaded && (
           <li className="flex flex-col">
             <div className="flex w-full flex-row justify-between p-2">
-              <span className="text-sm font-semibold">{t`Next from: ${queueFromLabel}`}</span>
+              <span className="text-sm font-semibold">
+                {<Trans>Next from: {queueFromLabel}</Trans>}
+              </span>
             </div>
             <ol className="flex flex-col">
               {mainQueueUpNext.map((item, index) => (
