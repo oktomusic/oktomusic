@@ -21,10 +21,12 @@ blockExoticSubdeps: true
 catalogs:
   default:
     "@types/node": ^24.12.2
+    fast-xml-parser: ^5.7.2
     sharp: ^0.34.5
     temporal-polyfill: ^0.3.2
     tsdown: ^0.21.10
     typescript: ^5.9.3
+    zod: ^4.4.1
 
 injectWorkspacePackages: true
 
@@ -34,13 +36,6 @@ minimumReleaseAge: 1440
 
 nodeOptions: ${NODE_OPTIONS:- } --experimental-transform-types
   --no-warnings=ExperimentalWarning --use-system-ca
-
-overrides:
-  "@types/node": catalog:default
-  sharp: catalog:default
-  temporal-polyfill: catalog:default
-  tsdown: catalog:default
-  typescript: catalog:default
 
 sharedWorkspaceLockfile: true
 
