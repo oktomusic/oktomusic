@@ -45,6 +45,6 @@
     "@vibrant/quantizer-mmcq": "^4.0.4",
     "sharp": "catalog:default",
     "temporal-polyfill": "catalog:default",
-    "zod": "^4.3.6"
+    "zod": "^4.4.1"
   }
 }
