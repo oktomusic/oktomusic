@@ -41,6 +41,19 @@ export const settingClientCrossfadeSeconds = atomWithStorage<number>(
   },
 );
 
+// Restart Threshold Setting
+
+const restartThresholdLocalStorageKey = "oktomusic:restart_threshold_seconds";
+
+export const settingClientRestartThresholdSeconds = atomWithStorage<number>(
+  restartThresholdLocalStorageKey,
+  3,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
 // Wake Lock Setting
 
 const wakeLockLocalStorageKey = "oktomusic:wake_lock";

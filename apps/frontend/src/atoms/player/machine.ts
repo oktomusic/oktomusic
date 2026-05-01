@@ -1,5 +1,6 @@
 import { atom } from "jotai";
 
+import { settingClientRestartThresholdSeconds } from "../app/settings_client";
 import {
   AlbumBasic,
   PlaylistBasic,
@@ -114,61 +115,89 @@ const getWrappedMainQueueIndex = (
   return index;
 };
 
-// TODO: reset to start of track when playback timing is not near the start of the track, with user configuration
-/** Move to previous track (wraps) and force playback. */
-export const handlePreviousTrackAtom = atom(null, (get, set) => {
-  const mainQueue = get(playerQueueAtom);
-  const manualQueue = get(playerQueueManualAtom);
-  const source = get(playerQueueCurrentTrackSourceAtom);
-  let index = get(playerQueueMainIndexAtom);
+/**
+ * Handle previous track functionality
+ *
+ * - If the current playback position is greater than the restart threshold and bypassRestartThreshold is not true, seek to the start of the current track.
+ * - Otherwise, move to the previous track in the queue.
+ *   - If the current track is from the manual queue, move to the previous track in the manual queue.
+ *   - If the manual queue is empty, move to the previous track in the main queue.
+ *   - If both queues are empty, set current track source to null and stop playback.
+ */
+export const handlePreviousTrackAtom = atom(
+  null,
+  (get, set, bypassRestartThreshold?: boolean) => {
+    if (!bypassRestartThreshold) {
+      const restartThreshold = get(settingClientRestartThresholdSeconds);
+      const playbackPosition = get(playerPlaybackPositionAtom);
 
-  if (mainQueue.length === 0 && manualQueue.length === 0) {
-    set(playerQueueCurrentTrackSourceAtom, null);
-    set(playerShouldPlayAtom, false);
-    return;
-  }
-
-  if (source === "manual") {
-    const remainingManualQueue = manualQueue.slice(1);
-    set(playerQueueManualAtom, remainingManualQueue);
-
-    if (remainingManualQueue.length > 0) {
-      set(playerQueueCurrentTrackSourceAtom, "manual");
-      set(playerShouldPlayAtom, true);
-      return;
+      if (playbackPosition > restartThreshold * 1000) {
+        set(playerSeekRequestAtom, 0);
+        set(playerShouldPlayAtom, true);
+        return;
+      }
     }
 
-    if (mainQueue.length === 0) {
+    const mainQueue = get(playerQueueAtom);
+    const manualQueue = get(playerQueueManualAtom);
+    const source = get(playerQueueCurrentTrackSourceAtom);
+    let index = get(playerQueueMainIndexAtom);
+
+    if (mainQueue.length === 0 && manualQueue.length === 0) {
       set(playerQueueCurrentTrackSourceAtom, null);
       set(playerShouldPlayAtom, false);
       return;
     }
 
-    // Returning from manual playback should resume the current main queue item.
-    set(
-      playerQueueMainIndexAtom,
-      getWrappedMainQueueIndex(index, mainQueue.length),
-    );
+    if (source === "manual") {
+      const remainingManualQueue = manualQueue.slice(1);
+      set(playerQueueManualAtom, remainingManualQueue);
+
+      if (remainingManualQueue.length > 0) {
+        set(playerQueueCurrentTrackSourceAtom, "manual");
+        set(playerShouldPlayAtom, true);
+        return;
+      }
+
+      if (mainQueue.length === 0) {
+        set(playerQueueCurrentTrackSourceAtom, null);
+        set(playerShouldPlayAtom, false);
+        return;
+      }
+
+      // Returning from manual playback should resume the current main queue item.
+      set(
+        playerQueueMainIndexAtom,
+        getWrappedMainQueueIndex(index, mainQueue.length),
+      );
+      set(playerQueueCurrentTrackSourceAtom, "main");
+      set(playerShouldPlayAtom, true);
+      return;
+    }
+
+    if (mainQueue.length === 0) {
+      set(
+        playerQueueCurrentTrackSourceAtom,
+        manualQueue.length > 0 ? "manual" : null,
+      );
+      set(playerShouldPlayAtom, manualQueue.length > 0);
+      return;
+    }
+
+    index = getWrappedMainQueueIndex(index - 1, mainQueue.length);
+    set(playerQueueMainIndexAtom, index);
     set(playerQueueCurrentTrackSourceAtom, "main");
     set(playerShouldPlayAtom, true);
-    return;
-  }
+  },
+);
 
-  if (mainQueue.length === 0) {
-    set(
-      playerQueueCurrentTrackSourceAtom,
-      manualQueue.length > 0 ? "manual" : null,
-    );
-    set(playerShouldPlayAtom, manualQueue.length > 0);
-    return;
-  }
-
-  index = getWrappedMainQueueIndex(index - 1, mainQueue.length);
-  set(playerQueueMainIndexAtom, index);
-  set(playerQueueCurrentTrackSourceAtom, "main");
-  set(playerShouldPlayAtom, true);
-});
-
+/**
+ * Handle next track functionality
+ *
+ * - If there are tracks in the manual queue, play the next track from the manual queue.
+ * - Otherwise, play the next track from the main queue.
+ * - If both queues are empty, set current track source to null and stop playback.
+ */
 export const handleNextTrackAtom = atom(null, (get, set) => {
   const mainQueue = get(playerQueueAtom);
   const manualQueue = get(playerQueueManualAtom);
