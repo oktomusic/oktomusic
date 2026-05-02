@@ -101,7 +101,9 @@ export function PanelRight() {
                   isCurrent={false}
                   isPlaying={false}
                   onClickPlay={() => {
-                    handleSeekToManualQueueIndex(index + 1);
+                    const manualQueueIndex =
+                      currentTrackSource === "manual" ? index + 1 : index
+                    handleSeekToManualQueueIndex(manualQueueIndex)
                   }}
                 />
               ))}
