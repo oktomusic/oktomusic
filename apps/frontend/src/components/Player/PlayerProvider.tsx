@@ -4,6 +4,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   handleNextTrackAtom,
   playerAudioContextAtom,
+  playerCurrentManualQueueEntryIdAtom,
   playerPlaybackDurationAtom,
   playerPlaybackPositionAtom,
   playerPlaybackStateAtom,
@@ -17,6 +18,7 @@ export default function PlayerProvider() {
   const [audioContext, setAudioContext] = useAtom(playerAudioContextAtom);
   const currentTrackFile = useAtomValue(playerQueueCurrentTrackFile);
   const queueIndex = useAtomValue(playerQueueMainIndexAtom);
+  const currentManualEntryId = useAtomValue(playerCurrentManualQueueEntryIdAtom);
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
   const [seekRequestMs, setSeekRequestMs] = useAtom(playerSeekRequestAtom);
 
@@ -192,6 +194,7 @@ export default function PlayerProvider() {
     setPlaybackPosition(0);
   }, [
     currentTrackFile,
+    currentManualEntryId,
     queueIndex,
     setPlaybackDuration,
     setPlaybackPosition,

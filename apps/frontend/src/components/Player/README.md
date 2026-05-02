@@ -109,6 +109,7 @@ During transitions (loading next track, buffering), intent can remain “play”
 
 - `playerQueueCurrentTrack`
 - `playerQueueCurrentTrackFile`
+- `playerCurrentManualQueueEntryIdAtom`
 - `playerCurrentTrackColors`
 - `playerIsPlayingAtom`
 - `playerIsBufferingAtom`
