@@ -404,6 +404,23 @@ export const playerQueueCurrentTrackFile = atom<string | null>((get) => {
   return `/api/media/${currentTrack.flacFileId}`;
 });
 
+/**
+ * The `queueEntryId` of the manual queue slot that is currently playing,
+ * or `null` when the active source is not manual.
+ *
+ * This is used by `PlayerProvider` to detect transitions between consecutive
+ * manual queue entries that share the same audio file, ensuring the audio
+ * element is always reset to the start when moving to a new queue slot.
+ */
+export const playerCurrentManualQueueEntryIdAtom = atom<string | null>((get) => {
+  const source = get(playerQueueCurrentTrackSourceAtom);
+  const manualQueue = get(playerQueueManualAtom);
+  if (source === "manual" && manualQueue.length > 0) {
+    return manualQueue[0]?.queueEntryId ?? null;
+  }
+  return null;
+});
+
 /** Current playback position in milliseconds. */
 export const playerPlaybackPositionAtom = atom<number>(0);
 
