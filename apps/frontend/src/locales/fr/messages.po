@@ -338,7 +338,7 @@ msgstr ""
 msgid "Next"
 msgstr "Suivant"
 
-#: src/pages/PanelRight.tsx:115
+#: src/pages/PanelRight.tsx:117
 msgid "Next from: {queueFromLabel}"
 msgstr "À suivre dans : {queueFromLabel}"
 

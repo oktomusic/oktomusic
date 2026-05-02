@@ -342,7 +342,7 @@ msgstr "New playlist"
 msgid "Next"
 msgstr "Next"
 
-#: src/pages/PanelRight.tsx:115
+#: src/pages/PanelRight.tsx:117
 msgid "Next from: {queueFromLabel}"
 msgstr "Next from: {queueFromLabel}"
 
