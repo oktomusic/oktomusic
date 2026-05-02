@@ -31,7 +31,7 @@
 
 == Générale
 
-=== Language de programmation
+=== Langage de programmation
 
 TypeScript #footnote[https://www.typescriptlang.org] a été choisi comme langage de programmation principal pour le développement de l'application, pour ses nombreux avantages :
 
