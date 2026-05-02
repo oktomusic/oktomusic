@@ -2,7 +2,7 @@
   "name": "Oktomusic",
   "image": "mcr.microsoft.com/devcontainers/base:noble",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {
+    "ghcr.io/devcontainers/features/node:2": {
       "nodeGypDependencies": true,
       "version": "lts/krypton",
       "pnpmVersion": "latest",
