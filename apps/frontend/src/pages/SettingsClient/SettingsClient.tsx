@@ -211,7 +211,7 @@ export function SettingsClient() {
                 id="settings:client:restart-threshold-seconds"
                 value={restartThresholdSeconds}
                 onChange={handleRestartThresholdChange}
-                min={0}
+                min={1}
                 max={10}
                 step={0.1}
                 aria-describedby="settings:client:restart-threshold-seconds:help"
@@ -219,7 +219,9 @@ export function SettingsClient() {
                 className="flex-1"
               />
               <span className="min-w-12 text-right text-sm text-white tabular-nums select-none">
-                {restartThresholdSeconds.toFixed(1)}
+                {restartThresholdSeconds === 10
+                  ? "∞"
+                  : restartThresholdSeconds.toFixed(1)}
               </span>
             </div>
           </div>

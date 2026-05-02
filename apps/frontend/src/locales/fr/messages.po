@@ -101,11 +101,11 @@ msgstr ""
 #~ msgid "Buffering…"
 #~ msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:244
+#: src/pages/SettingsClient/SettingsClient.tsx:246
 msgid "Cache max age (days):"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:229
+#: src/pages/SettingsClient/SettingsClient.tsx:231
 msgid "Cache max entries:"
 msgstr ""
 
@@ -113,7 +113,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:266
+#: src/pages/SettingsClient/SettingsClient.tsx:268
 msgid "Checking storage persistence..."
 msgstr ""
 
@@ -394,11 +394,11 @@ msgstr ""
 msgid "Pause {trackName}"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:267
+#: src/pages/SettingsClient/SettingsClient.tsx:269
 msgid "Persistent storage granted"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:269
+#: src/pages/SettingsClient/SettingsClient.tsx:271
 msgid "Persistent storage not granted"
 msgstr ""
 
@@ -489,7 +489,7 @@ msgstr ""
 msgid "Removed from playlist"
 msgstr ""
 
-#: src/pages/SettingsClient/SettingsClient.tsx:278
+#: src/pages/SettingsClient/SettingsClient.tsx:280
 msgid "Request"
 msgstr ""
 
@@ -562,7 +562,7 @@ msgstr "Espagnol"
 msgid "Static"
 msgstr "Statique"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:262
+#: src/pages/SettingsClient/SettingsClient.tsx:264
 msgid "Storage Persistence:"
 msgstr ""
 
