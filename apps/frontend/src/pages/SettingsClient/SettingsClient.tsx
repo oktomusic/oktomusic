@@ -2,6 +2,7 @@ import type { ChangeEvent } from "react";
 
 import { t } from "@lingui/core/macro";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { RESET } from "jotai/utils";
 
 import {
   audioSessionSupportAtom,
@@ -281,6 +282,26 @@ export function SettingsClient() {
                 </OktoButton>
               )}
             </div>
+          </div>
+
+          <div className="flex justify-end">
+            <OktoButton
+              type="button"
+              onClick={() => {
+                // Reset all settings to their default values
+                setKioskMode(RESET);
+                setAudioSessionType(RESET);
+                setWakeLockMode(RESET);
+                setLyricsDisplayMode(RESET);
+                setLyricsTranslationEnabled(RESET);
+                setCrossfadeSeconds(RESET);
+                setRestartThresholdSeconds(RESET);
+                setSwMediaMaxEntries(RESET);
+                setSwMediaMaxAge(RESET);
+              }}
+            >
+              {t`Reset`}
+            </OktoButton>
           </div>
         </form>
       </div>
