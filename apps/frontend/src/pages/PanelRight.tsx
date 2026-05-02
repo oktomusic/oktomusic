@@ -38,8 +38,8 @@ export function PanelRight() {
   const manualQueueUpNext =
     currentTrackSource === "manual" ? manualQueue.slice(1) : manualQueue;
   const hasManualQueue = manualQueueUpNext.length > 0;
-  const hasMainQueueLoaded = queueFrom !== null;
   const mainQueueUpNext = queue.slice(queueIndex + 1);
+  const hasMainQueueLoaded = queueFrom !== null && queue.length > 0;
 
   const queueFromLabel = queueFrom ? (
     <Link className="hover:underline" to={`/${queueFrom.type}/${queueFrom.id}`}>
