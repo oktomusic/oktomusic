@@ -33,7 +33,7 @@
 
 === Language de programmation
 
-TypeScript #footnote[https://www.typescriptlang.org] a été choisi comme language de programmation principal pour le développement de l'application, pour ses nombreux avantages :
+TypeScript #footnote[https://www.typescriptlang.org] a été choisi comme langage de programmation principal pour le développement de l'application, pour ses nombreux avantages :
 
 - *Typage statique* : Les types statiques de TypeScript permettent de détecter beaucoup d'erreurs à la compilation, améliorant ainsi la robustesse et la maintenabilité du code.
 - *ESLint* : TypeScript se combine parfaitement avec des outils de linting comme ESLint, permettant d'améliorer encore la robustesse du code.
