@@ -131,7 +131,11 @@ export const handlePreviousTrackAtom = atom(
       const restartThreshold = get(settingClientRestartThresholdSeconds);
       const playbackPosition = get(playerPlaybackPositionAtom);
 
-      if (playbackPosition > restartThreshold * 1000) {
+      // 10 is our arbitrary "infinity" value
+      if (
+        restartThreshold !== 10 &&
+        playbackPosition > restartThreshold * 1000
+      ) {
         set(playerSeekRequestAtom, 0);
         set(playerShouldPlayAtom, true);
         return;
