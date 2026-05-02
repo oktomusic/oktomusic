@@ -56,9 +56,9 @@ Le support de JSON dans PostgreSQL et la souplesse de Prisma permettent de stock
 
 Pour la persistance des sessions utilisateur et les queues BullMQ, le choix a été fait d'utiliser Valkey #footnote[https://valkey.io], une base de données clé-valeur distribuée et performante.
 
-Valkey est un fork de Redis 7 sous license BSD 3-clause, maintenu par la Linux Foundation après son changement de license vers une license source-availlable (avant le rajout de la license AGPL).
+Valkey est un fork de Redis 7 sous licence BSD 3-clause, maintenu par la Linux Foundation après son changement de licence vers une licence source-available (avant le rajout de la licence AGPL).
 
-J'ai privilégié l'utilisation de Valkey dont la license BSD 3-clause est plus permissive que la nouvelle license AGPL.
+J'ai privilégié l'utilisation de Valkey dont la licence BSD 3-clause est plus permissive que la nouvelle licence AGPL.
 
 Pour l'intégration, j'ai utilisé les bibliothèques officielles Valkey Glide #footnote[https://glide.valkey.io] et `iovalkey` pour la compatibilité avec BullMQ.
 
