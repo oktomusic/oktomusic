@@ -169,7 +169,7 @@ Des prompts réutilisables ont été créés pour automatiser des tâches couran
 L'automatisation de ces tâches répétitives a permis de réduire le risque d'oublis ou d'erreurs humaines, pouvant causer des erreurs CI/CD.
 
 Les Agents et LLMs utilisés proviennent principalement de la plateforme GitHub Copilot #footnote[https://github.com/features/copilot].
-Les modèles utilisés incluent les modèles _GPT-5_ de OpenAI, _Claude Sonet_ et _Claude Opus_ de Anthropic et _Grok Code Fast 1_ de xAI.
+Les modèles utilisés incluent les modèles _GPT-5_ de OpenAI, _Claude Sonnet_ et _Claude Opus_ de Anthropic et _Grok Code Fast 1_ de xAI.
 
 == Conformité RGPD <rgpd>
 
