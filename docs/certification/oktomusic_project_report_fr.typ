@@ -42,7 +42,7 @@ TypeScript #footnote[https://www.typescriptlang.org] a été choisi comme langag
 
 == Backend
 
-Le backend de l'application s'est architecturé autour du framework NestJS #footnote[https://nestjs.com], qui offre une structure standardisée et modulaire au dessus d'Espress.js, avec un très bon support natif de TypeScript.
+Le backend de l'application s'est architecturé autour du framework NestJS #footnote[https://nestjs.com], qui offre une structure standardisée et modulaire au dessus d'Express.js, avec un très bon support natif de TypeScript.
 
 === Base de données PostgreSQL + Prisma ORM
 
