@@ -12,7 +12,6 @@ import { formatDuration } from "../../utils/format_duration";
 import {
   TrackWithAlbum,
   addToQueueAtom,
-  playerQueueCurrentTrack,
   playerShouldPlayAtom,
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
@@ -32,6 +31,7 @@ interface TrackElementProps {
   readonly index: number;
   readonly displayCover: boolean;
   readonly onPlay: () => void;
+  readonly isCurrentTrack: boolean;
   readonly playlistId?: string;
   readonly playlistTrackIndex?: number;
   /**
@@ -51,7 +51,6 @@ interface TrackElementProps {
 export function TrackElement(props: TrackElementProps) {
   const addToQueue = useSetAtom(addToQueueAtom);
   const setToast = usePanelToast();
-  const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
 
@@ -76,7 +75,7 @@ export function TrackElement(props: TrackElementProps) {
     },
   });
 
-  const isCurrentTrack = currentTrack?.id === props.track.id;
+  const isCurrentTrack = props.isCurrentTrack;
   const showPauseIcon = isCurrentTrack && shouldPlay;
 
   const handleButtonClick = () => {

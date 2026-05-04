@@ -51,14 +51,14 @@ msgid "Add to playlist"
 msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:40
-#: src/components/TrackList/TrackElement.tsx:128
+#: src/components/TrackList/TrackElement.tsx:127
 #: src/pages/Center/Album.tsx:110
 #: src/pages/Center/Playlist.tsx:132
 msgid "Add to queue"
 msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:64
-#: src/components/TrackList/TrackElement.tsx:152
+#: src/components/TrackList/TrackElement.tsx:151
 msgid "Added to playlist"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/TrackList/TrackList.tsx:404
+#: src/components/TrackList/TrackList.tsx:420
 msgid "Disc {discNumber}"
 msgstr "Disque {discNumber}"
 
@@ -198,7 +198,7 @@ msgid "English"
 msgstr "Anglais"
 
 #: src/components/QueueTrack/QueueTrack.tsx:68
-#: src/components/TrackList/TrackElement.tsx:156
+#: src/components/TrackList/TrackElement.tsx:155
 msgid "Failed to add track"
 msgstr ""
 
@@ -206,11 +206,11 @@ msgstr ""
 msgid "Failed to delete playlist"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:116
+#: src/components/TrackList/TrackElement.tsx:115
 msgid "Failed to remove track"
 msgstr ""
 
-#: src/components/TrackList/TrackList.tsx:330
+#: src/components/TrackList/TrackList.tsx:332
 msgid "Failed to reorder playlist tracks"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgid "Go forward"
 msgstr "Avancer"
 
 #: src/components/QueueTrack/QueueTrack.tsx:48
-#: src/components/TrackList/TrackElement.tsx:136
+#: src/components/TrackList/TrackElement.tsx:135
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
@@ -313,7 +313,7 @@ msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
 #: src/components/QueueTrack/QueueTrack.tsx:129
-#: src/components/TrackList/TrackElement.tsx:255
+#: src/components/TrackList/TrackElement.tsx:254
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
@@ -390,7 +390,7 @@ msgstr "Pause"
 msgid "Pause {albumName}"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:204
+#: src/components/TrackList/TrackElement.tsx:203
 msgid "Pause {trackName}"
 msgstr ""
 
@@ -416,7 +416,7 @@ msgstr "Lecture"
 msgid "Play {albumName}"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:206
+#: src/components/TrackList/TrackElement.tsx:205
 msgid "Play {trackName}"
 msgstr ""
 
@@ -481,11 +481,11 @@ msgstr "Publique"
 msgid "Public playlists"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:95
+#: src/components/TrackList/TrackElement.tsx:94
 msgid "Remove from playlist"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:109
+#: src/components/TrackList/TrackElement.tsx:108
 msgid "Removed from playlist"
 msgstr ""
 
@@ -505,7 +505,7 @@ msgstr ""
 msgid "Restart threshold (seconds):"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:205
+#: src/components/TrackList/TrackElement.tsx:204
 msgid "Resume {trackName}"
 msgstr ""
 

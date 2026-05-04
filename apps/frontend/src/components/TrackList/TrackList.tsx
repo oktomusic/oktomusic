@@ -3,13 +3,15 @@ import { useMutation } from "@apollo/client/react";
 import { useDragDropMonitor, useDroppable } from "@dnd-kit/react";
 import { isSortable } from "@dnd-kit/react/sortable";
 import { t } from "@lingui/core/macro";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { LuDisc3 } from "react-icons/lu";
 
 import { REORDER_PLAYLIST_TRACKS_MUTATION } from "../../api/graphql/mutations/playlists/reorderPlaylistTracks";
 import {
   handleSeekToQueueIndexAtom,
+  playerQueueCurrentTrackSourceAtom,
   playerQueueFromAtom,
+  playerQueueMainIndexAtom,
   replaceQueueAtom,
   type PlayerQueueFrom,
   type TrackWithAlbum,
@@ -360,9 +362,23 @@ export function TrackList(props: TrackListProps) {
   // Flatten all rendered tracks so click-to-play always follows visible order.
   const allTracks = useMemo(() => renderedTracks.flat(), [renderedTracks]);
 
+  const mainQueueFrom = useAtomValue(playerQueueFromAtom);
+  const mainQueueIndex = useAtomValue(playerQueueMainIndexAtom);
+  const currentTrackSource = useAtomValue(playerQueueCurrentTrackSourceAtom);
+
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const setQueueFrom = useSetAtom(playerQueueFromAtom);
   const seekToQueueIndex = useSetAtom(handleSeekToQueueIndexAtom);
+
+  const queueFromMatches =
+    props.queueFrom !== undefined &&
+    props.queueFrom !== null &&
+    mainQueueFrom !== null &&
+    mainQueueFrom !== undefined &&
+    mainQueueFrom.type === props.queueFrom.type &&
+    mainQueueFrom.id === props.queueFrom.id;
+
+  const isMainQueueActive = currentTrackSource === "main";
 
   const handlePlay = useCallback(
     (globalIndex: number) => {
@@ -408,6 +424,10 @@ export function TrackList(props: TrackListProps) {
             <ol className="track-list__tracks">
               {discTracks.map((track, trackIndex) => {
                 const globalIndex = discStartIndex + trackIndex;
+                const isCurrentTrack =
+                  isMainQueueActive &&
+                  queueFromMatches &&
+                  mainQueueIndex === globalIndex;
                 const sortableId =
                   props.reorderable &&
                   sortableTrackItems[globalIndex] !== undefined
@@ -438,6 +458,7 @@ export function TrackList(props: TrackListProps) {
                     index={trackIndex}
                     displayCover={displayCover}
                     onPlay={() => handlePlay(globalIndex)}
+                    isCurrentTrack={isCurrentTrack}
                     playlistId={props.playlistId}
                     playlistTrackIndex={globalIndex}
                     sortable={sortable}
