@@ -14,11 +14,13 @@ import {
   playerShouldPlayAtom,
 } from "../../atoms/player/machine";
 
-export default function PlayerProvider() {
+export function PlayerProvider() {
   const [audioContext, setAudioContext] = useAtom(playerAudioContextAtom);
   const currentTrackFile = useAtomValue(playerQueueCurrentTrackFile);
   const queueIndex = useAtomValue(playerQueueMainIndexAtom);
-  const currentManualEntryId = useAtomValue(playerCurrentManualQueueEntryIdAtom);
+  const currentManualEntryId = useAtomValue(
+    playerCurrentManualQueueEntryIdAtom,
+  );
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
   const [seekRequestMs, setSeekRequestMs] = useAtom(playerSeekRequestAtom);
 

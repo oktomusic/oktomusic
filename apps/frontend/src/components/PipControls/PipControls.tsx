@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import { useAtom } from "jotai";
 
 import { pipOpenAtom, pipSupportedAtom } from "../../atoms/player/pip";
-import PipControlsWindow from "./PipControlsWindow";
+import { PipControlsWindow } from "./PipControlsWindow";
 
 import "./PipControls.css";
 
-export default function PipControls(): ReactPortal | null {
+export function PipControls(): ReactPortal | null {
   const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
   const [pipSupported] = useAtom(pipSupportedAtom);
 

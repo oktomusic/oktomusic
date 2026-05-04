@@ -35,7 +35,7 @@ import { formatDuration } from "../../utils/format_duration";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { OktoSlider } from "../Base/OktoSlider";
 
-export default function PlayerControls() {
+export function PlayerControls() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const playbackPosition = useAtomValue(playerPlaybackPositionAtom);
   const playbackDuration = useAtomValue(playerPlaybackDurationAtom);

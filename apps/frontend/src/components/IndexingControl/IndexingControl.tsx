@@ -9,7 +9,7 @@ import {
   type IndexingJobUpdatedSubscription,
 } from "../../api/graphql/gql/graphql";
 
-export default function IndexingControl() {
+export function IndexingControl() {
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [latestJobStatus, setLatestJobStatus] = useState<

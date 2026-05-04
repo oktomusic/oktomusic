@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client/react";
 import { ME_QUERY } from "../../api/graphql/queries/me.ts";
 import { networkStatusAtom } from "../../atoms/app/atoms";
 
-function AppInfo() {
+export function AppInfo() {
   const isOnline = useAtomValue(networkStatusAtom);
 
   const { data, loading, error } = useQuery(ME_QUERY, {
@@ -39,5 +39,3 @@ function AppInfo() {
     </div>
   );
 }
-
-export default AppInfo;

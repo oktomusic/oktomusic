@@ -3,7 +3,7 @@ import { Navigate, Outlet, useLocation } from "react-router";
 
 import { authSessionAtom } from "../atoms/auth/atoms";
 
-export default function ProtectedRoutes() {
+export function ProtectedRoutes() {
   const location = useLocation();
   const authSession = useAtomValue(authSessionAtom);
 

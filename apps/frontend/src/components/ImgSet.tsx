@@ -11,7 +11,7 @@ export type ImgSetProps = BaseImgProps & {
   readonly images: ImgSetImages;
 };
 
-const ImgSet = forwardRef<HTMLImageElement, ImgSetProps>(function ImgSet(
+export const ImgSet = forwardRef<HTMLImageElement, ImgSetProps>(function ImgSet(
   { images, ...rest },
   ref,
 ) {
@@ -20,5 +20,3 @@ const ImgSet = forwardRef<HTMLImageElement, ImgSetProps>(function ImgSet(
     .join(", ");
   return <img ref={ref} src={images["1x"]} srcSet={srcSet} {...rest} />;
 });
-
-export default ImgSet;

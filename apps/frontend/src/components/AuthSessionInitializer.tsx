@@ -5,7 +5,7 @@ import { useSetAtom } from "jotai";
 import { authSessionAtom } from "../atoms/auth/atoms";
 import { ME_QUERY } from "../api/graphql/queries/me";
 
-export default function AuthSessionInitializer() {
+export function AuthSessionInitializer() {
   const setAuthSession = useSetAtom(authSessionAtom);
   const { data, loading, error } = useQuery(ME_QUERY, {
     fetchPolicy: "cache-and-network",

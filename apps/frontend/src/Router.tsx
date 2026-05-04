@@ -10,10 +10,10 @@ import { usePwaDeferredPrompt } from "./hooks/pwa_prompt.ts";
 import { useKioskExitHandler } from "./hooks/kiosk_exit_handler.ts";
 import { useSWRegister } from "./hooks/sw_register.ts";
 
-import AuthSessionInitializer from "./components/AuthSessionInitializer.tsx";
-import WindowControls from "./components/WindowControls.tsx";
-import Login from "./pages/Auth/Login.tsx";
-import UnsupportedOverlay from "./pages/Unsupported/UnsupportedOverlay.tsx";
+import { AuthSessionInitializer } from "./components/AuthSessionInitializer.tsx";
+import { WindowControls } from "./components/WindowControls.tsx";
+import { Login } from "./pages/Auth/Login.tsx";
+import { UnsupportedOverlay } from "./pages/Unsupported/UnsupportedOverlay.tsx";
 
 import { App } from "./App.tsx";
 
@@ -26,7 +26,7 @@ function LoginRedirect() {
   return <Navigate to="/login" replace />;
 }
 
-export default function Router() {
+export function Router() {
   const { supported, missing } = useAtomValue(browserSupportAtom);
 
   const authSession = useAtomValue(authSessionAtom);

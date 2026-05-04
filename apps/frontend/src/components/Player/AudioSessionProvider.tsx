@@ -13,7 +13,7 @@ import {
  *
  * @see https://github.com/w3c/audio-session/blob/main/explainer.md
  */
-export default function AudioSessionProvider() {
+export function AudioSessionProvider() {
   const audioSessionType = useAtomValue(settingClientAudioSession);
   const audioSessionSupported = useAtomValue(audioSessionSupportAtom);
   const isPlaying = useAtomValue(playerIsPlayingAtom);

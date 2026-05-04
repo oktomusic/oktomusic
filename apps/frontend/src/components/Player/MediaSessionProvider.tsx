@@ -20,7 +20,7 @@ import { buildMediaMetadata } from "../../utils/media_metadata";
  *
  * @see https://web.dev/articles/media-session
  */
-export default function MediaSessionProvider() {
+export function MediaSessionProvider() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const playbackState = useAtomValue(playerPlaybackStateAtom);
   const isPlaying = useAtomValue(playerIsPlayingAtom);
