@@ -141,7 +141,6 @@ export function SettingsClient() {
               onChange={setAudioSessionType}
               options={audioSessionLabels}
               disabled={!audioSessionSupported}
-              aria-describedby="settings:client:audio-session:help"
             />
           </div>
 
@@ -152,7 +151,6 @@ export function SettingsClient() {
               value={wakeLockMode}
               onChange={setWakeLockMode}
               options={wakeLockLabels}
-              aria-describedby="settings:client:wake-lock:help"
             />
           </div>
 
@@ -163,7 +161,6 @@ export function SettingsClient() {
               value={lyricsDisplayMode}
               onChange={setLyricsDisplayMode}
               options={lyricsDisplayModeLabels}
-              aria-describedby="settings:client:lyrics-display-mode:help"
             />
           </div>
 
@@ -195,7 +192,6 @@ export function SettingsClient() {
                 min={0}
                 max={5}
                 step={0.1}
-                aria-describedby="settings:client:crossfade-seconds:help"
                 aria-label={t`Crossfade (seconds)`}
                 className="flex-1"
               />
@@ -215,7 +211,6 @@ export function SettingsClient() {
                 min={1}
                 max={10}
                 step={0.1}
-                aria-describedby="settings:client:restart-threshold-seconds:help"
                 aria-label={t`Restart threshold (seconds)`}
                 className="flex-1"
               />
@@ -238,7 +233,6 @@ export function SettingsClient() {
               step={1}
               value={swMediaMaxEntries ?? ""}
               onChange={handleSwMediaMaxEntriesChange}
-              aria-describedby="settings:client:sw-media-max-entries:help"
             />
           </div>
 
@@ -257,7 +251,6 @@ export function SettingsClient() {
                   : Math.round(swMediaMaxAge / (24 * 60 * 60))
               }
               onChange={handleSwMediaMaxAgeChange}
-              aria-describedby="settings:client:sw-media-max-age:help"
             />
           </div>
 

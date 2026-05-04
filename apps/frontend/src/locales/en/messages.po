@@ -105,11 +105,11 @@ msgstr "Audio session:"
 #~ msgid "Buffering…"
 #~ msgstr "Buffering…"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:247
+#: src/pages/SettingsClient/SettingsClient.tsx:241
 msgid "Cache max age (days):"
 msgstr "Cache max age (days):"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:232
+#: src/pages/SettingsClient/SettingsClient.tsx:227
 msgid "Cache max entries:"
 msgstr "Cache max entries:"
 
@@ -117,7 +117,7 @@ msgstr "Cache max entries:"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:269
+#: src/pages/SettingsClient/SettingsClient.tsx:262
 msgid "Checking storage persistence..."
 msgstr "Checking storage persistence..."
 
@@ -142,11 +142,11 @@ msgstr "Close Picture-in-Picture"
 msgid "Create playlist"
 msgstr "Create playlist"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:199
+#: src/pages/SettingsClient/SettingsClient.tsx:195
 msgid "Crossfade (seconds)"
 msgstr "Crossfade (seconds)"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:189
+#: src/pages/SettingsClient/SettingsClient.tsx:186
 msgid "Crossfade (seconds):"
 msgstr "Crossfade (seconds):"
 
@@ -290,11 +290,11 @@ msgstr "Link copied to clipboard"
 msgid "Logout"
 msgstr "Logout"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:160
+#: src/pages/SettingsClient/SettingsClient.tsx:158
 msgid "Lyrics display mode:"
 msgstr "Lyrics display mode:"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:174
+#: src/pages/SettingsClient/SettingsClient.tsx:171
 msgid "Lyrics translation:"
 msgstr "Lyrics translation:"
 
@@ -398,11 +398,11 @@ msgstr "Pause {albumName}"
 msgid "Pause {trackName}"
 msgstr "Pause {trackName}"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:270
+#: src/pages/SettingsClient/SettingsClient.tsx:263
 msgid "Persistent storage granted"
 msgstr "Persistent storage granted"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:272
+#: src/pages/SettingsClient/SettingsClient.tsx:265
 msgid "Persistent storage not granted"
 msgstr "Persistent storage not granted"
 
@@ -493,19 +493,19 @@ msgstr "Remove from playlist"
 msgid "Removed from playlist"
 msgstr "Removed from playlist"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:281
+#: src/pages/SettingsClient/SettingsClient.tsx:274
 msgid "Request"
 msgstr "Request"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:303
+#: src/pages/SettingsClient/SettingsClient.tsx:296
 msgid "Reset"
 msgstr "Reset"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:219
+#: src/pages/SettingsClient/SettingsClient.tsx:214
 msgid "Restart threshold (seconds)"
 msgstr "Restart threshold (seconds)"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:209
+#: src/pages/SettingsClient/SettingsClient.tsx:205
 msgid "Restart threshold (seconds):"
 msgstr "Restart threshold (seconds):"
 
@@ -570,7 +570,7 @@ msgstr "Spanish"
 msgid "Static"
 msgstr "Static"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:265
+#: src/pages/SettingsClient/SettingsClient.tsx:258
 msgid "Storage Persistence:"
 msgstr "Storage Persistence:"
 
@@ -595,7 +595,7 @@ msgstr "Unspecified"
 msgid "Upgrade to a supported Chromium browser"
 msgstr "Upgrade to a supported Chromium browser"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:149
+#: src/pages/SettingsClient/SettingsClient.tsx:148
 msgid "Wake lock:"
 msgstr "Wake lock:"
 
@@ -607,6 +607,6 @@ msgstr "Woman"
 msgid "Word by word"
 msgstr "Word by word"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:181
+#: src/pages/SettingsClient/SettingsClient.tsx:178
 msgid "Your browser does not support lyrics translation"
 msgstr "Your browser does not support lyrics translation"
