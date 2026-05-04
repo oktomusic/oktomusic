@@ -7,7 +7,7 @@ function getOverlayVisibility(): boolean {
   return window.navigator.windowControlsOverlay?.visible ?? false;
 }
 
-export default function WindowControls() {
+export function WindowControls() {
   const [isCustomEnabled, setIsCustomEnabled] = useState<boolean>(() => {
     return getOverlayVisibility();
   });

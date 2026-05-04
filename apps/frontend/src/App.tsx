@@ -9,11 +9,11 @@ import {
   panelOverlayVisibleAtom,
   panelRightVisibleAtom,
 } from "./atoms/app/panels";
-import PlayerProvider from "./components/Player/PlayerProvider";
-import MediaSessionProvider from "./components/Player/MediaSessionProvider";
-import AudioSessionProvider from "./components/Player/AudioSessionProvider";
+import { PlayerProvider } from "./components/Player/PlayerProvider";
+import { MediaSessionProvider } from "./components/Player/MediaSessionProvider";
+import { AudioSessionProvider } from "./components/Player/AudioSessionProvider";
 import { HeaderMenu } from "./components/HeaderMenu";
-import PipControls from "./components/PipControls/PipControls";
+import { PipControls } from "./components/PipControls/PipControls";
 import { DialogCover } from "./components/Dialogs/DialogCover";
 import { DialogPlaylistDelete } from "./components/Dialogs/DialogPlaylistDelete";
 import { DialogPlaylistEdit } from "./components/Dialogs/DialogPlaylistEdit";
@@ -21,7 +21,7 @@ import { OktoDragOverlay } from "./components/OktoDragOverlay";
 import { PanelLeft } from "./pages/PanelLeft";
 import { PanelOverlay } from "./pages/PanelOverlay";
 import { PanelRight } from "./pages/PanelRight";
-import PlayerControls from "./components/Player/PlayerControls";
+import { PlayerControls } from "./components/Player/PlayerControls";
 import { PanelCenter } from "./pages/PanelCenter";
 import { PanelToastProvider } from "./pages/PanelToastProvider";
 

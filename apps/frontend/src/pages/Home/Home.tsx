@@ -7,7 +7,7 @@ import { authSessionAtom } from "../../atoms/auth/atoms";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { DELETE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/deletePlaylist";
 import { Role } from "../../api/graphql/gql/graphql";
-import IndexingControl from "../../components/IndexingControl/IndexingControl";
+import { IndexingControl } from "../../components/IndexingControl/IndexingControl";
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 import { OktoButton } from "../../components/Base/OktoButton";
 import { OktoInput } from "../../components/Base/OktoInput";
@@ -15,7 +15,7 @@ import { usePanelToast } from "../../hooks/use_panel_toast";
 
 import "./Home.css";
 
-function Home() {
+export function Home() {
   const authSession = useAtomValue(authSessionAtom);
 
   const { data: userData } = useQuery(ME_QUERY, {
@@ -136,5 +136,3 @@ function Home() {
     </>
   );
 }
-
-export default Home;

@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router";
 import { authSessionAtom } from "../atoms/auth/atoms";
 import { Role } from "../api/graphql/gql/graphql";
 
-export default function AdminRoute() {
+export function AdminRoute() {
   const authSession = useAtomValue(authSessionAtom);
 
   if (authSession.status === "unknown") {

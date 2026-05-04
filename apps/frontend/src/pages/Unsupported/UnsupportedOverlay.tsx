@@ -49,5 +49,3 @@ export function UnsupportedOverlay({ missing }: UnsupportedOverlayProps) {
     </div>
   );
 }
-
-export default UnsupportedOverlay;

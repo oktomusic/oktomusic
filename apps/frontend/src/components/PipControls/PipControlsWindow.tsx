@@ -26,7 +26,7 @@ interface PipControlsWindowProps {
  * The window has three layouts depending on the available *window height*.
  * The grid + breakpoints are implemented in `PipControls.css` (see `#pip-shell > #pip-shell-inner`).
  */
-export default function PipControlsWindow(props: PipControlsWindowProps) {
+export function PipControlsWindow(props: PipControlsWindowProps) {
   const figureRef = useRef<HTMLElement | null>(null);
 
   const currentTrack = useAtomValue(playerQueueCurrentTrack);

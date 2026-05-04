@@ -7,7 +7,7 @@ import { t } from "@lingui/core/macro";
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { pwaDeferredPromptAtom } from "../../atoms/app/atoms";
 
-export default function Login() {
+export function Login() {
   const [searchParams, setSearchParams] = useSearchParams();
   const authSession = useAtomValue(authSessionAtom);
   const pwaDeferedPrompt = useAtomValue(pwaDeferredPromptAtom);
