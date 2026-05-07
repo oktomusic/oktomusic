@@ -340,6 +340,27 @@ export const addToQueueAtom = atom(
   },
 );
 
+/** Action: Clear upcoming manual queue entries. */
+export const clearManualQueueAtom = atom(null, (get, set) => {
+  const manualQueue = get(playerQueueManualAtom);
+  if (manualQueue.length === 0) {
+    return;
+  }
+
+  const source = get(playerQueueCurrentTrackSourceAtom);
+  if (source === "manual") {
+    const currentManualTrack = manualQueue[0];
+    if (!currentManualTrack) {
+      set(playerQueueManualAtom, []);
+      return;
+    }
+    set(playerQueueManualAtom, [currentManualTrack]);
+    return;
+  }
+
+  set(playerQueueManualAtom, []);
+});
+
 /** Derived current track from queue + index, safe for empty queues. */
 export const playerQueueCurrentTrack = atom<TrackWithAlbum | null>((get) => {
   const source = get(playerQueueCurrentTrackSourceAtom);

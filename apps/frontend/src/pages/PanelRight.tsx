@@ -4,6 +4,7 @@ import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 
 import {
+  clearManualQueueAtom,
   handleSeekToQueueIndexAtom,
   handleSeekToManualQueueIndexAtom,
   playerIsPlayingAtom,
@@ -33,6 +34,7 @@ export function PanelRight() {
   const handleSeekToManualQueueIndex = useSetAtom(
     handleSeekToManualQueueIndexAtom,
   );
+  const clearManualQueue = useSetAtom(clearManualQueueAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
 
   const manualQueueUpNext =
@@ -92,7 +94,18 @@ export function PanelRight() {
         </li>
         {hasManualQueue && (
           <li className="flex flex-col">
-            <span className="p-2 text-sm font-semibold">{t`Next in queue`}</span>
+            <div className="flex justify-between">
+              <span className="p-2 text-sm font-semibold">{t`Next in queue`}</span>
+              <button
+                type="button"
+                className="mr-2 cursor-pointer text-sm font-semibold text-zinc-400 hover:text-zinc-300"
+                onClick={() => {
+                  clearManualQueue();
+                }}
+              >
+                {t`Clear`}
+              </button>
+            </div>
             <ol className="flex flex-col">
               {manualQueueUpNext.map((item, index) => (
                 <QueueTrack
@@ -102,8 +115,8 @@ export function PanelRight() {
                   isPlaying={false}
                   onClickPlay={() => {
                     const manualQueueIndex =
-                      currentTrackSource === "manual" ? index + 1 : index
-                    handleSeekToManualQueueIndex(manualQueueIndex)
+                      currentTrackSource === "manual" ? index + 1 : index;
+                    handleSeekToManualQueueIndex(manualQueueIndex);
                   }}
                 />
               ))}
