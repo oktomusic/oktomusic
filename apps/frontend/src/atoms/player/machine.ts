@@ -120,8 +120,8 @@ const getWrappedMainQueueIndex = (
  *
  * - If the current playback position is greater than the restart threshold and bypassRestartThreshold is not true, seek to the start of the current track.
  * - Otherwise, move to the previous track in the queue.
- *   - If the current track is from the manual queue, move to the previous track in the manual queue.
- *   - If the manual queue is empty, move to the previous track in the main queue.
+ *   - If the current track is from the manual queue, consume it and return to the last main queue track when available.
+ *   - If the main queue is empty, continue with the remaining manual queue if any.
  *   - If both queues are empty, set current track source to null and stop playback.
  */
 export const handlePreviousTrackAtom = atom(
@@ -157,25 +157,25 @@ export const handlePreviousTrackAtom = atom(
       const remainingManualQueue = manualQueue.slice(1);
       set(playerQueueManualAtom, remainingManualQueue);
 
+      if (mainQueue.length > 0) {
+        // Returning from manual playback should resume the current main queue item.
+        set(
+          playerQueueMainIndexAtom,
+          getWrappedMainQueueIndex(index, mainQueue.length),
+        );
+        set(playerQueueCurrentTrackSourceAtom, "main");
+        set(playerShouldPlayAtom, true);
+        return;
+      }
+
       if (remainingManualQueue.length > 0) {
         set(playerQueueCurrentTrackSourceAtom, "manual");
         set(playerShouldPlayAtom, true);
         return;
       }
 
-      if (mainQueue.length === 0) {
-        set(playerQueueCurrentTrackSourceAtom, null);
-        set(playerShouldPlayAtom, false);
-        return;
-      }
-
-      // Returning from manual playback should resume the current main queue item.
-      set(
-        playerQueueMainIndexAtom,
-        getWrappedMainQueueIndex(index, mainQueue.length),
-      );
-      set(playerQueueCurrentTrackSourceAtom, "main");
-      set(playerShouldPlayAtom, true);
+      set(playerQueueCurrentTrackSourceAtom, null);
+      set(playerShouldPlayAtom, false);
       return;
     }
 
@@ -412,14 +412,16 @@ export const playerQueueCurrentTrackFile = atom<string | null>((get) => {
  * manual queue entries that share the same audio file, ensuring the audio
  * element is always reset to the start when moving to a new queue slot.
  */
-export const playerCurrentManualQueueEntryIdAtom = atom<string | null>((get) => {
-  const source = get(playerQueueCurrentTrackSourceAtom);
-  const manualQueue = get(playerQueueManualAtom);
-  if (source === "manual" && manualQueue.length > 0) {
-    return manualQueue[0]?.queueEntryId ?? null;
-  }
-  return null;
-});
+export const playerCurrentManualQueueEntryIdAtom = atom<string | null>(
+  (get) => {
+    const source = get(playerQueueCurrentTrackSourceAtom);
+    const manualQueue = get(playerQueueManualAtom);
+    if (source === "manual" && manualQueue.length > 0) {
+      return manualQueue[0]?.queueEntryId ?? null;
+    }
+    return null;
+  },
+);
 
 /** Current playback position in milliseconds. */
 export const playerPlaybackPositionAtom = atom<number>(0);
