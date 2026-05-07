@@ -12,9 +12,10 @@ export type ImgSetProps = BaseImgProps & {
 };
 
 export const ImgSet = forwardRef<HTMLImageElement, ImgSetProps>(function ImgSet(
-  { images, ...rest },
+  props,
   ref,
 ) {
+  const { images, ...rest } = props;
   const srcSet = Object.entries(images)
     .map(([key, url]) => `${url} ${key}`)
     .join(", ");
