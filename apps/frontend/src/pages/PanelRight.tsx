@@ -47,9 +47,7 @@ export function PanelRight() {
     <Link className="hover:underline" to={`/${queueFrom.type}/${queueFrom.id}`}>
       {queueFrom.meta.name}
     </Link>
-  ) : (
-    <>Unknown source</>
-  );
+  ) : undefined;
 
   if (!visible) {
     return null;
