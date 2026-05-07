@@ -28,7 +28,6 @@ export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
     },
   });
 
-  // 7 lines of 36px + separator of 9px
 
   return (
     <Menu.SubmenuRoot>
@@ -39,6 +38,7 @@ export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
       </Menu.SubmenuTrigger>
       <Menu.Portal>
         <Menu.Positioner sideOffset={8} alignOffset={-12}>
+          {/* max-h-67.25 = (7 playlist rows × 36px) + 9px separator height */}
           <Menu.Popup className="mt-2 max-h-67.25 w-52 origin-(--transform-origin) overflow-hidden rounded-xl bg-zinc-800 p-1 text-sm/6 text-white transition duration-100 ease-in focus:outline-none data-ending-style:opacity-0 data-starting-style:opacity-0">
             <Input
               placeholder={t`Find a playlist...`}
@@ -62,6 +62,7 @@ export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
               icon={<LuPlus className="size-4" />}
             />
             <OktoMenuSeparator />
+            {/* max-h-45 constrains the scrollable playlist list to 5 rows (5 × 36px = 180px) */}
             <ScrollArea.Root className={"max-h-45 w-auto"}>
               <ScrollArea.Viewport className="h-full">
                 <ScrollArea.Content>
