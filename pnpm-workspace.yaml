@@ -49,3 +49,4 @@ trustPolicyExclude:
   - reselect@5.1.1
   - rollup@2.80.0
   - chokidar@4.0.3
+  - "@trickfilm400/rollup-plugin-off-main-thread@3.0.0-pre1"
