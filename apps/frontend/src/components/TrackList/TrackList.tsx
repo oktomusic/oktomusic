@@ -9,6 +9,7 @@ import { LuDisc3 } from "react-icons/lu";
 import { REORDER_PLAYLIST_TRACKS_MUTATION } from "../../api/graphql/mutations/playlists/reorderPlaylistTracks";
 import {
   handleSeekToQueueIndexAtom,
+  playerQueueCurrentTrack,
   playerQueueCurrentTrackSourceAtom,
   playerQueueFromAtom,
   playerQueueMainIndexAtom,
@@ -364,6 +365,7 @@ export function TrackList(props: TrackListProps) {
 
   const mainQueueFrom = useAtomValue(playerQueueFromAtom);
   const mainQueueIndex = useAtomValue(playerQueueMainIndexAtom);
+  const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const currentTrackSource = useAtomValue(playerQueueCurrentTrackSourceAtom);
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
@@ -427,7 +429,8 @@ export function TrackList(props: TrackListProps) {
                 const isCurrentTrack =
                   isMainQueueActive &&
                   queueFromMatches &&
-                  mainQueueIndex === globalIndex;
+                  mainQueueIndex === globalIndex &&
+                  currentTrack?.id === track.id;
                 const sortableId =
                   props.reorderable &&
                   sortableTrackItems[globalIndex] !== undefined
