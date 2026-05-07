@@ -20,8 +20,6 @@ export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  console.log(typeof props);
-
   const { data, loading, error } = useQuery(SEARCH_MY_PLAYLISTS_QUERY, {
     variables: {
       name: searchQuery,
