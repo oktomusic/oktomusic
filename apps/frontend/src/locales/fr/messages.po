@@ -117,6 +117,10 @@ msgstr ""
 msgid "Checking storage persistence..."
 msgstr ""
 
+#: src/pages/PanelRight.tsx:106
+msgid "Clear"
+msgstr "Vider"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:120
 msgid "Client Settings"
 msgstr ""
@@ -338,11 +342,11 @@ msgstr ""
 msgid "Next"
 msgstr "Suivant"
 
-#: src/pages/PanelRight.tsx:117
+#: src/pages/PanelRight.tsx:130
 msgid "Next from: {queueFromLabel}"
 msgstr "À suivre dans : {queueFromLabel}"
 
-#: src/pages/PanelRight.tsx:95
+#: src/pages/PanelRight.tsx:98
 msgid "Next in queue"
 msgstr "À suivre"
 
@@ -360,7 +364,7 @@ msgstr ""
 msgid "No track playing"
 msgstr ""
 
-#: src/pages/PanelRight.tsx:79
+#: src/pages/PanelRight.tsx:81
 msgid "Now playing"
 msgstr ""
 

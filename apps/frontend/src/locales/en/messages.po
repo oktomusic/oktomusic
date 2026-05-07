@@ -121,6 +121,10 @@ msgstr "Cancel"
 msgid "Checking storage persistence..."
 msgstr "Checking storage persistence..."
 
+#: src/pages/PanelRight.tsx:106
+msgid "Clear"
+msgstr "Clear"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:120
 msgid "Client Settings"
 msgstr "Client Settings"
@@ -342,11 +346,11 @@ msgstr "New playlist"
 msgid "Next"
 msgstr "Next"
 
-#: src/pages/PanelRight.tsx:117
+#: src/pages/PanelRight.tsx:130
 msgid "Next from: {queueFromLabel}"
 msgstr "Next from: {queueFromLabel}"
 
-#: src/pages/PanelRight.tsx:95
+#: src/pages/PanelRight.tsx:98
 msgid "Next in queue"
 msgstr "Next in queue"
 
@@ -364,7 +368,7 @@ msgstr "No public playlists found"
 msgid "No track playing"
 msgstr "No track playing"
 
-#: src/pages/PanelRight.tsx:79
+#: src/pages/PanelRight.tsx:81
 msgid "Now playing"
 msgstr "Now playing"
 
