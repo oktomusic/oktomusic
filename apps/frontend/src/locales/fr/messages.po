@@ -46,7 +46,7 @@ msgstr ""
 msgid "Add an optional description"
 msgstr ""
 
-#: src/components/SubmenuPlaylistsSearch.tsx:37
+#: src/components/SubmenuPlaylistsSearch.tsx:34
 msgid "Add to playlist"
 msgstr ""
 
@@ -117,7 +117,7 @@ msgstr ""
 msgid "Checking storage persistence..."
 msgstr ""
 
-#: src/pages/PanelRight.tsx:106
+#: src/pages/PanelRight.tsx:104
 msgid "Clear"
 msgstr "Vider"
 
@@ -171,7 +171,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/TrackList/TrackList.tsx:420
+#: src/components/TrackList/TrackList.tsx:422
 msgid "Disc {discNumber}"
 msgstr "Disque {discNumber}"
 
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Failed to remove track"
 msgstr ""
 
-#: src/components/TrackList/TrackList.tsx:332
+#: src/components/TrackList/TrackList.tsx:333
 msgid "Failed to reorder playlist tracks"
 msgstr ""
 
@@ -222,7 +222,7 @@ msgstr ""
 msgid "Failed to share"
 msgstr ""
 
-#: src/components/SubmenuPlaylistsSearch.tsx:44
+#: src/components/SubmenuPlaylistsSearch.tsx:42
 msgid "Find a playlist..."
 msgstr ""
 
@@ -329,7 +329,7 @@ msgstr "Nom"
 msgid "Never"
 msgstr "Jamais"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:58
+#: src/components/SubmenuPlaylistsSearch.tsx:56
 msgid "New playlist"
 msgstr ""
 
@@ -342,11 +342,11 @@ msgstr ""
 msgid "Next"
 msgstr "Suivant"
 
-#: src/pages/PanelRight.tsx:130
+#: src/pages/PanelRight.tsx:128
 msgid "Next from: {queueFromLabel}"
 msgstr "À suivre dans : {queueFromLabel}"
 
-#: src/pages/PanelRight.tsx:98
+#: src/pages/PanelRight.tsx:96
 msgid "Next in queue"
 msgstr "À suivre"
 
@@ -364,7 +364,7 @@ msgstr ""
 msgid "No track playing"
 msgstr ""
 
-#: src/pages/PanelRight.tsx:81
+#: src/pages/PanelRight.tsx:79
 msgid "Now playing"
 msgstr ""
 

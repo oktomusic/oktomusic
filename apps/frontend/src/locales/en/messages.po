@@ -46,7 +46,7 @@ msgstr "Add a name"
 msgid "Add an optional description"
 msgstr "Add an optional description"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:37
+#: src/components/SubmenuPlaylistsSearch.tsx:34
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
@@ -121,7 +121,7 @@ msgstr "Cancel"
 msgid "Checking storage persistence..."
 msgstr "Checking storage persistence..."
 
-#: src/pages/PanelRight.tsx:106
+#: src/pages/PanelRight.tsx:104
 msgid "Clear"
 msgstr "Clear"
 
@@ -175,7 +175,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Disabled"
 
-#: src/components/TrackList/TrackList.tsx:420
+#: src/components/TrackList/TrackList.tsx:422
 msgid "Disc {discNumber}"
 msgstr "Disc {discNumber}"
 
@@ -218,7 +218,7 @@ msgstr "Failed to delete playlist"
 msgid "Failed to remove track"
 msgstr "Failed to remove track"
 
-#: src/components/TrackList/TrackList.tsx:332
+#: src/components/TrackList/TrackList.tsx:333
 msgid "Failed to reorder playlist tracks"
 msgstr "Failed to reorder playlist tracks"
 
@@ -226,7 +226,7 @@ msgstr "Failed to reorder playlist tracks"
 msgid "Failed to share"
 msgstr "Failed to share"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:44
+#: src/components/SubmenuPlaylistsSearch.tsx:42
 msgid "Find a playlist..."
 msgstr "Find a playlist..."
 
@@ -333,7 +333,7 @@ msgstr "Name"
 msgid "Never"
 msgstr "Never"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:58
+#: src/components/SubmenuPlaylistsSearch.tsx:56
 msgid "New playlist"
 msgstr "New playlist"
 
@@ -346,11 +346,11 @@ msgstr "New playlist"
 msgid "Next"
 msgstr "Next"
 
-#: src/pages/PanelRight.tsx:130
+#: src/pages/PanelRight.tsx:128
 msgid "Next from: {queueFromLabel}"
 msgstr "Next from: {queueFromLabel}"
 
-#: src/pages/PanelRight.tsx:98
+#: src/pages/PanelRight.tsx:96
 msgid "Next in queue"
 msgstr "Next in queue"
 
@@ -368,7 +368,7 @@ msgstr "No public playlists found"
 msgid "No track playing"
 msgstr "No track playing"
 
-#: src/pages/PanelRight.tsx:81
+#: src/pages/PanelRight.tsx:79
 msgid "Now playing"
 msgstr "Now playing"
 
