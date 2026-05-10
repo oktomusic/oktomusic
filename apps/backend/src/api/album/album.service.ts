@@ -1,4 +1,3 @@
-import fs from "node:fs";
 import path from "node:path";
 
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
@@ -11,6 +10,7 @@ import { AlbumCoverSizeString } from "../../common/utils/sharp-utils";
 import { AlbumModel } from "./album.model";
 import type { SearchAlbumsInput } from "./dto/search-albums.input";
 import { TrackModel } from "../track/track.model";
+import { resolveChildrenPath } from "../../utils/path";
 
 const albumInclude = {
   artists: {
@@ -43,23 +43,26 @@ export class AlbumService {
     this.albumCoverPath = path.resolve(this.appConf.intermediatePath, "albums");
   }
 
-  /**
-   * Resolve the file path for an album cover image from CUID and requested size.
-   */
   public findAlbumCoverPath(
     cuid: string,
     size: AlbumCoverSizeString,
   ): string | null {
-    const albumDir = path.resolve(this.albumCoverPath, cuid);
-
-    if (!fs.existsSync(albumDir)) {
+    const albumDir = resolveChildrenPath(
+      this.albumCoverPath,
+      cuid,
+      true,
+      "directory",
+    );
+    if (!albumDir) {
       return null;
     }
 
-    const coverPath = path.resolve(albumDir, `cover_${size}.avif`);
-    if (!fs.existsSync(coverPath)) {
-      return null;
-    }
+    const coverPath = resolveChildrenPath(
+      albumDir,
+      `cover_${size}.avif`,
+      true,
+      "file",
+    );
 
     return coverPath;
   }

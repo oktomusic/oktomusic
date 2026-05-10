@@ -25,11 +25,21 @@ describe("AlbumService", () => {
     vi.resetModules();
 
     const existsSync = vi.fn<(p: string) => boolean>();
+    const statSync = vi.fn((filePath: string) => {
+      const isCover = filePath.endsWith(".avif");
+
+      return {
+        isFile: () => isCover,
+        isDirectory: () => !isCover,
+      };
+    });
     vi.doMock("node:fs", () => {
       return {
         existsSync,
+        statSync,
         default: {
           existsSync,
+          statSync,
         },
       };
     });
