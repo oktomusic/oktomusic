@@ -13,7 +13,7 @@ import {
   ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
-import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import { SchemaObject } from "node_modules/@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 
 import {
   type ReportingBody,

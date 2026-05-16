@@ -1,7 +1,7 @@
 import { Controller, Get, Inject } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import { SchemaObject } from "node_modules/@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 
 import { ApiInfoResJSONSchema } from "@oktomusic/api-schemas";
 import type { ApiInfoRes } from "@oktomusic/api-schemas";
