@@ -39,7 +39,7 @@ export function WindowControls() {
 
   return isCustomEnabled ? (
     <div id="pwa-window-controls">
-      <h1>Oktomusic</h1>
+      <h1>{document.title}</h1>
     </div>
   ) : undefined;
 }

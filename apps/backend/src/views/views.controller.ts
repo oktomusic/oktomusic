@@ -46,8 +46,8 @@ export class ViewsController {
     };
 
     return {
-      name: "Oktomusic" + (isDev ? " (Dev)" : ""),
-      short_name: "Oktomusic" + (isDev ? " (Dev)" : ""),
+      name: this.appConf.appName,
+      short_name: this.appConf.appShortName,
       description: "Your personal music streaming server",
       categories: ["music", "entertainment"],
       start_url: "/",
@@ -143,6 +143,7 @@ export class ViewsController {
       buildViewModel({
         metaTags: this.og.getDefaultTags(),
         assetTags,
+        appName: this.appConf.appName,
       }),
     );
   }
