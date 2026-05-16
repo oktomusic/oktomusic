@@ -17,16 +17,14 @@ const members = [
     ],
     sponsor: "https://github.com/sponsors/AFCMS"
   },
-  /*{
+  {
     avatar: 'https://github.com/Klhmt.png',
     name: 'Klhmt',
     title: 'Maintainer',
     links: [
-      { icon: 'linkedin', link: '' },
       { icon: 'github', link: 'https://github.com/Klhmt' },
-      { icon: 'x', link: '' }
     ],
-  },*/
+  },
 ]
 </script>
 
