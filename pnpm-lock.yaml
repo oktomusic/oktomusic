@@ -26,8 +26,8 @@ catalogs:
       specifier: ^5.9.3
       version: 5.9.3
     zod:
-      specifier: ^4.4.1
-      version: 4.4.1
+      specifier: ^4.4.3
+      version: 4.4.3
 
 importers:
 
@@ -221,7 +221,7 @@ importers:
         version: 0.4.0(ioredis@5.10.1)
       zod:
         specifier: catalog:default
-        version: 4.4.1
+        version: 4.4.3
     devDependencies:
       '@nestjs/cli':
         specifier: ^11.0.21
@@ -475,7 +475,7 @@ importers:
     dependencies:
       zod:
         specifier: catalog:default
-        version: 4.4.1
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: catalog:default
@@ -500,7 +500,7 @@ importers:
         version: 5.8.0
       zod:
         specifier: catalog:default
-        version: 4.4.1
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: catalog:default
@@ -519,7 +519,7 @@ importers:
     dependencies:
       zod:
         specifier: catalog:default
-        version: 4.4.1
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: catalog:default
@@ -535,7 +535,7 @@ importers:
         version: 0.3.2
       zod:
         specifier: catalog:default
-        version: 4.4.1
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: catalog:default
@@ -551,7 +551,7 @@ importers:
         version: 5.8.0
       zod:
         specifier: catalog:default
-        version: 4.4.1
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: catalog:default
@@ -585,7 +585,7 @@ importers:
         version: 0.3.2
       zod:
         specifier: catalog:default
-        version: 4.4.1
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: catalog:default
@@ -9307,6 +9307,9 @@ packages:
 
   zod@4.4.1:
     resolution: {integrity: sha512-a6ENMBBGZBsnlSebQ/eKCguSBeGKSf4O7BPnqVPmYGtpBYI7VSqoVqw+QcB7kPRjbqPwhYTpFbVj/RqNz/CT0Q==}
+
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -18671,5 +18674,7 @@ snapshots:
       zod: 4.4.1
 
   zod@4.4.1: {}
+
+  zod@4.4.3: {}
 
   zwitch@2.0.4: {}
