@@ -12,6 +12,8 @@ const AppConfigSchema = z.object({
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
+  APP_NAME: z.string().default("Oktomusic"),
+  APP_SHORT_NAME: z.string().default("Oktomusic"),
   DATABASE_URL: z.string().min(1),
   SESSION_SECRET: z.string().min(1),
   APP_LIBRARY_PATH: zFolderPath("Library"),
@@ -23,6 +25,8 @@ const AppConfigSchema = z.object({
 
 export interface AppConfig {
   readonly env: "development" | "production" | "test";
+  readonly appName: string;
+  readonly appShortName: string;
   readonly databaseUrl: string;
   readonly isDev: boolean;
   readonly isProd: boolean;
@@ -40,6 +44,8 @@ export default registerAs("app", (): AppConfig => {
 
   return {
     env: parsed.NODE_ENV,
+    appName: parsed.APP_NAME,
+    appShortName: parsed.APP_SHORT_NAME,
     databaseUrl: parsed.DATABASE_URL,
     isDev: parsed.NODE_ENV === "development",
     isProd: parsed.NODE_ENV === "production",
