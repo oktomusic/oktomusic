@@ -34,7 +34,8 @@ linkWorkspacePackages: true
 
 minimumReleaseAge: 1440
 
-nodeOptions: ${NODE_OPTIONS:- } --experimental-transform-types
+# --experimental-transform-types
+nodeOptions: ${NODE_OPTIONS:- }
   --no-warnings=ExperimentalWarning --use-system-ca
 
 sharedWorkspaceLockfile: true
