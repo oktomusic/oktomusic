@@ -372,6 +372,7 @@ jobs:
         - registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+        ${{ secrets.DHI_REGISTRY_USERNAME && format('- registry: dhi.io\n  username: {0}\n  password: {1}', secrets.DHI_REGISTRY_USERNAME, secrets.DHI_REGISTRY_PASSWORD) || '' }}
 
   typst-docs:
     name: Typst Documents
