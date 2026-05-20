@@ -20,7 +20,7 @@ blockExoticSubdeps: true
 
 catalogs:
   default:
-    "@types/node": ^24.12.2
+    "@types/node": ^24.12.4
     fast-xml-parser: ^5.7.2
     sharp: ^0.34.5
     temporal-polyfill: ^0.3.2
