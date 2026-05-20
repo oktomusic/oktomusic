@@ -372,7 +372,9 @@ Chaque image est construite exclusivement via les pipelines CI/CD à partir d'un
 
 Les images sont signées avec Cosign #footnote[https://sigstore.dev], un outil open-source de signature et de vérification des artefacts container, assurant leur provenance et la détection de toute modification non autorisée.
 
-Elles sont construites à partir de bases officielles et versionnées, et toutes les dépendances externes critiques (comme le code source FFmpeg) font l’objet d’une vérification cryptographique lors de la construction (voir section #link(<ffmpeg>)[FFmpeg]).
+La base d'exécution de l'image est une version DHI (Docker Hardened Image)#footnote[https://www.docker.com/products/hardened-images] de NodeJS 24#footnote[https://hub.docker.com/hardened-images/catalog/dhi/node], offrant une configuration durcie et une surface d'attaque réduite par rapport à une image NodeJS standard.
+
+Toutes les dépendances externes critiques (comme le code source FFmpeg) font l’objet d’une vérification cryptographique lors de la construction (voir section #link(<ffmpeg>)[FFmpeg]).
 
 // TODO: fix link to FFmpeg section
 
