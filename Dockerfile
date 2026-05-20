@@ -1,7 +1,16 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-FROM --platform=$BUILDPLATFORM node:24-alpine AS builder
+# Supported base images:
+# - node:24-alpine (builder and production)
+# - dhi.io/node:24-alpine3.23-dev (builder and production)
+# 
+# TODO: support dhi.io/node:24-alpine3.23 as production image
+
+ARG IMAGE_BUILDER=dhi.io/node:24-alpine3.23-dev
+ARG IMAGE_PROD=dhi.io/node:24-alpine3.23-dev
+
+FROM --platform=$BUILDPLATFORM ${IMAGE_BUILDER} AS builder
 
 LABEL org.opencontainers.image.title="Oktomusic"
 LABEL org.opencontainers.image.description="Music streaming server"
@@ -92,9 +101,7 @@ RUN pnpm --filter @oktomusic/backend --prod deploy /prod/backend
 
 FROM ghcr.io/oktomusic/ffmpeg-custom:0.3.0 AS ffmpeg
 
-FROM node:24-alpine AS production
-
-RUN apk add --no-cache ca-certificates
+FROM ${IMAGE_PROD} AS production
 
 ENV NODE_ENV=production
 ENV UPDATE_CA=
