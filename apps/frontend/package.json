@@ -26,7 +26,7 @@
     "@graphql-typed-document-node/core": "^3.2.0",
     "@headlessui/react": "^2.2.10",
     "@headlessui/tailwindcss": "^0.2.2",
-    "@lingui/detect-locale": "^6.0.1",
+    "@lingui/detect-locale": "^6.1.0",
     "@oktomusic/api-schemas": "workspace:^",
     "@tailwindcss/vite": "^4.3.0",
     "graphql": "^16.14.0",
