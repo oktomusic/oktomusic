@@ -134,7 +134,7 @@ msgstr "Client Settings"
 msgid "Close"
 msgstr "Close"
 
-#: src/components/Player/PlayerControls.tsx:201
+#: src/components/Player/PlayerControlsAdditional.tsx:72
 msgid "Close Picture-in-Picture"
 msgstr "Close Picture-in-Picture"
 
@@ -253,13 +253,13 @@ msgstr "Go forward"
 msgid "Go to album"
 msgstr "Go to album"
 
-#: src/components/Player/PlayerControls.tsx:168
-#: src/components/Player/PlayerControls.tsx:169
+#: src/components/Player/PlayerControlsAdditional.tsx:39
+#: src/components/Player/PlayerControlsAdditional.tsx:40
 msgid "Hide overlay"
 msgstr "Hide overlay"
 
-#: src/components/Player/PlayerControls.tsx:181
-#: src/components/Player/PlayerControls.tsx:182
+#: src/components/Player/PlayerControlsAdditional.tsx:52
+#: src/components/Player/PlayerControlsAdditional.tsx:53
 msgid "Hide queue"
 msgstr "Hide queue"
 
@@ -341,8 +341,8 @@ msgstr "New playlist"
 #: src/components/PipControls/PipControlsOverlay.tsx:63
 #: src/components/PipControls/PipControlsWindow.tsx:114
 #: src/components/PipControls/PipControlsWindow.tsx:115
-#: src/components/Player/PlayerControls.tsx:129
-#: src/components/Player/PlayerControls.tsx:130
+#: src/components/Player/PlayerControlsPlayback.tsx:73
+#: src/components/Player/PlayerControlsPlayback.tsx:74
 msgid "Next"
 msgstr "Next"
 
@@ -364,7 +364,7 @@ msgstr "No public playlists found"
 
 #: src/components/PipControls/PipControlsWindow.tsx:57
 #: src/components/PipControls/PipControlsWindow.tsx:65
-#: src/components/Player/PlayerControls.tsx:76
+#: src/components/Player/PlayerControlsInfos.tsx:23
 msgid "No track playing"
 msgstr "No track playing"
 
@@ -372,7 +372,7 @@ msgstr "No track playing"
 msgid "Now playing"
 msgstr "Now playing"
 
-#: src/components/Player/PlayerControls.tsx:201
+#: src/components/Player/PlayerControlsAdditional.tsx:72
 msgid "Open Picture-in-Picture"
 msgstr "Open Picture-in-Picture"
 
@@ -389,8 +389,8 @@ msgstr "Page not found"
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
 #: src/components/PipControls/PipControlsWindow.tsx:101
-#: src/components/Player/PlayerControls.tsx:114
-#: src/components/Player/PlayerControls.tsx:115
+#: src/components/Player/PlayerControlsPlayback.tsx:58
+#: src/components/Player/PlayerControlsPlayback.tsx:59
 msgid "Pause"
 msgstr "Pause"
 
@@ -415,8 +415,8 @@ msgstr "Persistent storage not granted"
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
 #: src/components/PipControls/PipControlsWindow.tsx:101
-#: src/components/Player/PlayerControls.tsx:114
-#: src/components/Player/PlayerControls.tsx:115
+#: src/components/Player/PlayerControlsPlayback.tsx:58
+#: src/components/Player/PlayerControlsPlayback.tsx:59
 msgid "Play"
 msgstr "Play"
 
@@ -435,7 +435,7 @@ msgstr "Playback"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:37
 #: src/components/PipControls/PipControlsWindow.tsx:87
-#: src/components/Player/PlayerControls.tsx:95
+#: src/components/Player/PlayerControlsPlayback.tsx:39
 msgid "Playback controls"
 msgstr "Playback controls"
 
@@ -460,8 +460,8 @@ msgstr "Portuguese"
 #: src/components/PipControls/PipControlsOverlay.tsx:42
 #: src/components/PipControls/PipControlsWindow.tsx:90
 #: src/components/PipControls/PipControlsWindow.tsx:91
-#: src/components/Player/PlayerControls.tsx:103
-#: src/components/Player/PlayerControls.tsx:104
+#: src/components/Player/PlayerControlsPlayback.tsx:47
+#: src/components/Player/PlayerControlsPlayback.tsx:48
 msgid "Previous"
 msgstr "Previous"
 
@@ -534,7 +534,7 @@ msgstr "Save to library"
 msgid "Search"
 msgstr "Search"
 
-#: src/components/Player/PlayerControls.tsx:142
+#: src/components/Player/PlayerControlsPlayback.tsx:86
 msgid "Seek"
 msgstr "Seek"
 
@@ -556,13 +556,13 @@ msgstr "Sexe :"
 msgid "Share"
 msgstr "Share"
 
-#: src/components/Player/PlayerControls.tsx:168
-#: src/components/Player/PlayerControls.tsx:169
+#: src/components/Player/PlayerControlsAdditional.tsx:39
+#: src/components/Player/PlayerControlsAdditional.tsx:40
 msgid "Show overlay"
 msgstr "Show overlay"
 
-#: src/components/Player/PlayerControls.tsx:181
-#: src/components/Player/PlayerControls.tsx:182
+#: src/components/Player/PlayerControlsAdditional.tsx:52
+#: src/components/Player/PlayerControlsAdditional.tsx:53
 msgid "Show queue"
 msgstr "Show queue"
 
