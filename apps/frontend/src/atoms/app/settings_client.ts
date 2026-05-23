@@ -1,3 +1,4 @@
+import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 // Kiosk Mode Setting
@@ -40,6 +41,62 @@ export const settingClientCrossfadeSeconds = atomWithStorage<number>(
     getOnInit: true,
   },
 );
+
+// Sound volume
+
+const volumeEnabledLocalStorageKey = "oktomusic:volume_enabled";
+
+export const settingClientVolumeEnabled = atomWithStorage<boolean>(
+  volumeEnabledLocalStorageKey,
+  true,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
+// Sound volume muted
+
+const volumeMutedLocalStorageKey = "oktomusic:volume_muted";
+
+export const settingClientVolumeMuted = atomWithStorage<boolean>(
+  volumeMutedLocalStorageKey,
+  false,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
+// Sound volume (percentage, 0-100)
+
+const volumeStorageKey = "oktomusic:volume";
+
+export const settingClientVolume = atomWithStorage<number>(
+  volumeStorageKey,
+  100,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
+// Computed player volume (0-100), taking into account whether volume is enabled or not
+
+export const playerVolume = atom((get) => {
+  const enabled = get(settingClientVolumeEnabled);
+  const muted = get(settingClientVolumeMuted);
+  const volume = get(settingClientVolume);
+  if (!enabled) {
+    return 100;
+  }
+
+  if (muted) {
+    return 0;
+  }
+
+  return volume;
+});
 
 // Restart Threshold Setting
 

@@ -24,7 +24,10 @@ import {
   requestPlaybackToggleAtom,
   requestSeekAtom,
 } from "../../atoms/player/machine";
-import { settingClientKioskMode } from "../../atoms/app/settings_client";
+import {
+  settingClientKioskMode,
+  settingClientVolumeEnabled,
+} from "../../atoms/app/settings_client";
 import {
   panelOverlayVisibleAtom,
   panelRightVisibleAtom,
@@ -34,6 +37,7 @@ import { formatDuration } from "../../utils/format_duration";
 
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { OktoSlider } from "../Base/OktoSlider";
+import { PlayerControlsVolume } from "./PlayerControlsVolume";
 
 export function PlayerControls() {
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
@@ -44,6 +48,7 @@ export function PlayerControls() {
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
 
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
+  const volumeEnabled = useAtomValue(settingClientVolumeEnabled);
 
   const handlePreviousTrack = useSetAtom(handlePreviousTrackAtom);
   const handleNextTrack = useSetAtom(handleNextTrackAtom);
@@ -181,6 +186,7 @@ export function PlayerControls() {
         >
           <HiOutlineQueueList className="size-6" />
         </Button>
+        {volumeEnabled && <PlayerControlsVolume />}
         {!kioskModeEnabled && (
           <Button
             type="button"
@@ -189,7 +195,7 @@ export function PlayerControls() {
             }}
             className={
               "rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2" +
-              (pipOpen ? " text-blue-600" : " text-slate-600")
+              (pipOpen ? " text-white" : " text-slate-500")
             }
             title={
               pipOpen ? t`Close Picture-in-Picture` : t`Open Picture-in-Picture`

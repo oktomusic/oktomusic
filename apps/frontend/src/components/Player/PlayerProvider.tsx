@@ -13,6 +13,7 @@ import {
   playerSeekRequestAtom,
   playerShouldPlayAtom,
 } from "../../atoms/player/machine";
+import { playerVolume } from "../../atoms/app/settings_client";
 
 export function PlayerProvider() {
   const [audioContext, setAudioContext] = useAtom(playerAudioContextAtom);
@@ -22,6 +23,7 @@ export function PlayerProvider() {
     playerCurrentManualQueueEntryIdAtom,
   );
   const shouldPlay = useAtomValue(playerShouldPlayAtom);
+  const outputVolume = useAtomValue(playerVolume);
   const [seekRequestMs, setSeekRequestMs] = useAtom(playerSeekRequestAtom);
 
   const setPlaybackState = useSetAtom(playerPlaybackStateAtom);
@@ -36,6 +38,7 @@ export function PlayerProvider() {
   const source2 = useRef<MediaElementAudioSourceNode | null>(null);
   const gain1 = useRef<GainNode | null>(null);
   const gain2 = useRef<GainNode | null>(null);
+  const masterGain = useRef<GainNode | null>(null);
 
   useEffect(() => {
     const ctx = new AudioContext({
@@ -143,6 +146,9 @@ export function PlayerProvider() {
     if (gain2.current && gain2.current.context !== audioContext) {
       gain2.current = null;
     }
+    if (masterGain.current && masterGain.current.context !== audioContext) {
+      masterGain.current = null;
+    }
 
     if (!source1.current) {
       source1.current = audioContext.createMediaElementSource(el1);
@@ -159,25 +165,43 @@ export function PlayerProvider() {
       gain2.current = audioContext.createGain();
       gain2.current.gain.value = 1;
     }
+    if (!masterGain.current) {
+      masterGain.current = audioContext.createGain();
+      masterGain.current.gain.value = 1;
+      masterGain.current.connect(audioContext.destination);
+    }
 
     source1.current.connect(gain1.current);
-    gain1.current.connect(audioContext.destination);
+    gain1.current.connect(masterGain.current);
 
     source2.current.connect(gain2.current);
-    gain2.current.connect(audioContext.destination);
+    gain2.current.connect(masterGain.current);
 
     return () => {
       source1.current?.disconnect();
       source2.current?.disconnect();
       gain1.current?.disconnect();
       gain2.current?.disconnect();
+      masterGain.current?.disconnect();
 
       source1.current = null;
       source2.current = null;
       gain1.current = null;
       gain2.current = null;
+      masterGain.current = null;
     };
   }, [audioContext]);
+
+  useEffect(() => {
+    if (!audioContext || !masterGain.current) return;
+
+    const normalizedVolume = Math.max(0, Math.min(1, outputVolume / 100));
+    masterGain.current.gain.setTargetAtTime(
+      normalizedVolume,
+      audioContext.currentTime,
+      0.01,
+    );
+  }, [audioContext, outputVolume]);
 
   useEffect(() => {
     const el = audioEl1.current;

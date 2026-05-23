@@ -18,6 +18,7 @@ import {
   settingClientRestartThresholdSeconds,
   settingClientSWMediaMaxAge,
   settingClientSWMediaMaxEntries,
+  settingClientVolumeEnabled,
   settingClientWakeLock,
   WakeLockKey,
   type LyricsDisplayModeKey,
@@ -48,6 +49,7 @@ export function SettingsClient() {
   const [crossfadeSeconds, setCrossfadeSeconds] = useAtom(
     settingClientCrossfadeSeconds,
   );
+  const [volumeEnabled, setVolumeEnabled] = useAtom(settingClientVolumeEnabled);
   const [restartThresholdSeconds, setRestartThresholdSeconds] = useAtom(
     settingClientRestartThresholdSeconds,
   );
@@ -199,6 +201,18 @@ export function SettingsClient() {
                 {crossfadeSeconds.toFixed(1)}
               </span>
             </div>
+          </div>
+
+          <div className="flex h-14 flex-row items-center justify-between py-2">
+            <label
+              htmlFor="settings:client:volume-enabled"
+              className=""
+            >{t`Volume enabled:`}</label>
+            <OktoSwitch
+              id="settings:client:volume-enabled"
+              checked={volumeEnabled}
+              onChange={setVolumeEnabled}
+            />
           </div>
 
           <div className="flex h-14 flex-row items-center justify-between py-2">

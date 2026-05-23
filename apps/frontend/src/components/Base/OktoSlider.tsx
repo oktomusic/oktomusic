@@ -6,6 +6,7 @@ interface OktoSliderProps {
   readonly id: string;
   readonly value: number;
   readonly onChange: (value: number) => void;
+  readonly onCommit?: (value: number) => void;
   readonly min: number;
   readonly max: number;
   readonly step: number;
@@ -26,7 +27,8 @@ export function OktoSlider(props: OktoSliderProps) {
       step={props.step}
       thumbAlignment="edge-client-only"
       onValueChange={(value) => props.onChange(value)}
-      className={"w-full"}
+      onValueCommitted={(value) => props.onCommit?.(value)}
+      className={props.className ?? "w-full"}
     >
       <Slider.Control
         className={
