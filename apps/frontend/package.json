@@ -49,7 +49,7 @@
     "@lingui/cli": "^6.0.1",
     "@lingui/core": "^6.0.1",
     "@lingui/react": "^6.0.1",
-    "@lingui/vite-plugin": "^6.0.1",
+    "@lingui/vite-plugin": "^6.1.0",
     "@oktomusic/vite-sri-manifest": "workspace:^",
     "@rolldown/plugin-babel": "^0.2.3",
     "@types/babel__core": "^7.20.5",
