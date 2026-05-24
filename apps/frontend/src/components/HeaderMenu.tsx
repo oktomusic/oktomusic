@@ -5,7 +5,6 @@ import { Button } from "@headlessui/react";
 import {
   HiChevronLeft,
   HiChevronRight,
-  HiMagnifyingGlass,
   HiOutlineArrowDownCircle,
   HiOutlineArrowRightOnRectangle,
   HiOutlineCog6Tooth,
@@ -21,6 +20,7 @@ import { OktoMenu, OktoMenuItem } from "./Base/OktoMenu";
 import { settingClientKioskMode } from "../atoms/app/settings_client";
 import { authSessionAtom } from "../atoms/auth/atoms";
 import { Role } from "../api/graphql/gql/graphql";
+import { HeaderMenuSearch } from "./HeaderMenuSearch";
 
 export function HeaderMenu() {
   const pwaDeferedPrompt = useAtomValue(pwaDeferredPromptAtom);
@@ -100,14 +100,8 @@ export function HeaderMenu() {
         >
           <HiOutlineHome className="size-6" />
         </Link>
-        <Link
-          to="/search"
-          aria-label={t`Search`}
-          className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <HiMagnifyingGlass className="size-6" />
-        </Link>
       </div>
+      <HeaderMenuSearch />
       <div className="flex w-full grow"></div>
       <div className="mr-2 flex flex-row items-center justify-end gap-2">
         {pwaDeferedPrompt && (

@@ -81,6 +81,14 @@ msgstr "Album"
 msgid "Album cover"
 msgstr "Album cover"
 
+#: src/pages/Center/Search.tsx:22
+msgid "Albums"
+msgstr "Albums"
+
+#: src/pages/Center/Search.tsx:20
+msgid "All"
+msgstr "All"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:70
 msgid "Always"
 msgstr "Always"
@@ -92,6 +100,10 @@ msgstr "Ambient"
 #: src/components/LibraryRow/LibraryRow.tsx:99
 msgid "Artist"
 msgstr "Artist"
+
+#: src/pages/Center/Search.tsx:23
+msgid "Artists"
+msgstr "Artists"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:168
 #~ msgid "Audio Session API is not supported in this browser."
@@ -269,7 +281,7 @@ msgstr "Hide queue"
 msgid "Home"
 msgstr "Home"
 
-#: src/components/HeaderMenu.tsx:116
+#: src/components/HeaderMenu.tsx:110
 #: src/pages/Auth/Login.tsx:47
 msgid "Install Application"
 msgstr "Install Application"
@@ -452,6 +464,10 @@ msgstr "Playlist cover"
 msgid "Playlist deleted"
 msgstr "Playlist deleted"
 
+#: src/pages/Center/Search.tsx:24
+msgid "Playlists"
+msgstr "Playlists"
+
 #: src/utils/locales.ts:22
 msgid "Portuguese"
 msgstr "Portuguese"
@@ -530,9 +546,14 @@ msgstr "Save"
 msgid "Save to library"
 msgstr "Save to library"
 
-#: src/components/HeaderMenu.tsx:105
+#: src/components/HeaderMenuSearch.tsx:28
+#: src/components/HeaderMenuSearch.tsx:31
 msgid "Search"
 msgstr "Search"
+
+#: src/pages/Center/Search.tsx:67
+msgid "Search type"
+msgstr "Search type"
 
 #: src/components/Player/PlayerControlsPlayback.tsx:86
 msgid "Seek"
@@ -585,6 +606,10 @@ msgstr "The following modern web features are missing:"
 #: src/components/Dialogs/DialogPlaylistDelete.tsx:97
 msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
+
+#: src/pages/Center/Search.tsx:21
+msgid "Tracks"
+msgstr "Tracks"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:43
