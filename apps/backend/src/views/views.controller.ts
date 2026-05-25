@@ -10,7 +10,7 @@ import {
 import { ApiOkResponse, ApiOperation, ApiProduces } from "@nestjs/swagger";
 import type { NextFunction, Request, Response } from "express";
 
-import { buildViewModel } from "./view-model";
+import { ViewModel } from "./view-model";
 import { MetaTagsService } from "../common/metatags/metatags.service";
 import { getAssetTags, type ViteManifest } from "../utils/vite_manifest";
 import viteConfig, { type ViteConfig } from "../config/definitions/vite.config";
@@ -138,13 +138,13 @@ export class ViewsController {
       ? getAssetTags(viteManifest, "src/main.tsx")
       : undefined;
 
-    res.render(
-      "index",
-      buildViewModel({
-        metaTags: this.og.getDefaultTags(),
-        assetTags,
-        appName: this.appConf.appName,
-      }),
-    );
+    const viewModel = {
+      appName: this.appConf.appName,
+      dev: this.appConf.isDev,
+      metaTags: [{ property: "og:title", content: this.appConf.appName }],
+      assetTags: assetTags,
+    } as const satisfies ViewModel;
+
+    res.render("index", viewModel);
   }
 }
