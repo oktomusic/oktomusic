@@ -1,25 +1,42 @@
 import type { ChangeEvent } from "react";
-import { Link, useSearchParams } from "react-router";
 import { t } from "@lingui/core/macro";
-import { LuSearch, LuFolder } from "react-icons/lu";
+import { LuFolder, LuSearch } from "react-icons/lu";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 
 import { OktoInput } from "./Base/OktoInput";
 
 export function HeaderMenuSearch() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const q = searchParams.get("q") || "";
+  const isSearchRoute = location.pathname === "/search";
+  const q = isSearchRoute ? searchParams.get("q") || "" : "";
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) params.set("q", value);
-    else params.delete("q");
-    setSearchParams(params);
+    const params = isSearchRoute
+      ? new URLSearchParams(searchParams.toString())
+      : new URLSearchParams();
+
+    if (value) {
+      params.set("q", value);
+    } else {
+      params.delete("q");
+    }
+
+    const search = params.toString();
+    const nextPath = search ? `/search?${search}` : "/search";
+
+    if (isSearchRoute) {
+      setSearchParams(params, { replace: true });
+    } else {
+      void navigate(nextPath, { replace: false });
+    }
   };
 
   return (
-    <div className="relative ml-32 w-96">
+    <div className="relative ml-8 w-72">
       <div className="pointer-events-none absolute top-1/2 left-2 -translate-y-1/2 text-zinc-400">
         <LuSearch className="size-5" />
       </div>
@@ -34,7 +51,7 @@ export function HeaderMenuSearch() {
       <Link
         to="/search"
         className="absolute top-1/2 right-2 -translate-y-1/2 text-zinc-400 hover:text-white"
-        aria-label="Go to search"
+        aria-label={t`Browse`}
       >
         <LuFolder className="size-5" />
       </Link>

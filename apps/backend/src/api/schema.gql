@@ -277,7 +277,7 @@ type Query {
   playlist(id: String!): Playlist!
 
   """
-  Search across tracks, albums, and artists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately.
+  Search across tracks, albums, artists, and playlists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately.
   """
   search(input: SearchMusicInput!): SearchMusicResult!
 
@@ -336,11 +336,17 @@ input SearchMusicInput {
   """Filter by exact album ID"""
   albumId: String
 
+  """Maximum number of album results to return"""
+  albumLimit: Int
+
   """Filter by album name (case-insensitive partial match)"""
   albumName: String
 
   """Filter by exact artist ID"""
   artistId: String
+
+  """Maximum number of artist results to return"""
+  artistLimit: Int
 
   """Filter by artist name (case-insensitive partial match)"""
   artistName: String
@@ -351,6 +357,9 @@ input SearchMusicInput {
   """Include artists in search results"""
   includeArtists: Boolean = true
 
+  """Include playlists in search results"""
+  includePlaylists: Boolean = true
+
   """Include tracks in search results"""
   includeTracks: Boolean = true
 
@@ -360,6 +369,15 @@ input SearchMusicInput {
   """Number of results to skip"""
   offset: Int = 0
 
+  """Maximum number of playlist results to return"""
+  playlistLimit: Int
+
+  """Filter by playlist name (case-insensitive partial match)"""
+  playlistName: String
+
+  """Maximum number of track results to return"""
+  trackLimit: Int
+
   """Filter by track name (case-insensitive partial match)"""
   trackName: String
 }
@@ -367,6 +385,7 @@ input SearchMusicInput {
 type SearchMusicResult {
   albums: [Album!]!
   artists: [Artist!]!
+  playlists: [PlaylistBasic!]!
   tracks: [Track!]!
 }
 

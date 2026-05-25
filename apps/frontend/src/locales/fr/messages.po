@@ -77,11 +77,12 @@ msgstr "Album"
 msgid "Album cover"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:22
+#: src/pages/Center/Search.tsx:79
+#: src/pages/Center/Search.tsx:242
 msgid "Albums"
 msgstr "Albums"
 
-#: src/pages/Center/Search.tsx:20
+#: src/pages/Center/Search.tsx:77
 msgid "All"
 msgstr "Tout"
 
@@ -97,7 +98,8 @@ msgstr ""
 msgid "Artist"
 msgstr "Artiste"
 
-#: src/pages/Center/Search.tsx:23
+#: src/pages/Center/Search.tsx:80
+#: src/pages/Center/Search.tsx:254
 msgid "Artists"
 msgstr "Artistes"
 
@@ -107,6 +109,10 @@ msgstr "Artistes"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:138
 msgid "Audio session:"
+msgstr ""
+
+#: src/components/HeaderMenuSearch.tsx:54
+msgid "Browse"
 msgstr ""
 
 #: src/components/Player/PlayerControls.tsx:154
@@ -183,7 +189,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/TrackList/TrackList.tsx:422
+#: src/components/TrackList/TrackList.tsx:449
 msgid "Disc {discNumber}"
 msgstr "Disque {discNumber}"
 
@@ -226,7 +232,7 @@ msgstr ""
 msgid "Failed to remove track"
 msgstr ""
 
-#: src/components/TrackList/TrackList.tsx:333
+#: src/components/TrackList/TrackList.tsx:340
 msgid "Failed to reorder playlist tracks"
 msgstr ""
 
@@ -362,6 +368,21 @@ msgstr "À suivre dans : {queueFromLabel}"
 msgid "Next in queue"
 msgstr "À suivre"
 
+#: src/pages/Center/Search.tsx:246
+#: src/pages/Center/Search.tsx:300
+msgid "No albums found"
+msgstr ""
+
+#: src/pages/Center/Search.tsx:258
+#: src/pages/Center/Search.tsx:310
+msgid "No artists found"
+msgstr ""
+
+#: src/pages/Center/Search.tsx:270
+#: src/pages/Center/Search.tsx:319
+msgid "No playlists found"
+msgstr ""
+
 #: src/pages/Center/User.tsx:105
 msgid "No private or unlisted playlists found"
 msgstr ""
@@ -374,6 +395,11 @@ msgstr ""
 #: src/components/PipControls/PipControlsWindow.tsx:65
 #: src/components/Player/PlayerControlsInfos.tsx:23
 msgid "No track playing"
+msgstr ""
+
+#: src/pages/Center/Search.tsx:229
+#: src/pages/Center/Search.tsx:290
+msgid "No tracks found"
 msgstr ""
 
 #: src/pages/PanelRight.tsx:79
@@ -460,7 +486,8 @@ msgstr ""
 msgid "Playlist deleted"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:24
+#: src/pages/Center/Search.tsx:81
+#: src/pages/Center/Search.tsx:266
 msgid "Playlists"
 msgstr ""
 
@@ -542,12 +569,12 @@ msgstr "Sauvegarder"
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
-#: src/components/HeaderMenuSearch.tsx:28
-#: src/components/HeaderMenuSearch.tsx:31
+#: src/components/HeaderMenuSearch.tsx:45
+#: src/components/HeaderMenuSearch.tsx:48
 msgid "Search"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:67
+#: src/pages/Center/Search.tsx:189
 msgid "Search type"
 msgstr ""
 
@@ -603,7 +630,8 @@ msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 msgid "This action cannot be undone."
 msgstr ""
 
-#: src/pages/Center/Search.tsx:21
+#: src/pages/Center/Search.tsx:78
+#: src/pages/Center/Search.tsx:225
 msgid "Tracks"
 msgstr "Titres"
 
@@ -615,6 +643,10 @@ msgstr "Non répertoriée"
 #: src/utils/constants_sexes.ts:18
 msgid "Unspecified"
 msgstr "Non Spécifié"
+
+#: src/pages/Center/Search.tsx:211
+msgid "Updating results"
+msgstr ""
 
 #: src/pages/Unsupported/UnsupportedOverlay.tsx:15
 msgid "Upgrade to a supported Chromium browser"

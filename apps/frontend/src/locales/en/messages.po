@@ -81,11 +81,12 @@ msgstr "Album"
 msgid "Album cover"
 msgstr "Album cover"
 
-#: src/pages/Center/Search.tsx:22
+#: src/pages/Center/Search.tsx:79
+#: src/pages/Center/Search.tsx:242
 msgid "Albums"
 msgstr "Albums"
 
-#: src/pages/Center/Search.tsx:20
+#: src/pages/Center/Search.tsx:77
 msgid "All"
 msgstr "All"
 
@@ -101,7 +102,8 @@ msgstr "Ambient"
 msgid "Artist"
 msgstr "Artist"
 
-#: src/pages/Center/Search.tsx:23
+#: src/pages/Center/Search.tsx:80
+#: src/pages/Center/Search.tsx:254
 msgid "Artists"
 msgstr "Artists"
 
@@ -112,6 +114,10 @@ msgstr "Artists"
 #: src/pages/SettingsClient/SettingsClient.tsx:138
 msgid "Audio session:"
 msgstr "Audio session:"
+
+#: src/components/HeaderMenuSearch.tsx:54
+msgid "Browse"
+msgstr "Browse"
 
 #: src/components/Player/PlayerControls.tsx:154
 #~ msgid "Buffering…"
@@ -187,7 +193,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Disabled"
 
-#: src/components/TrackList/TrackList.tsx:422
+#: src/components/TrackList/TrackList.tsx:449
 msgid "Disc {discNumber}"
 msgstr "Disc {discNumber}"
 
@@ -230,7 +236,7 @@ msgstr "Failed to delete playlist"
 msgid "Failed to remove track"
 msgstr "Failed to remove track"
 
-#: src/components/TrackList/TrackList.tsx:333
+#: src/components/TrackList/TrackList.tsx:340
 msgid "Failed to reorder playlist tracks"
 msgstr "Failed to reorder playlist tracks"
 
@@ -366,6 +372,21 @@ msgstr "Next from: {queueFromLabel}"
 msgid "Next in queue"
 msgstr "Next in queue"
 
+#: src/pages/Center/Search.tsx:246
+#: src/pages/Center/Search.tsx:300
+msgid "No albums found"
+msgstr "No albums found"
+
+#: src/pages/Center/Search.tsx:258
+#: src/pages/Center/Search.tsx:310
+msgid "No artists found"
+msgstr "No artists found"
+
+#: src/pages/Center/Search.tsx:270
+#: src/pages/Center/Search.tsx:319
+msgid "No playlists found"
+msgstr "No playlists found"
+
 #: src/pages/Center/User.tsx:105
 msgid "No private or unlisted playlists found"
 msgstr "No private or unlisted playlists found"
@@ -379,6 +400,11 @@ msgstr "No public playlists found"
 #: src/components/Player/PlayerControlsInfos.tsx:23
 msgid "No track playing"
 msgstr "No track playing"
+
+#: src/pages/Center/Search.tsx:229
+#: src/pages/Center/Search.tsx:290
+msgid "No tracks found"
+msgstr "No tracks found"
 
 #: src/pages/PanelRight.tsx:79
 msgid "Now playing"
@@ -464,7 +490,8 @@ msgstr "Playlist cover"
 msgid "Playlist deleted"
 msgstr "Playlist deleted"
 
-#: src/pages/Center/Search.tsx:24
+#: src/pages/Center/Search.tsx:81
+#: src/pages/Center/Search.tsx:266
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -546,12 +573,12 @@ msgstr "Save"
 msgid "Save to library"
 msgstr "Save to library"
 
-#: src/components/HeaderMenuSearch.tsx:28
-#: src/components/HeaderMenuSearch.tsx:31
+#: src/components/HeaderMenuSearch.tsx:45
+#: src/components/HeaderMenuSearch.tsx:48
 msgid "Search"
 msgstr "Search"
 
-#: src/pages/Center/Search.tsx:67
+#: src/pages/Center/Search.tsx:189
 msgid "Search type"
 msgstr "Search type"
 
@@ -607,7 +634,8 @@ msgstr "The following modern web features are missing:"
 msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
 
-#: src/pages/Center/Search.tsx:21
+#: src/pages/Center/Search.tsx:78
+#: src/pages/Center/Search.tsx:225
 msgid "Tracks"
 msgstr "Tracks"
 
@@ -619,6 +647,10 @@ msgstr "Unlisted"
 #: src/utils/constants_sexes.ts:18
 msgid "Unspecified"
 msgstr "Unspecified"
+
+#: src/pages/Center/Search.tsx:211
+msgid "Updating results"
+msgstr "Updating results"
 
 #: src/pages/Unsupported/UnsupportedOverlay.tsx:15
 msgid "Upgrade to a supported Chromium browser"
