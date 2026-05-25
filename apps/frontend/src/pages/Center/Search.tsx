@@ -186,6 +186,9 @@ export function Search() {
           className="flex flex-row flex-wrap gap-2"
           value={[type]}
           onValueChange={handleTypeChange}
+          // Override needed to fix BaseUI accessibility issue
+          // https://github.com/mui/base-ui/issues/4623
+          aria-orientation={undefined}
           aria-label={t`Search type`}
         >
           {searchTypeOptions.map((option) => (
