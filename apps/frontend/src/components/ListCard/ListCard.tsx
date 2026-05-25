@@ -51,6 +51,7 @@ export function ListCard(props: ListCardProps) {
     isArtistList
       ? props.artists.map((artist) => ({ id: artist.id, label: artist.name }))
       : props.users.map((user) => ({ id: user.id, label: user.username }));
+  const hasMeta = props.year !== undefined || people.length > 0;
 
   return (
     <div
@@ -68,21 +69,25 @@ export function ListCard(props: ListCardProps) {
         />
       </div>
       <h3 className="mb-1 line-clamp-2 font-semibold">{props.title}</h3>
-      <p className="line-clamp-2 text-sm text-zinc-400">
-        {props.year ? <span>{props.year} • </span> : null}
-        {people.map((person, index) => (
-          <span key={person.id ?? index}>
-            <span
-              onClick={(e) => handlePersonClick(e, person.id, peopleRoutePrefix)}
-              className="cursor-pointer hover:underline"
-              role="link"
-            >
-              {person.label}
+      {hasMeta ? (
+        <p className="line-clamp-2 text-sm text-zinc-400">
+          {props.year ? <span>{props.year} • </span> : null}
+          {people.map((person, index) => (
+            <span key={person.id ?? index}>
+              <span
+                onClick={(e) =>
+                  handlePersonClick(e, person.id, peopleRoutePrefix)
+                }
+                className="cursor-pointer hover:underline"
+                role="link"
+              >
+                {person.label}
+              </span>
+              {index < people.length - 1 && ", "}
             </span>
-            {index < people.length - 1 && ", "}
-          </span>
-        ))}
-      </p>
+          ))}
+        </p>
+      ) : null}
     </div>
   );
 }

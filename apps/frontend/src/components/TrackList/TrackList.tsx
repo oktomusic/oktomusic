@@ -13,6 +13,7 @@ import {
   playerQueueCurrentTrackSourceAtom,
   playerQueueFromAtom,
   playerQueueMainIndexAtom,
+  replaceManualQueueAtom,
   replaceQueueAtom,
   type PlayerQueueFrom,
   type TrackWithAlbum,
@@ -99,6 +100,10 @@ interface TrackListProps {
   readonly tracks: readonly (readonly TrackWithAlbum[])[];
   readonly displayCover?: boolean;
   /**
+   * Controls how clicking a track should queue playback.
+   */
+  readonly playMode?: TrackListPlayMode;
+  /**
    * Optional source metadata for the queue being started from this list.
    */
   readonly queueFrom?: PlayerQueueFrom | null;
@@ -118,6 +123,8 @@ interface TrackListProps {
    */
   readonly droppableId: string;
 }
+
+type TrackListPlayMode = "main" | "manual";
 
 export function TrackList(props: TrackListProps) {
   const [reorderPlaylistTracks] = useMutation(REORDER_PLAYLIST_TRACKS_MUTATION);
@@ -369,6 +376,7 @@ export function TrackList(props: TrackListProps) {
   const currentTrackSource = useAtomValue(playerQueueCurrentTrackSourceAtom);
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
+  const replaceManualQueue = useSetAtom(replaceManualQueueAtom);
   const setQueueFrom = useSetAtom(playerQueueFromAtom);
   const seekToQueueIndex = useSetAtom(handleSeekToQueueIndexAtom);
 
@@ -381,16 +389,35 @@ export function TrackList(props: TrackListProps) {
     mainQueueFrom.id === props.queueFrom.id;
 
   const isMainQueueActive = currentTrackSource === "main";
+  const isManualQueueActive = currentTrackSource === "manual";
+  const playMode = props.playMode ?? "main";
 
   const handlePlay = useCallback(
     (globalIndex: number) => {
+      if (playMode === "manual") {
+        const track = allTracks[globalIndex];
+        if (!track) {
+          return;
+        }
+        replaceManualQueue([track]);
+        return;
+      }
+
       setQueueFrom(props.queueFrom ?? null);
       replaceQueue(allTracks);
       if (globalIndex > 0) {
         seekToQueueIndex(globalIndex);
       }
     },
-    [allTracks, props.queueFrom, replaceQueue, seekToQueueIndex, setQueueFrom],
+    [
+      allTracks,
+      playMode,
+      props.queueFrom,
+      replaceManualQueue,
+      replaceQueue,
+      seekToQueueIndex,
+      setQueueFrom,
+    ],
   );
 
   return (
@@ -427,10 +454,12 @@ export function TrackList(props: TrackListProps) {
               {discTracks.map((track, trackIndex) => {
                 const globalIndex = discStartIndex + trackIndex;
                 const isCurrentTrack =
-                  isMainQueueActive &&
-                  queueFromMatches &&
-                  mainQueueIndex === globalIndex &&
-                  currentTrack?.id === track.id;
+                  playMode === "manual"
+                    ? isManualQueueActive && currentTrack?.id === track.id
+                    : isMainQueueActive &&
+                      queueFromMatches &&
+                      mainQueueIndex === globalIndex &&
+                      currentTrack?.id === track.id;
                 const sortableId =
                   props.reorderable &&
                   sortableTrackItems[globalIndex] !== undefined

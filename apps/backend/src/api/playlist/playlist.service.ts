@@ -17,7 +17,11 @@ import { PrismaService } from "../../db/prisma.service";
 import { TrackService } from "../track/track.service";
 import type { CreatePlaylistInput } from "./dto/create-playlist.input";
 import type { UpdatePlaylistInput } from "./dto/update-playlist.input";
-import { PlaylistModel, PlaylistTrackModel } from "./playlist.model";
+import {
+  PlaylistBasicModel,
+  PlaylistModel,
+  PlaylistTrackModel,
+} from "./playlist.model";
 import { PlaylistVisibility } from "./playlist-visibility.enum";
 
 @Injectable()
@@ -112,7 +116,7 @@ export class PlaylistService {
     nameQuery: string,
     user: User | false,
     limit: number = 50,
-  ) {
+  ): Promise<PlaylistBasicModel[]> {
     const where: Prisma.PlaylistWhereInput = {
       name: { contains: nameQuery, mode: "insensitive" },
     };
@@ -120,6 +124,8 @@ export class PlaylistService {
     if (user !== false) {
       // restrict to the current user's playlists (including private)
       where.userId = user.id;
+    } else {
+      where.visibility = PrismaPlaylistVisibility.PUBLIC;
     }
 
     const playlists = await this.prisma.playlist.findMany({
@@ -139,7 +145,7 @@ export class PlaylistService {
       id: p.id,
       name: p.name,
       description: p.description,
-      visibility: p.visibility,
+      visibility: p.visibility as PlaylistVisibility,
       creator: { id: p.user.id, username: p.user.username },
     }));
   }

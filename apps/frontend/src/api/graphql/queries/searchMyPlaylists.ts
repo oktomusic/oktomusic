@@ -6,6 +6,11 @@ export const SEARCH_MY_PLAYLISTS_QUERY = graphql(/* GraphQL */ `
       id
       name
       description
+      visibility
+      creator {
+        id
+        username
+      }
     }
   }
 `);

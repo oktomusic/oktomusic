@@ -299,6 +299,12 @@ export const handleSeekToManualQueueIndexAtom = atom(
   },
 );
 
+const toQueuedManualTracks = (tracks: TrackWithAlbum[]): QueuedManualTrack[] =>
+  tracks.map((track) => ({
+    ...track,
+    queueEntryId: crypto.randomUUID(),
+  }));
+
 /** Action: Replace the queue with new tracks and start playing from the first track. */
 export const replaceQueueAtom = atom(
   null,
@@ -308,6 +314,29 @@ export const replaceQueueAtom = atom(
     set(playerQueueManualAtom, []);
     set(playerQueueCurrentTrackSourceAtom, tracks.length > 0 ? "main" : null);
     set(playerShouldPlayAtom, tracks.length > 0);
+  },
+);
+
+/** Action: Replace manual queue tracks and play from the first item. */
+export const replaceManualQueueAtom = atom(
+  null,
+  (get, set, tracks: TrackWithAlbum[]) => {
+    const queuedTracks = toQueuedManualTracks(tracks);
+
+    set(playerQueueManualAtom, queuedTracks);
+
+    if (queuedTracks.length > 0) {
+      set(playerQueueCurrentTrackSourceAtom, "manual");
+      set(playerShouldPlayAtom, true);
+      return;
+    }
+
+    const mainQueue = get(playerQueueAtom);
+    set(
+      playerQueueCurrentTrackSourceAtom,
+      mainQueue.length > 0 ? "main" : null,
+    );
+    set(playerShouldPlayAtom, mainQueue.length > 0);
   },
 );
 
@@ -326,10 +355,7 @@ export const addToQueueAtom = atom(
     const hasCurrentTrack =
       (source === "manual" && manualQueue.length > 0) || mainQueue.length > 0;
 
-    const queuedTracks: QueuedManualTrack[] = tracks.map((track) => ({
-      ...track,
-      queueEntryId: crypto.randomUUID(),
-    }));
+    const queuedTracks = toQueuedManualTracks(tracks);
 
     set(playerQueueManualAtom, [...manualQueue, ...queuedTracks]);
 
