@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { Button } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { LuVolume2, LuVolumeX } from "react-icons/lu";
+import { t } from "@lingui/core/macro";
 
 import { OktoSlider } from "../Base/OktoSlider";
 import {
@@ -96,6 +97,7 @@ export function PlayerControlsVolume() {
       <Button
         className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
         onClick={handleMuteToggle}
+        title={muted ? t`Unmute` : t`Mute`}
       >
         {Icon}
       </Button>

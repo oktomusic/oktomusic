@@ -339,6 +339,10 @@ msgstr "Plus d'options pour {albumName}"
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
+#: src/components/Player/PlayerControlsVolume.tsx:100
+msgid "Mute"
+msgstr ""
+
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:189
 msgid "Name"
 msgstr "Nom"
@@ -639,6 +643,10 @@ msgstr "Titres"
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:43
 msgid "Unlisted"
 msgstr "Non répertoriée"
+
+#: src/components/Player/PlayerControlsVolume.tsx:100
+msgid "Unmute"
+msgstr ""
 
 #: src/utils/constants_sexes.ts:18
 msgid "Unspecified"
