@@ -34,15 +34,6 @@ export function ListCard(props: ListCardProps) {
     void navigate(props.link);
   };
 
-  const handlePersonClick = (
-    e: React.MouseEvent<HTMLSpanElement>,
-    personId: string,
-    routePrefix: "/artist/" | "/user/",
-  ) => {
-    e.stopPropagation();
-    void navigate(`${routePrefix}${personId}`);
-  };
-
   const isArtistList = props.artists !== undefined;
   const peopleRoutePrefix: "/artist/" | "/user/" = isArtistList
     ? "/artist/"
@@ -74,15 +65,16 @@ export function ListCard(props: ListCardProps) {
           {props.year ? <span>{props.year} • </span> : null}
           {people.map((person, index) => (
             <span key={person.id ?? index}>
-              <span
-                onClick={(e) =>
-                  handlePersonClick(e, person.id, peopleRoutePrefix)
-                }
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  void navigate(`${peopleRoutePrefix}${person.id}`);
+                }}
                 className="cursor-pointer hover:underline"
                 role="link"
               >
                 {person.label}
-              </span>
+              </button>
               {index < people.length - 1 && ", "}
             </span>
           ))}
