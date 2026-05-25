@@ -82,7 +82,7 @@ msgid "Album cover"
 msgstr "Album cover"
 
 #: src/pages/Center/Search.tsx:79
-#: src/pages/Center/Search.tsx:242
+#: src/pages/Center/Search.tsx:245
 msgid "Albums"
 msgstr "Albums"
 
@@ -103,7 +103,7 @@ msgid "Artist"
 msgstr "Artist"
 
 #: src/pages/Center/Search.tsx:80
-#: src/pages/Center/Search.tsx:254
+#: src/pages/Center/Search.tsx:257
 msgid "Artists"
 msgstr "Artists"
 
@@ -376,18 +376,18 @@ msgstr "Next from: {queueFromLabel}"
 msgid "Next in queue"
 msgstr "Next in queue"
 
-#: src/pages/Center/Search.tsx:246
-#: src/pages/Center/Search.tsx:300
+#: src/pages/Center/Search.tsx:249
+#: src/pages/Center/Search.tsx:303
 msgid "No albums found"
 msgstr "No albums found"
 
-#: src/pages/Center/Search.tsx:258
-#: src/pages/Center/Search.tsx:310
+#: src/pages/Center/Search.tsx:261
+#: src/pages/Center/Search.tsx:313
 msgid "No artists found"
 msgstr "No artists found"
 
-#: src/pages/Center/Search.tsx:270
-#: src/pages/Center/Search.tsx:319
+#: src/pages/Center/Search.tsx:273
+#: src/pages/Center/Search.tsx:322
 msgid "No playlists found"
 msgstr "No playlists found"
 
@@ -405,8 +405,8 @@ msgstr "No public playlists found"
 msgid "No track playing"
 msgstr "No track playing"
 
-#: src/pages/Center/Search.tsx:229
-#: src/pages/Center/Search.tsx:290
+#: src/pages/Center/Search.tsx:232
+#: src/pages/Center/Search.tsx:293
 msgid "No tracks found"
 msgstr "No tracks found"
 
@@ -495,7 +495,7 @@ msgid "Playlist deleted"
 msgstr "Playlist deleted"
 
 #: src/pages/Center/Search.tsx:81
-#: src/pages/Center/Search.tsx:266
+#: src/pages/Center/Search.tsx:269
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -582,7 +582,7 @@ msgstr "Save to library"
 msgid "Search"
 msgstr "Search"
 
-#: src/pages/Center/Search.tsx:189
+#: src/pages/Center/Search.tsx:192
 msgid "Search type"
 msgstr "Search type"
 
@@ -639,7 +639,7 @@ msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
 
 #: src/pages/Center/Search.tsx:78
-#: src/pages/Center/Search.tsx:225
+#: src/pages/Center/Search.tsx:228
 msgid "Tracks"
 msgstr "Tracks"
 
@@ -656,7 +656,7 @@ msgstr "Unmute"
 msgid "Unspecified"
 msgstr "Unspecified"
 
-#: src/pages/Center/Search.tsx:211
+#: src/pages/Center/Search.tsx:214
 msgid "Updating results"
 msgstr "Updating results"
 

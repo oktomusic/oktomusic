@@ -78,7 +78,7 @@ msgid "Album cover"
 msgstr ""
 
 #: src/pages/Center/Search.tsx:79
-#: src/pages/Center/Search.tsx:242
+#: src/pages/Center/Search.tsx:245
 msgid "Albums"
 msgstr "Albums"
 
@@ -99,7 +99,7 @@ msgid "Artist"
 msgstr "Artiste"
 
 #: src/pages/Center/Search.tsx:80
-#: src/pages/Center/Search.tsx:254
+#: src/pages/Center/Search.tsx:257
 msgid "Artists"
 msgstr "Artistes"
 
@@ -372,18 +372,18 @@ msgstr "À suivre dans : {queueFromLabel}"
 msgid "Next in queue"
 msgstr "À suivre"
 
-#: src/pages/Center/Search.tsx:246
-#: src/pages/Center/Search.tsx:300
+#: src/pages/Center/Search.tsx:249
+#: src/pages/Center/Search.tsx:303
 msgid "No albums found"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:258
-#: src/pages/Center/Search.tsx:310
+#: src/pages/Center/Search.tsx:261
+#: src/pages/Center/Search.tsx:313
 msgid "No artists found"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:270
-#: src/pages/Center/Search.tsx:319
+#: src/pages/Center/Search.tsx:273
+#: src/pages/Center/Search.tsx:322
 msgid "No playlists found"
 msgstr ""
 
@@ -401,8 +401,8 @@ msgstr ""
 msgid "No track playing"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:229
-#: src/pages/Center/Search.tsx:290
+#: src/pages/Center/Search.tsx:232
+#: src/pages/Center/Search.tsx:293
 msgid "No tracks found"
 msgstr ""
 
@@ -491,7 +491,7 @@ msgid "Playlist deleted"
 msgstr ""
 
 #: src/pages/Center/Search.tsx:81
-#: src/pages/Center/Search.tsx:266
+#: src/pages/Center/Search.tsx:269
 msgid "Playlists"
 msgstr ""
 
@@ -578,7 +578,7 @@ msgstr "Sauvegarder dans la bibliothèque"
 msgid "Search"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:189
+#: src/pages/Center/Search.tsx:192
 msgid "Search type"
 msgstr ""
 
@@ -635,7 +635,7 @@ msgid "This action cannot be undone."
 msgstr ""
 
 #: src/pages/Center/Search.tsx:78
-#: src/pages/Center/Search.tsx:225
+#: src/pages/Center/Search.tsx:228
 msgid "Tracks"
 msgstr "Titres"
 
@@ -652,7 +652,7 @@ msgstr ""
 msgid "Unspecified"
 msgstr "Non Spécifié"
 
-#: src/pages/Center/Search.tsx:211
+#: src/pages/Center/Search.tsx:214
 msgid "Updating results"
 msgstr ""
 
