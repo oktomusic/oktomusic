@@ -10,3 +10,5 @@
   format: "svg",
   height: auto,
 )
+
+#image("../common/setup.excalidraw.svg", alt: "Schéma de setup", fit: "contain", format: "svg", height: auto)
