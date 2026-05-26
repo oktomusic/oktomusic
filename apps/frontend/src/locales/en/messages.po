@@ -46,7 +46,7 @@ msgstr "Add a name"
 msgid "Add an optional description"
 msgstr "Add an optional description"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:33
+#: src/components/SubmenuPlaylistsSearch.tsx:46
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
@@ -244,7 +244,7 @@ msgstr "Failed to reorder playlist tracks"
 msgid "Failed to share"
 msgstr "Failed to share"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:41
+#: src/components/SubmenuPlaylistsSearch.tsx:55
 msgid "Find a playlist..."
 msgstr "Find a playlist..."
 
@@ -308,6 +308,10 @@ msgstr "Line by line"
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
+#: src/components/SubmenuPlaylistsSearch.tsx:78
+msgid "Loading playlists"
+msgstr "Loading playlists"
+
 #: src/components/HeaderMenu.tsx:59
 msgid "Logout"
 msgstr "Logout"
@@ -355,7 +359,7 @@ msgstr "Name"
 msgid "Never"
 msgstr "Never"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:55
+#: src/components/SubmenuPlaylistsSearch.tsx:84
 msgid "New playlist"
 msgstr "New playlist"
 

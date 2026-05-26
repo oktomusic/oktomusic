@@ -46,7 +46,7 @@ msgstr ""
 msgid "Add an optional description"
 msgstr ""
 
-#: src/components/SubmenuPlaylistsSearch.tsx:33
+#: src/components/SubmenuPlaylistsSearch.tsx:46
 msgid "Add to playlist"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgstr ""
 msgid "Failed to share"
 msgstr ""
 
-#: src/components/SubmenuPlaylistsSearch.tsx:41
+#: src/components/SubmenuPlaylistsSearch.tsx:55
 msgid "Find a playlist..."
 msgstr ""
 
@@ -304,6 +304,10 @@ msgstr "Ligne par ligne"
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
+#: src/components/SubmenuPlaylistsSearch.tsx:78
+msgid "Loading playlists"
+msgstr ""
+
 #: src/components/HeaderMenu.tsx:59
 msgid "Logout"
 msgstr "Déconnexion"
@@ -351,7 +355,7 @@ msgstr "Nom"
 msgid "Never"
 msgstr "Jamais"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:55
+#: src/components/SubmenuPlaylistsSearch.tsx:84
 msgid "New playlist"
 msgstr ""
 
