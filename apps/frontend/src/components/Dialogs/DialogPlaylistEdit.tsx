@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import { useAtom, useAtomValue } from "jotai";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { Button, Field, Fieldset, Label } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
+import { useAtom, useAtomValue } from "jotai";
 import {
   LuGlobe,
   LuLink,
@@ -14,6 +14,7 @@ import {
 import { dialogPlaylistOpenAtom } from "../../atoms/app/dialogs";
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
+import { SEARCH_MY_PLAYLISTS_QUERY } from "../../api/graphql/queries/searchMyPlaylists";
 import { CREATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/createPlaylist";
 import { UPDATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/updatePlaylist";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
@@ -103,6 +104,10 @@ export function DialogPlaylistEdit() {
               },
               refetchQueries: [
                 {
+                  query: SEARCH_MY_PLAYLISTS_QUERY,
+                  variables: { name: "" },
+                },
+                {
                   query: PLAYLIST_QUERY,
                   variables: { id: editPlaylistId },
                 },
@@ -120,6 +125,10 @@ export function DialogPlaylistEdit() {
                 input: payload,
               },
               refetchQueries: [
+                {
+                  query: SEARCH_MY_PLAYLISTS_QUERY,
+                  variables: { name: "" },
+                },
                 {
                   query: USER_PROFILE_QUERY,
                   variables: {

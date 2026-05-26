@@ -38,15 +38,15 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:197
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:206
 msgid "Add a name"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:213
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:222
 msgid "Add an optional description"
 msgstr ""
 
-#: src/components/SubmenuPlaylistsSearch.tsx:34
+#: src/components/SubmenuPlaylistsSearch.tsx:33
 msgid "Add to playlist"
 msgstr ""
 
@@ -156,7 +156,7 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:169
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:178
 msgid "Create playlist"
 msgstr ""
 
@@ -180,7 +180,7 @@ msgstr ""
 msgid "Delete playlist?"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:207
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:216
 msgid "Description"
 msgstr "Description"
 
@@ -202,7 +202,7 @@ msgstr "Télécharger"
 msgid "Edit details"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:169
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:178
 msgid "Edit playlist details"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgstr ""
 msgid "Failed to share"
 msgstr ""
 
-#: src/components/SubmenuPlaylistsSearch.tsx:42
+#: src/components/SubmenuPlaylistsSearch.tsx:41
 msgid "Find a playlist..."
 msgstr ""
 
@@ -343,7 +343,7 @@ msgstr "Plus d'options pour {trackName}"
 msgid "Mute"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:189
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:198
 msgid "Name"
 msgstr "Nom"
 
@@ -351,7 +351,7 @@ msgstr "Nom"
 msgid "Never"
 msgstr "Jamais"
 
-#: src/components/SubmenuPlaylistsSearch.tsx:56
+#: src/components/SubmenuPlaylistsSearch.tsx:55
 msgid "New playlist"
 msgstr ""
 
@@ -482,7 +482,7 @@ msgstr "Commandes de lecture"
 msgid "Playlist"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:179
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:188
 msgid "Playlist cover"
 msgstr ""
 
@@ -509,7 +509,7 @@ msgid "Previous"
 msgstr "Précédent"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:26
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:44
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:45
 msgid "Private"
 msgstr "Privée"
 
@@ -523,7 +523,7 @@ msgid "Profile"
 msgstr ""
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:28
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:42
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:43
 msgid "Public"
 msgstr "Publique"
 
@@ -564,7 +564,7 @@ msgstr ""
 msgid "Russian"
 msgstr "Russe"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:236
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:245
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -640,7 +640,7 @@ msgid "Tracks"
 msgstr "Titres"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:43
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:44
 msgid "Unlisted"
 msgstr "Non répertoriée"
 
