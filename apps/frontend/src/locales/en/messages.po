@@ -53,7 +53,7 @@ msgstr "Add to playlist"
 #: src/components/QueueTrack/QueueTrack.tsx:40
 #: src/components/TrackList/TrackElement.tsx:127
 #: src/pages/Center/Album.tsx:110
-#: src/pages/Center/Playlist.tsx:132
+#: src/pages/Center/Playlist.tsx:130
 msgid "Add to queue"
 msgstr "Add to queue"
 
@@ -176,7 +176,7 @@ msgstr "Crossfade (seconds):"
 msgid "Delete"
 msgstr "Delete"
 
-#: src/pages/Center/Playlist.tsx:155
+#: src/pages/Center/Playlist.tsx:153
 msgid "Delete playlist"
 msgstr "Delete playlist"
 
@@ -202,7 +202,7 @@ msgstr "Disc {discNumber}"
 msgid "Download"
 msgstr "Download"
 
-#: src/pages/Center/Playlist.tsx:147
+#: src/pages/Center/Playlist.tsx:145
 msgid "Edit details"
 msgstr "Edit details"
 
@@ -430,7 +430,7 @@ msgstr "Original"
 msgid "Page not found"
 msgstr "Page not found"
 
-#: src/components/CollectionView/CollectionView.tsx:81
+#: src/components/CollectionView/CollectionView.tsx:83
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -440,7 +440,7 @@ msgstr "Page not found"
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/CollectionView/CollectionView.tsx:83
+#: src/components/CollectionView/CollectionView.tsx:85
 msgid "Pause {albumName}"
 msgstr "Pause {albumName}"
 
@@ -456,7 +456,7 @@ msgstr "Persistent storage granted"
 msgid "Persistent storage not granted"
 msgstr "Persistent storage not granted"
 
-#: src/components/CollectionView/CollectionView.tsx:81
+#: src/components/CollectionView/CollectionView.tsx:83
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -466,7 +466,7 @@ msgstr "Persistent storage not granted"
 msgid "Play"
 msgstr "Play"
 
-#: src/components/CollectionView/CollectionView.tsx:84
+#: src/components/CollectionView/CollectionView.tsx:86
 msgid "Play {albumName}"
 msgstr "Play {albumName}"
 
@@ -486,7 +486,7 @@ msgid "Playback controls"
 msgstr "Playback controls"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:174
+#: src/pages/Center/Playlist.tsx:173
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -607,7 +607,7 @@ msgid "Sexe :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:103
-#: src/pages/Center/Playlist.tsx:139
+#: src/pages/Center/Playlist.tsx:137
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Share"

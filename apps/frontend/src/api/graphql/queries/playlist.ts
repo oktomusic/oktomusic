@@ -11,6 +11,7 @@ export const PLAYLIST_QUERY = graphql(/* GraphQL */ `
         id
         username
       }
+      coverAlbumIds
       tracks {
         position
         addedAt

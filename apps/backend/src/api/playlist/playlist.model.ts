@@ -51,6 +51,12 @@ export class PlaylistModel {
 
   @Field(() => [PlaylistTrackModel])
   tracks!: PlaylistTrackModel[];
+
+  @Field(() => [String], {
+    description:
+      "Album IDs used for the playlist cover (either 1 or 4 unique albums)",
+  })
+  coverAlbumIds!: string[];
 }
 
 @ObjectType("PlaylistBasic")
@@ -71,4 +77,10 @@ export class PlaylistBasicModel {
 
   @Field(() => PlaylistCreatorModel)
   creator!: PlaylistCreatorModel;
+
+  @Field(() => [String], {
+    description:
+      "Album IDs used for the playlist cover (either 1 or 4 unique albums)",
+  })
+  coverAlbumIds!: string[];
 }

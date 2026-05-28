@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router";
 
+import { Cover } from "../Base/Cover";
+import type { CoverImages } from "../Base/CoverImages";
+
 interface ArtistInfo {
   readonly id: string;
   readonly name: string;
@@ -10,22 +13,24 @@ interface UserInfo {
   readonly username: string;
 }
 
-type ListCardPeopleProps =
-  | {
-      readonly artists: readonly ArtistInfo[];
-      readonly users?: never;
-    }
-  | {
-      readonly artists?: never;
-      readonly users: readonly UserInfo[];
-    };
-
-type ListCardProps = ListCardPeopleProps & {
+interface ListCardBaseProps {
   readonly link: string;
-  readonly cover: string;
+  readonly cover: CoverImages;
   readonly title: string;
   readonly year?: number;
-};
+}
+
+interface ListCardArtistsProps extends ListCardBaseProps {
+  readonly artists: readonly ArtistInfo[];
+  readonly users?: never;
+}
+
+interface ListCardUsersProps extends ListCardBaseProps {
+  readonly artists?: never;
+  readonly users: readonly UserInfo[];
+}
+
+type ListCardProps = ListCardArtistsProps | ListCardUsersProps;
 
 export function ListCard(props: ListCardProps) {
   const navigate = useNavigate();
@@ -50,15 +55,14 @@ export function ListCard(props: ListCardProps) {
       className="group h-72 w-50 max-w-min cursor-pointer rounded-lg bg-zinc-800 p-3"
       role="link"
     >
-      <div className="mb-2 size-44 rounded-lg">
-        <img
-          src={props.cover}
-          alt={props.title}
-          className="h-full w-full rounded-lg"
-          loading="lazy"
-          fetchPriority="low"
-        />
-      </div>
+      <Cover
+        imgs={props.cover}
+        size={256}
+        alt={props.title}
+        className="mb-2 size-44 rounded-lg"
+        loading="lazy"
+        fetchPriority="low"
+      />
       <h3 className="mb-1 line-clamp-2 font-semibold">{props.title}</h3>
       {hasMeta ? (
         <p className="line-clamp-2 text-sm text-zinc-400">

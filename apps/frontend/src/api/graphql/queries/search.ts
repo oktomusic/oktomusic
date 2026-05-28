@@ -79,6 +79,7 @@ export const SEARCH_MUSIC_QUERY = graphql(/* GraphQL */ `
           id
           username
         }
+        coverAlbumIds
       }
     }
   }
