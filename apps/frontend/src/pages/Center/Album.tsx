@@ -118,7 +118,7 @@ export function Album() {
     <CollectionView
       type={t`Album`}
       title={data!.album.name}
-      cover={`/api/album/${data!.album.id}/cover/1280`}
+      cover={[data!.album.id]}
       coverOnClick={() => {
         setDialogCoverId(data!.album.id);
       }}
