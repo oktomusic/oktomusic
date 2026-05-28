@@ -1,5 +1,6 @@
 import { type PlaylistBasic } from "../../api/graphql/gql/graphql";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
+import { getCoverImagesFromAlbumIds } from "./CoverImages";
 import { ListCard } from "../ListCard/ListCard";
 
 interface PlaylistCardListProps {
@@ -13,7 +14,10 @@ export function PlaylistCardList(props: PlaylistCardListProps) {
         <ListCard
           key={playlist.id}
           link={`/playlist/${playlist.id}`}
-          cover={coverPlaceHolder}
+          cover={getCoverImagesFromAlbumIds(
+            playlist.coverAlbumIds,
+            coverPlaceHolder,
+          )}
           title={playlist.name}
           users={[
             {

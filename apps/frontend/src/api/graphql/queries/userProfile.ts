@@ -18,6 +18,7 @@ export const USER_PROFILE_QUERY = graphql(/* GraphQL */ `
           id
           username
         }
+        coverAlbumIds
       }
     }
   }

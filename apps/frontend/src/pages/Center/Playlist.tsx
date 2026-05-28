@@ -10,6 +10,7 @@ import { GenericGraphQLError } from "./GenericGraphQLError";
 import { CollectionView } from "../../components/CollectionView/CollectionView";
 import { TrackList } from "../../components/TrackList/TrackList";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
+import { getCoverImagesFromAlbumIds } from "../../components/Base/CoverImages";
 import {
   addToQueueAtom,
   playerQueueCurrentTrackSourceAtom,
@@ -21,7 +22,6 @@ import {
   type TrackWithAlbum,
 } from "../../atoms/player/machine";
 import {
-  dialogCoverId,
   dialogPlaylistDeleteOpenAtom,
   dialogPlaylistOpenAtom,
 } from "../../atoms/app/dialogs";
@@ -56,8 +56,6 @@ export function Playlist() {
   const setQueueFrom = useSetAtom(playerQueueFromAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
-
-  const setDialogCoverId = useSetAtom(dialogCoverId);
 
   const share = useShare(
     data ? `${window.location.origin}/playlist/${data.playlist.id}` : undefined,
@@ -104,10 +102,10 @@ export function Playlist() {
       }
     : undefined;
 
-  const playlistCover = primaryAlbum
-    ? `/api/album/${primaryAlbum.id}/cover/1280`
-    : coverPlaceHolder;
-  const playlistCoverId = primaryAlbum ? primaryAlbum.id : null;
+  const playlistCover = getCoverImagesFromAlbumIds(
+    playlist.coverAlbumIds,
+    coverPlaceHolder,
+  );
 
   const playlistTracksArray: TrackWithAlbum[][] = [playlistTracks];
   const playlistQueueFrom = {
@@ -162,6 +160,7 @@ export function Playlist() {
                 description: data.playlist.description,
                 visibility: data.playlist.visibility,
                 creator: data.playlist.creator,
+                coverAlbumIds: data.playlist.coverAlbumIds,
               });
             },
           },
@@ -175,9 +174,7 @@ export function Playlist() {
       title={title}
       subtitle={playlist.description ?? undefined}
       cover={playlistCover}
-      coverOnClick={() => {
-        setDialogCoverId(playlistCoverId);
-      }}
+      coverOnClick={undefined}
       playButtonIsPlaying={playButtonIsPlaying}
       colors={playlistColors}
       onPlay={() => {

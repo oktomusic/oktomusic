@@ -8,6 +8,7 @@ import {
 } from "../../generated/prisma/client";
 import { PrismaService } from "../../db/prisma.service";
 import { PlaylistBasicModel } from "../playlist/playlist.model";
+import { getCoverAlbumIds } from "../playlist/playlist-cover.utils";
 import { PlaylistVisibility } from "../playlist/playlist-visibility.enum";
 
 interface UpdateUserProfileData {
@@ -77,6 +78,12 @@ export class UserService {
             username: true,
           },
         },
+        playlistTracks: {
+          select: {
+            track: { select: { albumId: true } },
+          },
+          orderBy: { position: "asc" },
+        },
       },
       orderBy: { updatedAt: "desc" },
     });
@@ -90,6 +97,9 @@ export class UserService {
         id: playlist.user.id,
         username: playlist.user.username,
       },
+      coverAlbumIds: getCoverAlbumIds(
+        playlist.playlistTracks.map((track) => track.track.albumId),
+      ),
     }));
   }
 }

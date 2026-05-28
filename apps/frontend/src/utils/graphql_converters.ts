@@ -37,7 +37,7 @@ export function albumToAlbumBasic(album: AlbumToAlbumBasicInput): AlbumBasic {
 
 type PlaylistToPlaylistBasicInput = Pick<
   Playlist,
-  "creator" | "description" | "id" | "name" | "visibility"
+  "coverAlbumIds" | "creator" | "description" | "id" | "name" | "visibility"
 >;
 
 export function playlistToPlaylistBasic(
@@ -45,6 +45,7 @@ export function playlistToPlaylistBasic(
 ): PlaylistBasic {
   return {
     __typename: "PlaylistBasic",
+    coverAlbumIds: playlist.coverAlbumIds,
     creator: playlist.creator,
     description: playlist.description,
     id: playlist.id,

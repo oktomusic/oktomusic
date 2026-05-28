@@ -17,6 +17,7 @@ import { PrismaService } from "../../db/prisma.service";
 import { TrackService } from "../track/track.service";
 import type { CreatePlaylistInput } from "./dto/create-playlist.input";
 import type { UpdatePlaylistInput } from "./dto/update-playlist.input";
+import { getCoverAlbumIds } from "./playlist-cover.utils";
 import {
   PlaylistBasicModel,
   PlaylistModel,
@@ -97,6 +98,10 @@ export class PlaylistService {
       track: this.trackService.mapTrack(pt.track),
     }));
 
+    const coverAlbumIds = getCoverAlbumIds(
+      playlist.playlistTracks.map((pt) => pt.track.albumId),
+    );
+
     return {
       id: playlist.id,
       name: playlist.name,
@@ -109,6 +114,7 @@ export class PlaylistService {
         username: playlist.user.username,
       },
       tracks,
+      coverAlbumIds,
     };
   }
 
@@ -137,6 +143,12 @@ export class PlaylistService {
         description: true,
         visibility: true,
         user: { select: { id: true, username: true } },
+        playlistTracks: {
+          select: {
+            track: { select: { albumId: true } },
+          },
+          orderBy: { position: "asc" },
+        },
       },
       orderBy: { updatedAt: "desc" },
     });
@@ -147,6 +159,9 @@ export class PlaylistService {
       description: p.description,
       visibility: p.visibility as PlaylistVisibility,
       creator: { id: p.user.id, username: p.user.username },
+      coverAlbumIds: getCoverAlbumIds(
+        p.playlistTracks.map((pt) => pt.track.albumId),
+      ),
     }));
   }
 
@@ -215,6 +230,7 @@ export class PlaylistService {
         username: playlist.user.username,
       },
       tracks: [],
+      coverAlbumIds: [],
     };
   }
 

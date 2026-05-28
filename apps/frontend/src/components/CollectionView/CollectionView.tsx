@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@headlessui/react";
-import { HiPause, HiPlay } from "react-icons/hi2";
 import { t } from "@lingui/core/macro";
+import { HiPause, HiPlay } from "react-icons/hi2";
 
 import { useVibrantColors } from "../../hooks/vibrant_colors";
 import { useFitText } from "../../hooks/fit_text";
@@ -9,6 +9,8 @@ import {
   VibrantColors,
   VibrantColorsPartial,
 } from "../../atoms/player/machine";
+import { Cover } from "../Base/Cover";
+import type { CoverImages } from "../Base/CoverImages";
 
 import "./CollectionView.css";
 
@@ -16,7 +18,7 @@ interface CollectionViewProps {
   readonly type?: string;
   readonly title: string;
   readonly subtitle?: string;
-  readonly cover: string;
+  readonly cover: CoverImages;
   readonly coverOnClick?: () => void;
   readonly onPlay?: () => void;
   readonly playButtonIsPlaying?: boolean;
@@ -115,13 +117,16 @@ export function CollectionView(props: CollectionViewProps) {
       {/* Banner with cover, title and meta */}
       <div className="collection-view__banner w-full p-6">
         <div className="relative flex w-full flex-row gap-6">
-          <img
-            src={props.cover}
+          <Cover
+            imgs={props.cover}
+            size={512}
             alt={props.title}
+            className={
+              "w-56 shrink-0 rounded-lg shadow-2xl/50 select-none" +
+              (props.coverOnClick ? " hover:cursor-pointer" : "")
+            }
             loading="eager"
             fetchPriority="high"
-            draggable={false}
-            className="aspect-square w-56 shrink-0 rounded-lg shadow-2xl/50 select-none hover:cursor-pointer"
             onClick={props.coverOnClick}
           />
           <div

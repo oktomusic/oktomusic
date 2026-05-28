@@ -53,7 +53,7 @@ msgstr ""
 #: src/components/QueueTrack/QueueTrack.tsx:40
 #: src/components/TrackList/TrackElement.tsx:127
 #: src/pages/Center/Album.tsx:110
-#: src/pages/Center/Playlist.tsx:132
+#: src/pages/Center/Playlist.tsx:130
 msgid "Add to queue"
 msgstr ""
 
@@ -172,7 +172,7 @@ msgstr "Fondu enchaîné (secondes) :"
 msgid "Delete"
 msgstr ""
 
-#: src/pages/Center/Playlist.tsx:155
+#: src/pages/Center/Playlist.tsx:153
 msgid "Delete playlist"
 msgstr ""
 
@@ -198,7 +198,7 @@ msgstr "Disque {discNumber}"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:147
+#: src/pages/Center/Playlist.tsx:145
 msgid "Edit details"
 msgstr ""
 
@@ -426,7 +426,7 @@ msgstr "Originale"
 msgid "Page not found"
 msgstr "Page introuvable"
 
-#: src/components/CollectionView/CollectionView.tsx:81
+#: src/components/CollectionView/CollectionView.tsx:83
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -436,7 +436,7 @@ msgstr "Page introuvable"
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/CollectionView/CollectionView.tsx:83
+#: src/components/CollectionView/CollectionView.tsx:85
 msgid "Pause {albumName}"
 msgstr ""
 
@@ -452,7 +452,7 @@ msgstr ""
 msgid "Persistent storage not granted"
 msgstr ""
 
-#: src/components/CollectionView/CollectionView.tsx:81
+#: src/components/CollectionView/CollectionView.tsx:83
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
 #: src/components/PipControls/PipControlsWindow.tsx:100
@@ -462,7 +462,7 @@ msgstr ""
 msgid "Play"
 msgstr "Lecture"
 
-#: src/components/CollectionView/CollectionView.tsx:84
+#: src/components/CollectionView/CollectionView.tsx:86
 msgid "Play {albumName}"
 msgstr ""
 
@@ -482,7 +482,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:174
+#: src/pages/Center/Playlist.tsx:173
 msgid "Playlist"
 msgstr ""
 
@@ -603,7 +603,7 @@ msgid "Sexe :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:103
-#: src/pages/Center/Playlist.tsx:139
+#: src/pages/Center/Playlist.tsx:137
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Partager"

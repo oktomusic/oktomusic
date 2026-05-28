@@ -18,6 +18,7 @@ import { PlaylistVisibility } from "./playlist-visibility.enum";
 type PrismaMock = {
   readonly playlist: {
     readonly findUnique: ReturnType<typeof vi.fn>;
+    readonly findMany: ReturnType<typeof vi.fn>;
     readonly create: ReturnType<typeof vi.fn>;
     readonly update: ReturnType<typeof vi.fn>;
     readonly delete: ReturnType<typeof vi.fn>;
@@ -59,6 +60,7 @@ describe("PlaylistService", () => {
     prisma = {
       playlist: {
         findUnique: vi.fn(),
+        findMany: vi.fn(),
         create: vi.fn(),
         update: vi.fn(),
         delete: vi.fn(),
@@ -137,7 +139,7 @@ describe("PlaylistService", () => {
         {
           position: 0,
           addedAt: new Date("2026-01-01T00:00:00.000Z"),
-          track: { id: "track-1" },
+          track: { id: "track-1", albumId: "album-1" },
         },
       ],
     });
@@ -146,6 +148,7 @@ describe("PlaylistService", () => {
 
     expect(result.visibility).toBe(PlaylistVisibility.PUBLIC);
     expect(result.tracks).toHaveLength(1);
+    expect(result.coverAlbumIds).toEqual(["album-1"]);
     expect(trackService.mapTrack).toHaveBeenCalledTimes(1);
   });
 
@@ -163,7 +166,7 @@ describe("PlaylistService", () => {
       },
     });
 
-    await service.createPlaylist(
+    const result = await service.createPlaylist(
       {
         name: "My playlist",
         userId: "target-user",
@@ -178,6 +181,52 @@ describe("PlaylistService", () => {
         userId: "target-user",
       },
     });
+    expect(result.coverAlbumIds).toEqual([]);
+  });
+
+  it("searchUserPlaylists returns cover album ids", async () => {
+    prisma.playlist.findMany.mockResolvedValue([
+      {
+        id: "playlist-1",
+        name: "Playlist One",
+        description: null,
+        visibility: PrismaPlaylistVisibility.PUBLIC,
+        user: { id: "user-1", username: "tester" },
+        playlistTracks: [
+          { track: { albumId: "album-1" } },
+          { track: { albumId: "album-1" } },
+          { track: { albumId: "album-2" } },
+        ],
+      },
+      {
+        id: "playlist-2",
+        name: "Playlist Two",
+        description: "desc",
+        visibility: PrismaPlaylistVisibility.PRIVATE,
+        user: { id: "user-1", username: "tester" },
+        playlistTracks: [
+          { track: { albumId: "album-1" } },
+          { track: { albumId: "album-2" } },
+          { track: { albumId: "album-3" } },
+          { track: { albumId: "album-4" } },
+          { track: { albumId: "album-5" } },
+        ],
+      },
+    ]);
+
+    const results = await service.searchUserPlaylists(
+      "Play",
+      makeUser(Role.USER),
+      10,
+    );
+
+    expect(results[0]?.coverAlbumIds).toEqual(["album-1"]);
+    expect(results[1]?.coverAlbumIds).toEqual([
+      "album-1",
+      "album-2",
+      "album-3",
+      "album-4",
+    ]);
   });
 
   it("updatePlaylist throws when updating another user playlist as non-admin", async () => {
