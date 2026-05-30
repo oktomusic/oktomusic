@@ -129,7 +129,7 @@ export function SettingsClient() {
             <OktoSwitch
               id="settings:client:kiosk-mode"
               checked={kioskMode}
-              onChange={setKioskMode}
+              onCheckedChange={setKioskMode}
             />
           </div>
 
@@ -179,7 +179,7 @@ export function SettingsClient() {
                   ? undefined
                   : t`Your browser does not support lyrics translation`
               }
-              onChange={setLyricsTranslationEnabled}
+              onCheckedChange={setLyricsTranslationEnabled}
               disabled={!translatorSupport}
             />
           </div>
@@ -211,7 +211,7 @@ export function SettingsClient() {
             <OktoSwitch
               id="settings:client:volume-enabled"
               checked={volumeEnabled}
-              onChange={setVolumeEnabled}
+              onCheckedChange={setVolumeEnabled}
             />
           </div>
 
