@@ -44,7 +44,9 @@ export function Cover(props: CoverProps) {
     "aspect-square",
     "overflow-hidden",
     isGrid ? "grid grid-cols-2 grid-rows-2" : "flex",
-    isClickable ? "cursor-pointer border-0 bg-transparent p-0" : "",
+    isClickable
+      ? "cursor-pointer border-0 bg-transparent p-0 focus:outline-none"
+      : "",
     props.className ?? "",
   ]
     .filter((value) => value.length > 0)
