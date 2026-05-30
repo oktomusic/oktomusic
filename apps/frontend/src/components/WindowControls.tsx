@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+
+import { WindowTitle } from "./WindowTitle";
+
 import "./WindowControls.css";
 
 // https://web.dev/articles/window-controls-overlay
@@ -39,7 +42,7 @@ export function WindowControls() {
 
   return isCustomEnabled ? (
     <div id="pwa-window-controls">
-      <h1>{document.title}</h1>
+      <WindowTitle />
     </div>
-  ) : undefined;
+  ) : null;
 }
