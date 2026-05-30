@@ -41,5 +41,5 @@ export function WindowControls() {
     <div id="pwa-window-controls">
       <h1>{document.title}</h1>
     </div>
-  ) : undefined;
+  ) : null;
 }
