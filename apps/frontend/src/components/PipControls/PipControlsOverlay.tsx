@@ -1,6 +1,6 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@headlessui/react";
-import { HiBackward, HiForward, HiPause, HiPlay } from "react-icons/hi2";
+import { LuPause, LuPlay, LuSkipBack, LuSkipForward } from "react-icons/lu";
 import { t } from "@lingui/core/macro";
 
 import { OktoSlider } from "../Base/OktoSlider";
@@ -44,7 +44,7 @@ export function PipControlsOverlay() {
               handlePreviousTrack();
             }}
           >
-            <HiBackward />
+            <LuSkipBack />
           </Button>
           <Button
             type="button"
@@ -55,7 +55,7 @@ export function PipControlsOverlay() {
             }}
             id="pip-hover_overlay__controls__playpause"
           >
-            {shouldPlay ? <HiPause /> : <HiPlay />}
+            {shouldPlay ? <LuPause /> : <LuPlay />}
           </Button>
           <Button
             type="button"
@@ -65,7 +65,7 @@ export function PipControlsOverlay() {
               handleNextTrack();
             }}
           >
-            <HiForward />
+            <LuSkipForward />
           </Button>
         </div>
       </div>

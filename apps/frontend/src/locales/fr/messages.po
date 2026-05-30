@@ -30,10 +30,11 @@ msgstr "{minutes}min {seconds}s"
 msgid "{seconds}s"
 msgstr "{seconds}s"
 
-#: src/components/HeaderMenu.tsx:47
+#: src/components/HeaderMenu.tsx:54
 msgid "About"
 msgstr "À propos"
 
+#: src/components/HeaderMenu.tsx:48
 #: src/pages/SettingsAccount/SettingsAccount.tsx:45
 msgid "Account Settings"
 msgstr ""
@@ -50,19 +51,19 @@ msgstr ""
 msgid "Add to playlist"
 msgstr ""
 
-#: src/components/QueueTrack/QueueTrack.tsx:40
-#: src/components/TrackList/TrackElement.tsx:127
+#: src/components/QueueTrack/QueueTrack.tsx:45
+#: src/components/TrackList/TrackElement.tsx:134
 #: src/pages/Center/Album.tsx:110
 #: src/pages/Center/Playlist.tsx:130
 msgid "Add to queue"
 msgstr ""
 
-#: src/components/QueueTrack/QueueTrack.tsx:64
-#: src/components/TrackList/TrackElement.tsx:151
+#: src/components/QueueTrack/QueueTrack.tsx:69
+#: src/components/TrackList/TrackElement.tsx:158
 msgid "Added to playlist"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:68
+#: src/components/HeaderMenu.tsx:75
 #: src/pages/SettingsAdmin/SettingsAdmin.tsx:19
 msgid "Admin Settings"
 msgstr ""
@@ -148,7 +149,7 @@ msgstr ""
 msgid "Close"
 msgstr "Fermer"
 
-#: src/components/Player/PlayerControlsAdditional.tsx:72
+#: src/components/Player/PlayerControlsAdditional.tsx:76
 msgid "Close Picture-in-Picture"
 msgstr ""
 
@@ -193,8 +194,8 @@ msgstr "Description"
 msgid "Disc {discNumber}"
 msgstr "Disque {discNumber}"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:28
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:28
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:27
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:27
 msgid "Download"
 msgstr "Télécharger"
 
@@ -219,8 +220,8 @@ msgstr ""
 msgid "English"
 msgstr "Anglais"
 
-#: src/components/QueueTrack/QueueTrack.tsx:68
-#: src/components/TrackList/TrackElement.tsx:155
+#: src/components/QueueTrack/QueueTrack.tsx:73
+#: src/components/TrackList/TrackElement.tsx:162
 msgid "Failed to add track"
 msgstr ""
 
@@ -228,7 +229,7 @@ msgstr ""
 msgid "Failed to delete playlist"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:115
+#: src/components/TrackList/TrackElement.tsx:122
 msgid "Failed to remove track"
 msgstr ""
 
@@ -252,38 +253,41 @@ msgstr "Français"
 msgid "German"
 msgstr "Allemand"
 
-#: src/components/HeaderMenu.tsx:81
-#: src/components/HeaderMenu.tsx:82
+#: src/components/HeaderMenu.tsx:88
+#: src/components/HeaderMenu.tsx:89
 msgid "Go back"
 msgstr "Reculer"
 
-#: src/components/HeaderMenu.tsx:90
-#: src/components/HeaderMenu.tsx:91
+#: src/components/HeaderMenu.tsx:97
+#: src/components/HeaderMenu.tsx:98
 msgid "Go forward"
 msgstr "Avancer"
 
-#: src/components/QueueTrack/QueueTrack.tsx:48
-#: src/components/TrackList/TrackElement.tsx:135
+#: src/components/QueueTrack/QueueTrack.tsx:53
+#: src/components/TrackList/TrackElement.tsx:142
 msgid "Go to album"
 msgstr "Accéder à l'album"
 
-#: src/components/Player/PlayerControlsAdditional.tsx:39
-#: src/components/Player/PlayerControlsAdditional.tsx:40
-msgid "Hide overlay"
+#: src/components/Player/PlayerControlsAdditional.tsx:41
+msgid "Hide lyrics"
 msgstr ""
 
-#: src/components/Player/PlayerControlsAdditional.tsx:52
-#: src/components/Player/PlayerControlsAdditional.tsx:53
+#: src/components/Player/PlayerControlsAdditional.tsx:39
+#: src/components/Player/PlayerControlsAdditional.tsx:40
+#~ msgid "Hide overlay"
+#~ msgstr ""
+
+#: src/components/Player/PlayerControlsAdditional.tsx:56
 msgid "Hide queue"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:97
-#: src/components/HeaderMenu.tsx:98
+#: src/components/HeaderMenu.tsx:104
+#: src/components/HeaderMenu.tsx:105
 #: src/pages/Center/Generic404.tsx:12
 msgid "Home"
 msgstr "Accueil"
 
-#: src/components/HeaderMenu.tsx:110
+#: src/components/HeaderMenu.tsx:117
 #: src/pages/Auth/Login.tsx:47
 msgid "Install Application"
 msgstr ""
@@ -308,9 +312,13 @@ msgstr "Lien copié dans le presse-papiers"
 msgid "Loading playlists"
 msgstr ""
 
-#: src/components/HeaderMenu.tsx:59
+#: src/components/HeaderMenu.tsx:66
 msgid "Logout"
 msgstr "Déconnexion"
+
+#: src/components/Player/PlayerControlsAdditional.tsx:42
+msgid "Lyrics"
+msgstr "Paroles"
 
 #: src/pages/SettingsClient/SettingsClient.tsx:160
 msgid "Lyrics display mode:"
@@ -332,18 +340,18 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:38
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:38
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:37
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:37
 #: src/components/CollectionView/CollectionViewToolbarUser.tsx:23
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
 
-#: src/components/QueueTrack/QueueTrack.tsx:129
-#: src/components/TrackList/TrackElement.tsx:254
+#: src/components/QueueTrack/QueueTrack.tsx:134
+#: src/components/TrackList/TrackElement.tsx:261
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
-#: src/components/Player/PlayerControlsVolume.tsx:100
+#: src/components/Player/PlayerControlsVolume.tsx:107
 msgid "Mute"
 msgstr ""
 
@@ -361,8 +369,8 @@ msgstr ""
 
 #: src/components/PipControls/PipControlsOverlay.tsx:62
 #: src/components/PipControls/PipControlsOverlay.tsx:63
-#: src/components/PipControls/PipControlsWindow.tsx:114
-#: src/components/PipControls/PipControlsWindow.tsx:115
+#: src/components/PipControls/PipControlsWindow.tsx:119
+#: src/components/PipControls/PipControlsWindow.tsx:120
 #: src/components/Player/PlayerControlsPlayback.tsx:73
 #: src/components/Player/PlayerControlsPlayback.tsx:74
 msgid "Next"
@@ -399,8 +407,8 @@ msgstr ""
 msgid "No public playlists found"
 msgstr ""
 
-#: src/components/PipControls/PipControlsWindow.tsx:57
-#: src/components/PipControls/PipControlsWindow.tsx:65
+#: src/components/PipControls/PipControlsWindow.tsx:62
+#: src/components/PipControls/PipControlsWindow.tsx:70
 #: src/components/Player/PlayerControlsInfos.tsx:23
 msgid "No track playing"
 msgstr ""
@@ -414,7 +422,7 @@ msgstr ""
 msgid "Now playing"
 msgstr ""
 
-#: src/components/Player/PlayerControlsAdditional.tsx:72
+#: src/components/Player/PlayerControlsAdditional.tsx:76
 msgid "Open Picture-in-Picture"
 msgstr ""
 
@@ -429,8 +437,8 @@ msgstr "Page introuvable"
 #: src/components/CollectionView/CollectionView.tsx:83
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
-#: src/components/PipControls/PipControlsWindow.tsx:100
-#: src/components/PipControls/PipControlsWindow.tsx:101
+#: src/components/PipControls/PipControlsWindow.tsx:105
+#: src/components/PipControls/PipControlsWindow.tsx:106
 #: src/components/Player/PlayerControlsPlayback.tsx:58
 #: src/components/Player/PlayerControlsPlayback.tsx:59
 msgid "Pause"
@@ -440,7 +448,7 @@ msgstr "Pause"
 msgid "Pause {albumName}"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:203
+#: src/components/TrackList/TrackElement.tsx:210
 msgid "Pause {trackName}"
 msgstr ""
 
@@ -455,8 +463,8 @@ msgstr ""
 #: src/components/CollectionView/CollectionView.tsx:83
 #: src/components/PipControls/PipControlsOverlay.tsx:51
 #: src/components/PipControls/PipControlsOverlay.tsx:52
-#: src/components/PipControls/PipControlsWindow.tsx:100
-#: src/components/PipControls/PipControlsWindow.tsx:101
+#: src/components/PipControls/PipControlsWindow.tsx:105
+#: src/components/PipControls/PipControlsWindow.tsx:106
 #: src/components/Player/PlayerControlsPlayback.tsx:58
 #: src/components/Player/PlayerControlsPlayback.tsx:59
 msgid "Play"
@@ -466,7 +474,7 @@ msgstr "Lecture"
 msgid "Play {albumName}"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:205
+#: src/components/TrackList/TrackElement.tsx:212
 msgid "Play {trackName}"
 msgstr ""
 
@@ -476,7 +484,7 @@ msgid "Playback"
 msgstr ""
 
 #: src/components/PipControls/PipControlsOverlay.tsx:37
-#: src/components/PipControls/PipControlsWindow.tsx:87
+#: src/components/PipControls/PipControlsWindow.tsx:92
 #: src/components/Player/PlayerControlsPlayback.tsx:39
 msgid "Playback controls"
 msgstr "Commandes de lecture"
@@ -505,8 +513,8 @@ msgstr "Portugais"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:41
 #: src/components/PipControls/PipControlsOverlay.tsx:42
-#: src/components/PipControls/PipControlsWindow.tsx:90
-#: src/components/PipControls/PipControlsWindow.tsx:91
+#: src/components/PipControls/PipControlsWindow.tsx:95
+#: src/components/PipControls/PipControlsWindow.tsx:96
 #: src/components/Player/PlayerControlsPlayback.tsx:47
 #: src/components/Player/PlayerControlsPlayback.tsx:48
 msgid "Previous"
@@ -536,11 +544,15 @@ msgstr "Publique"
 msgid "Public playlists"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:94
+#: src/components/Player/PlayerControlsAdditional.tsx:57
+msgid "Queue"
+msgstr ""
+
+#: src/components/TrackList/TrackElement.tsx:101
 msgid "Remove from playlist"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:108
+#: src/components/TrackList/TrackElement.tsx:115
 msgid "Removed from playlist"
 msgstr ""
 
@@ -560,7 +572,7 @@ msgstr ""
 msgid "Restart threshold (seconds):"
 msgstr ""
 
-#: src/components/TrackList/TrackElement.tsx:204
+#: src/components/TrackList/TrackElement.tsx:211
 msgid "Resume {trackName}"
 msgstr ""
 
@@ -572,15 +584,15 @@ msgstr "Russe"
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:21
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:21
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:20
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:20
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
 #: src/components/HeaderMenuSearch.tsx:45
 #: src/components/HeaderMenuSearch.tsx:48
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #: src/pages/Center/Search.tsx:192
 msgid "Search type"
@@ -608,13 +620,16 @@ msgstr "Sexe :"
 msgid "Share"
 msgstr "Partager"
 
-#: src/components/Player/PlayerControlsAdditional.tsx:39
-#: src/components/Player/PlayerControlsAdditional.tsx:40
-msgid "Show overlay"
+#: src/components/Player/PlayerControlsAdditional.tsx:41
+msgid "Show lyrics"
 msgstr ""
 
-#: src/components/Player/PlayerControlsAdditional.tsx:52
-#: src/components/Player/PlayerControlsAdditional.tsx:53
+#: src/components/Player/PlayerControlsAdditional.tsx:39
+#: src/components/Player/PlayerControlsAdditional.tsx:40
+#~ msgid "Show overlay"
+#~ msgstr ""
+
+#: src/components/Player/PlayerControlsAdditional.tsx:56
 msgid "Show queue"
 msgstr ""
 
@@ -648,7 +663,7 @@ msgstr "Titres"
 msgid "Unlisted"
 msgstr "Non répertoriée"
 
-#: src/components/Player/PlayerControlsVolume.tsx:100
+#: src/components/Player/PlayerControlsVolume.tsx:107
 msgid "Unmute"
 msgstr ""
 

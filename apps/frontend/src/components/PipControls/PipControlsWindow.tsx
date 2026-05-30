@@ -2,8 +2,13 @@ import { useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
-import { HiBackward, HiForward, HiPause, HiPlay } from "react-icons/hi2";
-import { LuCircleSlash } from "react-icons/lu";
+import {
+  LuCircleSlash,
+  LuPause,
+  LuPlay,
+  LuSkipBack,
+  LuSkipForward,
+} from "react-icons/lu";
 
 import {
   handleNextTrackAtom,
@@ -93,7 +98,7 @@ export function PipControlsWindow(props: PipControlsWindowProps) {
             handlePreviousTrack();
           }}
         >
-          <HiBackward className="size-6" />
+          <LuSkipBack className="size-6" />
         </Button>
         <Button
           type="button"
@@ -104,9 +109,9 @@ export function PipControlsWindow(props: PipControlsWindowProps) {
           }}
         >
           {shouldPlay ? (
-            <HiPause className="size-6" />
+            <LuPause className="size-6" />
           ) : (
-            <HiPlay className="size-6" />
+            <LuPlay className="size-6" />
           )}
         </Button>
         <Button
@@ -117,7 +122,7 @@ export function PipControlsWindow(props: PipControlsWindowProps) {
             handleNextTrack();
           }}
         >
-          <HiForward className="size-6" />
+          <LuSkipForward className="size-6" />
         </Button>
       </div>
     </div>

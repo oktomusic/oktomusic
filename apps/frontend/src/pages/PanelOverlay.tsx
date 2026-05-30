@@ -1,7 +1,6 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@headlessui/react";
-import { LuLoaderCircle } from "react-icons/lu";
-import { HiXMark } from "react-icons/hi2";
+import { LuLoaderCircle, LuX } from "react-icons/lu";
 
 import { playerQueueCurrentTrack } from "../atoms/player/machine";
 import { panelOverlayVisibleAtom } from "../atoms/app/panels";
@@ -35,7 +34,7 @@ export function PanelOverlay() {
           closeOverlay(false);
         }}
       >
-        <HiXMark className="size-6" />
+        <LuX className="size-6" />
       </Button>
 
       <OktoScrollArea className="min-h-0 flex-1">

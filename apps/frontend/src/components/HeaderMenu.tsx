@@ -3,15 +3,16 @@ import { useAtomValue } from "jotai";
 import { Avatar } from "@base-ui/react/avatar";
 import { Button } from "@headlessui/react";
 import {
-  HiChevronLeft,
-  HiChevronRight,
-  HiOutlineArrowDownCircle,
-  HiOutlineArrowRightOnRectangle,
-  HiOutlineCog6Tooth,
-  HiOutlineHome,
-  HiOutlineInformationCircle,
-  HiOutlineUser,
-} from "react-icons/hi2";
+  LuChevronLeft,
+  LuChevronRight,
+  LuCircleArrowDown,
+  LuHouse,
+  LuInfo,
+  LuSettings,
+  LuSquareArrowRight,
+  LuUserRound,
+  LuUserRoundPen,
+} from "react-icons/lu";
 import { t } from "@lingui/core/macro";
 
 import { pwaDeferredPromptAtom } from "../atoms/app/atoms";
@@ -39,8 +40,14 @@ export function HeaderMenu() {
       type: "router-link",
       label: "User Profile",
       to: `/user/${authSession.user?.id}`,
-      icon: <HiOutlineUser className="size-4" />,
-      shortcut: "⌘E",
+      icon: <LuUserRound className="size-4" />,
+      // shortcut: "⌘E",
+    },
+    {
+      type: "router-link",
+      label: t`Account Settings`,
+      to: "/settings/account",
+      icon: <LuUserRoundPen className="size-4" />,
     },
     {
       type: "link",
@@ -48,7 +55,7 @@ export function HeaderMenu() {
       href: "https://oktomusic.afcms.dev",
       target: "_blank",
       rel: "noreferrer",
-      icon: <HiOutlineInformationCircle className="size-4" />,
+      icon: <LuInfo className="size-4" />,
       hidden: kioskModeEnabled,
     },
     {
@@ -58,16 +65,16 @@ export function HeaderMenu() {
       type: "link",
       label: t`Logout`,
       href: "/api/auth/logout",
-      icon: <HiOutlineArrowRightOnRectangle className="size-4" />,
+      icon: <LuSquareArrowRight className="size-4" />,
     },
   ];
 
   if (authSession.user?.role === Role.Admin) {
-    menuItems.splice(1, 0, {
+    menuItems.splice(2, 0, {
       type: "router-link",
       label: t`Admin Settings`,
       to: "/settings/admin",
-      icon: <HiOutlineCog6Tooth className="size-4" />,
+      icon: <LuSettings className="size-4" />,
     });
   }
 
@@ -81,7 +88,7 @@ export function HeaderMenu() {
           aria-label={t`Go back`}
           title={t`Go back`}
         >
-          <HiChevronLeft className="size-6" />
+          <LuChevronLeft className="size-6" />
         </Button>
         <Button
           className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
@@ -90,7 +97,7 @@ export function HeaderMenu() {
           aria-label={t`Go forward`}
           title={t`Go forward`}
         >
-          <HiChevronRight className="size-6" />
+          <LuChevronRight className="size-6" />
         </Button>
         <Link
           to="/"
@@ -98,7 +105,7 @@ export function HeaderMenu() {
           title={t`Home`}
           className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <HiOutlineHome className="size-6" />
+          <LuHouse className="size-6" />
         </Link>
       </div>
       <HeaderMenuSearch />
@@ -112,7 +119,7 @@ export function HeaderMenu() {
               void pwaDeferedPrompt.prompt();
             }}
           >
-            <HiOutlineArrowDownCircle className="size-6" />
+            <LuCircleArrowDown className="size-6" />
           </Button>
         )}
         <Link
@@ -120,7 +127,7 @@ export function HeaderMenu() {
           title="Client Settings"
           className="flex aspect-square size-8 items-center justify-center rounded-full"
         >
-          <HiOutlineCog6Tooth className="size-6" />
+          <LuSettings className="size-6" />
         </Link>
         <OktoMenu
           button={

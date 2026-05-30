@@ -1,4 +1,4 @@
-import { HiEllipsisHorizontal } from "react-icons/hi2";
+import { LuEllipsis } from "react-icons/lu";
 import { t } from "@lingui/core/macro";
 
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
@@ -16,7 +16,7 @@ export function CollectionViewToolbarUser(
   return (
     <>
       <OktoMenu
-        button={<HiEllipsisHorizontal className="size-8" />}
+        button={<LuEllipsis className="size-8" />}
         items={props.menuItems}
         positionAlign="start"
         positionSide="bottom"

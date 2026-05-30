@@ -1,7 +1,7 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { t } from "@lingui/core/macro";
 import { Button } from "@headlessui/react";
-import { HiBackward, HiForward, HiPause, HiPlay } from "react-icons/hi2";
+import { LuPause, LuPlay, LuSkipBack, LuSkipForward } from "react-icons/lu";
 
 import { formatDuration } from "../../utils/format_duration";
 import {
@@ -48,7 +48,7 @@ export function PlayerControlsPlayback() {
           title={t`Previous`}
           className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
         >
-          <HiBackward className="size-6" />
+          <LuSkipBack className="size-6" />
         </Button>
         <Button
           type="button"
@@ -60,9 +60,9 @@ export function PlayerControlsPlayback() {
           className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
         >
           {shouldPlay ? (
-            <HiPause className="size-6" />
+            <LuPause className="size-6" />
           ) : (
-            <HiPlay className="size-6" />
+            <LuPlay className="size-6" />
           )}
         </Button>
         <Button
@@ -74,7 +74,7 @@ export function PlayerControlsPlayback() {
           title={t`Next`}
           className="rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
         >
-          <HiForward className="size-6" />
+          <LuSkipForward className="size-6" />
         </Button>
       </div>
       <div className="flex flex-row items-center gap-2">

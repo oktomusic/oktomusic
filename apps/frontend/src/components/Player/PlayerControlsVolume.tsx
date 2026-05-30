@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Button } from "@headlessui/react";
-import { useAtom } from "jotai";
-import { LuVolume2, LuVolumeX } from "react-icons/lu";
 import { t } from "@lingui/core/macro";
+import { useAtom } from "jotai";
+import { LuVolume, LuVolume1, LuVolume2, LuVolumeX } from "react-icons/lu";
 
 import { OktoSlider } from "../Base/OktoSlider";
 import {
@@ -43,12 +43,19 @@ export function PlayerControlsVolume() {
     setVolume(minimumVolume);
   }, [muted, setMuted, setVolume, volume]);
 
+  const displayVolume = muted ? 0 : volume;
   const Icon = useMemo(() => {
-    if (muted) {
-      return <LuVolumeX className="size-6" />;
+    if (displayVolume <= 0) {
+      return LuVolumeX;
     }
-    return <LuVolume2 className="size-6" />;
-  }, [muted]);
+    if (displayVolume <= 33) {
+      return LuVolume;
+    }
+    if (displayVolume <= 66) {
+      return LuVolume1;
+    }
+    return LuVolume2;
+  }, [displayVolume]);
 
   const handleMuteToggle = () => {
     if (muted) {
@@ -99,7 +106,7 @@ export function PlayerControlsVolume() {
         onClick={handleMuteToggle}
         title={muted ? t`Unmute` : t`Mute`}
       >
-        {Icon}
+        <Icon className="size-6" />
       </Button>
       <OktoSlider
         id="oktomusic:player:volume"
@@ -107,7 +114,7 @@ export function PlayerControlsVolume() {
         min={0}
         max={100}
         step={1}
-        value={muted ? 0 : volume}
+        value={displayVolume}
         onChange={handleVolumeChange}
         onCommit={handleVolumeCommit}
         className="w-32"

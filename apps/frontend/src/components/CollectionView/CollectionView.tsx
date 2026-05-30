@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
-import { HiPause, HiPlay } from "react-icons/hi2";
+import { LuPause, LuPlay } from "react-icons/lu";
 
 import { useVibrantColors } from "../../hooks/vibrant_colors";
 import { useFitText } from "../../hooks/fit_text";
@@ -105,9 +105,9 @@ export function CollectionView(props: CollectionViewProps) {
               onClick={props.onPlay}
             >
               {props.playButtonIsPlaying ? (
-                <HiPause className="m-auto size-6" />
+                <LuPause className="m-auto size-6" />
               ) : (
-                <HiPlay className="m-auto size-6" />
+                <LuPlay className="m-auto size-6" />
               )}
             </Button>
           )}
@@ -160,9 +160,9 @@ export function CollectionView(props: CollectionViewProps) {
               onClick={props.onPlay}
             >
               {props.playButtonIsPlaying ? (
-                <HiPause className="m-auto size-6" />
+                <LuPause className="m-auto size-6" />
               ) : (
-                <HiPlay className="m-auto size-6" />
+                <LuPlay className="m-auto size-6" />
               )}
             </Button>
           )}

@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
-import { HiXMark } from "react-icons/hi2";
+import { LuX } from "react-icons/lu";
 
 interface OktoDialogProps {
   /**
@@ -88,7 +88,7 @@ export function OktoDialog(props: OktoDialogProps) {
                 className="flex size-8 cursor-pointer items-center justify-center text-white/80 transition-colors hover:text-white focus:text-white focus:outline-none"
                 title={t`Close`}
               >
-                <HiXMark className="size-6" />
+                <LuX className="size-6" />
               </CloseButton>
             )}
           </div>

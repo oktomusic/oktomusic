@@ -3,8 +3,15 @@ import { useSortable } from "@dnd-kit/react/sortable";
 import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
 import { useAtomValue, useSetAtom } from "jotai";
-import { HiEllipsisHorizontal, HiPause, HiPlay } from "react-icons/hi2";
-import { LuAudioLines, LuDisc3, LuListPlus, LuTrash2 } from "react-icons/lu";
+import {
+  LuAudioLines,
+  LuDisc3,
+  LuEllipsis,
+  LuListPlus,
+  LuPause,
+  LuPlay,
+  LuTrash2,
+} from "react-icons/lu";
 import { Link } from "react-router";
 
 import { OktoMenu, OktoMenuItem, OktoMenuButtonItem } from "../Base/OktoMenu";
@@ -207,9 +214,9 @@ export function TrackElement(props: TrackElementProps) {
           onClick={handleButtonClick}
         >
           {showPauseIcon ? (
-            <HiPause className="size-4" />
+            <LuPause className="size-4" />
           ) : (
-            <HiPlay className="size-4" />
+            <LuPlay className="size-4" />
           )}
         </Button>
       </div>
@@ -248,7 +255,7 @@ export function TrackElement(props: TrackElementProps) {
       <div className="flex items-center justify-center">
         <OktoMenu
           button={
-            <HiEllipsisHorizontal className="size-6 opacity-0 group-hover:opacity-100" />
+            <LuEllipsis className="size-6 opacity-0 group-hover:opacity-100" />
           }
           items={menuItems}
           buttonAriaLabel={t`More options for ${trackName}`}

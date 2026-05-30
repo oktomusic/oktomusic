@@ -1,7 +1,12 @@
 import { Link } from "react-router";
 import { Button } from "@headlessui/react";
-import { HiEllipsisHorizontal, HiPause, HiPlay } from "react-icons/hi2";
-import { LuDisc3, LuListPlus } from "react-icons/lu";
+import {
+  LuDisc3,
+  LuEllipsis,
+  LuListPlus,
+  LuPause,
+  LuPlay,
+} from "react-icons/lu";
 import { useSetAtom } from "jotai";
 import { useMutation } from "@apollo/client/react";
 import { t } from "@lingui/core/macro";
@@ -101,9 +106,9 @@ export function QueueTrack(props: QueueTrackProps) {
         />
         <span className="pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-zinc-950/60 opacity-0 transition duration-150 group-hover:opacity-100">
           {showPlayIcon ? (
-            <HiPlay aria-hidden="true" className="size-8 text-white/90" />
+            <LuPlay aria-hidden="true" className="size-8 text-white/90" />
           ) : (
-            <HiPause aria-hidden="true" className="size-8 text-white/90" />
+            <LuPause aria-hidden="true" className="size-8 text-white/90" />
           )}
         </span>
       </Button>
@@ -123,7 +128,7 @@ export function QueueTrack(props: QueueTrackProps) {
       <div className="flex flex-row items-center">
         <OktoMenu
           button={
-            <HiEllipsisHorizontal className="size-6 opacity-0 group-hover:opacity-100" />
+            <LuEllipsis className="size-6 opacity-0 group-hover:opacity-100" />
           }
           items={menuItems}
           buttonAriaLabel={t`More options for ${trackName}`}

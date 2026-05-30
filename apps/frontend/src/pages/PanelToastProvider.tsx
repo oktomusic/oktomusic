@@ -1,5 +1,5 @@
 import { Toast } from "@base-ui/react/toast";
-import { HiCheckCircle, HiInformationCircle, HiXCircle } from "react-icons/hi2";
+import { LuCircleCheck, LuCircleX, LuInfo } from "react-icons/lu";
 
 export function PanelToastProvider() {
   return (
@@ -27,13 +27,13 @@ function PanelToastList() {
         >
           <Toast.Content className="flex items-center gap-2">
             {toast.type === "success" && (
-              <HiCheckCircle className="size-6 text-green-400" />
+              <LuCircleCheck className="size-6 text-green-400" />
             )}
             {toast.type === "error" && (
-              <HiXCircle className="size-6 text-red-400" />
+              <LuCircleX className="size-6 text-red-400" />
             )}
             {toast.type === "info" && (
-              <HiInformationCircle className="size-6 text-blue-400" />
+              <LuInfo className="size-6 text-blue-400" />
             )}
             <Toast.Title
               id={`oktomusic:toast-title:${toast.id}`}

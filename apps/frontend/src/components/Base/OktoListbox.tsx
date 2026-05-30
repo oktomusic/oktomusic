@@ -4,7 +4,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { HiChevronDown, HiCheck } from "react-icons/hi2";
+import { LuCheck, LuChevronDown } from "react-icons/lu";
 
 export interface OktoListboxOption {
   readonly label: string;
@@ -45,10 +45,7 @@ export function OktoListbox<T extends string>(props: OktoListboxProps<T>) {
           {CurrentIcon && <CurrentIcon className="size-4" />}
           {currentLabel}
         </div>
-        <HiChevronDown
-          className="size-4 shrink-0 fill-white/60"
-          aria-hidden="true"
-        />
+        <LuChevronDown className="size-4 shrink-0" aria-hidden="true" />
       </ListboxButton>
       <ListboxOptions
         anchor="bottom"
@@ -64,7 +61,7 @@ export function OktoListbox<T extends string>(props: OktoListboxProps<T>) {
               value={key}
               className="group flex cursor-default items-center gap-2 rounded-lg px-3 py-1.5 select-none data-focus:bg-white/10"
             >
-              <HiCheck className="invisible size-4 fill-white group-data-selected:visible" />
+              <LuCheck className="invisible size-4 group-data-selected:visible" />
               {typeof option !== "string" && option.icon && (
                 <option.icon className="size-4" />
               )}

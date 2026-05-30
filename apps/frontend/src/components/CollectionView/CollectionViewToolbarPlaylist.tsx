@@ -1,8 +1,7 @@
 import { Button } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
-import { LuCircleArrowDown, LuCirclePlus } from "react-icons/lu";
+import { LuCircleArrowDown, LuCirclePlus, LuEllipsis } from "react-icons/lu";
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
-import { HiEllipsisHorizontal } from "react-icons/hi2";
 
 interface CollectionViewToolbarPlaylistProps {
   readonly playlistName: string;
@@ -31,7 +30,7 @@ export function CollectionViewToolbarPlaylist(
         <LuCircleArrowDown className="m-auto size-8" />
       </Button>
       <OktoMenu
-        button={<HiEllipsisHorizontal className="size-8" />}
+        button={<LuEllipsis className="size-8" />}
         items={props.menuItems}
         positionAlign="start"
         positionSide="bottom"
