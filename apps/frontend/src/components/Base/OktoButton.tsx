@@ -1,13 +1,13 @@
-import { Button } from "@headlessui/react";
+import type { ButtonHTMLAttributes } from "react";
 
-export function OktoButton(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement>,
-) {
+import { Button } from "@base-ui/react/button";
+
+export function OktoButton(props: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <Button
       {...props}
       className={
-        "cursor-pointer rounded-lg bg-zinc-800 px-3 py-1.5 text-sm hover:bg-zinc-700 data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25" +
+        "cursor-pointer rounded-lg bg-zinc-800 px-3 py-1.5 text-sm hover:bg-zinc-700 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-white/25" +
         ` ${props.className ?? ""}`
       }
     >

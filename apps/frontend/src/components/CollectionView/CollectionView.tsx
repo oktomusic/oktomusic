@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
 import { LuPause, LuPlay } from "react-icons/lu";
 

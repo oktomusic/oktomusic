@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
 import { useAtom } from "jotai";
 import { LuVolume, LuVolume1, LuVolume2, LuVolumeX } from "react-icons/lu";

@@ -1,4 +1,4 @@
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
 import { LuCircleArrowDown, LuCirclePlus, LuEllipsis } from "react-icons/lu";
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";

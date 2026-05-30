@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { t } from "@lingui/core/macro";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { LuPause, LuPlay } from "react-icons/lu";
 
 export interface LibraryRowArtist {

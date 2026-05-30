@@ -65,7 +65,7 @@ Adding new images to the project require proper optimisation.
 
 ## Icons
 
-Use exclusively icons from the `react-icons` library. Use the `Lu` (Lucide) icon set when possible, or `Hi` (Heroicons) as a fallback.
+Use exclusively icons from the `react-icons` library. Use the `Lu` (Lucide) icon set when possible.
 
 ## Inputs and Forms
 

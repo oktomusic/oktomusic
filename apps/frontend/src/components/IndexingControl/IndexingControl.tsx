@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useMutation, useSubscription } from "@apollo/client/react";
-import { Button } from "@headlessui/react";
 
 import { TRIGGER_INDEXING_MUTATION } from "../../api/graphql/mutations/triggerIndexing";
 import { INDEXING_JOB_UPDATED_SUBSCRIPTION } from "../../api/graphql/subscriptions/indexingJobUpdated";
@@ -8,6 +7,7 @@ import {
   IndexingJobStatus,
   type IndexingJobUpdatedSubscription,
 } from "../../api/graphql/gql/graphql";
+import { OktoButton } from "../Base/OktoButton";
 
 export function IndexingControl() {
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
@@ -102,24 +102,24 @@ export function IndexingControl() {
 
   return (
     <section
-      className="rounded-lg bg-sky-950 p-4"
+      className="flex w-full flex-col gap-4 rounded-lg bg-zinc-800 p-4"
       role="region"
       aria-label="Library Indexing Control"
     >
       <h2 className="mb-4 text-xl font-bold">Library Indexing</h2>
-
-      <Button
-        onClick={() => {
-          void handleTriggerIndexing();
-        }}
-        disabled={
-          triggerLoading || jobStatus?.status === IndexingJobStatus.Active
-        }
-        className="mb-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-gray-400"
-        aria-label="Trigger library indexing"
-      >
-        {triggerLoading ? "Triggering..." : "Trigger Indexing"}
-      </Button>
+      <div>
+        <OktoButton
+          onClick={() => {
+            void handleTriggerIndexing();
+          }}
+          disabled={
+            triggerLoading || jobStatus?.status === IndexingJobStatus.Active
+          }
+          aria-label="Trigger library indexing"
+        >
+          {triggerLoading ? "Triggering..." : "Trigger Indexing"}
+        </OktoButton>
+      </div>
 
       {error ? (
         <div className="mb-2 text-red-500" role="alert">

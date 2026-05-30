@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client/react";
 import { useSortable } from "@dnd-kit/react/sortable";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
 import { useAtomValue, useSetAtom } from "jotai";
 import {

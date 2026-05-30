@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { Navigate, useSearchParams } from "react-router";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
@@ -36,7 +36,7 @@ export function Login() {
         </a>
         <Button
           id="login-install-button"
-          className="align-center mt-4 flex w-full justify-center rounded-md bg-zinc-800 p-4 text-center select-none hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="align-center mt-4 flex w-full justify-center rounded-md bg-zinc-800 p-4 text-center select-none hover:bg-zinc-700 data-disabled:cursor-not-allowed data-disabled:opacity-50"
           disabled={!pwaDeferedPrompt}
           onClick={() => {
             if (pwaDeferedPrompt) {

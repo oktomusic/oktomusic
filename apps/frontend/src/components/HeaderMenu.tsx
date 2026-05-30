@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { useAtomValue } from "jotai";
 import { Avatar } from "@base-ui/react/avatar";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import {
   LuChevronLeft,
   LuChevronRight,
@@ -82,7 +82,7 @@ export function HeaderMenu() {
     <div className="flex h-14 flex-row gap-2 p-2">
       <div className="ml-40 flex flex-row items-center gap-2">
         <Button
-          className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex aspect-square size-8 items-center justify-center rounded-full data-disabled:cursor-not-allowed data-disabled:opacity-50"
           onClick={goBack}
           disabled={!canGoBack}
           aria-label={t`Go back`}
@@ -91,7 +91,7 @@ export function HeaderMenu() {
           <LuChevronLeft className="size-6" />
         </Button>
         <Button
-          className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex aspect-square size-8 items-center justify-center rounded-full data-disabled:cursor-not-allowed data-disabled:opacity-50"
           onClick={goForward}
           disabled={!canGoForward}
           aria-label={t`Go forward`}
@@ -103,7 +103,7 @@ export function HeaderMenu() {
           to="/"
           aria-label={t`Home`}
           title={t`Home`}
-          className="flex aspect-square size-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex aspect-square size-8 items-center justify-center rounded-full data-disabled:cursor-not-allowed data-disabled:opacity-50"
         >
           <LuHouse className="size-6" />
         </Link>

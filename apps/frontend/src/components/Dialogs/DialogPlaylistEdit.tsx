@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client/react";
-import { Button, Field, Fieldset, Label } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
+import { Field, Fieldset, Label } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
 import { useAtom, useAtomValue } from "jotai";
 import {
@@ -184,7 +185,7 @@ export function DialogPlaylistEdit() {
         <div className="flex flex-1 gap-4">
           <Button
             type="button"
-            className="flex size-48 shrink-0 items-center justify-center rounded-lg bg-zinc-800 text-zinc-400 hover:text-white data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
+            className="flex size-48 shrink-0 items-center justify-center rounded-lg bg-zinc-800 text-zinc-400 hover:text-white focus:outline-white/25 focus-visible:outline-2 focus-visible:-outline-offset-2"
             title={t`Playlist cover`}
           >
             <LuMusic size={64} />

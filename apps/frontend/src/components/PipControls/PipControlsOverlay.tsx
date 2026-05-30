@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { LuPause, LuPlay, LuSkipBack, LuSkipForward } from "react-icons/lu";
 import { t } from "@lingui/core/macro";
 

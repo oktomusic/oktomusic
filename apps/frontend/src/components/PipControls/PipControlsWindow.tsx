@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
 import {
   LuCircleSlash,

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import {
   LuDisc3,
   LuEllipsis,

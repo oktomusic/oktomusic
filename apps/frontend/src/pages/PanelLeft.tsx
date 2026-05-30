@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { Link } from "react-router";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
 
 import { panelLeftExpandedAtom } from "../atoms/app/panels";

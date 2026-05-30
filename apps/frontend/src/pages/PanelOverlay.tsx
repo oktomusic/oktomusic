@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { Button } from "@headlessui/react";
+import { Button } from "@base-ui/react/button";
 import { LuLoaderCircle, LuX } from "react-icons/lu";
 
 import { playerQueueCurrentTrack } from "../atoms/player/machine";
