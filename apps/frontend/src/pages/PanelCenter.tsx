@@ -4,7 +4,7 @@ import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 import { ProtectedRoutes } from "../components/ProtectedRoutes";
 import { AdminRoute } from "../components/AdminRoute";
 
-import { Home } from "./Home/Home";
+import { Home } from "./Center/Home";
 import { AppInfo } from "./AppInfo/AppInfo";
 import { SettingsAccount } from "./SettingsAccount/SettingsAccount";
 import { SettingsClient } from "./SettingsClient/SettingsClient";
