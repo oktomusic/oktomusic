@@ -39,11 +39,11 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:207
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:202
 msgid "Add a name"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:223
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:219
 msgid "Add an optional description"
 msgstr ""
 
@@ -157,7 +157,7 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:179
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:180
 msgid "Create playlist"
 msgstr ""
 
@@ -181,7 +181,7 @@ msgstr ""
 msgid "Delete playlist?"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:217
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:213
 msgid "Description"
 msgstr "Description"
 
@@ -203,7 +203,7 @@ msgstr "Télécharger"
 msgid "Edit details"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:179
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:180
 msgid "Edit playlist details"
 msgstr ""
 
@@ -355,7 +355,7 @@ msgstr "Plus d'options pour {trackName}"
 msgid "Mute"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:199
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:197
 msgid "Name"
 msgstr "Nom"
 
@@ -494,7 +494,7 @@ msgstr "Commandes de lecture"
 msgid "Playlist"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:189
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:190
 msgid "Playlist cover"
 msgstr ""
 
@@ -521,7 +521,7 @@ msgid "Previous"
 msgstr "Précédent"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:26
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:46
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:47
 msgid "Private"
 msgstr "Privée"
 
@@ -535,7 +535,7 @@ msgid "Profile"
 msgstr ""
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:28
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:44
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:45
 msgid "Public"
 msgstr "Publique"
 
@@ -580,7 +580,7 @@ msgstr ""
 msgid "Russian"
 msgstr "Russe"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:246
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:242
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -659,7 +659,7 @@ msgid "Tracks"
 msgstr "Titres"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:45
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:46
 msgid "Unlisted"
 msgstr "Non répertoriée"
 

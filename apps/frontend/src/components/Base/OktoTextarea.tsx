@@ -1,16 +1,19 @@
-import type { InputHTMLAttributes } from "react";
+import React from "react";
+import { Field } from "@base-ui/react/field";
 
-interface OktoTextareaProps extends InputHTMLAttributes<HTMLTextAreaElement> {
-  readonly className?: string;
-}
+export type OktoTextareaProps = Omit<Field.Control.Props, "render"> &
+  React.ComponentPropsWithoutRef<"textarea">;
 
-export function OktoTextarea(props: OktoTextareaProps) {
-  const { className, ...rest } = props;
-
+export const OktoTextarea = React.forwardRef<
+  HTMLTextAreaElement,
+  OktoTextareaProps
+>(function OktoTextArea(props, forwardedRef) {
   return (
-    <textarea
-      {...rest}
-      className={`resize-none rounded-lg bg-zinc-800 px-3 py-1.5 text-sm text-white focus:outline-2 focus:-outline-offset-2 focus:outline-white/25 disabled:cursor-not-allowed disabled:opacity-50 ${className ?? ""}`}
+    <Field.Control
+      {...props}
+      ref={forwardedRef}
+      render={<textarea />}
+      className={`resize-none rounded-lg bg-zinc-800 px-3 py-1.5 text-sm text-white focus:outline-2 focus:-outline-offset-2 focus:outline-white/25 disabled:cursor-not-allowed disabled:opacity-50 ${props.className ?? ""}`}
     />
   );
-}
+});
