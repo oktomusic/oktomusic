@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { Button } from "@base-ui/react/button";
-import { Field, Fieldset, Label } from "@headlessui/react";
+import { Field } from "@base-ui/react/field";
+import { Fieldset } from "@base-ui/react/fieldset";
 import { t } from "@lingui/core/macro";
 import { useAtom, useAtomValue } from "jotai";
 import {
@@ -190,32 +191,27 @@ export function DialogPlaylistEdit() {
           >
             <LuMusic size={64} />
           </Button>
-          <Fieldset className="flex flex-1 flex-col gap-4">
-            <Field>
-              <Label
-                htmlFor="dialog-playlist:name"
-                className="sr-only text-sm/6 font-medium text-white"
-              >
+          <Fieldset.Root className="flex flex-1 flex-col gap-4">
+            <Field.Root className="flex flex-col items-start gap-1">
+              <Field.Label className="sr-only text-sm/6 font-medium text-white">
                 {t`Name`}
-              </Label>
+              </Field.Label>
               <OktoInput
                 id="dialog-playlist:name"
                 type="text"
+                placeholder={t`Add a name`}
                 minLength={1}
                 value={name}
                 onChange={(e) => setNameDraft(e.target.value)}
-                placeholder={t`Add a name`}
                 className="w-full"
                 autoComplete="off"
               />
-            </Field>
-            <Field className="flex flex-1 flex-col">
-              <Label
-                htmlFor="dialog-playlist:description"
-                className="sr-only text-sm/6 font-medium text-white"
-              >
+            </Field.Root>
+
+            <Field.Root className="flex flex-1 flex-col items-start gap-1">
+              <Field.Label className="sr-only text-sm/6 font-medium text-white">
                 {t`Description`}
-              </Label>
+              </Field.Label>
               <OktoTextarea
                 id="dialog-playlist:description"
                 value={description}
@@ -223,8 +219,8 @@ export function DialogPlaylistEdit() {
                 placeholder={t`Add an optional description`}
                 className="w-full flex-1"
               />
-            </Field>
-          </Fieldset>
+            </Field.Root>
+          </Fieldset.Root>
         </div>
         <div className="flex justify-between">
           <OktoListbox
