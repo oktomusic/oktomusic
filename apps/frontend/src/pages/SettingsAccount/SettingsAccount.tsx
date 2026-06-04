@@ -1,13 +1,16 @@
 import { useMutation, useQuery } from "@apollo/client/react";
-import { useAtomValue } from "jotai";
 import { t } from "@lingui/core/macro";
+import { useAtomValue } from "jotai";
 
 import { UPDATE_MY_PROFILE_MUTATION } from "../../api/graphql/mutations/updateMyProfile";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Role, Sex } from "../../api/graphql/gql/graphql.ts";
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { getSexes, SexesKeys } from "../../utils/constants_sexes.ts";
-import { OktoListbox } from "../../components/Base/OktoListbox.tsx";
+import {
+  OktoListbox,
+  OktoListboxItem,
+} from "../../components/Base/OktoListbox.tsx";
 import { OktoBadge } from "../../components/Base/OktoBadge.tsx";
 
 function mapSexKeyToGraphql(value: SexesKeys): Sex | null {
@@ -16,6 +19,18 @@ function mapSexKeyToGraphql(value: SexesKeys): Sex | null {
   }
 
   return value === "XX" ? Sex.Xx : Sex.Xy;
+}
+
+function mapGraphqlSexToKey(value: Sex | null | undefined): SexesKeys {
+  if (value === Sex.Xx) {
+    return "XX";
+  }
+
+  if (value === Sex.Xy) {
+    return "XY";
+  }
+
+  return "unspecified";
 }
 
 export function SettingsAccount() {
@@ -29,7 +44,14 @@ export function SettingsAccount() {
     });
 
   const sexes = getSexes();
-  const currentSexKey = (data?.me?.sex ?? "unspecified") as SexesKeys;
+  const sexKeys: readonly SexesKeys[] = ["unspecified", "XX", "XY"];
+  const sexOptions: readonly OktoListboxItem<SexesKeys>[] = sexKeys.map(
+    (key) => ({
+      value: key,
+      label: sexes[key],
+    }),
+  );
+  const currentSexKey = mapGraphqlSexToKey(data?.me?.sex);
 
   const handleSexChange = (value: SexesKeys): void => {
     const nextSex = mapSexKeyToGraphql(value);
@@ -78,7 +100,7 @@ export function SettingsAccount() {
               value={currentSexKey}
               onChange={handleSexChange}
               disabled={loading || isUpdating}
-              options={sexes}
+              options={sexOptions}
             />
           </div>
           {(error || updateError) && (

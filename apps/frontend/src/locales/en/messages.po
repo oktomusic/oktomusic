@@ -35,15 +35,15 @@ msgid "About"
 msgstr "About"
 
 #: src/components/HeaderMenu.tsx:48
-#: src/pages/SettingsAccount/SettingsAccount.tsx:45
+#: src/pages/SettingsAccount/SettingsAccount.tsx:67
 msgid "Account Settings"
 msgstr "Account Settings"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:202
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:207
 msgid "Add a name"
 msgstr "Add a name"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:219
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:224
 msgid "Add an optional description"
 msgstr "Add an optional description"
 
@@ -91,11 +91,11 @@ msgstr "Albums"
 msgid "All"
 msgstr "All"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:70
+#: src/pages/SettingsClient/SettingsClient.tsx:73
 msgid "Always"
 msgstr "Always"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:65
+#: src/pages/SettingsClient/SettingsClient.tsx:68
 msgid "Ambient"
 msgstr "Ambient"
 
@@ -112,7 +112,7 @@ msgstr "Artists"
 #~ msgid "Audio Session API is not supported in this browser."
 #~ msgstr "Audio Session API is not supported in this browser."
 
-#: src/pages/SettingsClient/SettingsClient.tsx:138
+#: src/pages/SettingsClient/SettingsClient.tsx:142
 msgid "Audio session:"
 msgstr "Audio session:"
 
@@ -124,11 +124,11 @@ msgstr "Browse"
 #~ msgid "Buffering…"
 #~ msgstr "Buffering…"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:255
+#: src/pages/SettingsClient/SettingsClient.tsx:259
 msgid "Cache max age (days):"
 msgstr "Cache max age (days):"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:241
+#: src/pages/SettingsClient/SettingsClient.tsx:245
 msgid "Cache max entries:"
 msgstr "Cache max entries:"
 
@@ -136,7 +136,7 @@ msgstr "Cache max entries:"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:276
+#: src/pages/SettingsClient/SettingsClient.tsx:280
 msgid "Checking storage persistence..."
 msgstr "Checking storage persistence..."
 
@@ -144,7 +144,7 @@ msgstr "Checking storage persistence..."
 msgid "Clear"
 msgstr "Clear"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:122
+#: src/pages/SettingsClient/SettingsClient.tsx:126
 msgid "Client Settings"
 msgstr "Client Settings"
 
@@ -161,15 +161,15 @@ msgstr "Close Picture-in-Picture"
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr "Controls how Oktomusic mixes with other audio."
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:180
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:185
 msgid "Create playlist"
 msgstr "Create playlist"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:197
+#: src/pages/SettingsClient/SettingsClient.tsx:201
 msgid "Crossfade (seconds)"
 msgstr "Crossfade (seconds)"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:188
+#: src/pages/SettingsClient/SettingsClient.tsx:192
 msgid "Crossfade (seconds):"
 msgstr "Crossfade (seconds):"
 
@@ -185,7 +185,7 @@ msgstr "Delete playlist"
 msgid "Delete playlist?"
 msgstr "Delete playlist?"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:213
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:218
 msgid "Description"
 msgstr "Description"
 
@@ -207,7 +207,7 @@ msgstr "Download"
 msgid "Edit details"
 msgstr "Edit details"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:180
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:185
 msgid "Edit playlist details"
 msgstr "Edit playlist details"
 
@@ -300,11 +300,11 @@ msgstr "Install Application"
 msgid "Italian"
 msgstr "Italian"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:128
+#: src/pages/SettingsClient/SettingsClient.tsx:132
 msgid "Kiosk mode:"
 msgstr "Kiosk mode:"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:77
+#: src/pages/SettingsClient/SettingsClient.tsx:81
 msgid "Line by line"
 msgstr "Line by line"
 
@@ -324,11 +324,11 @@ msgstr "Logout"
 msgid "Lyrics"
 msgstr "Lyrics"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:160
+#: src/pages/SettingsClient/SettingsClient.tsx:164
 msgid "Lyrics display mode:"
 msgstr "Lyrics display mode:"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:173
+#: src/pages/SettingsClient/SettingsClient.tsx:177
 msgid "Lyrics translation:"
 msgstr "Lyrics translation:"
 
@@ -359,11 +359,11 @@ msgstr "More options for {trackName}"
 msgid "Mute"
 msgstr "Mute"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:197
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:202
 msgid "Name"
 msgstr "Name"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:72
+#: src/pages/SettingsClient/SettingsClient.tsx:75
 msgid "Never"
 msgstr "Never"
 
@@ -430,7 +430,7 @@ msgstr "Now playing"
 msgid "Open Picture-in-Picture"
 msgstr "Open Picture-in-Picture"
 
-#: src/hooks/use_panel_overlay_translation.tsx:106
+#: src/hooks/use_panel_overlay_translation.tsx:105
 msgid "Original"
 msgstr "Original"
 
@@ -456,11 +456,11 @@ msgstr "Pause {albumName}"
 msgid "Pause {trackName}"
 msgstr "Pause {trackName}"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:277
+#: src/pages/SettingsClient/SettingsClient.tsx:281
 msgid "Persistent storage granted"
 msgstr "Persistent storage granted"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:279
+#: src/pages/SettingsClient/SettingsClient.tsx:283
 msgid "Persistent storage not granted"
 msgstr "Persistent storage not granted"
 
@@ -482,8 +482,8 @@ msgstr "Play {albumName}"
 msgid "Play {trackName}"
 msgstr "Play {trackName}"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:66
-#: src/pages/SettingsClient/SettingsClient.tsx:71
+#: src/pages/SettingsClient/SettingsClient.tsx:69
+#: src/pages/SettingsClient/SettingsClient.tsx:74
 msgid "Playback"
 msgstr "Playback"
 
@@ -498,7 +498,7 @@ msgstr "Playback controls"
 msgid "Playlist"
 msgstr "Playlist"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:190
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:195
 msgid "Playlist cover"
 msgstr "Playlist cover"
 
@@ -525,7 +525,7 @@ msgid "Previous"
 msgstr "Previous"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:26
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:47
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:53
 msgid "Private"
 msgstr "Private"
 
@@ -539,7 +539,7 @@ msgid "Profile"
 msgstr "Profile"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:28
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:45
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:51
 msgid "Public"
 msgstr "Public"
 
@@ -560,19 +560,19 @@ msgstr "Remove from playlist"
 msgid "Removed from playlist"
 msgstr "Removed from playlist"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:288
+#: src/pages/SettingsClient/SettingsClient.tsx:292
 msgid "Request"
 msgstr "Request"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:310
+#: src/pages/SettingsClient/SettingsClient.tsx:314
 msgid "Reset"
 msgstr "Reset"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:228
+#: src/pages/SettingsClient/SettingsClient.tsx:232
 msgid "Restart threshold (seconds)"
 msgstr "Restart threshold (seconds)"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:219
+#: src/pages/SettingsClient/SettingsClient.tsx:223
 msgid "Restart threshold (seconds):"
 msgstr "Restart threshold (seconds):"
 
@@ -584,7 +584,7 @@ msgstr "Resume {trackName}"
 msgid "Russian"
 msgstr "Russian"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:242
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:247
 msgid "Save"
 msgstr "Save"
 
@@ -614,7 +614,7 @@ msgstr "Seek"
 #~ msgid "Service Worker max cache entries:"
 #~ msgstr "Service Worker max cache entries:"
 
-#: src/pages/SettingsAccount/SettingsAccount.tsx:75
+#: src/pages/SettingsAccount/SettingsAccount.tsx:97
 msgid "Sexe :"
 msgstr "Sexe :"
 
@@ -641,11 +641,11 @@ msgstr "Show queue"
 msgid "Spanish"
 msgstr "Spanish"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:78
+#: src/pages/SettingsClient/SettingsClient.tsx:82
 msgid "Static"
 msgstr "Static"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:272
+#: src/pages/SettingsClient/SettingsClient.tsx:276
 msgid "Storage Persistence:"
 msgstr "Storage Persistence:"
 
@@ -663,7 +663,7 @@ msgid "Tracks"
 msgstr "Tracks"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:46
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:52
 msgid "Unlisted"
 msgstr "Unlisted"
 
@@ -683,11 +683,11 @@ msgstr "Updating results"
 msgid "Upgrade to a supported Chromium browser"
 msgstr "Upgrade to a supported Chromium browser"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:210
+#: src/pages/SettingsClient/SettingsClient.tsx:214
 msgid "Volume enabled:"
 msgstr "Volume enabled:"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:150
+#: src/pages/SettingsClient/SettingsClient.tsx:154
 msgid "Wake lock:"
 msgstr "Wake lock:"
 
@@ -695,10 +695,10 @@ msgstr "Wake lock:"
 msgid "Woman"
 msgstr "Woman"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:76
+#: src/pages/SettingsClient/SettingsClient.tsx:80
 msgid "Word by word"
 msgstr "Word by word"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:180
+#: src/pages/SettingsClient/SettingsClient.tsx:184
 msgid "Your browser does not support lyrics translation"
 msgstr "Your browser does not support lyrics translation"

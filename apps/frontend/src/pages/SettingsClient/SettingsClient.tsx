@@ -28,7 +28,10 @@ import {
   storagePersistenceAtom,
 } from "../../atoms/app/atoms.ts";
 import { OktoSwitch } from "../../components/Base/OktoSwitch.tsx";
-import { OktoListbox } from "../../components/Base/OktoListbox.tsx";
+import {
+  OktoListbox,
+  OktoListboxItem,
+} from "../../components/Base/OktoListbox.tsx";
 import { OktoSlider } from "../../components/Base/OktoSlider.tsx";
 import { OktoInput } from "../../components/Base/OktoInput.tsx";
 import { OktoButton } from "../../components/Base/OktoButton.tsx";
@@ -61,22 +64,23 @@ export function SettingsClient() {
   const storagePersistence = useAtomValue(storagePersistenceAtom);
   const requestStoragePersistence = useSetAtom(requestStoragePersistenceAtom);
 
-  const audioSessionLabels: Record<AudioSessionKey, string> = {
-    ambient: t`Ambient`,
-    playback: t`Playback`,
-  } as const;
+  const audioSessionOptions: readonly OktoListboxItem<AudioSessionKey>[] = [
+    { value: "ambient", label: t`Ambient` },
+    { value: "playback", label: t`Playback` },
+  ];
 
-  const wakeLockLabels: Record<WakeLockKey, string> = {
-    always: t`Always`,
-    playback: t`Playback`,
-    never: t`Never`,
-  } as const;
+  const wakeLockOptions: readonly OktoListboxItem<WakeLockKey>[] = [
+    { value: "always", label: t`Always` },
+    { value: "playback", label: t`Playback` },
+    { value: "never", label: t`Never` },
+  ];
 
-  const lyricsDisplayModeLabels: Record<LyricsDisplayModeKey, string> = {
-    word: t`Word by word`,
-    line: t`Line by line`,
-    static: t`Static`,
-  } as const;
+  const lyricsDisplayModeOptions: readonly OktoListboxItem<LyricsDisplayModeKey>[] =
+    [
+      { value: "word", label: t`Word by word` },
+      { value: "line", label: t`Line by line` },
+      { value: "static", label: t`Static` },
+    ];
 
   const handleCrossfadeChange = (value: number) => {
     const roundedValue = Math.round(value * 10) / 10;
@@ -141,7 +145,7 @@ export function SettingsClient() {
               id="settings:client:audio-session"
               value={audioSessionType}
               onChange={setAudioSessionType}
-              options={audioSessionLabels}
+              options={audioSessionOptions}
               disabled={!audioSessionSupported}
             />
           </div>
@@ -152,7 +156,7 @@ export function SettingsClient() {
               id="settings:client:wake-lock"
               value={wakeLockMode}
               onChange={setWakeLockMode}
-              options={wakeLockLabels}
+              options={wakeLockOptions}
             />
           </div>
 
@@ -162,7 +166,7 @@ export function SettingsClient() {
               id="settings:client:lyrics-display-mode"
               value={lyricsDisplayMode}
               onChange={setLyricsDisplayMode}
-              options={lyricsDisplayModeLabels}
+              options={lyricsDisplayModeOptions}
             />
           </div>
 

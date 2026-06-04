@@ -1,20 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ErrorLike } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
+import { t } from "@lingui/core/macro";
 import { useAtomValue } from "jotai";
 import { LuCheck, LuDownload, LuLoaderCircle } from "react-icons/lu";
-import { t } from "@lingui/core/macro";
 
 import { translatorSupportAtom } from "../atoms/app/browser_support";
 import { settingClientLyricsTranslationEnabled } from "../atoms/app/settings_client";
 import { playerQueueCurrentTrack } from "../atoms/player/machine";
 import { TRACK_LYRICS_QUERY } from "../api/graphql/queries/trackLyrics";
 import { LyricsLine } from "../api/graphql/gql/graphql";
-import { OktoListboxOption } from "../components/Base/OktoListbox";
+import { OktoListboxItem } from "../components/Base/OktoListbox";
 import { useLyricsLanguageDetection } from "./use_language_detector";
 import { useLyricsTranslation } from "./use_translator";
 import { useTranslatorAvailability } from "./use_translator_availability";
-import { getLocales, Locale } from "../utils/locales";
+import { getLocales, Locale, locales } from "../utils/locales";
 
 export type PanelOverlayLanguage = "original" | Locale;
 
@@ -33,7 +33,7 @@ export interface PanelOverlayTranslationState {
   readonly translationEnabled: boolean;
   readonly language: PanelOverlayLanguage;
   readonly setLanguage: (language: PanelOverlayLanguage) => void;
-  readonly languageOptions: Record<string, OktoListboxOption>;
+  readonly languageOptions: readonly OktoListboxItem<PanelOverlayLanguage>[];
   readonly showTranslationSpinner: boolean;
   readonly translatedLyrics: ReadonlyArray<string> | null;
   readonly lyrics: ReadonlyArray<LyricsLine>;
@@ -74,10 +74,6 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
     useRef<TranslationStatus["status"]>("idle");
 
   const localeLabels = useMemo(() => getLocales(), []);
-  const targetLanguages = useMemo(
-    () => Object.keys(localeLabels) as Locale[],
-    [localeLabels],
-  );
 
   const availabilityState = useTranslatorAvailability({
     enabled:
@@ -85,7 +81,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
       languageDetectionState.status === "ready" &&
       Boolean(languageDetectionState.detectedLanguage),
     sourceLanguage: languageDetectionState.detectedLanguage,
-    targetLanguages,
+    targetLanguages: locales,
     refreshTrigger: availabilityRefreshKey,
   });
 
@@ -100,75 +96,67 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
     preservePreviousTranslation: true,
   });
 
-  const languageOptions = useMemo<Record<string, OktoListboxOption>>(() => {
-    const baseOptions = {
-      original: {
+  const languageOptions = useMemo<
+    readonly OktoListboxItem<PanelOverlayLanguage>[]
+  >(() => {
+    const options: OktoListboxItem<PanelOverlayLanguage>[] = [
+      {
+        value: "original",
         label: t`Original`,
-        icon: undefined,
       },
-    } as const satisfies Record<string, OktoListboxOption>;
+    ];
 
     if (
       !translationEnabled ||
       languageDetectionState.status !== "ready" ||
       !languageDetectionState.detectedLanguage
     ) {
-      return baseOptions;
+      return options;
     }
 
-    const translatedOptions: Record<string, OktoListboxOption> = {};
-
-    for (const [targetLanguage, label] of Object.entries(localeLabels) as [
-      Locale,
-      string,
-    ][]) {
+    for (const targetLanguage of locales) {
       if (targetLanguage === languageDetectionState.detectedLanguage) {
         continue;
       }
 
+      const label = localeLabels[targetLanguage];
       const availability =
         availabilityState.availabilityByLocale[targetLanguage];
       const downloadKey = `${languageDetectionState.detectedLanguage}:${targetLanguage}`;
       const isDownloaded = downloadedLanguages[downloadKey] === true;
 
-      if (availability === "unavailable") {
+      if (availability === "unavailable" || availability === undefined) {
         continue;
       }
 
       if (isDownloaded || availability === "available") {
-        translatedOptions[targetLanguage] = { label, icon: undefined };
+        options.push({ value: targetLanguage, label });
         continue;
       }
 
       if (availability === "downloadable") {
-        translatedOptions[targetLanguage] = { label, icon: LuDownload };
+        options.push({ value: targetLanguage, label, icon: LuDownload });
         continue;
       }
 
       if (availability === "downloading") {
-        translatedOptions[targetLanguage] = {
+        options.push({
+          value: targetLanguage,
           label,
-          icon: (props: Parameters<typeof LuLoaderCircle>[0]) => (
+          icon: (iconProps) => (
             <LuLoaderCircle
-              {...props}
-              className={`${props.className ?? ""} animate-spin`.trim()}
+              {...iconProps}
+              className={`${iconProps.className ?? ""} animate-spin`.trim()}
             />
           ),
-        };
+        });
         continue;
       }
 
-      if (availability === undefined) {
-        continue;
-      }
-
-      translatedOptions[targetLanguage] = { label, icon: LuCheck };
+      options.push({ value: targetLanguage, label, icon: LuCheck });
     }
 
-    return {
-      ...baseOptions,
-      ...translatedOptions,
-    };
+    return options;
   }, [
     availabilityState.availabilityByLocale,
     downloadedLanguages,
@@ -179,7 +167,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
   ]);
 
   useEffect(() => {
-    if (language in languageOptions) {
+    if (languageOptions.some((option) => option.value === language)) {
       return;
     }
 
