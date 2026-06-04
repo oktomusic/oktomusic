@@ -25,9 +25,15 @@ import { OktoDialog } from "../Base/OktoDialog";
 import { OktoInput } from "../Base/OktoInput";
 import { OktoTextarea } from "../Base/OktoTextarea";
 import { OktoButton } from "../Base/OktoButton";
-import { OktoListbox, OktoListboxOption } from "../Base/OktoListbox";
+import { OktoListbox, OktoListboxItem } from "../Base/OktoListbox";
 
 type VisibilityOptions = "public" | "unlisted" | "private";
+
+const visibilityEnumByOption = {
+  public: PlaylistVisibility.Public,
+  unlisted: PlaylistVisibility.Unlisted,
+  private: PlaylistVisibility.Private,
+} satisfies Record<VisibilityOptions, PlaylistVisibility>;
 
 export function DialogPlaylistEdit() {
   const [open, setOpen] = useAtom(dialogPlaylistOpenAtom);
@@ -41,11 +47,11 @@ export function DialogPlaylistEdit() {
     useState<VisibilityOptions | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const visibilityOptions: Record<VisibilityOptions, OktoListboxOption> = {
-    public: { label: t`Public`, icon: LuGlobe },
-    unlisted: { label: t`Unlisted`, icon: LuLink },
-    private: { label: t`Private`, icon: LuLock },
-  };
+  const visibilityOptions: readonly OktoListboxItem<VisibilityOptions>[] = [
+    { value: "public", label: t`Public`, icon: LuGlobe },
+    { value: "unlisted", label: t`Unlisted`, icon: LuLink },
+    { value: "private", label: t`Private`, icon: LuLock },
+  ];
 
   const [createPlaylist] = useMutation(CREATE_PLAYLIST_MUTATION);
   const [updatePlaylist] = useMutation(UPDATE_PLAYLIST_MUTATION);
@@ -88,8 +94,7 @@ export function DialogPlaylistEdit() {
       e.preventDefault();
       setLoading(true);
 
-      const visibilityEnumValue =
-        visibility.toUpperCase() as PlaylistVisibility;
+      const visibilityEnumValue = visibilityEnumByOption[visibility];
 
       const payload = {
         name,
