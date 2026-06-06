@@ -136,7 +136,7 @@ export function HeaderMenu() {
               <Avatar.Fallback>{usernameInitial}</Avatar.Fallback>
             </Avatar.Root>
           }
-          buttonClassName="rounded-full"
+          buttonClassName="rounded-full focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
           buttonAriaLabel="User menu"
           positionAlign="end"
           positionSide="bottom"

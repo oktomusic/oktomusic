@@ -50,7 +50,7 @@ export function HeaderMenuSearch() {
 
       <Link
         to="/search"
-        className="absolute top-1/2 right-2 -translate-y-1/2 text-zinc-400 hover:text-white"
+        className="absolute top-1/2 right-2 -translate-y-1/2 text-zinc-400 hover:text-white focus:text-white focus:outline-0"
         aria-label={t`Browse`}
       >
         <LuFolder className="size-5" />
