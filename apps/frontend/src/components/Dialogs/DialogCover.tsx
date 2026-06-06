@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAtom } from "jotai";
-import { CloseButton } from "@headlessui/react";
+import { Dialog } from "@base-ui/react";
 import { t } from "@lingui/core/macro";
 
 import { dialogCoverId } from "../../atoms/app/dialogs";
@@ -35,12 +35,12 @@ export function DialogCover() {
           fetchPriority="high"
         />
       )}
-      <CloseButton
+      <Dialog.Close
         className="mt-4 cursor-pointer px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:text-white focus:text-white focus:outline-none"
         onClick={() => setDialogCoverId(null)}
       >
         {t`Close`}
-      </CloseButton>
+      </Dialog.Close>
     </OktoDialog>
   );
 }

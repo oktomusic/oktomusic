@@ -148,7 +148,7 @@ msgstr "Clear"
 msgid "Client Settings"
 msgstr "Client Settings"
 
-#: src/components/Base/OktoDialog.tsx:89
+#: src/components/Base/OktoDialog.tsx:80
 #: src/components/Dialogs/DialogCover.tsx:42
 msgid "Close"
 msgstr "Close"

@@ -144,7 +144,7 @@ msgstr "Vider"
 msgid "Client Settings"
 msgstr ""
 
-#: src/components/Base/OktoDialog.tsx:89
+#: src/components/Base/OktoDialog.tsx:80
 #: src/components/Dialogs/DialogCover.tsx:42
 msgid "Close"
 msgstr "Fermer"

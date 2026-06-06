@@ -24,8 +24,6 @@
     "@base-ui/react": "^1.5.0",
     "@dnd-kit/react": "^0.4.0",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@headlessui/react": "^2.2.10",
-    "@headlessui/tailwindcss": "^0.2.2",
     "@lingui/detect-locale": "^6.1.0",
     "@oktomusic/api-schemas": "workspace:^",
     "@tailwindcss/vite": "^4.3.0",

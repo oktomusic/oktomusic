@@ -1,10 +1,4 @@
-import {
-  CloseButton,
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { Dialog } from "@base-ui/react/dialog";
 import { t } from "@lingui/core/macro";
 import { LuX } from "react-icons/lu";
 
@@ -53,19 +47,16 @@ interface OktoDialogProps {
  */
 export function OktoDialog(props: OktoDialogProps) {
   return (
-    <Dialog open={props.open} onClose={props.onClose} className="relative z-50">
-      <DialogBackdrop
-        transition
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm duration-300 ease-out data-closed:opacity-0"
-      />
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel
-          transition
-          className={
-            "flex max-w-lg flex-col items-center duration-300 ease-out select-none data-closed:scale-95 data-closed:opacity-0" +
-            (props.transparentPanel ? "" : " rounded-lg bg-zinc-900 p-6") +
-            (props.className ? " " + props.className : "")
-          }
+    <Dialog.Root
+      open={props.open}
+      onOpenChange={(open) => !open && props.onClose()}
+    >
+      <Dialog.Portal>
+        <Dialog.Backdrop className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ease-out data-ending-style:opacity-0 data-starting-style:opacity-0" />
+        <Dialog.Popup
+          className={`fixed top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col gap-4 p-4 transition-[scale,opacity] duration-100 ease-out data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-starting-style:opacity-0 ${
+            props.transparentPanel ? "" : "rounded-lg bg-zinc-900 p-6"
+          } ${props.className ?? ""} `}
         >
           <div
             className={
@@ -75,26 +66,26 @@ export function OktoDialog(props: OktoDialogProps) {
             }
           >
             {props.title && (
-              <DialogTitle
+              <Dialog.Title
                 className={
                   props.showHeader ? "text-2xl font-medium" : "sr-only"
                 }
               >
                 {props.title}
-              </DialogTitle>
+              </Dialog.Title>
             )}
             {props.showHeader && (
-              <CloseButton
+              <Dialog.Close
                 className="flex size-8 cursor-pointer items-center justify-center text-white/80 transition-colors hover:text-white focus:text-white focus:outline-none"
                 title={t`Close`}
               >
                 <LuX className="size-6" />
-              </CloseButton>
+              </Dialog.Close>
             )}
           </div>
           {props.children}
-        </DialogPanel>
-      </div>
-    </Dialog>
+        </Dialog.Popup>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
