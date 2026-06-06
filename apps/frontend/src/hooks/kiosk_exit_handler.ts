@@ -24,9 +24,9 @@ export function useKioskExitHandler() {
       window.alert("To exit kiosk mode, press Alt+F4.");
     };
 
-    window.addEventListener("keydown", onKeyDown, { capture: true });
+    window.addEventListener("keydown", onKeyDown, { capture: false });
     return () => {
-      window.removeEventListener("keydown", onKeyDown, { capture: true });
+      window.removeEventListener("keydown", onKeyDown, { capture: false });
     };
   }, [kioskModeEnabled]);
 }
