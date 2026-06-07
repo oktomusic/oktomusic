@@ -91,10 +91,15 @@ export function SettingsClient() {
       { value: "static", label: t`Static` },
     ];
 
-  const languageDisplayLabels: Record<SupportedLocale, string> = {
-    fr: 'Français',
-    en: 'English',
-  } as const;
+  // const languageDisplayLabels: Record<SupportedLocale, string> = {
+  //   fr: 'Français',
+  //   en: 'English',
+  // } as const;
+
+  const languageDisplayLabels: OktoListboxItem<SupportedLocale>[] = [
+    { value: "en", label: 'English' },
+    {value: "fr", label: 'Français'}
+  ];
 
   const handleCrossfadeChange = (value: number) => {
     const roundedValue = Math.round(value * 10) / 10;
