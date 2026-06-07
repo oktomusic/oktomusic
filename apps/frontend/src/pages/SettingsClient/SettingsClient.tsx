@@ -39,6 +39,8 @@ import { OktoInput } from "../../components/Base/OktoInput.tsx";
 import { OktoButton } from "../../components/Base/OktoButton.tsx";
 import { SupportedLocale } from "../../utils/supported_locales.ts";
 import { dynamicActivate } from "../../utils/i18n_loader.ts";
+import FrenchFlag from "../../assets/country_flags/french_flag.svg";
+import BritishFlag from "../../assets/country_flags/british_flag.svg";
 
 export function SettingsClient() {
   const { t } = useLingui();
@@ -55,10 +57,13 @@ export function SettingsClient() {
     settingClientLyricsDisplayMode,
   );
   const [appLanguage, setAppLanguage] = useAtom(applicationLanguage);
-  const onAppLanguageChange = useCallback((appLanguage: SupportedLocale) => {
-    void dynamicActivate(appLanguage);
-    setAppLanguage(appLanguage);
-  }, [setAppLanguage]);
+  const onAppLanguageChange = useCallback(
+    (appLanguage: SupportedLocale) => {
+      void dynamicActivate(appLanguage);
+      setAppLanguage(appLanguage);
+    },
+    [setAppLanguage],
+  );
 
   const [lyricsTranslationEnabled, setLyricsTranslationEnabled] = useAtom(
     settingClientLyricsTranslationEnabled,
@@ -97,14 +102,13 @@ export function SettingsClient() {
       { value: "static", label: t`Static` },
     ];
 
-  // const languageDisplayLabels: Record<SupportedLocale, string> = {
-  //   fr: 'Français',
-  //   en: 'English',
-  // } as const;
-
   const languageDisplayLabels: OktoListboxItem<SupportedLocale>[] = [
-    { value: "en", label: 'English' },
-    {value: "fr", label: 'Français'}
+    { value: "en", label: "English", icon: BritishFlag },
+    {
+      value: "fr",
+      label: "Français",
+      icon: FrenchFlag,
+    },
   ];
 
   const handleCrossfadeChange = (value: number) => {
