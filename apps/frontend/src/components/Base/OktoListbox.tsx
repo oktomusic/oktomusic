@@ -3,7 +3,7 @@ import { LuCheck, LuChevronDown } from "react-icons/lu";
 
 export interface OktoListboxOption {
   readonly label: string;
-  readonly icon?: (props: React.SVGAttributes<SVGElement>) => React.ReactNode;
+  readonly icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> | string;
 }
 
 export interface OktoListboxItem<T extends string> extends OktoListboxOption {
@@ -95,7 +95,11 @@ export function OktoListbox<T extends string>(props: OktoListboxProps<T>) {
                     >
                       <LuCheck className="invisible size-4 group-data-selected:visible" />
                     </Select.ItemIndicator>
-                    {Icon && <Icon className="size-4" />}
+                    {typeof Icon === "string" ? (
+                      <img src={Icon} alt="" className="size-4 shrink-0" />
+                    ) : Icon ? (
+                      <Icon className="size-4 shrink-0" />
+                    ) : null}
                     <Select.ItemText className="text-white">
                       {option.label}
                     </Select.ItemText>
