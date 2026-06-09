@@ -99,7 +99,7 @@ RUN mkdir -p apps/backend/dist/public && \
 # Create a portable, pruned backend bundle for production image
 RUN pnpm --filter @oktomusic/backend --prod deploy /prod/backend
 
-FROM ghcr.io/oktomusic/ffmpeg-custom:0.3.0 AS ffmpeg
+FROM ghcr.io/oktomusic/ffmpeg-custom:0.4.0 AS ffmpeg
 
 FROM ${IMAGE_PROD} AS production
 
