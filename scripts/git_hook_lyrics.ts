@@ -85,5 +85,4 @@ if (changedLocales.length > 0) {
   process.exit(1);
 }
 
-console.log("Translation files are up to date.");
 process.exit(0);
