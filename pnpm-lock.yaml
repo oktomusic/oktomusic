@@ -10,24 +10,12 @@ catalogs:
     '@types/node':
       specifier: ^24.12.2
       version: 24.12.4
-    fast-xml-parser:
-      specifier: ^5.8.0
-      version: 5.8.0
-    sharp:
-      specifier: ^0.34.5
-      version: 0.34.5
     temporal-polyfill:
       specifier: ^0.3.2
       version: 0.3.2
-    tsdown:
-      specifier: ^0.21.10
-      version: 0.21.10
     typescript:
       specifier: ^5.9.3
       version: 5.9.3
-    zod:
-      specifier: ^4.4.3
-      version: 4.4.3
 
 importers:
 
@@ -95,7 +83,7 @@ importers:
         version: 8.60.1(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
       vitest:
         specifier: ^4.1.8
-        version: 4.1.8(@types/node@24.12.4)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1(@noble/hashes@1.8.0))(vite@8.0.16)
+        version: 4.1.8(@types/node@24.12.4)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1(@noble/hashes@1.8.0))(vite@8.0.16(@types/node@24.12.4)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0))
 
   apps/backend:
     dependencies:
@@ -273,13 +261,13 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.1.8
-        version: 4.1.8(@types/node@24.12.4)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1(@noble/hashes@1.8.0))(vite@8.0.16)
+        version: 4.1.8(@types/node@24.12.4)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1(@noble/hashes@1.8.0))(vite@8.0.16(@types/node@24.12.4)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0))
 
   apps/frontend:
     dependencies:
       '@apollo/client':
         specifier: ^4.2.2
-        version: 4.2.2(graphql-ws@6.0.8(crossws@0.3.5)(graphql@16.14.1)(ws@8.21.0))(graphql@16.14.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rxjs@7.8.2)(subscriptions-transport-ws@0.11.0(graphql@16.14.1))
+        version: 4.2.2(graphql-ws@6.0.8(graphql@16.14.1)(ws@8.20.1))(graphql@16.14.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rxjs@7.8.2)(subscriptions-transport-ws@0.11.0(graphql@16.14.1))
       '@base-ui/react':
         specifier: ^1.5.0
         version: 1.5.0(@types/react@19.2.16)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -294,7 +282,7 @@ importers:
         version: 6.2.0
       '@oktomusic/api-schemas':
         specifier: workspace:^
-        version: link:../../packages/api-schemas
+        version: file:packages/api-schemas
       '@tailwindcss/vite':
         specifier: ^4.3.0
         version: 4.3.0(vite@8.0.16)
@@ -303,7 +291,7 @@ importers:
         version: 16.14.1
       graphql-ws:
         specifier: 6.0.8
-        version: 6.0.8(crossws@0.3.5)(graphql@16.14.1)(ws@8.21.0)
+        version: 6.0.8(graphql@16.14.1)(ws@8.20.1)
       jotai:
         specifier: ^2.20.0
         version: 2.20.0(@babel/core@7.29.7)(@babel/template@7.29.7)(@types/react@19.2.16)(react@19.2.7)
@@ -337,7 +325,7 @@ importers:
         version: 7.29.7
       '@graphql-codegen/cli':
         specifier: 6.3.1
-        version: 6.3.1(@types/node@24.12.4)(crossws@0.3.5)(graphql@16.14.1)(typescript@5.9.3)
+        version: 6.3.1(@types/node@24.12.4)(graphql@16.14.1)(typescript@5.9.3)
       '@graphql-codegen/client-preset':
         specifier: 5.3.0
         version: 5.3.0(graphql@16.14.1)
@@ -379,7 +367,7 @@ importers:
         version: 1.0.2
       '@vitejs/devtools':
         specifier: ^0.3.1
-        version: 0.3.1(crossws@0.3.5)(ioredis@5.10.1)(typescript@5.9.3)(vite@8.0.16)
+        version: 0.3.1(ioredis@5.10.1)(typescript@5.9.3)(vite@8.0.16)
       '@vitejs/plugin-react':
         specifier: ^6.0.2
         version: 6.0.2(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.2)(rolldown@1.0.3)(vite@8.0.16))(babel-plugin-react-compiler@1.0.0)(vite@8.0.16)
@@ -3069,6 +3057,9 @@ packages:
     resolution: {integrity: sha512-GXD3wy50qYbxCJ652bDrDzgMr3NFEkIS374+IgFQKkCvk9yiYcLvX2XDYr7UyQxf4wK0e+yqDYRubZ0DtOxnmQ==}
     engines: {node: ^14.18.0 || >=16.10.0, npm: '>=5.10.0'}
     hasBin: true
+
+  '@oktomusic/api-schemas@file:packages/api-schemas':
+    resolution: {directory: packages/api-schemas, type: directory}
 
   '@oktomusic/vite-sri-manifest@file:packages/vite-sri-manifest':
     resolution: {directory: packages/vite-sri-manifest, type: directory}
@@ -9292,7 +9283,7 @@ snapshots:
     dependencies:
       graphql: 16.14.1
 
-  '@apollo/client@4.2.2(graphql-ws@6.0.8(crossws@0.3.5)(graphql@16.14.1)(ws@8.21.0))(graphql@16.14.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rxjs@7.8.2)(subscriptions-transport-ws@0.11.0(graphql@16.14.1))':
+  '@apollo/client@4.2.2(graphql-ws@6.0.8(graphql@16.14.1)(ws@8.20.1))(graphql@16.14.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rxjs@7.8.2)(subscriptions-transport-ws@0.11.0(graphql@16.14.1))':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.14.1)
       '@wry/caches': 1.0.1
@@ -9304,7 +9295,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
     optionalDependencies:
-      graphql-ws: 6.0.8(crossws@0.3.5)(graphql@16.14.1)(ws@8.21.0)
+      graphql-ws: 6.0.8(graphql@16.14.1)(ws@8.20.1)
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
       subscriptions-transport-ws: 0.11.0(graphql@16.14.1)
@@ -10421,6 +10412,16 @@ snapshots:
       pathe: 2.0.3
       perfect-debounce: 2.1.0
       tinyexec: 1.2.3
+    optional: true
+
+  '@devframes/hub@0.5.2(devframe@0.5.2(typescript@5.9.3))':
+    dependencies:
+      birpc: 4.0.0
+      devframe: 0.5.2(typescript@5.9.3)
+      nostics: 0.2.0
+      pathe: 2.0.3
+      perfect-debounce: 2.1.0
+      tinyexec: 1.2.3
 
   '@dnd-kit/abstract@0.4.0':
     dependencies:
@@ -10749,7 +10750,7 @@ snapshots:
       graphql: 16.14.1
       tslib: 2.8.1
 
-  '@graphql-codegen/cli@6.3.1(@types/node@24.12.4)(crossws@0.3.5)(graphql@16.14.1)(typescript@5.9.3)':
+  '@graphql-codegen/cli@6.3.1(@types/node@24.12.4)(graphql@16.14.1)(typescript@5.9.3)':
     dependencies:
       '@babel/generator': 7.29.1
       '@babel/template': 7.28.6
@@ -10765,7 +10766,7 @@ snapshots:
       '@graphql-tools/json-file-loader': 8.0.28(graphql@16.14.1)
       '@graphql-tools/load': 8.1.10(graphql@16.14.1)
       '@graphql-tools/merge': 9.1.9(graphql@16.14.1)
-      '@graphql-tools/url-loader': 9.1.2(@types/node@24.12.4)(crossws@0.3.5)(graphql@16.14.1)
+      '@graphql-tools/url-loader': 9.1.2(@types/node@24.12.4)(graphql@16.14.1)
       '@graphql-tools/utils': 11.1.0(graphql@16.14.1)
       '@inquirer/prompts': 7.10.1(@types/node@24.12.4)
       '@whatwg-node/fetch': 0.10.13
@@ -10774,7 +10775,7 @@ snapshots:
       debounce: 2.2.0
       detect-indent: 6.1.0
       graphql: 16.14.1
-      graphql-config: 5.1.6(@types/node@24.12.4)(crossws@0.3.5)(graphql@16.14.1)(typescript@5.9.3)
+      graphql-config: 5.1.6(@types/node@24.12.4)(graphql@16.14.1)(typescript@5.9.3)
       is-glob: 4.0.3
       jiti: 2.7.0
       json-to-pretty-yaml: 1.2.2
@@ -10958,6 +10959,22 @@ snapshots:
       - crossws
       - utf-8-validate
 
+  '@graphql-tools/executor-graphql-ws@3.1.5(graphql@16.14.1)':
+    dependencies:
+      '@graphql-tools/executor-common': 1.0.6(graphql@16.14.1)
+      '@graphql-tools/utils': 11.1.0(graphql@16.14.1)
+      '@whatwg-node/disposablestack': 0.0.6
+      graphql: 16.14.1
+      graphql-ws: 6.0.8(graphql@16.14.1)(ws@8.20.1)
+      isows: 1.0.7(ws@8.20.1)
+      tslib: 2.8.1
+      ws: 8.20.1
+    transitivePeerDependencies:
+      - '@fastify/websocket'
+      - bufferutil
+      - crossws
+      - utf-8-validate
+
   '@graphql-tools/executor-http@3.3.0(@types/node@24.12.4)(graphql@16.14.1)':
     dependencies:
       '@graphql-hive/signal': 2.0.0
@@ -11094,6 +11111,28 @@ snapshots:
   '@graphql-tools/url-loader@9.1.2(@types/node@24.12.4)(crossws@0.3.5)(graphql@16.14.1)':
     dependencies:
       '@graphql-tools/executor-graphql-ws': 3.1.5(crossws@0.3.5)(graphql@16.14.1)
+      '@graphql-tools/executor-http': 3.3.0(@types/node@24.12.4)(graphql@16.14.1)
+      '@graphql-tools/executor-legacy-ws': 1.1.28(graphql@16.14.1)
+      '@graphql-tools/utils': 11.1.0(graphql@16.14.1)
+      '@graphql-tools/wrap': 11.1.15(graphql@16.14.1)
+      '@types/ws': 8.18.1
+      '@whatwg-node/fetch': 0.10.13
+      '@whatwg-node/promise-helpers': 1.3.2
+      graphql: 16.14.1
+      isomorphic-ws: 5.0.0(ws@8.20.1)
+      sync-fetch: 0.6.0
+      tslib: 2.8.1
+      ws: 8.20.1
+    transitivePeerDependencies:
+      - '@fastify/websocket'
+      - '@types/node'
+      - bufferutil
+      - crossws
+      - utf-8-validate
+
+  '@graphql-tools/url-loader@9.1.2(@types/node@24.12.4)(graphql@16.14.1)':
+    dependencies:
+      '@graphql-tools/executor-graphql-ws': 3.1.5(graphql@16.14.1)
       '@graphql-tools/executor-http': 3.3.0(@types/node@24.12.4)(graphql@16.14.1)
       '@graphql-tools/executor-legacy-ws': 1.1.28(graphql@16.14.1)
       '@graphql-tools/utils': 11.1.0(graphql@16.14.1)
@@ -11884,6 +11923,10 @@ snapshots:
   '@nuxt/opencollective@0.4.1':
     dependencies:
       consola: 3.4.2
+
+  '@oktomusic/api-schemas@file:packages/api-schemas':
+    dependencies:
+      zod: 4.4.3
 
   '@oktomusic/vite-sri-manifest@file:packages/vite-sri-manifest(vite@8.0.16)':
     dependencies:
@@ -13007,6 +13050,25 @@ snapshots:
       - crossws
       - typescript
       - utf-8-validate
+    optional: true
+
+  '@vitejs/devtools-kit@0.3.1(typescript@5.9.3)(vite@8.0.16)':
+    dependencies:
+      '@devframes/hub': 0.5.2(devframe@0.5.2(typescript@5.9.3))
+      birpc: 4.0.0
+      devframe: 0.5.2(typescript@5.9.3)
+      mlly: 1.8.2
+      nostics: 0.2.0
+      pathe: 2.0.3
+      perfect-debounce: 2.1.0
+      tinyexec: 1.2.3
+      vite: 8.0.16(@types/node@24.12.4)(@vitejs/devtools@0.3.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - bufferutil
+      - crossws
+      - typescript
+      - utf-8-validate
 
   '@vitejs/devtools-rolldown@0.3.1(crossws@0.3.5)(ioredis@5.10.1)(typescript@5.9.3)(vite@8.0.16)(vue@3.5.35(typescript@5.9.3))':
     dependencies:
@@ -13020,6 +13082,58 @@ snapshots:
       diff: 9.0.0
       get-port-please: 3.2.0
       h3: 2.0.1-rc.22(crossws@0.3.5)
+      mlly: 1.8.2
+      mrmime: 2.0.1
+      nostics: 0.2.0
+      p-limit: 7.3.0
+      pathe: 2.0.3
+      publint: 0.3.21
+      tinyglobby: 0.2.16
+      unconfig: 7.5.0
+      unstorage: 1.17.5(ioredis@5.10.1)
+      vue-virtual-scroller: 3.0.4(vue@3.5.35(typescript@5.9.3))
+      ws: 8.21.0
+    transitivePeerDependencies:
+      - '@azure/app-configuration'
+      - '@azure/cosmos'
+      - '@azure/data-tables'
+      - '@azure/identity'
+      - '@azure/keyvault-secrets'
+      - '@azure/storage-blob'
+      - '@capacitor/preferences'
+      - '@deno/kv'
+      - '@modelcontextprotocol/sdk'
+      - '@netlify/blobs'
+      - '@planetscale/database'
+      - '@upstash/redis'
+      - '@vercel/blob'
+      - '@vercel/functions'
+      - '@vercel/kv'
+      - aws4fetch
+      - bufferutil
+      - crossws
+      - db0
+      - idb-keyval
+      - ioredis
+      - typescript
+      - uploadthing
+      - utf-8-validate
+      - vite
+      - vue
+    optional: true
+
+  '@vitejs/devtools-rolldown@0.3.1(ioredis@5.10.1)(typescript@5.9.3)(vite@8.0.16)(vue@3.5.35(typescript@5.9.3))':
+    dependencies:
+      '@floating-ui/dom': 1.7.6
+      '@rolldown/debug': 1.0.3
+      '@vitejs/devtools-kit': 0.3.1(typescript@5.9.3)(vite@8.0.16)
+      birpc: 4.0.0
+      cac: 7.0.0
+      d3-shape: 3.2.0
+      devframe: 0.5.2(typescript@5.9.3)
+      diff: 9.0.0
+      get-port-please: 3.2.0
+      h3: 2.0.1-rc.22
       mlly: 1.8.2
       mrmime: 2.0.1
       nostics: 0.2.0
@@ -13102,6 +13216,51 @@ snapshots:
       - typescript
       - uploadthing
       - utf-8-validate
+    optional: true
+
+  '@vitejs/devtools@0.3.1(ioredis@5.10.1)(typescript@5.9.3)(vite@8.0.16)':
+    dependencies:
+      '@devframes/hub': 0.5.2(devframe@0.5.2(typescript@5.9.3))
+      '@vitejs/devtools-kit': 0.3.1(typescript@5.9.3)(vite@8.0.16)
+      '@vitejs/devtools-rolldown': 0.3.1(ioredis@5.10.1)(typescript@5.9.3)(vite@8.0.16)(vue@3.5.35(typescript@5.9.3))
+      birpc: 4.0.0
+      cac: 7.0.0
+      devframe: 0.5.2(typescript@5.9.3)
+      h3: 2.0.1-rc.22
+      mlly: 1.8.2
+      nostics: 0.2.0
+      obug: 2.1.1
+      pathe: 2.0.3
+      perfect-debounce: 2.1.0
+      tinyexec: 1.2.3
+      vite: 8.0.16(@types/node@24.12.4)(@vitejs/devtools@0.3.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0)
+      vue: 3.5.35(typescript@5.9.3)
+      ws: 8.21.0
+    transitivePeerDependencies:
+      - '@azure/app-configuration'
+      - '@azure/cosmos'
+      - '@azure/data-tables'
+      - '@azure/identity'
+      - '@azure/keyvault-secrets'
+      - '@azure/storage-blob'
+      - '@capacitor/preferences'
+      - '@deno/kv'
+      - '@modelcontextprotocol/sdk'
+      - '@netlify/blobs'
+      - '@planetscale/database'
+      - '@upstash/redis'
+      - '@vercel/blob'
+      - '@vercel/functions'
+      - '@vercel/kv'
+      - aws4fetch
+      - bufferutil
+      - crossws
+      - db0
+      - idb-keyval
+      - ioredis
+      - typescript
+      - uploadthing
+      - utf-8-validate
 
   '@vitejs/plugin-react@6.0.2(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.2)(rolldown@1.0.3)(vite@8.0.16))(babel-plugin-react-compiler@1.0.0)(vite@8.0.16)':
     dependencies:
@@ -13140,6 +13299,14 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
+  '@vitest/mocker@4.1.8(vite@8.0.16(@types/node@24.12.4)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0))':
+    dependencies:
+      '@vitest/spy': 4.1.8
+      estree-walker: 3.0.3
+      magic-string: 0.30.21
+    optionalDependencies:
+      vite: 8.0.16(@types/node@24.12.4)(@vitejs/devtools@0.3.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0)
+
   '@vitest/mocker@4.1.8(vite@8.0.16)':
     dependencies:
       '@vitest/spy': 4.1.8
@@ -13173,7 +13340,7 @@ snapshots:
       flatted: 3.4.2
       pathe: 2.0.3
       sirv: 3.0.2
-      tinyglobby: 0.2.16
+      tinyglobby: 0.2.17
       tinyrainbow: 3.1.0
       vitest: 4.1.8(@types/node@24.12.4)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1(@noble/hashes@1.8.0))(vite@8.0.16)
 
@@ -14248,6 +14415,24 @@ snapshots:
       - crossws
       - typescript
       - utf-8-validate
+    optional: true
+
+  devframe@0.5.2(typescript@5.9.3):
+    dependencies:
+      '@valibot/to-json-schema': 1.7.0(valibot@1.4.1(typescript@5.9.3))
+      birpc: 4.0.0
+      cac: 7.0.0
+      h3: 2.0.1-rc.22
+      mrmime: 2.0.1
+      nostics: 0.2.0
+      pathe: 2.0.3
+      valibot: 1.4.1(typescript@5.9.3)
+      ws: 8.21.0
+    transitivePeerDependencies:
+      - bufferutil
+      - crossws
+      - typescript
+      - utf-8-validate
 
   devlop@1.1.0:
     dependencies:
@@ -15035,6 +15220,28 @@ snapshots:
       - typescript
       - utf-8-validate
 
+  graphql-config@5.1.6(@types/node@24.12.4)(graphql@16.14.1)(typescript@5.9.3):
+    dependencies:
+      '@graphql-tools/graphql-file-loader': 8.1.14(graphql@16.14.1)
+      '@graphql-tools/json-file-loader': 8.0.28(graphql@16.14.1)
+      '@graphql-tools/load': 8.1.10(graphql@16.14.1)
+      '@graphql-tools/merge': 9.1.9(graphql@16.14.1)
+      '@graphql-tools/url-loader': 9.1.2(@types/node@24.12.4)(graphql@16.14.1)
+      '@graphql-tools/utils': 11.1.0(graphql@16.14.1)
+      cosmiconfig: 8.3.6(typescript@5.9.3)
+      graphql: 16.14.1
+      jiti: 2.7.0
+      minimatch: 10.2.5
+      string-env-interpolation: 1.0.1
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@fastify/websocket'
+      - '@types/node'
+      - bufferutil
+      - crossws
+      - typescript
+      - utf-8-validate
+
   graphql-subscriptions@3.0.0(graphql@16.14.1):
     dependencies:
       graphql: 16.14.1
@@ -15051,12 +15258,11 @@ snapshots:
       crossws: 0.3.5
       ws: 8.20.1
 
-  graphql-ws@6.0.8(crossws@0.3.5)(graphql@16.14.1)(ws@8.21.0):
+  graphql-ws@6.0.8(graphql@16.14.1)(ws@8.20.1):
     dependencies:
       graphql: 16.14.1
     optionalDependencies:
-      crossws: 0.3.5
-      ws: 8.21.0
+      ws: 8.20.1
 
   graphql@16.14.1: {}
 
@@ -15079,12 +15285,18 @@ snapshots:
       ufo: 1.6.4
       uncrypto: 0.1.3
 
+  h3@2.0.1-rc.22:
+    dependencies:
+      rou3: 0.8.1
+      srvx: 0.11.15
+
   h3@2.0.1-rc.22(crossws@0.3.5):
     dependencies:
       rou3: 0.8.1
       srvx: 0.11.15
     optionalDependencies:
       crossws: 0.3.5
+    optional: true
 
   handlebars@4.7.9:
     dependencies:
@@ -17651,8 +17863,8 @@ snapshots:
       rolldown: 1.0.0-rc.17
       rolldown-plugin-dts: 0.23.2(rolldown@1.0.0-rc.17)(typescript@5.9.3)
       semver: 7.8.0
-      tinyexec: 1.1.2
-      tinyglobby: 0.2.16
+      tinyexec: 1.2.3
+      tinyglobby: 0.2.17
       tree-kill: 1.2.2
       unconfig-core: 7.5.0
       unrun: 0.2.39
@@ -18008,7 +18220,7 @@ snapshots:
       tinyglobby: 0.2.17
     optionalDependencies:
       '@types/node': 24.12.4
-      '@vitejs/devtools': 0.3.1(crossws@0.3.5)(ioredis@5.10.1)(typescript@5.9.3)(vite@8.0.16)
+      '@vitejs/devtools': 0.3.1(ioredis@5.10.1)(typescript@5.9.3)(vite@8.0.16)
       esbuild: 0.27.7
       fsevents: 2.3.3
       jiti: 2.7.0
@@ -18089,6 +18301,36 @@ snapshots:
       - typescript
       - universal-cookie
       - yaml
+
+  vitest@4.1.8(@types/node@24.12.4)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1(@noble/hashes@1.8.0))(vite@8.0.16(@types/node@24.12.4)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0)):
+    dependencies:
+      '@vitest/expect': 4.1.8
+      '@vitest/mocker': 4.1.8(vite@8.0.16(@types/node@24.12.4)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0))
+      '@vitest/pretty-format': 4.1.8
+      '@vitest/runner': 4.1.8
+      '@vitest/snapshot': 4.1.8
+      '@vitest/spy': 4.1.8
+      '@vitest/utils': 4.1.8
+      es-module-lexer: 2.1.0
+      expect-type: 1.3.0
+      magic-string: 0.30.21
+      obug: 2.1.1
+      pathe: 2.0.3
+      picomatch: 4.0.4
+      std-env: 4.1.0
+      tinybench: 2.9.0
+      tinyexec: 1.2.3
+      tinyglobby: 0.2.16
+      tinyrainbow: 3.1.0
+      vite: 8.0.16(@types/node@24.12.4)(@vitejs/devtools@0.3.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.47.1)(yaml@2.9.0)
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 24.12.4
+      '@vitest/coverage-v8': 4.1.8(vitest@4.1.8)
+      '@vitest/ui': 4.1.8(vitest@4.1.8)
+      jsdom: 29.1.1(@noble/hashes@1.8.0)
+    transitivePeerDependencies:
+      - msw
 
   vitest@4.1.8(@types/node@24.12.4)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1(@noble/hashes@1.8.0))(vite@8.0.16):
     dependencies:
