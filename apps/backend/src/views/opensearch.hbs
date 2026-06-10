@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>{{appShortName}}</ShortName>
+  <LongName>{{appName}}</LongName>
+  <Description>Search {{appName}}</Description>
+  <Tags>oktomusic music</Tags>
+  <Developer>Oktomusic Development Team</Developer>
+
+  <Image type="image/svg+xml">{{baseUrl}}/favicon.svg</Image>
+  <Image width="48" height="48" type="image/x-icon">{{baseUrl}}/favicon.ico</Image>
+  <Image width="64" height="64" type="image/png">{{baseUrl}}/pwa-64x64.png</Image>
+  <Image width="192" height="192" type="image/png">{{baseUrl}}/pwa-192x192.png</Image>
+  <Image width="512" height="512" type="image/png">{{baseUrl}}/pwa-512x512.png</Image>
+
+  <Url rel="results" type="text/html" template="{{baseUrl}}/search?q={searchTerms}" />
+  <Url rel="self" type="application/opensearchdescription+xml" template="{{baseUrl}}/opensearch.xml" />
+
+  <SyndicationRight>private</SyndicationRight>
+  <Language>*</Language>
+  <OutputEncoding>UTF-8</OutputEncoding>
+  <InputEncoding>UTF-8</InputEncoding>
+</OpenSearchDescription>

@@ -10,7 +10,7 @@ import {
 import { ApiOkResponse, ApiOperation, ApiProduces } from "@nestjs/swagger";
 import type { NextFunction, Request, Response } from "express";
 
-import { ViewModel } from "./view-model";
+import { ViewModel, ViewModelOpenSearch } from "./view-model";
 import { MetaTagsService } from "../common/metatags/metatags.service";
 import { getAssetTags, type ViteManifest } from "../utils/vite_manifest";
 import viteConfig, { type ViteConfig } from "../config/definitions/vite.config";
@@ -98,7 +98,31 @@ export class ViewsController {
     };
   }
 
+  // https://github.com/dewitt/opensearch/blob/master/opensearch-1-1-draft-6.md
+  // https://developer.mozilla.org/en-US/docs/Web/XML/Guides/OpenSearch
+
+  @Get("/opensearch.xml")
+  @Header("Content-Type", "application/opensearchdescription+xml")
+  @Header("Content-Disposition", "inline")
+  @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
+  @ApiOperation({
+    summary: "Get OpenSearch Description",
+    description:
+      "Returns the OpenSearch Description XML to allow users to add Oktomusic as a search engine in their browser.",
+  })
+  @ApiProduces("application/opensearchdescription+xml")
+  opensearch(@Res() res: Response) {
+    const viewModel = {
+      appName: this.appConf.appName,
+      appShortName: this.appConf.appShortName,
+      baseUrl: "https://afcms.dev",
+    } as const satisfies ViewModelOpenSearch;
+
+    return res.render("opensearch", viewModel);
+  }
+
   @Get("/robots.txt")
+  @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
   @ApiOperation({
     summary: "Get robots.txt",
     description: "Returns the robots.txt file to disallow all web crawlers.",
@@ -140,6 +164,7 @@ export class ViewsController {
 
     const viewModel = {
       appName: this.appConf.appName,
+      appShortName: this.appConf.appShortName,
       dev: this.appConf.isDev,
       metaTags: [{ property: "og:title", content: this.appConf.appName }],
       assetTags: assetTags,

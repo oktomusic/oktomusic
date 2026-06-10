@@ -5,6 +5,13 @@ import type { EntryAssetTags } from "../utils/vite_manifest";
 export interface ViewModel {
   readonly dev: boolean;
   readonly appName: string;
+  readonly appShortName: string;
   readonly metaTags: CompiledMetaTags;
   readonly assetTags?: EntryAssetTags;
+}
+
+export interface ViewModelOpenSearch {
+  readonly appName: string;
+  readonly appShortName: string;
+  readonly baseUrl: string;
 }
