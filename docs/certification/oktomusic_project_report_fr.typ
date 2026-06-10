@@ -256,6 +256,40 @@ COPY --from=builder /usr/local/bin/ffprobe /usr/local/bin/ffprobe
 COPY --from=builder /usr/local/bin/metaflac /usr/local/bin/metaflac
 ```
 
+== Système de parsing de fichiers de paroles synchronisées
+
+Pour son support de la visualisation des paroles synchronisées, l'application intègre un système de parsing de fichiers de paroles, dans le package `@oktomusic/lyrics`.
+
+Ce système supporte en entrée plusieurs formats de fichiers :
+
+- LRC #footnote[https://en.wikipedia.org/wiki/LRC_(file_format)] (synchronisation ligne à ligne)
+- Enhanced LRC #footnote[https://en.wikipedia.org/wiki/LRC_(file_format)#A2_extension_(Enhanced_LRC_format)] (synchronisation ligne à ligne + par début de mots)
+- TTML #footnote[https://en.wikipedia.org/wiki/Timed_Text_Markup_Language] (XML, synchronisation complète, ligne et mots avec les informations de début et de fin)
+
+Un système de parsing spécifique à été développé pour les fichiers LRC, un parser XML basé sur la librarie `fast-xml-parser` est utilisé pour les fichiers TTML.
+
+Les données parsées sont extraites dans un format commun compatible JSON, inspiré par l'API richsync de Musixmatch#footnote[https://docs.musixmatch.com/api-reference/lyrics-catalog/track-richsync-get], défini par un schéma Zod #footnote[https://zod.dev] et permettant un typage strict en backend.
+
+Des tests unitaires complets ont été écrits pour garantir la robustesse du système de parsing.
+
+Ces données sont stoquées directement dans la base de données PostgreSQL, en exploitant le type `jsonb` ainsi qu'un générateur de types TypeScript pour Prisma#footnote[https://github.com/arthurfiorette/prisma-json-types-generator], dans le but de garantir la cohérence des données.
+
+== Système de parsing et de génération de fichiers de playlist
+
+Pour faciliter l'intéropérabilité avec d'autres applications, l'application supporte l'import et l'export de playlists au format XSPF #footnote[https://xspf.org], JSPF (variante JSON) et M3U #footnote[https://en.wikipedia.org/wiki/M3U], dans le package `@oktomusic/playlists`.
+
+Le modèle de données commun est celui de JSPF, qui permet une manipulation facile des données en TypeScript. Celui-ci est définit par un schéma Zod, permettant une utilisation directe pour parser les fichiers JSPF.
+
+Un parseur basé sur la librarie `fast-xml-parser` est utilisé pour les fichiers XSPF, tandis que les fichiers M3U sont parsés via une approche spécifique basée sur une itération ligne à ligne et des expressions régulières.
+
+Des tests unitaires complets ont été écrits pour garantir la robustesse du système de parsing et de génération de fichiers de playlist.
+
+== Extraction de couleurs dominantes dans les couvertures d'album
+
+L'application intègre un système d'extraction de couleurs dominantes à partir des images de couverture d'album, dans le package `@oktomusic/vibrant`.
+
+Les couvertures d'album subissant une conversion au format AVIF en plusieurs résolutions obtimisées à l'aide de la librarie `sharp`#footnote("https://sharp.pixelplumbing.com"), la décision a été prise de développer un adaptateur pour sharp basé sur les algorithme MMCQ exportés par les modules de la bibliothèque `node-vibrant`#footnote[https://vibrant.dev], permettant d'éviter l'ajout d'une dépendance supplémentaire (`jimp`) et de charger deux fois les images en mémoire au moment de l'indexation.
+
 = Sécurité de l'application <security>
 
 == OpenID Connect <security_oidc>
