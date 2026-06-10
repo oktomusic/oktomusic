@@ -383,6 +383,26 @@ jobs:
       - name: Setup Typst
         uses: typst-community/setup-typst@v5
 
+      - name: Install Fonts
+        run: |
+          mkdir -p ~/.local/share/fonts
+
+          wget -O Inter.zip \
+            https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip
+
+          unzip -j Inter.zip "Inter.ttc" -d ~/.local/share/fonts
+          rm Inter.zip
+
+          wget -O ~/.local/share/fonts/comic-shanns.ttf \
+            https://github.com/shannpersand/comic-shanns/raw/refs/heads/master/v2/comic%20shanns%202.ttf
+
+          fc-cache --force --verbose
+
+      - name: Check installed fonts
+        run: |
+          fc-list | grep "Inter"
+          fc-list | grep "Comic Shanns"
+
       - name: Build Project Report
         run: typst compile --root . docs/certification/oktomusic_project_report_fr.typ docs/certification/oktomusic_project_report_fr.pdf
 
