@@ -9,6 +9,9 @@ describe("AlbumService", () => {
 
   const appConf: AppConfig = {
     env: "test",
+    appName: "Oktomusic",
+    appShortName: "Oktomusic",
+    publicUrl: undefined,
     databaseUrl: "postgresql://unused",
     isDev: false,
     isProd: false,

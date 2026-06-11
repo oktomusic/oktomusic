@@ -6,6 +6,7 @@ export interface ViewModel {
   readonly dev: boolean;
   readonly appName: string;
   readonly appShortName: string;
+  readonly openSearch: boolean;
   readonly metaTags: CompiledMetaTags;
   readonly assetTags?: EntryAssetTags;
 }

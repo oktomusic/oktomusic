@@ -7,7 +7,12 @@ import {
   Inject,
   Header,
 } from "@nestjs/common";
-import { ApiOkResponse, ApiOperation, ApiProduces } from "@nestjs/swagger";
+import {
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiProduces,
+} from "@nestjs/swagger";
 import type { NextFunction, Request, Response } from "express";
 
 import { ViewModel, ViewModelOpenSearch } from "./view-model";
@@ -102,22 +107,33 @@ export class ViewsController {
   // https://developer.mozilla.org/en-US/docs/Web/XML/Guides/OpenSearch
 
   @Get("/opensearch.xml")
-  @Header("Content-Type", "application/opensearchdescription+xml")
-  @Header("Content-Disposition", "inline")
-  @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
   @ApiOperation({
     summary: "Get OpenSearch Description",
     description:
       "Returns the OpenSearch Description XML to allow users to add Oktomusic as a search engine in their browser.",
   })
   @ApiProduces("application/opensearchdescription+xml")
+  @ApiNotFoundResponse({
+    description:
+      "OpenSearch is disabled when APP_PUBLIC_URL is not configured.",
+  })
   opensearch(@Res() res: Response) {
+    if (!this.appConf.publicUrl) {
+      return res.sendStatus(404);
+    }
+
     const viewModel = {
       appName: this.appConf.appName,
       appShortName: this.appConf.appShortName,
-      baseUrl: "https://afcms.dev",
+      baseUrl: this.appConf.publicUrl,
     } as const satisfies ViewModelOpenSearch;
 
+    res.type("application/opensearchdescription+xml");
+    res.setHeader("Content-Disposition", "inline");
+    res.setHeader(
+      "Cache-Control",
+      "public, max-age=0, s-maxage=0, must-revalidate",
+    );
     return res.render("opensearch", viewModel);
   }
 
@@ -165,6 +181,7 @@ export class ViewsController {
     const viewModel = {
       appName: this.appConf.appName,
       appShortName: this.appConf.appShortName,
+      openSearch: this.appConf.publicUrl !== undefined,
       dev: this.appConf.isDev,
       metaTags: [{ property: "og:title", content: this.appConf.appName }],
       assetTags: assetTags,
