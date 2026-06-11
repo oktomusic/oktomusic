@@ -14,7 +14,9 @@
     <meta property="{{this.property}}" content="{{this.content}}" />
     {{/each}}
     <link rel="manifest" href="/manifest.webmanifest" />
+    {{#if openSearch}}
     <link rel="search" type="application/opensearchdescription+xml" title="{{appShortName}}" href="/opensearch.xml" />
+    {{/if}}
     {{#unless dev}}
     {{{viteAssetTags "head"}}}
     {{/unless}}

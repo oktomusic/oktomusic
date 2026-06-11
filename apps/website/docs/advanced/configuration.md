@@ -11,12 +11,13 @@ Configuration for the app is provided with environment variables.
 ## App
 
 | Name                    | Description                                                                                                                 |
-|-------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `NODE_ENV`              | Application environment. One of `development`, `production`, or `test`. Default: `development`.                             |
 | `DATABASE_URL`          | Prisma PostgreSQL [connection URL][prisma_connection_url]. Required.                                                        |
 | `SESSION_SECRET`        | Secret string used for session encryption. Required. Keep secret in production.                                             |
 | `APP_NAME`              | Application name. Default: `Oktomusic`                                                                                      |
 | `APP_SHORT_NAME`        | Application short name. Default: `Oktomusic`                                                                                |
+| `APP_PUBLIC_URL`        | Optional public URL where Oktomusic is reachable. Used for browser registration as search engine.                           |
 | `APP_LIBRARY_PATH`      | Path to the music library folder. Must exist and be a directory; the path is resolved at startup.                           |
 | `APP_INTERMEDIATE_PATH` | Path to store intermediate files (transcoding, etc) folder. Must exist and be a directory; the path is resolved at startup. |
 | `FFMPEG_PATH`           | Optional path to the `ffmpeg` binary.                                                                                       |

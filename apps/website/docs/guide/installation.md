@@ -47,6 +47,9 @@ DATABASE_URL=postgresql://oktomusic:oktomusic@postgres:5432/oktomusic
 # Session encryption secret (generate a long random string)
 SESSION_SECRET=change-me-to-a-long-random-secret
 
+# Public URL used for absolute metadata such as OpenSearch (optional)
+APP_PUBLIC_URL=https://music.example.com
+
 # Storage paths inside the container (must exist)
 # The library path is considered read-only by the application.
 # The intermediate path is used for temporary files (transcoding, lower resolution cover arts, etc).
