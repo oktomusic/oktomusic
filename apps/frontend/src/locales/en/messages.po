@@ -53,8 +53,8 @@ msgstr "Add to playlist"
 
 #: src/components/QueueTrack/QueueTrack.tsx:45
 #: src/components/TrackList/TrackElement.tsx:134
-#: src/pages/Center/Album.tsx:110
-#: src/pages/Center/Playlist.tsx:130
+#: src/pages/Center/Album.tsx:112
+#: src/pages/Center/Playlist.tsx:132
 msgid "Add to queue"
 msgstr "Add to queue"
 
@@ -73,7 +73,7 @@ msgid "Admin Settings"
 msgstr "Admin Settings"
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:119
+#: src/pages/Center/Album.tsx:121
 msgid "Album"
 msgstr "Album"
 
@@ -177,7 +177,7 @@ msgstr "Crossfade (seconds):"
 msgid "Delete"
 msgstr "Delete"
 
-#: src/pages/Center/Playlist.tsx:153
+#: src/pages/Center/Playlist.tsx:155
 msgid "Delete playlist"
 msgstr "Delete playlist"
 
@@ -194,7 +194,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Disabled"
 
-#: src/components/TrackList/TrackList.tsx:449
+#: src/components/TrackList/TrackList.tsx:456
 msgid "Disc {discNumber}"
 msgstr "Disc {discNumber}"
 
@@ -203,7 +203,7 @@ msgstr "Disc {discNumber}"
 msgid "Download"
 msgstr "Download"
 
-#: src/pages/Center/Playlist.tsx:145
+#: src/pages/Center/Playlist.tsx:147
 msgid "Edit details"
 msgstr "Edit details"
 
@@ -237,7 +237,7 @@ msgstr "Failed to delete playlist"
 msgid "Failed to remove track"
 msgstr "Failed to remove track"
 
-#: src/components/TrackList/TrackList.tsx:340
+#: src/components/TrackList/TrackList.tsx:341
 msgid "Failed to reorder playlist tracks"
 msgstr "Failed to reorder playlist tracks"
 
@@ -494,7 +494,7 @@ msgid "Playback controls"
 msgstr "Playback controls"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:173
+#: src/pages/Center/Playlist.tsx:175
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -618,8 +618,8 @@ msgstr "Seek"
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:103
-#: src/pages/Center/Playlist.tsx:137
+#: src/pages/Center/Album.tsx:105
+#: src/pages/Center/Playlist.tsx:139
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Share"

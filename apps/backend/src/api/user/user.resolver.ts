@@ -14,7 +14,7 @@ import { GraphqlAuthGuard } from "../../common/guards/graphql-auth.guard";
 import { Role } from "../../generated/prisma/client";
 import { PlaylistBasicModel } from "../playlist/playlist.model";
 import { UpdateUserProfileInput } from "./dto/update-user-profile.input";
-import { UserModel } from "./user.model";
+import { LibraryItemType, UserModel } from "./user.model";
 import { UserService } from "./user.service";
 
 @Resolver(() => UserModel)
@@ -84,5 +84,23 @@ export class UserResolver {
     }
 
     return this.userService.updateUserProfile(userId, input);
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation(() => Boolean, {
+    name: "recordItemPlay",
+    description: "Record that the user played an item",
+  })
+  recordItemPlay(
+    @Args("itemType", { type: () => LibraryItemType })
+    itemType: LibraryItemType,
+    @Args("itemId") itemId: string,
+    @Context("req") req: Request,
+  ): Promise<boolean> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    return this.userService.recordItemPlay(req.user.id, itemType, itemId);
   }
 }

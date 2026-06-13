@@ -27,6 +27,7 @@ import { useShare } from "../../hooks/use_share";
 import { CollectionViewMetaAlbum } from "../../components/CollectionView/CollectionViewMetaAlbum";
 import { CollectionViewToolbarAlbum } from "../../components/CollectionView/CollectionViewToolbarAlbum";
 import { albumToAlbumBasic } from "../../utils/graphql_converters";
+import { useRecordItemPlay } from "../../hooks/use_record_item_play";
 
 export function Album() {
   const { cuid } = useParams();
@@ -52,6 +53,7 @@ export function Album() {
   const setQueueFrom = useSetAtom(playerQueueFromAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
+  const recordItemPlay = useRecordItemPlay();
 
   const setDialogCoverId = useSetAtom(dialogCoverId);
 
@@ -124,6 +126,13 @@ export function Album() {
       }}
       playButtonIsPlaying={playButtonIsPlaying}
       onPlay={() => {
+        if (
+          flatTracks.length > 0 &&
+          (!isCurrentAlbumMainQueue || !shouldPlay)
+        ) {
+          recordItemPlay(albumQueueFrom);
+        }
+
         if (isCurrentAlbumMainQueue) {
           togglePlayback();
           return;

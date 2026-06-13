@@ -37,6 +37,9 @@ model User {
   sex       Sex? // NULL if not specified
   playlists Playlist[]
 
+  userPlayHistoryAlbums    UserPlayHistoryAlbum[]
+  userPlayHistoryPlaylists UserPlayHistoryPlaylist[]
+
   @@index([username])
   @@index([role])
   @@index([sex])
@@ -119,6 +122,8 @@ model Album {
   coverColorLightMuted   String
   artists                AlbumArtist[]
   tracks                 Track[]
+
+  userPlayHistoryAlbums UserPlayHistoryAlbum[]
 }
 
 model Artist {
@@ -201,6 +206,8 @@ model Playlist {
 
   playlistTracks PlaylistTrack[]
 
+  userPlayHistoryPlaylists UserPlayHistoryPlaylist[]
+
   @@index([userId])
 }
 
@@ -219,4 +226,40 @@ model PlaylistTrack {
 
   @@unique([playlistId, position])
   @@index([trackId])
+}
+
+// ---------------------------------------
+// User library
+// ---------------------------------------
+
+// TODO
+
+// ---------------------------------------
+// User playback history
+// ---------------------------------------
+
+model UserPlayHistoryAlbum {
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  albumId String
+  album   Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
+
+  lastPlayedAt DateTime @db.Timestamptz(3)
+
+  @@id([userId, albumId])
+  @@index([userId, lastPlayedAt(sort: Desc)])
+}
+
+model UserPlayHistoryPlaylist {
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  playlistId String
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+
+  lastPlayedAt DateTime @db.Timestamptz(3)
+
+  @@id([userId, playlistId])
+  @@index([userId, lastPlayedAt(sort: Desc)])
 }

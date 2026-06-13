@@ -32,6 +32,7 @@ import { OktoMenuItem } from "../../components/Base/OktoMenu";
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { Role } from "../../api/graphql/gql/graphql";
 import { playlistToPlaylistBasic } from "../../utils/graphql_converters";
+import { useRecordItemPlay } from "../../hooks/use_record_item_play";
 
 export function Playlist() {
   const { cuid } = useParams();
@@ -56,6 +57,7 @@ export function Playlist() {
   const setQueueFrom = useSetAtom(playerQueueFromAtom);
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
+  const recordItemPlay = useRecordItemPlay();
 
   const share = useShare(
     data ? `${window.location.origin}/playlist/${data.playlist.id}` : undefined,
@@ -178,6 +180,13 @@ export function Playlist() {
       playButtonIsPlaying={playButtonIsPlaying}
       colors={playlistColors}
       onPlay={() => {
+        if (
+          playlistTracks.length > 0 &&
+          (!isCurrentPlaylistMainQueue || !shouldPlay)
+        ) {
+          recordItemPlay(playlistQueueFrom);
+        }
+
         if (isCurrentPlaylistMainQueue) {
           togglePlayback();
           return;

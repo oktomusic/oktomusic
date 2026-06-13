@@ -19,6 +19,7 @@ import {
   type TrackWithAlbum,
 } from "../../atoms/player/machine";
 import { usePanelToast } from "../../hooks/use_panel_toast";
+import { useRecordItemPlay } from "../../hooks/use_record_item_play";
 import { TrackElement } from "./TrackElement";
 import {
   TRACK_DND_TYPE,
@@ -379,6 +380,7 @@ export function TrackList(props: TrackListProps) {
   const replaceManualQueue = useSetAtom(replaceManualQueueAtom);
   const setQueueFrom = useSetAtom(playerQueueFromAtom);
   const seekToQueueIndex = useSetAtom(handleSeekToQueueIndexAtom);
+  const recordItemPlay = useRecordItemPlay();
 
   const queueFromMatches =
     props.queueFrom !== undefined &&
@@ -403,6 +405,10 @@ export function TrackList(props: TrackListProps) {
         return;
       }
 
+      if (props.queueFrom !== undefined && props.queueFrom !== null) {
+        recordItemPlay(props.queueFrom);
+      }
+
       setQueueFrom(props.queueFrom ?? null);
       replaceQueue(allTracks);
       if (globalIndex > 0) {
@@ -413,6 +419,7 @@ export function TrackList(props: TrackListProps) {
       allTracks,
       playMode,
       props.queueFrom,
+      recordItemPlay,
       replaceManualQueue,
       replaceQueue,
       seekToQueueIndex,

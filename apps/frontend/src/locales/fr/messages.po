@@ -53,8 +53,8 @@ msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:45
 #: src/components/TrackList/TrackElement.tsx:134
-#: src/pages/Center/Album.tsx:110
-#: src/pages/Center/Playlist.tsx:130
+#: src/pages/Center/Album.tsx:112
+#: src/pages/Center/Playlist.tsx:132
 msgid "Add to queue"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgid "Admin Settings"
 msgstr ""
 
 #: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:119
+#: src/pages/Center/Album.tsx:121
 msgid "Album"
 msgstr "Album"
 
@@ -173,7 +173,7 @@ msgstr "Fondu enchaîné (secondes) :"
 msgid "Delete"
 msgstr ""
 
-#: src/pages/Center/Playlist.tsx:153
+#: src/pages/Center/Playlist.tsx:155
 msgid "Delete playlist"
 msgstr ""
 
@@ -190,7 +190,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
 
-#: src/components/TrackList/TrackList.tsx:449
+#: src/components/TrackList/TrackList.tsx:456
 msgid "Disc {discNumber}"
 msgstr "Disque {discNumber}"
 
@@ -199,7 +199,7 @@ msgstr "Disque {discNumber}"
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:145
+#: src/pages/Center/Playlist.tsx:147
 msgid "Edit details"
 msgstr ""
 
@@ -233,7 +233,7 @@ msgstr ""
 msgid "Failed to remove track"
 msgstr ""
 
-#: src/components/TrackList/TrackList.tsx:340
+#: src/components/TrackList/TrackList.tsx:341
 msgid "Failed to reorder playlist tracks"
 msgstr ""
 
@@ -490,7 +490,7 @@ msgid "Playback controls"
 msgstr "Commandes de lecture"
 
 #: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:173
+#: src/pages/Center/Playlist.tsx:175
 msgid "Playlist"
 msgstr ""
 
@@ -614,8 +614,8 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:103
-#: src/pages/Center/Playlist.tsx:137
+#: src/pages/Center/Album.tsx:105
+#: src/pages/Center/Playlist.tsx:139
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Partager"

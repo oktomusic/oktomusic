@@ -121,6 +121,11 @@ type IndexingWarningSubdirectories {
   type: IndexingReportType!
 }
 
+enum LibraryItemType {
+  ALBUM
+  PLAYLIST
+}
+
 type LyricsChunk {
   """Word or character"""
   c: String!
@@ -172,6 +177,9 @@ type Mutation {
     """ID of the playlist to delete"""
     id: String!
   ): Boolean!
+
+  """Record that the user played an item"""
+  recordItemPlay(itemId: String!, itemType: LibraryItemType!): Boolean!
 
   """Remove one or more tracks from a playlist"""
   removeTracksFromPlaylist(
