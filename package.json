@@ -48,7 +48,7 @@
     "globals": "^17.6.0",
     "graphql-config": "^5.1.6",
     "husky": "^9.1.7",
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.4",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "typescript": "catalog:default",
     "typescript-eslint": "^8.61.0",

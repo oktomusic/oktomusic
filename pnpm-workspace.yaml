@@ -20,11 +20,11 @@ blockExoticSubdeps: true
 
 catalogs:
   default:
-    "@types/node": ^24.12.2
+    "@types/node": ^24.13.2
     fast-xml-parser: ^5.8.0
-    sharp: ^0.34.5
+    sharp: ^0.35.1
     temporal-polyfill: ^0.3.2
-    tsdown: ^0.21.10
+    tsdown: ^0.22.2
     typescript: ^5.9.3
     zod: ^4.4.3
 
@@ -47,7 +47,5 @@ trustPolicy: no-downgrade
 
 trustPolicyExclude:
   - semver@6.3.1
-  - reselect@5.1.1
-  - rollup@2.80.0
   - chokidar@4.0.3
   - "@trickfilm400/rollup-plugin-off-main-thread@3.0.0-pre1"
