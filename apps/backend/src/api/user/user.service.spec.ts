@@ -6,9 +6,11 @@ import { UserService } from "./user.service";
 type PrismaMock = {
   readonly userPlayHistoryAlbum: {
     readonly upsert: ReturnType<typeof vi.fn>;
+    readonly deleteMany: ReturnType<typeof vi.fn>;
   };
   readonly userPlayHistoryPlaylist: {
     readonly upsert: ReturnType<typeof vi.fn>;
+    readonly deleteMany: ReturnType<typeof vi.fn>;
   };
 };
 
@@ -25,9 +27,11 @@ describe("UserService", () => {
     prisma = {
       userPlayHistoryAlbum: {
         upsert: vi.fn().mockResolvedValue({}),
+        deleteMany: vi.fn().mockResolvedValue({ count: 1 }),
       },
       userPlayHistoryPlaylist: {
         upsert: vi.fn().mockResolvedValue({}),
+        deleteMany: vi.fn().mockResolvedValue({ count: 1 }),
       },
     };
 
@@ -84,5 +88,16 @@ describe("UserService", () => {
       },
     });
     expect(prisma.userPlayHistoryAlbum.upsert).not.toHaveBeenCalled();
+  });
+
+  it("clears user play history", async () => {
+    await expect(service.clearItemPlay("user-1")).resolves.toBe(true);
+
+    expect(prisma.userPlayHistoryAlbum.deleteMany).toHaveBeenCalledWith({
+      where: { userId: "user-1" },
+    });
+    expect(prisma.userPlayHistoryPlaylist.deleteMany).toHaveBeenCalledWith({
+      where: { userId: "user-1" },
+    });
   });
 });

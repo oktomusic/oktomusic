@@ -163,4 +163,16 @@ export class UserService {
       throw error;
     }
   }
+
+  async clearItemPlay(userId: string): Promise<boolean> {
+    await this.prisma.userPlayHistoryAlbum.deleteMany({
+      where: { userId },
+    });
+
+    await this.prisma.userPlayHistoryPlaylist.deleteMany({
+      where: { userId },
+    });
+
+    return true;
+  }
 }

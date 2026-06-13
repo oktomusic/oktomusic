@@ -164,6 +164,9 @@ type Mutation {
   """Update a user profile as an administrator"""
   adminUpdateUserProfile(input: UpdateUserProfileInput!, userId: String!): User!
 
+  """Remove the records of the user playing items"""
+  cleanItemPlay: Boolean!
+
   """
   Create a new empty playlist for the current user, or as administrator for a specific user
   """

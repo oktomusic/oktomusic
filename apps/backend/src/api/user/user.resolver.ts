@@ -91,7 +91,7 @@ export class UserResolver {
     name: "recordItemPlay",
     description: "Record that the user played an item",
   })
-  recordItemPlay(
+  async recordItemPlay(
     @Args("itemType", { type: () => LibraryItemType })
     itemType: LibraryItemType,
     @Args("itemId") itemId: string,
@@ -102,5 +102,18 @@ export class UserResolver {
     }
 
     return this.userService.recordItemPlay(req.user.id, itemType, itemId);
+  }
+
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation(() => Boolean, {
+    name: "cleanItemPlay",
+    description: "Remove the records of the user playing items",
+  })
+  async clearItemPlay(@Context("req") req: Request): Promise<boolean> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    return this.userService.clearItemPlay(req.user.id);
   }
 }

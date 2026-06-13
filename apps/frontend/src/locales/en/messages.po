@@ -35,7 +35,7 @@ msgid "About"
 msgstr "About"
 
 #: src/components/HeaderMenu.tsx:48
-#: src/pages/SettingsAccount/SettingsAccount.tsx:67
+#: src/pages/SettingsAccount/SettingsAccount.tsx:65
 msgid "Account Settings"
 msgstr "Account Settings"
 
@@ -144,6 +144,18 @@ msgstr "Checking storage persistence..."
 msgid "Clear"
 msgstr "Clear"
 
+#: src/pages/SettingsAccount/SettingsAccountPlaybackHistory.tsx:15
+msgid "Clear all played items history?"
+msgstr "Clear all played items history?"
+
+#: src/pages/SettingsAccount/SettingsAccountPlaybackHistory.tsx:44
+msgid "Clear history"
+msgstr "Clear history"
+
+#: src/pages/SettingsAccount/SettingsAccountPlaybackHistory.tsx:44
+msgid "Clearing..."
+msgstr "Clearing..."
+
 #: src/pages/SettingsClient/SettingsClient.tsx:126
 msgid "Client Settings"
 msgstr "Client Settings"
@@ -228,6 +240,10 @@ msgstr "English"
 #: src/components/TrackList/TrackElement.tsx:162
 msgid "Failed to add track"
 msgstr "Failed to add track"
+
+#: src/pages/SettingsAccount/SettingsAccountPlaybackHistory.tsx:29
+msgid "Failed to clear played items history"
+msgstr "Failed to clear played items history"
 
 #: src/components/Dialogs/DialogPlaylistDelete.tsx:72
 msgid "Failed to delete playlist"
@@ -493,6 +509,14 @@ msgstr "Playback"
 msgid "Playback controls"
 msgstr "Playback controls"
 
+#: src/pages/SettingsAccount/SettingsAccountPlaybackHistory.tsx:22
+msgid "Played items history cleared"
+msgstr "Played items history cleared"
+
+#: src/pages/SettingsAccount/SettingsAccountPlaybackHistory.tsx:37
+msgid "Played items history:"
+msgstr "Played items history:"
+
 #: src/components/LibraryRow/LibraryRow.tsx:103
 #: src/pages/Center/Playlist.tsx:175
 msgid "Playlist"
@@ -614,7 +638,7 @@ msgstr "Seek"
 #~ msgid "Service Worker max cache entries:"
 #~ msgstr "Service Worker max cache entries:"
 
-#: src/pages/SettingsAccount/SettingsAccount.tsx:97
+#: src/pages/SettingsAccount/SettingsAccount.tsx:69
 msgid "Sexe :"
 msgstr "Sexe :"
 

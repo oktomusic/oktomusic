@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n": typeof types.AdminUpdateUserProfileDocument,
+    "\n  mutation CleanItemPlay {\n    cleanItemPlay\n  }\n": typeof types.CleanItemPlayDocument,
     "\n  mutation AddTracksToPlaylist(\n    $id: String!\n    $trackIds: [String!]!\n    $position: Int\n  ) {\n    addTracksToPlaylist(id: $id, trackIds: $trackIds, position: $position)\n  }\n": typeof types.AddTracksToPlaylistDocument,
     "\n  mutation CreatePlaylist($input: CreatePlaylistInput!) {\n    createPlaylist(input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": typeof types.CreatePlaylistDocument,
     "\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n": typeof types.DeletePlaylistDocument,
@@ -37,6 +38,7 @@ type Documents = {
 };
 const documents: Documents = {
     "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n": types.AdminUpdateUserProfileDocument,
+    "\n  mutation CleanItemPlay {\n    cleanItemPlay\n  }\n": types.CleanItemPlayDocument,
     "\n  mutation AddTracksToPlaylist(\n    $id: String!\n    $trackIds: [String!]!\n    $position: Int\n  ) {\n    addTracksToPlaylist(id: $id, trackIds: $trackIds, position: $position)\n  }\n": types.AddTracksToPlaylistDocument,
     "\n  mutation CreatePlaylist($input: CreatePlaylistInput!) {\n    createPlaylist(input: $input) {\n      id\n      name\n      description\n      visibility\n      createdAt\n      updatedAt\n      tracks {\n        position\n        addedAt\n        track {\n          id\n          name\n          durationMs\n        }\n      }\n    }\n  }\n": types.CreatePlaylistDocument,
     "\n  mutation DeletePlaylist($id: String!) {\n    deletePlaylist(id: $id)\n  }\n": types.DeletePlaylistDocument,
@@ -76,6 +78,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  mutation AdminUpdateUserProfile(\n    $userId: String!\n    $input: UpdateUserProfileInput!\n  ) {\n    adminUpdateUserProfile(userId: $userId, input: $input) {\n      id\n      username\n      role\n      sex\n      updatedAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CleanItemPlay {\n    cleanItemPlay\n  }\n"): (typeof documents)["\n  mutation CleanItemPlay {\n    cleanItemPlay\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
