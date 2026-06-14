@@ -11,20 +11,20 @@ describe("getAssetTags", () => {
         imports: ["_shared.js"],
         dynamicImports: ["src/locales/en/messages.po"],
         css: ["assets/main.css"],
-        sri: "sha512-main",
+        integrity: "sha512-main",
       },
       "_shared.js": {
         file: "assets/shared.js",
-        sri: "sha512-shared",
+        integrity: "sha512-shared",
       },
       "src/locales/en/messages.po": {
         file: "assets/messages.js",
         imports: ["_shared.js"],
-        sri: "sha512-messages",
+        integrity: "sha512-messages",
       },
       "assets/main.css": {
         file: "assets/main.css",
-        sri: "sha512-css",
+        integrity: "sha512-css",
       },
     };
 

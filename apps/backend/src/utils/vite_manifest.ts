@@ -16,7 +16,8 @@ interface ManifestChunk {
 }
 
 interface ManifestWithSRI extends ManifestChunk {
-  sri?: string;
+  integrity?: string;
+  cssIntegrity?: Array<string | null>;
 }
 
 export type ViteManifest = Record<string, ManifestWithSRI>;
@@ -66,18 +67,21 @@ export function getAssetTags(
   const seenHeadFiles = new Set<string>();
 
   const pushStylesheetTags = (chunk: ManifestWithSRI): void => {
-    for (const cssFile of chunk.css ?? []) {
+    const cssFiles = chunk.css ?? [];
+    for (const [index, cssFile] of cssFiles.entries()) {
       if (seenHeadFiles.has(cssFile)) {
         continue;
       }
       seenHeadFiles.add(cssFile);
+      const cssIntegrity = chunk.cssIntegrity?.[index];
       const cssEntry = findEntryByFile(manifest, cssFile);
+      const integrity = cssIntegrity ?? cssEntry?.integrity;
       headTags.push({
         tag: "link",
         attrs: {
           rel: "stylesheet",
           href: `${basePath}${cssFile}`,
-          ...(cssEntry?.sri && { integrity: cssEntry.sri }),
+          ...(integrity && { integrity }),
           crossorigin: true,
         },
       });
@@ -95,7 +99,7 @@ export function getAssetTags(
         attrs: {
           rel: "modulepreload",
           href: `${basePath}${chunk.file}`,
-          ...(chunk.sri && { integrity: chunk.sri }),
+          ...(chunk.integrity && { integrity: chunk.integrity }),
           crossorigin: true,
         },
       });
@@ -113,7 +117,7 @@ export function getAssetTags(
       attrs: {
         type: "module",
         src: `${basePath}${entry.file}`,
-        ...(entry.sri && { integrity: entry.sri }),
+        ...(entry.integrity && { integrity: entry.integrity }),
         crossorigin: true,
       },
     },
