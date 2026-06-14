@@ -5,6 +5,7 @@ export const ALBUM_QUERY = graphql(/* GraphQL */ `
     album(id: $id) {
       id
       name
+      isInLibrary
       date
       coverColorVibrant
       coverColorDarkVibrant

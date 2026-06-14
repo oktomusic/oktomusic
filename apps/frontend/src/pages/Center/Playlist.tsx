@@ -30,9 +30,10 @@ import { CollectionViewMetaPlaylist } from "../../components/CollectionView/Coll
 import { CollectionViewToolbarPlaylist } from "../../components/CollectionView/CollectionViewToolbarPlaylist";
 import { OktoMenuItem } from "../../components/Base/OktoMenu";
 import { authSessionAtom } from "../../atoms/auth/atoms";
-import { Role } from "../../api/graphql/gql/graphql";
+import { LibraryItemType, Role } from "../../api/graphql/gql/graphql";
 import { playlistToPlaylistBasic } from "../../utils/graphql_converters";
 import { useRecordItemPlay } from "../../hooks/use_record_item_play";
+import { useLibraryItemToggle } from "../../hooks/use_library_item_toggle";
 
 export function Playlist() {
   const { cuid } = useParams();
@@ -58,6 +59,14 @@ export function Playlist() {
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
   const recordItemPlay = useRecordItemPlay();
+  const playlist = data?.playlist;
+  const isOwnPlaylist = userId !== null && playlist?.creator.id === userId;
+  const libraryItemToggle = useLibraryItemToggle({
+    itemId: cuid ?? "",
+    itemType: LibraryItemType.Playlist,
+    isInLibrary: playlist?.isInLibrary ?? false,
+    disabled: !playlist || isOwnPlaylist,
+  });
 
   const share = useShare(
     data ? `${window.location.origin}/playlist/${data.playlist.id}` : undefined,
@@ -77,7 +86,6 @@ export function Playlist() {
     return <GenericGraphQLError error={error} />;
   }
 
-  const playlist = data?.playlist;
   if (!playlist) {
     return null;
   }
@@ -206,6 +214,10 @@ export function Playlist() {
       toolbar={
         <CollectionViewToolbarPlaylist
           playlistName={title}
+          isInLibrary={playlist.isInLibrary}
+          libraryActionDisabled={isOwnPlaylist}
+          libraryActionLoading={libraryItemToggle.loading}
+          onToggleLibrary={libraryItemToggle.toggleLibraryItem}
           menuItems={menuItems}
         />
       }

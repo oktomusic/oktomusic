@@ -8,6 +8,7 @@ describe("mapTracksWithAlbum", () => {
     __typename: "Album",
     id: "album-1",
     name: "Test Album",
+    isInLibrary: false,
     date: new Date("2026-02-01T00:00:00.000Z"),
     coverColorVibrant: "#111111",
     coverColorDarkVibrant: "#222222",

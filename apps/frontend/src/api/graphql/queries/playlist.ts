@@ -5,6 +5,7 @@ export const PLAYLIST_QUERY = graphql(/* GraphQL */ `
     playlist(id: $id) {
       id
       name
+      isInLibrary
       description
       visibility
       creator {

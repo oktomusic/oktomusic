@@ -1,8 +1,19 @@
-import { Album } from "../../api/graphql/gql/graphql";
 import { ListCard } from "../ListCard/ListCard";
 
+interface AlbumCardListArtist {
+  readonly id: string;
+  readonly name: string;
+}
+
+interface AlbumCardListAlbum {
+  readonly id: string;
+  readonly name: string;
+  readonly date: Date | null;
+  readonly artists: readonly AlbumCardListArtist[];
+}
+
 interface AlbumCardListProps {
-  readonly albums: Omit<Album, "tracksByDisc">[];
+  readonly albums: readonly AlbumCardListAlbum[];
 }
 
 export function AlbumCardList(props: AlbumCardListProps) {

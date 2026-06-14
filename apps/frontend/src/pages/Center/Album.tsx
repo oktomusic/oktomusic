@@ -28,6 +28,8 @@ import { CollectionViewMetaAlbum } from "../../components/CollectionView/Collect
 import { CollectionViewToolbarAlbum } from "../../components/CollectionView/CollectionViewToolbarAlbum";
 import { albumToAlbumBasic } from "../../utils/graphql_converters";
 import { useRecordItemPlay } from "../../hooks/use_record_item_play";
+import { useLibraryItemToggle } from "../../hooks/use_library_item_toggle";
+import { LibraryItemType } from "../../api/graphql/gql/graphql";
 
 export function Album() {
   const { cuid } = useParams();
@@ -54,6 +56,12 @@ export function Album() {
   const togglePlayback = useSetAtom(requestPlaybackToggleAtom);
   const addToQueue = useSetAtom(addToQueueAtom);
   const recordItemPlay = useRecordItemPlay();
+  const libraryItemToggle = useLibraryItemToggle({
+    itemId: cuid ?? "",
+    itemType: LibraryItemType.Album,
+    isInLibrary: data?.album.isInLibrary ?? false,
+    disabled: !data?.album,
+  });
 
   const setDialogCoverId = useSetAtom(dialogCoverId);
 
@@ -153,6 +161,9 @@ export function Album() {
       toolbar={
         <CollectionViewToolbarAlbum
           albumName={data!.album.name}
+          isInLibrary={data!.album.isInLibrary}
+          libraryActionLoading={libraryItemToggle.loading}
+          onToggleLibrary={libraryItemToggle.toggleLibraryItem}
           menuItems={menuItems}
         />
       }

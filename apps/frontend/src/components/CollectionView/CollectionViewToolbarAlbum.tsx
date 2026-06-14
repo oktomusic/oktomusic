@@ -1,10 +1,18 @@
 import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
-import { LuCircleArrowDown, LuCirclePlus, LuEllipsis } from "react-icons/lu";
+import {
+  LuCircleArrowDown,
+  LuCircleCheck,
+  LuCirclePlus,
+  LuEllipsis,
+} from "react-icons/lu";
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
 
 interface CollectionViewToolbarAlbumProps {
   readonly albumName: string;
+  readonly isInLibrary: boolean;
+  readonly libraryActionLoading?: boolean;
+  readonly onToggleLibrary: () => void;
   readonly menuItems: readonly OktoMenuItem[];
 }
 
@@ -12,15 +20,24 @@ export function CollectionViewToolbarAlbum(
   props: CollectionViewToolbarAlbumProps,
 ) {
   const albumName = props.albumName;
+  const LibraryIcon = props.isInLibrary ? LuCircleCheck : LuCirclePlus;
 
   return (
     <>
       <Button
-        className="size-8"
-        title={t`Save to library`}
-        onClick={undefined /* TODO */}
+        className={[
+          "size-8 disabled:cursor-not-allowed disabled:opacity-60",
+          props.isInLibrary ? "text-blue-500 hover:text-blue-400" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        title={props.isInLibrary ? t`Remove from library` : t`Save to library`}
+        aria-label={t`Save to library`}
+        aria-pressed={props.isInLibrary}
+        onClick={props.onToggleLibrary}
+        disabled={props.libraryActionLoading}
       >
-        <LuCirclePlus className="m-auto size-8" />
+        <LibraryIcon className="m-auto size-8" />
       </Button>
       <Button
         className="size-8"

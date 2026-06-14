@@ -53,8 +53,8 @@ msgstr "Add to playlist"
 
 #: src/components/QueueTrack/QueueTrack.tsx:45
 #: src/components/TrackList/TrackElement.tsx:134
-#: src/pages/Center/Album.tsx:112
-#: src/pages/Center/Playlist.tsx:132
+#: src/pages/Center/Album.tsx:120
+#: src/pages/Center/Playlist.tsx:140
 msgid "Add to queue"
 msgstr "Add to queue"
 
@@ -72,8 +72,8 @@ msgstr "Added to playlist"
 msgid "Admin Settings"
 msgstr "Admin Settings"
 
-#: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:121
+#: src/components/LibraryRow/LibraryRow.tsx:81
+#: src/pages/Center/Album.tsx:129
 msgid "Album"
 msgstr "Album"
 
@@ -91,6 +91,10 @@ msgstr "Albums"
 msgid "All"
 msgstr "All"
 
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:29
+msgid "Already in library"
+msgstr "Already in library"
+
 #: src/pages/SettingsClient/SettingsClient.tsx:73
 msgid "Always"
 msgstr "Always"
@@ -99,7 +103,7 @@ msgstr "Always"
 msgid "Ambient"
 msgstr "Ambient"
 
-#: src/components/LibraryRow/LibraryRow.tsx:99
+#: src/components/LibraryRow/LibraryRow.tsx:74
 msgid "Artist"
 msgstr "Artist"
 
@@ -173,6 +177,10 @@ msgstr "Close Picture-in-Picture"
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr "Controls how Oktomusic mixes with other audio."
 
+#: src/pages/PanelLeft.tsx:52
+msgid "Could not load library"
+msgstr "Could not load library"
+
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:185
 msgid "Create playlist"
 msgstr "Create playlist"
@@ -189,7 +197,7 @@ msgstr "Crossfade (seconds):"
 msgid "Delete"
 msgstr "Delete"
 
-#: src/pages/Center/Playlist.tsx:155
+#: src/pages/Center/Playlist.tsx:163
 msgid "Delete playlist"
 msgstr "Delete playlist"
 
@@ -210,12 +218,12 @@ msgstr "Description"
 msgid "Disc {discNumber}"
 msgstr "Disc {discNumber}"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:27
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:27
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:44
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:53
 msgid "Download"
 msgstr "Download"
 
-#: src/pages/Center/Playlist.tsx:147
+#: src/pages/Center/Playlist.tsx:155
 msgid "Edit details"
 msgstr "Edit details"
 
@@ -249,6 +257,10 @@ msgstr "Failed to clear played items history"
 msgid "Failed to delete playlist"
 msgstr "Failed to delete playlist"
 
+#: src/hooks/use_library_item_toggle.ts:63
+msgid "Failed to remove from library"
+msgstr "Failed to remove from library"
+
 #: src/components/TrackList/TrackElement.tsx:122
 msgid "Failed to remove track"
 msgstr "Failed to remove track"
@@ -256,6 +268,10 @@ msgstr "Failed to remove track"
 #: src/components/TrackList/TrackList.tsx:341
 msgid "Failed to reorder playlist tracks"
 msgstr "Failed to reorder playlist tracks"
+
+#: src/hooks/use_library_item_toggle.ts:64
+msgid "Failed to save to library"
+msgstr "Failed to save to library"
 
 #: src/hooks/use_share.tsx:36
 msgid "Failed to share"
@@ -328,6 +344,10 @@ msgstr "Line by line"
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
+#: src/pages/PanelLeft.tsx:47
+msgid "Loading library"
+msgstr "Loading library"
+
 #: src/components/SubmenuPlaylistsSearch.tsx:78
 msgid "Loading playlists"
 msgstr "Loading playlists"
@@ -360,8 +380,8 @@ msgstr "Man"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr "Maximum number of media files to cache."
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:37
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:37
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:54
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:63
 #: src/components/CollectionView/CollectionViewToolbarUser.tsx:23
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
@@ -517,8 +537,8 @@ msgstr "Played items history cleared"
 msgid "Played items history:"
 msgstr "Played items history:"
 
-#: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:175
+#: src/components/LibraryRow/LibraryRow.tsx:91
+#: src/pages/Center/Playlist.tsx:183
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -576,6 +596,11 @@ msgstr "Public playlists"
 msgid "Queue"
 msgstr "Queue"
 
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:34
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:31
+msgid "Remove from library"
+msgstr "Remove from library"
+
 #: src/components/TrackList/TrackElement.tsx:101
 msgid "Remove from playlist"
 msgstr "Remove from playlist"
@@ -612,8 +637,10 @@ msgstr "Russian"
 msgid "Save"
 msgstr "Save"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:20
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:20
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:34
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:35
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:32
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:44
 msgid "Save to library"
 msgstr "Save to library"
 
@@ -642,8 +669,8 @@ msgstr "Seek"
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:105
-#: src/pages/Center/Playlist.tsx:139
+#: src/pages/Center/Album.tsx:113
+#: src/pages/Center/Playlist.tsx:147
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Share"
@@ -726,3 +753,7 @@ msgstr "Word by word"
 #: src/pages/SettingsClient/SettingsClient.tsx:184
 msgid "Your browser does not support lyrics translation"
 msgstr "Your browser does not support lyrics translation"
+
+#: src/pages/PanelLeft.tsx:57
+msgid "Your library is empty"
+msgstr "Your library is empty"

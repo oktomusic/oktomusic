@@ -27,6 +27,11 @@ enum Sex {
   XX
 }
 
+enum LibraryItemType {
+  ALBUM
+  PLAYLIST
+}
+
 model User {
   id        String     @id @default(cuid(2))
   username  String     @unique
@@ -37,8 +42,8 @@ model User {
   sex       Sex? // NULL if not specified
   playlists Playlist[]
 
-  userPlayHistoryAlbums    UserPlayHistoryAlbum[]
-  userPlayHistoryPlaylists UserPlayHistoryPlaylist[]
+  userLibraryItems      UserLibraryItem[]
+  userItemPlayHistories UserItemPlayHistory[]
 
   @@index([username])
   @@index([role])
@@ -122,8 +127,6 @@ model Album {
   coverColorLightMuted   String
   artists                AlbumArtist[]
   tracks                 Track[]
-
-  userPlayHistoryAlbums UserPlayHistoryAlbum[]
 }
 
 model Artist {
@@ -206,8 +209,6 @@ model Playlist {
 
   playlistTracks PlaylistTrack[]
 
-  userPlayHistoryPlaylists UserPlayHistoryPlaylist[]
-
   @@index([userId])
 }
 
@@ -232,34 +233,36 @@ model PlaylistTrack {
 // User library
 // ---------------------------------------
 
-// TODO
+model UserLibraryItem {
+  id String @id @default(cuid(2))
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  itemType LibraryItemType
+  itemId   String
+
+  addedAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@unique([userId, itemType, itemId])
+  @@index([userId, addedAt(sort: Desc)])
+  @@index([itemType, itemId])
+}
 
 // ---------------------------------------
 // User playback history
 // ---------------------------------------
 
-model UserPlayHistoryAlbum {
+model UserItemPlayHistory {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  albumId String
-  album   Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  itemType LibraryItemType
+  itemId   String
 
   lastPlayedAt DateTime @db.Timestamptz(3)
 
-  @@id([userId, albumId])
+  @@id([userId, itemType, itemId])
   @@index([userId, lastPlayedAt(sort: Desc)])
-}
-
-model UserPlayHistoryPlaylist {
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  playlistId String
-  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
-
-  lastPlayedAt DateTime @db.Timestamptz(3)
-
-  @@id([userId, playlistId])
-  @@index([userId, lastPlayedAt(sort: Desc)])
+  @@index([itemType, itemId])
 }

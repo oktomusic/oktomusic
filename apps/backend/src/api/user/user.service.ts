@@ -10,7 +10,6 @@ import { PrismaService } from "../../db/prisma.service";
 import { PlaylistBasicModel } from "../playlist/playlist.model";
 import { getCoverAlbumIds } from "../playlist/playlist-cover.utils";
 import { PlaylistVisibility } from "../playlist/playlist-visibility.enum";
-import { type LibraryItemType } from "./user.model";
 
 interface UpdateUserProfileData {
   sex?: Sex | null;
@@ -102,77 +101,5 @@ export class UserService {
         playlist.playlistTracks.map((track) => track.track.albumId),
       ),
     }));
-  }
-
-  async recordItemPlay(
-    userId: string,
-    itemType: LibraryItemType,
-    itemId: string,
-  ): Promise<boolean> {
-    const lastPlayedAt = new Date();
-
-    try {
-      switch (itemType) {
-        case "ALBUM":
-          await this.prisma.userPlayHistoryAlbum.upsert({
-            where: {
-              userId_albumId: {
-                userId,
-                albumId: itemId,
-              },
-            },
-            create: {
-              userId,
-              albumId: itemId,
-              lastPlayedAt,
-            },
-            update: {
-              lastPlayedAt,
-            },
-          });
-          return true;
-        case "PLAYLIST":
-          await this.prisma.userPlayHistoryPlaylist.upsert({
-            where: {
-              userId_playlistId: {
-                userId,
-                playlistId: itemId,
-              },
-            },
-            create: {
-              userId,
-              playlistId: itemId,
-              lastPlayedAt,
-            },
-            update: {
-              lastPlayedAt,
-            },
-          });
-          return true;
-        default:
-          throw new Error("Invalid item type");
-      }
-    } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        (error.code === "P2003" || error.code === "P2025")
-      ) {
-        throw new NotFoundException("Library item not found");
-      }
-
-      throw error;
-    }
-  }
-
-  async clearItemPlay(userId: string): Promise<boolean> {
-    await this.prisma.userPlayHistoryAlbum.deleteMany({
-      where: { userId },
-    });
-
-    await this.prisma.userPlayHistoryPlaylist.deleteMany({
-      where: { userId },
-    });
-
-    return true;
   }
 }

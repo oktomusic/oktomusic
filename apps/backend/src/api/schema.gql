@@ -24,6 +24,9 @@ type Album {
   coverColorVibrant: String!
   date: DateTime
   id: String!
+
+  """Whether the album is in the current user's library"""
+  isInLibrary: Boolean!
   name: String!
 
   """Tracks grouped by disc number, ordered by track number"""
@@ -121,6 +124,13 @@ type IndexingWarningSubdirectories {
   type: IndexingReportType!
 }
 
+union LibraryItem = AlbumBasic | PlaylistBasic
+
+input LibraryItemRefInput {
+  itemId: String!
+  itemType: LibraryItemType!
+}
+
 enum LibraryItemType {
   ALBUM
   PLAYLIST
@@ -149,6 +159,11 @@ type LyricsLine {
 }
 
 type Mutation {
+  """
+  Add an album or another user's public/unlisted playlist to the current user's library
+  """
+  addLibraryItem(input: LibraryItemRefInput!): UserLibraryEntry!
+
   """Add one or more tracks to a playlist at a specific position"""
   addTracksToPlaylist(
     """ID of the playlist to add tracks to"""
@@ -183,6 +198,9 @@ type Mutation {
 
   """Record that the user played an item"""
   recordItemPlay(itemId: String!, itemType: LibraryItemType!): Boolean!
+
+  """Remove an explicitly saved library item"""
+  removeLibraryItem(input: LibraryItemRefInput!): Boolean!
 
   """Remove one or more tracks from a playlist"""
   removeTracksFromPlaylist(
@@ -233,6 +251,9 @@ type Playlist {
   creator: PlaylistCreator!
   description: String
   id: String!
+
+  """Whether the playlist is in the current user's library"""
+  isInLibrary: Boolean!
   name: String!
   tracks: [PlaylistTrack!]!
   updatedAt: DateTime!
@@ -287,6 +308,9 @@ type Query {
 
   """Current logged-in user"""
   me: User!
+
+  """Current user's effective library"""
+  myLibrary: UserLibrary!
 
   """Get a playlist by ID with its tracks in order"""
   playlist(id: String!): Playlist!
@@ -483,4 +507,23 @@ type User {
   sex: Sex
   updatedAt: DateTime!
   username: String!
+}
+
+type UserLibrary {
+  items: [UserLibraryEntry!]!
+}
+
+type UserLibraryEntry {
+  addedAt: DateTime!
+  id: String!
+  item: LibraryItem!
+  itemId: String!
+  itemType: LibraryItemType!
+  lastPlayedAt: DateTime
+  source: UserLibraryItemSource!
+}
+
+enum UserLibraryItemSource {
+  OWNED_PLAYLIST
+  SAVED
 }

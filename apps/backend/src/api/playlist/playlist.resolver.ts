@@ -1,17 +1,50 @@
 import { ForbiddenException, UseGuards } from "@nestjs/common";
-import { Args, Context, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
+import {
+  Args,
+  Context,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from "@nestjs/graphql";
 import type { Request } from "express";
 
 import { GraphqlAuthGuard } from "../../common/guards/graphql-auth.guard";
+import { LibraryItemType } from "../library/library.model";
+import { LibraryService } from "../library/library.service";
 import { CreatePlaylistInput } from "./dto/create-playlist.input";
 import { UpdatePlaylistInput } from "./dto/update-playlist.input";
 import { PlaylistModel } from "./playlist.model";
 import { PlaylistBasicModel } from "./playlist.model";
 import { PlaylistService } from "./playlist.service";
 
-@Resolver()
+@Resolver(() => PlaylistModel)
 export class PlaylistResolver {
-  constructor(private readonly playlistService: PlaylistService) {}
+  constructor(
+    private readonly playlistService: PlaylistService,
+    private readonly libraryService: LibraryService,
+  ) {}
+
+  @UseGuards(GraphqlAuthGuard)
+  @ResolveField(() => Boolean, {
+    name: "isInLibrary",
+    description: "Whether the playlist is in the current user's library",
+  })
+  async isInLibrary(
+    @Parent() playlist: PlaylistModel,
+    @Context("req") req: Request,
+  ): Promise<boolean> {
+    if (!req.user) {
+      throw new ForbiddenException("Current user not found in request");
+    }
+
+    return this.libraryService.isInLibrary(req.user, {
+      itemType: LibraryItemType.PLAYLIST,
+      itemId: playlist.id,
+    });
+  }
 
   @UseGuards(GraphqlAuthGuard)
   @Query(() => PlaylistModel, {

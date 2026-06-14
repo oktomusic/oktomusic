@@ -53,8 +53,8 @@ msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:45
 #: src/components/TrackList/TrackElement.tsx:134
-#: src/pages/Center/Album.tsx:112
-#: src/pages/Center/Playlist.tsx:132
+#: src/pages/Center/Album.tsx:120
+#: src/pages/Center/Playlist.tsx:140
 msgid "Add to queue"
 msgstr ""
 
@@ -68,8 +68,8 @@ msgstr ""
 msgid "Admin Settings"
 msgstr ""
 
-#: src/components/LibraryRow/LibraryRow.tsx:101
-#: src/pages/Center/Album.tsx:121
+#: src/components/LibraryRow/LibraryRow.tsx:81
+#: src/pages/Center/Album.tsx:129
 msgid "Album"
 msgstr "Album"
 
@@ -87,6 +87,10 @@ msgstr "Albums"
 msgid "All"
 msgstr "Tout"
 
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:29
+msgid "Already in library"
+msgstr ""
+
 #: src/pages/SettingsClient/SettingsClient.tsx:73
 msgid "Always"
 msgstr "Toujours"
@@ -95,7 +99,7 @@ msgstr "Toujours"
 msgid "Ambient"
 msgstr ""
 
-#: src/components/LibraryRow/LibraryRow.tsx:99
+#: src/components/LibraryRow/LibraryRow.tsx:74
 msgid "Artist"
 msgstr "Artiste"
 
@@ -169,6 +173,10 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
+#: src/pages/PanelLeft.tsx:52
+msgid "Could not load library"
+msgstr ""
+
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:185
 msgid "Create playlist"
 msgstr ""
@@ -185,7 +193,7 @@ msgstr "Fondu enchaîné (secondes) :"
 msgid "Delete"
 msgstr ""
 
-#: src/pages/Center/Playlist.tsx:155
+#: src/pages/Center/Playlist.tsx:163
 msgid "Delete playlist"
 msgstr ""
 
@@ -206,12 +214,12 @@ msgstr "Description"
 msgid "Disc {discNumber}"
 msgstr "Disque {discNumber}"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:27
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:27
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:44
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:53
 msgid "Download"
 msgstr "Télécharger"
 
-#: src/pages/Center/Playlist.tsx:147
+#: src/pages/Center/Playlist.tsx:155
 msgid "Edit details"
 msgstr ""
 
@@ -245,12 +253,20 @@ msgstr ""
 msgid "Failed to delete playlist"
 msgstr ""
 
+#: src/hooks/use_library_item_toggle.ts:63
+msgid "Failed to remove from library"
+msgstr ""
+
 #: src/components/TrackList/TrackElement.tsx:122
 msgid "Failed to remove track"
 msgstr ""
 
 #: src/components/TrackList/TrackList.tsx:341
 msgid "Failed to reorder playlist tracks"
+msgstr ""
+
+#: src/hooks/use_library_item_toggle.ts:64
+msgid "Failed to save to library"
 msgstr ""
 
 #: src/hooks/use_share.tsx:36
@@ -324,6 +340,10 @@ msgstr "Ligne par ligne"
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
+#: src/pages/PanelLeft.tsx:47
+msgid "Loading library"
+msgstr ""
+
 #: src/components/SubmenuPlaylistsSearch.tsx:78
 msgid "Loading playlists"
 msgstr ""
@@ -356,8 +376,8 @@ msgstr "Homme"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr ""
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:37
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:37
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:54
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:63
 #: src/components/CollectionView/CollectionViewToolbarUser.tsx:23
 msgid "More options for {albumName}"
 msgstr "Plus d'options pour {albumName}"
@@ -513,8 +533,8 @@ msgstr ""
 msgid "Played items history:"
 msgstr ""
 
-#: src/components/LibraryRow/LibraryRow.tsx:103
-#: src/pages/Center/Playlist.tsx:175
+#: src/components/LibraryRow/LibraryRow.tsx:91
+#: src/pages/Center/Playlist.tsx:183
 msgid "Playlist"
 msgstr ""
 
@@ -572,6 +592,11 @@ msgstr ""
 msgid "Queue"
 msgstr ""
 
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:34
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:31
+msgid "Remove from library"
+msgstr ""
+
 #: src/components/TrackList/TrackElement.tsx:101
 msgid "Remove from playlist"
 msgstr ""
@@ -608,8 +633,10 @@ msgstr "Russe"
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:20
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:20
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:34
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:35
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:32
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:44
 msgid "Save to library"
 msgstr "Sauvegarder dans la bibliothèque"
 
@@ -638,8 +665,8 @@ msgstr ""
 msgid "Sexe :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:105
-#: src/pages/Center/Playlist.tsx:139
+#: src/pages/Center/Album.tsx:113
+#: src/pages/Center/Playlist.tsx:147
 #: src/pages/Center/User.tsx:81
 msgid "Share"
 msgstr "Partager"
@@ -722,3 +749,7 @@ msgstr "Mot à mot"
 #: src/pages/SettingsClient/SettingsClient.tsx:184
 msgid "Your browser does not support lyrics translation"
 msgstr "Votre navigateur ne supporte pas la traduction des paroles"
+
+#: src/pages/PanelLeft.tsx:57
+msgid "Your library is empty"
+msgstr ""

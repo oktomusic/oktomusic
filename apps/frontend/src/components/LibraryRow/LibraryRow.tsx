@@ -3,6 +3,13 @@ import { t } from "@lingui/core/macro";
 import { Button } from "@base-ui/react/button";
 import { LuPause, LuPlay } from "react-icons/lu";
 
+import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
+import { Cover } from "../Base/Cover";
+import {
+  getCoverImagesFromAlbumIds,
+  type CoverImages,
+} from "../Base/CoverImages";
+
 export interface LibraryRowArtist {
   readonly id: string;
   readonly name: string;
@@ -23,6 +30,7 @@ export interface LibraryRowPlaylist {
   readonly id: string;
   readonly name: string;
   readonly author: LibraryRowProfile;
+  readonly coverAlbumIds: readonly string[];
 }
 
 export interface LibraryRowPropsBase {
@@ -49,61 +57,93 @@ export interface LibraryRowPropsPlaylist {
 export type LibraryRowProps = LibraryRowPropsBase &
   (LibraryRowPropsArtist | LibraryRowPropsAlbum | LibraryRowPropsPlaylist);
 
-/**
- * @todo Handle artists and playlists, not just albums
- */
+interface LibraryRowItemView {
+  readonly title: string;
+  readonly link: string;
+  readonly cover: CoverImages;
+  readonly typeLabel: string;
+}
+
+function getLibraryRowItemView(props: LibraryRowProps): LibraryRowItemView {
+  switch (props.type) {
+    case "artist":
+      return {
+        title: props.artist.name,
+        link: `/artist/${props.artist.id}`,
+        cover: coverPlaceHolder,
+        typeLabel: t`Artist`,
+      };
+    case "album":
+      return {
+        title: props.album.name,
+        link: `/album/${props.album.id}`,
+        cover: [props.album.id],
+        typeLabel: t`Album`,
+      };
+    case "playlist":
+      return {
+        title: props.playlist.name,
+        link: `/playlist/${props.playlist.id}`,
+        cover: getCoverImagesFromAlbumIds(
+          props.playlist.coverAlbumIds,
+          coverPlaceHolder,
+        ),
+        typeLabel: t`Playlist`,
+      };
+  }
+}
+
 export function LibraryRow(props: LibraryRowProps) {
   const showPlayIcon = !props.isCurrent || !props.isPlaying;
-  const playLabel = props.type === "album" ? props.album.name : "item";
+  const item = getLibraryRowItemView(props);
+  const cover = (
+    <Cover
+      imgs={item.cover}
+      size={96}
+      alt={`${item.title} cover`}
+      loading="lazy"
+      fetchPriority="low"
+      className="size-12 rounded"
+    />
+  );
 
   return (
     <li className="flex flex-row gap-3 rounded p-2 hover:bg-white/10">
-      <Button
-        className="group relative size-12 shrink-0 appearance-none rounded"
-        onClick={props.onClickPlay}
-        aria-label={
-          props.isCurrent
-            ? props.isPlaying
-              ? "Pause"
-              : "Resume playback"
-            : `Play ${playLabel}`
-        }
-      >
-        <img
-          className="size-12 shrink-0 rounded"
-          fetchPriority="low"
-          loading="lazy"
-          draggable={false}
-          src={
-            props.type === "album"
-              ? `/api/album/${props.album.id}/cover/96`
-              : ""
+      {props.onClickPlay ? (
+        <Button
+          className="group relative size-12 shrink-0 appearance-none rounded"
+          onClick={props.onClickPlay}
+          aria-label={
+            props.isCurrent
+              ? props.isPlaying
+                ? "Pause"
+                : "Resume playback"
+              : `Play ${item.title}`
           }
-          alt={`${playLabel} cover`}
-        />
-        <span className="pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-zinc-950/60 opacity-0 transition duration-150 group-hover:opacity-100">
-          {showPlayIcon ? (
-            <LuPlay aria-hidden="true" className="size-8 text-white/90" />
-          ) : (
-            <LuPause aria-hidden="true" className="size-8 text-white/90" />
-          )}
-        </span>
-      </Button>
-      <div className="flex h-12 w-full grow flex-col content-between justify-center overflow-hidden align-middle whitespace-nowrap">
-        <span>{playLabel}</span>
-        <span className="text-sm text-zinc-400">
-          <span>
-            {(() => {
-              switch (props.type) {
-                case "artist":
-                  return t`Artist`;
-                case "album":
-                  return t`Album`;
-                case "playlist":
-                  return t`Playlist`;
-              }
-            })() + " • "}
+        >
+          {cover}
+          <span className="pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-zinc-950/60 opacity-0 transition duration-150 group-hover:opacity-100">
+            {showPlayIcon ? (
+              <LuPlay aria-hidden="true" className="size-8 text-white/90" />
+            ) : (
+              <LuPause aria-hidden="true" className="size-8 text-white/90" />
+            )}
           </span>
+        </Button>
+      ) : (
+        <Link
+          to={item.link}
+          className="size-12 shrink-0 rounded hover:brightness-110"
+        >
+          {cover}
+        </Link>
+      )}
+      <div className="flex h-12 w-full grow flex-col content-between justify-center overflow-hidden align-middle whitespace-nowrap">
+        <Link to={item.link} className="truncate hover:underline">
+          {item.title}
+        </Link>
+        <span className="text-sm text-zinc-400">
+          <span>{item.typeLabel + " • "}</span>
           {props.type === "album" &&
             props.album.artists.map((artist, index) => (
               <span key={artist.id ?? index}>
@@ -113,6 +153,14 @@ export function LibraryRow(props: LibraryRowProps) {
                 {index < (props.album.artists.length ?? 0) - 1 && ", "}
               </span>
             ))}
+          {props.type === "playlist" && (
+            <Link
+              to={`/user/${props.playlist.author.id}`}
+              className="hover:underline"
+            >
+              {props.playlist.author.username}
+            </Link>
+          )}
         </span>
       </div>
     </li>

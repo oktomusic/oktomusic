@@ -39,6 +39,8 @@ import { PlaylistResolver } from "./playlist/playlist.resolver";
 import { SearchService } from "./search/search.service";
 import { SearchResolver } from "./search/search.resolver";
 import { ReportingController } from "./reporting/reporting.controller";
+import { LibraryResolver } from "./library/library.resolver";
+import { LibraryService } from "./library/library.service";
 
 const graphqlCodeByStatus: Record<number, string> = {
   [HttpStatus.BAD_REQUEST]: "BAD_USER_INPUT",
@@ -171,6 +173,8 @@ const mapHttpExceptionToGraphqlError = (exception: HttpException) => {
     PlaylistResolver,
     SearchService,
     SearchResolver,
+    LibraryResolver,
+    LibraryService,
   ],
   exports: [AuthGuard, AdminGuard, GraphqlAuthGuard, GraphqlAdminGuard],
 })
