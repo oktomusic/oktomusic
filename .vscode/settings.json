@@ -140,23 +140,6 @@
       "approve": true,
       "matchCommandLine": true
     },
-    // @oktomusic/vite-sri-manifest
-    "pnpm --filter @oktomusic/vite-sri-manifest build": {
-      "approve": true,
-      "matchCommandLine": true
-    },
-    "pnpm --filter @oktomusic/vite-sri-manifest dev": {
-      "approve": true,
-      "matchCommandLine": true
-    },
-    "pnpm --filter @oktomusic/vite-sri-manifest lint": {
-      "approve": true,
-      "matchCommandLine": true
-    },
-    "pnpm --filter @oktomusic/vite-sri-manifest lint:fix": {
-      "approve": true,
-      "matchCommandLine": true
-    },
     // Approved common safe commands
     "cd": true,
     "echo": true,
@@ -298,6 +281,8 @@
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "eslint.enable": true,
   "eslint.options": {
-    "flags": ["unstable_native_nodejs_ts_config"]
+    "flags": [
+      "unstable_native_nodejs_ts_config"
+    ]
   }
 }

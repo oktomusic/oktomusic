@@ -75,7 +75,6 @@ jobs:
     name: "@oktomusic/frontend"
     runs-on: ubuntu-latest
     needs:
-      - pkg-vite-sri-manifest
       - pkg-lyrics
       - pkg-api-schemas
     steps:
@@ -84,9 +83,6 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
-
-      - name: Build @oktomusic/vite-sri-manifest
-        run: pnpm --filter "@oktomusic/vite-sri-manifest" build
 
       - name: Build @oktomusic/api-schemas
         run: pnpm --filter "@oktomusic/api-schemas" build
@@ -101,26 +97,6 @@ jobs:
       - name: Tests
         run: |
           pnpm --filter "@oktomusic/frontend" run test
-
-  pkg-vite-sri-manifest:
-    name: "@oktomusic/vite-sri-manifest"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
-
-      - name: Build
-        run: pnpm --filter "@oktomusic/vite-sri-manifest" build
-
-      - name: Typecheck
-        run: pnpm --filter "@oktomusic/vite-sri-manifest" run typecheck
-
-      - name: Lint
-        run: |
-          pnpm --filter "@oktomusic/vite-sri-manifest" run lint
 
   pkg-lyrics:
     name: "@oktomusic/lyrics"
