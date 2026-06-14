@@ -201,20 +201,4 @@ export default defineConfig([
       },
     },
   },
-
-  // @oktomusic/vite-sri-manifest (tsdown)
-  {
-    files: ["packages/vite-sri-manifest/**/*.ts"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      prettier,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: "./packages/vite-sri-manifest/tsconfig.json",
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
 ]);

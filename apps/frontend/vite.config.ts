@@ -4,7 +4,7 @@ import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { lingui } from "@lingui/vite-plugin";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
-import manifestSRIPlugin from "@oktomusic/vite-sri-manifest";
+import sri from "vite-plugin-sri-gen";
 
 const MB = 1024 * 1024;
 // Maximum size of a single asset to be cached by the service worker.
@@ -60,7 +60,7 @@ export default defineConfig({
     tailwindcss(),
     lingui(),
     VitePWA(viteConfigPWA),
-    manifestSRIPlugin(),
+    sri({ algorithm: "sha512" }),
   ],
   server: {
     cors: {

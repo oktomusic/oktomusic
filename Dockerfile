@@ -32,7 +32,6 @@ WORKDIR /usr/src/app
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 
-COPY packages/vite-sri-manifest/package.json packages/vite-sri-manifest/
 COPY packages/api-schemas/package.json packages/api-schemas/
 COPY packages/metaflac-parser/package.json packages/metaflac-parser/
 COPY packages/lyrics/package.json packages/lyrics/
@@ -44,7 +43,6 @@ COPY apps/frontend/package.json apps/frontend/
 
 RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
   pnpm install --frozen-lockfile \
-  --filter @oktomusic/vite-sri-manifest \
   --filter @oktomusic/metaflac-parser \
   --filter @oktomusic/lyrics \
   --filter @oktomusic/playlists \
@@ -54,7 +52,6 @@ RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
   --filter @oktomusic/backend \
   --filter @oktomusic/frontend
 
-COPY packages/vite-sri-manifest/ packages/vite-sri-manifest/
 COPY packages/api-schemas/ packages/api-schemas/
 COPY packages/metaflac-parser/ packages/metaflac-parser/
 COPY packages/lyrics/ packages/lyrics/
@@ -63,9 +60,6 @@ COPY packages/vibrant/ packages/vibrant/
 COPY packages/meta-tags/ packages/meta-tags/
 COPY apps/backend/ apps/backend/
 COPY apps/frontend/ apps/frontend/
-
-# Build the vite-sri-manifest package
-RUN pnpm run --filter @oktomusic/vite-sri-manifest build
 
 # Build the metaflac-parser package
 RUN pnpm run --filter @oktomusic/metaflac-parser build
