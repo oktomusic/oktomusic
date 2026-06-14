@@ -25,7 +25,7 @@ catalogs:
     sharp: ^0.35.1
     temporal-polyfill: ^0.3.2
     tsdown: ^0.22.2
-    typescript: ^5.9.3
+    typescript: ^6.0.3
     zod: ^4.4.3
 
 injectWorkspacePackages: true
