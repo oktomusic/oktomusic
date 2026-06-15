@@ -10,6 +10,7 @@ import { dialogPlaylistDeleteOpenAtom } from "../../atoms/app/dialogs";
 import { OktoButton } from "../Base/OktoButton";
 import { OktoDialog } from "../Base/OktoDialog";
 import { usePanelToast } from "../../hooks/use_panel_toast";
+import { MY_LIBRARY_QUERY } from "../../api/graphql/queries/myLibrary";
 
 export function DialogPlaylistDelete() {
   const [open, setOpen] = useAtom(dialogPlaylistDeleteOpenAtom);
@@ -48,6 +49,9 @@ export function DialogPlaylistDelete() {
         cache.gc();
       },
       refetchQueries: [
+        {
+          query: MY_LIBRARY_QUERY,
+        },
         {
           query: USER_PROFILE_QUERY,
           variables: {
