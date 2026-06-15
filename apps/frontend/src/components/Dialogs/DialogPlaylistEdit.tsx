@@ -19,6 +19,7 @@ import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
 import { SEARCH_MY_PLAYLISTS_QUERY } from "../../api/graphql/queries/searchMyPlaylists";
 import { CREATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/createPlaylist";
 import { UPDATE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/updatePlaylist";
+import { MY_LIBRARY_QUERY } from "../../api/graphql/queries/myLibrary";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import { USER_PROFILE_QUERY } from "../../api/graphql/queries/userProfile";
 import { OktoDialog } from "../Base/OktoDialog";
@@ -111,6 +112,9 @@ export function DialogPlaylistEdit() {
               },
               refetchQueries: [
                 {
+                  query: MY_LIBRARY_QUERY,
+                },
+                {
                   query: SEARCH_MY_PLAYLISTS_QUERY,
                   variables: { name: "" },
                 },
@@ -132,6 +136,9 @@ export function DialogPlaylistEdit() {
                 input: payload,
               },
               refetchQueries: [
+                {
+                  query: MY_LIBRARY_QUERY,
+                },
                 {
                   query: SEARCH_MY_PLAYLISTS_QUERY,
                   variables: { name: "" },
