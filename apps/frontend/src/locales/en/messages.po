@@ -136,7 +136,7 @@ msgstr "Cache max age (days):"
 msgid "Cache max entries:"
 msgstr "Cache max entries:"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:105
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:109
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -177,9 +177,18 @@ msgstr "Close Picture-in-Picture"
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr "Controls how Oktomusic mixes with other audio."
 
-#: src/pages/PanelLeft.tsx:57
+#: src/pages/PanelLeft.tsx:82
 msgid "Could not load library"
 msgstr "Could not load library"
+
+#: src/pages/PanelLeft.tsx:54
+msgid "Create"
+msgstr "Create"
+
+#: src/pages/PanelLeft.tsx:50
+#: src/pages/PanelLeft.tsx:62
+msgid "Create a playlist"
+msgstr "Create a playlist"
 
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:192
 msgid "Create playlist"
@@ -193,7 +202,7 @@ msgstr "Crossfade (seconds)"
 msgid "Crossfade (seconds):"
 msgstr "Crossfade (seconds):"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:113
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:117
 msgid "Delete"
 msgstr "Delete"
 
@@ -201,7 +210,7 @@ msgstr "Delete"
 msgid "Delete playlist"
 msgstr "Delete playlist"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:81
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:85
 msgid "Delete playlist?"
 msgstr "Delete playlist?"
 
@@ -253,7 +262,7 @@ msgstr "Failed to add track"
 msgid "Failed to clear played items history"
 msgstr "Failed to clear played items history"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:72
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:76
 msgid "Failed to delete playlist"
 msgstr "Failed to delete playlist"
 
@@ -344,7 +353,7 @@ msgstr "Line by line"
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
-#: src/pages/PanelLeft.tsx:52
+#: src/pages/PanelLeft.tsx:77
 msgid "Loading library"
 msgstr "Loading library"
 
@@ -546,7 +555,7 @@ msgstr "Playlist"
 msgid "Playlist cover"
 msgstr "Playlist cover"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:63
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:67
 msgid "Playlist deleted"
 msgstr "Playlist deleted"
 
@@ -704,7 +713,7 @@ msgstr "Storage Persistence:"
 msgid "The following modern web features are missing:"
 msgstr "The following modern web features are missing:"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:97
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:101
 msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
 
@@ -754,6 +763,6 @@ msgstr "Word by word"
 msgid "Your browser does not support lyrics translation"
 msgstr "Your browser does not support lyrics translation"
 
-#: src/pages/PanelLeft.tsx:62
+#: src/pages/PanelLeft.tsx:87
 msgid "Your library is empty"
 msgstr "Your library is empty"

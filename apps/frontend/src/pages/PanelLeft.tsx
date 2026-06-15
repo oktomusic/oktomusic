@@ -1,22 +1,26 @@
 import { useQuery } from "@apollo/client/react";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { Link } from "react-router";
 import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
-import { LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
+import { LuPanelLeftClose, LuPanelLeftOpen, LuPlus } from "react-icons/lu";
 
 import { MY_LIBRARY_QUERY } from "../api/graphql/queries/myLibrary";
 import { panelLeftExpandedAtom } from "../atoms/app/panels";
+import { dialogPlaylistOpenAtom } from "../atoms/app/dialogs";
 import coverPlaceHolder from "../assets/pip-cover-placeholder.svg";
 import { Cover } from "../components/Base/Cover";
 import { getCoverImagesFromAlbumIds } from "../components/Base/CoverImages";
 import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 import { LibraryRow } from "../components/LibraryRow/LibraryRow";
+import { OktoButton } from "../components/Base/OktoButton";
 
 export function PanelLeft() {
   const [expanded, setExpanded] = useAtom(panelLeftExpandedAtom);
   const { data, loading, error } = useQuery(MY_LIBRARY_QUERY);
   const libraryItems = data?.myLibrary.items ?? [];
+
+  const setOpen = useSetAtom(dialogPlaylistOpenAtom);
 
   return (
     <nav
@@ -24,7 +28,7 @@ export function PanelLeft() {
       className="flex flex-col overflow-hidden rounded bg-zinc-900"
       aria-label="Library"
     >
-      <div className="flex items-center justify-end p-2">
+      <div className="flex items-center px-2 pt-2">
         <Button
           type="button"
           onClick={() => {
@@ -40,7 +44,28 @@ export function PanelLeft() {
             <LuPanelLeftOpen className="size-6" />
           )}
         </Button>
+        {expanded ? (
+          <OktoButton
+            className="mr-2.5 ml-auto flex h-9 flex-row items-center gap-1 rounded-full!"
+            title={t`Create a playlist`}
+            onClick={() => setOpen(true)}
+          >
+            <LuPlus className="size-5" />
+            {t`Create`}
+          </OktoButton>
+        ) : null}
       </div>
+      {!expanded && (
+        <div className="flex h-16 w-20 items-center justify-center px-2">
+          <OktoButton
+            className="mx-auto flex size-9 items-center justify-center rounded-full! p-0!"
+            title={t`Create a playlist`}
+            onClick={() => setOpen(true)}
+          >
+            <LuPlus className="size-5" />
+          </OktoButton>
+        </div>
+      )}
       {expanded ? (
         <OktoScrollArea
           render={<ul />}

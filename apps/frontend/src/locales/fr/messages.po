@@ -132,7 +132,7 @@ msgstr ""
 msgid "Cache max entries:"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:105
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:109
 msgid "Cancel"
 msgstr ""
 
@@ -173,9 +173,18 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
-#: src/pages/PanelLeft.tsx:57
+#: src/pages/PanelLeft.tsx:82
 msgid "Could not load library"
 msgstr ""
+
+#: src/pages/PanelLeft.tsx:54
+msgid "Create"
+msgstr "Créer"
+
+#: src/pages/PanelLeft.tsx:50
+#: src/pages/PanelLeft.tsx:62
+msgid "Create a playlist"
+msgstr "Créer une playlist"
 
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:192
 msgid "Create playlist"
@@ -189,17 +198,17 @@ msgstr ""
 msgid "Crossfade (seconds):"
 msgstr "Fondu enchaîné (secondes) :"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:113
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:117
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: src/pages/Center/Playlist.tsx:163
 msgid "Delete playlist"
-msgstr ""
+msgstr "Supprimer la playlist"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:81
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:85
 msgid "Delete playlist?"
-msgstr ""
+msgstr "Supprimer la playlist ?"
 
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:225
 msgid "Description"
@@ -249,7 +258,7 @@ msgstr ""
 msgid "Failed to clear played items history"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:72
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:76
 msgid "Failed to delete playlist"
 msgstr ""
 
@@ -340,7 +349,7 @@ msgstr "Ligne par ligne"
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
-#: src/pages/PanelLeft.tsx:52
+#: src/pages/PanelLeft.tsx:77
 msgid "Loading library"
 msgstr ""
 
@@ -542,7 +551,7 @@ msgstr ""
 msgid "Playlist cover"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:63
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:67
 msgid "Playlist deleted"
 msgstr ""
 
@@ -700,7 +709,7 @@ msgstr ""
 msgid "The following modern web features are missing:"
 msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:97
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:101
 msgid "This action cannot be undone."
 msgstr ""
 
@@ -750,6 +759,6 @@ msgstr "Mot à mot"
 msgid "Your browser does not support lyrics translation"
 msgstr "Votre navigateur ne supporte pas la traduction des paroles"
 
-#: src/pages/PanelLeft.tsx:62
+#: src/pages/PanelLeft.tsx:87
 msgid "Your library is empty"
 msgstr ""
