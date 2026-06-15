@@ -39,11 +39,11 @@ msgstr "À propos"
 msgid "Account Settings"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:207
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:214
 msgid "Add a name"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:224
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:231
 msgid "Add an optional description"
 msgstr ""
 
@@ -173,11 +173,11 @@ msgstr ""
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr ""
 
-#: src/pages/PanelLeft.tsx:52
+#: src/pages/PanelLeft.tsx:57
 msgid "Could not load library"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:185
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:192
 msgid "Create playlist"
 msgstr ""
 
@@ -201,7 +201,7 @@ msgstr ""
 msgid "Delete playlist?"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:218
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:225
 msgid "Description"
 msgstr "Description"
 
@@ -223,7 +223,7 @@ msgstr "Télécharger"
 msgid "Edit details"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:185
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:192
 msgid "Edit playlist details"
 msgstr ""
 
@@ -340,7 +340,7 @@ msgstr "Ligne par ligne"
 msgid "Link copied to clipboard"
 msgstr "Lien copié dans le presse-papiers"
 
-#: src/pages/PanelLeft.tsx:47
+#: src/pages/PanelLeft.tsx:52
 msgid "Loading library"
 msgstr ""
 
@@ -391,7 +391,7 @@ msgstr "Plus d'options pour {trackName}"
 msgid "Mute"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:202
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:209
 msgid "Name"
 msgstr "Nom"
 
@@ -538,7 +538,7 @@ msgstr ""
 msgid "Playlist"
 msgstr ""
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:195
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:202
 msgid "Playlist cover"
 msgstr ""
 
@@ -565,7 +565,7 @@ msgid "Previous"
 msgstr "Précédent"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:26
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:53
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:54
 msgid "Private"
 msgstr "Privée"
 
@@ -579,7 +579,7 @@ msgid "Profile"
 msgstr ""
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:28
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:51
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:52
 msgid "Public"
 msgstr "Publique"
 
@@ -629,7 +629,7 @@ msgstr ""
 msgid "Russian"
 msgstr "Russe"
 
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:247
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:254
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -710,7 +710,7 @@ msgid "Tracks"
 msgstr "Titres"
 
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
-#: src/components/Dialogs/DialogPlaylistEdit.tsx:52
+#: src/components/Dialogs/DialogPlaylistEdit.tsx:53
 msgid "Unlisted"
 msgstr "Non répertoriée"
 
@@ -750,6 +750,6 @@ msgstr "Mot à mot"
 msgid "Your browser does not support lyrics translation"
 msgstr "Votre navigateur ne supporte pas la traduction des paroles"
 
-#: src/pages/PanelLeft.tsx:57
+#: src/pages/PanelLeft.tsx:62
 msgid "Your library is empty"
 msgstr ""

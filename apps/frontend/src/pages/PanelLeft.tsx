@@ -10,6 +10,7 @@ import { panelLeftExpandedAtom } from "../atoms/app/panels";
 import coverPlaceHolder from "../assets/pip-cover-placeholder.svg";
 import { Cover } from "../components/Base/Cover";
 import { getCoverImagesFromAlbumIds } from "../components/Base/CoverImages";
+import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 import { LibraryRow } from "../components/LibraryRow/LibraryRow";
 
 export function PanelLeft() {
@@ -41,7 +42,11 @@ export function PanelLeft() {
         </Button>
       </div>
       {expanded ? (
-        <ul className="flex w-full flex-1 flex-col overflow-y-auto px-2 pb-2">
+        <OktoScrollArea
+          render={<ul />}
+          className="w-full flex-1 px-2 pb-2"
+          noMargin={true}
+        >
           {loading && libraryItems.length === 0 && (
             <li className="px-3 py-2 text-sm text-zinc-400">
               {t`Loading library`}
@@ -85,43 +90,45 @@ export function PanelLeft() {
               />
             );
           })}
-        </ul>
+        </OktoScrollArea>
       ) : (
-        <div className="scrollbar-hidden flex flex-1 flex-col items-center overflow-y-auto pb-2 align-middle select-none">
-          {libraryItems.map((entry) => {
-            const title = entry.item.name;
-            const link =
-              entry.item.__typename === "AlbumBasic"
-                ? `/album/${entry.item.id}`
-                : `/playlist/${entry.item.id}`;
-            const cover =
-              entry.item.__typename === "AlbumBasic"
-                ? ([entry.item.id] as const)
-                : getCoverImagesFromAlbumIds(
-                    entry.item.coverAlbumIds,
-                    coverPlaceHolder,
-                  );
+        <OktoScrollArea className="flex-1 pb-2 select-none" noMargin={true}>
+          <div className="flex flex-col items-center align-middle">
+            {libraryItems.map((entry) => {
+              const title = entry.item.name;
+              const link =
+                entry.item.__typename === "AlbumBasic"
+                  ? `/album/${entry.item.id}`
+                  : `/playlist/${entry.item.id}`;
+              const cover =
+                entry.item.__typename === "AlbumBasic"
+                  ? ([entry.item.id] as const)
+                  : getCoverImagesFromAlbumIds(
+                      entry.item.coverAlbumIds,
+                      coverPlaceHolder,
+                    );
 
-            return (
-              <Link
-                key={entry.id}
-                to={link}
-                className="size-16 rounded py-2 hover:bg-white/10"
-                aria-label={title}
-                title={title}
-              >
-                <Cover
-                  imgs={cover}
-                  size={96}
-                  alt={`${title} cover`}
-                  loading="lazy"
-                  fetchPriority="low"
-                  className="mx-auto size-12 rounded"
-                />
-              </Link>
-            );
-          })}
-        </div>
+              return (
+                <Link
+                  key={entry.id}
+                  to={link}
+                  className="size-16 rounded py-2 hover:bg-white/10"
+                  aria-label={title}
+                  title={title}
+                >
+                  <Cover
+                    imgs={cover}
+                    size={96}
+                    alt={`${title} cover`}
+                    loading="lazy"
+                    fetchPriority="low"
+                    className="mx-auto size-12 rounded"
+                  />
+                </Link>
+              );
+            })}
+          </div>
+        </OktoScrollArea>
       )}
     </nav>
   );
