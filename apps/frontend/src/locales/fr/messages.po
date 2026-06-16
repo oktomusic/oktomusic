@@ -64,7 +64,7 @@ msgid "Added to playlist"
 msgstr ""
 
 #: src/components/HeaderMenu.tsx:75
-#: src/pages/SettingsAdmin/SettingsAdmin.tsx:19
+#: src/pages/SettingsAdmin/SettingsAdmin.tsx:9
 msgid "Admin Settings"
 msgstr ""
 
