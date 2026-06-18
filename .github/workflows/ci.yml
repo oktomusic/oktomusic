@@ -34,7 +34,7 @@ jobs:
       - pkg-meta-tags
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -79,7 +79,7 @@ jobs:
       - pkg-api-schemas
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -103,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -151,7 +151,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -175,7 +175,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -195,7 +195,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -219,7 +219,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -245,7 +245,7 @@ jobs:
       - pkg-meta-tags
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -269,7 +269,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Environment
         uses: ./.github/actions/setup-environment
@@ -354,7 +354,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Typst
         uses: typst-community/setup-typst@v5
