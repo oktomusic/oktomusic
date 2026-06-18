@@ -137,7 +137,7 @@ importers:
         version: link:../../packages/api-schemas
       '@oktomusic/lyrics':
         specifier: workspace:^
-        version: link:../../packages/lyrics
+        version: file:packages/lyrics
       '@oktomusic/meta-tags':
         specifier: workspace:^
         version: link:../../packages/meta-tags
@@ -146,7 +146,7 @@ importers:
         version: link:../../packages/metaflac-parser
       '@oktomusic/playlists':
         specifier: workspace:^
-        version: link:../../packages/playlists
+        version: file:packages/playlists
       '@oktomusic/vibrant':
         specifier: workspace:^
         version: link:../../packages/vibrant
@@ -251,8 +251,8 @@ importers:
         specifier: ^4.1.8
         version: 4.1.8(vitest@4.1.8)
       http-proxy-middleware:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       prisma-json-types-generator:
         specifier: ^4.1.1
         version: 4.1.1(@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3))(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3)
@@ -3020,6 +3020,12 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
+  '@oktomusic/lyrics@file:packages/lyrics':
+    resolution: {directory: packages/lyrics, type: directory}
+
+  '@oktomusic/playlists@file:packages/playlists':
+    resolution: {directory: packages/playlists, type: directory}
+
   '@oxc-parser/binding-android-arm-eabi@0.132.0':
     resolution: {integrity: sha512-KrLaPWa5c9Y7LkW+rKkaUE3y7DBDrQtaf7rlsSDfv6KAHUjgzAIRA761Lrrp6//Yd/Rlie/yEOt9YENCoJnOcw==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -4600,6 +4606,9 @@ packages:
   anynum@1.0.0:
     resolution: {integrity: sha512-xjR9/zBVnUOP6ztMIIgShjsxui80nQUQH+5xJnvrYLs+90bF25/KJqaAi8mk+B4RDtX1Nspi6fmp4YTEts8SfA==}
 
+  anynum@1.0.1:
+    resolution: {integrity: sha512-N6//FLET/tXYNM/F6ABca1oH6fWB+KlTt909Le28WMDBk8oaT4vY17DCrwg2MvmuqUKt3Ni4N5dGJ/EoBgcO6A==}
+
   append-field@1.0.0:
     resolution: {integrity: sha512-klpgFSWLW1ZEs8svjfb7g4qWY0YS5imI82dTg+QahUvJ8YqAY0P10Uk8tTyh9ZGuYEZEMaeJYCF5BFuX552hsw==}
 
@@ -5647,6 +5656,10 @@ packages:
     resolution: {integrity: sha512-6bIM7fsJxeo3uXv7OncQYsBAMPJ7V16Slahl/6M98C/i2q+vB1+4a0MtrvYwDFEUrwDSbAmeLDRXsOBwrL7yAg==}
     hasBin: true
 
+  fast-xml-parser@5.9.2:
+    resolution: {integrity: sha512-DYPkXnVSJHAGAkSBeVYhEo/seIpz2SLr9OQcX7m6lXaX3gvoB+DCKzFdZIEhZGI3I1DUhObBAUOT/v2xfoXz/w==}
+    hasBin: true
+
   fastq@1.20.1:
     resolution: {integrity: sha512-GGToxJ/w1x32s/D2EKND7kTil4n8OVk/9mycTc4VDza13lOvpUZTGX3mFSCtV9ksdGBVzvsyAVLM6mHFThxXxw==}
 
@@ -6028,8 +6041,8 @@ packages:
     resolution: {integrity: sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==}
     engines: {node: '>= 0.8'}
 
-  http-proxy-middleware@4.1.0:
-    resolution: {integrity: sha512-XUOAjKncPZjsrgDTTem+CUED6A+piUAKTOwBM8g1gAublBX/GdxTHP8mO+og1EW1evYP8wd0G2c111tExwo/jw==}
+  http-proxy-middleware@4.1.1:
+    resolution: {integrity: sha512-KX5ZofGXLFXqFAkQoOWZ+rTtaLTut7m0gyL+QzJrdejtIZ+F4bPPDoe7reISg2+v0CAz5OfVwEJEhty7X+e57g==}
     engines: {node: ^22.15.0 || ^24.0.0 || >=26.0.0}
 
   http-proxy@1.18.1:
@@ -6298,6 +6311,9 @@ packages:
   is-unicode-supported@2.1.0:
     resolution: {integrity: sha512-mE00Gnza5EEB3Ds0HfMyllZzbBrmLOX3vfWoj9A9PEnTfratQ/BcaJOuMhnkhjXvb2+FkY3VuHqtAGpTPmglFQ==}
     engines: {node: '>=18'}
+
+  is-unsafe@1.0.1:
+    resolution: {integrity: sha512-CLK2+VdgERgD96EYm5lUQssZYlRg2tkZnbsxZoacmSiRxiFJ4Nk4SzjCl+Ur+v3kXIY9dTIdb3IH22y1mZ56LA==}
 
   is-upper-case@2.0.2:
     resolution: {integrity: sha512-44pxmxAvnnAOwBg4tHPnkfvgjPwbc5QIsSstNU+YcJ1ovxVzCWpSGosPJOZh/a1tdl81fbgnLc9LLv+x2ywbPQ==}
@@ -7810,8 +7826,8 @@ packages:
   seq-queue@0.0.5:
     resolution: {integrity: sha512-hr3Wtp/GZIc/6DAGPDcV4/9WoZhjrkXsi5B/07QgX8tsdc6ilr7BFM6PM6rbdAX1kFSDYeZGLipIZZKyQP0O5Q==}
 
-  serialize-javascript@7.0.5:
-    resolution: {integrity: sha512-F4LcB0UqUl1zErq+1nYEEzSHJnIwb3AF2XWB94b+afhrekOUijwooAYqFyRbjYkm2PAKBabx6oYv/xDxNi8IBw==}
+  serialize-javascript@7.0.6:
+    resolution: {integrity: sha512-ATTK5Q4gFVg0YDp1my2vqygyvhcklD/UV5GIlYHooGTn/NogJqIzpetkD6E5kmuVULqz/S9inUL25XcAgDRJQg==}
     engines: {node: '>=20.0.0'}
 
   serve-static@2.2.1:
@@ -8063,6 +8079,9 @@ packages:
 
   strnum@2.4.0:
     resolution: {integrity: sha512-sHrVyWWdq28RbhjuJdZsA1SnGRJV6NiXbk6AXBxDOsgAcA+lmpUZCYjOdLBxkXMwis6RRe7dlZt4VlIWFVzkmg==}
+
+  strnum@2.4.1:
+    resolution: {integrity: sha512-M9eUSMT2dCB2cTNPG7UYj6KuK7RJR2SN2+yCV/fTW3xzTCS6EaGZ5pSMgDIjB7r8zSfTGk+dvvn9rTjpVS9Mwg==}
 
   strtok3@10.3.5:
     resolution: {integrity: sha512-ki4hZQfh5rX0QDLLkOCj+h+CVNkqmp/CMf8v8kZpkNVK6jGQooMytqzLZYUVYIZcFZ6yDB70EfD8POcFXiF5oA==}
@@ -11724,6 +11743,16 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
+  '@oktomusic/lyrics@file:packages/lyrics':
+    dependencies:
+      fast-xml-parser: 5.9.2
+      zod: 4.4.3
+
+  '@oktomusic/playlists@file:packages/playlists':
+    dependencies:
+      fast-xml-parser: 5.9.2
+      zod: 4.4.3
+
   '@oxc-parser/binding-android-arm-eabi@0.132.0':
     optional: true
 
@@ -12144,7 +12173,7 @@ snapshots:
 
   '@rollup/plugin-terser@1.0.0(rollup@4.62.0)':
     dependencies:
-      serialize-javascript: 7.0.5
+      serialize-javascript: 7.0.6
       smob: 1.6.2
       terser: 5.48.0
     optionalDependencies:
@@ -13253,6 +13282,8 @@ snapshots:
       picomatch: 2.3.2
 
   anynum@1.0.0: {}
+
+  anynum@1.0.1: {}
 
   append-field@1.0.0: {}
 
@@ -14483,6 +14514,15 @@ snapshots:
       strnum: 2.4.0
       xml-naming: 0.1.0
 
+  fast-xml-parser@5.9.2:
+    dependencies:
+      '@nodable/entities': 2.2.0
+      fast-xml-builder: 1.2.0
+      is-unsafe: 1.0.1
+      path-expression-matcher: 1.5.0
+      strnum: 2.4.1
+      xml-naming: 0.1.0
+
   fastq@1.20.1:
     dependencies:
       reusify: 1.1.0
@@ -14915,7 +14955,7 @@ snapshots:
       statuses: 2.0.2
       toidentifier: 1.0.1
 
-  http-proxy-middleware@4.1.0:
+  http-proxy-middleware@4.1.1:
     dependencies:
       debug: 4.4.3
       httpxy: 0.5.3
@@ -15173,6 +15213,8 @@ snapshots:
   is-unicode-supported@0.1.0: {}
 
   is-unicode-supported@2.1.0: {}
+
+  is-unsafe@1.0.1: {}
 
   is-upper-case@2.0.2:
     dependencies:
@@ -16842,7 +16884,7 @@ snapshots:
 
   seq-queue@0.0.5: {}
 
-  serialize-javascript@7.0.5: {}
+  serialize-javascript@7.0.6: {}
 
   serve-static@2.2.1:
     dependencies:
@@ -16889,7 +16931,7 @@ snapshots:
     dependencies:
       decode-ico: 0.4.1
       ico-endec: 0.1.6
-      sharp: 0.33.5
+      sharp: 0.35.1
 
   sharp@0.33.5:
     dependencies:
@@ -17179,6 +17221,10 @@ snapshots:
   strnum@2.4.0:
     dependencies:
       anynum: 1.0.0
+
+  strnum@2.4.1:
+    dependencies:
+      anynum: 1.0.1
 
   strtok3@10.3.5:
     dependencies:
