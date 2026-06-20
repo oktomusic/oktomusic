@@ -52,7 +52,7 @@
     "bullmq": "^5.79.0",
     "cookie-parser": "^1.4.7",
     "express-session": "^1.19.0",
-    "graphql": "^16.14.2",
+    "graphql": "^17.0.1",
     "graphql-subscriptions": "3.0.0",
     "handlebars": "^4.7.9",
     "hbs": "^4.2.1",
