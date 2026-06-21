@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ImageBase, type ImageData, type ImageSource } from "@vibrant/image";
-import type sharp from "sharp";
+import type { Sharp } from "sharp";
 
 /**
  * Internal Image class implementation using sharp.
@@ -35,7 +35,7 @@ export class SharpImage extends ImageBase {
    * Load image data from a sharp.Sharp object.
    * Converts the image to raw RGBA pixel data.
    */
-  async loadFromSharp(sharpInstance: sharp.Sharp): Promise<SharpImage> {
+  async loadFromSharp(sharpInstance: Sharp): Promise<SharpImage> {
     // Ensure we get raw RGBA data
     const { data, info } = await sharpInstance
       .ensureAlpha()
