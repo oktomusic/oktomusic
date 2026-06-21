@@ -14,7 +14,7 @@ catalogs:
       specifier: ^5.8.0
       version: 5.9.3
     sharp:
-      specifier: ^0.35.1
+      specifier: ^0.35.2
       version: 0.35.2
     temporal-polyfill:
       specifier: ^0.3.2
@@ -16905,7 +16905,7 @@ snapshots:
     dependencies:
       decode-ico: 0.4.1
       ico-endec: 0.1.6
-      sharp: 0.33.5
+      sharp: 0.35.2
 
   sharp@0.33.5:
     dependencies:
