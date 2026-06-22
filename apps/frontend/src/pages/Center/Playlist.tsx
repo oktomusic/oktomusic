@@ -34,6 +34,8 @@ import { LibraryItemType, Role } from "../../api/graphql/gql/graphql";
 import { playlistToPlaylistBasic } from "../../utils/graphql_converters";
 import { useRecordItemPlay } from "../../hooks/use_record_item_play";
 import { useLibraryItemToggle } from "../../hooks/use_library_item_toggle";
+import { settingClientPlaylistExport } from "../../atoms/app/settings_client";
+import { SubmenuPlaylistExport } from "../../components/SubmenuPlaylistExport";
 
 export function Playlist() {
   const { cuid } = useParams();
@@ -42,6 +44,8 @@ export function Playlist() {
   const userId = user.status === "authenticated" ? user.user.id : null;
   const userIsAdmin =
     user.status === "authenticated" && user.user.role === Role.Admin;
+
+  const playlistExport = useAtomValue(settingClientPlaylistExport);
 
   const setDialogPlaylistOpen = useSetAtom(dialogPlaylistOpenAtom);
   const setDialogPlaylistDeleteOpen = useSetAtom(dialogPlaylistDeleteOpenAtom);
@@ -148,34 +152,37 @@ export function Playlist() {
       icon: <LuShare className="size-4" />,
       onClick: share,
     },
-    ...(userId === playlist.creator.id || userIsAdmin
-      ? ([
-          {
-            type: "button",
-            label: t`Edit details`,
-            icon: <LuPen className="size-4" />,
-            onClick: () => {
-              setDialogPlaylistOpen(cuid);
-            },
-          },
-          {
-            type: "button",
-            label: t`Delete playlist`,
-            icon: <LuCircleMinus className="size-4" />,
-            onClick: () => {
-              setDialogPlaylistDeleteOpen({
-                __typename: "PlaylistBasic",
-                id: data.playlist.id,
-                name: data.playlist.name,
-                description: data.playlist.description,
-                visibility: data.playlist.visibility,
-                creator: data.playlist.creator,
-                coverAlbumIds: data.playlist.coverAlbumIds,
-              });
-            },
-          },
-        ] as const satisfies readonly OktoMenuItem[])
-      : []),
+    {
+      type: "button",
+      label: t`Edit details`,
+      icon: <LuPen className="size-4" />,
+      onClick: () => {
+        setDialogPlaylistOpen(cuid);
+      },
+      hidden: !isOwnPlaylist && !userIsAdmin,
+    },
+    {
+      type: "button",
+      label: t`Delete playlist`,
+      icon: <LuCircleMinus className="size-4" />,
+      onClick: () => {
+        setDialogPlaylistDeleteOpen({
+          __typename: "PlaylistBasic",
+          id: data.playlist.id,
+          name: data.playlist.name,
+          description: data.playlist.description,
+          visibility: data.playlist.visibility,
+          creator: data.playlist.creator,
+          coverAlbumIds: data.playlist.coverAlbumIds,
+        });
+      },
+      hidden: !isOwnPlaylist && !userIsAdmin,
+    },
+    {
+      type: "submenu",
+      component: <SubmenuPlaylistExport playlistId={playlist.id} />,
+      hidden: !playlistExport,
+    },
   ] as const satisfies readonly OktoMenuItem[];
 
   return (

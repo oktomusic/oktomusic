@@ -149,6 +149,19 @@ export const settingClientSWMediaMaxAge = atomWithStorage<number | null>(
   },
 );
 
+// Playlist Export Setting
+
+const playlistExportLocalStorageKey = "oktomusic:playlist_export";
+
+export const settingClientPlaylistExport = atomWithStorage<boolean>(
+  playlistExportLocalStorageKey,
+  false,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
 // Lyrics display mode
 
 const lyricsDisplayModeLocalStorageKey = "oktomusic:lyrics_display_mode";

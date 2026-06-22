@@ -50,6 +50,13 @@ export function HeaderMenu() {
       icon: <LuUserRoundPen className="size-4" />,
     },
     {
+      type: "router-link",
+      label: t`Admin Settings`,
+      to: "/settings/admin",
+      icon: <LuSettings className="size-4" />,
+      hidden: authSession.user?.role !== Role.Admin,
+    },
+    {
       type: "link",
       label: t`About`,
       href: "https://oktomusic.afcms.dev",
@@ -68,15 +75,6 @@ export function HeaderMenu() {
       icon: <LuSquareArrowRight className="size-4" />,
     },
   ];
-
-  if (authSession.user?.role === Role.Admin) {
-    menuItems.splice(2, 0, {
-      type: "router-link",
-      label: t`Admin Settings`,
-      to: "/settings/admin",
-      icon: <LuSettings className="size-4" />,
-    });
-  }
 
   return (
     <div className="flex h-14 flex-row gap-2 p-2">

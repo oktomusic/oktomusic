@@ -14,7 +14,7 @@ import {
 } from "react-icons/lu";
 import { Link } from "react-router";
 
-import { OktoMenu, OktoMenuItem, OktoMenuButtonItem } from "../Base/OktoMenu";
+import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
 import { formatDuration } from "../../utils/format_duration";
 import {
   TrackWithAlbum,
@@ -93,40 +93,6 @@ export function TrackElement(props: TrackElementProps) {
     }
   };
 
-  const removeFromPlaylistMenuItem: OktoMenuButtonItem | null =
-    props.playlistId !== undefined && props.playlistTrackIndex !== undefined
-      ? {
-          type: "button",
-          icon: <LuTrash2 className="size-4" />,
-          label: t`Remove from playlist`,
-          onClick: () => {
-            void removeTracksFromPlaylist({
-              variables: {
-                id: props.playlistId!,
-                positions: [props.playlistTrackIndex!],
-              },
-              refetchQueries: [
-                { query: PLAYLIST_QUERY, variables: { id: props.playlistId! } },
-              ],
-              awaitRefetchQueries: true,
-            })
-              .then(() => {
-                setToast({
-                  message: t`Removed from playlist`,
-                  type: "success",
-                });
-              })
-              .catch((err: unknown) => {
-                console.error(err);
-                setToast({
-                  message: t`Failed to remove track`,
-                  type: "error",
-                });
-              });
-          },
-        }
-      : null;
-
   const menuItems = [
     {
       type: "button",
@@ -167,7 +133,39 @@ export function TrackElement(props: TrackElementProps) {
         />
       ),
     },
-    ...(removeFromPlaylistMenuItem ? [removeFromPlaylistMenuItem] : []),
+    {
+      type: "button",
+      icon: <LuTrash2 className="size-4" />,
+      label: t`Remove from playlist`,
+      onClick: () => {
+        void removeTracksFromPlaylist({
+          variables: {
+            id: props.playlistId!,
+            positions: [props.playlistTrackIndex!],
+          },
+          refetchQueries: [
+            { query: PLAYLIST_QUERY, variables: { id: props.playlistId! } },
+          ],
+          awaitRefetchQueries: true,
+        })
+          .then(() => {
+            setToast({
+              message: t`Removed from playlist`,
+              type: "success",
+            });
+          })
+          .catch((err: unknown) => {
+            console.error(err);
+            setToast({
+              message: t`Failed to remove track`,
+              type: "error",
+            });
+          });
+      },
+      hidden:
+        props.playlistId === undefined ||
+        props.playlistTrackIndex === undefined,
+    },
   ] as const satisfies readonly OktoMenuItem[];
 
   const trackName = props.track.name;

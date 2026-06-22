@@ -15,6 +15,7 @@ import {
   settingClientKioskMode,
   settingClientLyricsDisplayMode,
   settingClientLyricsTranslationEnabled,
+  settingClientPlaylistExport,
   settingClientRestartThresholdSeconds,
   settingClientSWMediaMaxAge,
   settingClientSWMediaMaxEntries,
@@ -38,6 +39,9 @@ import { OktoButton } from "../../components/Base/OktoButton.tsx";
 
 export function SettingsClient() {
   const [kioskMode, setKioskMode] = useAtom(settingClientKioskMode);
+  const [playlistExport, setPlaylistExport] = useAtom(
+    settingClientPlaylistExport,
+  );
   const [audioSessionType, setAudioSessionType] = useAtom(
     settingClientAudioSession,
   );
@@ -134,6 +138,18 @@ export function SettingsClient() {
               id="settings:client:kiosk-mode"
               checked={kioskMode}
               onCheckedChange={setKioskMode}
+            />
+          </div>
+
+          <div className="flex h-14 flex-row items-center justify-between py-2">
+            <label
+              htmlFor="settings:client:playlist-export"
+              className=""
+            >{t`Playlist export:`}</label>
+            <OktoSwitch
+              id="settings:client:playlist-export"
+              checked={playlistExport}
+              onCheckedChange={setPlaylistExport}
             />
           </div>
 

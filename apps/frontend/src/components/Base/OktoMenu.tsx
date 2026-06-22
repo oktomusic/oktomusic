@@ -22,6 +22,7 @@ export interface OktoMenuLinkItem {
   readonly icon?: ReactNode;
   readonly shortcut?: string;
   readonly disabled?: boolean;
+  readonly download?: boolean;
 }
 
 export interface OktoMenuRouterLinkItem {
@@ -93,6 +94,7 @@ export function OktoMenuLink(props: OktoMenuLinkItem) {
       href={props.href}
       target={props.target}
       rel={props.rel}
+      download={props.download}
       className="group flex cursor-default items-center gap-2 rounded-lg px-3 py-1.5 text-white select-none focus:outline-0 data-highlighted:bg-white/10"
     >
       {props.icon && <span>{props.icon}</span>}
