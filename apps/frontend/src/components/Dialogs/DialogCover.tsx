@@ -25,18 +25,19 @@ export function DialogCover() {
       showHeader={false}
       transparentPanel={true}
       title={t`Album cover`}
+      className="items-center p-0!"
     >
       {displayCoverId && (
         <img
           src={`/api/album/${displayCoverId}/cover/1280`}
-          className="w-full rounded-lg shadow-2xl"
+          className="max-h-[calc(100dvh-18rem)] max-w-[calc(100vw-8rem)] rounded-lg object-contain shadow-2xl"
           alt={t`Album cover`}
           loading="eager"
           fetchPriority="high"
         />
       )}
       <Dialog.Close
-        className="mt-4 cursor-pointer px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:text-white focus:text-white focus:outline-none"
+        className="cursor-pointer px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:text-white focus:text-white focus:outline-none"
         onClick={() => setDialogCoverId(null)}
       >
         {t`Close`}

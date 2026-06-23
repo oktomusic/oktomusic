@@ -78,7 +78,7 @@ msgid "Album"
 msgstr "Album"
 
 #: src/components/Dialogs/DialogCover.tsx:27
-#: src/components/Dialogs/DialogCover.tsx:33
+#: src/components/Dialogs/DialogCover.tsx:34
 msgid "Album cover"
 msgstr "Album cover"
 
@@ -165,7 +165,7 @@ msgid "Client Settings"
 msgstr "Client Settings"
 
 #: src/components/Base/OktoDialog.tsx:80
-#: src/components/Dialogs/DialogCover.tsx:42
+#: src/components/Dialogs/DialogCover.tsx:43
 msgid "Close"
 msgstr "Close"
 
