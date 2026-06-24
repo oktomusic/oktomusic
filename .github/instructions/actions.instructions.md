@@ -20,7 +20,7 @@ new-job-name:
   needs: [other-job-if-needed]
   steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Setup Environment
       uses: ./.github/actions/setup-node-pnpm
