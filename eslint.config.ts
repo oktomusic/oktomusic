@@ -3,9 +3,10 @@
 import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-import pluginReact from "eslint-plugin-react";
-import pluginReactRefresh from "eslint-plugin-react-refresh";
-import pluginReactHooks from "eslint-plugin-react-hooks";
+import e18e from "@e18e/eslint-plugin";
+import eslintReact from "@eslint-react/eslint-plugin";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
 import prettier from "eslint-config-prettier/flat";
 import pluginLingui from "eslint-plugin-lingui";
 import { defineConfig, globalIgnores } from "eslint/config";
@@ -13,15 +14,18 @@ import { defineConfig, globalIgnores } from "eslint/config";
 const configBase = [
   js.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
+  e18e.configs.recommended,
   prettier,
 ];
 
 const configsReact = [
   js.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
-  pluginReact.configs.flat.recommended,
-  pluginReactRefresh.configs.vite,
-  pluginReactHooks.configs.flat["recommended-latest"],
+  e18e.configs.recommended,
+  eslintReact.configs["recommended-typescript"],
+  eslintReact.configs["disable-conflict-eslint-plugin-react-hooks"],
+  reactHooks.configs.flat.recommended,
+  reactRefresh.configs.vite,
   prettier,
   pluginLingui.configs["flat/recommended"],
 ];
@@ -48,6 +52,14 @@ export default defineConfig([
         project: "./apps/backend/tsconfig.json",
         tsconfigRootDir: import.meta.dirname,
       },
+    },
+    rules: {
+      "e18e/ban-dependencies": [
+        "error",
+        {
+          allowed: ["express"],
+        },
+      ],
     },
   },
   {

@@ -109,30 +109,27 @@ export function OktoMenuLink(props: OktoMenuLinkItem) {
 }
 
 export function OktoMenuRouterLink(props: OktoMenuRouterLinkItem) {
+  const isDisabled = Boolean(props.disabled);
+
   return (
     <Menu.Item className="group focus:outline-0">
-      {(() => {
-        const isDisabled = Boolean(props.disabled);
-        return (
-          <Link
-            to={props.to}
-            className={`flex w-full cursor-default items-center gap-2 rounded-lg px-3 py-1.5 text-white select-none group-data-highlighted:bg-white/10 focus:outline-0 ${
-              isDisabled ? "pointer-events-none opacity-50" : ""
-            }`}
-            aria-disabled={isDisabled}
-            tabIndex={isDisabled ? -1 : undefined}
-            onClick={isDisabled ? (e) => e.preventDefault() : undefined}
-          >
-            {props.icon && <span>{props.icon}</span>}
-            <span>{props.label}</span>
-            {props.shortcut && (
-              <kbd className="ml-auto font-sans text-xs text-white/50">
-                {props.shortcut}
-              </kbd>
-            )}
-          </Link>
-        );
-      })()}
+      <Link
+        to={props.to}
+        className={`flex w-full cursor-default items-center gap-2 rounded-lg px-3 py-1.5 text-white select-none group-data-highlighted:bg-white/10 focus:outline-0 ${
+          isDisabled ? "pointer-events-none opacity-50" : ""
+        }`}
+        aria-disabled={isDisabled}
+        tabIndex={isDisabled ? -1 : undefined}
+        onClick={isDisabled ? (e) => e.preventDefault() : undefined}
+      >
+        {props.icon && <span>{props.icon}</span>}
+        <span>{props.label}</span>
+        {props.shortcut && (
+          <kbd className="ml-auto font-sans text-xs text-white/50">
+            {props.shortcut}
+          </kbd>
+        )}
+      </Link>
     </Menu.Item>
   );
 }
