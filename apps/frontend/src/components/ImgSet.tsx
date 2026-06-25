@@ -1,5 +1,3 @@
-import { forwardRef } from "react";
-
 type BaseImgProps = Omit<React.ComponentProps<"img">, "src" | "srcSet">;
 
 interface ImgSetImages {
@@ -11,13 +9,13 @@ export type ImgSetProps = BaseImgProps & {
   readonly images: ImgSetImages;
 };
 
-export const ImgSet = forwardRef<HTMLImageElement, ImgSetProps>(function ImgSet(
-  props,
+export const ImgSet = function ImgSet({
   ref,
-) {
+  ...props
+}: ImgSetProps & { ref?: React.RefObject<HTMLImageElement | null> }) {
   const { images, ...rest } = props;
   const srcSet = Object.entries(images)
     .map(([key, url]) => `${url} ${key}`)
     .join(", ");
   return <img ref={ref} src={images["1x"]} srcSet={srcSet} {...rest} />;
-});
+};

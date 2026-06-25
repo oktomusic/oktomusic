@@ -11,7 +11,7 @@ export function mergeDirectivesCSP(data: CSPDirectives[]): CSPDirectives {
   return data.reduce<CSPDirectives>((acc, current) => {
     for (const [directive, values] of Object.entries(current)) {
       acc[directive] = acc[directive]
-        ? Array.from(new Set([...acc[directive], ...values]))
+        ? [...new Set([...acc[directive], ...values])]
         : [...values];
     }
     return acc;

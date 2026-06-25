@@ -79,7 +79,7 @@ export function getTrackKey(source: TrackKeySource): string {
 export function getOrderedTrackKeys(
   tracks: readonly TrackKeySource[],
 ): string[] {
-  const ordered = [...tracks].sort((a, b) =>
+  const ordered = tracks.toSorted((a, b) =>
     a.discNumber !== b.discNumber
       ? a.discNumber - b.discNumber
       : a.trackNumber - b.trackNumber,
@@ -127,7 +127,7 @@ export function pickAlbumDateFromTrackDates(
     }
   }
 
-  const distinctDates = Array.from(counts.values());
+  const distinctDates = [...counts.values()];
   if (distinctDates.length === 0) return null;
 
   const majorityThreshold = Math.floor(totalTracks / 2) + 1;

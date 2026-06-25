@@ -31,14 +31,14 @@ export function PlayerProvider() {
   const setPlaybackDuration = useSetAtom(playerPlaybackDurationAtom);
   const handleNextTrack = useSetAtom(handleNextTrackAtom);
 
-  const audioEl1 = useRef<HTMLAudioElement | null>(null);
-  const audioEl2 = useRef<HTMLAudioElement | null>(null);
+  const audioEl1Ref = useRef<HTMLAudioElement | null>(null);
+  const audioEl2Ref = useRef<HTMLAudioElement | null>(null);
 
-  const source1 = useRef<MediaElementAudioSourceNode | null>(null);
-  const source2 = useRef<MediaElementAudioSourceNode | null>(null);
-  const gain1 = useRef<GainNode | null>(null);
-  const gain2 = useRef<GainNode | null>(null);
-  const masterGain = useRef<GainNode | null>(null);
+  const source1Ref = useRef<MediaElementAudioSourceNode | null>(null);
+  const source2Ref = useRef<MediaElementAudioSourceNode | null>(null);
+  const gain1Ref = useRef<GainNode | null>(null);
+  const gain2Ref = useRef<GainNode | null>(null);
+  const masterGainRef = useRef<GainNode | null>(null);
 
   useEffect(() => {
     const ctx = new AudioContext({
@@ -54,7 +54,7 @@ export function PlayerProvider() {
   }, [setAudioContext]);
 
   useEffect(() => {
-    const el = audioEl1.current;
+    const el = audioEl1Ref.current;
     if (!el) return;
 
     const updatePosition = () => {
@@ -129,74 +129,77 @@ export function PlayerProvider() {
   useEffect(() => {
     if (!audioContext) return;
 
-    const el1 = audioEl1.current;
-    const el2 = audioEl2.current;
+    const el1 = audioEl1Ref.current;
+    const el2 = audioEl2Ref.current;
     if (!el1 || !el2) return;
 
-    if (source1.current && source1.current.context !== audioContext) {
-      source1.current = null;
+    if (source1Ref.current && source1Ref.current.context !== audioContext) {
+      source1Ref.current = null;
     }
-    if (source2.current && source2.current.context !== audioContext) {
-      source2.current = null;
-    }
-
-    if (gain1.current && gain1.current.context !== audioContext) {
-      gain1.current = null;
-    }
-    if (gain2.current && gain2.current.context !== audioContext) {
-      gain2.current = null;
-    }
-    if (masterGain.current && masterGain.current.context !== audioContext) {
-      masterGain.current = null;
+    if (source2Ref.current && source2Ref.current.context !== audioContext) {
+      source2Ref.current = null;
     }
 
-    if (!source1.current) {
-      source1.current = audioContext.createMediaElementSource(el1);
+    if (gain1Ref.current && gain1Ref.current.context !== audioContext) {
+      gain1Ref.current = null;
     }
-    if (!source2.current) {
-      source2.current = audioContext.createMediaElementSource(el2);
+    if (gain2Ref.current && gain2Ref.current.context !== audioContext) {
+      gain2Ref.current = null;
     }
-
-    if (!gain1.current) {
-      gain1.current = audioContext.createGain();
-      gain1.current.gain.value = 1;
-    }
-    if (!gain2.current) {
-      gain2.current = audioContext.createGain();
-      gain2.current.gain.value = 1;
-    }
-    if (!masterGain.current) {
-      masterGain.current = audioContext.createGain();
-      masterGain.current.gain.value = 1;
-      masterGain.current.connect(audioContext.destination);
+    if (
+      masterGainRef.current &&
+      masterGainRef.current.context !== audioContext
+    ) {
+      masterGainRef.current = null;
     }
 
-    source1.current.connect(gain1.current);
-    gain1.current.connect(masterGain.current);
+    if (!source1Ref.current) {
+      source1Ref.current = audioContext.createMediaElementSource(el1);
+    }
+    if (!source2Ref.current) {
+      source2Ref.current = audioContext.createMediaElementSource(el2);
+    }
 
-    source2.current.connect(gain2.current);
-    gain2.current.connect(masterGain.current);
+    if (!gain1Ref.current) {
+      gain1Ref.current = audioContext.createGain();
+      gain1Ref.current.gain.value = 1;
+    }
+    if (!gain2Ref.current) {
+      gain2Ref.current = audioContext.createGain();
+      gain2Ref.current.gain.value = 1;
+    }
+    if (!masterGainRef.current) {
+      masterGainRef.current = audioContext.createGain();
+      masterGainRef.current.gain.value = 1;
+      masterGainRef.current.connect(audioContext.destination);
+    }
+
+    source1Ref.current.connect(gain1Ref.current);
+    gain1Ref.current.connect(masterGainRef.current);
+
+    source2Ref.current.connect(gain2Ref.current);
+    gain2Ref.current.connect(masterGainRef.current);
 
     return () => {
-      source1.current?.disconnect();
-      source2.current?.disconnect();
-      gain1.current?.disconnect();
-      gain2.current?.disconnect();
-      masterGain.current?.disconnect();
+      source1Ref.current?.disconnect();
+      source2Ref.current?.disconnect();
+      gain1Ref.current?.disconnect();
+      gain2Ref.current?.disconnect();
+      masterGainRef.current?.disconnect();
 
-      source1.current = null;
-      source2.current = null;
-      gain1.current = null;
-      gain2.current = null;
-      masterGain.current = null;
+      source1Ref.current = null;
+      source2Ref.current = null;
+      gain1Ref.current = null;
+      gain2Ref.current = null;
+      masterGainRef.current = null;
     };
   }, [audioContext]);
 
   useEffect(() => {
-    if (!audioContext || !masterGain.current) return;
+    if (!audioContext || !masterGainRef.current) return;
 
     const normalizedVolume = Math.max(0, Math.min(1, outputVolume / 100));
-    masterGain.current.gain.setTargetAtTime(
+    masterGainRef.current.gain.setTargetAtTime(
       normalizedVolume,
       audioContext.currentTime,
       0.01,
@@ -204,7 +207,7 @@ export function PlayerProvider() {
   }, [audioContext, outputVolume]);
 
   useEffect(() => {
-    const el = audioEl1.current;
+    const el = audioEl1Ref.current;
     if (!el) return;
 
     if (!currentTrackFile) {
@@ -228,7 +231,7 @@ export function PlayerProvider() {
   ]);
 
   useEffect(() => {
-    const el = audioEl1.current;
+    const el = audioEl1Ref.current;
     if (!el || !currentTrackFile) return;
 
     if (!shouldPlay) {
@@ -254,7 +257,7 @@ export function PlayerProvider() {
   }, [audioContext, currentTrackFile, setPlaybackState, shouldPlay]);
 
   useEffect(() => {
-    const el = audioEl1.current;
+    const el = audioEl1Ref.current;
     if (!el) return;
 
     if (seekRequestMs === null) {
@@ -271,14 +274,14 @@ export function PlayerProvider() {
     <section aria-label="Player">
       <audio
         id="oktomusic:player:audio1"
-        ref={audioEl1}
+        ref={audioEl1Ref}
         preload="auto"
         crossOrigin="use-credentials"
         src={currentTrackFile || undefined}
       />
       <audio
         id="oktomusic:player:audio2"
-        ref={audioEl2}
+        ref={audioEl2Ref}
         preload="auto"
         crossOrigin="use-credentials"
       />

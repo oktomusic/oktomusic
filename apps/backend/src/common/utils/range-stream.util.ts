@@ -16,6 +16,8 @@ export interface RangeStreamResult {
   status: HttpStatus;
 }
 
+const PARTS_REGEX = /bytes=/;
+
 /**
  * Create a streamable file response with range support
  * Handles both full file requests and partial content (range) requests
@@ -30,7 +32,7 @@ export function createRangeStream(
 
   // Handle range request
   if (range) {
-    const parts = range.replace(/bytes=/, "").split("-");
+    const parts = range.replace(PARTS_REGEX, "").split("-");
     const start = Number.parseInt(parts[0], 10);
     const end = parts[1] ? Number.parseInt(parts[1], 10) : fileSize - 1;
 

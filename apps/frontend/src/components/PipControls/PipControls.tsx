@@ -42,7 +42,7 @@ export function PipControls(): ReactPortal | null {
 
         const doc = pipWin.document;
 
-        Array.from(document.querySelectorAll('link[rel="stylesheet"]')).forEach(
+        [...document.querySelectorAll('link[rel="stylesheet"]')].forEach(
           (link) => {
             doc.head.appendChild(link.cloneNode(true));
           },
@@ -54,7 +54,7 @@ export function PipControls(): ReactPortal | null {
 
         // In dev mode styles are applied via style tags
         if (import.meta.env.DEV) {
-          Array.from(document.querySelectorAll("style")).forEach((style) => {
+          [...document.querySelectorAll("style")].forEach((style) => {
             doc.head.appendChild(style.cloneNode(true));
           });
         }

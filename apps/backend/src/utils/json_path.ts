@@ -21,6 +21,8 @@ function resolvePlaceholders(
   return resolved;
 }
 
+const INT_REGEX = /^\d+$/;
+
 /**
  * Get a value from an object using a JSON path with optional placeholders
  * Supports dot notation and array indices
@@ -38,7 +40,7 @@ function getByPath(
   for (const key of parts) {
     if (current === undefined || current === null) return undefined;
 
-    if (Array.isArray(current) && /^\d+$/.test(key)) {
+    if (Array.isArray(current) && INT_REGEX.test(key)) {
       const idx = Number(key);
       current = current[idx];
       continue;
@@ -46,9 +48,7 @@ function getByPath(
 
     if (typeof current === "object") {
       const rec = current as Record<string, unknown>;
-      current = Object.prototype.hasOwnProperty.call(rec, key)
-        ? rec[key]
-        : undefined;
+      current = Object.hasOwn(rec, key) ? rec[key] : undefined;
       continue;
     }
 

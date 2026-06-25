@@ -400,7 +400,7 @@ msgstr "Plus d'options pour {albumName}"
 msgid "More options for {trackName}"
 msgstr "Plus d'options pour {trackName}"
 
-#: src/components/Player/PlayerControlsVolume.tsx:107
+#: src/components/Player/PlayerControlsVolume.tsx:112
 msgid "Mute"
 msgstr ""
 
@@ -731,7 +731,7 @@ msgstr "Titres"
 msgid "Unlisted"
 msgstr "Non répertoriée"
 
-#: src/components/Player/PlayerControlsVolume.tsx:107
+#: src/components/Player/PlayerControlsVolume.tsx:112
 msgid "Unmute"
 msgstr ""
 

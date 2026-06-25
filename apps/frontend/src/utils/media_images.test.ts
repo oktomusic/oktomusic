@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import { getMediaImages } from "./media_images";
 
+const SIZE_REGEX = /^\d+x\d+$/;
+
 describe("getMediaImages", () => {
   it("returns a list of cover images for common sizes", () => {
     const uuid = "any-id";
@@ -12,7 +14,7 @@ describe("getMediaImages", () => {
     for (const image of images) {
       expect(image.src).toContain(`/api/album/${uuid}/cover/`);
       expect(image.type).toBe("image/avif");
-      expect(image.sizes).toMatch(/^\d+x\d+$/);
+      expect(image.sizes).toMatch(SIZE_REGEX);
     }
   });
 });

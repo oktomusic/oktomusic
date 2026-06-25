@@ -161,7 +161,7 @@ export class LibraryService {
       });
     }
 
-    const items = Array.from(entriesByKey.values()).sort((a, b) =>
+    const items = [...entriesByKey.values()].sort((a, b) =>
       this.compareLibraryEntries(a, b),
     );
 
@@ -435,9 +435,9 @@ export class LibraryService {
     userId: string,
     refs: readonly LibraryItemRef[],
   ): Promise<Map<string, Date>> {
-    const uniqueRefs = Array.from(
-      new Map(refs.map((ref) => [this.getRefKey(ref), ref])).values(),
-    );
+    const uniqueRefs = [
+      ...new Map(refs.map((ref) => [this.getRefKey(ref), ref])).values(),
+    ];
 
     if (uniqueRefs.length === 0) {
       return new Map();

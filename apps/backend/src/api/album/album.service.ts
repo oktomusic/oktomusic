@@ -96,9 +96,7 @@ export class AlbumService {
       tracksByDiscMap.set(track.discNumber, discTracks);
     }
 
-    const sortedDiscNumbers = Array.from(tracksByDiscMap.keys()).sort(
-      (a, b) => a - b,
-    );
+    const sortedDiscNumbers = [...tracksByDiscMap.keys()].sort((a, b) => a - b);
 
     return {
       id: album.id,

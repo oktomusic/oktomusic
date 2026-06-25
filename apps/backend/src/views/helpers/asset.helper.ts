@@ -1,5 +1,7 @@
 import hbs from "hbs";
 
+const ASSET_HELPER_REGEX = /^https?:\/\//i;
+
 /**
  * Registers the `asset` Handlebars helper.
  * Prefixes asset paths with the Vite origin in development mode.
@@ -13,7 +15,7 @@ export function registerAssetHelper(opts: {
   hbs.registerHelper("asset", (p: unknown) => {
     if (typeof p !== "string" || !p) return "";
     // Absolute URL? return as-is
-    if (/^https?:\/\//i.test(p)) return p;
+    if (ASSET_HELPER_REGEX.test(p)) return p;
     // Avoid prefixing API routes
     if (p.startsWith("/api")) return p;
     if (isDev && viteOrigin) {

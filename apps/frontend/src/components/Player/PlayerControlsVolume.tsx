@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@base-ui/react/button";
 import { t } from "@lingui/core/macro";
 import { useAtom } from "jotai";
@@ -11,6 +11,23 @@ import {
 } from "../../atoms/app/settings_client";
 
 const minimumVolume = 1;
+
+interface VolumeIconProps {
+  readonly volume: number;
+}
+
+function VolumeIcon(props: VolumeIconProps) {
+  if (props.volume <= 0) {
+    return <LuVolumeX className="size-6" />;
+  }
+  if (props.volume <= 33) {
+    return <LuVolume className="size-6" />;
+  }
+  if (props.volume <= 66) {
+    return <LuVolume1 className="size-6" />;
+  }
+  return <LuVolume2 className="size-6" />;
+}
 
 /**
  * Controls volume and mute state for the player.
@@ -44,18 +61,6 @@ export function PlayerControlsVolume() {
   }, [muted, setMuted, setVolume, volume]);
 
   const displayVolume = muted ? 0 : volume;
-  const Icon = useMemo(() => {
-    if (displayVolume <= 0) {
-      return LuVolumeX;
-    }
-    if (displayVolume <= 33) {
-      return LuVolume;
-    }
-    if (displayVolume <= 66) {
-      return LuVolume1;
-    }
-    return LuVolume2;
-  }, [displayVolume]);
 
   const handleMuteToggle = () => {
     if (muted) {
@@ -106,7 +111,7 @@ export function PlayerControlsVolume() {
         onClick={handleMuteToggle}
         title={muted ? t`Unmute` : t`Mute`}
       >
-        <Icon className="size-6" />
+        <VolumeIcon volume={displayVolume} />
       </Button>
       <OktoSlider
         id="oktomusic:player:volume"
