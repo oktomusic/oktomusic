@@ -23,6 +23,8 @@ export function PipControls(): ReactPortal | null {
     if (!pipOpen) return;
 
     let cancelled = false;
+    let eventSourcePipWindow: Window | null = null;
+    const syncClosed = () => setPipOpen(false);
 
     async function openPip() {
       try {
@@ -64,9 +66,9 @@ export function PipControls(): ReactPortal | null {
         doc.body.appendChild(container);
         setPipContainer(container);
 
-        const syncClosed = () => setPipOpen(false);
-        pipWin.addEventListener("pagehide", syncClosed);
-        pipWin.addEventListener("beforeunload", syncClosed);
+        eventSourcePipWindow = pipWin;
+        pipWin.onpagehide = syncClosed;
+        pipWin.onbeforeunload = syncClosed;
       } catch (e) {
         console.error("Failed to open Document PiP", e);
         setPipOpen(false);
@@ -77,6 +79,11 @@ export function PipControls(): ReactPortal | null {
 
     return () => {
       cancelled = true;
+      if (eventSourcePipWindow) {
+        eventSourcePipWindow.onpagehide = null;
+        eventSourcePipWindow.onbeforeunload = null;
+      }
+      eventSourcePipWindow = null;
       if (pipWindowRef.current) {
         if (!pipWindowRef.current.closed) {
           pipWindowRef.current.close();

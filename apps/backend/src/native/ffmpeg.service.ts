@@ -89,6 +89,7 @@ export class FFmpegService {
     } catch (error) {
       throw new Error(
         `Unable to execute ffprobe: ${error instanceof Error ? error.message : String(error)}`,
+        { cause: error },
       );
     }
   }

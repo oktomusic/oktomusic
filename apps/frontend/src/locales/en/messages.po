@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/CollectionView/CollectionViewMetaAlbum.tsx:44
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:42
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:49
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# track} other {# tracks}}"
 

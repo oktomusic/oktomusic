@@ -15,21 +15,28 @@ interface CollectionViewMetaPlaylistProps {
   readonly durationMs: number;
 }
 
+type PlaylistVisibilityIconProps = Pick<
+  CollectionViewMetaPlaylistProps,
+  "visibility"
+>;
+
+function PlaylistVisibilityIcon(props: PlaylistVisibilityIconProps) {
+  switch (props.visibility) {
+    case "PRIVATE":
+      return <LuLock className="mr-2 size-4" title={t`Private`} />;
+    case "PUBLIC":
+      return <LuGlobe className="mr-2 size-4" title={t`Public`} />;
+    case "UNLISTED":
+      return <LuLink className="mr-2 size-4" title={t`Unlisted`} />;
+  }
+}
+
 export function CollectionViewMetaPlaylist(
   props: CollectionViewMetaPlaylistProps,
 ) {
   return (
     <div className="flex flex-row items-center text-sm">
-      {(() => {
-        switch (props.visibility) {
-          case "PRIVATE":
-            return <LuLock className="mr-2 size-4" title={t`Private`} />;
-          case "PUBLIC":
-            return <LuGlobe className="mr-2 size-4" title={t`Public`} />;
-          case "UNLISTED":
-            return <LuLink className="mr-2 size-4" title={t`Unlisted`} />;
-        }
-      })()}
+      <PlaylistVisibilityIcon visibility={props.visibility} />
       <span className="font-bold">
         <span key={props.user.id}>
           <Link to={`/user/${props.user.id}`} className="hover:underline">

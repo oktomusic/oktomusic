@@ -170,7 +170,9 @@ export function parseJspf(input: string): JspfPlaylist {
   try {
     raw = JSON.parse(input);
   } catch (err) {
-    throw new Error(`Invalid JSPF: failed to parse JSON: ${String(err)}`);
+    throw new Error(`Invalid JSPF: failed to parse JSON: ${String(err)}`, {
+      cause: err,
+    });
   }
   const result = JspfSchema.safeParse(raw);
   if (!result.success) {

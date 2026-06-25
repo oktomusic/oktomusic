@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useAtomValue } from "jotai";
 
 import { shouldHoldWakeLockAtom } from "../atoms/player/wake_lock";
@@ -9,32 +9,48 @@ export function useScreenWakeLock(): void {
   const wakeLockRef = useRef<WakeLockSentinel | null>(null);
   const seqRef = useRef<number>(0);
 
+  const setWakeLock = useCallback((lock: WakeLockSentinel) => {
+    lock.onrelease = () => {
+      if (wakeLockRef.current === lock) {
+        lock.onrelease = null;
+        wakeLockRef.current = null;
+      }
+    };
+
+    wakeLockRef.current = lock;
+  }, []);
+
+  const releaseWakeLock = useCallback(async () => {
+    const lock = wakeLockRef.current;
+    if (!lock) {
+      return;
+    }
+
+    wakeLockRef.current = null;
+    lock.onrelease = null;
+    await lock.release();
+  }, []);
+
   useEffect(() => {
     const seq = ++seqRef.current;
+    let cancelled = false;
 
     async function sync() {
       try {
-        if (!shouldHold && wakeLockRef.current) {
-          const lock = wakeLockRef.current;
-          wakeLockRef.current = null;
-          await lock.release();
+        if (!shouldHold) {
+          await releaseWakeLock();
+          return;
         }
 
-        if (shouldHold && !wakeLockRef.current) {
+        if (!wakeLockRef.current) {
           const lock = await navigator.wakeLock.request("screen");
 
-          if (seq !== seqRef.current) {
+          if (cancelled || seq !== seqRef.current) {
             await lock.release();
             return;
           }
 
-          lock.addEventListener("release", () => {
-            if (wakeLockRef.current === lock) {
-              wakeLockRef.current = null;
-            }
-          });
-
-          wakeLockRef.current = lock;
+          setWakeLock(lock);
         }
       } catch {
         console.warn("Failed to sync wake lock");
@@ -42,7 +58,13 @@ export function useScreenWakeLock(): void {
     }
 
     void sync();
-  }, [shouldHold]);
+    return () => {
+      cancelled = true;
+      if (shouldHold) {
+        void releaseWakeLock();
+      }
+    };
+  }, [releaseWakeLock, setWakeLock, shouldHold]);
 
   useEffect(() => {
     const onVisibilityChange = () => {
@@ -60,7 +82,7 @@ export function useScreenWakeLock(): void {
               void lock.release();
               return;
             }
-            wakeLockRef.current = lock;
+            setWakeLock(lock);
           })
           .catch(() => {});
       }
@@ -69,5 +91,5 @@ export function useScreenWakeLock(): void {
     document.addEventListener("visibilitychange", onVisibilityChange);
     return () =>
       document.removeEventListener("visibilitychange", onVisibilityChange);
-  }, [shouldHold]);
+  }, [setWakeLock, shouldHold]);
 }
