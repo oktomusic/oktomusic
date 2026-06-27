@@ -27,7 +27,7 @@
     "@lingui/detect-locale": "^6.4.0",
     "@oktomusic/api-schemas": "workspace:^",
     "@tailwindcss/vite": "^4.3.1",
-    "graphql": "^16.14.2",
+    "graphql": "^17.0.1",
     "graphql-ws": "6.0.8",
     "jotai": "^2.20.1",
     "jotai-babel": "^0.2.0",
