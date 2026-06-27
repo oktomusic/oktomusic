@@ -16,8 +16,10 @@ vi.mock("./use_panel_toast", () => ({
   usePanelToast: () => setToastMock,
 }));
 
-vi.mock("@lingui/core/macro", () => ({
-  t: (strings: TemplateStringsArray) => strings.join(""),
+vi.mock("@lingui/react/macro", () => ({
+  useLingui: () => ({
+    t: (strings: TemplateStringsArray) => strings.join(""),
+  }),
 }));
 
 import { useShare } from "./use_share";
