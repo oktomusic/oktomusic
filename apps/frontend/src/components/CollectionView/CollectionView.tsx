@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@base-ui/react/button";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { LuPause, LuPlay } from "react-icons/lu";
 
 import { useVibrantColors } from "../../hooks/vibrant_colors";
@@ -37,6 +37,8 @@ interface CollectionViewProps {
  * Provide the cover, title, and color gradients.
  */
 export function CollectionView(props: CollectionViewProps) {
+  const { t } = useLingui();
+
   const mainDivRef = useRef<HTMLDivElement>(null);
   const titleContainerRef = useRef<HTMLDivElement>(null);
   const titleContentRef = useRef<HTMLDivElement>(null);

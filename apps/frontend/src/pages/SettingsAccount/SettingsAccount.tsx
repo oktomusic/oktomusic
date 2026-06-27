@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client/react";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { UPDATE_MY_PROFILE_MUTATION } from "../../api/graphql/mutations/updateMyProfile";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { Sex } from "../../api/graphql/gql/graphql.ts";
-import { getSexes, SexesKeys } from "../../utils/constants_sexes.ts";
+import { useSexes, SexesKeys } from "../../utils/constants_sexes.ts";
 import {
   OktoListbox,
   OktoListboxItem,
@@ -33,6 +33,8 @@ function mapGraphqlSexToKey(value: Sex | null | undefined): SexesKeys {
 }
 
 export function SettingsAccount() {
+  const { t } = useLingui();
+
   const { data, loading, error } = useQuery(ME_QUERY, {
     fetchPolicy: "cache-and-network",
   });
@@ -41,7 +43,7 @@ export function SettingsAccount() {
       refetchQueries: [{ query: ME_QUERY }],
     });
 
-  const sexes = getSexes();
+  const sexes = useSexes();
   const sexKeys: readonly SexesKeys[] = ["unspecified", "XX", "XY"];
   const sexOptions: readonly OktoListboxItem<SexesKeys>[] = sexKeys.map(
     (key) => ({

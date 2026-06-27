@@ -1,5 +1,5 @@
 import { Button } from "@base-ui/react/button";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useAtom, useAtomValue } from "jotai";
 import {
   LuListMusic,
@@ -19,6 +19,8 @@ import {
 import { PlayerControlsVolume } from "./PlayerControlsVolume";
 
 export function PlayerControlsAdditional() {
+  const { t } = useLingui();
+
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
   const volumeEnabled = useAtomValue(settingClientVolumeEnabled);
 

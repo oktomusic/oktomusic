@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useQuery } from "@apollo/client/react";
 import { Toggle } from "@base-ui/react/toggle";
 import { ToggleGroup } from "@base-ui/react/toggle-group";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useSearchParams } from "react-router";
 
 import {
@@ -73,6 +73,8 @@ const toTrackWithAlbum = (track: SearchTrack): TrackWithAlbum | null => {
  * - type: "all" | "album" | "artist" | "track" | "playlist" (optional, defaults to "all")
  */
 export function Search() {
+  const { t } = useLingui();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParam = searchParams.get("q") ?? "";
   const query = queryParam.trim();

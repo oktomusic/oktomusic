@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client/react";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useCallback } from "react";
 
 import { ADD_LIBRARY_ITEM_MUTATION } from "../api/graphql/mutations/addLibraryItem";
@@ -18,6 +18,8 @@ interface UseLibraryItemToggleOptions {
 }
 
 export function useLibraryItemToggle(options: UseLibraryItemToggleOptions) {
+  const { t } = useLingui();
+
   const setToast = usePanelToast();
   const [addLibraryItem, addLibraryItemState] = useMutation(
     ADD_LIBRARY_ITEM_MUTATION,
@@ -74,6 +76,7 @@ export function useLibraryItemToggle(options: UseLibraryItemToggleOptions) {
     options.itemType,
     removeLibraryItem,
     setToast,
+    t,
   ]);
 
   return {

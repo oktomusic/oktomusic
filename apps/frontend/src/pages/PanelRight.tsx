@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 import { useAtomValue, useSetAtom } from "jotai";
-import { t } from "@lingui/core/macro";
-import { Trans } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import {
   clearManualQueueAtom,
@@ -21,6 +20,7 @@ import { QueueTrack } from "../components/QueueTrack/QueueTrack";
 import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 
 export function PanelRight() {
+  const { t } = useLingui();
   const visible = useAtomValue(panelRightVisibleAtom);
   const queueIndex = useAtomValue(playerQueueMainIndexAtom);
   const queue = useAtomValue(playerQueueAtom);
@@ -125,7 +125,7 @@ export function PanelRight() {
           <li className="flex flex-col">
             <div className="flex w-full flex-row justify-between p-2">
               <span className="text-sm font-semibold">
-                {<Trans>Next from: {queueFromLabel}</Trans>}
+                {t`Next from: ${queueFromLabel}`}
               </span>
             </div>
             <ol className="flex flex-col">

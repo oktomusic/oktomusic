@@ -1,4 +1,4 @@
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 export const locales = [
   "en",
@@ -12,7 +12,9 @@ export const locales = [
 
 export type Locale = (typeof locales)[number];
 
-export function getLocales() {
+export function useLocales() {
+  const { t } = useLingui();
+
   return {
     en: t`English`,
     fr: t`French`,

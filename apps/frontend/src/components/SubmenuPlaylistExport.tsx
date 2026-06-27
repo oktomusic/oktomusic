@@ -1,5 +1,5 @@
 import { Menu } from "@base-ui/react";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { LuArrowDownToLine, LuChevronRight } from "react-icons/lu";
 
 import { OktoMenuLink } from "./Base/OktoMenu";
@@ -9,6 +9,8 @@ interface SubmenuPlaylistExportProps {
 }
 
 export function SubmenuPlaylistExport(props: SubmenuPlaylistExportProps) {
+  const { t } = useLingui();
+
   return (
     <Menu.SubmenuRoot>
       <Menu.SubmenuTrigger className="group flex cursor-default items-center gap-2 rounded-lg px-3 py-1.5 text-white select-none focus:outline-0 data-highlighted:bg-white/10">

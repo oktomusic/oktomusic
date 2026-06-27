@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
 import { useAtomValue, useSetAtom } from "jotai";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { LuCircleMinus, LuListPlus, LuPen, LuShare } from "react-icons/lu";
 
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
@@ -38,6 +38,7 @@ import { settingClientPlaylistExport } from "../../atoms/app/settings_client";
 import { SubmenuPlaylistExport } from "../../components/SubmenuPlaylistExport";
 
 export function Playlist() {
+  const { t } = useLingui();
   const { cuid } = useParams();
 
   const user = useAtomValue(authSessionAtom);

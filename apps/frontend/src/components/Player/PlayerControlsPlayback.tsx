@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { Button } from "@base-ui/react/button";
 import { LuPause, LuPlay, LuSkipBack, LuSkipForward } from "react-icons/lu";
 
@@ -19,6 +19,8 @@ import {
 import { OktoSlider } from "../Base/OktoSlider";
 
 export function PlayerControlsPlayback() {
+  const { t } = useLingui();
+
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const playbackPosition = useAtomValue(playerPlaybackPositionAtom);
   const playbackDuration = useAtomValue(playerPlaybackDurationAtom);

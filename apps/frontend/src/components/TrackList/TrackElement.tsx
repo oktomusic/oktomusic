@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client/react";
 import { useSortable } from "@dnd-kit/react/sortable";
 import { Button } from "@base-ui/react/button";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
   LuAudioLines,
@@ -56,6 +56,8 @@ interface TrackElementProps {
 }
 
 export function TrackElement(props: TrackElementProps) {
+  const { t } = useLingui();
+
   const addToQueue = useSetAtom(addToQueueAtom);
   const setToast = usePanelToast();
   const shouldPlay = useAtomValue(playerShouldPlayAtom);

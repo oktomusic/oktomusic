@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client/react";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LuListPlus, LuShare } from "react-icons/lu";
 import { useParams } from "react-router";
@@ -32,6 +32,8 @@ import { useLibraryItemToggle } from "../../hooks/use_library_item_toggle";
 import { LibraryItemType } from "../../api/graphql/gql/graphql";
 
 export function Album() {
+  const { t } = useLingui();
+
   const { cuid } = useParams();
 
   const { data, loading, error } = useQuery(ALBUM_QUERY, {

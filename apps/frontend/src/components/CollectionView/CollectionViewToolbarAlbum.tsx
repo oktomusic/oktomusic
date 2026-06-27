@@ -1,5 +1,5 @@
 import { Button } from "@base-ui/react/button";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import {
   LuCircleArrowDown,
   LuCircleCheck,
@@ -19,6 +19,8 @@ interface CollectionViewToolbarAlbumProps {
 export function CollectionViewToolbarAlbum(
   props: CollectionViewToolbarAlbumProps,
 ) {
+  const { t } = useLingui();
+
   const albumName = props.albumName;
   const LibraryIcon = props.isInLibrary ? LuCircleCheck : LuCirclePlus;
 

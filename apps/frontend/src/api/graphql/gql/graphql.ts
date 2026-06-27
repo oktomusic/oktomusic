@@ -483,7 +483,7 @@ export enum Role {
 export type SearchAlbumsInput = {
   /** Filter by artist ID */
   artistId?: InputMaybe<Scalars['String']['input']>;
-  /** Maximum number of results */
+  /** Maximum number of results. Omit to return all matches. */
   limit?: InputMaybe<Scalars['Int']['input']>;
   /** Filter by album name (case-insensitive partial match) */
   name?: InputMaybe<Scalars['String']['input']>;

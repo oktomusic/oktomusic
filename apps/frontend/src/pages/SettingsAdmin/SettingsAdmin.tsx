@@ -1,8 +1,10 @@
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { SettingsAdminIndexing } from "./SettingsAdminIndexing";
 
 export function SettingsAdmin() {
+  const { t } = useLingui();
+
   return (
     <div className="flex min-h-full w-full flex-col items-center">
       <div className="w-4xl p-8 pb-0">

@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/client/react";
 import { Button } from "@base-ui/react/button";
 import { Field } from "@base-ui/react/field";
 import { Fieldset } from "@base-ui/react/fieldset";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useAtom, useAtomValue } from "jotai";
 import {
   LuGlobe,
@@ -37,6 +37,8 @@ const visibilityEnumByOption = {
 } satisfies Record<VisibilityOptions, PlaylistVisibility>;
 
 export function DialogPlaylistEdit() {
+  const { t } = useLingui();
+
   const [open, setOpen] = useAtom(dialogPlaylistOpenAtom);
   const authSession = useAtomValue(authSessionAtom);
   const userId = authSession.user!.id;

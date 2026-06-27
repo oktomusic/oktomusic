@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { Button } from "@base-ui/react/button";
 import { LuPause, LuPlay } from "react-icons/lu";
 
@@ -64,7 +64,9 @@ interface LibraryRowItemView {
   readonly typeLabel: string;
 }
 
-function getLibraryRowItemView(props: LibraryRowProps): LibraryRowItemView {
+function useLibraryRowItemView(props: LibraryRowProps): LibraryRowItemView {
+  const { t } = useLingui();
+
   switch (props.type) {
     case "artist":
       return {
@@ -95,7 +97,7 @@ function getLibraryRowItemView(props: LibraryRowProps): LibraryRowItemView {
 
 export function LibraryRow(props: LibraryRowProps) {
   const showPlayIcon = !props.isCurrent || !props.isPlaying;
-  const item = getLibraryRowItemView(props);
+  const item = useLibraryRowItemView(props);
   const cover = (
     <Cover
       imgs={item.cover}

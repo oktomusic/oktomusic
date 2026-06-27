@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { Dialog } from "@base-ui/react";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { dialogCoverId } from "../../atoms/app/dialogs";
 import { OktoDialog } from "../Base/OktoDialog";
 
 export function DialogCover() {
+  const { t } = useLingui();
+
   const [coverDialogId, setDialogCoverId] = useAtom(dialogCoverId);
   const [cachedCoverId, setCachedCoverId] = useState<string | null>(null);
 

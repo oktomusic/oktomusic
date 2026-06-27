@@ -434,8 +434,8 @@ input SearchAlbumsInput {
   """Filter by artist ID"""
   artistId: String
 
-  """Maximum number of results"""
-  limit: Int = 50
+  """Maximum number of results. Omit to return all matches."""
+  limit: Int
 
   """Filter by album name (case-insensitive partial match)"""
   name: String

@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client/react";
 import { Input } from "@base-ui/react/input";
 import { Menu } from "@base-ui/react/menu";
 import { ScrollArea } from "@base-ui/react/scroll-area";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useSetAtom } from "jotai";
 import {
   LuChevronRight,
@@ -21,6 +21,8 @@ interface SubmenuPlaylistsSearchProps {
 }
 
 export function SubmenuPlaylistsSearch(props: SubmenuPlaylistsSearchProps) {
+  const { t } = useLingui();
+
   const setDialogPlaylistOpen = useSetAtom(dialogPlaylistOpenAtom);
 
   const [searchQuery, setSearchQuery] = useState("");

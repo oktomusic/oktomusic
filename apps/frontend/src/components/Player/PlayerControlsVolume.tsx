@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Button } from "@base-ui/react/button";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useAtom } from "jotai";
 import { LuVolume, LuVolume1, LuVolume2, LuVolumeX } from "react-icons/lu";
 
@@ -42,6 +42,8 @@ function VolumeIcon(props: VolumeIconProps) {
  * updates the ref, clears `muted`, and persists the new volume.
  */
 export function PlayerControlsVolume() {
+  const { t } = useLingui();
+
   const [volume, setVolume] = useAtom(settingClientVolume);
   const [muted, setMuted] = useAtom(settingClientVolumeMuted);
   const lastCommittedVolumeRef = useRef<number>(

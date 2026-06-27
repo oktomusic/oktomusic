@@ -1,4 +1,4 @@
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { usePanelToast } from "./use_panel_toast";
 
@@ -17,6 +17,8 @@ export function useShare(
   url: string | undefined,
   title: string | undefined,
 ): () => void {
+  const { t } = useLingui();
+
   const setToast = usePanelToast();
 
   return function () {

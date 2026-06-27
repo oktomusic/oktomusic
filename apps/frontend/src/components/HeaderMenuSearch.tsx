@@ -1,11 +1,13 @@
 import type { ChangeEvent } from "react";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { LuFolder, LuSearch } from "react-icons/lu";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 
 import { OktoInput } from "./Base/OktoInput";
 
 export function HeaderMenuSearch() {
+  const { t } = useLingui();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { LuPen, LuShare } from "react-icons/lu";
 
 import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
@@ -15,6 +15,8 @@ import { useShare } from "../../hooks/use_share";
 import { CollectionViewToolbarUser } from "../../components/CollectionView/CollectionViewToolbarUser";
 
 export function User() {
+  const { t } = useLingui();
+
   const { cuid } = useParams();
 
   const { data, loading, error } = useQuery(USER_PROFILE_QUERY, {

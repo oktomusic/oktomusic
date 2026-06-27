@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@base-ui/react/button";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import {
   LuCircleSlash,
   LuPause,
@@ -32,6 +32,8 @@ interface PipControlsWindowProps {
  * The grid + breakpoints are implemented in `PipControls.css` (see `#pip-shell > #pip-shell-inner`).
  */
 export function PipControlsWindow(props: PipControlsWindowProps) {
+  const { t } = useLingui();
+
   const figureRef = useRef<HTMLElement | null>(null);
 
   const currentTrack = useAtomValue(playerQueueCurrentTrack);

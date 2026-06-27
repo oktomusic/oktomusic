@@ -1,7 +1,7 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@base-ui/react/button";
 import { LuPause, LuPlay, LuSkipBack, LuSkipForward } from "react-icons/lu";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { OktoSlider } from "../Base/OktoSlider";
 import {
@@ -17,6 +17,8 @@ import {
 import { formatDuration } from "../../utils/format_duration";
 
 export function PipControlsOverlay() {
+  const { t } = useLingui();
+
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const playbackPosition = useAtomValue(playerPlaybackPositionAtom);
   const playbackDuration = useAtomValue(playerPlaybackDurationAtom);

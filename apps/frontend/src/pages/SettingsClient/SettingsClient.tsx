@@ -1,6 +1,6 @@
 import type { ChangeEvent } from "react";
 
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { RESET } from "jotai/utils";
 
@@ -38,6 +38,8 @@ import { OktoInput } from "../../components/Base/OktoInput.tsx";
 import { OktoButton } from "../../components/Base/OktoButton.tsx";
 
 export function SettingsClient() {
+  const { t } = useLingui();
+
   const [kioskMode, setKioskMode] = useAtom(settingClientKioskMode);
   const [playlistExport, setPlaylistExport] = useAtom(
     settingClientPlaylistExport,

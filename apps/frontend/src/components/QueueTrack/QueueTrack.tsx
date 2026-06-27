@@ -9,7 +9,7 @@ import {
 } from "react-icons/lu";
 import { useSetAtom } from "jotai";
 import { useMutation } from "@apollo/client/react";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { addToQueueAtom, TrackWithAlbum } from "../../atoms/player/machine";
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
@@ -29,6 +29,7 @@ interface QueueTrackProps {
 }
 
 export function QueueTrack(props: QueueTrackProps) {
+  const { t } = useLingui();
   const addToQueue = useSetAtom(addToQueueAtom);
   const setToast = usePanelToast();
 

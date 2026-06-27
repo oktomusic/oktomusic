@@ -1,5 +1,5 @@
 import { Dialog } from "@base-ui/react/dialog";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { LuX } from "react-icons/lu";
 
 interface OktoDialogProps {
@@ -46,6 +46,8 @@ interface OktoDialogProps {
  * The dialog supports both transparent and styled panel options.
  */
 export function OktoDialog(props: OktoDialogProps) {
+  const { t } = useLingui();
+
   return (
     <Dialog.Root
       open={props.open}

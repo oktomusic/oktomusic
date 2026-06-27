@@ -1,4 +1,4 @@
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 interface Sexes {
   readonly XY: string;
@@ -11,7 +11,9 @@ interface SexesOrUnspecified extends Sexes {
 
 export type SexesKeys = keyof SexesOrUnspecified;
 
-export function getSexes(): SexesOrUnspecified {
+export function useSexes(): SexesOrUnspecified {
+  const { t } = useLingui();
+
   return {
     XY: t`Man`,
     XX: t`Woman`,

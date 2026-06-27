@@ -1,11 +1,13 @@
 import { useAtomValue } from "jotai";
 import { Link } from "react-router";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { playerQueueCurrentTrack } from "../../atoms/player/machine";
 
 export function PlayerControlsInfos() {
+  const { t } = useLingui();
+
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
 
   return (

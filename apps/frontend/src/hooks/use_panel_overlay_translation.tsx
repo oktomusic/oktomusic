@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ErrorLike } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useAtomValue } from "jotai";
 import { LuCheck, LuDownload, LuLoaderCircle } from "react-icons/lu";
 
@@ -14,7 +14,7 @@ import { OktoListboxItem } from "../components/Base/OktoListbox";
 import { useLyricsLanguageDetection } from "./use_language_detector";
 import { useLyricsTranslation } from "./use_translator";
 import { useTranslatorAvailability } from "./use_translator_availability";
-import { getLocales, Locale, locales } from "../utils/locales";
+import { useLocales, Locale, locales } from "../utils/locales";
 
 export type PanelOverlayLanguage = "original" | Locale;
 
@@ -42,6 +42,8 @@ export interface PanelOverlayTranslationState {
 }
 
 export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
+  const { t } = useLingui();
+
   const translatorSupport = useAtomValue(translatorSupportAtom);
   const translationEnabledSetting = useAtomValue(
     settingClientLyricsTranslationEnabled,
@@ -73,7 +75,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
   const previousTranslationStatusRef =
     useRef<TranslationStatus["status"]>("idle");
 
-  const localeLabels = useMemo(() => getLocales(), []);
+  const localeLabels = useLocales();
 
   const availabilityState = useTranslatorAvailability({
     enabled:
@@ -163,6 +165,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
     languageDetectionState.detectedLanguage,
     languageDetectionState.status,
     localeLabels,
+    t,
     translationEnabled,
   ]);
 

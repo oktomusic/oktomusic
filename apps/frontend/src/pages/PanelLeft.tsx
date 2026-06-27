@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client/react";
 import { useAtom, useSetAtom } from "jotai";
 import { Link } from "react-router";
 import { Button } from "@base-ui/react/button";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { LuPanelLeftClose, LuPanelLeftOpen, LuPlus } from "react-icons/lu";
 
 import { MY_LIBRARY_QUERY } from "../api/graphql/queries/myLibrary";
@@ -16,6 +16,7 @@ import { LibraryRow } from "../components/LibraryRow/LibraryRow";
 import { OktoButton } from "../components/Base/OktoButton";
 
 export function PanelLeft() {
+  const { t } = useLingui();
   const [expanded, setExpanded] = useAtom(panelLeftExpandedAtom);
   const { data, loading, error } = useQuery(MY_LIBRARY_QUERY);
   const libraryItems = data?.myLibrary.items ?? [];

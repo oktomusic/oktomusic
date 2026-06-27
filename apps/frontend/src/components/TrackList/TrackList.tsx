@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { useDragDropMonitor, useDroppable } from "@dnd-kit/react";
 import { isSortable } from "@dnd-kit/react/sortable";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LuDisc3 } from "react-icons/lu";
 
@@ -128,6 +128,8 @@ interface TrackListProps {
 type TrackListPlayMode = "main" | "manual";
 
 export function TrackList(props: TrackListProps) {
+  const { t } = useLingui();
+
   const [reorderPlaylistTracks] = useMutation(REORDER_PLAYLIST_TRACKS_MUTATION);
   const setToast = usePanelToast();
 

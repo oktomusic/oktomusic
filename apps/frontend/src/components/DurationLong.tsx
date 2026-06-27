@@ -1,4 +1,4 @@
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { getDurationComponents } from "../utils/format_duration";
 
@@ -7,6 +7,8 @@ interface DurationLongProps {
 }
 
 export function DurationLong(props: DurationLongProps) {
+  const { t } = useLingui();
+
   const duration = getDurationComponents(props.durationMs);
 
   if ("hours" in duration) {

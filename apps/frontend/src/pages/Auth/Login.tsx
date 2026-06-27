@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { Navigate, useSearchParams } from "react-router";
 import { Button } from "@base-ui/react/button";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import { pwaDeferredPromptAtom } from "../../atoms/app/atoms";
 
 export function Login() {
+  const { t } = useLingui();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const authSession = useAtomValue(authSessionAtom);
   const pwaDeferedPrompt = useAtomValue(pwaDeferredPromptAtom);

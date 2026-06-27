@@ -1,7 +1,9 @@
 import { Link } from "react-router";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 export function Generic404() {
+  const { t } = useLingui();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-6">
       <span className="text-4xl font-bold">{t`Page not found`}</span>

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useMutation } from "@apollo/client/react";
 import { useAtom } from "jotai";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useNavigate } from "react-router";
 
 import { DELETE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/deletePlaylist";
@@ -13,6 +13,8 @@ import { usePanelToast } from "../../hooks/use_panel_toast";
 import { MY_LIBRARY_QUERY } from "../../api/graphql/queries/myLibrary";
 
 export function DialogPlaylistDelete() {
+  const { t } = useLingui();
+
   const [open, setOpen] = useAtom(dialogPlaylistDeleteOpenAtom);
   const setToast = usePanelToast();
   const navigate = useNavigate();
@@ -76,7 +78,7 @@ export function DialogPlaylistDelete() {
           message: t`Failed to delete playlist`,
         });
       });
-  }, [deletePlaylist, navigate, open, setOpen, setToast]);
+  }, [deletePlaylist, navigate, open, setOpen, setToast, t]);
 
   return (
     <OktoDialog

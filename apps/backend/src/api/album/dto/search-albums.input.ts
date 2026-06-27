@@ -13,8 +13,7 @@ export class SearchAlbumsInput {
 
   @Field(() => Int, {
     nullable: true,
-    defaultValue: 50,
-    description: "Maximum number of results",
+    description: "Maximum number of results. Omit to return all matches.",
   })
   limit?: number;
 

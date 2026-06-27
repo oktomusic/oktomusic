@@ -13,7 +13,7 @@ import {
   LuUserRound,
   LuUserRoundPen,
 } from "react-icons/lu";
-import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 
 import { pwaDeferredPromptAtom } from "../atoms/app/atoms";
 import { useNavigationHistory } from "../hooks/use_navigation_history";
@@ -24,6 +24,8 @@ import { Role } from "../api/graphql/gql/graphql";
 import { HeaderMenuSearch } from "./HeaderMenuSearch";
 
 export function HeaderMenu() {
+  const { t } = useLingui();
+
   const pwaDeferedPrompt = useAtomValue(pwaDeferredPromptAtom);
   const kioskModeEnabled = useAtomValue(settingClientKioskMode);
 
