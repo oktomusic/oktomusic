@@ -1,6 +1,8 @@
 import { Link } from "react-router";
-import { plural, t } from "@lingui/core/macro";
+import { plural } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { LuGlobe, LuLink, LuLock } from "react-icons/lu";
+
 import { DurationLong } from "../DurationLong";
 
 interface CollectionViewUser {
@@ -21,6 +23,8 @@ type PlaylistVisibilityIconProps = Pick<
 >;
 
 function PlaylistVisibilityIcon(props: PlaylistVisibilityIconProps) {
+  const { t } = useLingui();
+
   switch (props.visibility) {
     case "PRIVATE":
       return <LuLock className="mr-2 size-4" title={t`Private`} />;
