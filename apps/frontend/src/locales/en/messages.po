@@ -13,6 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/CollectionView/CollectionViewMetaAlbum.tsx:44
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:53
+msgid "{count, plural, one {# track} other {# tracks}}"
+msgstr "{count, plural, one {# track} other {# tracks}}"
+
 #: src/components/DurationLong.tsx:18
 msgid "{hours}h {minutes}min"
 msgstr "{hours}h {minutes}min"
@@ -27,8 +32,8 @@ msgstr "{seconds}s"
 
 #: src/components/CollectionView/CollectionViewMetaAlbum.tsx:46
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:54
-msgid "{tracksTotal, plural, one {# track} other {# tracks}}"
-msgstr "{tracksTotal, plural, one {# track} other {# tracks}}"
+#~ msgid "{tracksTotal, plural, one {# track} other {# tracks}}"
+#~ msgstr "{tracksTotal, plural, one {# track} other {# tracks}}"
 
 #: src/components/HeaderMenu.tsx:63
 msgid "About"
@@ -82,6 +87,8 @@ msgstr "Album"
 msgid "Album cover"
 msgstr "Album cover"
 
+#: src/pages/Center/Artist.tsx:74
+#: src/pages/Center/Artist.tsx:75
 #: src/pages/Center/Search.tsx:86
 #: src/pages/Center/Search.tsx:295
 msgid "Albums"
@@ -91,7 +98,7 @@ msgstr "Albums"
 msgid "All"
 msgstr "All"
 
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:31
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:26
 msgid "Already in library"
 msgstr "Already in library"
 
@@ -103,8 +110,13 @@ msgstr "Always"
 msgid "Ambient"
 msgstr "Ambient"
 
+#: src/pages/Center/Artist.tsx:80
+#: src/pages/Center/Artist.tsx:81
+msgid "Appears on"
+msgstr "Appears on"
+
 #: src/components/LibraryRow/LibraryRow.tsx:76
-#: src/pages/Center/Artist.tsx:39
+#: src/pages/Center/Artist.tsx:50
 msgid "Artist"
 msgstr "Artist"
 
@@ -230,8 +242,8 @@ msgstr "Disc {discNumber}"
 
 #: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:46
 #: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:55
-msgid "Download"
-msgstr "Download"
+#~ msgid "Download"
+#~ msgstr "Download"
 
 #: src/pages/Center/Playlist.tsx:158
 msgid "Edit details"
@@ -394,8 +406,8 @@ msgstr "Man"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr "Maximum number of media files to cache."
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:56
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:65
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:44
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:53
 #: src/components/CollectionView/CollectionViewToolbarUser.tsx:24
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
@@ -443,6 +455,10 @@ msgstr "Next in queue"
 #: src/pages/Center/Search.tsx:353
 msgid "No albums found"
 msgstr "No albums found"
+
+#: src/pages/Center/Artist.tsx:70
+msgid "No albums found for this artist."
+msgstr "No albums found for this artist."
 
 #: src/pages/Center/Search.tsx:311
 #: src/pages/Center/Search.tsx:363
@@ -587,7 +603,7 @@ msgstr "Portuguese"
 msgid "Previous"
 msgstr "Previous"
 
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:29
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:56
 msgid "Private"
 msgstr "Private"
@@ -601,7 +617,7 @@ msgstr "Private and unlisted playlists"
 msgid "Profile"
 msgstr "Profile"
 
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:31
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:32
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:54
 msgid "Public"
 msgstr "Public"
@@ -615,8 +631,8 @@ msgstr "Public playlists"
 msgid "Queue"
 msgstr "Queue"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:36
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:33
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:31
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:28
 msgid "Remove from library"
 msgstr "Remove from library"
 
@@ -656,10 +672,10 @@ msgstr "Russian"
 msgid "Save"
 msgstr "Save"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:36
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:37
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:34
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:46
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:31
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:32
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:29
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:41
 msgid "Save to library"
 msgstr "Save to library"
 
@@ -689,6 +705,7 @@ msgid "Sexe :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:115
+#: src/pages/Center/Artist.tsx:59
 #: src/pages/Center/Playlist.tsx:152
 #: src/pages/Center/User.tsx:79
 msgid "Share"
@@ -732,7 +749,7 @@ msgstr "This action cannot be undone."
 msgid "Tracks"
 msgstr "Tracks"
 
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:33
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:34
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:55
 msgid "Unlisted"
 msgstr "Unlisted"

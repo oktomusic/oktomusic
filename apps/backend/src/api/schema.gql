@@ -63,6 +63,18 @@ type Artist {
   name: String!
 }
 
+type ArtistDetail {
+  """Albums where this artist is credited as an album artist"""
+  albums: [AlbumBasic!]!
+
+  """
+  Albums where this artist is credited on tracks but not as an album artist
+  """
+  featuredOnAlbums: [AlbumBasic!]!
+  id: String!
+  name: String!
+}
+
 input CreatePlaylistInput {
   """Optional playlist description"""
   description: String
@@ -379,7 +391,7 @@ type Query {
   album(id: String!): Album!
 
   """Get a single artist by ID"""
-  artist(id: String!): Artist!
+  artist(id: String!): ArtistDetail!
   hello: String!
 
   """Get the status of an indexing job"""
