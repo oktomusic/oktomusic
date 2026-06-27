@@ -8,13 +8,14 @@ import { I18nProvider } from "@lingui/react";
 
 import { createApolloClient } from "./api/graphql/client.ts";
 import { dynamicActivate } from "./utils/i18n_loader.ts";
-import { getLanguage } from "./utils/get_language.ts";
+import { getLanguage, setLanguageInLocalStorage } from "./utils/get_language.ts";
 import { Router } from "./Router.tsx";
 
 import "./index.css";
 
 // Determine and activate the user's language
 const selectedLanguage = getLanguage();
+setLanguageInLocalStorage(selectedLanguage);
 await dynamicActivate(selectedLanguage);
 
 const apolloClient = createApolloClient();

@@ -1,5 +1,9 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+import {
+  DEFAULT_FALLBACK,
+  type SupportedLocale,
+} from "../../utils/supported_locales.ts";
 
 // Kiosk Mode Setting
 
@@ -196,6 +200,19 @@ const lyricsTranslationEnabledLocalStorageKey =
 export const settingClientLyricsTranslationEnabled = atomWithStorage<boolean>(
   lyricsTranslationEnabledLocalStorageKey,
   true,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
+// Application language
+
+export const applicationLanguageLocalStorageKey = "lang";
+
+export const applicationLanguage = atomWithStorage<SupportedLocale>(
+  applicationLanguageLocalStorageKey,
+  DEFAULT_FALLBACK,
   undefined,
   {
     getOnInit: true,

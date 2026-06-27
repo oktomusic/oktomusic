@@ -59,7 +59,11 @@ export function OktoListbox<T extends string>(props: OktoListboxProps<T>) {
 
             return (
               <>
-                {Icon && <Icon className="size-4 shrink-0" />}
+                {typeof Icon === "string" ? (
+                  <img src={Icon} alt="" className="size-4 shrink-0" />
+                ) : Icon ? (
+                  <Icon className="size-4 shrink-0" />
+                ) : null}
                 {option.label}
               </>
             );

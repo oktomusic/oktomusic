@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react";
+import { ChangeEvent, useCallback } from "react";
 
 import { useLingui } from "@lingui/react/macro";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -23,6 +23,7 @@ import {
   settingClientWakeLock,
   WakeLockKey,
   type LyricsDisplayModeKey,
+  applicationLanguage,
 } from "../../atoms/app/settings_client.ts";
 import {
   requestStoragePersistenceAtom,
@@ -36,6 +37,10 @@ import {
 import { OktoSlider } from "../../components/Base/OktoSlider.tsx";
 import { OktoInput } from "../../components/Base/OktoInput.tsx";
 import { OktoButton } from "../../components/Base/OktoButton.tsx";
+import { SupportedLocale } from "../../utils/supported_locales.ts";
+import { dynamicActivate } from "../../utils/i18n_loader.ts";
+import FrenchFlag from "../../assets/country_flags/french_flag.svg";
+import BritishFlag from "../../assets/country_flags/british_flag.svg";
 
 export function SettingsClient() {
   const { t } = useLingui();
@@ -51,6 +56,15 @@ export function SettingsClient() {
   const [lyricsDisplayMode, setLyricsDisplayMode] = useAtom(
     settingClientLyricsDisplayMode,
   );
+  const [appLanguage, setAppLanguage] = useAtom(applicationLanguage);
+  const onAppLanguageChange = useCallback(
+    (appLanguage: SupportedLocale) => {
+      void dynamicActivate(appLanguage);
+      setAppLanguage(appLanguage);
+    },
+    [setAppLanguage],
+  );
+
   const [lyricsTranslationEnabled, setLyricsTranslationEnabled] = useAtom(
     settingClientLyricsTranslationEnabled,
   );
@@ -87,6 +101,15 @@ export function SettingsClient() {
       { value: "line", label: t`Line by line` },
       { value: "static", label: t`Static` },
     ];
+
+  const languageDisplayLabels: OktoListboxItem<SupportedLocale>[] = [
+    { value: "en", label: "English", icon: BritishFlag },
+    {
+      value: "fr",
+      label: "Français",
+      icon: FrenchFlag,
+    },
+  ];
 
   const handleCrossfadeChange = (value: number) => {
     const roundedValue = Math.round(value * 10) / 10;
@@ -185,6 +208,16 @@ export function SettingsClient() {
               value={lyricsDisplayMode}
               onChange={setLyricsDisplayMode}
               options={lyricsDisplayModeOptions}
+            />
+          </div>
+
+          <div className="flex h-14 flex-row items-center justify-between py-2">
+            <label htmlFor="settings:client:app-language">{t`Application language:`}</label>
+            <OktoListbox
+              id="settings:client:app-language"
+              value={appLanguage}
+              onChange={onAppLanguageChange}
+              options={languageDisplayLabels}
             />
           </div>
 
