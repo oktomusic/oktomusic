@@ -5,6 +5,7 @@ interface OktoProgressProps {
   readonly min: number;
   readonly max: number;
   readonly label: string;
+  readonly valueLabel?: string;
   readonly className?: string;
 }
 
@@ -20,7 +21,7 @@ export function OktoProgress(props: OktoProgressProps) {
         {props.label}
       </Progress.Label>
       <Progress.Value className="text-right text-sm">
-        {() => `${props.value} / ${props.max}`}
+        {() => props.valueLabel ?? `${props.value} / ${props.max}`}
       </Progress.Value>
       <Progress.Track className="col-span-2 h-2 overflow-hidden rounded-lg bg-zinc-700">
         <Progress.Indicator className="bg-zinc-400 transition-[width] duration-500" />

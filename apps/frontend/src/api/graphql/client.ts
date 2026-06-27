@@ -76,7 +76,35 @@ export function createApolloClient() {
         },
         IndexingJob: {
           fields: {
+            startedAt: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+            updatedAt: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
             completedAt: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+          },
+        },
+        IndexingLibraryStats: {
+          fields: {
+            generatedAt: {
+              read(value: unknown) {
+                return parseDateTime(value);
+              },
+            },
+          },
+        },
+        IndexingReportItem: {
+          fields: {
+            emittedAt: {
               read(value: unknown) {
                 return parseDateTime(value);
               },

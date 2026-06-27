@@ -82,6 +82,12 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type IndexingErrorLyricsParsing {
+  errorMessage: String!
+  filePath: String!
+  type: IndexingReportType!
+}
+
 type IndexingErrorMetaflacParsing {
   errorMessage: String!
   filePath: String!
@@ -93,7 +99,11 @@ type IndexingJob {
   error: String
   jobId: String!
   progress: Float
+  reports: [IndexingReportItem!]!
+  startedAt: DateTime
   status: IndexingJobStatus!
+  steps: [IndexingProgressStep!]!
+  updatedAt: DateTime
   warnings: [IndexingWarning!]
 }
 
@@ -104,14 +114,83 @@ enum IndexingJobStatus {
   QUEUED
 }
 
+type IndexingLibraryStats {
+  albumsCount: Int!
+  artistsCount: Int!
+  flacFilesCount: Int!
+  generatedAt: DateTime!
+  playHistoryItemsCount: Int!
+  playlistTracksCount: Int!
+  playlistsCount: Int!
+  savedLibraryItemsCount: Int!
+  tracksCount: Int!
+  tracksWithLyricsCount: Int!
+  usersCount: Int!
+}
+
+type IndexingOverview {
+  latestJob: IndexingJob
+  libraryStats: IndexingLibraryStats!
+}
+
+type IndexingProgressStep {
+  current: Int
+  detail: String
+  key: IndexingProgressStepKey!
+  label: String!
+  status: IndexingProgressStepStatus!
+  total: Int
+}
+
+enum IndexingProgressStepKey {
+  ANALYZE_COVERS
+  DISCOVER_FLAC_FOLDERS
+  EXTRACT_METADATA
+  SYNC_ALBUMS
+  SYNC_ARTISTS
+  SYNC_TRACKS
+  VALIDATE_METADATA
+}
+
+enum IndexingProgressStepStatus {
+  COMPLETED
+  FAILED
+  PENDING
+  RUNNING
+  SKIPPED
+}
+
+type IndexingReportItem {
+  details: [String!]
+  emittedAt: DateTime!
+  id: String!
+  level: IndexingReportLevel!
+  message: String!
+  path: String
+  type: IndexingReportType!
+}
+
+enum IndexingReportLevel {
+  ERROR
+  INFO
+  WARNING
+}
+
 enum IndexingReportType {
+  ERROR_INDEXING_FAILED
   ERROR_LYRICS_PARSING
   ERROR_METAFLAC_PARSING
+  INFO_INDEXING_COMPLETED
+  INFO_INDEXING_STARTED
+  INFO_INDEXING_SUMMARY
+  INFO_STAGE_COMPLETED
+  INFO_STAGE_SKIPPED
+  INFO_STAGE_STARTED
   WARNING_FOLDER_METADATA
   WARNING_SUBDIRECTORIES
 }
 
-union IndexingWarning = IndexingErrorMetaflacParsing | IndexingWarningFolderMetadata | IndexingWarningSubdirectories
+union IndexingWarning = IndexingErrorLyricsParsing | IndexingErrorMetaflacParsing | IndexingWarningFolderMetadata | IndexingWarningSubdirectories
 
 type IndexingWarningFolderMetadata {
   folderPath: String!
@@ -305,6 +384,11 @@ type Query {
 
   """Get the status of an indexing job"""
   indexingJobStatus(jobId: String!): IndexingJob!
+
+  """
+  Get library indexing stats and the latest active or completed indexing job
+  """
+  indexingOverview: IndexingOverview!
 
   """Current logged-in user"""
   me: User!

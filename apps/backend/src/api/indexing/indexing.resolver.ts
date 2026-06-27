@@ -4,7 +4,7 @@ import { PubSub } from "graphql-subscriptions";
 
 import { PUB_SUB } from "../../common/pubsub/pubsub.module";
 import { GraphqlAdminGuard } from "../../common/guards/graphql-admin.guard";
-import { IndexingJobModel } from "./indexing.model";
+import { IndexingJobModel, IndexingOverviewModel } from "./indexing.model";
 import { IndexingService } from "./indexing.service";
 import { INDEXING_JOB_UPDATED } from "./indexing.constants";
 
@@ -39,6 +39,15 @@ export class IndexingResolver {
     @Args("jobId") jobId: string,
   ): Promise<IndexingJobModel> {
     return this.indexingService.getJobStatus(jobId);
+  }
+
+  @UseGuards(GraphqlAdminGuard)
+  @Query(() => IndexingOverviewModel, {
+    description:
+      "Get library indexing stats and the latest active or completed indexing job",
+  })
+  async indexingOverview(): Promise<IndexingOverviewModel> {
+    return this.indexingService.getOverview();
   }
 
   @Subscription(() => IndexingJobModel, {
