@@ -133,7 +133,7 @@ export class AlbumService {
   }
 
   public async searchAlbums(input: SearchAlbumsInput): Promise<AlbumModel[]> {
-    const limit = input.limit ?? 50;
+    const limit = input.limit ?? undefined;
     const offset = input.offset ?? 0;
 
     const albums = await this.prisma.album.findMany({

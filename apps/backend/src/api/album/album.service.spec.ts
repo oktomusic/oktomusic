@@ -48,9 +48,18 @@ describe("AlbumService", () => {
     });
 
     const { AlbumService } = await import("./album.service.js");
-    const service = new AlbumService(appConf);
+    const findMany = vi.fn().mockResolvedValue([]);
+    const prisma = {
+      album: {
+        findMany,
+      },
+    };
+    const service = new AlbumService(
+      appConf,
+      prisma as unknown as ConstructorParameters<typeof AlbumService>[1],
+    );
 
-    return { existsSync, service };
+    return { existsSync, findMany, service };
   };
 
   it("returns null when album directory does not exist", async () => {
@@ -100,5 +109,42 @@ describe("AlbumService", () => {
     );
 
     expect(existsSync).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not cap album searches when no limit is supplied", async () => {
+    const { findMany, service } = await setup();
+
+    await service.searchAlbums({});
+
+    expect(findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        orderBy: [{ name: "asc" }],
+        skip: 0,
+        take: undefined,
+      }),
+    );
+  });
+
+  it("honors explicit album search filters and limits", async () => {
+    const { findMany, service } = await setup();
+
+    await service.searchAlbums({
+      artistId: "artist-1",
+      limit: 25,
+      name: "Kind",
+      offset: 5,
+    });
+
+    expect(findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        orderBy: [{ name: "asc" }],
+        skip: 5,
+        take: 25,
+        where: {
+          artists: { some: { artistId: "artist-1" } },
+          name: { contains: "Kind", mode: "insensitive" },
+        },
+      }),
+    );
   });
 });

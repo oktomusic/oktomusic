@@ -6,10 +6,14 @@ import { t } from "@lingui/core/macro";
 import { useSearchParams } from "react-router";
 
 import {
-  SearchMusicInput,
+  type SearchAlbumsInput,
+  type SearchMusicInput,
   type SearchMusicQuery,
 } from "../../api/graphql/gql/graphql";
-import { SEARCH_MUSIC_QUERY } from "../../api/graphql/queries/search";
+import {
+  SEARCH_ALBUMS_QUERY,
+  SEARCH_MUSIC_QUERY,
+} from "../../api/graphql/queries/search";
 import { type TrackWithAlbum } from "../../atoms/player/machine";
 import { AlbumCardList } from "../../components/Base/AlbumCardList";
 import { ArtistCardList } from "../../components/Base/ArtistCardList";
@@ -72,6 +76,7 @@ export function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParam = searchParams.get("q") ?? "";
   const query = queryParam.trim();
+  const hasSearchQuery = query.length > 0;
   const typeParam = searchParams.get("type");
   const searchTypeOptions = [
     { value: "all", label: t`All` },
@@ -82,7 +87,7 @@ export function Search() {
   ] as const;
   const type: SearchType = isSearchType(typeParam) ? typeParam : "all";
 
-  const searchName = query.length > 0 ? query : undefined;
+  const searchName = hasSearchQuery ? query : undefined;
 
   const handleTypeChange = (groupValue: string[]) => {
     const nextType = isSearchType(groupValue[0] ?? null)
@@ -152,12 +157,35 @@ export function Search() {
     ],
   );
 
+  const allAlbumsVariables = useMemo(
+    () =>
+      ({
+        input: {},
+      }) satisfies { readonly input: SearchAlbumsInput },
+    [],
+  );
+
   const { data, previousData, loading, error } = useQuery(SEARCH_MUSIC_QUERY, {
     variables: searchVariables,
     notifyOnNetworkStatusChange: true,
+    skip: !hasSearchQuery,
   });
 
-  const searchResults = data ?? previousData;
+  const {
+    data: allAlbumsData,
+    previousData: previousAllAlbumsData,
+    loading: allAlbumsLoading,
+    error: allAlbumsError,
+  } = useQuery(SEARCH_ALBUMS_QUERY, {
+    variables: allAlbumsVariables,
+    notifyOnNetworkStatusChange: true,
+    skip: hasSearchQuery,
+  });
+
+  const searchResults = hasSearchQuery ? (data ?? previousData) : undefined;
+  const allAlbumsResults = hasSearchQuery
+    ? undefined
+    : (allAlbumsData ?? previousAllAlbumsData);
 
   const tracksWithAlbum = useMemo(
     () =>
@@ -167,12 +195,18 @@ export function Search() {
     [searchResults],
   );
 
-  const albums = searchResults?.search.albums ?? [];
+  const albums = hasSearchQuery
+    ? (searchResults?.search.albums ?? [])
+    : (allAlbumsResults?.searchAlbums ?? []);
   const artists = searchResults?.search.artists ?? [];
   const playlists = searchResults?.search.playlists ?? [];
 
-  const isRefreshing = loading && searchResults !== undefined;
-  const showLoadingState = loading && searchResults === undefined;
+  const isRefreshing = hasSearchQuery
+    ? loading && searchResults !== undefined
+    : allAlbumsLoading && allAlbumsResults !== undefined;
+  const showLoadingState = hasSearchQuery
+    ? loading && searchResults === undefined
+    : allAlbumsLoading && allAlbumsResults === undefined;
 
   const hasTrackResults = tracksWithAlbum.length > 0;
   const hasAlbumResults = albums.length > 0;
@@ -181,43 +215,57 @@ export function Search() {
 
   return (
     <div className="w-full p-6">
-      <div className="mb-4 flex w-full flex-row flex-wrap items-center gap-3">
-        <ToggleGroup
-          className="flex flex-row flex-wrap gap-2"
-          value={[type]}
-          onValueChange={handleTypeChange}
-          // Override needed to fix BaseUI accessibility issue
-          // https://github.com/mui/base-ui/issues/4623
-          aria-orientation={undefined}
-          aria-label={t`Search type`}
-        >
-          {searchTypeOptions.map((option) => (
-            <Toggle
-              key={option.value}
-              value={option.value}
-              className="h-8 rounded bg-zinc-700 px-4 text-sm font-medium text-zinc-100 transition hover:bg-zinc-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400 data-pressed:bg-zinc-200 data-pressed:text-zinc-900"
+      {hasSearchQuery || isRefreshing || showLoadingState ? (
+        <div className="mb-4 flex w-full flex-row flex-wrap items-center gap-3">
+          {hasSearchQuery ? (
+            <ToggleGroup
+              className="flex flex-row flex-wrap gap-2"
+              value={[type]}
+              onValueChange={handleTypeChange}
+              // Override needed to fix BaseUI accessibility issue
+              // https://github.com/mui/base-ui/issues/4623
+              aria-orientation={undefined}
+              aria-label={t`Search type`}
             >
-              {option.label}
-            </Toggle>
-          ))}
-        </ToggleGroup>
-        {isRefreshing || showLoadingState ? (
-          <div
-            className="flex items-center gap-2 text-sm text-zinc-300"
-            role="status"
-            aria-live="polite"
-          >
-            <span
-              aria-hidden="true"
-              className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-500/40 border-t-zinc-200"
-            />
-            {t`Updating results`}
-          </div>
-        ) : null}
-      </div>
+              {searchTypeOptions.map((option) => (
+                <Toggle
+                  key={option.value}
+                  value={option.value}
+                  className="h-8 rounded bg-zinc-700 px-4 text-sm font-medium text-zinc-100 transition hover:bg-zinc-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400 data-pressed:bg-zinc-200 data-pressed:text-zinc-900"
+                >
+                  {option.label}
+                </Toggle>
+              ))}
+            </ToggleGroup>
+          ) : null}
+          {isRefreshing || showLoadingState ? (
+            <div
+              className="flex items-center gap-2 text-sm text-zinc-300"
+              role="status"
+              aria-live="polite"
+            >
+              <span
+                aria-hidden="true"
+                className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-500/40 border-t-zinc-200"
+              />
+              {t`Updating results`}
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       {showLoadingState ? (
         <GenericLoading />
+      ) : !hasSearchQuery ? (
+        allAlbumsError && !allAlbumsResults ? (
+          <GenericGraphQLError error={allAlbumsError} />
+        ) : hasAlbumResults ? (
+          <AlbumCardList albums={albums} />
+        ) : (
+          <div className="rounded-lg border border-dashed border-zinc-700 p-4 text-sm text-zinc-400">
+            {t`No albums found`}
+          </div>
+        )
       ) : isAllType ? (
         error && !searchResults ? (
           <GenericGraphQLError error={error} />
