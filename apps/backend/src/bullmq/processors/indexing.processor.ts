@@ -261,7 +261,6 @@ export class IndexingProcessor extends WorkerHost {
       });
       let validatedFolders = 0;
       for (const [folderPath, folderData] of foldersWithMetadata) {
-        console.log(`Validating folder: ${folderPath}`);
         const errors = this.validateFlacFolder(folderData.files);
 
         if (errors.length !== 0) {
@@ -423,10 +422,10 @@ export class IndexingProcessor extends WorkerHost {
         detail: `Analyzed covers for ${analyzedCoverFolders} album folder(s).`,
       });
 
-      console.log(JSON.stringify(context.sourceData, null, 2));
-      for (const [, folderData] of Object.entries(context.sourceData)) {
-        console.log(JSON.stringify(folderData.albumSummary, null, 2));
-      }
+      const albumSummaryCount = Object.values(context.sourceData).filter(
+        (folderData) => folderData.albumSummary !== undefined,
+      ).length;
+      this.logger.log(`Prepared ${albumSummaryCount} album summary record(s)`);
 
       // 5. Match and create artists
       const artistNames = new Set<string>();
@@ -1438,7 +1437,9 @@ export class IndexingProcessor extends WorkerHost {
 
       // Covers are generated during album matching/creation.
 
-      console.log("Indexing completed");
+      this.logger.log(
+        `Indexing job ${job.id} completed with ${context.warnings.length} reportable issue(s)`,
+      );
       await job.updateProgress(100);
       await this.publishJobStatus(
         job,

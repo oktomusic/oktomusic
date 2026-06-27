@@ -2,9 +2,12 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
 
+import { Logger } from "@nestjs/common";
 import sharp from "sharp";
 
 import { getPaletteFromSharp } from "@oktomusic/vibrant";
+
+const logger = new Logger("AlbumCoverUtils");
 
 /**
  * Vibrant color palette extracted from an album cover.
@@ -158,8 +161,8 @@ async function convertAlbumCoverCandidate(
         ),
       );
       const lossyEnd = performance.now();
-      console.log(
-        `Album cover lossy conversions took ${(lossyEnd - lossyStart).toFixed(0)} ms`,
+      logger.debug(
+        `Album cover AVIF conversions completed in ${(lossyEnd - lossyStart).toFixed(0)} ms`,
       );
     })(),
   ]);
@@ -176,7 +179,11 @@ async function pickAndConvertAlbumCover(
 } | null> {
   const candidatePath = await pickAlbumCoverCandidate(srcPath);
 
-  console.log(`Picked album cover candidate: ${candidatePath}`);
+  if (candidatePath) {
+    logger.debug(`Picked album cover candidate ${candidatePath}`);
+  } else {
+    logger.debug(`No album cover candidate found in ${srcPath}`);
+  }
 
   if (!candidatePath) {
     return null;

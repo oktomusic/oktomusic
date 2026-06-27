@@ -64,7 +64,7 @@ export class GraphqlAuthGuard implements CanActivate {
 
         if (secondsUntilExpiry < 60 && timeSinceLastRefresh > 60) {
           this.logger.log(
-            `Access token expires in ${secondsUntilExpiry} seconds, refreshing...`,
+            `Access token for user ${userId} expires in ${secondsUntilExpiry} seconds, refreshing...`,
           );
 
           try {
@@ -96,9 +96,14 @@ export class GraphqlAuthGuard implements CanActivate {
               });
             });
 
-            this.logger.log("Access token refreshed successfully");
+            this.logger.log(
+              "Access token refreshed successfully for user " + userId,
+            );
           } catch (error) {
-            this.logger.error("Failed to refresh access token", error);
+            this.logger.error(
+              "Failed to refresh access token for user " + userId,
+              error,
+            );
             throw new UnauthorizedException(
               "Session expired, please log in again",
             );

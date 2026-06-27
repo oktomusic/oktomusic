@@ -65,15 +65,11 @@ export class OidcService implements OnModuleInit {
   private extractRoleFromIntrospection(
     introspection: client.IntrospectionResponse,
   ): Role {
-    const roles = getByPath(
-      introspection,
-      this.oidcConf.rolesPath,
-      { client_id: this.oidcConf.clientId },
-    );
+    const roles = getByPath(introspection, this.oidcConf.rolesPath, {
+      client_id: this.oidcConf.clientId,
+    });
 
     const clientRoles = Array.isArray(roles) ? roles : [];
-
-    console.log("Extracted client roles:", clientRoles);
 
     // Admin role inherits from user, so check admin first
     if (clientRoles.includes("admin")) {
@@ -159,14 +155,10 @@ export class OidcService implements OnModuleInit {
 
     const claims = tokens.claims();
 
-    console.log("Availlable claims:", claims);
-
     const introspection = await client.tokenIntrospection(
       this.config,
       tokens.access_token,
     );
-
-    console.log("Access Token Introspection:", introspection.resource_access);
 
     if (!claims?.sub) {
       throw new Error("ID token does not contain 'sub' claim");
@@ -177,8 +169,6 @@ export class OidcService implements OnModuleInit {
       tokens.access_token,
       claims.sub,
     );
-
-    console.log("User profile:", profile);
 
     // Extract role from Keycloak resource_access
     const role = this.extractRoleFromIntrospection(introspection);
