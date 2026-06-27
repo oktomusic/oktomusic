@@ -1,11 +1,6 @@
 import { Button } from "@base-ui/react/button";
 import { useLingui } from "@lingui/react/macro";
-import {
-  LuCircleArrowDown,
-  LuCircleCheck,
-  LuCirclePlus,
-  LuEllipsis,
-} from "react-icons/lu";
+import { LuCircleCheck, LuCirclePlus, LuEllipsis } from "react-icons/lu";
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
 
 interface CollectionViewToolbarAlbumProps {
@@ -40,13 +35,6 @@ export function CollectionViewToolbarAlbum(
         disabled={props.libraryActionLoading}
       >
         <LibraryIcon className="m-auto size-8" />
-      </Button>
-      <Button
-        className="size-8"
-        title={t`Download`}
-        onClick={undefined /* TODO */}
-      >
-        <LuCircleArrowDown className="m-auto size-8" />
       </Button>
       <OktoMenu
         button={<LuEllipsis className="size-8" />}

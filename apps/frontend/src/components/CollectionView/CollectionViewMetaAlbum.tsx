@@ -22,7 +22,7 @@ export function CollectionViewMetaAlbum(props: CollectionViewMetaAlbumProps) {
       {props.artists && props.artists.length > 0 && (
         <span className="font-bold">
           {props.artists.map((artist, index) => (
-            <span key={artist.id ?? index}>
+            <span key={artist.id}>
               <Link to={`/artist/${artist.id}`} className="hover:underline">
                 {artist.name}
               </Link>
