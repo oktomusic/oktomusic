@@ -701,7 +701,7 @@ msgstr ""
 #~ msgstr ""
 
 #: src/pages/SettingsAccount/SettingsAccount.tsx:71
-msgid "Sexe :"
+msgid "Sex :"
 msgstr "Sexe :"
 
 #: src/pages/Center/Album.tsx:115

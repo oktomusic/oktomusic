@@ -705,8 +705,8 @@ msgstr "Seek"
 #~ msgstr "Service Worker max cache entries:"
 
 #: src/pages/SettingsAccount/SettingsAccount.tsx:71
-msgid "Sexe :"
-msgstr "Sexe :"
+msgid "Sex :"
+msgstr "Sex :"
 
 #: src/pages/Center/Album.tsx:115
 #: src/pages/Center/Artist.tsx:59
