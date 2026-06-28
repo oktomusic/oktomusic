@@ -1,5 +1,4 @@
-import { ChangeEvent, useCallback } from "react";
-
+import { ChangeEvent } from "react";
 import { useLingui } from "@lingui/react/macro";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { RESET } from "jotai/utils";
@@ -23,12 +22,15 @@ import {
   settingClientWakeLock,
   WakeLockKey,
   type LyricsDisplayModeKey,
-  applicationLanguage,
 } from "../../atoms/app/settings_client.ts";
 import {
   requestStoragePersistenceAtom,
   storagePersistenceAtom,
 } from "../../atoms/app/atoms.ts";
+import {
+  applicationLanguage,
+  changeLanguageAtom,
+} from "../../atoms/app/language.ts";
 import { OktoSwitch } from "../../components/Base/OktoSwitch.tsx";
 import {
   OktoListbox,
@@ -38,7 +40,6 @@ import { OktoSlider } from "../../components/Base/OktoSlider.tsx";
 import { OktoInput } from "../../components/Base/OktoInput.tsx";
 import { OktoButton } from "../../components/Base/OktoButton.tsx";
 import { SupportedLocale } from "../../utils/supported_locales.ts";
-import { dynamicActivate } from "../../utils/i18n_loader.ts";
 import FrenchFlag from "../../assets/country_flags/french_flag.svg";
 import BritishFlag from "../../assets/country_flags/british_flag.svg";
 
@@ -56,14 +57,8 @@ export function SettingsClient() {
   const [lyricsDisplayMode, setLyricsDisplayMode] = useAtom(
     settingClientLyricsDisplayMode,
   );
-  const [appLanguage, setAppLanguage] = useAtom(applicationLanguage);
-  const onAppLanguageChange = useCallback(
-    (appLanguage: SupportedLocale) => {
-      void dynamicActivate(appLanguage);
-      setAppLanguage(appLanguage);
-    },
-    [setAppLanguage],
-  );
+  const appLanguage = useAtomValue(applicationLanguage);
+  const changeLanguage = useSetAtom(changeLanguageAtom);
 
   const [lyricsTranslationEnabled, setLyricsTranslationEnabled] = useAtom(
     settingClientLyricsTranslationEnabled,
@@ -216,7 +211,7 @@ export function SettingsClient() {
             <OktoListbox
               id="settings:client:app-language"
               value={appLanguage}
-              onChange={onAppLanguageChange}
+              onChange={(e) => void changeLanguage(e)}
               options={languageDisplayLabels}
             />
           </div>
