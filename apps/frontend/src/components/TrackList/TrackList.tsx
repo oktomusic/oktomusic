@@ -100,6 +100,7 @@ function hasMeaningfulInsertionSlot(
 interface TrackListProps {
   readonly tracks: readonly (readonly TrackWithAlbum[])[];
   readonly displayCover?: boolean;
+  readonly displayAlbumName?: boolean;
   /**
    * Controls how clicking a track should queue playback.
    */
@@ -360,6 +361,7 @@ export function TrackList(props: TrackListProps) {
 
   const isMultiDisc = renderedTracks.length > 1;
   const displayCover = props.displayCover !== false;
+  const displayAlbumName = props.displayAlbumName === true;
   const effectiveDragPreview = hasMeaningfulInsertionSlot(dragPreview)
     ? dragPreview
     : null;
@@ -432,13 +434,18 @@ export function TrackList(props: TrackListProps) {
   return (
     <div
       className={
-        "track-list" + (isDropTarget ? " track-list--drop-target" : "")
+        "track-list" +
+        (displayAlbumName ? " track-list--album-name" : "") +
+        (isDropTarget ? " track-list--drop-target" : "")
       }
       ref={ref}
     >
       <nav className="track-list__nav mb-2 grid w-full border-b border-zinc-600 pb-2">
         <span className="text-end">#</span>
         <span className="border-zinc-600">{t`Title`}</span>
+        {displayAlbumName && (
+          <span className="border-l border-zinc-600 px-2">{t`Album`}</span>
+        )}
         <span className="border-l border-zinc-600 px-2">{t`Duration`}</span>
       </nav>
       {renderedTracks.map((discTracks, discIndex) => {
@@ -498,6 +505,7 @@ export function TrackList(props: TrackListProps) {
                     track={track}
                     index={trackIndex}
                     displayCover={displayCover}
+                    displayAlbumName={displayAlbumName}
                     onPlay={() => handlePlay(globalIndex)}
                     isCurrentTrack={isCurrentTrack}
                     playlistId={props.playlistId}

@@ -233,6 +233,7 @@ export function Playlist() {
       <TrackList
         tracks={playlistTracksArray}
         displayCover={true}
+        displayAlbumName={true}
         queueFrom={playlistQueueFrom}
         playlistId={playlist.id}
         reorderable={userId === playlist.creator.id || userIsAdmin}

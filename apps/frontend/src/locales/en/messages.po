@@ -57,7 +57,7 @@ msgid "Add to playlist"
 msgstr "Add to playlist"
 
 #: src/components/QueueTrack/QueueTrack.tsx:46
-#: src/components/TrackList/TrackElement.tsx:102
+#: src/components/TrackList/TrackElement.tsx:103
 #: src/pages/Center/Album.tsx:122
 #: src/pages/Center/Playlist.tsx:145
 msgid "Add to queue"
@@ -68,7 +68,7 @@ msgstr "Add to queue"
 #~ msgstr "Add to Queue"
 
 #: src/components/QueueTrack/QueueTrack.tsx:70
-#: src/components/TrackList/TrackElement.tsx:126
+#: src/components/TrackList/TrackElement.tsx:127
 msgid "Added to playlist"
 msgstr "Added to playlist"
 
@@ -78,6 +78,7 @@ msgid "Admin Settings"
 msgstr "Admin Settings"
 
 #: src/components/LibraryRow/LibraryRow.tsx:83
+#: src/components/TrackList/TrackList.tsx:447
 #: src/pages/Center/Album.tsx:131
 msgid "Album"
 msgstr "Album"
@@ -90,7 +91,7 @@ msgstr "Album cover"
 #: src/pages/Center/Artist.tsx:74
 #: src/pages/Center/Artist.tsx:75
 #: src/pages/Center/Search.tsx:86
-#: src/pages/Center/Search.tsx:295
+#: src/pages/Center/Search.tsx:296
 msgid "Albums"
 msgstr "Albums"
 
@@ -125,7 +126,7 @@ msgid "Artist"
 msgstr "Artist"
 
 #: src/pages/Center/Search.tsx:87
-#: src/pages/Center/Search.tsx:307
+#: src/pages/Center/Search.tsx:308
 msgid "Artists"
 msgstr "Artists"
 
@@ -240,7 +241,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Disabled"
 
-#: src/components/TrackList/TrackList.tsx:458
+#: src/components/TrackList/TrackList.tsx:465
 msgid "Disc {discNumber}"
 msgstr "Disc {discNumber}"
 
@@ -249,7 +250,7 @@ msgstr "Disc {discNumber}"
 #~ msgid "Download"
 #~ msgstr "Download"
 
-#: src/components/TrackList/TrackList.tsx:442
+#: src/components/TrackList/TrackList.tsx:449
 msgid "Duration"
 msgstr "Duration"
 
@@ -279,7 +280,7 @@ msgid "Export as..."
 msgstr "Export as..."
 
 #: src/components/QueueTrack/QueueTrack.tsx:74
-#: src/components/TrackList/TrackElement.tsx:130
+#: src/components/TrackList/TrackElement.tsx:131
 msgid "Failed to add track"
 msgstr "Failed to add track"
 
@@ -295,11 +296,11 @@ msgstr "Failed to delete playlist"
 msgid "Failed to remove from library"
 msgstr "Failed to remove from library"
 
-#: src/components/TrackList/TrackElement.tsx:162
+#: src/components/TrackList/TrackElement.tsx:163
 msgid "Failed to remove track"
 msgstr "Failed to remove track"
 
-#: src/components/TrackList/TrackList.tsx:343
+#: src/components/TrackList/TrackList.tsx:344
 msgid "Failed to reorder playlist tracks"
 msgstr "Failed to reorder playlist tracks"
 
@@ -334,7 +335,7 @@ msgid "Go forward"
 msgstr "Go forward"
 
 #: src/components/QueueTrack/QueueTrack.tsx:54
-#: src/components/TrackList/TrackElement.tsx:110
+#: src/components/TrackList/TrackElement.tsx:111
 msgid "Go to album"
 msgstr "Go to album"
 
@@ -421,7 +422,7 @@ msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
 #: src/components/QueueTrack/QueueTrack.tsx:135
-#: src/components/TrackList/TrackElement.tsx:261
+#: src/components/TrackList/TrackElement.tsx:272
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"
 
@@ -459,8 +460,8 @@ msgid "Next in queue"
 msgstr "Next in queue"
 
 #: src/pages/Center/Search.tsx:268
-#: src/pages/Center/Search.tsx:299
-#: src/pages/Center/Search.tsx:353
+#: src/pages/Center/Search.tsx:300
+#: src/pages/Center/Search.tsx:355
 msgid "No albums found"
 msgstr "No albums found"
 
@@ -468,13 +469,13 @@ msgstr "No albums found"
 msgid "No albums found for this artist."
 msgstr "No albums found for this artist."
 
-#: src/pages/Center/Search.tsx:311
-#: src/pages/Center/Search.tsx:363
+#: src/pages/Center/Search.tsx:312
+#: src/pages/Center/Search.tsx:365
 msgid "No artists found"
 msgstr "No artists found"
 
-#: src/pages/Center/Search.tsx:323
-#: src/pages/Center/Search.tsx:372
+#: src/pages/Center/Search.tsx:324
+#: src/pages/Center/Search.tsx:374
 msgid "No playlists found"
 msgstr "No playlists found"
 
@@ -493,7 +494,7 @@ msgid "No track playing"
 msgstr "No track playing"
 
 #: src/pages/Center/Search.tsx:282
-#: src/pages/Center/Search.tsx:343
+#: src/pages/Center/Search.tsx:345
 msgid "No tracks found"
 msgstr "No tracks found"
 
@@ -527,7 +528,7 @@ msgstr "Pause"
 msgid "Pause {albumName}"
 msgstr "Pause {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:210
+#: src/components/TrackList/TrackElement.tsx:211
 msgid "Pause {trackName}"
 msgstr "Pause {trackName}"
 
@@ -553,7 +554,7 @@ msgstr "Play"
 msgid "Play {albumName}"
 msgstr "Play {albumName}"
 
-#: src/components/TrackList/TrackElement.tsx:212
+#: src/components/TrackList/TrackElement.tsx:213
 msgid "Play {trackName}"
 msgstr "Play {trackName}"
 
@@ -594,7 +595,7 @@ msgid "Playlist export:"
 msgstr "Playlist export:"
 
 #: src/pages/Center/Search.tsx:88
-#: src/pages/Center/Search.tsx:319
+#: src/pages/Center/Search.tsx:320
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -644,11 +645,11 @@ msgstr "Queue"
 msgid "Remove from library"
 msgstr "Remove from library"
 
-#: src/components/TrackList/TrackElement.tsx:141
+#: src/components/TrackList/TrackElement.tsx:142
 msgid "Remove from playlist"
 msgstr "Remove from playlist"
 
-#: src/components/TrackList/TrackElement.tsx:155
+#: src/components/TrackList/TrackElement.tsx:156
 msgid "Removed from playlist"
 msgstr "Removed from playlist"
 
@@ -668,7 +669,7 @@ msgstr "Restart threshold (seconds)"
 msgid "Restart threshold (seconds):"
 msgstr "Restart threshold (seconds):"
 
-#: src/components/TrackList/TrackElement.tsx:211
+#: src/components/TrackList/TrackElement.tsx:212
 msgid "Resume {trackName}"
 msgstr "Resume {trackName}"
 
@@ -752,7 +753,7 @@ msgstr "The following modern web features are missing:"
 msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
 
-#: src/components/TrackList/TrackList.tsx:441
+#: src/components/TrackList/TrackList.tsx:445
 msgid "Title"
 msgstr "Title"
 

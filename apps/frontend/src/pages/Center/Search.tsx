@@ -285,6 +285,7 @@ export function Search() {
                 <TrackList
                   tracks={[tracksWithAlbum]}
                   displayCover={true}
+                  displayAlbumName={true}
                   playMode="manual"
                   droppableId={`search:all:${query || "all"}`}
                 />
@@ -335,6 +336,7 @@ export function Search() {
           <TrackList
             tracks={[tracksWithAlbum]}
             displayCover={true}
+            displayAlbumName={true}
             playMode="manual"
             droppableId={`search:tracks:${query || "all"}`}
           />
