@@ -37,6 +37,7 @@ interface TrackElementProps {
   readonly track: TrackWithAlbum;
   readonly index: number;
   readonly displayCover: boolean;
+  readonly displayAlbumName: boolean;
   readonly onPlay: () => void;
   readonly isCurrentTrack: boolean;
   readonly playlistId?: string;
@@ -251,6 +252,16 @@ export function TrackElement(props: TrackElementProps) {
           </span>
         </div>
       </div>
+      {props.displayAlbumName && (
+        <div className="track-list__track_album px-2">
+          <Link
+            to={`/album/${props.track.album.id}`}
+            className="block truncate text-sm text-zinc-300 hover:underline"
+          >
+            {props.track.album.name}
+          </Link>
+        </div>
+      )}
       <span className="text-end">{formatDuration(props.track.durationMs)}</span>
       <div className="flex items-center justify-center">
         <OktoMenu

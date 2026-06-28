@@ -172,7 +172,7 @@ export function Album() {
     >
       <TrackList
         tracks={tracksWithAlbum}
-        displayCover={true} /* TODO: remove cover */
+        displayCover={false}
         queueFrom={albumQueueFrom}
         droppableId={`album:${data!.album.id}`}
       />
