@@ -10,12 +10,24 @@ catalogs:
     '@types/node':
       specifier: ^24.13.2
       version: 24.13.2
+    fast-xml-parser:
+      specifier: ^5.9.3
+      version: 5.9.3
+    sharp:
+      specifier: ^0.35.2
+      version: 0.35.2
     temporal-polyfill:
       specifier: ^0.3.2
       version: 0.3.2
+    tsdown:
+      specifier: ^0.22.3
+      version: 0.22.3
     typescript:
       specifier: ^5.9.3
       version: 5.9.3
+    zod:
+      specifier: ^4.4.3
+      version: 4.4.3
 
 importers:
 
@@ -242,8 +254,8 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1
       prisma-json-types-generator:
-        specifier: ^4.1.1
-        version: 4.1.1(@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3))(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3)
+        specifier: ^5.1.0
+        version: 5.1.0(@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3))(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -322,7 +334,7 @@ importers:
         version: 7.29.7
       '@graphql-codegen/cli':
         specifier: 6.3.1
-        version: 6.3.1(@types/node@24.13.2)(graphql@16.14.2)(typescript@5.9.3)
+        version: 6.3.1(@types/node@24.13.2)(crossws@0.3.5)(graphql@16.14.2)(typescript@5.9.3)
       '@graphql-codegen/client-preset':
         specifier: 5.3.0
         version: 5.3.0(graphql@16.14.2)
@@ -361,7 +373,7 @@ importers:
         version: 1.0.2
       '@vitejs/devtools':
         specifier: ^0.3.3
-        version: 0.3.3(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)
+        version: 0.3.3(crossws@0.3.5)(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)
       '@vitejs/plugin-react':
         specifier: ^6.0.3
         version: 6.0.3(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.1.2)(vite@8.1.0))(babel-plugin-react-compiler@1.0.0)(vite@8.1.0)
@@ -5400,8 +5412,8 @@ packages:
     resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
 
-  es-to-primitive@1.3.1:
-    resolution: {integrity: sha512-CxN9N56HYfd2m/acc/NOFrZQsN9kU4eh+2kk6A707Kz1krH8tKmfrs5RnftB8WNX80T0NS7vSQsDOlg23diR2g==}
+  es-to-primitive@1.3.4:
+    resolution: {integrity: sha512-yPDz7wqpg1/mmHLmS3tcfTfbw5f1eryXvyghYBffGdERwe+mV7ZcWzTR8LR17Kvqt3qfPurjlonmnq3MKXIOXw==}
     engines: {node: '>= 0.4'}
 
   es-toolkit@1.48.1:
@@ -5816,6 +5828,7 @@ packages:
   git-raw-commits@5.0.1:
     resolution: {integrity: sha512-Y+csSm2GD/PCSh6Isd/WiMjNAydu0VBiG9J7EdQsNA5P9uXvLayqjmTsNlK5Gs9IhblFZqOU0yid5Il5JPoLiQ==}
     engines: {node: '>=18'}
+    deprecated: Deprecated and no longer maintained. Use @conventional-changelog/git-client instead.
     hasBin: true
 
   glob-parent@5.1.2:
@@ -7338,14 +7351,14 @@ packages:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  prisma-json-types-generator@4.1.1:
-    resolution: {integrity: sha512-oz0MYu1r2Jqu3qOGCEGulz6RjPsECVjyS3ZAz3HEmz0jkKbVkZEwQyksNJm0X5utV1TZCmaG/98EPExN7S22xw==}
+  prisma-json-types-generator@5.1.0:
+    resolution: {integrity: sha512-nUYP3UoR/wXjXWiD3IwhaVMadkWuQBU1pxSvRkWq8mxx7uGexhDPwaP9f5q2rHXm9OgUZ73/zdQrtlRg3Aoqsg==}
     engines: {node: '>=14.0'}
     hasBin: true
     peerDependencies:
-      '@prisma/client': ^7.2.0
-      prisma: ^7.2.0
-      typescript: ^5.9.3
+      '@prisma/client': ^7.8.0
+      prisma: ^7.8.0
+      typescript: ^6.0.3
 
   prisma@7.8.0:
     resolution: {integrity: sha512-yfN4yrw7HV9kEJhoy1+jgah0jafEIQsf7uWouSsM8MvJtlubsk+kM7AIBWZ8+GJl74Yj3c+nbYqBkMOxtsZ3Lw==}
@@ -10185,16 +10198,6 @@ snapshots:
       pathe: 2.0.3
       perfect-debounce: 2.1.0
       tinyexec: 1.2.4
-    optional: true
-
-  '@devframes/hub@0.5.4(devframe@0.5.4(typescript@5.9.3))':
-    dependencies:
-      birpc: 4.0.0
-      devframe: 0.5.4(typescript@5.9.3)
-      nostics: 0.2.0
-      pathe: 2.0.3
-      perfect-debounce: 2.1.0
-      tinyexec: 1.2.4
 
   '@dnd-kit/abstract@0.5.0':
     dependencies:
@@ -10622,7 +10625,7 @@ snapshots:
       graphql: 16.14.2
       tslib: 2.8.1
 
-  '@graphql-codegen/cli@6.3.1(@types/node@24.13.2)(graphql@16.14.2)(typescript@5.9.3)':
+  '@graphql-codegen/cli@6.3.1(@types/node@24.13.2)(crossws@0.3.5)(graphql@16.14.2)(typescript@5.9.3)':
     dependencies:
       '@babel/generator': 7.29.7
       '@babel/template': 7.29.7
@@ -10638,7 +10641,7 @@ snapshots:
       '@graphql-tools/json-file-loader': 8.0.28(graphql@16.14.2)
       '@graphql-tools/load': 8.1.10(graphql@16.14.2)
       '@graphql-tools/merge': 9.1.9(graphql@16.14.2)
-      '@graphql-tools/url-loader': 9.1.2(@types/node@24.13.2)(graphql@16.14.2)
+      '@graphql-tools/url-loader': 9.1.2(@types/node@24.13.2)(crossws@0.3.5)(graphql@16.14.2)
       '@graphql-tools/utils': 11.1.0(graphql@16.14.2)
       '@inquirer/prompts': 7.10.1(@types/node@24.13.2)
       '@whatwg-node/fetch': 0.10.13
@@ -10647,7 +10650,7 @@ snapshots:
       debounce: 2.2.0
       detect-indent: 6.1.0
       graphql: 16.14.2
-      graphql-config: 5.1.6(@types/node@24.13.2)(graphql@16.14.2)(typescript@5.9.3)
+      graphql-config: 5.1.6(@types/node@24.13.2)(crossws@0.3.5)(graphql@16.14.2)(typescript@5.9.3)
       is-glob: 4.0.3
       jiti: 2.7.0
       json-to-pretty-yaml: 1.2.2
@@ -10831,22 +10834,6 @@ snapshots:
       - crossws
       - utf-8-validate
 
-  '@graphql-tools/executor-graphql-ws@3.1.5(graphql@16.14.2)':
-    dependencies:
-      '@graphql-tools/executor-common': 1.0.6(graphql@16.14.2)
-      '@graphql-tools/utils': 11.1.0(graphql@16.14.2)
-      '@whatwg-node/disposablestack': 0.0.6
-      graphql: 16.14.2
-      graphql-ws: 6.0.8(crossws@0.3.5)(graphql@16.14.2)(ws@8.21.0)
-      isows: 1.0.7(ws@8.21.0)
-      tslib: 2.8.1
-      ws: 8.21.0
-    transitivePeerDependencies:
-      - '@fastify/websocket'
-      - bufferutil
-      - crossws
-      - utf-8-validate
-
   '@graphql-tools/executor-http@3.3.0(@types/node@24.13.2)(graphql@16.14.2)':
     dependencies:
       '@graphql-hive/signal': 2.0.0
@@ -10983,28 +10970,6 @@ snapshots:
   '@graphql-tools/url-loader@9.1.2(@types/node@24.13.2)(crossws@0.3.5)(graphql@16.14.2)':
     dependencies:
       '@graphql-tools/executor-graphql-ws': 3.1.5(crossws@0.3.5)(graphql@16.14.2)
-      '@graphql-tools/executor-http': 3.3.0(@types/node@24.13.2)(graphql@16.14.2)
-      '@graphql-tools/executor-legacy-ws': 1.1.28(graphql@16.14.2)
-      '@graphql-tools/utils': 11.1.0(graphql@16.14.2)
-      '@graphql-tools/wrap': 11.1.16(graphql@16.14.2)
-      '@types/ws': 8.18.1
-      '@whatwg-node/fetch': 0.10.13
-      '@whatwg-node/promise-helpers': 1.3.2
-      graphql: 16.14.2
-      isomorphic-ws: 5.0.0(ws@8.21.0)
-      sync-fetch: 0.6.0
-      tslib: 2.8.1
-      ws: 8.21.0
-    transitivePeerDependencies:
-      - '@fastify/websocket'
-      - '@types/node'
-      - bufferutil
-      - crossws
-      - utf-8-validate
-
-  '@graphql-tools/url-loader@9.1.2(@types/node@24.13.2)(graphql@16.14.2)':
-    dependencies:
-      '@graphql-tools/executor-graphql-ws': 3.1.5(graphql@16.14.2)
       '@graphql-tools/executor-http': 3.3.0(@types/node@24.13.2)(graphql@16.14.2)
       '@graphql-tools/executor-legacy-ws': 1.1.28(graphql@16.14.2)
       '@graphql-tools/utils': 11.1.0(graphql@16.14.2)
@@ -12828,25 +12793,6 @@ snapshots:
       - crossws
       - typescript
       - utf-8-validate
-    optional: true
-
-  '@vitejs/devtools-kit@0.3.3(typescript@5.9.3)(vite@8.1.0)':
-    dependencies:
-      '@devframes/hub': 0.5.4(devframe@0.5.4(typescript@5.9.3))
-      birpc: 4.0.0
-      devframe: 0.5.4(typescript@5.9.3)
-      mlly: 1.8.2
-      nostics: 0.3.0
-      pathe: 2.0.3
-      perfect-debounce: 2.1.0
-      tinyexec: 1.2.4
-      vite: 8.1.0(@types/node@24.13.2)(@vitejs/devtools@0.3.3)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)
-    transitivePeerDependencies:
-      - '@modelcontextprotocol/sdk'
-      - bufferutil
-      - crossws
-      - typescript
-      - utf-8-validate
 
   '@vitejs/devtools-rolldown@0.3.3(crossws@0.3.5)(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)(vue@3.5.38(typescript@5.9.3))':
     dependencies:
@@ -12898,58 +12844,6 @@ snapshots:
       - utf-8-validate
       - vite
       - vue
-    optional: true
-
-  '@vitejs/devtools-rolldown@0.3.3(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)(vue@3.5.38(typescript@5.9.3))':
-    dependencies:
-      '@floating-ui/dom': 1.7.6
-      '@rolldown/debug': 1.1.2
-      '@vitejs/devtools-kit': 0.3.3(typescript@5.9.3)(vite@8.1.0)
-      birpc: 4.0.0
-      cac: 7.0.0
-      d3-shape: 3.2.0
-      devframe: 0.5.4(typescript@5.9.3)
-      diff: 9.0.0
-      get-port-please: 3.2.0
-      h3: 2.0.1-rc.22
-      mlly: 1.8.2
-      mrmime: 2.0.1
-      nostics: 0.3.0
-      p-limit: 7.3.0
-      pathe: 2.0.3
-      publint: 0.3.21
-      tinyglobby: 0.2.17
-      unconfig: 7.5.0
-      unstorage: 1.17.5(ioredis@5.10.1)
-      vue-virtual-scroller: 3.0.4(vue@3.5.38(typescript@5.9.3))
-      ws: 8.21.0
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@deno/kv'
-      - '@modelcontextprotocol/sdk'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@upstash/redis'
-      - '@vercel/blob'
-      - '@vercel/functions'
-      - '@vercel/kv'
-      - aws4fetch
-      - bufferutil
-      - crossws
-      - db0
-      - idb-keyval
-      - ioredis
-      - typescript
-      - uploadthing
-      - utf-8-validate
-      - vite
-      - vue
 
   '@vitejs/devtools@0.3.3(crossws@0.3.5)(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)':
     dependencies:
@@ -12960,51 +12854,6 @@ snapshots:
       cac: 7.0.0
       devframe: 0.5.4(crossws@0.3.5)(typescript@5.9.3)
       h3: 2.0.1-rc.22(crossws@0.3.5)
-      mlly: 1.8.2
-      nostics: 0.3.0
-      obug: 2.1.3
-      pathe: 2.0.3
-      perfect-debounce: 2.1.0
-      tinyexec: 1.2.4
-      vite: 8.1.0(@types/node@24.13.2)(@vitejs/devtools@0.3.3)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)
-      vue: 3.5.38(typescript@5.9.3)
-      ws: 8.21.0
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@deno/kv'
-      - '@modelcontextprotocol/sdk'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@upstash/redis'
-      - '@vercel/blob'
-      - '@vercel/functions'
-      - '@vercel/kv'
-      - aws4fetch
-      - bufferutil
-      - crossws
-      - db0
-      - idb-keyval
-      - ioredis
-      - typescript
-      - uploadthing
-      - utf-8-validate
-    optional: true
-
-  '@vitejs/devtools@0.3.3(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)':
-    dependencies:
-      '@devframes/hub': 0.5.4(devframe@0.5.4(typescript@5.9.3))
-      '@vitejs/devtools-kit': 0.3.3(typescript@5.9.3)(vite@8.1.0)
-      '@vitejs/devtools-rolldown': 0.3.3(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)(vue@3.5.38(typescript@5.9.3))
-      birpc: 4.0.0
-      cac: 7.0.0
-      devframe: 0.5.4(typescript@5.9.3)
-      h3: 2.0.1-rc.22
       mlly: 1.8.2
       nostics: 0.3.0
       obug: 2.1.3
@@ -14149,24 +13998,6 @@ snapshots:
       - crossws
       - typescript
       - utf-8-validate
-    optional: true
-
-  devframe@0.5.4(typescript@5.9.3):
-    dependencies:
-      '@valibot/to-json-schema': 1.7.1(valibot@1.4.1(typescript@5.9.3))
-      birpc: 4.0.0
-      cac: 7.0.0
-      h3: 2.0.1-rc.22
-      mrmime: 2.0.1
-      nostics: 0.2.0
-      pathe: 2.0.3
-      valibot: 1.4.1(typescript@5.9.3)
-      ws: 8.21.0
-    transitivePeerDependencies:
-      - bufferutil
-      - crossws
-      - typescript
-      - utf-8-validate
 
   devlop@1.1.0:
     dependencies:
@@ -14282,7 +14113,7 @@ snapshots:
       es-errors: 1.3.0
       es-object-atoms: 1.1.2
       es-set-tostringtag: 2.1.0
-      es-to-primitive: 1.3.1
+      es-to-primitive: 1.3.4
       function.prototype.name: 1.2.0
       get-intrinsic: 1.3.0
       get-proto: 1.0.1
@@ -14342,9 +14173,10 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.4
 
-  es-to-primitive@1.3.1:
+  es-to-primitive@1.3.4:
     dependencies:
       es-abstract-get: 1.0.0
+      es-define-property: 1.0.1
       es-errors: 1.3.0
       is-callable: 1.2.7
       is-date-object: 1.1.0
@@ -15011,28 +14843,6 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  graphql-config@5.1.6(@types/node@24.13.2)(graphql@16.14.2)(typescript@5.9.3):
-    dependencies:
-      '@graphql-tools/graphql-file-loader': 8.1.14(graphql@16.14.2)
-      '@graphql-tools/json-file-loader': 8.0.28(graphql@16.14.2)
-      '@graphql-tools/load': 8.1.10(graphql@16.14.2)
-      '@graphql-tools/merge': 9.1.9(graphql@16.14.2)
-      '@graphql-tools/url-loader': 9.1.2(@types/node@24.13.2)(graphql@16.14.2)
-      '@graphql-tools/utils': 11.1.0(graphql@16.14.2)
-      cosmiconfig: 8.3.6(typescript@5.9.3)
-      graphql: 16.14.2
-      jiti: 2.7.0
-      minimatch: 10.2.5
-      string-env-interpolation: 1.0.1
-      tslib: 2.8.1
-    transitivePeerDependencies:
-      - '@fastify/websocket'
-      - '@types/node'
-      - bufferutil
-      - crossws
-      - typescript
-      - utf-8-validate
-
   graphql-subscriptions@3.0.0(graphql@16.14.2):
     dependencies:
       graphql: 16.14.2
@@ -15082,18 +14892,12 @@ snapshots:
       ufo: 1.6.4
       uncrypto: 0.1.3
 
-  h3@2.0.1-rc.22:
-    dependencies:
-      rou3: 0.8.1
-      srvx: 0.11.17
-
   h3@2.0.1-rc.22(crossws@0.3.5):
     dependencies:
       rou3: 0.8.1
       srvx: 0.11.17
     optionalDependencies:
       crossws: 0.3.5
-    optional: true
 
   handlebars@4.7.9:
     dependencies:
@@ -16524,7 +16328,7 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 18.3.1
 
-  prisma-json-types-generator@4.1.1(@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3))(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3):
+  prisma-json-types-generator@5.1.0(@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3))(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
       '@prisma/client': 7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(magicast@0.5.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3)
       '@prisma/generator-helper': 7.8.0
@@ -17940,7 +17744,7 @@ snapshots:
       tinyglobby: 0.2.17
     optionalDependencies:
       '@types/node': 24.13.2
-      '@vitejs/devtools': 0.3.3(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)
+      '@vitejs/devtools': 0.3.3(crossws@0.3.5)(ioredis@5.10.1)(typescript@5.9.3)(vite@8.1.0)
       esbuild: 0.27.7
       fsevents: 2.3.3
       jiti: 2.7.0
