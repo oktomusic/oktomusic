@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
 
 import { authSessionAtom } from "./atoms/auth/atoms.ts";
 import { browserSupportAtom } from "./atoms/app/browser_support.ts";
@@ -17,6 +20,11 @@ import { UnsupportedOverlay } from "./pages/Unsupported/UnsupportedOverlay.tsx";
 
 import { App } from "./App.tsx";
 
+import {
+  applicationLanguageReady,
+  bootstrapLocaleAtom,
+} from "./atoms/app/language.ts";
+
 function LoginRedirect() {
   const authSession = useAtomValue(authSessionAtom);
 
@@ -31,6 +39,9 @@ export function Router() {
 
   const authSession = useAtomValue(authSessionAtom);
 
+  const languageReady = useAtomValue(applicationLanguageReady);
+  const bootstrapLocale = useSetAtom(bootstrapLocaleAtom);
+
   useScreenWakeLock();
   useStoragePersistence();
   usePwaDeferredPrompt();
@@ -38,8 +49,16 @@ export function Router() {
 
   useSWRegister();
 
+  useEffect(() => {
+    void bootstrapLocale();
+  }, [bootstrapLocale]);
+
+  if (!languageReady) {
+    return null;
+  }
+
   return (
-    <>
+    <I18nProvider i18n={i18n}>
       <AuthSessionInitializer />
       <WindowControls />
       <main id="app-shell">
@@ -59,6 +78,6 @@ export function Router() {
           </BrowserRouter>
         )}
       </main>
-    </>
+    </I18nProvider>
   );
 }
