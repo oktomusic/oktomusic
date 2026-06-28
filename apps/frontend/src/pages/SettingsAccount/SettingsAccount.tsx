@@ -68,7 +68,7 @@ export function SettingsAccount() {
         <SettingsAccountHeader />
         <form className="flex flex-col" aria-busy={loading || isUpdating}>
           <div className="flex h-14 flex-row items-center justify-between py-2">
-            <label htmlFor="settings:account:sex">{t`Sexe :`}</label>
+            <label htmlFor="settings:account:sex">{t`Sex :`}</label>
             <OktoListbox
               id="settings:account:sex"
               value={currentSexKey}
