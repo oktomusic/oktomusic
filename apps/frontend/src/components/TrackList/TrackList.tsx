@@ -438,8 +438,8 @@ export function TrackList(props: TrackListProps) {
     >
       <nav className="track-list__nav mb-2 grid w-full border-b border-zinc-600 pb-2">
         <span className="text-end">#</span>
-        <span className="border-zinc-600">Title</span>
-        <span className="border-l border-zinc-600 px-2">Duration</span>
+        <span className="border-zinc-600">{t`Title`}</span>
+        <span className="border-l border-zinc-600 px-2">{t`Duration`}</span>
       </nav>
       {renderedTracks.map((discTracks, discIndex) => {
         // Calculate the starting global index for this disc

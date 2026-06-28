@@ -245,6 +245,10 @@ msgstr "Disque {discNumber}"
 #~ msgid "Download"
 #~ msgstr "Télécharger"
 
+#: src/components/TrackList/TrackList.tsx:442
+msgid "Duration"
+msgstr "Durée"
+
 #: src/pages/Center/Playlist.tsx:158
 msgid "Edit details"
 msgstr ""
@@ -743,6 +747,10 @@ msgstr "Les fonctionnalités Web modernes suivantes sont manquantes :"
 #: src/components/Dialogs/DialogPlaylistDelete.tsx:103
 msgid "This action cannot be undone."
 msgstr ""
+
+#: src/components/TrackList/TrackList.tsx:441
+msgid "Title"
+msgstr "Titre"
 
 #: src/pages/Center/Search.tsx:85
 #: src/pages/Center/Search.tsx:278
