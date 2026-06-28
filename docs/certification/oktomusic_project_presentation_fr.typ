@@ -16,6 +16,70 @@
 
 = Analyse du besoin
 
+== Contexte et objectif
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1em,
+  [
+    *Constat*
+
+    - Les plateformes musicales centralisées donnent peu de contrôle sur les données, l'hébergement et l'évolution du service
+    - Les solutions auto-hébergées existantes couvrent souvent la vidéo ou la lecture audio basique, mais moins bien l'expérience musicale moderne
+    - Une bibliothèque personnelle demande une bonne prise en charge des métadonnées audio, des albums, des artistes, des paroles et des playlists
+  ],
+  [
+    *Objectif du projet*
+
+    - Concevoir un serveur de streaming musical *open-source* et auto-hébergeable
+    - Proposer une application *web uniquement*, exploitant des fonctionnalités web modernes
+    - S'intégrer à une infrastructure existante via *OpenID Connect*, sans gérer localement les mots de passe
+    - Permettre à l'utilisateur de parcourir, écouter et organiser sa bibliothèque musicale depuis un navigateur
+  ],
+)
+
+== Utilisateurs et besoins
+
+#grid(columns: (1fr, 1fr), gutter: 1em, [
+  *Administrateur / opérateur*
+
+  - Déployer l'application facilement dans une infrastructure Docker
+  - Connecter l'application à un fournisseur d'identité existant : Keycloak, Authentik, etc.
+  - Indexer une bibliothèque musicale FLAC stockée sur le serveur
+  - Bénéficier d'un socle sécurisé : sessions serveur, rôles, configuration explicite
+], [
+  *Utilisateur final*
+
+  - Se connecter avec son compte habituel grâce à OpenID Connect
+  - Rechercher des titres, albums et artistes
+  - Écouter la musique avec un lecteur web moderne : file d'attente, Media Session, PWA, service worker
+  - Créer, modifier, importer et exporter des playlists
+  - Consulter des paroles synchronisées lorsque disponibles
+])
+
+== Positionnement face aux alternatives
+
+#grid(columns: (1fr, 1fr), gutter: 1em, [
+  #align(center, image("../common/assets/jellyfin.svg", height: 2.5em))
+
+  *Jellyfin*
+
+  - Solution très complète, mais orientée médiathèque généraliste
+  - Mauvaise gestion des métadonnées audio pour une bibliothèque musicale exigeante
+  - Pas de paroles synchronisées adaptées à l'usage visé
+  - Interface perfectible pour une écoute quotidienne
+  - Pas d'OpenID Connect en standard
+], [
+  #align(center, image("../common/assets/navidrome.svg", height: 2.5em))
+
+  *Navidrome*
+
+  - Solution plus spécialisée musique, mais interface moins pratique pour l'usage recherché
+  - Thème et fonctionnalités peu pertinents pour une expérience web moderne centrée sur l'écoute
+  - Fonctionnalités avancées limitées pour les paroles, playlists et intégration navigateur
+  - Pas d'OpenID Connect en standard
+])
+
 = Architecture globale
 
 == Vue d'ensemble
@@ -29,6 +93,14 @@
 ))
 
 == Choix technologiques
+
+- Language : *TypeScript*
+- Backend : *NestJS*, avec *Prisma* et *GraphQL*
+- Frontend :
+  - *React*: librarie d'interface
+  - *Jotai*: state management
+  - *TailwindCSS*: framework CSS
+  - *Lingui*: internationalisation
 
 = Démonstration
 
@@ -66,12 +138,12 @@ Composants déjà en place :
 - Instance Keycloak sécurisée
   - Connection OAuth2 avec GitHub
   - Comptes déjà créés pour la démonstration
+- Configuration du client Keycloak pour Oktomusic
+- Création du sous-domaine DNS, associé au tunnel Cloudflare
 
 Composants à déployer en live :
 
-- Configuration du client Keycloak pour Oktomusic
 - Déploiement de l'application Oktomusic et de ses dépendances via Docker Compose
-- Création du sous-domaine DNS, associé au tunnel Cloudflare
 
 = Bilan
 
