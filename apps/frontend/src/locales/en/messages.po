@@ -162,7 +162,7 @@ msgstr "Cancel"
 msgid "Checking storage persistence..."
 msgstr "Checking storage persistence..."
 
-#: src/pages/PanelRight.tsx:104
+#: src/pages/PanelRight.tsx:99
 msgid "Clear"
 msgstr "Clear"
 
@@ -451,11 +451,11 @@ msgstr "New playlist"
 msgid "Next"
 msgstr "Next"
 
-#: src/pages/PanelRight.tsx:128
-msgid "Next from: {queueFromLabel}"
-msgstr "Next from: {queueFromLabel}"
+#: src/pages/PanelRight.tsx:123
+msgid "Next from: <0>{queueFromName}</0>"
+msgstr "Next from: <0>{queueFromName}</0>"
 
-#: src/pages/PanelRight.tsx:96
+#: src/pages/PanelRight.tsx:91
 msgid "Next in queue"
 msgstr "Next in queue"
 
@@ -498,7 +498,7 @@ msgstr "No track playing"
 msgid "No tracks found"
 msgstr "No tracks found"
 
-#: src/pages/PanelRight.tsx:79
+#: src/pages/PanelRight.tsx:74
 msgid "Now playing"
 msgstr "Now playing"
 

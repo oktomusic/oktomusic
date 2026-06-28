@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 
 import {
   clearManualQueueAtom,
@@ -42,12 +42,7 @@ export function PanelRight() {
   const hasManualQueue = manualQueueUpNext.length > 0;
   const mainQueueUpNext = queue.slice(queueIndex + 1);
   const hasMainQueueLoaded = queueFrom !== null && queue.length > 0;
-
-  const queueFromLabel = queueFrom ? (
-    <Link className="hover:underline" to={`/${queueFrom.type}/${queueFrom.id}`}>
-      {queueFrom.meta.name}
-    </Link>
-  ) : undefined;
+  const queueFromName = queueFrom?.meta.name ?? "";
 
   if (!visible) {
     return null;
@@ -125,7 +120,15 @@ export function PanelRight() {
           <li className="flex flex-col">
             <div className="flex w-full flex-row justify-between p-2">
               <span className="text-sm font-semibold">
-                {t`Next from: ${queueFromLabel}`}
+                <Trans>
+                  Next from:{" "}
+                  <Link
+                    className="hover:underline"
+                    to={`/${queueFrom.type}/${queueFrom.id}`}
+                  >
+                    {queueFromName}
+                  </Link>
+                </Trans>
               </span>
             </div>
             <ol className="flex flex-col">
