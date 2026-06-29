@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { plural } from "@lingui/core/macro";
+import { Plural } from "@lingui/react/macro";
 import { Temporal } from "temporal-polyfill";
 
 import { DurationLong } from "../DurationLong";
@@ -41,13 +41,11 @@ export function CollectionViewMetaAlbum(props: CollectionViewMetaAlbumProps) {
       )}
       <span className="mx-2">•</span>
       <span>
-        {plural(
-          { count: props.tracksTotal },
-          {
-            one: "# track",
-            other: "# tracks",
-          },
-        )}
+        <Plural
+          value={{ count: props.tracksTotal }}
+          one={`# track`}
+          other={`# tracks`}
+        />
       </span>
       <span>,&nbsp;</span>
       <DurationLong durationMs={props.durationMs} />

@@ -14,9 +14,9 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/CollectionView/CollectionViewMetaAlbum.tsx:44
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:53
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:52
 msgid "{count, plural, one {# track} other {# tracks}}"
-msgstr ""
+msgstr "{count, plural, one {# titre} other {# titres}}"
 
 #: src/components/DurationLong.tsx:18
 msgid "{hours}h {minutes}min"
@@ -29,11 +29,6 @@ msgstr "{minutes}min {seconds}s"
 #: src/components/DurationLong.tsx:31
 msgid "{seconds}s"
 msgstr "{seconds}s"
-
-#: src/components/CollectionView/CollectionViewMetaAlbum.tsx:46
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:54
-#~ msgid "{tracksTotal, plural, one {# track} other {# tracks}}"
-#~ msgstr "{tracksTotal, plural, one {# titre} other {# titres}}"
 
 #: src/components/HeaderMenu.tsx:63
 msgid "About"
@@ -608,7 +603,7 @@ msgstr "Portugais"
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:30
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:29
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:56
 msgid "Private"
 msgstr "Privée"
@@ -622,7 +617,7 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:32
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:31
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:54
 msgid "Public"
 msgstr "Publique"
@@ -758,7 +753,7 @@ msgstr "Titre"
 msgid "Tracks"
 msgstr "Titres"
 
-#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:34
+#: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:33
 #: src/components/Dialogs/DialogPlaylistEdit.tsx:55
 msgid "Unlisted"
 msgstr "Non répertoriée"

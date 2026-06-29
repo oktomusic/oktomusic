@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
-import { lingui } from "@lingui/vite-plugin";
+import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 import sri from "vite-plugin-sri-gen";
 
@@ -51,11 +51,11 @@ export default defineConfig({
   plugins: [
     react(),
     babel({
-      plugins: [
-        "babel-plugin-react-compiler",
-        "@lingui/babel-plugin-lingui-macro",
+      presets: [
+        reactCompilerPreset(),
+        "jotai-babel/preset",
+        linguiTransformerBabelPreset(),
       ],
-      presets: [reactCompilerPreset(), "jotai-babel/preset"],
     }),
     tailwindcss(),
     lingui(),

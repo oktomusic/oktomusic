@@ -1,6 +1,5 @@
 import { Link } from "react-router";
-import { plural } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
+import { Plural, useLingui } from "@lingui/react/macro";
 import { LuGlobe, LuLink, LuLock } from "react-icons/lu";
 
 import { DurationLong } from "../DurationLong";
@@ -50,13 +49,11 @@ export function CollectionViewMetaPlaylist(
       </span>
       <span className="mx-2">•</span>
       <span>
-        {plural(
-          { count: props.tracksTotal },
-          {
-            one: "# track",
-            other: "# tracks",
-          },
-        )}
+        <Plural
+          value={{ count: props.tracksTotal }}
+          one={`# track`}
+          other={`# tracks`}
+        />
       </span>
       <span>,&nbsp;</span>
       <DurationLong durationMs={props.durationMs} />
