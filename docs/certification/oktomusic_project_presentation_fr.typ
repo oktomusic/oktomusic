@@ -303,7 +303,7 @@
   - Streaming FLAC avec support des requêtes HTTP `Range`
   - Traduction locale des paroles via l'API #link("https://developer.mozilla.org/en-US/docs/Web/API/Translator")[Translator] (Chromium)
   - Mini-lecteur Picture-in-Picture
-  - Mode Kiosque pour systèmes embarqués (nterface de chaîne HiFi, etc)
+  - Mode Kiosque pour systèmes embarqués (interface de chaîne HiFi, etc)
   ],
 )
 
