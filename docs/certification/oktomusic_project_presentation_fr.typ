@@ -160,6 +160,20 @@
 - `UserItemPlayHistory` historise les écoutes récentes
 ])
 
+== Modèle conceptuel de données
+
+#align(
+  center,
+  image("../common/database_mcd.png", alt: "Modèle conceptuel de données Oktomusic", fit: "contain", height: 7.6cm),
+)
+
+== Modèle logique de données
+
+#align(
+  center,
+  image("../common/database_mld.png", alt: "Modèle logique de données Oktomusic", fit: "contain", height: 7.6cm),
+)
+
 == Choix technologiques
 
 #grid(columns: (1fr, 1fr), gutter: 1em, [
