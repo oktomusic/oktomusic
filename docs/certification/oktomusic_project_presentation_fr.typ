@@ -174,6 +174,13 @@
   image("../common/database_mld.png", alt: "Modèle logique de données Oktomusic", fit: "contain", height: 7.6cm),
 )
 
+== Modèle physique de données
+
+#align(
+  center,
+  image("../common/database_prisma.png", alt: "Modèle physique de données Oktomusic", fit: "contain", height: 7.6cm),
+)
+
 == Choix technologiques
 
 #grid(columns: (1fr, 1fr), gutter: 1em, [
