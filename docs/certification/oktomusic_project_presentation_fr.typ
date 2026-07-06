@@ -105,7 +105,7 @@
   alt: "Zoning de l'interface Oktomusic",
   fit: "contain",
   format: "svg",
-  height: 6.7cm,
+  height: auto,
 ))
 
 = Gestion de projet
@@ -127,6 +127,15 @@
   - Contributions upstream : rapports de bugs et demandes d'amélioration sur des dépendances
   - Packaging final : image Docker, documentation d'installation et support de présentation
 ])
+
+== Suivi avec GitHub Projects
+
+#align(center, image(
+  "../common/github_project.png",
+  alt: "Tableau Kanban GitHub Projects du projet Oktomusic",
+  fit: "contain",
+  height: auto,
+))
 
 = Architecture globale
 
@@ -171,14 +180,14 @@
 
 #align(
   center,
-  image("../common/database_mld.png", alt: "Modèle logique de données Oktomusic", fit: "contain", height: 7.6cm),
+  image("../common/database_mld.png", alt: "Modèle logique de données Oktomusic", fit: "contain", height: auto),
 )
 
 == Modèle physique de données
 
 #align(
   center,
-  image("../common/database_prisma.png", alt: "Modèle physique de données Oktomusic", fit: "contain", height: 7.6cm),
+  image("../common/database_prisma.png", alt: "Modèle physique de données Oktomusic", fit: "contain", height: auto),
 )
 
 == Choix technologiques
