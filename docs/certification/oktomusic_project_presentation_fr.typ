@@ -171,23 +171,63 @@
 
 == Modèle conceptuel de données
 
-#align(
-  center,
-  image("../common/database_mcd.png", alt: "Modèle conceptuel de données Oktomusic", fit: "contain", height: 7.6cm),
+#grid(
+  columns: (0.34fr, 0.66fr),
+  gutter: 0.8em,
+  [
+    *Lecture métier*
+
+    - Catalogue musical séparé des données utilisateur
+    - Albums, pistes, artistes et fichiers FLAC pour l'indexation
+    - Comptes, playlists, bibliothèque et historique pour l'usage
+    - Associations explicites pour conserver l'ordre des crédits
+  ],
+  [
+    #align(
+      center,
+      image("../common/database_mcd.png", alt: "Modèle conceptuel de données Oktomusic", fit: "contain", height: 6.6cm),
+    )
+  ],
 )
 
 == Modèle logique de données
 
-#align(
-  center,
-  image("../common/database_mld.png", alt: "Modèle logique de données Oktomusic", fit: "contain", height: auto),
+#grid(
+  columns: (0.34fr, 0.66fr),
+  gutter: 0.8em,
+  [
+    *Passage au relationnel*
+
+    - Tables de jointure pour les relations plusieurs-à-plusieurs
+    - Ordre stocké pour les artistes et les playlists
+    - Contraintes et index pour cohérence et requêtes courantes
+  ],
+  [
+    #align(
+      center,
+      image("../common/database_mld.png", alt: "Modèle logique de données Oktomusic", fit: "contain", height: 6.6cm),
+    )
+  ],
 )
 
 == Modèle physique de données
 
-#align(
-  center,
-  image("../common/database_prisma.png", alt: "Modèle physique de données Oktomusic", fit: "contain", height: auto),
+#grid(
+  columns: (0.34fr, 0.66fr),
+  gutter: 0.8em,
+  [
+  *Implémentation Prisma*
+
+  - Schéma source pour migrations et client TypeScript
+  - Types PostgreSQL, contraintes et suppressions en cascade
+  - Paroles synchronisées stockées en `jsonb`
+  ],
+  [
+    #align(
+      center,
+      image("../common/database_prisma.png", alt: "Modèle physique de données Oktomusic", fit: "contain", height: 6.6cm),
+    )
+  ],
 )
 
 == Choix technologiques

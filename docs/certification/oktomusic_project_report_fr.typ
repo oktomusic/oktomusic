@@ -98,11 +98,45 @@ Compte tenu de la taille de l'application, les gains de performance offerts par 
 - https://www.apollographql.com
 - https://lingui.dev
 
-== MCD
+== Modélisation de la base de données
 
-== MLD
+La base de données a été conçue en trois niveaux.
+Le *MCD* décrit les concepts métier, le *MLD* les traduit en tables relationnelles, et le *MPD* correspond au schéma Prisma réellement utilisé par le backend.
 
-== MPD
+=== MCD
+
+Le MCD sépare le catalogue musical (albums, pistes, artistes, fichiers FLAC) des données utilisateur (comptes, playlists, bibliothèque et historique).
+Les associations artistes/albums/pistes sont explicites pour gérer les crédits multiples et leur ordre d'affichage.
+
+#figure(
+  image("../common/database_mcd.png", alt: "Modèle conceptuel de données Oktomusic", fit: "contain", width: 100%),
+  caption: [Modèle conceptuel de données du catalogue musical et des données utilisateur],
+)
+
+=== MLD
+
+Le MLD transforme ces concepts en tables PostgreSQL.
+Les relations many-to-many passent par des tables de jointure comme `AlbumArtist`, `TrackArtist` et `PlaylistTrack`, qui stockent aussi l'ordre des artistes ou la position des pistes.
+Les contraintes d'unicité et les index servent à garantir la cohérence des données importées et à accélérer les requêtes courantes.
+
+#figure(
+  image("../common/database_mld.png", alt: "Modèle logique de données Oktomusic", fit: "contain", width: 100%),
+  caption: [Modèle logique de données avec tables relationnelles, jointures et contraintes],
+)
+
+=== MPD et schéma Prisma
+
+Le MPD est matérialisé par le schéma Prisma.
+Il définit les types PostgreSQL, les index, les contraintes et les règles de suppression en cascade.
+Prisma génère ensuite le client TypeScript utilisé par les services NestJS.
+Le champ `lyrics`, stocké en `jsonb`, permet par exemple de conserver les paroles synchronisées dans PostgreSQL tout en les manipulant avec un typage applicatif.
+
+#figure(image(
+  "../common/database_prisma.png",
+  alt: "Modèle physique de données Oktomusic dans Prisma",
+  fit: "contain",
+  width: 100%,
+), caption: [Modèle physique de données sous forme de schéma Prisma])
 
 = Spécifications techniques
 
