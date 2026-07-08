@@ -9,6 +9,104 @@
 
 = Cahier des charges
 
+*Oktomusic* vise à proposer une solution de streaming musical concue pour l'auto hébergement, et répond à un besoin concret, basé sur l'anaylse des solutions existantes et des besoins des utilisateurs.
+
+== Comparaison avec les solutions existantes
+
+La volonté de proposer une solution de ce type est née de l'expérience de l'auteur avec les solutions existantes, notamment Jellyfin et Navidrome.
+
+Les limites de ces solutions ont été identifiées et analysées, afin de définir clairement les besoins et les objectifs du projet Oktomusic et apporter une réelle amélioration.
+
+=== Jellyfin
+
+*Jellyfin*#footnote("https://jellyfin.org") est une solution très complète pour l'auto-hébergement de médias, capable de gérer plusieurs types de contenus : films, séries, musique, images, utilisateurs et bibliothèques partagées.
+
+Cette approche généraliste rend l'expérience musicale moins spécialisée.
+
+De plus, l'interface utilisateur est centrée principalement sur les médias vidéo, qui se traduit par une ergonomie et des fonctionalités moins adaptées à la lecture musicale.
+
+- Un support limité des métadonnées audio, avec des difficultés pour gérer les crédits multiples pour les pistes et les albums.
+- Manque de fonctionalités de lecture musicale moderne, dans le système de lecture, la gestion des playlists, ainsi que la navigation. Pas de support des paroles synchronisées mot-à-mot.
+- Manque de fonctionalités modernes sur le client web
+  - Pas de PWA réelle
+  - Pas de mode Picture-in-Picture
+- Aucun support d'OpenID Connect en standard, ce qui complique l'intégration dans une infrastructure d'identité déjà existante et l'administration des utilisateurs
+
+=== Navidrome
+
+*Navidrome*#footnote("https://www.navidrome.org") est plus proche du besoin, car il est conçu spécifiquement pour le streaming musical.
+
+Il propose une solution légère et efficace pour exploiter une bibliothèque audio, incluant un support des clients OpenSubsonic.
+
+- Pas de support des paroles synchronisées mot-à-mot.
+- Manque de fonctionalités modernes sur le client web
+  - Interface MUI avec design peu ergonomique
+  - Pas d'expérience PWA réelle
+  - Pas de mode Picture-in-Picture
+- Comme Jellyfin, aucun support d'OpenID Connect en standard
+
+Cependant, son interface et son modèle fonctionnel ne couvrent pas entièrement l'expérience recherchée pour Oktomusic : application web moderne, file d'attente riche, paroles synchronisées, gestion avancée des playlists et intégration navigateur via PWA, Media Session ou Picture-in-Picture.
+Comme Jellyfin, il ne répond pas directement au besoin d'authentification déléguée par OpenID Connect.
+
+== Objectifs du projet
+
+Oktomusic se positionne avec une approche ciblé :
+
+- Exploitation d'une bibilothèque exclusivement musicale
+- Indexation basée sur des règles strictes de formats de métadonnées, basées sur les recommendations Vorbis#footnote("https://xiph.org/vorbis/doc/v-comment.html") ainsi que Musicbrainz Picard#footnote("https://picard-docs.musicbrainz.org/en/latest/variables/tags_basic.html")
+- Expérience Web moderne sous forme de Progressive Web App (PWA) avec l'utilisation de fonctionnalités avancées des navigateurs (Media Session, Audio Session, Picture-in-Picture, OpenSearch, etc)
+- Conception de l'interface centrée sur l'expérience des applications de streaming modernes (paroles synchronisées, recherche, file d'attente, etc.)
+- Délégation complète de l'authentification à un fournisseur OpenID Connect au choix de l'opérateur du serveur, pour une meilleure sécurité et une administration simplifiée des utilisateurs
+- Distribution sous forme d'image Docker, moderne et sécurisée
+- Facilitation de l'interopérabilité via l'export de playlists, les métadonnées standardisées, etc.
+
+== Utilisateurs cibles
+
+*Administrateur / opérateur*
+
+- Déployer l'application dans une infrastructure Docker.
+- Configurer la connexion à PostgreSQL, Valkey et au fournisseur OpenID Connect.
+- Lancer l'indexation d'une bibliothèque FLAC locale.
+- Disposer d'une configuration explicite et documentée.
+
+*Utilisateur final*
+
+- Se connecter avec son compte existant.
+- Rechercher et parcourir albums, artistes et pistes.
+- Écouter la musique depuis le navigateur avec un lecteur persistant.
+- Gérer ses playlists, sa bibliothèque personnelle et consulter les paroles disponibles.
+
+== Périmètre fonctionnel
+
+Le périmètre retenu pour la version présentée couvre :
+
+- le déploiement de l'application et de ses dépendances ;
+- l'authentification par OpenID Connect ;
+- l'indexation des fichiers FLAC et de leurs métadonnées ;
+- l'affichage du catalogue musical ;
+- la lecture audio en streaming ;
+- la gestion des playlists et de la bibliothèque utilisateur ;
+- l'affichage des paroles synchronisées lorsqu'elles sont disponibles.
+
+== Contraintes principales
+
+- Application *web uniquement* : navigateur, PWA et APIs web modernes.
+- Déploiement auto-hébergé, sans dépendance à un service externe obligatoire au runtime.
+- Base de données relationnelle PostgreSQL pour les données persistantes.
+- Sessions et traitements asynchrones persistés via Valkey.
+- Authentification déléguée : aucun mot de passe utilisateur n'est géré par Oktomusic.
+- Code source open-source sous licence AGPL-3.0.
+- Documentation suffisante pour installer, configurer et présenter l'application.
+
+== Hors périmètre initial
+
+De nombreuses fonctionnalités ont été identifiées comme hors périmètre initial, mais pourraient être intégrées dans des versions futures :
+
+- Interface responsive pour tablettes et mobiles (nécéssite l'implémentation de la navigation par gestes et d'une interface adaptée)
+- Recommandations musicales avancées (intégration de systèmes externes)
+- Mode hors ligne complet (librarie externe nécéssaire non maintenue)
+- Transcodage audio
+
 = Présentation de l'entreprise/service
 
 (à supprimer ?)
