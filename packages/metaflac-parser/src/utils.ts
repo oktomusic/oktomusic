@@ -15,7 +15,7 @@ export function parseLine(line: string): [string, string] | null {
   return null;
 }
 
-export function parseOutput(data: string) {
+export function parseOutput(data: string): MetaflacLinesParseResult {
   const lines = data.trim().split("\n");
 
   const result: MetaflacLinesParseResult = {};

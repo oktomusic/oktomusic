@@ -38,6 +38,7 @@ import {
   getOrderedTrackKeys,
   getTrackCountsPerDisc,
   pickAlbumDateFromTrackDates,
+  validateAlbumFilesMetadata,
 } from "./indexing.utils";
 import {
   getAlbumDiscTrackKey,
@@ -88,7 +89,6 @@ interface IndexingFolderData {
   coverColors?: AlbumCoverColors;
 }
 
-type IndexingFileMap = Record<string, IndexingFileData>;
 type IndexingFolderMap = Record<string, IndexingFolderData>;
 
 interface IndexingProcessorContext {
@@ -261,7 +261,9 @@ export class IndexingProcessor extends WorkerHost {
       });
       let validatedFolders = 0;
       for (const [folderPath, folderData] of foldersWithMetadata) {
-        const errors = this.validateFlacFolder(folderData.files);
+        const errors = validateAlbumFilesMetadata(
+          Object.values(folderData.files),
+        );
 
         if (errors.length !== 0) {
           await this.addWarning(context, {
@@ -1530,54 +1532,6 @@ export class IndexingProcessor extends WorkerHost {
     }
 
     return result;
-  }
-
-  /**
-   * Evaluate a folder of FLAC files for metadata consistency.
-   *
-   * If a folder passes all checks it is considered a candidate for an album
-   * (no duplication check yet, the folder is evaluated alone).
-   *
-   * @returns Array of error messages for found inconsistencies
-   */
-  private validateFlacFolder(fileMap: IndexingFileMap): string[] {
-    const fileArray = Object.values(fileMap);
-    const metadataIssues: string[] = [];
-
-    // 1. ALBUM consistency
-    const albumSet = new Set(fileArray.map((f) => f.tags.ALBUM));
-    if (albumSet.size > 1) {
-      metadataIssues.push(
-        `Inconsistent ALBUM values: ${[...albumSet].join(", ")}`,
-      );
-    }
-
-    // 2. ALBUMARTIST consistency
-    const albumArtistSet = new Set(
-      fileArray.map((f) => JSON.stringify(f.tags.ALBUMARTIST)),
-    );
-    if (albumArtistSet.size > 1) {
-      metadataIssues.push(
-        `Inconsistent ALBUMARTIST values: ${[...albumArtistSet].join(", ")}`,
-      );
-    }
-
-    // 3. DISCNUMBER totals consistency
-    const discTotals = new Map<number, number>();
-
-    for (const f of Object.values(fileMap)) {
-      const disc = f.tags.DISCNUMBER;
-      const discTotal = f.tags.TOTALDISCS;
-      discTotals.set(disc, discTotal);
-    }
-    const uniqueTotals = new Set(discTotals.values());
-    if (uniqueTotals.size > 1) {
-      metadataIssues.push(
-        `Inconsistent DISCNUMBER totals: ${[...uniqueTotals].join(", ")}`,
-      );
-    }
-
-    return metadataIssues;
   }
 
   private async addWarning(

@@ -6,9 +6,123 @@ import {
   getOrderedTrackKeys,
   getTrackCountsPerDisc,
   pickAlbumDateFromTrackDates,
+  validateAlbumFilesMetadata,
 } from "./indexing.utils";
 
 describe("indexing.utils", () => {
+  describe("validateAlbumFilesMetadata", () => {
+    const file = (
+      overrides: Partial<{
+        ALBUM: string;
+        ALBUMARTIST: string[];
+        DISCNUMBER: number;
+        TRACKNUMBER: number;
+        TOTALTRACKS: number;
+        TOTALDISCS: number;
+      }> = {},
+    ) => ({
+      tags: {
+        ALBUM: "Album",
+        ALBUMARTIST: ["Artist"],
+        DISCNUMBER: 1,
+        TRACKNUMBER: 1,
+        TOTALTRACKS: 1,
+        TOTALDISCS: 1,
+        ...overrides,
+      },
+    });
+
+    it("accepts a complete album folder", () => {
+      const issues = validateAlbumFilesMetadata([
+        file({ TRACKNUMBER: 1, TOTALTRACKS: 2, TOTALDISCS: 2 }),
+        file({ TRACKNUMBER: 2, TOTALTRACKS: 2, TOTALDISCS: 2 }),
+        file({
+          DISCNUMBER: 2,
+          TRACKNUMBER: 1,
+          TOTALTRACKS: 1,
+          TOTALDISCS: 2,
+        }),
+      ]);
+
+      expect(issues).toEqual([]);
+    });
+
+    it("rejects inconsistent album identity metadata", () => {
+      const issues = validateAlbumFilesMetadata([
+        file(),
+        file({ ALBUM: "Other Album", ALBUMARTIST: ["Other Artist"] }),
+      ]);
+
+      expect(issues).toContain("Inconsistent ALBUM values: Album, Other Album");
+      expect(issues).toContain(
+        'Inconsistent ALBUMARTIST values: ["Artist"], ["Other Artist"]',
+      );
+    });
+
+    it("rejects inconsistent disc totals", () => {
+      const issues = validateAlbumFilesMetadata([
+        file({ TRACKNUMBER: 1, TOTALTRACKS: 2, TOTALDISCS: 2 }),
+        file({ TRACKNUMBER: 2, TOTALTRACKS: 2, TOTALDISCS: 3 }),
+      ]);
+
+      expect(issues).toContain("Inconsistent TOTALDISCS values: 2, 3");
+    });
+
+    it("rejects a total disc count that does not match the highest disc number", () => {
+      const issues = validateAlbumFilesMetadata([
+        file({ TRACKNUMBER: 1, TOTALTRACKS: 1, TOTALDISCS: 3 }),
+        file({
+          DISCNUMBER: 2,
+          TRACKNUMBER: 1,
+          TOTALTRACKS: 1,
+          TOTALDISCS: 3,
+        }),
+      ]);
+
+      expect(issues).toContain(
+        "TOTALDISCS (3) does not match the highest DISCNUMBER (2)",
+      );
+    });
+
+    it("rejects inconsistent track totals within the same disc", () => {
+      const issues = validateAlbumFilesMetadata([
+        file({ TRACKNUMBER: 1, TOTALTRACKS: 2 }),
+        file({ TRACKNUMBER: 2, TOTALTRACKS: 3 }),
+      ]);
+
+      expect(issues).toContain(
+        "Inconsistent TOTALTRACKS values for DISCNUMBER 1: 2, 3",
+      );
+    });
+
+    it("rejects duplicate disc and track positions", () => {
+      const issues = validateAlbumFilesMetadata([
+        file({ TRACKNUMBER: 1, TOTALTRACKS: 2 }),
+        file({ TRACKNUMBER: 1, TOTALTRACKS: 2 }),
+      ]);
+
+      expect(issues).toContain(
+        "Duplicate DISCNUMBER + TRACKNUMBER pairs: d1t1",
+      );
+      expect(issues).toContain(
+        "DISCNUMBER 1 declares TOTALTRACKS=2 but has 1 unique track number(s)",
+      );
+      expect(issues).toContain("DISCNUMBER 1 is missing TRACKNUMBER values: 2");
+    });
+
+    it("rejects missing and out-of-range track positions", () => {
+      const issues = validateAlbumFilesMetadata([
+        file({ TRACKNUMBER: 1, TOTALTRACKS: 2 }),
+        file({ TRACKNUMBER: 3, TOTALTRACKS: 2 }),
+      ]);
+
+      expect(issues).toContain("DISCNUMBER 1 is missing TRACKNUMBER values: 2");
+      expect(issues).toContain(
+        "DISCNUMBER 1 has TRACKNUMBER values outside 1..2: 3",
+      );
+    });
+  });
+
   describe("getTrackCountsPerDisc", () => {
     it("returns empty for no tracks", () => {
       expect(getTrackCountsPerDisc([])).toEqual([]);
