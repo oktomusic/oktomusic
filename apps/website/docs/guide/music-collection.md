@@ -36,10 +36,12 @@ FLAC files metadata is composed of [Vorbis comments](https://xiph.org/vorbis/doc
 | `TITLE`       | ✅       | String                             | ❌     | ❌               |
 | `ARTIST`      | ✅       | String                             | ❌     | ✅               |
 | `ALBUM`       | ✅       | String                             | ✅     | ❌               |
+| `ALBUMARTIST` | ✅       | String                             | ✅     | ✅               |
 | `TRACKNUMBER` | ✅       | Integer (1-based)                  | ❌     | ❌               |
 | `TOTALTRACKS` | ✅       | Integer (1-based)                  | ❌     | ❌               |
 | `DISCNUMBER`  | ✅       | Integer (1-based)                  | ❌     | ❌               |
-| `TOTALDISCS`  | ✅       | Integer (1-based)                  | ❌     | ❌               |
+| `TOTALDISCS`  | ✅       | Integer (1-based)                  | ✅     | ❌               |
+| `DATE`        | ❌       | Date (`YYYY-MM-DD`)                | ❌     | ❌               |
 | `ISRC`        | ❌       | [ISRC code](https://isrc.ifpi.org) | ❌     | ❌               |
 
 > [!IMPORTANT]

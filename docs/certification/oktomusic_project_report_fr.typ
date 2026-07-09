@@ -423,6 +423,192 @@ L'application intègre un système d'extraction de couleurs dominantes à partir
 
 Les couvertures d'album subissant une conversion au format AVIF en plusieurs résolutions obtimisées à l'aide de la librarie `sharp`#footnote("https://sharp.pixelplumbing.com"), la décision a été prise de développer un adaptateur pour sharp basé sur les algorithme MMCQ exportés par les modules de la bibliothèque `node-vibrant`#footnote[https://vibrant.dev], permettant d'éviter l'ajout d'une dépendance supplémentaire (`jimp`) et de charger deux fois les images en mémoire au moment de l'indexation.
 
+== Validation des métadonnées FLAC
+
+Pour garantir un système d'indexation robuste et cohérent, notamment en évitant la perte de donnée au maximum lors d'une réindexation tout en conservant la qualité des métadonnées, le projet impose des exigences claires aux fichiers exploités.
+
+Les fichiers manipulés par l'application sont au format FLAC et utilisent donc les commentaires Vorbis #footnote[https://xiph.org/vorbis/doc/v-comment.html] comme format de métadonnées.
+
+Le format Vorbis ne définit malheureusement que des recommandations pour les noms et le format des tags, et ne définit pas de standard strict pour les métadonnées musicales.
+
+Une spécification stricte a donc été définie pour les tags gérés par l'application, basée sur les recommandations Vorbis et les conventions Musicbrainz Picard#footnote[https://picard-docs.musicbrainz.org/en/latest/variables/tags_basic.html].
+
+Le choix a été fait d'imposer ce modèle stricte pour limiter l'indexation de fichiers ne respectant pas la structure d'un album, et faire correspondre plus simplement le modèle de données plat des fichiers FLAC avec le modèle relationnel de la base de données.
+
+#table(
+  columns: (auto, auto, auto, auto, auto),
+  align: horizon,
+  table.header([*Nom*], [*Requis*], [*Format*], [*Unique*], [*Multiple*]),
+  `TITLE`,
+  [Oui],
+  [String],
+  [Non],
+  [Non],
+  `ARTIST`,
+  [Oui],
+  [String],
+  [Non],
+  [Oui],
+  `ALBUM`,
+  [Oui],
+  [String],
+  [Oui],
+  [Non],
+  `ALBUMARTIST`,
+  [Oui],
+  [String],
+  [Oui],
+  [Oui],
+  `TRACKNUMBER`,
+  [Oui],
+  [Entier >= 1],
+  [Non],
+  [Non],
+  `TOTALTRACKS`,
+  [Oui],
+  [Entier >= 1],
+  [Non],
+  [Non],
+  `DISCNUMBER`,
+  [Oui],
+  [Entier >= 1],
+  [Non],
+  [Non],
+  `TOTALDISCS`,
+  [Oui],
+  [Entier >= 1],
+  [Oui],
+  [Non],
+  `DATE`,
+  [Non],
+  [`YYYY-MM-DD`],
+  [Non],
+  [Non],
+  `ISRC`,
+  [Non],
+  [Code ISRC#footnote[https://en.wikipedia.org/wiki/International_Standard_Recording_Code]],
+  [Non],
+  [Non],
+)
+
+- *Unique*: Tous les fichiers d'un même album doivent avoir la même valeur pour ce tag
+- *Multiple*: Un seul fichier peut contenir plusieur fois le tag, avec des valeurs différentes (ex: plusieurs artistes pour un même album). L'ordre des valeurs est conservé.
+- Les tags multiples utilisants des caractères de séparation (ex: `;`) ne sont pas supportés, car ne correspondant pas au standard Vorbis
+- `TOTALTRACKS` est le nombre total de pistes dans le disque `DISCNUMBER`
+- `TRACKNUMBER` est le numéro de la piste dans son disque `DISCNUMBER`
+- `TOTALTRACKS` et `TOTALDISCS` sont validés pour la cohérence à travers tous les fichiers de l'album
+- Les paires `DISCNUMBER` + `TRACKNUMBER` sont validées pour l'unicité à travers tous les fichiers de l'album
+- Deux artistes différents avec le même nom ne peuvent pas être distingués. Le processus d'indexation pourrait prendre en charge une clé supplémentaire comme `MUSICBRAINZ_ARTISTID` à l'avenir pour résoudre ce problème.
+
+L'extraction des métadonnées et la validation de format par fichier sont effectués par le module `@oktomusic/metaflac-parser` et exploite la sortie standard de l'outil CLI `metaflac` (faisant partie de la librarie FLAC officielle) pour extraire les métadonnées Vorbis.
+
+Un parseur spécifique a été développé pour l'analyse ligne à ligne, les vérifications de format et la génération d'un objet JSON typé pour le backend se faisant via un schéma Zod.
+
+=== Parser ligne à ligne
+
+Source : `packages/metaflac-parser/src/utils.ts`
+
+Les lignes de sorties sont analysées via une expression régulière, les clés sont normalisées en majuscules et les valeurs sont stockées dans un tableau pour gérer les tags multiples.
+
+```ts
+export type MetaflacLinesParseResult = Record<string, string[]>;
+
+export const lineRegex = /^([a-zA-Z]*)=(.*)$/;
+
+export function parseLine(line: string): [string, string] | null {
+  const match = lineRegex.exec(line);
+  if (match) {
+    const [, key, value] = match;
+    return [key.toUpperCase(), value];
+  }
+  return null;
+}
+
+export function parseOutput(data: string): MetaflacLinesParseResult {
+  const lines = data.trim().split("\n");
+
+  const result: MetaflacLinesParseResult = {};
+  for (const line of lines) {
+    const parsed = parseLine(line);
+    if (parsed) {
+      const [key, value] = parsed;
+      if (key in result) {
+        result[key].push(value);
+      } else {
+        result[key] = [value];
+      }
+    }
+  }
+  return result;
+}
+```
+
+=== Validation par fichier
+
+Source : `packages/metaflac-parser/src/index.ts`
+
+La validation de format par fichier se fait via un premier schéma Zod. Pour valider les tags unique, on utilise un tuple Zod de longueur 1 et des tableaux simples pour les tags multiples.
+
+Les valeurs sont ensuite transformées en un objet plat via un deuxième schéma Zod pour une utilisation plus facile en backend.
+
+```ts
+// zPlainDate est un une fonction Zod pour valider les dates au format `YYYY-MM-DD` et en sortir un objet Temporal.PlainDate
+
+export const isrcRegex = /^[A-Z]{2}-?\w{3}-?\d{2}-?\d{5}$/;
+
+const IntermediateMetaflacSchema2 = z.object({
+  TITLE: z.tuple([z.string()]),
+  ALBUM: z.tuple([z.string()]),
+  TRACKNUMBER: z.tuple([z.coerce.number()]),
+  DISCNUMBER: z.tuple([z.coerce.number()]),
+  TOTALTRACKS: z.tuple([z.coerce.number()]),
+  TOTALDISCS: z.tuple([z.coerce.number()]),
+  ARTIST: z.array(z.string()),
+  ALBUMARTIST: z.array(z.string()),
+  DATE: z.tuple([zPlainDate]).optional(),
+  ISRC: z
+    .tuple([z.string().regex(isrcRegex, "Invalid ISRC format")])
+    .optional(),
+});
+
+export const MetaflacSchema = IntermediateMetaflacSchema.transform((val) => ({
+  TITLE: val.TITLE[0],
+  ARTIST: val.ARTIST,
+  ALBUM: val.ALBUM[0],
+  ALBUMARTIST: val.ALBUMARTIST,
+  TRACKNUMBER: val.TRACKNUMBER[0],
+  DISCNUMBER: val.DISCNUMBER[0],
+  TOTALTRACKS: val.TOTALTRACKS[0],
+  TOTALDISCS: val.TOTALDISCS[0],
+  DATE: val.DATE?.[0],
+  ISRC: val.ISRC?.[0],
+}));
+```
+
+=== Validation par collection de fichiers
+
+Source: `apps/backend/src/bullmq/processors/indexing.utils.ts`
+
+Pour indexer un album, les fichiers FLAC doivent passer une vérification de cohérence globale.
+
+Cette validation est effectuée après la validation individuelle de chaque fichier, sur l'ensemble des fichiers FLAC présents dans un même dossier d'album. Elle permet de vérifier que la collection de fichiers représente bien un album unique et complet avant de créer ou mettre à jour les entités en base de données.
+
+Les vérifications sont effectuées dans l'ordre suivant :
+
++ *Identité de l'album* : tous les fichiers du dossier doivent partager la même valeur `ALBUM`, et la même liste `ALBUMARTIST` dans le même ordre. Cela évite qu'un même dossier mélange plusieurs albums ou plusieurs crédits d'album différents.
+
++ *Nombre total de disques* : la valeur `TOTALDISCS` doit être identique sur tous les fichiers. Cette valeur doit également correspondre au plus grand `DISCNUMBER` présent dans le dossier. Par exemple, si le disque le plus élevé est `DISCNUMBER=2`, alors `TOTALDISCS` doit être égal à `2`.
+
++ *Collecte des positions de pistes* : le système regroupe ensuite les fichiers par couple `DISCNUMBER` + `TRACKNUMBER`, puis par disque. Cette étape ne produit pas d'erreur directement, mais prépare les informations nécessaires aux validations suivantes.
+
++ *Unicité des positions* : un même couple `DISCNUMBER` + `TRACKNUMBER` ne peut apparaître qu'une seule fois dans l'album. Deux fichiers ne peuvent donc pas représenter simultanément la piste `2` du disque `1`.
+
++ *Nombre total de pistes par disque* : pour chaque disque, tous les fichiers doivent déclarer la même valeur `TOTALTRACKS`. Cette règle est appliquée disque par disque, car `TOTALTRACKS` représente le nombre de pistes dans le disque courant, et non dans l'album complet.
+
++ *Continuité des numéros de pistes* : pour chaque disque, les valeurs `TRACKNUMBER` doivent former une séquence complète de `1` à `TOTALTRACKS`. Cela permet de détecter à la fois les pistes manquantes, les doublons et les numéros hors limites.
+
+Si l'une de ces règles échoue, le dossier reçoit un avertissement `WARNING_FOLDER_METADATA`. Il est alors exclu des étapes suivantes de synchronisation des artistes, des albums et des pistes, ce qui empêche l'indexation partielle ou ambiguë d'un album.
+
 = Sécurité de l'application <security>
 
 == OpenID Connect <security_oidc>
@@ -483,7 +669,7 @@ Cette politique permet de réduire l’impact d’une éventuelle compromission 
 
 Tout au long du développement, les instances de pré-production de l'application ont été régulièrement testées à l'aide d'outils d'analyse de sécurité HTTP tels que Security Headers #footnote[https://securityheaders.com] (Snyk), HTTP Observatory #footnote[https://developer.mozilla.org/en-US/observatory] (Mozilla) et CSP Evaluator #footnote[https://csp-evaluator.withgoogle.com] (Google), dans le but d'obtenir les meilleurs résultats possibles.
 
-Pour l'instance de pré-production (reverse proxy Traefik), les résultats obtenus sont les suivants :
+Pour une instance de production (derrière reverse proxy Traefik), les résultats obtenus sont les suivants :
 
 #table(
   columns: (auto, auto),
