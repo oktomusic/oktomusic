@@ -609,6 +609,103 @@ Les vérifications sont effectuées dans l'ordre suivant :
 
 Si l'une de ces règles échoue, le dossier reçoit un avertissement `WARNING_FOLDER_METADATA`. Il est alors exclu des étapes suivantes de synchronisation des artistes, des albums et des pistes, ce qui empêche l'indexation partielle ou ambiguë d'un album.
 
+== Lecteur Picture-in-Picture
+
+Source : `apps/frontend/src/components/PipControls/PipControls.tsx`
+
+L'interface de l'application intègre un mini lecteur, détachable de la page principale, exploitant l'API web Document Picture-in-Picture#footnote[https://developer.mozilla.org/en-US/docs/Web/API/Document_Picture-in-Picture_API] pour permettre à l'utilisateur de continuer à contrôler sa musique tout en naviguant sur d'autres pages ou applications.
+
+Ce lecteur a représenté un défi technique particulier pour s'adapter aux contraintes de l'API Document Picture-in-Picture et au fonctionnement du bundler Vite.
+
+La principale caractéristique de l'API est qu'elle permet l'obtention d'une instance spécifique de l'interface `Document`#footnote[https://developer.mozilla.org/en-US/docs/Web/API/Document] séparée de la page principale.
+
+Un portail ReactDOM#footnote[https://react.dev/reference/react-dom/createPortal
+] a été utilisé pour rendre le mini lecteur dans le document détaché, tout en conservant l'accès aux hooks React et à l'état global de l'application, sans créer une nouvelle racine React.
+
+Les styles CSS importés par l'application n'étant pas automatiquement appliqués par Vite au document détaché, il a été nécessaire de cloner les styles dans celui-ci pour permettre de les exploiter.
+
+Une branche spécifique a été créée pour gérer le clonage des styles inline en mode développement, conformément au fonctionnement de Vite. Cette branche est supprimée automatiquement en production par le bundler Vite (tree-shaking).
+
+```ts
+export function PipControls(): ReactPortal | null {
+  const [pipOpen, setPipOpen] = useAtom(pipOpenAtom);
+
+  const pipWindowRef = useRef<Window | null>(null);
+  const [pipContainer, setPipContainer] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!pipOpen) return;
+    let cancelled = false;
+    let eventSourcePipWindow: Window | null = null;
+    const syncClosed = () => setPipOpen(false);
+
+    async function openPip() {
+      try {
+        const pipWin = await window.documentPictureInPicture!.requestWindow(...);
+
+        if (cancelled) {
+          pipWin.close();
+          return;
+        }
+
+        pipWindowRef.current = pipWin;
+
+        const doc = pipWin.document;
+
+        [...document.querySelectorAll('link[rel="stylesheet"]')].forEach(
+          (link) => {
+            doc.head.appendChild(link.cloneNode(true));
+          },
+        );
+
+        ...
+
+        if (import.meta.env.DEV) {
+          [...document.querySelectorAll("style")].forEach((style) => {
+            doc.head.appendChild(style.cloneNode(true));
+          });
+        }
+
+        const container = doc.createElement("main");
+        doc.body.appendChild(container);
+        setPipContainer(container);
+
+        eventSourcePipWindow = pipWin;
+        pipWin.onpagehide = syncClosed;
+        pipWin.onbeforeunload = syncClosed;
+      } catch (e) {
+        setPipOpen(false);
+      }
+    }
+
+    void openPip();
+
+    return () => {
+      cancelled = true;
+      if (eventSourcePipWindow) {
+        eventSourcePipWindow.onpagehide = null;
+        eventSourcePipWindow.onbeforeunload = null;
+      }
+      eventSourcePipWindow = null;
+      if (pipWindowRef.current) {
+        if (!pipWindowRef.current.closed) {
+          pipWindowRef.current.close();
+        }
+        pipWindowRef.current = null;
+      }
+      setPipContainer(null);
+    };
+  }, [pipOpen, pipSupported, setPipOpen]);
+
+  if (!pipContainer) return null;
+
+  return ReactDOM.createPortal(
+    <PipControlsWindow pipDocument={pipContainer.ownerDocument} />,
+    pipContainer,
+  );
+}
+```
+
 = Sécurité de l'application <security>
 
 == OpenID Connect <security_oidc>
