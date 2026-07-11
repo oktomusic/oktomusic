@@ -100,12 +100,56 @@ Le périmètre retenu pour la version présentée couvre :
 
 == Hors périmètre initial
 
-De nombreuses fonctionnalités ont été identifiées comme hors périmètre initial, mais pourraient être intégrées dans des versions futures :
+De nombreuses fonctionnalités ont été identifiées comme hors périmètre initial, mais pourraient être intégrées dans des versions futures.
 
-- Interface responsive pour tablettes et mobiles (nécéssite l'implémentation de la navigation par gestes et d'une interface adaptée)
-- Recommandations musicales avancées (intégration de systèmes externes)
-- Mode hors ligne complet (librarie externe nécéssaire non maintenue)
-- Transcodage audio
+=== Transcodage audio
+
+L'application ne supportant en entrée que les fichiers au format sans-pertes FLAC, les utilisateurs souhaitant écouter de la musique sur des appareils ne disposant pas de débit internet suffisant ou de limites de données mobiles pourraient souhaiter le streaming de versions transcodées dans différents formats plus légers.
+
+Ce besoin a été considéré au départ comme rentrant dans le périmètre initial, mais en a été écarté suite à des contraintes de temps de développement.
+
+La conception prévoyait pour chaque fichier FLAC suite aux étapes d'indexation, la génération de différentes versions transcodées au format Opus#footnote[https://en.wikipedia.org/wiki/Opus_(audio_format)] avec différents débits binaires au moyen d'FFMpeg pour permettre à l'utilisateur de choisir la qualité de streaming adaptée à sa connexion.
+
+Une évolution plus complexe aurait été la mise en place d'un transcodage à la volée, effectué au moment du streaming, mais aurait demandé un effort de développement plus important, notamment pour la gestion des performances, de la charge serveur et de l'interfaçage avec FFMpeg.
+
+=== Interface responsive et adaptée aux contrôles tactiles
+
+La possibilité d'utiliser l'application sur des petits écrans et avec contrôles tactiles a été envisagée dés le départ, mais écarté du périmètre initial pour se concentrer sur une utilisation essentiellement desktop.
+
+Contrairement à une interface desktop, une interface responsive dotée de contrôles tactile notamment par gestes nécessite une conception et un développement spécifiques, ne ce limitant pas à une mise en page CSS.
+
+Contrairement à un site web plus standard, la création de deux branches distinctes de l'interface aurait été nécessaires pour garantir une expérience de qualité telle que celle attendue par les utilisateurs d'application de streaming.
+
+=== Interface compatible d'une utilisation de type console de salon
+
+Certaines applications de streaming classiques ayant une intégration ou des applications spécifiques pour téléviseurs ou consoles de salon, la possibilité d'adapter l'interface pour une utilisation dans le navigateur de ce type d'appareil a été étudiée.
+
+La plus grosse difficulté réside dans la nécéssité de supporter une navigation spatiale par focus, pour une utilisation avec une télécommande ou un gamepad (joystick ou D-pad).
+
+Le modèle de focus classique des navigateurs est uni-directionnel, et ne permet pas à ce jour une navigation spatiale.
+Il existe une spécification W3C `CSS Spatial Navigation Level 1`#footnote[https://www.w3.org/TR/css-nav-1] (working draft) pour doter les navigateurs de capacités de navigation spatiales, poussée par des ingénieurs de LG.
+
+Les polyfils disponibles pour cette spécifications, ainsi que les bibliothèques de navigation spatiale open-source pour React#footnote[https://devportal.noriginmedia.com/docs/Norigin-Spatial-Navigation] n'étant pas assez matures ou nécéssitant des modifications trop lourdes au code de l'application, cette fonctionnalité a été écartée du périmètre initial.
+
+La lecture de l'article de Spotify Engineering#footnote[https://engineering.atspotify.com/2023/5/tv-spatial-navigation] sur le sujet de la navigation spatiale sur les téléviseurs a été une source d'inspiration dans ces recherches.
+
+=== Recommendations musicales avancées
+
+=== Support d'un mode hors-ligne complet
+
+La plus part des applications de streaming musical modernes proposent un mode hors-ligne complet, permettant à l'utilisateur de télécharger des albums ou playlists pour les écouter sans connexion internet, ainsi que la mise en cache automatique de contenu sur la base du comportement de l'utilisateur.
+
+Dans le cas de l'application Oktomusic, le support d'un mode hors-ligne nécéssite la mise en place de plusieurs mécanismes complexes.
+Certaines d'entre elles sont déjà implémentées.
+
+L'utilisation d'un Service Worker dans le cadre d'une PWA (Progressive Web App) permet de mettre en cache les fichiers statiques de l'application.
+Une logique de mise en cache spécifique a été mise en place pour les fichiers audio, pour permettre un démarage plus rapide de la lecture des fichiers écoutés récemment.
+
+Le mécanisme principal nécéssite une logique de détection du mode hors-ligne, couplée à une mise en cache des données GraphQL associées aux albums, playlists et à la librarie utilisateur.
+
+Malheureusement, la librarie officielle permettant d'appliquer une logique de persistance de la mise en cache pour Apollo Client#footnote[https://github.com/apollographql/apollo-cache-persist] est non maintenue et ne supporte pas la dernière version stable, ce qui implique le fait de développer une solution spécifique pour l'application.
+
+Par ailleurs, le fait de "télécharger" les fichiers audio pour assurer leur disponibilité indépendament du dernier accès nécéssite de mettre en place un mécanisme donnant au cache une durée de vie infinie, sois en adaptant la politique de cache, sois en téléchargeant les fichiers audio dans le système de fichiers du navigateur (Origin Private File System#footnote[https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system]) et en interceptant les requêtes réseau dans le Service Worker pour servir les fichiers depuis celui-ci.
 
 = Présentation de l'entreprise/service
 
