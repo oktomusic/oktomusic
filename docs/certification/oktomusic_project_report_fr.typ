@@ -609,6 +609,86 @@ Les vérifications sont effectuées dans l'ordre suivant :
 
 Si l'une de ces règles échoue, le dossier reçoit un avertissement `WARNING_FOLDER_METADATA`. Il est alors exclu des étapes suivantes de synchronisation des artistes, des albums et des pistes, ce qui empêche l'indexation partielle ou ambiguë d'un album.
 
+== Adaptation de l’interface aux couleurs des albums
+
+Des éléments d'interface de l'application sont adaptés aux couleurs dominantes des couvertures d'album, extraites à l'indexation (voir la section dédiée), pour améliorer l'expérience utilisateur et la cohérence visuelle.
+
+Pour faciliter l'exploitation contextuelle de ces couleurs, des propriétés CSS personalisées#footnote[https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@property] ainsi que des hook React ont été définis à cet effet.
+
+Les propriétés CSS sont définies avec le sélecteur `@property` pour permettre le type checking et la définition d'une valeur initiale.
+
+```css
+@property --album-color-vibrant {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --album-color-vibrant-dark {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+/* ... */
+```
+
+Après cette définition, le hook React `useVibrantColors` peut être utilisé contextuellement pour appliquer les couleurs extraites à un élément HTML, en utilisant les propriétés CSS définies.
+
+```ts
+export interface VibrantColors {
+  readonly vibrant: string;
+  readonly darkVibrant: string;
+  ...
+}
+
+export type VibrantColorsPartial = Partial<VibrantColors>;
+
+export function applyColorProperties(
+  elem: HTMLElement,
+  colors: VibrantColorsPartial,
+) {
+  elem.style.setProperty("--album-color-vibrant", colors.vibrant || null);
+  elem.style.setProperty("--album-color-vibrant-dark", colors.darkVibrant || null);
+  ...
+}
+
+
+export function useVibrantColors(
+  targetRef: RefObject<HTMLElement | null>,
+  colors?: VibrantColors,
+  fallbackColors?: VibrantColorsPartial,
+) {
+  useEffect(() => {
+    const target = targetRef.current;
+
+    if (!target) {
+      return undefined;
+    }
+
+    applyColorProperties(target, colors ? colors : fallbackColors || {});
+
+    return () => {
+      applyColorProperties(target, {});
+    };
+  }, [colors, fallbackColors, targetRef]);
+}
+```
+
+Les éléments enfants pourront ensuite exploiter ces propriétés CSS pour adapter leur style en conséquence. Les hooks peuvent êtres imbriqués, permettant de définir les couleurs pour un composant parent, et de les surcharger dans un composant enfant.
+
+Les couleurs de l'album du titre en cours de lecture sont appliquées de manière automatique à l'élément racine de l'application, et sont donc disponibles pour tous les composants enfants par défaut.
+
+```css
+.component {
+  background-image: linear-gradient(
+    45deg in oklch,
+    var(--album-color-vibrant-dark),
+    var(--album-color-vibrant)
+  );
+}
+```
+
 == Lecteur Picture-in-Picture
 
 Source : `apps/frontend/src/components/PipControls/PipControls.tsx`
