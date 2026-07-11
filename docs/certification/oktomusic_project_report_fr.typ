@@ -126,17 +126,17 @@ Cela a impliqué l’identification des causes, la rédaction de rapports reprod
 
 = Spécifications fonctionnelles
 
-#image("../common/interface.excalidraw.svg")
+#figure(image("../common/interface.excalidraw.svg"), caption: [Schéma de zoning])
 
 = Architecture logicielle
 
-#image(
+#figure(image(
   "../common/architecture.excalidraw.svg",
   alt: "Schéma d'architecture",
   fit: "contain",
   format: "svg",
   height: auto,
-)
+), caption: [Schéma d'architecture])
 
 == Générale
 
@@ -611,6 +611,8 @@ Si l'une de ces règles échoue, le dossier reçoit un avertissement `WARNING_FO
 
 == Adaptation de l’interface aux couleurs des albums
 
+Source : `apps/frontend/src/hooks/vibrant_colors.ts`
+
 Des éléments d'interface de l'application sont adaptés aux couleurs dominantes des couvertures d'album, extraites à l'indexation (voir la section dédiée), pour améliorer l'expérience utilisateur et la cohérence visuelle.
 
 Pour faciliter l'exploitation contextuelle de ces couleurs, des propriétés CSS personalisées#footnote[https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@property] ainsi que des hook React ont été définis à cet effet.
@@ -785,6 +787,15 @@ export function PipControls(): ReactPortal | null {
   );
 }
 ```
+
+#figure(image(
+  "../common/screenshots/player_pip.png",
+  alt: "Mini lecteur détachable en mode Picture-in-Picture",
+  fit: "contain",
+  format: "png",
+  width: 50%,
+  scaling: "smooth",
+), caption: [Mini lecteur détachable en mode Picture-in-Picture])
 
 = Sécurité de l'application <security>
 
