@@ -135,6 +135,13 @@ La lecture de l'article de Spotify Engineering#footnote[https://engineering.atsp
 
 === Recommendations musicales avancées
 
+Une des fonctionalités importantes des application de streaming musical modernes est la possibilité de proposer des playlists automatiques et la lecture infinie basées sur la similarité musicale et les habitudes d'écoute de l'utilisateur.
+
+Une solution de ce type ne pouvant pas se baser uniquement sur le support des métadonnées de genres musicaux, mais nécéssite l'exploitation d'analyses acoustiques par IA.
+
+Mes recherches sur les technologies open-source permettant de réaliser ce type d'analyse acoustique ont revevé le projet AudioMuse AI#footnote[https://github.com/NeptuneHub/AudioMuse-AI] qui est une solution intégrée dans Jellyfin, Navidrome et d'autres applications de streaming musical.
+La création d'un plugin spécifique ou l'intégration de cette solution dans Oktomusic serait envisageable.
+
 === Support d'un mode hors-ligne complet
 
 La plus part des applications de streaming musical modernes proposent un mode hors-ligne complet, permettant à l'utilisateur de télécharger des albums ou playlists pour les écouter sans connexion internet, ainsi que la mise en cache automatique de contenu sur la base du comportement de l'utilisateur.
