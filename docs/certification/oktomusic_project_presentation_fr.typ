@@ -115,7 +115,7 @@
 #grid(columns: (1fr, 1fr), gutter: 1em, [
   *Méthode*
 
-  - Cadrage à partir d'un besoin fictif mais réaliste
+  - Cadrage à partir d'un besoin réaliste
   - Développement itératif orienté MVP
   - Découpage par domaines : auth, indexation, catalogue, lecteur, playlists, déploiement
   - Documentation utilisateur et technique maintenue avec le code

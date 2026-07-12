@@ -60,21 +60,99 @@ Oktomusic se positionne avec une approche ciblé :
 - Distribution sous forme d'image Docker, moderne et sécurisée
 - Facilitation de l'interopérabilité via l'export de playlists, les métadonnées standardisées, etc.
 
-== Utilisateurs cibles
+== Personas, epics et user stories
 
-*Administrateur / opérateur*
+Les utilisateurs cibles ont été formalisés sous forme de *personas*, regroupés en *epics* et en *user stories*.
 
-- Déployer l'application dans une infrastructure Docker.
-- Configurer la connexion à PostgreSQL, Valkey et au fournisseur OpenID Connect.
-- Lancer l'indexation d'une bibliothèque FLAC locale.
-- Disposer d'une configuration explicite et documentée.
+=== Personas
 
-*Utilisateur final*
+==== Persona 1 : administrateur / opérateur auto-hébergé
 
-- Se connecter avec son compte existant.
-- Rechercher et parcourir albums, artistes et pistes.
-- Écouter la musique depuis le navigateur avec un lecteur persistant.
-- Gérer ses playlists, sa bibliothèque personnelle et consulter les paroles disponibles.
+Ce persona représente l'utilisateur technique qui déploie et maintient Oktomusic sur son infrastructure personnelle ou familiale.
+Il est à l'aise avec Docker, les variables d'environnement et les services auto-hébergés.
+Son objectif principal est de disposer d'un service stable, documenté et simple à intégrer à son infrastructure existante.
+
+- Besoins principaux : déploiement Docker, configuration PostgreSQL / Valkey, connexion à un fournisseur OpenID Connect, indexation de la bibliothèque musicale.
+- Critères de satisfaction : installation reproductible, configuration explicite, logs exploitables, absence de gestion locale des mots de passe.
+
+==== Persona 2 : auditeur quotidien
+
+Ce persona représente l'utilisateur final qui utilise Oktomusic pour écouter sa musique depuis un navigateur.
+Il attend une expérience fluide, proche des applications de streaming modernes, sans avoir à comprendre l'infrastructure technique.
+
+- Besoins principaux : recherche rapide, navigation par albums et artistes, lecteur persistant, file d'attente, paroles synchronisées, gestion de playlists.
+- Critères de satisfaction : interface agréable, lecture fiable, accès simple à la bibliothèque, continuité de l'écoute pendant la navigation.
+
+==== Persona 3 : collectionneur musical
+
+Ce persona représente l'utilisateur qui accorde une importance particulière à la qualité de sa bibliothèque musicale : fichiers FLAC, métadonnées propres, crédits artistes, pochettes et organisation des albums.
+Il peut être aussi l'administrateur du serveur, mais son besoin est centré sur la fidélité du catalogue.
+
+- Besoins principaux : indexation fiable, prise en charge des métadonnées audio, association correcte des artistes, albums et pistes, export des playlists.
+- Critères de satisfaction : catalogue cohérent, métadonnées bien interprétées, respect des crédits multiples, interopérabilité avec d'autres outils.
+
+=== Epics fonctionnelles
+
+Les epics regroupent les besoins utilisateurs en grands ensembles fonctionnels, utilisés pour organiser le périmètre du MVP.
+
+#table(
+  columns: (auto, auto, 1fr),
+  align: horizon,
+  table.header([*Epic*], [*Persona principal*], [*Objectif*]),
+  [EPIC-01],
+  [Administrateur],
+  [Déployer et configurer Oktomusic dans une infrastructure auto-hébergée],
+  [EPIC-02],
+  [Administrateur / utilisateur],
+  [Déléguer l'authentification à un fournisseur OpenID Connect],
+  [EPIC-03],
+  [Administrateur / collectionneur],
+  [Indexer une bibliothèque musicale FLAC et construire un catalogue fiable],
+  [EPIC-04],
+  [Utilisateur],
+  [Parcourir et rechercher albums, artistes et pistes],
+  [EPIC-05],
+  [Utilisateur],
+  [Écouter la musique avec un lecteur web moderne et une file d'attente],
+  [EPIC-06],
+  [Utilisateur / collectionneur],
+  [Créer, modifier et exporter des playlists],
+  [EPIC-07],
+  [Utilisateur],
+  [Enrichir l'expérience d'écoute avec les paroles synchronisées et les couleurs d'album],
+)
+
+=== User stories représentatives
+
+#table(
+  columns: (auto, auto, 1fr),
+  align: horizon,
+  table.header([*ID*], [*Epic*], [*User story*]),
+  [US-01],
+  [EPIC-01],
+  [En tant qu'administrateur, je veux déployer l'application avec Docker Compose afin de disposer rapidement d'un environnement reproductible.],
+  [US-02],
+  [EPIC-02],
+  [En tant qu'administrateur, je veux connecter Oktomusic à mon fournisseur OpenID Connect afin de centraliser la gestion des comptes et des accès.],
+  [US-03],
+  [EPIC-03],
+  [En tant qu'administrateur, je veux lancer l'indexation d'une bibliothèque FLAC afin de rendre les albums, artistes et pistes disponibles dans l'application.],
+  [US-04],
+  [EPIC-04],
+  [En tant qu'utilisateur, je veux rechercher rapidement un album, un artiste ou une piste afin de lancer la lecture sans parcourir toute la bibliothèque.],
+  [US-05],
+  [EPIC-05],
+  [En tant qu'utilisateur, je veux conserver un lecteur persistant pendant ma navigation afin de contrôler la musique à tout moment.],
+  [US-06],
+  [EPIC-06],
+  [En tant qu'utilisateur, je veux créer et réordonner mes playlists afin d'organiser ma bibliothèque selon mes usages d'écoute.],
+  [US-07],
+  [EPIC-07],
+  [En tant qu'utilisateur, je veux consulter les paroles synchronisées pendant l'écoute afin de suivre le morceau en cours.],
+  [US-08],
+  [EPIC-07],
+  [En tant qu'utilisateur, je veux que l'interface s'adapte aux couleurs de l'album afin de bénéficier d'une expérience visuelle plus immersive.],
+)
 
 == Périmètre fonctionnel
 
