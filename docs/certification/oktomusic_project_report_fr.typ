@@ -170,10 +170,10 @@ Dans le cadre du projet, plusieurs rapports de bugs et demandes d’amélioratio
 
 Cela a impliqué l’identification des causes, la rédaction de rapports reproductibles et le suivi des échanges.
 
-- #link("https://github.com/docker/github-builder/issues/194")[*docker/github-builder* (rapport de bug)]: blocage des builds lié à une mauvaise récupération des références Git lors de la construction de l’image Docker
-- #link("https://github.com/rbonestell/vite-plugin-sri-gen/issues/23")[*vite-plugin-sri-gen* (feature)]: injection des hachages SRI dans le manifest de build Vite, permettant d’abandonner le plugin custom de génération de SRI initialement écrit pour le projet
-- #link("https://github.com/Vibrant-Colors/node-vibrant/issues/186")[*node-vibrant* (rapport de bug)]: correction de problèmes de typage TypeScript dans la bibliothèque d’extraction de couleurs dominantes
-- #link("https://github.com/lingui/js-lingui/issues/2584")[*lingui* (rapport de bug)]: macro de traduction non fonctionnelle dans certains cas
+- *docker/github-builder* (rapport de bug)#footnote[https://github.com/docker/github-builder/issues/194]: blocage des builds lié à une mauvaise récupération des références Git lors de la construction de l’image Docker
+- *vite-plugin-sri-gen* (feature)#footnote[https://github.com/rbonestell/vite-plugin-sri-gen/issues/23]: injection des hachages SRI dans le manifest de build Vite, permettant d’abandonner le plugin custom de génération de SRI initialement écrit pour le projet
+- *node-vibrant* (rapport de bug)#footnote[https://github.com/Vibrant-Colors/node-vibrant/issues/186]: correction de problèmes de typage TypeScript dans la bibliothèque d'extraction de couleurs dominantes
+- *lingui* (rapport de bug)#footnote[https://github.com/lingui/js-lingui/issues/2584]: macro de traduction non fonctionnelle dans certains cas
 
 = Spécifications fonctionnelles
 
