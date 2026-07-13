@@ -258,6 +258,42 @@ Par ailleurs, le fait de "télécharger" les fichiers audio pour assurer leur di
 
 = Gestion de projet
 
+== Organisation et suivi
+
+Le besoin ayant été cadré à partir d'un besoin spécifique et réaliste, le développement a eu lieu de manière itérative orienté vers la réalisation d'un MVP (Minimum Viable Product) fonctionnel, avec un découpage par domaines fonctionnels.
+
+La documentation utilisateur a été maintenue en parallèle du développement, pour garantir sa cohérence avec l'application.
+
+La plateforme GitHub a été sélectionnée, de part sa polyvalence, pour l'hébergement du code source, la réalisation des pipelines de CI/CD, la gestion de projet ainsi que la distribution.
+La documentation utilisateur, rédigée en Markdown, est publiée au travers du générateur VitePress sur un site Cloudflare Pages.
+
+GitHub a servi d'espace central de gestion du projet : code source, documentation, suivi des tâches, intégration continue et distribution des artefacts.
+Le choix d'un monorepo a permis de conserver une source unique pour l'ensemble du projet, sans séparer artificiellement le backend, le frontend, les packages communs, la documentation et les fichiers de déploiement.
+
+Le choix a été fait d'héberger l'ensemble du code source dans un monorepo, pour facilier la mutualisation des fichiers de configuration ainsi que la recherche d'informations dans le code source, notamment pour les agents LLMs utilisés pour assister le développement.
+
+L'organisation technique du dépôt est présenté de manière plus détaillée dans la section #link(<code_organization>)[Organisation du code].
+
+Le suivi du travail a été organisé sous formes d'issues GitHub associé à un projet GitHub Projects#footnote[https://github.com/orgs/oktomusic/projects/1], qui fournissait une manière efficace de suivre les tâches à réaliser.
+Les tâches ont été regroupées par domaines et priorités.
+
+Même si des cycles de développement agiles n'ont pas été utilisés, cette organisation a permis de suivre l'avancement du MVP, de prioriser les éléments indispensables à la réalisation du MVP et de conserver une trace des choix réalisés au fil du développement.
+
+#figure(image(
+  "../common/github_project.png",
+  alt: "Tableau Kanban GitHub Projects du projet Oktomusic",
+  fit: "contain",
+  width: 100%,
+), caption: [Suivi du projet dans GitHub Projects (Kanban)])
+
+L'utilisation des pull requests ainsi que des workflows GitHub Actions ont complété ce suivi en permettant de garder un rythme de développement souple tout en s'assurant que les évolution importantes puissent être validées par des contrôles automatisés avant intégration au projet.
+
+Certains contributeurs externes ont été impliqués dans l'implémentation de différentes fonctionalités du projet, ce qui a nécessité de la collaboration, des échanges et de la revue de code.
+
+- Support configurable du bloquage allumé de l'écran#footnote[https://developer.mozilla.org/en-US/docs/Web/API/WakeLock] pendant la lecture#footnote[https://github.com/oktomusic/oktomusic/pull/165]
+- Customisation du nom d'affichage de l'application#footnote[https://github.com/oktomusic/oktomusic/pull/291]
+- Sélecteur de langue de l'interface#footnote[https://github.com/oktomusic/oktomusic/pull/313]
+
 == Collaboration et contributions upstream <collaboration>
 
 Dans le cadre du projet, plusieurs rapports de bugs et demandes d’amélioration ont été effectués auprès des projets dépendants.
@@ -383,7 +419,7 @@ Le champ `lyrics`, stocké en `jsonb`, permet par exemple de conserver les parol
 
 = Spécifications techniques
 
-== Organisation du code
+== Organisation du code <code_organization>
 
 Le code source de l'application est organisé dans un monorepo PNPM #footnote[https://pnpm.io/workspaces] hébergé sur un repository GitHub à l'exception de la version customisée de FFmpeg gérée dans un repository séparé.
 
