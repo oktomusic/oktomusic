@@ -1,9 +1,25 @@
-#set page(paper: "a4", numbering: "1/1")
 #set document(title: "Rapport de projet Oktomusic", author: "Louis WALTER")
 
 #set heading(numbering: "1.")
 
-#title()
+#set text(lang: "fr")
+
+#import "@preview/ilm:2.1.1": *
+
+#set text(font: "Inter")
+
+#show: ilm.with(
+  title: [Oktomusic],
+  authors: "Louis WALTER",
+  abstract: [#lorem(30)],
+  figure-index: (enabled: true),
+  table-index: (enabled: true),
+  listing-index: (enabled: true),
+  chapter-pagebreak: false,
+  // https://typst.app/docs/reference/foundations/datetime#format
+  // (missing localization support for French month names)
+  date-format: "15 Juillet 2026",
+)
 
 = Compétences mises en oeuvre
 
@@ -166,16 +182,6 @@ Le périmètre retenu pour la version présentée couvre :
 - la gestion des playlists et de la bibliothèque utilisateur ;
 - l'affichage des paroles synchronisées lorsqu'elles sont disponibles.
 
-== Contraintes principales
-
-- Application *web uniquement* : navigateur, PWA et APIs web modernes.
-- Déploiement auto-hébergé, sans dépendance à un service externe obligatoire au runtime.
-- Base de données relationnelle PostgreSQL pour les données persistantes.
-- Sessions et traitements asynchrones persistés via Valkey.
-- Authentification déléguée : aucun mot de passe utilisateur n'est géré par Oktomusic.
-- Code source open-source sous licence AGPL-3.0.
-- Documentation suffisante pour installer, configurer et présenter l'application.
-
 == Hors périmètre initial
 
 De nombreuses fonctionnalités ont été identifiées comme hors périmètre initial, mais pourraient être intégrées dans des versions futures.
@@ -235,6 +241,16 @@ Le mécanisme principal nécéssite une logique de détection du mode hors-ligne
 Malheureusement, la librarie officielle permettant d'appliquer une logique de persistance de la mise en cache pour Apollo Client#footnote[https://github.com/apollographql/apollo-cache-persist] est non maintenue et ne supporte pas la dernière version stable, ce qui implique le fait de développer une solution spécifique pour l'application.
 
 Par ailleurs, le fait de "télécharger" les fichiers audio pour assurer leur disponibilité indépendament du dernier accès nécéssite de mettre en place un mécanisme donnant au cache une durée de vie infinie, sois en adaptant la politique de cache, sois en téléchargeant les fichiers audio dans le système de fichiers du navigateur (Origin Private File System#footnote[https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system]) et en interceptant les requêtes réseau dans le Service Worker pour servir les fichiers depuis celui-ci.
+
+== Contraintes principales retenues
+
+- Une unique interface web, exploitant les capacités PWA ainsi que les APIs web modernes.
+- Un déploiement facile pour l'utilisateur, via une image Docker multi-plateforme moderne
+- Utilisation d'une base de données relationnelle PostgreSQL pour les données persistantes
+- Sessions et traitements asynchrones persistés via une base de donnée Valkey
+- Authentification déléguée intégralement à un provider OpenID Connect au choix de l'utilisateur
+- Publication du code source licence AGPL-3.0
+- Une documentation intégrale pour installer, configurer et présenter l'application
 
 = Présentation de l'entreprise/service
 
@@ -1045,8 +1061,6 @@ Les images sont signées avec Cosign #footnote[https://sigstore.dev], un outil o
 La base d'exécution de l'image est une version DHI (Docker Hardened Image)#footnote[https://www.docker.com/products/hardened-images] de NodeJS 24#footnote[https://hub.docker.com/hardened-images/catalog/dhi/node], offrant une configuration durcie et une surface d'attaque réduite par rapport à une image NodeJS standard.
 
 Toutes les dépendances externes critiques (comme le code source FFmpeg) font l’objet d’une vérification cryptographique lors de la construction (voir section #link(<ffmpeg>)[FFmpeg]).
-
-// TODO: fix link to FFmpeg section
 
 = Plan de tests et jeu d'essai
 
