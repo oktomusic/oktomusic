@@ -1049,8 +1049,14 @@ Pour une instance de production (derrière reverse proxy Traefik), les résultat
   [HTTP Observatory],
   table.cell(fill: green, "A+ (140/100)"),
   [CSP Evaluator],
-  table.cell(fill: green, "Green"), // TODO
+  table.cell(fill: yellow, "Yellow"), // TODO
 )
+
+=== Zones d'amélioration
+
+L'exploitation de l'API Trusted Types#footnote[https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API] ainsi que l'API Sanitizer#footnote[https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API], couplé à la directive CSP `require-trusted-types-for`#footnote[https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for] aurait fourni une protoction supplémentaire contre les attaques XSS.
+
+L'implémentation a été évaluée, mais a été bloquée un manque de support par le plugin chargé de la génération du Service Worker. Les éléments nécéssaires devrais être mis en place dans la prochaine version du plugin.#footnote[https://github.com/vite-pwa/vite-plugin-pwa/issues/933]
 
 == Supply chain <security_supply_chain>
 
