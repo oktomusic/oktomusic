@@ -11,7 +11,16 @@
 #show: ilm.with(
   title: [Oktomusic],
   authors: "Louis WALTER",
-  abstract: [#lorem(30)],
+  abstract: [
+    #block(width: 110%)[
+      #set align(left)
+
+      Conception et développement d'une plateforme de streaming musical
+      auto-hébergée, moderne et sécurisée.
+
+      *Concepteur Développeur d'Applications (RNCP37873)*
+    ]
+  ],
   figure-index: (enabled: true),
   table-index: (enabled: true),
   listing-index: (enabled: true),
