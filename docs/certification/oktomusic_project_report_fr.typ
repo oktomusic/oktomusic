@@ -23,6 +23,72 @@
 
 = Compétences mises en oeuvre
 
+Le projet Oktomusic a été construit pour couvrir les trois activités types du titre professionnel *Concepteur Développeur d'Applications*.
+Le tableau ci-dessous reprend les compétences du référentiel et indique leur mise en œuvre concrète dans le projet.
+
+== Développer une application sécurisée
+
+#[
+
+  #show table: set text(size: 7pt, hyphenate: false)
+  #show table: set par(justify: false)
+
+  #table(
+    columns: (1.55fr, 2.2fr, 1.7fr),
+    align: horizon,
+    table.header([*Compétence CDA*], [*Mise en œuvre *], [*Éléments du dossier*]),
+    [Installer et configurer son environnement de travail en fonction du projet],
+    [Mise en place d'un monorepo PNPM, des applications frontend/backend, des packages partagés, des scripts de développement, des workflows GitHub Actions et de l'environnement Docker de l'application.],
+    [Gestion de projet, Organisation du code, Distribution],
+    [Développer des interfaces utilisateur],
+    [Développement d'une interface web React/Vite : navigation par albums, artistes et pistes, lecteur persistant, file d'attente, affichage des paroles, adaptation visuelle aux couleurs des albums et mini-lecteur Picture-in-Picture.],
+    [Spécifications fonctionnelles, Réalisations, Interface et expérience web],
+    [Développer des composants métier],
+    [Implémentation des traitements métier liés à l'indexation musicale, à la validation des métadonnées FLAC, au parsing des paroles synchronisées, à la génération de playlists et à l'extraction de couleurs dominantes.],
+    [Réalisations, Backend, Briques spécialisées],
+    [Contribuer à la gestion d'un projet informatique],
+    [Cadrage du besoin, formalisation des personas, epics et user stories, suivi Kanban dans GitHub Projects, découpage par domaines fonctionnels, documentation maintenue avec le code et contributions upstream.],
+    [Cahier des charges, Gestion de projet],
+  )
+
+  == Concevoir et développer une application sécurisée organisée en couches
+
+  #table(
+    columns: (1.55fr, 2.2fr, 1.7fr),
+    align: horizon,
+    table.header([*Compétence CDA*], [*Mise en œuvre dans Oktomusic*], [*Éléments du dossier*]),
+    [Analyser les besoins et maquetter une application],
+    [Analyse des limites de Jellyfin et Navidrome, définition des personas, epics et user stories, cadrage du périmètre MVP, hors périmètre initial et zoning de l'interface.],
+    [Cahier des charges, Spécifications fonctionnelles],
+    [Définir l'architecture logicielle d'une application],
+    [Conception d'une architecture en couches avec frontend React/Vite, backend NestJS, API GraphQL/REST, PostgreSQL, Valkey, fournisseur OpenID Connect.],
+    [Architecture logicielle, Schéma d'architecture],
+    [Concevoir et mettre en place une base de données relationnelle],
+    [Modélisation du catalogue musical et des données utilisateur avec MCD, MLD et MPD Prisma ; utilisation de PostgreSQL pour les albums, pistes, artistes, playlists, historiques et paroles en jsonb.],
+    [Modélisation de la base de données],
+    [Développer des composants d'accès aux données SQL et NoSQL],
+    [Accès aux données PostgreSQL via Prisma dans les services backend, stockage relationnel principal, utilisation de Valkey pour les sessions et les files de traitement BullMQ.],
+    [Backend, Organisation du code, Réalisations],
+  )
+
+  == Préparer le déploiement d'une application sécurisée
+
+  #table(
+    columns: (1.55fr, 2.2fr, 1.7fr),
+    align: horizon,
+    table.header([*Compétence CDA*], [*Mise en œuvre dans Oktomusic*], [*Éléments du dossier*]),
+    [Préparer et exécuter les plans de tests d'une application],
+    [Mise en place de tests unitaires Vitest sur les packages et applications, validation continue via GitHub Actions et utilisation de jeux de fixtures pour les formats manipulés par l'application.],
+    [Plan de tests et jeu d'essai, Organisation et suivi],
+    [Préparer et documenter le déploiement d'une application],
+    [Préparation d'une distribution Docker, documentation d'installation, configuration par variables d'environnement et schéma de déploiement avec PostgreSQL, Valkey, reverse proxy et fournisseur OpenID Connect.],
+    [Distribution, Documentation, Architecture logicielle],
+    [Contribuer à la mise en production dans une démarche DevOps],
+    [Automatisation des contrôles qualité, construction d'images Docker multi-plateformes, publication sur registre container, signature des images et suivi des vulnérabilités de dépendances.],
+    [Gestion de projet, Supply chain, Distribution],
+  )
+]
+
 = Cahier des charges
 
 *Oktomusic* vise à proposer une solution de streaming musical concue pour l'auto hébergement, et répond à un besoin concret, basé sur l'anaylse des solutions existantes et des besoins des utilisateurs.
