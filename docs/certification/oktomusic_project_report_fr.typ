@@ -605,11 +605,18 @@ Les modèles utilisés incluent les modèles _GPT-5_ de OpenAI, _Claude Sonnet_ 
 
 == Conformité RGPD <rgpd>
 
-L'application se veut faciliter la conformité au RGPD #footnote[https://www.cnil.fr/fr/reglement-europeen-protection-donnees].
+L'application se veut faciliter la conformité au RGPD.#footnote[https://www.cnil.fr/fr/reglement-europeen-protection-donnees]
 
-Comme nous ne fournissons pas l'application sous forme de service, ni ne collectons de télémérie ou données personelles, l'opérateur du serveur est le responsable de traitement conformément au RGPD.
+Oktomusic ne fournit pas directement un service hébergé : l’application est distribuée comme logiciel auto-hébergeable.
+L’opérateur du serveur reste donc responsable du traitement des données personnelles dans son propre contexte d’exploitation.
 
-// TODO: outils de conformité RGPD (suppression, etc)
+Le projet limite les données personnelles nécessaires au fonctionnement. L’authentification étant déléguée à un fournisseur OpenID Connect, Oktomusic ne stocke pas de mot de passe utilisateur.
+
+Les données conservées localement sont principalement l’identifiant OIDC de l’utilisateur, les rôles applicatifs, ainsi que les playlists, les éléments de bibliothèque et l’historique d’écoute qui peuvent être supprimés par l'utilisateur à tout moment.
+
+Cette approche réduit la surface de traitement et facilite la conformité : minimisation des données, absence de mot de passe local, configuration explicite, possibilité pour l’opérateur de gérer les comptes depuis son fournisseur d’identité.
+
+Une amélioration prévue consiste à ajouter des outils d’administration dédiés à l’export et à la suppression des données d’un utilisateur.
 
 == Accessibilité <accessibility>
 
