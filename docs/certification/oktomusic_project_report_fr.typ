@@ -11,14 +11,17 @@
 #show: ilm.with(
   title: [Oktomusic],
   authors: "Louis WALTER",
+  external-link-circle: false,
   abstract: [
-    #block(width: 110%)[
+    #block(
+      width: 110%,
+    )[
       #set align(left)
 
       Conception et développement d'une plateforme de streaming musical
       auto-hébergée, moderne et sécurisée.
 
-      *Concepteur Développeur d'Applications (RNCP37873)*
+      *Concepteur Développeur d'Applications (#link("https://www.francecompetences.fr/recherche/rncp/37873", "RNCP37873"))*
     ]
   ],
   figure-index: (enabled: true),
@@ -396,6 +399,18 @@ Cela a impliqué l’identification des causes, la rédaction de rapports reprod
 
 == Générale
 
+L’architecture générale suit une séparation en couches afin d’isoler les responsabilités et de faciliter la maintenance.
+
+La couche frontend fournit l’interface utilisateur, gère l’état de lecture et communique avec le backend via GraphQL pour les données applicatives et via REST pour les flux de fichiers.
+
+La couche backend expose les API, applique les règles métier, contrôle l’accès aux ressources et orchestre les traitements longs comme l’indexation.
+
+La couche persistance repose sur PostgreSQL pour les données structurées et Valkey pour les sessions et les files de traitement asynchrone.
+
+Cette organisation permet de distinguer clairement les préoccupations : présentation, logique métier, accès aux données, tâches asynchrones et déploiement.
+
+Elle facilite également la couverture des compétences CDA liées à l’architecture multicouche, à la base relationnelle, aux composants métier, aux accès aux données et à la préparation du déploiement.
+
 === Langage de programmation
 
 TypeScript #footnote[https://www.typescriptlang.org] a été choisi comme langage de programmation principal pour le développement de l'application, pour ses nombreux avantages :
@@ -443,14 +458,32 @@ De plus, elle permet de bénéficier d'une sécurité renforcée (voir section #
 
 == Frontend
 
-Vite #footnote[https://vite.dev] est utilisé comme framework pour la partie frontend de l'application.
+Le frontend de l'application, propulsé par le framework Vite#footnote[https://vite.dev], a été développé avec la librairie React.#footnote[https://react.dev]
 
-Compte tenu de la taille de l'application, les gains de performance offerts par la toolchain native utilisée par Vite en termes de temps de compilation et de rafraîchissement à chaud sont particulièrement utiles pour le développement.
+Vite avec sa toolchain native a apporté un environnement de développement moderne et rapide adapté aux applications web modernes.
 
-- https://vite.dev
-- https://react.dev
-- https://www.apollographql.com
-- https://lingui.dev
+React a permis de construire l’interface sous forme de composants réutilisables.
+
+La gestion d'état global de l'application est assurée par la librarie Jotai#footnote[https://jotai.org], qui fonctionne de manière simple et puissante tout en reprenant les patterns usuellement utilisés par React.
+
+La récupération ainsi que la mise en cache des données applicatives est assurée par Apollo Client#footnote[https://www.apollographql.com], qui fournit un client GraphQL complet et performant.
+
+La traduction de l'interface est effectuée à l'aide de la librarie Lingui#footnote[https://lingui.dev], qui fournit une expérience moderne.
+
+React Router#footnote[https://reactrouter.com] a été utilisé pour gérer la navigation dans l'application.
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+
+L’état applicatif est structuré autour de plusieurs besoins : état du lecteur, file d’attente, session utilisateur et interactions avec l’API.
+
+La gestion de l’état du lecteur est particulièrement importante car la lecture doit rester stable lorsque l’utilisateur change de page ou manipule une playlist.
+
+#[
+  #set text(hyphenate: false)
+  L’application exploite de nombreuses capacités natives du navigateur : Progressive Web App, Service Worker, Web Audio API, Media Session API, Audio Session API, Wake Lock, OpenSearch, Picture-in-Picture, etc.
+]
+
+Ces choix permettent de rapprocher l’expérience utilisateur d’une application de streaming installable, tout en conservant une distribution web simple.
 
 == Modélisation de la base de données
 
