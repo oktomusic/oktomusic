@@ -620,6 +620,16 @@ Une amélioration prévue consiste à ajouter des outils d’administration déd
 
 == Accessibilité <accessibility>
 
+L’accessibilité a été prise en compte dès la conception de l’interface.
+Le projet vise une interface utilisable au clavier, lisible, structurée et compatible avec les technologies d’assistance.
+
+Les principaux choix appliqués sont : utilisation de tags HTML sémantiques, contrastes suffisants, états de focus visibles, labels explicites, absence de dépendance exclusive à la couleur et textes alternatifs pour les images porteuses d’information.
+
+La conformité complète au RGAA#footnote[https://accessibilite.numerique.gouv.fr] nécessiterait un audit dédié.
+À ce stade, les contrôles réalisés se concentrent essentiellement sur le suivis des bonnes pratiques WCAG#footnote[https://www.w3.org/TR/WCAG22], les vérifications Google Lighthouse#footnote[https://developer.chrome.com/docs/lighthouse/overview] ainsi que des tests manuels des parcours principaux au clavier.
+
+L'utilisation de libraries tel que BaseUI#footnote[https://base-ui.com], compatible WCAG 2.2, permet d'assurer l'accessibilité de nombreux composants interactifs de l'application.
+
 // Lighthouse
 // WCAG 2.2 AAA
 // RGAA
