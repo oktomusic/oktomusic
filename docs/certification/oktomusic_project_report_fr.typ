@@ -1231,6 +1231,68 @@ Toutes les dépendances externes critiques (comme le code source FFmpeg) font l�
 
 = Plan de tests et jeu d'essai
 
+La stratégie de tests combine des tests unitaires, des tests d’intégration ciblés et des vérifications manuelles sur les parcours critiques de l’application.
+
+L’objectif est de sécuriser les briques réutilisables, les traitements métier sensibles et le comportement attendu lors de la démonstration.
+
+Les tests unitaires couvrent principalement les packages partagés :
+
+- parsing des paroles synchronisées
+- parsing et génération de playlists
+- validation des métadonnées FLAC
+- extraction ou normalisation de données et fonctions utilitaires
+
+Ces tests permettent de vérifier des règles métier précises avec des jeux de fixtures reproductibles.
+
+Les tests backend portent sur des services NestJS, la validation des entrées, la logique d'indexation isolée, la génération de headers HTTP et plusieurs utilitaires transverses.
+
+Les tests frontend portent sur la manipulation de données, les hooks clés, les interactions de drag and drop et le service worker de lecture FLAC.
+
+#[
+  #show table: set text(size: 7pt, hyphenate: false)
+  #show table: set par(justify: false)
+
+  #table(
+    columns: (1.3fr, 1.8fr, 2fr),
+    align: horizon,
+    table.header([*Périmètre testé*], [*Entrées / fixtures*], [*Assertions vérifiées*]),
+    [Parsing de paroles synchronisées],
+    [Fixtures LRC, Enhanced LRC et TTML, formats de temps valides ou invalides, XML TTML mal formé],
+    [Production d'un objet conforme au schéma commun, calcul des fins de lignes, tokens mot à mot, rejet des valeurs invalides],
+    [Parsing et génération de playlists],
+    [Fixtures M3U, JSPF et XSPF, playlists vides ou complètes, JSON/XML invalides, durées ou numéros de piste invalides],
+    [Parsing, génération, échappement XML, validation du schéma JSPF et round-trip entre formats],
+    [Métadonnées FLAC et cohérence d'album],
+    [Sortie metaflac, dates strictes, numéros de pistes invalides, albums multi-disques incohérents ou incomplets],
+    [Normalisation des tags, rejet des dates non strictes, détection des incohérences d'album, doublons et positions manquantes],
+    [Logique d'indexation isolée],
+    [Présence ou absence de fichiers TTML/LRC, fichiers de paroles invalides, ISRC, titres et durées de pistes],
+    [Priorité au TTML, fallback LRC, remontée d'erreurs de parsing, normalisation ISRC/titre et plan de mise à jour d'une piste],
+    [Services playlist],
+    [Playlists existantes ou absentes, propriétaire, administrateur, autre utilisateur, positions de pistes à ajouter, déplacer ou supprimer],
+    [Règles d'accès, création, recherche, ajout, réordonnancement, suppression, export JSPF et sélection des pochettes],
+    [Bibliothèque, albums et jobs d'indexation],
+    [Historique d'écoute, sauvegarde d'albums ou playlists, recherche d'albums, fichiers de pochette, snapshots BullMQ],
+    [Enregistrement et purge d'historique, bibliothèque explicite et virtuelle, filtres de recherche, résolution de pochettes, statut du dernier job],
+    [Utilitaires backend et headers HTTP],
+    [Dates ISO strictes, chemins enfants, JSON path avec placeholders, CUID2, manifest Vite, CSP, Permissions-Policy, endpoints info/health/OpenSearch],
+    [Validation ou rejet des entrées, résolution sûre de chemins, fusion de headers de sécurité, génération de tags assets avec SRI, rendu des contrôleurs simples],
+    [Service worker et utilitaires frontend],
+    [Requêtes /api/media/{cuid}, OPFS disponible ou absent, Range HTTP avec cache hit/miss, méthodes non-GET, dates, durées, images média, métadonnées média, codes/messages GraphQL, positions de paroles],
+    [Réponse FLAC avec headers OPFS, délégation non-GET au réseau, Range depuis cache ou fetch + cache, extraction du CUID, formatage et mapping des données affichées, détection de la ligne ou du mot actif],
+    [Hooks et interactions frontend],
+    [Web Share API disponible ou non, clipboard, ResizeObserver, couleurs Vibrant, payload de drag and drop de piste],
+    [Partage ou copie du lien, toast d'erreur ou de succès, ajustement de taille de texte, application/nettoyage des variables CSS, validation du payload DnD],
+    [Packages utilitaires],
+    [Image Sharp mockée avec métadonnées, palette manquante, champs Open Graph scalaires, URL, entiers ou enum],
+    [Redimensionnement avant pipeline Sharp, retour de palette, erreur si palette absente, compilation de meta tags et rejet des valeurs invalides],
+  )
+]
+
+Le jeu d’essai le plus représentatif reste l’indexation d’un album FLAC complet, car il mobilise plusieurs compétences : accès au système de fichiers, extraction de métadonnées, validation, normalisation, persistance SQL, traitement asynchrone, gestion d’erreurs et mise à jour de l’interface.
+
+À ce stade, cette chaîne complète est surtout couverte par des tests unitaires et d'intégration ciblés sur ses briques isolées.
+
 = Veille sécurité
 
 = Annexes
