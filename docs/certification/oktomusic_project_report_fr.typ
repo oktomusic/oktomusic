@@ -906,6 +906,101 @@ export function PanelCenter() {
 }
 ```
 
+== Composant d'accès aux données : gestion des playlists
+
+Le service de gestion des playlists constitue un composant d'accès aux données représentatif.
+Il manipule des entités relationnelles PostgreSQL via Prisma : playlists, pistes, table de jointure `PlaylistTrack` et utilisateur propriétaire.
+
+L'exemple ci-dessous illustre l'ajout de pistes à une playlist.
+Cette opération ne se limite pas à une insertion simple : elle vérifie les droits d'accès, contrôle l'existence des pistes, valide la position d'insertion, décale les pistes déjà présentes, puis insère les nouvelles entrées dans une transaction.
+
+Source : `apps/backend/src/api/playlist/playlist.service.ts`
+
+```ts
+async addTracksToPlaylist(
+  playlistId: string,
+  user: User | false,
+  trackIds: string[],
+  position?: number,
+): Promise<void> {
+  const existingPlaylist = await this.prisma.playlist.findUnique({
+    where: { id: playlistId },
+    select: { id: true, userId: true },
+  });
+
+  if (!existingPlaylist) {
+    throw new NotFoundException(`Playlist with id ${playlistId} not found`);
+  }
+
+  if (
+    user !== false &&
+    existingPlaylist.userId !== user.id &&
+    user.role !== Role.ADMIN
+  ) {
+    throw new ForbiddenException(
+      "You can only add tracks to your own playlists",
+    );
+  }
+
+  if (trackIds.length === 0) {
+    throw new BadRequestException("trackIds must contain at least one track");
+  }
+
+  const existingTracksCount = await this.prisma.track.count({
+    where: { id: { in: [...new Set(trackIds)] } },
+  });
+
+  if (existingTracksCount !== [...new Set(trackIds)].length) {
+    throw new NotFoundException("One or more tracks were not found");
+  }
+
+  const playlistTracksCount = await this.prisma.playlistTrack.count({
+    where: { playlistId },
+  });
+
+  const insertionPosition = position ?? playlistTracksCount;
+
+  if (insertionPosition < 0 || insertionPosition > playlistTracksCount) {
+    throw new BadRequestException(
+      `position must be between 0 and ${playlistTracksCount}`,
+    );
+  }
+
+  await this.prisma.$transaction(async (tx) => {
+    const tracksToShift = await tx.playlistTrack.findMany({
+      where: {
+        playlistId,
+        position: { gte: insertionPosition },
+      },
+      select: { id: true, position: true },
+      orderBy: { position: "desc" },
+    });
+
+    for (const track of tracksToShift) {
+      await tx.playlistTrack.update({
+        where: { id: track.id },
+        data: { position: track.position + trackIds.length },
+      });
+    }
+
+    await tx.playlistTrack.createMany({
+      data: trackIds.map((trackId, index) => ({
+        playlistId,
+        trackId,
+        position: insertionPosition + index,
+      })),
+    });
+  });
+}
+```
+
+Ce composant montre plusieurs points attendus pour l'accès aux données :
+
+- *Contrôle d'accès avant requête mutante* : un utilisateur standard ne peut modifier que ses propres playlists, tandis qu'un administrateur peut agir sur celles d'un autre utilisateur.
+- *Validation des entrées* : la liste de pistes ne peut pas être vide, les identifiants de pistes doivent exister et la position d'insertion doit rester dans les bornes de la playlist.
+- *Préservation de l'intégrité relationnelle* : l'ajout est réalisé dans une transaction Prisma afin d'éviter un état intermédiaire où certaines positions auraient été décalées sans que les nouvelles pistes soient insérées.
+- *Maintien de l'ordre métier* : la table de jointure `PlaylistTrack` ne sert pas seulement à relier une playlist et une piste ; elle porte aussi la position de chaque piste dans la playlist.
+
 == Version customisée de FFmpeg <ffmpeg>
 
 L'application exploite les capacités de FFmpeg et metaflac pour l'extraction des métadonnées des fichiers FLAC.
