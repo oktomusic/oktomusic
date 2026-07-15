@@ -1436,9 +1436,23 @@ Le jeu d’essai le plus représentatif reste l’indexation d’un album FLAC c
 
 = Veille sécurité
 
-Une veille sécurité a été menée pendant le projet afin d’identifier les risques liés aux technologies utilisées : Node.js, TypeScript, NestJS, React, Vite, Prisma, PostgreSQL, Valkey, Docker, GitHub Actions et dépendances NPM.
+La veille sécurité a été menée en complément des mesures déjà détaillées dans les sections #link(<security_http>)[Sécurité HTTP] et #link(<security_supply_chain>)[Supply chain].
+Pour éviter les doublons, cette section ne reprend pas l'ensemble des mécanismes de surveillance des dépendances, de signature des images ou d'analyse statique ; ceux-ci sont traités dans la partie dédiée à la chaîne d'approvisionnement.
 
-Un soin particulier a été apporté à la mise à jour régulière des dépendances, ainsi qu'a la réduction de leur nombre pour limiter la surface d'attaque.
+L'objectif de la veille était surtout d'identifier les évolutions pouvant modifier les choix de sécurité du projet :
+
+- évolution des APIs navigateur de sécurité, notamment Trusted Types, Sanitizer API, CSP, SRI et Permissions Policy
+- bonnes pratiques liées aux Progressive Web Apps et aux Service Workers
+- risques liés aux dépendances critiques du frontend et du backend
+- durcissement des images Docker et des pipelines de construction
+- retours et limitations rencontrés sur les outils utilisés dans le projet
+
+Cette veille a notamment conduit à plusieurs décisions concrètes déjà intégrées dans le projet :
+
+- conserver une politique de zéro ressource externe au runtime, pour simplifier la CSP et limiter les risques d'injection par dépendance externe
+- suivre les scores Security Headers, HTTP Observatory et CSP Evaluator pour vérifier régulièrement la configuration HTTP exposée
+- étudier l'ajout de Trusted Types et de la Sanitizer API pour renforcer la protection contre les XSS, tout en reportant leur intégration à cause de limitations côté génération du Service Worker
+- ouvrir ou suivre des issues upstream lorsque les limites venaient d'outils externes, par exemple `vite-plugin-sri-gen`, `node-vibrant`, `lingui` ou `docker/github-builder`
 
 = Annexes
 
