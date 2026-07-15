@@ -1607,6 +1607,133 @@ La base d'exécution de l'image est une version DHI (Docker Hardened Image)#foot
 
 Toutes les dépendances externes critiques (comme le code source FFmpeg) font l’objet d’une vérification cryptographique lors de la construction (voir section #link(<ffmpeg>)[FFmpeg]).
 
+=== Procédure de déploiement documentée
+
+La procédure de déploiement est documentée dans le site de documentation utilisateur.#footnote[https://oktomusic.afcms.dev]
+
+Elle repose sur Docker Compose et sur trois services : l'application Oktomusic, PostgreSQL et Valkey.
+
+Les étapes opérationnelles sont les suivantes.
+
++ *Préparer les prérequis.*
+  Docker Engine doit être installé sur le serveur.
+  Un fournisseur OpenID Connect, par exemple Keycloak ou Authentik, doit être disponible.
+
+  Les versions supportées pour les services externes sont PostgreSQL 18 ou supérieur et Valkey 9 ou supérieur.
+
++ *Configurer le client OpenID Connect.*
+  Un client Oktomusic est créé côté fournisseur d'identité.
+  Les URI de redirection doivent correspondre à l'URL publique de l'application : `/api/auth/callback` pour le retour d'authentification et `/` pour le retour après déconnexion.
+
+  Les rôles user et admin sont déclarés et exposés dans le token selon la variable `OIDC_ROLES_PATH`.
+
++ *Créer le fichier d'environnement.*
+  Le fichier `.env` contient les paramètres nécessaires au démarrage de l'application :
+  - `DATABASE_URL`
+  - `SESSION_SECRET`
+  - `VALKEY_HOST`
+  - `VALKEY_PORT`
+  - `VALKEY_PASSWORD`
+  - `OIDC_ISSUER`
+  - `OIDC_CLIENT_ID`
+  - `OIDC_CLIENT_SECRET`
+  - `OIDC_REDIRECT_URI`
+  - `OIDC_LOGOUT_REDIRECT_URI`
+  En production derrière reverse proxy, `TRUST_PROXY` doit être mis à `true`.
+
++ *Préparer le fichier Compose.*
+  Le service PostgreSQL expose la base relationnelle avec un volume persistant et un healthcheck.
+  Le service Valkey active la persistance AOF.
+
+  Le service applicatif utilise l'image `ghcr.io/oktomusic/oktomusic:latest`, monte la bibliothèque musicale en lecture seule sur `/srv/music` et le dossier intermédiaire sur `/srv/intermediate`.
+
++ *Démarrer la pile.*
+  La commande Docker Compose démarre PostgreSQL et Valkey, puis l'application après validation des healthchecks.
+
+  Au démarrage de l'image applicative, les migrations Prisma sont appliquées automatiquement avec `prisma migrate deploy`.
+
++ *Vérifier le déploiement.*
+  Les conteneurs doivent être sains dans l'état Docker Compose.
+  L'endpoint `/api/health` doit répondre.
+
+  L'utilisateur peut ensuite ouvrir l'application, déclencher le flux OpenID Connect, se connecter, puis lancer une indexation depuis l'interface d'administration.
+
++ *Mettre à jour l'application.*
+  L'opérateur met à jour l'image Docker, relance la pile Docker Compose et laisse les migrations automatiques appliquer les évolutions de schéma.
+  Les volumes PostgreSQL, Valkey et le dossier intermédiaire sont conservés.
+
+Voici un exemple de fichier `compose.yml` pour un déploiement type :
+
+```yaml
+---
+name: Oktomusic
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: oktomusic
+      POSTGRES_PASSWORD: oktomusic
+      POSTGRES_DB: oktomusic
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U oktomusic"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  valkey:
+    image: valkey/valkey:9-alpine
+    environment:
+      VALKEY_PASSWORD: ${VALKEY_PASSWORD}
+    command:
+      - valkey-server
+      - "--port"
+      - "6379"
+      - "--requirepass"
+      - "${VALKEY_PASSWORD}"
+      - "--dir"
+      - "/data"
+      - "--appendonly"
+      - "yes"
+      - "--appendfilename"
+      - "appendonly.aof"
+    ports:
+      - "6379:6379"
+    volumes:
+      - valkey_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli -a $$VALKEY_PASSWORD ping | grep PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  app:
+    image: ghcr.io/oktomusic/oktomusic:latest
+    env_file:
+      - ./.env
+    ports:
+      - "3100:3000"
+    volumes:
+      - /path/to/your/music:/srv/music:ro
+      - /path/to/your/intermediate:/srv/intermediate
+    depends_on:
+      postgres:
+        condition: service_healthy
+      valkey:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  valkey_data:
+```
+
+L'application ne gère pas TLS elle-même.
+Pour un déploiement exposé publiquement, il est fortement recommandé de placer Oktomusic derrière un reverse proxy comme Traefik, Caddy ou Nginx, avec terminaison TLS.
+
 = Plan de tests et jeu d'essai
 
 La stratégie de tests combine des tests unitaires, des tests d’intégration ciblés et des vérifications manuelles sur les parcours critiques de l’application.
@@ -1667,9 +1794,222 @@ Les tests frontend portent sur la manipulation de données, les hooks clés, les
   )
 ]
 
+== Jeu d'essai détaillé : indexation d'un album FLAC
+
 Le jeu d’essai le plus représentatif reste l’indexation d’un album FLAC complet, car il mobilise plusieurs compétences : accès au système de fichiers, extraction de métadonnées, validation, normalisation, persistance SQL, traitement asynchrone, gestion d’erreurs et mise à jour de l’interface.
 
-À ce stade, cette chaîne complète est surtout couverte par des tests unitaires et d'intégration ciblés sur ses briques isolées.
+Dans l'état actuel du projet, cette chaîne est principalement vérifiée par des tests Vitest ciblés sur les briques critiques plutôt que par un unique test end-to-end.
+
+Le jeu d'essai détaillé ci-dessous reprend les cas effectivement couverts par les tests Vitest implémentés sur la logique d'indexation.
+
+#[
+  #show table: set text(size: 7pt, hyphenate: false)
+  #show table: set par(justify: false)
+
+  #table(
+    columns: (1.2fr, 1.5fr, 1.7fr, 1.6fr),
+    align: horizon,
+    table.header([*Cas testé*], [*Données en entrée*], [*Résultat attendu*], [*Résultat obtenu*]),
+    [Parsing d'une sortie metaflac valide],
+    [
+      Fixture test_1.txt.#linebreak()
+      Tags présents : ALBUM=Phoenix, ARTIST, ALBUMARTIST, TITLE, TRACKNUMBER, DISCNUMBER, TOTALTRACKS, TOTALDISCS, DATE et ISRC.#linebreak()
+      Plusieurs valeurs COMPOSER.
+    ],
+    [
+      Normalisation des clés en majuscules.#linebreak()
+      Conservation des valeurs multiples en tableau.#linebreak()
+      Conversion des nombres et de la date YYYY-MM-DD.
+    ],
+    [
+      parseMetaflacTags retourne l'objet attendu.#linebreak()
+      Album : Phoenix.#linebreak()
+      Artistes : Netrum et HALVORSEN.#linebreak()
+      Piste 1/1, disque 1/1, ISRC GB2LD2110224, date 2021-08-20.
+    ],
+    [Rejet d'un tag de piste invalide],
+    [
+      Sortie metaflac contenant TRACKNUMBER=5.#linebreak()
+      Les autres informations de piste ne permettent pas une structure cohérente.
+    ],
+    [
+      Refuser une piste incohérente.#linebreak()
+      Empêcher son intégration dans le catalogue.
+    ],
+    [
+      parseMetaflacTags lève une erreur de validation.#linebreak()
+      La suite du traitement est bloquée pour ce fichier.
+    ],
+    [Validation d'un dossier d'album complet],
+    [
+      Trois fichiers simulés.#linebreak()
+      Disque 1 : pistes 1 et 2, TOTALTRACKS=2.#linebreak()
+      Disque 2 : piste 1, TOTALTRACKS=1.#linebreak()
+      Tous déclarent TOTALDISCS=2, ALBUM=Album et ALBUMARTIST=["Artist"].
+    ],
+    [
+      Album complet.#linebreak()
+      Identité commune.#linebreak()
+      Nombre de disques cohérent.#linebreak()
+      Aucune piste manquante ni doublon de position.
+    ],
+    [
+      validateAlbumFilesMetadata retourne une liste vide d'anomalies.#linebreak()
+      Le dossier peut être transmis à la synchronisation album/pistes.
+    ],
+    [Détection d'identité d'album incohérente],
+    [
+      Deux fichiers d'un même dossier.#linebreak()
+      Valeurs différentes pour ALBUM et ALBUMARTIST.
+    ],
+    [
+      Refuser l'indexation comme album unique.#linebreak()
+      Éviter de fusionner des morceaux appartenant à des albums différents.
+    ],
+    [
+      La validation remonte deux anomalies.#linebreak()
+      Inconsistent ALBUM values.#linebreak()
+      Inconsistent ALBUMARTIST values.
+    ],
+    [Détection de pistes manquantes ou dupliquées],
+    [
+      Cas 1 : deux fichiers utilisent DISCNUMBER=1 et TRACKNUMBER=1.#linebreak()
+      Cas 2 : les pistes déclarées passent de 1 à 3 avec TOTALTRACKS=2.
+    ],
+    [
+      Refuser une structure d'album ambiguë.#linebreak()
+      Détecter les doublons, pistes manquantes et numéros hors plage.
+    ],
+    [
+      La validation remonte les anomalies attendues.#linebreak()
+      Duplicate DISCNUMBER + TRACKNUMBER pairs.#linebreak()
+      missing TRACKNUMBER values.#linebreak()
+      outside 1..TOTALTRACKS.
+    ],
+    [Association des paroles synchronisées],
+    [
+      Fichier source : /music/Album/01 - Track.flac.#linebreak()
+      Fichiers de paroles possibles : /music/Album/01 - Track.ttml ou /music/Album/01 - Track.lrc.
+    ],
+    [
+      Priorité au fichier TTML.#linebreak()
+      Repli vers LRC si TTML est absent.#linebreak()
+      Absence de paroles non bloquante.#linebreak()
+      Fichier de paroles invalide signalé.
+    ],
+    [
+      findAndParseLyrics retourne les paroles TTML en priorité.#linebreak()
+      La fonction bascule vers LRC lorsque TTML est absent.#linebreak()
+      Elle retourne lyrics: null sans erreur lorsqu'aucun fichier n'existe.#linebreak()
+      Elle remonte une erreur si le fichier présent est invalide.
+    ],
+    [Normalisation et mise à jour d'une piste],
+    [
+      Piste existante avec nom, ISRC et durée.#linebreak()
+      Métadonnées extraites avec titre, durée et éventuellement ISRC.
+    ],
+    [
+      Normaliser l'ISRC en majuscules.#linebreak()
+      Utiliser l'ISRC comme identité principale s'il existe.#linebreak()
+      Corriger titre et durée sans casser les références existantes.
+    ],
+    [
+      getTrackUpdatePlan produit uniquement le patch nécessaire.#linebreak()
+      Mise à jour de durée.#linebreak()
+      Ajout d'ISRC manquant.#linebreak()
+      Correction de nom si l'ISRC identifie déjà la piste.#linebreak()
+      Signalement d'un conflit si l'ISRC change.
+    ],
+  )
+]
+
+Ce jeu d'essai montre que l'indexation n'accepte pas simplement une collection de fichiers : elle vérifie la cohérence d'album, conserve les métadonnées multiples utiles, évite les collisions de pistes et traite les paroles comme un enrichissement optionnel mais validé.
+
+== Test de sécurité détaillé : contrôle d'accès aux playlists
+
+Le test de sécurité retenu porte sur la confidentialité des playlists privées.
+Il est représentatif car il vérifie un contrôle d'accès métier côté serveur, directement avant l'accès aux données Prisma.
+Les cas sont implémentés dans les tests Vitest du service PlaylistService, et sont détaillés ci-dessous.
+
+#[
+  #show table: set text(size: 7pt, hyphenate: false)
+  #show table: set par(justify: false)
+
+  #table(
+    columns: (1.2fr, 1.6fr, 1.6fr, 1.6fr),
+    align: horizon,
+    table.header([*Cas testé*], [*Données en entrée*], [*Résultat attendu*], [*Résultat obtenu*]),
+    [Lecture d'une playlist privée appartenant à un autre utilisateur],
+    [
+      Playlist : playlist-1.#linebreak()
+      Propriétaire : owner-1.#linebreak()
+      Visibilité : PRIVATE.#linebreak()
+      Requête effectuée par l'utilisateur standard other-user.
+    ],
+    [
+      Refuser l'accès.#linebreak()
+      Ne pas renvoyer les pistes ni les métadonnées privées de la playlist.
+    ],
+    [
+      getPlaylist lève une ForbiddenException.#linebreak()
+      Le message indique que seuls les administrateurs peuvent lire une playlist privée d'un autre utilisateur.
+    ],
+    [Modification d'une playlist appartenant à un autre utilisateur],
+    [
+      Playlist : playlist-1.#linebreak()
+      Propriétaire : owner-1.#linebreak()
+      Requête de mise à jour effectuée par other-user avec rôle USER.
+    ],
+    [
+      Refuser la modification.#linebreak()
+      Le refus doit s'appliquer même si l'identifiant de playlist est valide.
+    ],
+    [
+      updatePlaylist lève une ForbiddenException.#linebreak()
+      Aucune mise à jour Prisma n'est validée.
+    ],
+    [Réordonnancement d'une playlist appartenant à un autre utilisateur],
+    [
+      Déplacement d'une piste dans playlist-1.#linebreak()
+      Demande effectuée par un utilisateur non propriétaire et non administrateur.
+    ],
+    [
+      Empêcher la modification de l'ordre des pistes.#linebreak()
+      Protéger les playlists privées ou contrôlées par un autre utilisateur.
+    ],
+    [
+      reorderPlaylistTracks lève une ForbiddenException.
+    ],
+    [Suppression de pistes dans une playlist appartenant à un autre utilisateur],
+    [
+      Suppression de la position 0 dans playlist-1.#linebreak()
+      Demande effectuée par other-user.
+    ],
+    [
+      Refuser la suppression.#linebreak()
+      Bloquer l'action avant les opérations de suppression Prisma.
+    ],
+    [
+      removeTracksFromPlaylist lève une ForbiddenException.
+    ],
+    [Action administrateur],
+    [
+      Utilisateur avec rôle ADMIN.#linebreak()
+      Création ou suppression d'une playlist pour un autre utilisateur.
+    ],
+    [
+      Autoriser l'action d'administration ciblée.#linebreak()
+      Conserver le refus pour le rôle utilisateur standard.
+    ],
+    [
+      createPlaylist accepte la création pour un autre utilisateur.#linebreak()
+      deletePlaylist appelle prisma.playlist.delete.
+    ],
+  )
+]
+
+Un contrôle complémentaire protège aussi l'accès aux chemins de fichiers en vérifiant qu'un chemin enfant résolu en dehors du dossier de base retourne null.
+Ce cas limite les risques de traversée de répertoire lors de l'accès aux fichiers de la bibliothèque.
 
 = Veille sécurité
 
