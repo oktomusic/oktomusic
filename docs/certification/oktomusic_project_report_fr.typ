@@ -1234,3 +1234,17 @@ Toutes les dépendances externes critiques (comme le code source FFmpeg) font l�
 = Veille sécurité
 
 = Annexes
+
+#table(
+  columns: (0.7fr, 1.3fr),
+  align: horizon,
+  table.header([*Nom*], [*Lien*]),
+  [Dépôt GitHub],
+  [https://github.com/oktomusic/oktomusic],
+  [Dépôt GitHub (FFmpeg)],
+  [https://github.com/oktomusic/ffmpeg-custom],
+  [Documentation utilisateur],
+  [https://oktomusic.afcms.dev],
+  [Démonstation vidéo],
+  [https://youtu.be/EA4ffNnbFVQ],
+)
