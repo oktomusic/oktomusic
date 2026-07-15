@@ -33,7 +33,7 @@
   date-format: "15 Juillet 2026",
 )
 
-= Compétences mises en oeuvre
+= Compétences mises en œuvre
 
 Le projet Oktomusic a été construit pour couvrir les trois activités types du titre professionnel *Concepteur Développeur d'Applications*.
 Le tableau ci-dessous reprend les compétences du référentiel et indique leur mise en œuvre concrète dans le projet.
@@ -103,13 +103,13 @@ Le tableau ci-dessous reprend les compétences du référentiel et indique leur 
 
 = Cahier des charges
 
-*Oktomusic* vise à proposer une solution de streaming musical concue pour l'auto hébergement, et répond à un besoin concret, basé sur l'anaylse des solutions existantes et des besoins des utilisateurs.
+*Oktomusic* vise à proposer une solution de streaming musical conçue pour l'auto-hébergement, et répond à un besoin concret, basé sur l'analyse des solutions existantes et des besoins des utilisateurs.
 
 == Comparaison avec les solutions existantes
 
 La volonté de proposer une solution de ce type est née de l'expérience de l'auteur avec les solutions existantes, notamment Jellyfin et Navidrome.
 
-Les limites de ces solutions ont été identifiées et analysées, afin de définir clairement les besoins et les objectifs du projet Oktomusic et apporter une réelle amélioration.
+Les limites de ces solutions ont été identifiées et analysées, afin de définir clairement les besoins et les objectifs du projet Oktomusic et d'apporter une réelle amélioration.
 
 === Jellyfin
 
@@ -117,11 +117,11 @@ Les limites de ces solutions ont été identifiées et analysées, afin de défi
 
 Cette approche généraliste rend l'expérience musicale moins spécialisée.
 
-De plus, l'interface utilisateur est centrée principalement sur les médias vidéo, qui se traduit par une ergonomie et des fonctionalités moins adaptées à la lecture musicale.
+De plus, l'interface utilisateur est centrée principalement sur les médias vidéo, ce qui se traduit par une ergonomie et des fonctionnalités moins adaptées à la lecture musicale.
 
 - Un support limité des métadonnées audio, avec des difficultés pour gérer les crédits multiples pour les pistes et les albums.
-- Manque de fonctionalités de lecture musicale moderne, dans le système de lecture, la gestion des playlists, ainsi que la navigation. Pas de support des paroles synchronisées mot-à-mot.
-- Manque de fonctionalités modernes sur le client web
+- Manque de fonctionnalités de lecture musicale moderne, dans le système de lecture, la gestion des playlists, ainsi que la navigation. Pas de support des paroles synchronisées mot-à-mot.
+- Manque de fonctionnalités modernes sur le client web
   - Pas de PWA réelle
   - Pas de mode Picture-in-Picture
 - Aucun support d'OpenID Connect en standard, ce qui complique l'intégration dans une infrastructure d'identité déjà existante et l'administration des utilisateurs
@@ -133,7 +133,7 @@ De plus, l'interface utilisateur est centrée principalement sur les médias vid
 Il propose une solution légère et efficace pour exploiter une bibliothèque audio, incluant un support des clients OpenSubsonic.
 
 - Pas de support des paroles synchronisées mot-à-mot.
-- Manque de fonctionalités modernes sur le client web
+- Manque de fonctionnalités modernes sur le client web
   - Interface MUI avec design peu ergonomique
   - Pas d'expérience PWA réelle
   - Pas de mode Picture-in-Picture
@@ -146,8 +146,8 @@ Comme Jellyfin, il ne répond pas directement au besoin d'authentification dél�
 
 Oktomusic se positionne avec une approche ciblé :
 
-- Exploitation d'une bibilothèque exclusivement musicale
-- Indexation basée sur des règles strictes de formats de métadonnées, basées sur les recommendations Vorbis#footnote("https://xiph.org/vorbis/doc/v-comment.html") ainsi que Musicbrainz Picard#footnote("https://picard-docs.musicbrainz.org/en/latest/variables/tags_basic.html")
+- Exploitation d'une bibliothèque exclusivement musicale
+- Indexation basée sur des règles strictes de formats de métadonnées, basées sur les recommandations Vorbis#footnote("https://xiph.org/vorbis/doc/v-comment.html") ainsi que MusicBrainz Picard#footnote("https://picard-docs.musicbrainz.org/en/latest/variables/tags_basic.html")
 - Expérience Web moderne sous forme de Progressive Web App (PWA) avec l'utilisation de fonctionnalités avancées des navigateurs (Media Session, Audio Session, Picture-in-Picture, OpenSearch, etc)
 - Conception de l'interface centrée sur l'expérience des applications de streaming modernes (paroles synchronisées, recherche, file d'attente, etc.)
 - Délégation complète de l'authentification à un fournisseur OpenID Connect au choix de l'opérateur du serveur, pour une meilleure sécurité et une administration simplifiée des utilisateurs
@@ -270,62 +270,62 @@ L'application ne supportant en entrée que les fichiers au format sans-pertes FL
 
 Ce besoin a été considéré au départ comme rentrant dans le périmètre initial, mais en a été écarté suite à des contraintes de temps de développement.
 
-La conception prévoyait pour chaque fichier FLAC suite aux étapes d'indexation, la génération de différentes versions transcodées au format Opus#footnote[https://en.wikipedia.org/wiki/Opus_(audio_format)] avec différents débits binaires au moyen d'FFMpeg pour permettre à l'utilisateur de choisir la qualité de streaming adaptée à sa connexion.
+La conception prévoyait pour chaque fichier FLAC suite aux étapes d'indexation, la génération de différentes versions transcodées au format Opus#footnote[https://en.wikipedia.org/wiki/Opus_(audio_format)] avec différents débits binaires au moyen de FFmpeg pour permettre à l'utilisateur de choisir la qualité de streaming adaptée à sa connexion.
 
-Une évolution plus complexe aurait été la mise en place d'un transcodage à la volée, effectué au moment du streaming, mais aurait demandé un effort de développement plus important, notamment pour la gestion des performances, de la charge serveur et de l'interfaçage avec FFMpeg.
+Une évolution plus complexe aurait été la mise en place d'un transcodage à la volée, effectué au moment du streaming, mais aurait demandé un effort de développement plus important, notamment pour la gestion des performances, de la charge serveur et de l'interfaçage avec FFmpeg.
 
 === Interface responsive et adaptée aux contrôles tactiles
 
-La possibilité d'utiliser l'application sur des petits écrans et avec contrôles tactiles a été envisagée dés le départ, mais écarté du périmètre initial pour se concentrer sur une utilisation essentiellement desktop.
+La possibilité d'utiliser l'application sur des petits écrans et avec des contrôles tactiles a été envisagée dès le départ, mais écartée du périmètre initial pour se concentrer sur une utilisation essentiellement desktop.
 
-Contrairement à une interface desktop, une interface responsive dotée de contrôles tactile notamment par gestes nécessite une conception et un développement spécifiques, ne ce limitant pas à une mise en page CSS.
+Contrairement à une interface desktop, une interface responsive dotée de contrôles tactiles notamment par gestes nécessite une conception et un développement spécifiques, ne se limitant pas à une mise en page CSS.
 
-Contrairement à un site web plus standard, la création de deux branches distinctes de l'interface aurait été nécessaires pour garantir une expérience de qualité telle que celle attendue par les utilisateurs d'application de streaming.
+Contrairement à un site web plus standard, la création de deux branches distinctes de l'interface aurait été nécessaire pour garantir une expérience de qualité telle que celle attendue par les utilisateurs d'applications de streaming.
 
-=== Interface compatible d'une utilisation de type console de salon
+=== Interface compatible avec une utilisation de type console de salon
 
 Certaines applications de streaming classiques ayant une intégration ou des applications spécifiques pour téléviseurs ou consoles de salon, la possibilité d'adapter l'interface pour une utilisation dans le navigateur de ce type d'appareil a été étudiée.
 
-La plus grosse difficulté réside dans la nécéssité de supporter une navigation spatiale par focus, pour une utilisation avec une télécommande ou un gamepad (joystick ou D-pad).
+La plus grosse difficulté réside dans la nécessité de supporter une navigation spatiale par focus, pour une utilisation avec une télécommande ou un gamepad (joystick ou D-pad).
 
 Le modèle de focus classique des navigateurs est uni-directionnel, et ne permet pas à ce jour une navigation spatiale.
 Il existe une spécification W3C `CSS Spatial Navigation Level 1`#footnote[https://www.w3.org/TR/css-nav-1] (working draft) pour doter les navigateurs de capacités de navigation spatiales, poussée par des ingénieurs de LG.
 
-Les polyfils disponibles pour cette spécifications, ainsi que les bibliothèques de navigation spatiale open-source pour React#footnote[https://devportal.noriginmedia.com/docs/Norigin-Spatial-Navigation] n'étant pas assez matures ou nécéssitant des modifications trop lourdes au code de l'application, cette fonctionnalité a été écartée du périmètre initial.
+Les polyfills disponibles pour cette spécification, ainsi que les bibliothèques de navigation spatiale open-source pour React#footnote[https://devportal.noriginmedia.com/docs/Norigin-Spatial-Navigation] n'étant pas assez matures ou nécessitant des modifications trop lourdes au code de l'application, cette fonctionnalité a été écartée du périmètre initial.
 
 La lecture de l'article de Spotify Engineering#footnote[https://engineering.atspotify.com/2023/5/tv-spatial-navigation] sur le sujet de la navigation spatiale sur les téléviseurs a été une source d'inspiration dans ces recherches.
 
-=== Recommendations musicales avancées
+=== Recommandations musicales avancées
 
-Une des fonctionalités importantes des application de streaming musical modernes est la possibilité de proposer des playlists automatiques et la lecture infinie basées sur la similarité musicale et les habitudes d'écoute de l'utilisateur.
+Une des fonctionnalités importantes des applications de streaming musical modernes est la possibilité de proposer des playlists automatiques et la lecture infinie basées sur la similarité musicale et les habitudes d'écoute de l'utilisateur.
 
-Une solution de ce type ne pouvant pas se baser uniquement sur le support des métadonnées de genres musicaux, mais nécéssite l'exploitation d'analyses acoustiques par IA.
+Une solution de ce type ne peut pas se baser uniquement sur le support des métadonnées de genres musicaux, mais nécessite l'exploitation d'analyses acoustiques par IA.
 
-Mes recherches sur les technologies open-source permettant de réaliser ce type d'analyse acoustique ont revevé le projet AudioMuse AI#footnote[https://github.com/NeptuneHub/AudioMuse-AI] qui est une solution intégrée dans Jellyfin, Navidrome et d'autres applications de streaming musical.
+Mes recherches sur les technologies open-source permettant de réaliser ce type d'analyse acoustique ont révélé le projet AudioMuse AI#footnote[https://github.com/NeptuneHub/AudioMuse-AI] qui est une solution intégrée dans Jellyfin, Navidrome et d'autres applications de streaming musical.
 La création d'un plugin spécifique ou l'intégration de cette solution dans Oktomusic serait envisageable.
 
 === Support d'un mode hors-ligne complet
 
-La plus part des applications de streaming musical modernes proposent un mode hors-ligne complet, permettant à l'utilisateur de télécharger des albums ou playlists pour les écouter sans connexion internet, ainsi que la mise en cache automatique de contenu sur la base du comportement de l'utilisateur.
+La plupart des applications de streaming musical modernes proposent un mode hors-ligne complet, permettant à l'utilisateur de télécharger des albums ou playlists pour les écouter sans connexion internet, ainsi que la mise en cache automatique de contenu sur la base du comportement de l'utilisateur.
 
-Dans le cas de l'application Oktomusic, le support d'un mode hors-ligne nécéssite la mise en place de plusieurs mécanismes complexes.
+Dans le cas de l'application Oktomusic, le support d'un mode hors-ligne nécessite la mise en place de plusieurs mécanismes complexes.
 Certaines d'entre elles sont déjà implémentées.
 
 L'utilisation d'un Service Worker dans le cadre d'une PWA (Progressive Web App) permet de mettre en cache les fichiers statiques de l'application.
-Une logique de mise en cache spécifique a été mise en place pour les fichiers audio, pour permettre un démarage plus rapide de la lecture des fichiers écoutés récemment.
+Une logique de mise en cache spécifique a été mise en place pour les fichiers audio, pour permettre un démarrage plus rapide de la lecture des fichiers écoutés récemment.
 
-Le mécanisme principal nécéssite une logique de détection du mode hors-ligne, couplée à une mise en cache des données GraphQL associées aux albums, playlists et à la librarie utilisateur.
+Le mécanisme principal nécessite une logique de détection du mode hors-ligne, couplée à une mise en cache des données GraphQL associées aux albums, playlists et à la bibliothèque utilisateur.
 
-Malheureusement, la librarie officielle permettant d'appliquer une logique de persistance de la mise en cache pour Apollo Client#footnote[https://github.com/apollographql/apollo-cache-persist] est non maintenue et ne supporte pas la dernière version stable, ce qui implique le fait de développer une solution spécifique pour l'application.
+Malheureusement, la bibliothèque officielle permettant d'appliquer une logique de persistance de la mise en cache pour Apollo Client#footnote[https://github.com/apollographql/apollo-cache-persist] est non maintenue et ne supporte pas la dernière version stable, ce qui implique le fait de développer une solution spécifique pour l'application.
 
-Par ailleurs, le fait de "télécharger" les fichiers audio pour assurer leur disponibilité indépendament du dernier accès nécéssite de mettre en place un mécanisme donnant au cache une durée de vie infinie, sois en adaptant la politique de cache, sois en téléchargeant les fichiers audio dans le système de fichiers du navigateur (Origin Private File System#footnote[https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system]) et en interceptant les requêtes réseau dans le Service Worker pour servir les fichiers depuis celui-ci.
+Par ailleurs, le fait de "télécharger" les fichiers audio pour assurer leur disponibilité indépendamment du dernier accès nécessite de mettre en place un mécanisme donnant au cache une durée de vie infinie, soit en adaptant la politique de cache, soit en téléchargeant les fichiers audio dans le système de fichiers du navigateur (Origin Private File System#footnote[https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system]) et en interceptant les requêtes réseau dans le Service Worker pour servir les fichiers depuis celui-ci.
 
 == Contraintes principales retenues
 
-- Une unique interface web, exploitant les capacités PWA ainsi que les APIs web modernes.
+- Une unique interface web, exploitant les capacités PWA ainsi que les API web modernes.
 - Un déploiement facile pour l'utilisateur, via une image Docker multi-plateforme moderne
 - Utilisation d'une base de données relationnelle PostgreSQL pour les données persistantes
-- Sessions et traitements asynchrones persistés via une base de donnée Valkey
+- Sessions et traitements asynchrones persistés via une base de données Valkey
 - Authentification déléguée intégralement à un provider OpenID Connect au choix de l'utilisateur
 - Publication du code source licence AGPL-3.0
 - Une documentation intégrale pour installer, configurer et présenter l'application
@@ -334,19 +334,19 @@ Par ailleurs, le fait de "télécharger" les fichiers audio pour assurer leur di
 
 == Organisation et suivi
 
-Le besoin ayant été cadré à partir d'un besoin spécifique et réaliste, le développement a eu lieu de manière itérative orienté vers la réalisation d'un MVP (Minimum Viable Product) fonctionnel, avec un découpage par domaines fonctionnels.
+Le besoin ayant été cadré à partir d'un besoin spécifique et réaliste, le développement a suivi une approche itérative orientée vers la réalisation d'un MVP (Minimum Viable Product) fonctionnel, avec un découpage par domaines fonctionnels.
 
 La documentation utilisateur a été maintenue en parallèle du développement, pour garantir sa cohérence avec l'application.
 
-La plateforme GitHub a été sélectionnée, de part sa polyvalence, pour l'hébergement du code source, la réalisation des pipelines de CI/CD, la gestion de projet ainsi que la distribution.
+La plateforme GitHub a été sélectionnée, en raison de sa polyvalence, pour l'hébergement du code source, la réalisation des pipelines de CI/CD, la gestion de projet ainsi que la distribution.
 La documentation utilisateur, rédigée en Markdown, est publiée au travers du générateur VitePress sur un site Cloudflare Pages.
 
 GitHub a servi d'espace central de gestion du projet : code source, documentation, suivi des tâches, intégration continue et distribution des artefacts.
 Le choix d'un monorepo a permis de conserver une source unique pour l'ensemble du projet, sans séparer artificiellement le backend, le frontend, les packages communs, la documentation et les fichiers de déploiement.
 
-Le choix a été fait d'héberger l'ensemble du code source dans un monorepo, pour facilier la mutualisation des fichiers de configuration ainsi que la recherche d'informations dans le code source, notamment pour les agents LLMs utilisés pour assister le développement.
+Le choix a été fait d'héberger l'ensemble du code source dans un monorepo, pour faciliter la mutualisation des fichiers de configuration ainsi que la recherche d'informations dans le code source, notamment pour les agents LLMs utilisés pour assister le développement.
 
-L'organisation technique du dépôt est présenté de manière plus détaillée dans la section #link(<code_organization>)[Organisation du code].
+L'organisation technique du dépôt est présentée de manière plus détaillée dans la section #link(<code_organization>)[Organisation du code].
 
 Le suivi du travail a été organisé sous formes d'issues GitHub associé à un projet GitHub Projects#footnote[https://github.com/orgs/oktomusic/projects/1], qui fournissait une manière efficace de suivre les tâches à réaliser.
 Les tâches ont été regroupées par domaines et priorités.
@@ -360,11 +360,11 @@ Même si des cycles de développement agiles n'ont pas été utilisés, cette or
   width: 100%,
 ), caption: [Suivi du projet dans GitHub Projects (Kanban)])
 
-L'utilisation des pull requests ainsi que des workflows GitHub Actions ont complété ce suivi en permettant de garder un rythme de développement souple tout en s'assurant que les évolution importantes puissent être validées par des contrôles automatisés avant intégration au projet.
+L'utilisation des pull requests ainsi que des workflows GitHub Actions a complété ce suivi en permettant de garder un rythme de développement souple tout en s'assurant que les évolutions importantes puissent être validées par des contrôles automatisés avant intégration au projet.
 
-Certains contributeurs externes ont été impliqués dans l'implémentation de différentes fonctionalités du projet, ce qui a nécessité de la collaboration, des échanges et de la revue de code.
+Certains contributeurs externes ont été impliqués dans l'implémentation de différentes fonctionnalités du projet, ce qui a nécessité de la collaboration, des échanges et de la revue de code.
 
-- Support configurable du bloquage allumé de l'écran#footnote[https://developer.mozilla.org/en-US/docs/Web/API/WakeLock] pendant la lecture#footnote[https://github.com/oktomusic/oktomusic/pull/165]
+- Support configurable du blocage de la mise en veille de l'écran#footnote[https://developer.mozilla.org/en-US/docs/Web/API/WakeLock] pendant la lecture#footnote[https://github.com/oktomusic/oktomusic/pull/165]
 - Customisation du nom d'affichage de l'application#footnote[https://github.com/oktomusic/oktomusic/pull/291]
 - Sélecteur de langue de l'interface#footnote[https://github.com/oktomusic/oktomusic/pull/313]
 
@@ -405,7 +405,7 @@ L'interface est organisée autour de quatre zones stables :
 
 == Maquettes Figma
 
-Toutes les vues n'ont pas été maquetées, mais la structure générale ainsi que le thème visuel de l'application ont été formalisées dans un fichier Figma.#footnote[https://www.figma.com/design/bkhuLo4RZVG6qd5Au4siZg/Oktomusic]
+Toutes les vues n'ont pas été maquettées, mais la structure générale ainsi que le thème visuel de l'application ont été formalisées dans un fichier Figma.#footnote[https://www.figma.com/design/bkhuLo4RZVG6qd5Au4siZg/Oktomusic]
 
 #figure(image("../common/screenshots/figma_album.png"), caption: "Maquette d'album")
 
@@ -515,15 +515,15 @@ TypeScript #footnote[https://www.typescriptlang.org] a été choisi comme langag
 - *Typage statique* : Les types statiques de TypeScript permettent de détecter beaucoup d'erreurs à la compilation, améliorant ainsi la robustesse et la maintenabilité du code.
 - *ESLint* : TypeScript se combine parfaitement avec des outils de linting comme ESLint, permettant d'améliorer encore la robustesse du code.
 - *Partage de code* : TypeScript permet de partager facilement du code et des types entre le backend et le frontend, notamment via des packages communs.
-- *Ecosystème* : TypeScript bénéficie d'un écosystème riche de bibliothèques backend et frontend, et un support excellent dans les éditeurs de code, facilitant le développement.
+- *Écosystème* : TypeScript bénéficie d'un écosystème riche de bibliothèques backend et frontend, et d'un excellent support dans les éditeurs de code, facilitant le développement.
 
 == Backend
 
-Le backend de l'application s'est architecturé autour du framework NestJS #footnote[https://nestjs.com], qui offre une structure standardisée et modulaire au dessus d'Express.js, avec un très bon support natif de TypeScript.
+Le backend de l'application s'est architecturé autour du framework NestJS #footnote[https://nestjs.com], qui offre une structure standardisée et modulaire au-dessus d'Express.js, avec un très bon support natif de TypeScript.
 
 === Base de données PostgreSQL + Prisma ORM
 
-Pour la base de donnée principale, qui stocke les données de l'application (utilisateurs, albums, playlists, etc), le choix a été fait d'utiliser PostgreSQL #footnote[https://www.postgresql.org] pour sa robustesse et ses performances.
+Pour la base de données principale, qui stocke les données de l'application (utilisateurs, albums, playlists, etc), le choix a été fait d'utiliser PostgreSQL #footnote[https://www.postgresql.org] pour sa robustesse et ses performances.
 
 L'intégration avec la base de données est assurée par Prisma ORM #footnote[https://www.prisma.io], qui offre une définition de schéma de données simple et un générateur de client TypeScript très puissant.
 
@@ -548,24 +548,24 @@ L'application se comporte donc comme un Relying Party (RP) dans ce protocole, en
 Elle utilise le flux d’autorisation (*Authorization Code Flow*) avec *PKCE* et des sessions côté serveur.
 Elle s’appuie sur les protocoles *OpenID Connect Core* et *OpenID Connect Discovery*.
 
-Cette approche présente plusieurs avantages applicatifs, notamment en laissant l'opérateur du serveur gérer lui même les aspects liés à la gestion des utilisateurs.
+Cette approche présente plusieurs avantages applicatifs, notamment en laissant l'opérateur du serveur gérer lui-même les aspects liés à la gestion des utilisateurs.
 Pas besoin de gérer en interne la gestion des comptes, politiques de mot de passe, réinitialisation, emails, 2FA, etc.
 
 De plus, elle permet de bénéficier d'une sécurité renforcée (voir section #link(<security_oidc>)[Sécurité, OpenID Connect])
 
 == Frontend
 
-Le frontend de l'application, propulsé par le framework Vite#footnote[https://vite.dev], a été développé avec la librairie React.#footnote[https://react.dev]
+Le frontend de l'application, propulsé par le framework Vite#footnote[https://vite.dev], a été développé avec la bibliothèque React.#footnote[https://react.dev]
 
 Vite avec sa toolchain native a apporté un environnement de développement moderne et rapide adapté aux applications web modernes.
 
 React a permis de construire l’interface sous forme de composants réutilisables.
 
-La gestion d'état global de l'application est assurée par la librarie Jotai#footnote[https://jotai.org], qui fonctionne de manière simple et puissante tout en reprenant les patterns usuellement utilisés par React.
+La gestion d'état global de l'application est assurée par la bibliothèque Jotai#footnote[https://jotai.org], qui fonctionne de manière simple et puissante tout en reprenant les patterns usuellement utilisés par React.
 
 La récupération ainsi que la mise en cache des données applicatives est assurée par Apollo Client#footnote[https://www.apollographql.com], qui fournit un client GraphQL complet et performant.
 
-La traduction de l'interface est effectuée à l'aide de la librarie Lingui#footnote[https://lingui.dev], qui fournit une expérience moderne.
+La traduction de l'interface est effectuée à l'aide de la bibliothèque Lingui#footnote[https://lingui.dev], qui fournit une expérience moderne.
 
 React Router#footnote[https://reactrouter.com] a été utilisé pour gérer la navigation dans l'application.
 
@@ -622,13 +622,67 @@ Le champ `lyrics`, stocké en `jsonb`, permet par exemple de conserver les parol
   width: 100%,
 ), caption: [Modèle physique de données sous forme de schéma Prisma])
 
+Lors de l'exécution de l'image Docker, les migrations Prisma sont automatiquement appliquées à la base de données PostgreSQL configurée.
+
+```
+app-1       | Running Prisma migrations...
+app-1       | Loaded Prisma config from prisma.config.ts.
+app-1       |
+app-1       | Prisma schema loaded from prisma/schema.prisma.
+app-1       | Datasource "db": PostgreSQL database "hexamusic", schema "public" at "postgres:5432"
+app-1       |
+app-1       | 11 migrations found in prisma/migrations
+app-1       |
+app-1       | Applying migration `20251026213543_basic_user_profile`
+app-1       | Applying migration `20251230154153_primary_music_model`
+app-1       | Applying migration `20251231184604_add_flac_file_entity`
+app-1       | Applying migration `20260102184015_add_album_cover_hash`
+app-1       | Applying migration `20260102185908_no_null_hash`
+app-1       | Applying migration `20260126092400_add_track_lyrics`
+app-1       | Applying migration `20260128131902_add_vibrant_colors`
+app-1       | Applying migration `20260303195650_playlists`
+app-1       | Applying migration `20260310210820_playlist_visibility_type`
+app-1       | Applying migration `20260613143930_last_played_date`
+app-1       | Applying migration `20260613170000_user_library`
+app-1       |
+app-1       | The following migration(s) have been applied:
+app-1       |
+app-1       | migrations/
+app-1       |   └─ 20251026213543_basic_user_profile/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20251230154153_primary_music_model/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20251231184604_add_flac_file_entity/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20260102184015_add_album_cover_hash/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20260102185908_no_null_hash/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20260126092400_add_track_lyrics/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20260128131902_add_vibrant_colors/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20260303195650_playlists/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20260310210820_playlist_visibility_type/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20260613143930_last_played_date/
+app-1       |     └─ migration.sql
+app-1       |   └─ 20260613170000_user_library/
+app-1       |     └─ migration.sql
+app-1       |
+app-1       | All migrations have been successfully applied.
+app-1       | Migrations completed successfully
+app-1       | [Nest] 1  - 07/15/2026, 6:47:08 PM     LOG [NestFactory] Starting Nest application...
+```
+
 = Spécifications techniques
 
 == Organisation du code <code_organization>
 
-Le code source de l'application est organisé dans un monorepo PNPM #footnote[https://pnpm.io/workspaces] hébergé sur un repository GitHub à l'exception de la version customisée de FFmpeg gérée dans un repository séparé.
+Le code source de l'application est organisé dans un monorepo PNPM #footnote[https://pnpm.io/workspaces] hébergé sur un dépôt GitHub, à l'exception de la version customisée de FFmpeg, gérée dans un dépôt séparé.
 
-Différent packages sont définis pour les différentes parties de l'application (backend, frontend, packages communs, etc).
+Différents packages sont définis pour les différentes parties de l'application (backend, frontend, packages communs, etc).
 
 Les packages communs utilisent `tsdown` #footnote[https://tsdown.dev].
 
@@ -669,7 +723,7 @@ Les packages communs utilisent `tsdown` #footnote[https://tsdown.dev].
   table.cell[`packages/`],
   table.cell[`metaflac-parser`],
   table.cell[
-  Parsing et validation de métadonnées FLAC basé sur l'exécutable `metaflac`.
+  Parsing et validation de métadonnées FLAC basés sur l'exécutable `metaflac`.
   Utilisé par le backend.
   ],
   table.cell[`packages/`],
@@ -690,9 +744,9 @@ Les packages communs utilisent `tsdown` #footnote[https://tsdown.dev].
 
 Le développement de l'application a été assisté par l'utilisation d'agents LLMs pour de nombreuses tâches, à la fois pour la génération de code, la rédaction de documentation, la création de tests unitaires, la recherche et le prototypage de fonctionnalités, etc.
 
-Un effort a été fait pour maximiser l'efficacité de ces outils, en fournissant un environment de développement complet pour les agents autonomes, ainsi que des instructions système détaillées et spécialisées pour chaque partie de l'application.
+Un effort a été fait pour maximiser l'efficacité de ces outils, en fournissant un environnement de développement complet pour les agents autonomes, ainsi que des instructions système détaillées et spécialisées pour chaque partie de l'application.
 
-Ces instructions couvrent des aspects tels que l'architecture du projet (organisation des fichiers), les conventions de code (TypeScript, CSS, nommage, etc.), les exigences de performances et d'accessibilité (CSP, respect des recommendations WCAG 2.2 AAA, etc.).
+Ces instructions couvrent des aspects tels que l'architecture du projet (organisation des fichiers), les conventions de code (TypeScript, CSS, nommage, etc.), les exigences de performances et d'accessibilité (CSP, respect des recommandations WCAG 2.2 AAA, etc.).
 
 Des prompts réutilisables ont été créés pour automatiser des tâches courantes, comme la création de nouveaux packages partagés, impliquant des modifications dans plusieurs parties de la base de code (CI/CD, Docker, configuration ESLint et Vitest, etc).
 L'automatisation de ces tâches répétitives a permis de réduire le risque d'oublis ou d'erreurs humaines, pouvant causer des erreurs CI/CD.
@@ -723,9 +777,9 @@ Le projet vise une interface utilisable au clavier, lisible, structurée et comp
 Les principaux choix appliqués sont : utilisation de tags HTML sémantiques, contrastes suffisants, états de focus visibles, labels explicites, absence de dépendance exclusive à la couleur et textes alternatifs pour les images porteuses d’information.
 
 La conformité complète au RGAA#footnote[https://accessibilite.numerique.gouv.fr] nécessiterait un audit dédié.
-À ce stade, les contrôles réalisés se concentrent essentiellement sur le suivis des bonnes pratiques WCAG#footnote[https://www.w3.org/TR/WCAG22], les vérifications Google Lighthouse#footnote[https://developer.chrome.com/docs/lighthouse/overview] ainsi que des tests manuels des parcours principaux au clavier.
+À ce stade, les contrôles réalisés se concentrent essentiellement sur le suivi des bonnes pratiques WCAG#footnote[https://www.w3.org/TR/WCAG22], les vérifications Google Lighthouse#footnote[https://developer.chrome.com/docs/lighthouse/overview] ainsi que des tests manuels des parcours principaux au clavier.
 
-L'utilisation de libraries tel que BaseUI#footnote[https://base-ui.com], compatible WCAG 2.2, permet d'assurer l'accessibilité de nombreux composants interactifs de l'application.
+L'utilisation de bibliothèques telles que BaseUI#footnote[https://base-ui.com], compatible WCAG 2.2, permet d'assurer l'accessibilité de nombreux composants interactifs de l'application.
 
 // Lighthouse
 // WCAG 2.2 AAA
@@ -758,7 +812,7 @@ Ils permettent cependant de concentrer les ressources serveur sur les usages ré
 
 #figure(image("../common/screenshots/interface_search.png"), caption: "Interface de recherche")
 
-#figure(image("../common/screenshots/interface_queue_library.png"), caption: "Librarie et file d'attente")
+#figure(image("../common/screenshots/interface_queue_library.png"), caption: "Bibliothèque et file d'attente")
 
 #figure(image("../common/screenshots/interface_lyrics.png"), caption: "Visualisation des paroles synchronisées")
 
@@ -768,7 +822,7 @@ Ils permettent cependant de concentrer les ressources serveur sur les usages ré
 
 L'application exploite les capacités de FFmpeg et metaflac pour l'extraction des métadonnées des fichiers FLAC.
 
-Pour l'inclusion de FFmpeg dans l'image Docker de l'application, le choix a été fait de compiler une version statique et customisée de FFmpeg 8 et de ces dépendances principales à partir des sources officielles.
+Pour l'inclusion de FFmpeg dans l'image Docker de l'application, le choix a été fait de compiler une version statique et customisée de FFmpeg 8 et de ses dépendances principales à partir des sources officielles.
 
 L'avantage principal de cette approche est de limiter la taille de l'image finale en n'incluant que les codecs audio FLAC et Opus.
 
@@ -776,9 +830,9 @@ Les gains de taille sont significatifs, avec des binaires finaux d'environ 5Mo c
 
 Ces binaires sont distribués sous forme d'image Docker, pour permettre une intégration facile dans l'image Docker de l'application via un layer séparé.
 
-Le fichier Dockerfile et les pipeline CI/CD de construction de cette image sont disponibles dans un repository séparé sur GitHub #footnote[https://github.com/oktomusic/ffmpeg-custom].
+Le fichier Dockerfile et les pipelines CI/CD de construction de cette image sont disponibles dans un dépôt séparé sur GitHub #footnote[https://github.com/oktomusic/ffmpeg-custom].
 
-L'image a été construite à partir des sources officielles de FFmpeg et de ses dépendances, avec un support de la cross compilation native Docker #footnote[https://docs.docker.com/build/building/multi-platform/#cross-compilation] et vérification des hash des sources pour garantir l'intégrité des composants utilisés :
+L'image a été construite à partir des sources officielles de FFmpeg et de ses dépendances, avec une prise en charge de la cross-compilation native Docker #footnote[https://docs.docker.com/build/building/multi-platform/#cross-compilation] et une vérification des hachages des sources pour garantir l'intégrité des composants utilisés :
 
 - libogg #footnote[https://github.com/xiph/ogg]
 - libopus #footnote[https://github.com/xiph/opus]
@@ -833,21 +887,21 @@ Ce système supporte en entrée plusieurs formats de fichiers :
 - Enhanced LRC #footnote[https://en.wikipedia.org/wiki/LRC_(file_format)#A2_extension_(Enhanced_LRC_format)] (synchronisation ligne à ligne + par début de mots)
 - TTML #footnote[https://en.wikipedia.org/wiki/Timed_Text_Markup_Language] (XML, synchronisation complète, ligne et mots avec les informations de début et de fin)
 
-Un système de parsing spécifique à été développé pour les fichiers LRC, un parser XML basé sur la librarie `fast-xml-parser` est utilisé pour les fichiers TTML.
+Un système de parsing spécifique a été développé pour les fichiers LRC, un parseur XML basé sur la bibliothèque `fast-xml-parser` est utilisé pour les fichiers TTML.
 
 Les données parsées sont extraites dans un format commun compatible JSON, inspiré par l'API richsync de Musixmatch#footnote[https://docs.musixmatch.com/api-reference/lyrics-catalog/track-richsync-get], défini par un schéma Zod #footnote[https://zod.dev] et permettant un typage strict en backend.
 
 Des tests unitaires complets ont été écrits pour garantir la robustesse du système de parsing.
 
-Ces données sont stoquées directement dans la base de données PostgreSQL, en exploitant le type `jsonb` ainsi qu'un générateur de types TypeScript pour Prisma#footnote[https://github.com/arthurfiorette/prisma-json-types-generator], dans le but de garantir la cohérence des données.
+Ces données sont stockées directement dans la base de données PostgreSQL, en exploitant le type `jsonb` ainsi qu'un générateur de types TypeScript pour Prisma#footnote[https://github.com/arthurfiorette/prisma-json-types-generator], dans le but de garantir la cohérence des données.
 
 == Système de parsing et de génération de fichiers de playlist
 
-Pour faciliter l'intéropérabilité avec d'autres applications, l'application supporte l'import et l'export de playlists au format XSPF #footnote[https://xspf.org], JSPF (variante JSON) et M3U #footnote[https://en.wikipedia.org/wiki/M3U], dans le package `@oktomusic/playlists`.
+Pour faciliter l'interopérabilité avec d'autres applications, l'application prend en charge l'import et l'export de playlists au format XSPF #footnote[https://xspf.org], JSPF (variante JSON) et M3U #footnote[https://en.wikipedia.org/wiki/M3U], dans le package `@oktomusic/playlists`.
 
-Le modèle de données commun est celui de JSPF, qui permet une manipulation facile des données en TypeScript. Celui-ci est définit par un schéma Zod, permettant une utilisation directe pour parser les fichiers JSPF.
+Le modèle de données commun est celui de JSPF, qui permet une manipulation facile des données en TypeScript. Celui-ci est défini par un schéma Zod, permettant une utilisation directe pour parser les fichiers JSPF.
 
-Un parseur basé sur la librarie `fast-xml-parser` est utilisé pour les fichiers XSPF, tandis que les fichiers M3U sont parsés via une approche spécifique basée sur une itération ligne à ligne et des expressions régulières.
+Un parseur basé sur la bibliothèque `fast-xml-parser` est utilisé pour les fichiers XSPF, tandis que les fichiers M3U sont parsés via une approche spécifique basée sur une itération ligne à ligne et des expressions régulières.
 
 Des tests unitaires complets ont été écrits pour garantir la robustesse du système de parsing et de génération de fichiers de playlist.
 
@@ -855,19 +909,19 @@ Des tests unitaires complets ont été écrits pour garantir la robustesse du sy
 
 L'application intègre un système d'extraction de couleurs dominantes à partir des images de couverture d'album, dans le package `@oktomusic/vibrant`.
 
-Les couvertures d'album subissant une conversion au format AVIF en plusieurs résolutions obtimisées à l'aide de la librarie `sharp`#footnote("https://sharp.pixelplumbing.com"), la décision a été prise de développer un adaptateur pour sharp basé sur les algorithme MMCQ exportés par les modules de la bibliothèque `node-vibrant`#footnote[https://vibrant.dev], permettant d'éviter l'ajout d'une dépendance supplémentaire (`jimp`) et de charger deux fois les images en mémoire au moment de l'indexation.
+Les couvertures d'album subissant une conversion au format AVIF en plusieurs résolutions optimisées à l'aide de la bibliothèque `sharp`#footnote("https://sharp.pixelplumbing.com"), la décision a été prise de développer un adaptateur pour sharp basé sur les algorithmes MMCQ exportés par les modules de la bibliothèque `node-vibrant`#footnote[https://vibrant.dev], permettant d'éviter l'ajout d'une dépendance supplémentaire (`jimp`) et de charger deux fois les images en mémoire au moment de l'indexation.
 
 == Validation des métadonnées FLAC
 
-Pour garantir un système d'indexation robuste et cohérent, notamment en évitant la perte de donnée au maximum lors d'une réindexation tout en conservant la qualité des métadonnées, le projet impose des exigences claires aux fichiers exploités.
+Pour garantir un système d'indexation robuste et cohérent, notamment en limitant autant que possible la perte de données lors d'une réindexation tout en conservant la qualité des métadonnées, le projet impose des exigences claires aux fichiers exploités.
 
 Les fichiers manipulés par l'application sont au format FLAC et utilisent donc les commentaires Vorbis #footnote[https://xiph.org/vorbis/doc/v-comment.html] comme format de métadonnées.
 
 Le format Vorbis ne définit malheureusement que des recommandations pour les noms et le format des tags, et ne définit pas de standard strict pour les métadonnées musicales.
 
-Une spécification stricte a donc été définie pour les tags gérés par l'application, basée sur les recommandations Vorbis et les conventions Musicbrainz Picard#footnote[https://picard-docs.musicbrainz.org/en/latest/variables/tags_basic.html].
+Une spécification stricte a donc été définie pour les tags gérés par l'application, basée sur les recommandations Vorbis et les conventions MusicBrainz Picard#footnote[https://picard-docs.musicbrainz.org/en/latest/variables/tags_basic.html].
 
-Le choix a été fait d'imposer ce modèle stricte pour limiter l'indexation de fichiers ne respectant pas la structure d'un album, et faire correspondre plus simplement le modèle de données plat des fichiers FLAC avec le modèle relationnel de la base de données.
+Le choix a été fait d'imposer ce modèle strict pour limiter l'indexation de fichiers ne respectant pas la structure d'un album, et faire correspondre plus simplement le modèle de données plat des fichiers FLAC avec le modèle relationnel de la base de données.
 
 #table(
   columns: (auto, auto, auto, auto, auto),
@@ -926,15 +980,15 @@ Le choix a été fait d'imposer ce modèle stricte pour limiter l'indexation de 
 )
 
 - *Unique*: Tous les fichiers d'un même album doivent avoir la même valeur pour ce tag
-- *Multiple*: Un seul fichier peut contenir plusieur fois le tag, avec des valeurs différentes (ex: plusieurs artistes pour un même album). L'ordre des valeurs est conservé.
-- Les tags multiples utilisants des caractères de séparation (ex: `;`) ne sont pas supportés, car ne correspondant pas au standard Vorbis
+- *Multiple*: Un seul fichier peut contenir plusieurs fois le tag, avec des valeurs différentes (ex: plusieurs artistes pour un même album). L'ordre des valeurs est conservé.
+- Les tags multiples utilisant des caractères de séparation (ex: `;`) ne sont pas pris en charge, car ils ne correspondent pas au standard Vorbis
 - `TOTALTRACKS` est le nombre total de pistes dans le disque `DISCNUMBER`
 - `TRACKNUMBER` est le numéro de la piste dans son disque `DISCNUMBER`
 - `TOTALTRACKS` et `TOTALDISCS` sont validés pour la cohérence à travers tous les fichiers de l'album
 - Les paires `DISCNUMBER` + `TRACKNUMBER` sont validées pour l'unicité à travers tous les fichiers de l'album
 - Deux artistes différents avec le même nom ne peuvent pas être distingués. Le processus d'indexation pourrait prendre en charge une clé supplémentaire comme `MUSICBRAINZ_ARTISTID` à l'avenir pour résoudre ce problème.
 
-L'extraction des métadonnées et la validation de format par fichier sont effectués par le module `@oktomusic/metaflac-parser` et exploite la sortie standard de l'outil CLI `metaflac` (faisant partie de la librarie FLAC officielle) pour extraire les métadonnées Vorbis.
+L'extraction des métadonnées et la validation de format par fichier sont effectuées par le module `@oktomusic/metaflac-parser` et exploitent la sortie standard de l'outil CLI `metaflac` (faisant partie de la bibliothèque FLAC officielle) pour extraire les métadonnées Vorbis.
 
 Un parseur spécifique a été développé pour l'analyse ligne à ligne, les vérifications de format et la génération d'un objet JSON typé pour le backend se faisant via un schéma Zod.
 
@@ -942,7 +996,7 @@ Un parseur spécifique a été développé pour l'analyse ligne à ligne, les v�
 
 Source : `packages/metaflac-parser/src/utils.ts`
 
-Les lignes de sorties sont analysées via une expression régulière, les clés sont normalisées en majuscules et les valeurs sont stockées dans un tableau pour gérer les tags multiples.
+Les lignes de sortie sont analysées via une expression régulière, les clés sont normalisées en majuscules et les valeurs sont stockées dans un tableau pour gérer les tags multiples.
 
 ```ts
 export type MetaflacLinesParseResult = Record<string, string[]>;
@@ -986,7 +1040,7 @@ La validation de format par fichier se fait via un premier schéma Zod. Pour val
 Les valeurs sont ensuite transformées en un objet plat via un deuxième schéma Zod pour une utilisation plus facile en backend.
 
 ```ts
-// zPlainDate est un une fonction Zod pour valider les dates au format `YYYY-MM-DD` et en sortir un objet Temporal.PlainDate
+// zPlainDate est une fonction Zod pour valider les dates au format `YYYY-MM-DD` et en sortir un objet Temporal.PlainDate
 
 export const isrcRegex = /^[A-Z]{2}-?\w{3}-?\d{2}-?\d{5}$/;
 
@@ -1049,7 +1103,7 @@ Source : `apps/frontend/src/hooks/vibrant_colors.ts`
 
 Des éléments d'interface de l'application sont adaptés aux couleurs dominantes des couvertures d'album, extraites à l'indexation (voir la section dédiée), pour améliorer l'expérience utilisateur et la cohérence visuelle.
 
-Pour faciliter l'exploitation contextuelle de ces couleurs, des propriétés CSS personalisées#footnote[https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@property] ainsi que des hook React ont été définis à cet effet.
+Pour faciliter l'exploitation contextuelle de ces couleurs, des propriétés CSS personnalisées#footnote[https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@property] ainsi que des hooks React ont été définis à cet effet.
 
 Les propriétés CSS sont définies avec le sélecteur `@property` pour permettre le type checking et la définition d'une valeur initiale.
 
@@ -1320,9 +1374,9 @@ Pour une instance de production (derrière reverse proxy Traefik), les résultat
 
 === Zones d'amélioration
 
-L'exploitation de l'API Trusted Types#footnote[https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API] ainsi que l'API Sanitizer#footnote[https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API], couplé à la directive CSP `require-trusted-types-for`#footnote[https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for] aurait fourni une protoction supplémentaire contre les attaques XSS.
+L'exploitation de l'API Trusted Types#footnote[https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API] ainsi que l'API Sanitizer#footnote[https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API], couplées à la directive CSP `require-trusted-types-for`#footnote[https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for] aurait fourni une protection supplémentaire contre les attaques XSS.
 
-L'implémentation a été évaluée, mais a été bloquée un manque de support par le plugin chargé de la génération du Service Worker. Les éléments nécéssaires devrais être mis en place dans la prochaine version du plugin.#footnote[https://github.com/vite-pwa/vite-plugin-pwa/issues/933]
+L'implémentation a été évaluée, mais a été bloquée par un manque de support du plugin chargé de la génération du Service Worker. Les éléments nécessaires devraient être mis en place dans la prochaine version du plugin.#footnote[https://github.com/vite-pwa/vite-plugin-pwa/issues/933]
 
 == Supply chain <security_supply_chain>
 
@@ -1342,7 +1396,7 @@ Ces paramètres permettent :
 
 - de bloquer les dépendances utilisant des sources non standards (ex : Git ou tarball)
 - d’éviter l’utilisation de versions trop récentes, potentiellement compromises (voir la compromission de la bibliothèque `axios` le 31 mars 2026)
-- de bloquer l'installation de versions de dépendances au standards de confiance plus faibles que celles déjà installées (signature de publication manquante, etc)
+- de bloquer l'installation de versions de dépendances aux standards de confiance plus faibles que celles déjà installées (signature de publication manquante, etc)
 
 Les versions des dépendances sont figées via un fichier de verrouillage (lockfile), garantissant la reproductibilité des builds.
 
@@ -1350,7 +1404,7 @@ Les versions des dépendances sont figées via un fichier de verrouillage (lockf
 
 Les mises à jour des dépendances sont très régulièrement effectuées, avec une attention particulière portée aux correctifs de sécurité.
 
-La fonctionnalité Dependabot#footnote[https://github.com/security/advanced-security] de la plateforme GitHub permet permet de créer automatiquement des pull requests pour les mises à jour de dépendances, ainsi que la création d'alertes en cas de vulnérabilités détectées dans les dépendances utilisées.
+La fonctionnalité Dependabot#footnote[https://github.com/security/advanced-security] de la plateforme GitHub permet de créer automatiquement des pull requests pour les mises à jour de dépendances, ainsi que des alertes en cas de vulnérabilités détectées dans les dépendances utilisées.
 
 La mise en place de pipelines CI/CD complets permet de s'assurer de l'absence de régressions lors de ces mises à jour, et d'assurer une intégration rapide des correctifs de sécurité.
 
@@ -1366,7 +1420,7 @@ Chaque image est construite exclusivement via les pipelines CI/CD à partir d'un
 
 Les images sont signées avec Cosign #footnote[https://sigstore.dev], un outil open-source de signature et de vérification des artefacts container, assurant leur provenance et la détection de toute modification non autorisée.
 
-La base d'exécution de l'image est une version DHI (Docker Hardened Image)#footnote[https://www.docker.com/products/hardened-images] de NodeJS 24#footnote[https://hub.docker.com/hardened-images/catalog/dhi/node], offrant une configuration durcie et une surface d'attaque réduite par rapport à une image NodeJS standard.
+La base d'exécution de l'image est une version DHI (Docker Hardened Image)#footnote[https://www.docker.com/products/hardened-images] de Node.js 24#footnote[https://hub.docker.com/hardened-images/catalog/dhi/node], offrant une configuration durcie et une surface d'attaque réduite par rapport à une image Node.js standard.
 
 Toutes les dépendances externes critiques (comme le code source FFmpeg) font l’objet d’une vérification cryptographique lors de la construction (voir section #link(<ffmpeg>)[FFmpeg]).
 
@@ -1441,7 +1495,7 @@ Pour éviter les doublons, cette section ne reprend pas l'ensemble des mécanism
 
 L'objectif de la veille était surtout d'identifier les évolutions pouvant modifier les choix de sécurité du projet :
 
-- évolution des APIs navigateur de sécurité, notamment Trusted Types, Sanitizer API, CSP, SRI et Permissions Policy
+- évolution des API navigateur de sécurité, notamment Trusted Types, Sanitizer API, CSP, SRI et Permissions Policy
 - bonnes pratiques liées aux Progressive Web Apps et aux Service Workers
 - risques liés aux dépendances critiques du frontend et du backend
 - durcissement des images Docker et des pipelines de construction
@@ -1466,7 +1520,7 @@ Cette veille a notamment conduit à plusieurs décisions concrètes déjà inté
   [https://github.com/oktomusic/ffmpeg-custom],
   [Documentation utilisateur],
   [https://oktomusic.afcms.dev],
-  [Démonstation vidéo],
+  [Démonstration vidéo],
   [https://youtu.be/EA4ffNnbFVQ],
   [Maquette Figma],
   [https://www.figma.com/design/bkhuLo4RZVG6qd5Au4siZg/Oktomusic],

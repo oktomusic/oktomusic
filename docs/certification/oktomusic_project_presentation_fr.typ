@@ -21,7 +21,7 @@
 
   - Serveur de streaming musical auto-hébergé
   - Projet open-source sous licence AGPL-3.0
-  - Application *web uniquement* : navigateur, PWA et APIs web modernes
+  - Application *web uniquement* : navigateur, PWA et API web modernes
   - Authentification déléguée à un fournisseur OpenID Connect
 ], [
   *Périmètre présenté*
@@ -373,7 +373,7 @@
   - Streaming FLAC avec support des requêtes HTTP `Range`
   - Traduction locale des paroles via l'API #link("https://developer.mozilla.org/en-US/docs/Web/API/Translator")[Translator] (Chromium)
   - Mini-lecteur Picture-in-Picture
-  - Mode Kiosque pour systèmes embarqués (interface de chaîne HiFi, etc)
+  - Mode kiosque pour systèmes embarqués (interface de chaîne HiFi, etc)
   ],
 )
 
@@ -489,14 +489,14 @@ Le projet couvre les trois blocs CDA : application sécurisée, architecture en 
 
 - Interface utilisateur mobile
   - Trop différente de la version desktop pour se baser uniquement sur une approche CSS
-  - Gros travail de mise en place et test de la navigation par gestes
+  - Gros travail de mise en place et de test de la navigation par gestes
 - Transcodage des pistes musicales
   - Permettrait de réduire la consommation de bande passante et d'espace de stockage
   - Briques technologiques déjà en place (ffmpeg)
 - Mode hors ligne
   - Possible sur la plateforme web moderne
   - Permettrait d'écouter sa musique même sans connexion internet
-  - Mise en cache + téléchargement des musiques facile avec le Service Worker
+  - Mise en cache + téléchargement des musiques faciles avec le Service Worker
   - Solution de persistance custom nécessaire (plugins Apollo GraphQL non maintenus)
 - Suggestions d'écoute et recherche avancée
   - Intégration possible d'#link("https://github.com/NeptuneHub/AudioMuse-AI", "AudioMuse-AI") pour l'analyse audio et les recommandations
