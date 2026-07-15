@@ -23,7 +23,7 @@ new-job-name:
       uses: actions/checkout@v7
 
     - name: Setup Environment
-      uses: ./.github/actions/setup-node-pnpm
+      uses: ./.github/actions/setup-environment
 
     - name: Do something
       run: |
