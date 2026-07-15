@@ -818,6 +818,94 @@ Ils permettent cependant de concentrer les ressources serveur sur les usages ré
 
 #figure(image("../common/screenshots/interface_indexation.png"), caption: "Interface administrateur pour l'indexation")
 
+=== Structure de l'interface et routage
+
+Le cœur de l'interface respecte l'architecture du zoning défini dans la spécification fonctionnelle.
+
+Après l'initialisation des providers indispensables (i18n, session utilisateur), le composant Router gère le cas où la session est authentifiée ou non, et redirige vers l'écran de login si nécessaire.
+
+Lorsque l'utilisateur est authentifié, le composant App gère l'affichage de l'interface principale (header, contenu, panneau et lecteur) ainsi que l'initialisation des providers nécessaires à l'utilisation.
+
+Des états globaux, exploités dans les composants, contrôlent la visibilité des différents panneaux.
+
+Une deuxième logique de routage est appliquée dans le composant PanelCenter, qui gère les routes principales de l'application (accueil, recherche, album, artiste, playlist, utilisateur et paramètres).
+
+Exemple de code simplifié :
+
+```tsx
+function Router() {
+  const authSession = useAtomValue(authSessionAtom);
+
+  return (
+    <I18nProvider i18n={i18n}>
+      <AuthSessionInitializer />
+      <main id="app-shell">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="*"
+              Component={
+                authSession.status === "authenticated" ? App : LoginRedirect
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </main>
+    </I18nProvider>
+  );
+}
+
+function App() {
+  const leftExpanded = useAtomValue(panelLeftExpandedAtom);
+  const rightVisible = useAtomValue(panelRightVisibleAtom);
+  const overlayVisible = useAtomValue(panelOverlayVisibleAtom);
+  return (
+    <DragDropProvider>
+      <PlayerProvider />
+      {/*...*/}
+      <HeaderMenu />
+      {/*...*/}
+      <div
+        id="oktomusic:content-grid"
+        data-left={leftExpanded ? "expanded" : "collapsed"}
+        data-right={rightVisible ? "visible" : "hidden"}
+      >
+        <PanelLeft />
+        <PanelCenter />
+        {overlayVisible && <PanelOverlay />}
+        <PanelToastProvider />
+        <PanelRight />
+      </div>
+      <PlayerControls />
+    </DragDropProvider>
+  )
+}
+
+export function PanelCenter() {
+  return (
+    <OktoScrollArea id="oktomusic:panel-center" className="rounded bg-zinc-900">
+      <Routes>
+        <Route element={<ProtectedRoutes />}>
+          <Route index element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/album/:cuid" element={<Album />} />
+          <Route path="/playlist/:cuid" element={<Playlist />} />
+          <Route path="/artist/:cuid" element={<Artist />} />
+          <Route path="/user/:cuid" element={<User />} />
+          <Route path="/settings/account" element={<SettingsAccount />} />
+          <Route path="/settings/client" element={<SettingsClient />} />
+          <Route element={<AdminRoute />}>
+            <Route path="/settings/admin" element={<SettingsAdmin />} />
+          </Route>
+          <Route path="*" element={<Generic404 />} />
+        </Route>
+      </Routes>
+    </OktoScrollArea>
+  );
+}
+```
+
 == Version customisée de FFmpeg <ffmpeg>
 
 L'application exploite les capacités de FFmpeg et metaflac pour l'extraction des métadonnées des fichiers FLAC.
