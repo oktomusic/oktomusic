@@ -731,6 +731,25 @@ L'utilisation de libraries tel que BaseUI#footnote[https://base-ui.com], compati
 // WCAG 2.2 AAA
 // RGAA
 
+== Sobriété technique et coût d'hébergement <eco_conception>
+
+L'écoconception a été abordée dans le projet sous l'angle de la sobriété technique et du coût d'exploitation.
+Dans le contexte d'une application auto-hébergée, l'objectif principal est de permettre à l'opérateur de faire fonctionner le service sur une machine modeste, sans devoir surdimensionner inutilement le serveur, le stockage ou la bande passante.
+
+Cette démarche est également cohérente avec les attentes environnementales du référentiel, mais elle a surtout été traitée comme un enjeu concret pour l'utilisateur : réduire les ressources consommées permet de réduire le coût mensuel d'hébergement, de faciliter l'installation sur un serveur personnel et d'améliorer la durée de vie de l'infrastructure.
+
+Les principaux choix allant dans ce sens sont :
+
+- *Application web uniquement* : aucune application native séparée à maintenir, distribuer et mettre à jour. Le navigateur sert de client universel.
+- *Images de couverture optimisées* : les pochettes sont converties en plusieurs tailles AVIF lors de l'indexation. L'interface charge ensuite une image adaptée à l'usage, ce qui limite la bande passante et le temps de rendu.
+- *Cache navigateur et Service Worker* : les fichiers statiques de la PWA et certains flux audio peuvent être servis plus rapidement, avec moins de requêtes réseau répétées.
+- *FFmpeg customisé* : l'image dédiée n'embarque que les codecs nécessaires au projet, ce qui réduit la taille finale de l'image Docker et accélère les téléchargements, les déploiements et les mises à jour.
+- *Zéro ressource externe au runtime* : l'application ne dépend pas de CDN tiers pour son interface. Cela réduit les appels réseau, simplifie la sécurité HTTP et limite les points de défaillance.
+- *Mutualisation dans un monorepo* : les packages partagés évitent la duplication de logique entre frontend, backend et documentation, ce qui réduit la maintenance et le risque de divergences.
+
+Ces choix ne suppriment pas le coût de l'application, notamment parce que le streaming FLAC reste naturellement consommateur de bande passante.
+Ils permettent cependant de concentrer les ressources serveur sur les usages réellement utiles : indexer la bibliothèque, servir les métadonnées, diffuser l'audio et maintenir l'expérience utilisateur fluide.
+
 = Réalisations
 
 == Interface utilisateur réalisée
