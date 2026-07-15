@@ -330,10 +330,6 @@ Par ailleurs, le fait de "télécharger" les fichiers audio pour assurer leur di
 - Publication du code source licence AGPL-3.0
 - Une documentation intégrale pour installer, configurer et présenter l'application
 
-= Présentation de l'entreprise/service
-
-(à supprimer ?)
-
 = Gestion de projet
 
 == Organisation et suivi
@@ -385,7 +381,108 @@ Cela a impliqué l’identification des causes, la rédaction de rapports reprod
 
 = Spécifications fonctionnelles
 
+Les spécifications fonctionnelles d'Oktomusic traduisent les besoins décrits dans le cahier des charges en parcours utilisateurs et en écrans principaux.
+Elles ont servi à délimiter le périmètre du MVP, à prioriser les fonctionnalités indispensables et à guider la conception de l'interface web.
+
+L'interface a été conçue en s'inspirant des usages établis par les principales plateformes de streaming musical, notamment Spotify, mais aussi Deezer, Apple Music ou YouTube Music.
+
+L'objectif n'était pas de reproduire leur identité visuelle, mais de reprendre des conventions ergonomiques familières pour les utilisateurs : navigation latérale, pages album et artiste, lecteur persistant, file d'attente, recherche rapide, playlists et affichage des paroles.
+
+Le travail de maquettage a été réalisé dans Figma.
+Je n'ai donc pas produit de wireframes séparés : Figma a été utilisé comme support principal pour formaliser la structure des écrans, leur hiérarchie visuelle et les parcours de navigation.
+
+== Zoning de l'interface
+
+Le zoning définit la répartition générale de l'application sur un écran desktop.
+L'interface est organisée autour de quatre zones stables :
+
+- une navigation latérale pour accéder rapidement à la bibliothèque, à la recherche, aux playlists et aux vues d'administration ;
+- une zone de contenu principale pour afficher albums, artistes, pistes, résultats de recherche ou détails d'une playlist ;
+- une file d'attente latérale permettant de consulter et modifier les prochains titres ;
+- un lecteur persistant en bas de l'écran, toujours accessible pendant la navigation.
+
 #figure(image("../common/interface.excalidraw.svg"), caption: [Schéma de zoning])
+
+== Maquettes Figma
+
+Toutes les vues n'ont pas été maquetées, mais la structure générale ainsi que le thème visuel de l'application ont été formalisées dans un fichier Figma.#footnote[https://www.figma.com/design/bkhuLo4RZVG6qd5Au4siZg/Oktomusic]
+
+#figure(image("../common/screenshots/figma_album.png"), caption: "Maquette d'album")
+
+#figure(image("../common/screenshots/figma_search.png"), caption: "Maquette de recherche par album")
+
+== Parcours utilisateurs principaux
+
+Les parcours fonctionnels ont été définis à partir des personas et des user stories.
+Ils couvrent les actions indispensables pour une première version utilisable du service.
+
+#[
+  #show table: set text(size: 7pt, hyphenate: false)
+  #show table: set par(justify: false)
+
+  #table(
+    columns: (auto, 1.25fr, 2fr, 1.8fr),
+    align: horizon,
+    table.header([*ID*], [*Parcours*], [*Description fonctionnelle*], [*Écrans concernés*]),
+    [PF-01],
+    [Se connecter],
+    [L'utilisateur accède à l'application, est redirigé vers le fournisseur OpenID Connect, puis revient dans Oktomusic avec une session applicative ouverte.],
+    [Accueil, fournisseur OIDC, retour application],
+    [PF-02],
+    [Parcourir le catalogue],
+    [L'utilisateur consulte les albums, artistes et pistes issus de l'indexation de la bibliothèque musicale.],
+    [Bibliothèque, liste albums, page album, page artiste],
+    [PF-03],
+    [Rechercher un contenu],
+    [L'utilisateur saisit une recherche et obtient des résultats regroupant albums, artistes et titres.],
+    [Recherche, résultats, pages de détail],
+    [PF-04],
+    [Lancer la lecture],
+    [L'utilisateur lance un titre, un album ou une playlist ; le lecteur persistant affiche le titre en cours et permet le contrôle de la lecture.],
+    [Page album, playlist, lecteur persistant],
+    [PF-05],
+    [Gérer la file d'attente],
+    [L'utilisateur consulte les prochains titres, ajoute des pistes et modifie l'ordre de lecture.],
+    [Lecteur, file d'attente, listes de pistes],
+    [PF-06],
+    [Gérer les playlists],
+    [L'utilisateur crée une playlist, y ajoute des titres, les réordonne, les supprime et peut exporter la playlist.],
+    [Bibliothèque utilisateur, playlist, modale d'ajout, export],
+    [PF-07],
+    [Consulter les paroles],
+    [Lorsque les paroles synchronisées sont disponibles, l'utilisateur les suit pendant l'écoute du titre.],
+    [Lecteur, écran paroles],
+    [PF-08],
+    [Indexer la bibliothèque],
+    [L'administrateur déclenche l'indexation, suit son avancement et consulte les avertissements ou erreurs éventuels.],
+    [Espace administrateur, statut du job, rapport d'indexation],
+  )
+]
+
+== Diagramme de séquence : indexation de la bibliothèque
+
+Le parcours d'indexation est le cas d'utilisation technique le plus représentatif du projet.
+Il relie l'interface d'administration, l'API GraphQL, la file BullMQ, le worker d'indexation, les outils d'analyse des fichiers audio et la base de données.
+
+#figure(image("../common/sequence_indexation.png"), caption: [Diagramme de séquence du processus d'indexation])
+
+== Règles fonctionnelles retenues
+
+- L'application doit rester utilisable depuis un navigateur moderne, avec une approche web uniquement.
+- Le lecteur doit rester disponible pendant la navigation, afin de ne pas interrompre l'écoute lorsque l'utilisateur change d'écran.
+- Les actions liées à la lecture doivent être accessibles depuis les vues les plus fréquentes : album, artiste, playlist, recherche et file d'attente.
+- Les playlists doivent conserver l'ordre choisi par l'utilisateur (réorganisation possible des pistes).
+- L'affichage des artistes doit respecter les crédits multiples et leur ordre lorsque les métadonnées le permettent.
+- Les paroles synchronisées sont affichées uniquement lorsqu'elles existent dans les fichiers indexés.
+- Les fonctionnalités d'administration, notamment l'indexation de la bibliothèque, sont réservées aux utilisateurs disposant du rôle adéquat.
+- Les erreurs d'indexation ne doivent pas bloquer toute la bibliothèque : elles doivent être remontées de manière exploitable pour l'administrateur.
+
+== Hors périmètre fonctionnel de l'interface
+
+Certaines fonctionnalités visibles dans les applications de streaming modernes ont été volontairement écartées du MVP.
+Elles sont détaillées dans la section "Hors périmètre initial" du cahier des charges.
+
+Les principales limites côté interface sont l'absence de version mobile dédiée et l'absence de recommandations musicales avancées.
 
 = Architecture logicielle
 
@@ -635,6 +732,18 @@ L'utilisation de libraries tel que BaseUI#footnote[https://base-ui.com], compati
 // RGAA
 
 = Réalisations
+
+== Interface utilisateur réalisée
+
+#figure(image("../common/screenshots/interface_album.png"), caption: "Interface d'album")
+
+#figure(image("../common/screenshots/interface_search.png"), caption: "Interface de recherche")
+
+#figure(image("../common/screenshots/interface_queue_library.png"), caption: "Librarie et file d'attente")
+
+#figure(image("../common/screenshots/interface_lyrics.png"), caption: "Visualisation des paroles synchronisées")
+
+#figure(image("../common/screenshots/interface_indexation.png"), caption: "Interface administrateur pour l'indexation")
 
 == Version customisée de FFmpeg <ffmpeg>
 
@@ -1103,6 +1212,19 @@ export function PipControls(): ReactPortal | null {
   scaling: "smooth",
 ), caption: [Mini lecteur détachable en mode Picture-in-Picture])
 
+== Traduction côté client des paroles synchronisées
+
+L'API web Translator#footnote[https://developer.mozilla.org/en-US/docs/Web/API/Translator], disponible actuellement uniquement dans les navigateurs Chromium#footnote[https://developer.chrome.com/docs/ai/translator-api], permet de traduire du texte côté client sans avoir à faire appel à un service tiers.
+
+Les modèles IA utilisés par l'API étant exécutés localement dans le navigateur, la traduction est effectuée de manière sécurisée et privée, sans que les données ne quittent l'appareil de l'utilisateur.
+
+La possibilité pour l'utilisateur de traduire les paroles synchronisées à l'aide de cette API a été intégrée dans la partie frontend de l'application.
+
+#figure(
+  image("../common/screenshots/interface_lyrics_translation.png"),
+  caption: "Visualisation des paroles avec traduction",
+)
+
 = Sécurité de l'application <security>
 
 == OpenID Connect <security_oidc>
@@ -1174,7 +1296,7 @@ Pour une instance de production (derrière reverse proxy Traefik), les résultat
   [HTTP Observatory],
   table.cell(fill: green, "A+ (140/100)"),
   [CSP Evaluator],
-  table.cell(fill: yellow, "Yellow"), // TODO
+  table.cell(fill: yellow, "Yellow"),
 )
 
 === Zones d'amélioration
@@ -1295,6 +1417,10 @@ Le jeu d’essai le plus représentatif reste l’indexation d’un album FLAC c
 
 = Veille sécurité
 
+Une veille sécurité a été menée pendant le projet afin d’identifier les risques liés aux technologies utilisées : Node.js, TypeScript, NestJS, React, Vite, Prisma, PostgreSQL, Valkey, Docker, GitHub Actions et dépendances NPM.
+
+Un soin particulier a été apporté à la mise à jour régulière des dépendances, ainsi qu'a la réduction de leur nombre pour limiter la surface d'attaque.
+
 = Annexes
 
 #table(
@@ -1309,4 +1435,6 @@ Le jeu d’essai le plus représentatif reste l’indexation d’un album FLAC c
   [https://oktomusic.afcms.dev],
   [Démonstation vidéo],
   [https://youtu.be/EA4ffNnbFVQ],
+  [Maquette Figma],
+  [https://www.figma.com/design/bkhuLo4RZVG6qd5Au4siZg/Oktomusic],
 )
