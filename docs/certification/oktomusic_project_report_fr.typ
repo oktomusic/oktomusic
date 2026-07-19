@@ -122,7 +122,7 @@ De plus, l'interface utilisateur est centrée principalement sur les médias vid
 - Un support limité des métadonnées audio, avec des difficultés pour gérer les crédits multiples pour les pistes et les albums.
 - Manque de fonctionnalités de lecture musicale moderne, dans le système de lecture, la gestion des playlists, ainsi que la navigation. Pas de support des paroles synchronisées mot-à-mot.
 - Manque de fonctionnalités modernes sur le client web
-  - Pas de PWA réelle
+  - Pas de PWA (Progressive Web App) réelle
   - Pas de mode Picture-in-Picture
 - Aucun support d'OpenID Connect en standard, ce qui complique l'intégration dans une infrastructure d'identité déjà existante et l'administration des utilisateurs
 
@@ -134,7 +134,7 @@ Il propose une solution légère et efficace pour exploiter une bibliothèque au
 
 - Pas de support des paroles synchronisées mot-à-mot.
 - Manque de fonctionnalités modernes sur le client web
-  - Interface MUI avec design peu ergonomique
+  - Interface Material UI avec design peu ergonomique
   - Pas d'expérience PWA réelle
   - Pas de mode Picture-in-Picture
 - Comme Jellyfin, aucun support d'OpenID Connect en standard
@@ -144,7 +144,7 @@ Comme Jellyfin, il ne répond pas directement au besoin d'authentification dél�
 
 == Objectifs du projet
 
-Oktomusic se positionne avec une approche ciblé :
+Oktomusic se positionne avec une approche ciblée :
 
 - Exploitation d'une bibliothèque exclusivement musicale
 - Indexation basée sur des règles strictes de formats de métadonnées, basées sur les recommandations Vorbis#footnote("https://xiph.org/vorbis/doc/v-comment.html") ainsi que MusicBrainz Picard#footnote("https://picard-docs.musicbrainz.org/en/latest/variables/tags_basic.html")
@@ -189,76 +189,98 @@ Il peut être aussi l'administrateur du serveur, mais son besoin est centré sur
 
 Les epics regroupent les besoins utilisateurs en grands ensembles fonctionnels, utilisés pour organiser le périmètre du MVP.
 
-#table(
-  columns: (auto, auto, 1fr),
-  align: horizon,
-  table.header([*Epic*], [*Persona principal*], [*Objectif*]),
-  [EPIC-01],
-  [Administrateur],
-  [Déployer et configurer Oktomusic dans une infrastructure auto-hébergée],
-  [EPIC-02],
-  [Administrateur / utilisateur],
-  [Déléguer l'authentification à un fournisseur OpenID Connect],
-  [EPIC-03],
-  [Administrateur / collectionneur],
-  [Indexer une bibliothèque musicale FLAC et construire un catalogue fiable],
-  [EPIC-04],
-  [Utilisateur],
-  [Parcourir et rechercher albums, artistes et pistes],
-  [EPIC-05],
-  [Utilisateur],
-  [Écouter la musique avec un lecteur web moderne et une file d'attente],
-  [EPIC-06],
-  [Utilisateur / collectionneur],
-  [Créer, modifier et exporter des playlists],
-  [EPIC-07],
-  [Utilisateur],
-  [Enrichir l'expérience d'écoute avec les paroles synchronisées et les couleurs d'album],
-)
+#text(size: 8.5pt)[
+  #table(
+    columns: (auto, auto, 1fr),
+    align: horizon,
+    inset: 4pt,
+    table.header([*Epic*], [*Persona principal*], [*Objectif*]),
+    [EPIC-01],
+    [Administrateur],
+    [Déployer et configurer Oktomusic dans une infrastructure auto-hébergée],
+    [EPIC-02],
+    [Administrateur / utilisateur],
+    [Déléguer l'authentification à un fournisseur OpenID Connect],
+    [EPIC-03],
+    [Administrateur / collectionneur],
+    [Indexer une bibliothèque musicale FLAC et construire un catalogue fiable],
+    [EPIC-04],
+    [Utilisateur],
+    [Parcourir et rechercher albums, artistes et pistes],
+    [EPIC-05],
+    [Utilisateur],
+    [Écouter la musique avec un lecteur web moderne et une file d'attente],
+    [EPIC-06],
+    [Utilisateur / collectionneur],
+    [Créer, modifier et exporter des playlists],
+    [EPIC-07],
+    [Utilisateur],
+    [Enrichir l'expérience d'écoute avec les paroles synchronisées et les couleurs d'album],
+  )
+]
 
 === User stories représentatives
 
-#table(
-  columns: (auto, auto, 1fr),
-  align: horizon,
-  table.header([*ID*], [*Epic*], [*User story*]),
-  [US-01],
-  [EPIC-01],
-  [En tant qu'administrateur, je veux déployer l'application avec Docker Compose afin de disposer rapidement d'un environnement reproductible.],
-  [US-02],
-  [EPIC-02],
-  [En tant qu'administrateur, je veux connecter Oktomusic à mon fournisseur OpenID Connect afin de centraliser la gestion des comptes et des accès.],
-  [US-03],
-  [EPIC-03],
-  [En tant qu'administrateur, je veux lancer l'indexation d'une bibliothèque FLAC afin de rendre les albums, artistes et pistes disponibles dans l'application.],
-  [US-04],
-  [EPIC-04],
-  [En tant qu'utilisateur, je veux rechercher rapidement un album, un artiste ou une piste afin de lancer la lecture sans parcourir toute la bibliothèque.],
-  [US-05],
-  [EPIC-05],
-  [En tant qu'utilisateur, je veux conserver un lecteur persistant pendant ma navigation afin de contrôler la musique à tout moment.],
-  [US-06],
-  [EPIC-06],
-  [En tant qu'utilisateur, je veux créer et réordonner mes playlists afin d'organiser ma bibliothèque selon mes usages d'écoute.],
-  [US-07],
-  [EPIC-07],
-  [En tant qu'utilisateur, je veux consulter les paroles synchronisées pendant l'écoute afin de suivre le morceau en cours.],
-  [US-08],
-  [EPIC-07],
-  [En tant qu'utilisateur, je veux que l'interface s'adapte aux couleurs de l'album afin de bénéficier d'une expérience visuelle plus immersive.],
-)
+Ces user stories sont représentatives et ne constituent pas l'intégralité du backlog suivi dans GitHub Projects.
+
+#text(
+  size: 8.5pt,
+)[
+  #table(
+    columns: (auto, auto, 1fr),
+    align: horizon,
+    inset: 4pt,
+    table.header([*ID*], [*Epic*], [*User story*]),
+    [US-01],
+    [EPIC-01],
+    [En tant qu'administrateur, je veux déployer l'application avec Docker Compose afin de disposer rapidement d'un environnement reproductible.],
+    [US-02],
+    [EPIC-02],
+    [En tant qu'administrateur, je veux connecter Oktomusic à mon fournisseur OpenID Connect afin de centraliser la gestion des comptes et des accès.],
+    [US-03],
+    [EPIC-03],
+    [En tant qu'administrateur, je veux lancer l'indexation d'une bibliothèque FLAC afin de rendre les albums, artistes et pistes disponibles dans l'application.],
+    [US-04],
+    [EPIC-03],
+    [En tant que collectionneur, je veux que les métadonnées des artistes, albums et pistes soient correctement interprétées afin de conserver un catalogue musical cohérent.],
+    [US-05],
+    [EPIC-04],
+    [En tant qu'utilisateur, je veux rechercher rapidement un album, un artiste ou une piste afin de lancer la lecture sans parcourir toute la bibliothèque.],
+    [US-06],
+    [EPIC-04],
+    [En tant qu'utilisateur, je veux parcourir les pages d'albums et d'artistes afin de retrouver ma musique sans passer uniquement par la recherche.],
+    [US-07],
+    [EPIC-05],
+    [En tant qu'utilisateur, je veux conserver un lecteur persistant pendant ma navigation afin de contrôler la musique à tout moment.],
+    [US-08],
+    [EPIC-05],
+    [En tant qu'utilisateur, je veux gérer une file d'attente de lecture afin d'enchaîner plusieurs morceaux dans l'ordre de mon choix.],
+    [US-09],
+    [EPIC-06],
+    [En tant qu'utilisateur, je veux créer et réordonner mes playlists afin d'organiser ma bibliothèque selon mes usages d'écoute.],
+    [US-10],
+    [EPIC-06],
+    [En tant que collectionneur, je veux exporter mes playlists afin de conserver mes sélections et les réutiliser dans d'autres outils.],
+    [US-11],
+    [EPIC-07],
+    [En tant qu'utilisateur, je veux consulter les paroles synchronisées pendant l'écoute afin de suivre le morceau en cours.],
+    [US-12],
+    [EPIC-07],
+    [En tant qu'utilisateur, je veux que l'interface s'adapte aux couleurs de l'album afin de bénéficier d'une expérience visuelle plus immersive.],
+  )
+]
 
 == Périmètre fonctionnel
 
 Le périmètre retenu pour la version présentée couvre :
 
-- le déploiement de l'application et de ses dépendances ;
-- l'authentification par OpenID Connect ;
-- l'indexation des fichiers FLAC et de leurs métadonnées ;
-- l'affichage du catalogue musical ;
-- la lecture audio en streaming ;
-- la gestion des playlists et de la bibliothèque utilisateur ;
-- l'affichage des paroles synchronisées lorsqu'elles sont disponibles.
+- le déploiement de l'application et de ses dépendances
+- l'authentification par OpenID Connect
+- l'indexation des fichiers FLAC et de leurs métadonnées
+- l'affichage du catalogue musical
+- la lecture audio en streaming
+- la gestion des playlists et de la bibliothèque utilisateur
+- l'affichage des paroles synchronisées lorsqu'elles sont disponibles
 
 == Hors périmètre initial
 
@@ -266,7 +288,7 @@ De nombreuses fonctionnalités ont été identifiées comme hors périmètre ini
 
 === Transcodage audio
 
-L'application ne supportant en entrée que les fichiers au format sans-pertes FLAC, les utilisateurs souhaitant écouter de la musique sur des appareils ne disposant pas de débit internet suffisant ou de limites de données mobiles pourraient souhaiter le streaming de versions transcodées dans différents formats plus légers.
+L'application ne supportant en entrée que les fichiers au format sans pertes FLAC, les utilisateurs souhaitant écouter de la musique sur des appareils ne disposant pas de débit internet suffisant ou de limites de données mobiles pourraient souhaiter le streaming de versions transcodées dans différents formats plus légers.
 
 Ce besoin a été considéré au départ comme rentrant dans le périmètre initial, mais en a été écarté suite à des contraintes de temps de développement.
 
@@ -291,7 +313,7 @@ La plus grosse difficulté réside dans la nécessité de supporter une navigati
 Le modèle de focus classique des navigateurs est uni-directionnel, et ne permet pas à ce jour une navigation spatiale.
 Il existe une spécification W3C `CSS Spatial Navigation Level 1`#footnote[https://www.w3.org/TR/css-nav-1] (working draft) pour doter les navigateurs de capacités de navigation spatiales, poussée par des ingénieurs de LG.
 
-Les polyfills disponibles pour cette spécification, ainsi que les bibliothèques de navigation spatiale open-source pour React#footnote[https://devportal.noriginmedia.com/docs/Norigin-Spatial-Navigation] n'étant pas assez matures ou nécessitant des modifications trop lourdes au code de l'application, cette fonctionnalité a été écartée du périmètre initial.
+Les polyfills disponibles pour cette spécification, ainsi que les bibliothèques de navigation spatiale open-source pour React#footnote[https://devportal.noriginmedia.com/docs/Norigin-Spatial-Navigation] ne sont pas assez matures ou nécessitent des modifications trop lourdes au code de l'application, aussi cette fonctionnalité a-t-elle été écartée du périmètre initial.
 
 La lecture de l'article de Spotify Engineering#footnote[https://engineering.atspotify.com/2023/5/tv-spatial-navigation] sur le sujet de la navigation spatiale sur les téléviseurs a été une source d'inspiration dans ces recherches.
 
@@ -301,7 +323,7 @@ Une des fonctionnalités importantes des applications de streaming musical moder
 
 Une solution de ce type ne peut pas se baser uniquement sur le support des métadonnées de genres musicaux, mais nécessite l'exploitation d'analyses acoustiques par IA.
 
-Mes recherches sur les technologies open-source permettant de réaliser ce type d'analyse acoustique ont révélé le projet AudioMuse AI#footnote[https://github.com/NeptuneHub/AudioMuse-AI] qui est une solution intégrée dans Jellyfin, Navidrome et d'autres applications de streaming musical.
+Mes recherches sur les technologies open-source d'analyse acoustique m'ont fait connaîtrexle projet AudioMuse AI#footnote[https://github.com/NeptuneHub/AudioMuse-AI] qui est une solution intégrée dans Jellyfin, Navidrome et d'autres applications de streaming musical.
 La création d'un plugin spécifique ou l'intégration de cette solution dans Oktomusic serait envisageable.
 
 === Support d'un mode hors-ligne complet
@@ -322,7 +344,7 @@ Par ailleurs, le fait de "télécharger" les fichiers audio pour assurer leur di
 
 == Contraintes principales retenues
 
-- Une unique interface web, exploitant les capacités PWA ainsi que les API web modernes.
+- Une unique interface web, exploitant les capacités PWA ainsi que les API web modernes
 - Un déploiement facile pour l'utilisateur, via une image Docker multi-plateforme moderne
 - Utilisation d'une base de données relationnelle PostgreSQL pour les données persistantes
 - Sessions et traitements asynchrones persistés via une base de données Valkey
@@ -362,7 +384,7 @@ Même si des cycles de développement agiles n'ont pas été utilisés, cette or
 
 L'utilisation des pull requests ainsi que des workflows GitHub Actions a complété ce suivi en permettant de garder un rythme de développement souple tout en s'assurant que les évolutions importantes puissent être validées par des contrôles automatisés avant intégration au projet.
 
-Certains contributeurs externes ont été impliqués dans l'implémentation de différentes fonctionnalités du projet, ce qui a nécessité de la collaboration, des échanges et de la revue de code.
+Certains contributeurs externes ont été impliqués dans l'implémentation de différentes fonctionnalités du projet, ce qui a nécessité une collaboration, des échanges et de la revue de code.
 
 - Support configurable du blocage de la mise en veille de l'écran#footnote[https://developer.mozilla.org/en-US/docs/Web/API/WakeLock] pendant la lecture#footnote[https://github.com/oktomusic/oktomusic/pull/165]
 - Customisation du nom d'affichage de l'application#footnote[https://github.com/oktomusic/oktomusic/pull/291]
@@ -549,7 +571,7 @@ Elle utilise le flux d’autorisation (*Authorization Code Flow*) avec *PKCE* et
 Elle s’appuie sur les protocoles *OpenID Connect Core* et *OpenID Connect Discovery*.
 
 Cette approche présente plusieurs avantages applicatifs, notamment en laissant l'opérateur du serveur gérer lui-même les aspects liés à la gestion des utilisateurs.
-Pas besoin de gérer en interne la gestion des comptes, politiques de mot de passe, réinitialisation, emails, 2FA, etc.
+Pas besoin de gérer en interne, dans l'application Oktomusic, la gestion des comptes, politiques de mot de passe, réinitialisation, emails, 2FA, etc.
 
 De plus, elle permet de bénéficier d'une sécurité renforcée (voir section #link(<security_oidc>)[Sécurité, OpenID Connect])
 
@@ -1286,7 +1308,7 @@ Source : `apps/frontend/src/hooks/vibrant_colors.ts`
 
 Des éléments d'interface de l'application sont adaptés aux couleurs dominantes des couvertures d'album, extraites à l'indexation (voir la section dédiée), pour améliorer l'expérience utilisateur et la cohérence visuelle.
 
-Pour faciliter l'exploitation contextuelle de ces couleurs, des propriétés CSS personnalisées#footnote[https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@property] ainsi que des hooks React ont été définis à cet effet.
+Pour faciliter l'exploitation contextuelle de ces couleurs, des propriétés CSS personnalisées#footnote[https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@property] ainsi que des hooks React ont été définis.
 
 Les propriétés CSS sont définies avec le sélecteur `@property` pour permettre le type checking et la définition d'une valeur initiale.
 
@@ -1555,11 +1577,13 @@ Pour une instance de production (derrière reverse proxy Traefik), les résultat
   table.cell(fill: yellow, "Yellow"),
 )
 
-=== Zones d'amélioration
+=== Pistes d'amélioration
 
 L'exploitation de l'API Trusted Types#footnote[https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API] ainsi que l'API Sanitizer#footnote[https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API], couplées à la directive CSP `require-trusted-types-for`#footnote[https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for] aurait fourni une protection supplémentaire contre les attaques XSS.
 
 L'implémentation a été évaluée, mais a été bloquée par un manque de support du plugin chargé de la génération du Service Worker. Les éléments nécessaires devraient être mis en place dans la prochaine version du plugin.#footnote[https://github.com/vite-pwa/vite-plugin-pwa/issues/933]
+
+Elle aurait contribué au passage du test CSP Evaluator de jaune à vert.
 
 == Supply chain <security_supply_chain>
 
@@ -1643,7 +1667,7 @@ Les étapes opérationnelles sont les suivantes.
 
 + *Préparer le fichier Compose.*
   Le service PostgreSQL expose la base relationnelle avec un volume persistant et un healthcheck.
-  Le service Valkey active la persistance AOF.
+  Le service Valkey active la persistance AOF (Append Only File#footnote[https://valkey.io/topics/persistence]).
 
   Le service applicatif utilise l'image `ghcr.io/oktomusic/oktomusic:latest`, monte la bibliothèque musicale en lecture seule sur `/srv/music` et le dossier intermédiaire sur `/srv/intermediate`.
 
