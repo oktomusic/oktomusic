@@ -241,7 +241,6 @@ Update `eslint.config.ts` at the root of the monorepo, add a new entry in the `d
     extends: [
       js.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
-      prettier,
     ],
     languageOptions: {
       parserOptions: {

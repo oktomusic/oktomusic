@@ -1,11 +1,11 @@
 /// <reference lib="webworker" />
 
-import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
 import { clientsClaim } from "workbox-core";
+import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
 
+import { registerAlbumCoverRoute } from "./sw-covers";
 import "./sw-db";
 import { fetchMediaHandler } from "./sw-flac";
-import { registerAlbumCoverRoute } from "./sw-covers";
 
 declare let self: ServiceWorkerGlobalScope;
 

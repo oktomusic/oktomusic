@@ -3,12 +3,12 @@ import { Button } from "@base-ui/react/button";
 import { useLingui } from "@lingui/react/macro";
 import { LuPause, LuPlay } from "react-icons/lu";
 
-import { useVibrantColors } from "../../hooks/vibrant_colors";
-import { useFitText } from "../../hooks/fit_text";
 import {
   VibrantColors,
   VibrantColorsPartial,
 } from "../../atoms/player/machine";
+import { useFitText } from "../../hooks/fit_text";
+import { useVibrantColors } from "../../hooks/vibrant_colors";
 import { Cover } from "../Base/Cover";
 import type { CoverImages } from "../Base/CoverImages";
 

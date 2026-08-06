@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useAtomValue } from "jotai";
 import { Navigate, useSearchParams } from "react-router";
 import { Button } from "@base-ui/react/button";
 import { useLingui } from "@lingui/react/macro";
+import { useAtomValue } from "jotai";
 
-import { authSessionAtom } from "../../atoms/auth/atoms";
 import { pwaDeferredPromptAtom } from "../../atoms/app/atoms";
+import { authSessionAtom } from "../../atoms/auth/atoms";
 
 export function Login() {
   const { t } = useLingui();

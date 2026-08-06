@@ -1,6 +1,7 @@
 import { Button } from "@base-ui/react/button";
 import { useLingui } from "@lingui/react/macro";
 import { LuCircleCheck, LuCirclePlus, LuEllipsis } from "react-icons/lu";
+
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
 
 interface CollectionViewToolbarPlaylistProps {

@@ -1,7 +1,8 @@
 import { Link } from "react-router";
-import { useAtomValue, useSetAtom } from "jotai";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { useAtomValue, useSetAtom } from "jotai";
 
+import { panelRightVisibleAtom } from "../atoms/app/panels";
 import {
   clearManualQueueAtom,
   handleSeekToQueueIndexAtom,
@@ -15,9 +16,8 @@ import {
   playerQueueMainIndexAtom,
   requestPlaybackToggleAtom,
 } from "../atoms/player/machine";
-import { panelRightVisibleAtom } from "../atoms/app/panels";
-import { QueueTrack } from "../components/QueueTrack/QueueTrack";
 import { OktoScrollArea } from "../components/Base/OktoScrollArea";
+import { QueueTrack } from "../components/QueueTrack/QueueTrack";
 
 export function PanelRight() {
   const { t } = useLingui();

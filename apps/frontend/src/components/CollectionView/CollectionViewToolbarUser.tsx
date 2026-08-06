@@ -1,5 +1,5 @@
-import { LuEllipsis } from "react-icons/lu";
 import { useLingui } from "@lingui/react/macro";
+import { LuEllipsis } from "react-icons/lu";
 
 import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
 

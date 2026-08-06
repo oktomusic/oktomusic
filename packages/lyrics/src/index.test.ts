@@ -2,7 +2,8 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { suite, test, expect } from "vitest";
-import { parseTTMLtoLyrics } from ".";
+
+import { parseTTMLtoLyrics } from "./index";
 import { LyricsSchema } from "./model";
 
 void suite("Lyrics parser", () => {

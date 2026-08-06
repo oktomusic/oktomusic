@@ -1,15 +1,15 @@
 import { Module } from "@nestjs/common";
 
 import { ApiModule } from "./api/api.module";
-import { ViewsModule } from "./views/views.module";
-import { MetaTagsModule } from "./common/metatags/metatags.module";
-import { AppConfigModule } from "./config/app-config.module";
 import { HealthModule } from "./api/health/health.module";
-import { SessionModule } from "./session/session.module";
-import { BullmqService } from "./bullmq/bullmq.service";
 import { BullmqModule } from "./bullmq/bullmq.module";
+import { BullmqService } from "./bullmq/bullmq.service";
+import { MetaTagsModule } from "./common/metatags/metatags.module";
 import { PubSubModule } from "./common/pubsub/pubsub.module";
+import { AppConfigModule } from "./config/app-config.module";
 import { NativeModule } from "./native/native.module";
+import { SessionModule } from "./session/session.module";
+import { ViewsModule } from "./views/views.module";
 
 @Module({
   imports: [

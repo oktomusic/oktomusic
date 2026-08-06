@@ -3,10 +3,20 @@ import { useLingui } from "@lingui/react/macro";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { RESET } from "jotai/utils";
 
+import BritishFlag from "../../assets/country_flags/british_flag.svg";
+import FrenchFlag from "../../assets/country_flags/french_flag.svg";
+import {
+  requestStoragePersistenceAtom,
+  storagePersistenceAtom,
+} from "../../atoms/app/atoms.ts";
 import {
   audioSessionSupportAtom,
   translatorSupportAtom,
 } from "../../atoms/app/browser_support.ts";
+import {
+  applicationLanguage,
+  changeLanguageAtom,
+} from "../../atoms/app/language.ts";
 import {
   AudioSessionKey,
   settingClientAudioSession,
@@ -23,25 +33,15 @@ import {
   WakeLockKey,
   type LyricsDisplayModeKey,
 } from "../../atoms/app/settings_client.ts";
-import {
-  requestStoragePersistenceAtom,
-  storagePersistenceAtom,
-} from "../../atoms/app/atoms.ts";
-import {
-  applicationLanguage,
-  changeLanguageAtom,
-} from "../../atoms/app/language.ts";
-import { OktoSwitch } from "../../components/Base/OktoSwitch.tsx";
+import { OktoButton } from "../../components/Base/OktoButton.tsx";
+import { OktoInput } from "../../components/Base/OktoInput.tsx";
 import {
   OktoListbox,
   OktoListboxItem,
 } from "../../components/Base/OktoListbox.tsx";
 import { OktoSlider } from "../../components/Base/OktoSlider.tsx";
-import { OktoInput } from "../../components/Base/OktoInput.tsx";
-import { OktoButton } from "../../components/Base/OktoButton.tsx";
+import { OktoSwitch } from "../../components/Base/OktoSwitch.tsx";
 import { SupportedLocale } from "../../utils/supported_locales.ts";
-import FrenchFlag from "../../assets/country_flags/french_flag.svg";
-import BritishFlag from "../../assets/country_flags/british_flag.svg";
 
 export function SettingsClient() {
   const { t } = useLingui();
@@ -174,9 +174,7 @@ export function SettingsClient() {
           </div>
 
           <div className="flex h-14 flex-row items-center justify-between py-2">
-            <label htmlFor="settings:client:audio-session">
-              {t`Audio session:`}
-            </label>
+            <label htmlFor="settings:client:audio-session">{t`Audio session:`}</label>
             <OktoListbox
               id="settings:client:audio-session"
               value={audioSessionType}
@@ -287,9 +285,7 @@ export function SettingsClient() {
           </div>
 
           <div className="flex h-14 flex-row items-center justify-between py-2">
-            <label htmlFor="settings:client:sw-media-max-entries">
-              {t`Cache max entries:`}
-            </label>
+            <label htmlFor="settings:client:sw-media-max-entries">{t`Cache max entries:`}</label>
             <OktoInput
               id="settings:client:sw-media-max-entries"
               type="number"
@@ -301,9 +297,7 @@ export function SettingsClient() {
           </div>
 
           <div className="flex h-14 flex-row items-center justify-between py-2">
-            <label htmlFor="settings:client:sw-media-max-age">
-              {t`Cache max age (days):`}
-            </label>
+            <label htmlFor="settings:client:sw-media-max-age">{t`Cache max age (days):`}</label>
             <OktoInput
               id="settings:client:sw-media-max-age"
               type="number"

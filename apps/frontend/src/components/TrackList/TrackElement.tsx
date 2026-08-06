@@ -1,6 +1,7 @@
+import { Link } from "react-router";
 import { useMutation } from "@apollo/client/react";
-import { useSortable } from "@dnd-kit/react/sortable";
 import { Button } from "@base-ui/react/button";
+import { useSortable } from "@dnd-kit/react/sortable";
 import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
@@ -12,21 +13,20 @@ import {
   LuPlay,
   LuTrash2,
 } from "react-icons/lu";
-import { Link } from "react-router";
 
-import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
-import { formatDuration } from "../../utils/format_duration";
+import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
+import { REMOVE_TRACKS_FROM_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/removeTracksFromPlaylist";
+import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import {
   TrackWithAlbum,
   addToQueueAtom,
   playerShouldPlayAtom,
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
-import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
-import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
-import { REMOVE_TRACKS_FROM_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/removeTracksFromPlaylist";
-import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import { usePanelToast } from "../../hooks/use_panel_toast";
+import { formatDuration } from "../../utils/format_duration";
+import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
+import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
 import {
   TRACK_DND_TYPE,
   type TrackDropIndicator,

@@ -1,12 +1,12 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
+import { dynamicActivate } from "../../utils/i18n_loader";
 import {
   DEFAULT_FALLBACK,
   getLanguage,
   SupportedLocale,
 } from "../../utils/supported_locales";
-import { dynamicActivate } from "../../utils/i18n_loader";
 
 // Application language
 

@@ -1,16 +1,16 @@
 import { ErrorLike } from "@apollo/client";
 import { useAtomValue } from "jotai";
 
+import { LyricsLine } from "../api/graphql/gql/graphql";
+import { settingClientLyricsDisplayMode } from "../atoms/app/settings_client";
 import {
   playerPlaybackPositionAtom,
   playerQueueCurrentTrack,
 } from "../atoms/player/machine";
-import { settingClientLyricsDisplayMode } from "../atoms/app/settings_client";
-import { GenericLoading } from "../pages/Center/GenericLoading";
 import { GenericGraphQLError } from "../pages/Center/GenericGraphQLError";
-import { isCurrentLine, isWordPassed } from "../utils/lyrics";
+import { GenericLoading } from "../pages/Center/GenericLoading";
 import { Locale } from "../utils/locales";
-import { LyricsLine } from "../api/graphql/gql/graphql";
+import { isCurrentLine, isWordPassed } from "../utils/lyrics";
 
 export interface LyricsViewerProps {
   readonly selectedLanguage: "original" | Locale;

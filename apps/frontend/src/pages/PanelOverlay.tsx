@@ -1,12 +1,12 @@
-import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@base-ui/react/button";
+import { useAtomValue, useSetAtom } from "jotai";
 import { LuLoaderCircle, LuX } from "react-icons/lu";
 
-import { playerQueueCurrentTrack } from "../atoms/player/machine";
 import { panelOverlayVisibleAtom } from "../atoms/app/panels";
+import { playerQueueCurrentTrack } from "../atoms/player/machine";
+import { OktoListbox } from "../components/Base/OktoListbox";
 import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 import { LyricsViewer } from "../components/LyricsViewer";
-import { OktoListbox } from "../components/Base/OktoListbox";
 import { usePanelOverlayTranslation } from "../hooks/use_panel_overlay_translation";
 
 export function PanelOverlay() {

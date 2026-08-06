@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@base-ui/react/button";
 import { useLingui } from "@lingui/react/macro";
+import { useAtomValue, useSetAtom } from "jotai";
 import {
   LuCircleSlash,
   LuPause,
@@ -10,6 +10,7 @@ import {
   LuSkipForward,
 } from "react-icons/lu";
 
+import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import {
   handleNextTrackAtom,
   handlePreviousTrackAtom,
@@ -18,7 +19,6 @@ import {
   requestPlaybackToggleAtom,
 } from "../../atoms/player/machine";
 import { useVibrantColorsPlaying } from "../../hooks/vibrant_colors";
-import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { PipControlsOverlay } from "./PipControlsOverlay";
 
 interface PipControlsWindowProps {

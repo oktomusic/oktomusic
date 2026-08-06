@@ -7,9 +7,9 @@ import Valkey from "iovalkey";
 
 import type { ValkeyConfig } from "../config/definitions/valkey.config";
 import { PrismaModule } from "../db/prisma.module";
+import { NativeModule } from "../native/native.module";
 import { BullmqService } from "./bullmq.service";
 import { IndexingProcessor } from "./processors/indexing.processor";
-import { NativeModule } from "../native/native.module";
 
 @Module({
   imports: [

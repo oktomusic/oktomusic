@@ -7,23 +7,23 @@ import {
 
 import type { JspfPlaylist } from "@oktomusic/playlists";
 
+import { PrismaService } from "../../db/prisma.service";
 import {
   PlaylistVisibility as PrismaPlaylistVisibility,
   Prisma,
   Role,
   User,
 } from "../../generated/prisma/client";
-import { PrismaService } from "../../db/prisma.service";
 import { TrackService } from "../track/track.service";
 import type { CreatePlaylistInput } from "./dto/create-playlist.input";
 import type { UpdatePlaylistInput } from "./dto/update-playlist.input";
 import { getCoverAlbumIds } from "./playlist-cover.utils";
+import { PlaylistVisibility } from "./playlist-visibility.enum";
 import {
   PlaylistBasicModel,
   PlaylistModel,
   PlaylistTrackModel,
 } from "./playlist.model";
-import { PlaylistVisibility } from "./playlist-visibility.enum";
 
 @Injectable()
 export class PlaylistService {

@@ -1,15 +1,15 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
+import { PrismaService } from "../../db/prisma.service";
 import {
   PlaylistVisibility as PrismaPlaylistVisibility,
   Prisma,
   Sex,
   User,
 } from "../../generated/prisma/client";
-import { PrismaService } from "../../db/prisma.service";
-import { PlaylistBasicModel } from "../playlist/playlist.model";
 import { getCoverAlbumIds } from "../playlist/playlist-cover.utils";
 import { PlaylistVisibility } from "../playlist/playlist-visibility.enum";
+import { PlaylistBasicModel } from "../playlist/playlist.model";
 
 interface UpdateUserProfileData {
   sex?: Sex | null;

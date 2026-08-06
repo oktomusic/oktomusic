@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
+import { playerVolume } from "../../atoms/app/settings_client";
 import {
   handleNextTrackAtom,
   playerAudioContextAtom,
@@ -13,7 +14,6 @@ import {
   playerSeekRequestAtom,
   playerShouldPlayAtom,
 } from "../../atoms/player/machine";
-import { playerVolume } from "../../atoms/app/settings_client";
 
 export function PlayerProvider() {
   const [audioContext, setAudioContext] = useAtom(playerAudioContextAtom);

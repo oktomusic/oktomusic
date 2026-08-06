@@ -9,8 +9,8 @@ import { ApiOperation, ApiParam, ApiSecurity, ApiTags } from "@nestjs/swagger";
 
 import { generateXspf, generateM3U } from "@oktomusic/playlists";
 
-import { AuthGuard } from "../../common/guards/auth.guard";
 import { ApiFile } from "../../common/decorators/api-file.decorator";
+import { AuthGuard } from "../../common/guards/auth.guard";
 import { ParseCuid2Pipe } from "../../common/pipes/parse-cuid2.pipe";
 import { PlaylistService } from "./playlist.service";
 

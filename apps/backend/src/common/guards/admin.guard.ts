@@ -7,7 +7,6 @@ import {
 import type { Request } from "express";
 
 import { Role } from "../../generated/prisma/client";
-
 import { AuthGuard } from "./auth.guard";
 
 @Injectable()

@@ -8,14 +8,14 @@ import {
 } from "react-icons/lu";
 
 import {
+  panelOverlayVisibleAtom,
+  panelRightVisibleAtom,
+} from "../../atoms/app/panels";
+import {
   settingClientKioskMode,
   settingClientVolumeEnabled,
 } from "../../atoms/app/settings_client";
 import { pipOpenAtom } from "../../atoms/player/pip";
-import {
-  panelOverlayVisibleAtom,
-  panelRightVisibleAtom,
-} from "../../atoms/app/panels";
 import { PlayerControlsVolume } from "./PlayerControlsVolume";
 
 export function PlayerControlsAdditional() {

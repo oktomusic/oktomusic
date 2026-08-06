@@ -6,9 +6,7 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/backend build",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ],
+      "problemMatcher": ["$tsc"],
       "group": "build"
     },
     {
@@ -16,9 +14,7 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/frontend build",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ],
+      "problemMatcher": ["$tsc"],
       "group": "build"
     },
     {
@@ -26,9 +22,7 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/backend start:dev",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": ["$tsc"]
     },
     {
       "label": "backend: studio",
@@ -42,27 +36,21 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/backend test",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": ["$tsc"]
     },
     {
       "label": "frontend: dev",
       "type": "shell",
       "command": "pnpm --filter @oktomusic/frontend dev",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": ["$tsc"]
     },
     {
       "label": "frontend: tests",
       "type": "shell",
       "command": "pnpm --filter @oktomusic/frontend test",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": ["$tsc"]
     },
     {
       "label": "frontend: watch locales",
@@ -76,18 +64,14 @@
       "type": "shell",
       "command": "pnpm --filter @oktomusic/lyrics test",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": ["$tsc"]
     },
     {
       "label": "website: dev",
       "type": "shell",
       "command": "pnpm --filter @oktomusic/website dev",
       "isBackground": false,
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": ["$tsc"]
     },
     {
       "label": "docker: start",
@@ -97,11 +81,7 @@
     },
     {
       "label": "app: dev",
-      "dependsOn": [
-        "docker: start",
-        "backend: dev",
-        "frontend: dev",
-      ],
+      "dependsOn": ["docker: start", "backend: dev", "frontend: dev"],
       "problemMatcher": []
     }
   ]

@@ -1,10 +1,10 @@
-import { describe, expect, it, vi } from "vitest";
 import type { Response } from "express";
+import { describe, expect, it, vi } from "vitest";
 
-import { ViewsController } from "./views.controller";
 import type { MetaTagsService } from "../common/metatags/metatags.service";
 import type { AppConfig } from "../config/definitions/app.config";
 import type { ViteConfig } from "../config/definitions/vite.config";
+import { ViewsController } from "./views.controller";
 
 const appConfig = (publicUrl?: string): AppConfig => ({
   env: "test",

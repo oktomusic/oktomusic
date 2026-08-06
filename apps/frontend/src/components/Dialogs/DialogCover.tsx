@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useAtom } from "jotai";
 import { Dialog } from "@base-ui/react";
 import { useLingui } from "@lingui/react/macro";
+import { useAtom } from "jotai";
 
 import { dialogCoverId } from "../../atoms/app/dialogs";
 import { OktoDialog } from "../Base/OktoDialog";

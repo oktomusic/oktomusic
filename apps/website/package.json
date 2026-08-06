@@ -2,6 +2,7 @@
   "name": "@oktomusic/website",
   "version": "0.0.0",
   "private": true,
+  "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
@@ -10,7 +11,6 @@
     "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --no-error-on-unmatched-pattern --fix apps/website",
     "pwa-assets": "pwa-assets-generator --config pwa-assets.config.ts"
   },
-  "license": "AGPL-3.0-only",
   "devDependencies": {
     "@oktomusic/meta-tags": "workspace:^",
     "@vite-pwa/assets-generator": "^1.0.2",

@@ -1,28 +1,28 @@
-import { useAtomValue } from "jotai";
-import { DragDropProvider } from "@dnd-kit/react";
 import { CSPProvider } from "@base-ui/react/csp-provider";
 import { Toast } from "@base-ui/react/toast";
+import { DragDropProvider } from "@dnd-kit/react";
+import { useAtomValue } from "jotai";
 
-import { useVibrantColorsPlaying } from "./hooks/vibrant_colors";
 import {
   panelLeftExpandedAtom,
   panelOverlayVisibleAtom,
   panelRightVisibleAtom,
 } from "./atoms/app/panels";
-import { PlayerProvider } from "./components/Player/PlayerProvider";
-import { MediaSessionProvider } from "./components/Player/MediaSessionProvider";
-import { AudioSessionProvider } from "./components/Player/AudioSessionProvider";
-import { HeaderMenu } from "./components/HeaderMenu";
-import { PipControls } from "./components/PipControls/PipControls";
 import { DialogCover } from "./components/Dialogs/DialogCover";
 import { DialogPlaylistDelete } from "./components/Dialogs/DialogPlaylistDelete";
 import { DialogPlaylistEdit } from "./components/Dialogs/DialogPlaylistEdit";
+import { HeaderMenu } from "./components/HeaderMenu";
 import { OktoDragOverlay } from "./components/OktoDragOverlay";
+import { PipControls } from "./components/PipControls/PipControls";
+import { AudioSessionProvider } from "./components/Player/AudioSessionProvider";
+import { MediaSessionProvider } from "./components/Player/MediaSessionProvider";
+import { PlayerControls } from "./components/Player/PlayerControls";
+import { PlayerProvider } from "./components/Player/PlayerProvider";
+import { useVibrantColorsPlaying } from "./hooks/vibrant_colors";
+import { PanelCenter } from "./pages/PanelCenter";
 import { PanelLeft } from "./pages/PanelLeft";
 import { PanelOverlay } from "./pages/PanelOverlay";
 import { PanelRight } from "./pages/PanelRight";
-import { PlayerControls } from "./components/Player/PlayerControls";
-import { PanelCenter } from "./pages/PanelCenter";
 import { PanelToastProvider } from "./pages/PanelToastProvider";
 
 export function App() {

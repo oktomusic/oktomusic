@@ -20,12 +20,12 @@ import {
 } from "../../atoms/player/machine";
 import { usePanelToast } from "../../hooks/use_panel_toast";
 import { useRecordItemPlay } from "../../hooks/use_record_item_play";
-import { TrackElement } from "./TrackElement";
 import {
   TRACK_DND_TYPE,
   TRACK_LIST_DND_TYPE,
   type TrackSortableConfig,
 } from "./track_dnd";
+import { TrackElement } from "./TrackElement";
 
 import "./TrackList.css";
 
@@ -461,9 +461,7 @@ export function TrackList(props: TrackListProps) {
             {isMultiDisc && (
               <div className="flex h-14 flex-row items-center gap-4 px-4">
                 <LuDisc3 />
-                <h2 className="track-list__disc-title font-bold">
-                  {t`Disc ${discNumber}`}
-                </h2>
+                <h2 className="track-list__disc-title font-bold">{t`Disc ${discNumber}`}</h2>
               </div>
             )}
             <ol className="track-list__tracks">

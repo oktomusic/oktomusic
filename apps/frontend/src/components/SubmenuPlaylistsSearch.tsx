@@ -13,8 +13,8 @@ import {
 } from "react-icons/lu";
 
 import { SEARCH_MY_PLAYLISTS_QUERY } from "../api/graphql/queries/searchMyPlaylists";
-import { OktoMenuButton, OktoMenuSeparator } from "./Base/OktoMenu";
 import { dialogPlaylistOpenAtom } from "../atoms/app/dialogs";
+import { OktoMenuButton, OktoMenuSeparator } from "./Base/OktoMenu";
 
 interface SubmenuPlaylistsSearchProps {
   readonly onClick: (playlistId: string) => Promise<void>;

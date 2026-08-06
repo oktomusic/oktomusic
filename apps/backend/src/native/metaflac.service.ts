@@ -3,10 +3,11 @@ import { promisify } from "node:util";
 
 import { Inject, Injectable } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
+
 import { parseMetaflacTags, MetaflacTags } from "@oktomusic/metaflac-parser";
-import { MetaflacError } from "./metaflac-error";
 
 import appConfig from "../config/definitions/app.config";
+import { MetaflacError } from "./metaflac-error";
 
 const execFileAsync = promisify(execFile);
 

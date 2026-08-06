@@ -1,5 +1,4 @@
 import "express-session";
-
 import * as client from "openid-client";
 
 declare module "express-session" {

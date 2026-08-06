@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger, OnModuleInit } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
-
 import * as client from "openid-client";
 
 import oidcConfig from "../config/definitions/oidc.config";

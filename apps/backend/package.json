@@ -1,11 +1,11 @@
 {
   "name": "@oktomusic/backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
   "private": true,
-  "type": "commonjs",
+  "description": "",
   "license": "AGPL-3.0-only",
+  "author": "",
+  "type": "commonjs",
   "scripts": {
     "build": "nest build",
     "start": "nest start",

@@ -18,9 +18,9 @@ vi.mock("path", () => {
   };
 });
 
-import { pickAlbumCoverCandidate } from "./sharp-utils";
-
 import fs from "fs/promises";
+
+import { pickAlbumCoverCandidate } from "./sharp-utils";
 
 describe("pickAlbumCoverCandidate", () => {
   beforeEach(() => {

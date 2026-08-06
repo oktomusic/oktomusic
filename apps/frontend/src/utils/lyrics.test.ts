@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import type { LyricsChunk, LyricsLine } from "../api/graphql/gql/graphql";
-
 import { isCurrentLine, isWordPassed } from "./lyrics";
 
 describe("isCurrentLine", () => {

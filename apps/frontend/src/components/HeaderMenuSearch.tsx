@@ -1,7 +1,7 @@
 import type { ChangeEvent } from "react";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 import { useLingui } from "@lingui/react/macro";
 import { LuFolder, LuSearch } from "react-icons/lu";
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 
 import { OktoInput } from "./Base/OktoInput";
 

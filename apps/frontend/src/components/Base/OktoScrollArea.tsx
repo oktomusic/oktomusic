@@ -1,5 +1,4 @@
 import type { ReactElement, ReactNode } from "react";
-
 import { ScrollArea } from "@base-ui/react/scroll-area";
 
 import "./OktoScrollArea.css";

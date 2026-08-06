@@ -1,7 +1,8 @@
 import { Link } from "react-router";
-import { useAtomValue } from "jotai";
 import { Avatar } from "@base-ui/react/avatar";
 import { Button } from "@base-ui/react/button";
+import { useLingui } from "@lingui/react/macro";
+import { useAtomValue } from "jotai";
 import {
   LuChevronLeft,
   LuChevronRight,
@@ -13,14 +14,13 @@ import {
   LuUserRound,
   LuUserRoundPen,
 } from "react-icons/lu";
-import { useLingui } from "@lingui/react/macro";
 
+import { Role } from "../api/graphql/gql/graphql";
 import { pwaDeferredPromptAtom } from "../atoms/app/atoms";
-import { useNavigationHistory } from "../hooks/use_navigation_history";
-import { OktoMenu, OktoMenuItem } from "./Base/OktoMenu";
 import { settingClientKioskMode } from "../atoms/app/settings_client";
 import { authSessionAtom } from "../atoms/auth/atoms";
-import { Role } from "../api/graphql/gql/graphql";
+import { useNavigationHistory } from "../hooks/use_navigation_history";
+import { OktoMenu, OktoMenuItem } from "./Base/OktoMenu";
 import { HeaderMenuSearch } from "./HeaderMenuSearch";
 
 export function HeaderMenu() {

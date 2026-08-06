@@ -1,10 +1,11 @@
+import { NextFunction, Request, Response } from "express";
 import { describe, it, vi, expect } from "vitest";
+
 import {
   getPermissionsPolicyString,
   PermissionsPolicyMap,
   permissionsPolicyMiddleware,
 } from "./permissions_policy";
-import { NextFunction, Request, Response } from "express";
 
 describe("getPermissionsPolicyString", () => {
   it("renders disabled directives as empty parentheses", () => {

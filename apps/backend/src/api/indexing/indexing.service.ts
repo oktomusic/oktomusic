@@ -1,13 +1,13 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-
 import type { Job } from "bullmq";
 import { PubSub } from "graphql-subscriptions";
 
 import { BullmqService } from "../../bullmq/bullmq.service";
 import type { IndexingJobData } from "../../bullmq/processors/errors";
 import { PUB_SUB } from "../../common/pubsub/pubsub.module";
-import { Prisma } from "../../generated/prisma/client";
 import { PrismaService } from "../../db/prisma.service";
+import { Prisma } from "../../generated/prisma/client";
+import { INDEXING_JOB_UPDATED } from "./indexing.constants";
 import {
   IndexingJobModel,
   IndexingJobStatus,
@@ -15,7 +15,6 @@ import {
   IndexingOverviewModel,
   IndexingReportItemModel,
 } from "./indexing.model";
-import { INDEXING_JOB_UPDATED } from "./indexing.constants";
 
 @Injectable()
 export class IndexingService {

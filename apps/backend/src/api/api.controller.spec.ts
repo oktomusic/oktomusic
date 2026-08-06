@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { ConfigType } from "@nestjs/config";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 
+import oidcConfig from "../config/definitions/oidc.config";
 import { ApiController } from "./api.controller";
 import type { ApiService } from "./api.service";
-import oidcConfig from "../config/definitions/oidc.config";
 
 // Mock ESM package
 vi.mock("@oktomusic/api-schemas", () => ({

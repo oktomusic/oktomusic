@@ -1,16 +1,16 @@
 import { useCallback } from "react";
-import { useMutation } from "@apollo/client/react";
-import { useAtom } from "jotai";
-import { useLingui } from "@lingui/react/macro";
 import { useNavigate } from "react-router";
+import { useMutation } from "@apollo/client/react";
+import { useLingui } from "@lingui/react/macro";
+import { useAtom } from "jotai";
 
 import { DELETE_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/deletePlaylist";
+import { MY_LIBRARY_QUERY } from "../../api/graphql/queries/myLibrary";
 import { USER_PROFILE_QUERY } from "../../api/graphql/queries/userProfile";
 import { dialogPlaylistDeleteOpenAtom } from "../../atoms/app/dialogs";
+import { usePanelToast } from "../../hooks/use_panel_toast";
 import { OktoButton } from "../Base/OktoButton";
 import { OktoDialog } from "../Base/OktoDialog";
-import { usePanelToast } from "../../hooks/use_panel_toast";
-import { MY_LIBRARY_QUERY } from "../../api/graphql/queries/myLibrary";
 
 export function DialogPlaylistDelete() {
   const { t } = useLingui();
@@ -99,9 +99,7 @@ export function DialogPlaylistDelete() {
           </div>
         </div>
         <div className="flex items-center justify-end gap-3">
-          <p className="mr-auto text-sm text-zinc-400">
-            {t`This action cannot be undone.`}
-          </p>
+          <p className="mr-auto text-sm text-zinc-400">{t`This action cannot be undone.`}</p>
           <OktoButton
             type="button"
             onClick={handleClose}

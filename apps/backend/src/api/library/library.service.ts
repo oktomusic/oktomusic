@@ -5,17 +5,17 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 
+import { PrismaService } from "../../db/prisma.service";
 import {
   PlaylistVisibility as PrismaPlaylistVisibility,
   Prisma,
   Role,
   type User,
 } from "../../generated/prisma/client";
-import { PrismaService } from "../../db/prisma.service";
 import { AlbumBasicModel } from "../album/album.model";
-import { PlaylistBasicModel } from "../playlist/playlist.model";
 import { getCoverAlbumIds } from "../playlist/playlist-cover.utils";
 import { PlaylistVisibility } from "../playlist/playlist-visibility.enum";
+import { PlaylistBasicModel } from "../playlist/playlist.model";
 import {
   LibraryItemType,
   UserLibraryEntryModel,

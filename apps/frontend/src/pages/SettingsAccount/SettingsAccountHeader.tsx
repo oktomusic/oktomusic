@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 
-import { authSessionAtom } from "../../atoms/auth/atoms";
 import { Role } from "../../api/graphql/gql/graphql";
+import { authSessionAtom } from "../../atoms/auth/atoms";
 import { OktoBadge } from "../../components/Base/OktoBadge";
 
 export function SettingsAccountHeader() {

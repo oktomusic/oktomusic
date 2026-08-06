@@ -1,9 +1,9 @@
-import { useLingui } from "@lingui/react/macro";
 import { useMutation } from "@apollo/client/react";
+import { useLingui } from "@lingui/react/macro";
 
+import { CLEAN_ITEM_PLAY_MUTATION } from "../../api/graphql/mutations/cleanItemPlay";
 import { OktoButton } from "../../components/Base/OktoButton";
 import { usePanelToast } from "../../hooks/use_panel_toast";
-import { CLEAN_ITEM_PLAY_MUTATION } from "../../api/graphql/mutations/cleanItemPlay";
 
 export function SettingsAccountPlaybackHistory() {
   const { t } = useLingui();

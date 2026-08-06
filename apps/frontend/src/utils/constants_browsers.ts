@@ -1,5 +1,5 @@
-import chrome_icon from "../assets/google_chrome_2022.svg";
 import brave_icon from "../assets/brave_2022.svg";
+import chrome_icon from "../assets/google_chrome_2022.svg";
 import edge_icon from "../assets/microsoft_edge_2019.svg";
 // icons are from Wikipedia
 

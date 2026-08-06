@@ -1,8 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Test, TestingModule } from "@nestjs/testing";
-import { HealthController } from "./health.controller";
 import { HealthCheckService, PrismaHealthIndicator } from "@nestjs/terminus";
+import { Test, TestingModule } from "@nestjs/testing";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+
 import { PrismaService } from "../../db/prisma.service";
+import { HealthController } from "./health.controller";
 
 describe("HealthController", () => {
   let controller: HealthController;

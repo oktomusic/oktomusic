@@ -8,7 +8,6 @@ import { GqlExecutionContext } from "@nestjs/graphql";
 import type { Request } from "express";
 
 import { Role } from "../../generated/prisma/client";
-
 import { GraphqlAuthGuard } from "./graphql-auth.guard";
 
 @Injectable()

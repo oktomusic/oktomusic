@@ -1,9 +1,9 @@
 import { useMemo } from "react";
+import { useSearchParams } from "react-router";
 import { useQuery } from "@apollo/client/react";
 import { Toggle } from "@base-ui/react/toggle";
 import { ToggleGroup } from "@base-ui/react/toggle-group";
 import { useLingui } from "@lingui/react/macro";
-import { useSearchParams } from "react-router";
 
 import {
   type SearchAlbumsInput,

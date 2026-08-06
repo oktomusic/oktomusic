@@ -1,7 +1,7 @@
 import { ErrorLike } from "@apollo/client";
 
-import { Generic404 } from "./Generic404";
 import { isNotFoundError } from "../../utils/graphql_errors";
+import { Generic404 } from "./Generic404";
 
 interface GenericGraphQLErrorProps {
   readonly error: ErrorLike;

@@ -1,9 +1,8 @@
-import { expect, suite, test } from "vitest";
 import { Temporal } from "temporal-polyfill";
+import { expect, suite, test } from "vitest";
 
 import { parseMetaflacTags } from "../src";
 import { parseLine, parseOutput, zPlainDate } from "../src/utils";
-
 import test_1 from "./test_1.txt?raw";
 
 void suite("Metaflac output parser", () => {

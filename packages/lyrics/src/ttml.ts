@@ -1,8 +1,8 @@
 import { XMLParser } from "fast-xml-parser";
 
 import type { Lyrics } from "./model";
-import { parseTtmlTimeToMs } from "./ttml/time";
 import { extractParagraphText, normalizedSpans } from "./ttml/text";
+import { parseTtmlTimeToMs } from "./ttml/time";
 import type { TtmlParagraph, TtmlRoot } from "./ttml/types";
 import { isRecord } from "./ttml/types";
 

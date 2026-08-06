@@ -1,9 +1,8 @@
 import type { Palette } from "@vibrant/color";
 import type { Sharp } from "sharp";
 
-import { SharpImage } from "./sharp_image";
 import { pipeline } from "./pipeline";
-
+import { SharpImage } from "./sharp_image";
 export async function getPaletteFromSharp(img: Sharp): Promise<Palette> {
   // Get image metadata to determine original dimensions
   const metadata = await img.metadata();

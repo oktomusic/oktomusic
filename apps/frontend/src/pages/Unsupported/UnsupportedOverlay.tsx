@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+
 import { supportedBrowsers } from "../../utils/constants_browsers";
 
 interface UnsupportedOverlayProps {

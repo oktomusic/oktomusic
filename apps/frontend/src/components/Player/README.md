@@ -157,9 +157,11 @@ When `handleNextTrackAtom` is called:
 When `handlePreviousTrackAtom` is called:
 
 1. If source is manual:
-  - consume current manual item
-  - if main queue has items, return to **current main item** (do not double-step backward)
-  - else if manual still has items, stay on manual
+
+- consume current manual item
+- if main queue has items, return to **current main item** (do not double-step backward)
+- else if manual still has items, stay on manual
+
 2. Else move main index backward with wrapping
 3. If no main but manual exists, keep/return manual
 4. If nothing exists, clear source and stop intent
