@@ -269,7 +269,6 @@ pkg-<package-name>:
     - name: Setup PNPM
       uses: pnpm/setup@v2
       with:
-        cache: true
         install: true
 
     - name: Build
