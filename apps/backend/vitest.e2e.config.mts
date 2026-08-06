@@ -3,7 +3,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     name: "@oktomusic/backend:e2e",
-    root: __dirname,
+    root: import.meta.dirname,
     globals: true,
     environment: "node",
     include: ["test/**/*.e2e-spec.ts"],

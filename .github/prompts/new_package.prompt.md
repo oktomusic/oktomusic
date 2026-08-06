@@ -127,7 +127,7 @@ export default defineConfig({
   plugins: [],
   test: {
     name: "@oktomusic/<package-name>",
-    root: __dirname,
+    root: import.meta.dirname,
     globals: true,
     environment: "node",
     include: ["**/*.{test,spec}.{ts,tsx}"],

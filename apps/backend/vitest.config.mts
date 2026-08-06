@@ -6,15 +6,18 @@ export default defineConfig({
   resolve: {
     alias: {
       "@oktomusic/api-schemas": path.resolve(
-        __dirname,
+        import.meta.dirname,
         "./test/mocks/api-schemas.ts",
       ),
-      "openid-client": path.resolve(__dirname, "./test/mocks/openid-client.ts"),
+      "openid-client": path.resolve(
+        import.meta.dirname,
+        "./test/mocks/openid-client.ts",
+      ),
     },
   },
   test: {
     name: "@oktomusic/backend",
-    root: __dirname,
+    root: import.meta.dirname,
     globals: true,
     environment: "node",
     include: ["src/**/*.spec.ts"],
