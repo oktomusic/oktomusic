@@ -22,8 +22,11 @@ new-job-name:
     - name: Checkout repository
       uses: actions/checkout@v7
 
-    - name: Setup Environment
-      uses: ./.github/actions/setup-environment
+    - name: Setup PNPM
+      uses: pnpm/setup@v2
+      with:
+        cache: true
+        install: true
 
     - name: Do something
       run: |
