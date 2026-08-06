@@ -1,10 +1,10 @@
+import { useCallback } from "react";
 import { useMutation } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
-import { useCallback } from "react";
 
+import { LibraryItemType } from "../api/graphql/gql/graphql";
 import { ADD_LIBRARY_ITEM_MUTATION } from "../api/graphql/mutations/addLibraryItem";
 import { REMOVE_LIBRARY_ITEM_MUTATION } from "../api/graphql/mutations/removeLibraryItem";
-import { LibraryItemType } from "../api/graphql/gql/graphql";
 import { ALBUM_QUERY } from "../api/graphql/queries/album";
 import { MY_LIBRARY_QUERY } from "../api/graphql/queries/myLibrary";
 import { PLAYLIST_QUERY } from "../api/graphql/queries/playlist";

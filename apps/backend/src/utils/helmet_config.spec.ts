@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+
 import { mergeDirectivesCSP } from "./helmet_config";
 
 type CSPDirectives = Record<string, string[]>;

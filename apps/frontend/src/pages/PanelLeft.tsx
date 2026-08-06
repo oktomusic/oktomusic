@@ -1,19 +1,19 @@
-import { useQuery } from "@apollo/client/react";
-import { useAtom, useSetAtom } from "jotai";
 import { Link } from "react-router";
+import { useQuery } from "@apollo/client/react";
 import { Button } from "@base-ui/react/button";
 import { useLingui } from "@lingui/react/macro";
+import { useAtom, useSetAtom } from "jotai";
 import { LuPanelLeftClose, LuPanelLeftOpen, LuPlus } from "react-icons/lu";
 
 import { MY_LIBRARY_QUERY } from "../api/graphql/queries/myLibrary";
-import { panelLeftExpandedAtom } from "../atoms/app/panels";
-import { dialogPlaylistOpenAtom } from "../atoms/app/dialogs";
 import coverPlaceHolder from "../assets/pip-cover-placeholder.svg";
+import { dialogPlaylistOpenAtom } from "../atoms/app/dialogs";
+import { panelLeftExpandedAtom } from "../atoms/app/panels";
 import { Cover } from "../components/Base/Cover";
 import { getCoverImagesFromAlbumIds } from "../components/Base/CoverImages";
+import { OktoButton } from "../components/Base/OktoButton";
 import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 import { LibraryRow } from "../components/LibraryRow/LibraryRow";
-import { OktoButton } from "../components/Base/OktoButton";
 
 export function PanelLeft() {
   const { t } = useLingui();
@@ -74,19 +74,13 @@ export function PanelLeft() {
           noMargin={true}
         >
           {loading && libraryItems.length === 0 && (
-            <li className="px-3 py-2 text-sm text-zinc-400">
-              {t`Loading library`}
-            </li>
+            <li className="px-3 py-2 text-sm text-zinc-400">{t`Loading library`}</li>
           )}
           {error && libraryItems.length === 0 && (
-            <li className="px-3 py-2 text-sm text-red-300">
-              {t`Could not load library`}
-            </li>
+            <li className="px-3 py-2 text-sm text-red-300">{t`Could not load library`}</li>
           )}
           {!loading && !error && libraryItems.length === 0 && (
-            <li className="px-3 py-2 text-sm text-zinc-400">
-              {t`Your library is empty`}
-            </li>
+            <li className="px-3 py-2 text-sm text-zinc-400">{t`Your library is empty`}</li>
           )}
           {libraryItems.map((entry) => {
             if (entry.item.__typename === "AlbumBasic") {

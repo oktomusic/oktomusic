@@ -1,9 +1,8 @@
-import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@base-ui/react/button";
-import { LuPause, LuPlay, LuSkipBack, LuSkipForward } from "react-icons/lu";
 import { useLingui } from "@lingui/react/macro";
+import { useAtomValue, useSetAtom } from "jotai";
+import { LuPause, LuPlay, LuSkipBack, LuSkipForward } from "react-icons/lu";
 
-import { OktoSlider } from "../Base/OktoSlider";
 import {
   handleNextTrackAtom,
   handlePreviousTrackAtom,
@@ -15,6 +14,7 @@ import {
   requestSeekAtom,
 } from "../../atoms/player/machine";
 import { formatDuration } from "../../utils/format_duration";
+import { OktoSlider } from "../Base/OktoSlider";
 
 export function PipControlsOverlay() {
   const { t } = useLingui();

@@ -25,7 +25,7 @@
       "request": "attach",
       "name": "backend: debug",
       "port": 9229,
-      "restart": true,
+      "restart": true
     }
   ]
 }

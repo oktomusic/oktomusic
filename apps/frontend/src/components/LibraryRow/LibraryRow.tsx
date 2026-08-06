@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { useLingui } from "@lingui/react/macro";
 import { Button } from "@base-ui/react/button";
+import { useLingui } from "@lingui/react/macro";
 import { LuPause, LuPlay } from "react-icons/lu";
 
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";

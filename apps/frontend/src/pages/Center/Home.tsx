@@ -1,5 +1,5 @@
-import { useAtomValue } from "jotai";
 import { Link } from "react-router";
+import { useAtomValue } from "jotai";
 import { LuSearch, LuSettings } from "react-icons/lu";
 
 import { authSessionAtom } from "../../atoms/auth/atoms";

@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
-import { MetaflacService } from "./metaflac.service";
+
 import { FFmpegService } from "./ffmpeg.service";
+import { MetaflacService } from "./metaflac.service";
 
 @Module({
   exports: [MetaflacService, FFmpegService],

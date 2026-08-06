@@ -1,6 +1,6 @@
-import { useAtomValue } from "jotai";
 import { Link } from "react-router";
 import { useLingui } from "@lingui/react/macro";
+import { useAtomValue } from "jotai";
 
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { playerQueueCurrentTrack } from "../../atoms/player/machine";

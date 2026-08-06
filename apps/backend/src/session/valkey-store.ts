@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import { type SessionData, Store } from "express-session";
 import {
   GlideClient,
   GlideClusterClient,
   TimeUnit,
 } from "@valkey/valkey-glide";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { type SessionData, Store } from "express-session";
 
 interface Serializer {
   parse(s: string): SessionData | Promise<SessionData>;

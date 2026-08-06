@@ -1,6 +1,6 @@
+import { PlayerControlsAdditional } from "./PlayerControlsAdditional";
 import { PlayerControlsInfos } from "./PlayerControlsInfos";
 import { PlayerControlsPlayback } from "./PlayerControlsPlayback";
-import { PlayerControlsAdditional } from "./PlayerControlsAdditional";
 
 export function PlayerControls() {
   return (

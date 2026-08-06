@@ -1,5 +1,6 @@
-import { useAtomValue } from "jotai";
 import { useQuery } from "@apollo/client/react";
+import { useAtomValue } from "jotai";
+
 import { ME_QUERY } from "../../api/graphql/queries/me.ts";
 import { networkStatusAtom } from "../../atoms/app/atoms";
 

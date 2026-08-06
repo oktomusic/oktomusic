@@ -3,7 +3,7 @@
   "editor.formatOnSaveMode": "file",
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.tabSize": 2,
   "editor.indentSize": 2,
   "editor.detectIndentation": false,
@@ -18,11 +18,8 @@
   },
   "files.insertFinalNewline": true,
   "files.eol": "\n",
-  "prettier.enable": true,
-  "prettier.requireConfig": true,
-  "prettier.configPath": "prettier.config.ts",
-  "prettier.prettierPath": "./node_modules/prettier",
-  "prettier.embeddedLanguageFormatting": "auto",
+  "oxc.enable.oxfmt": true,
+  "oxc.fmt.configPath": "oxfmt.config.ts",
   "npm.packageManager": "pnpm",
   "material-icon-theme.activeIconPack": "nest",
   "material-icon-theme.folders.associations": {
@@ -281,8 +278,6 @@
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "eslint.enable": true,
   "eslint.options": {
-    "flags": [
-      "unstable_native_nodejs_ts_config"
-    ]
+    "flags": ["unstable_native_nodejs_ts_config"]
   }
 }

@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { applyColorProperties } from "./vibrant_colors";
+
 import type { VibrantColors } from "../atoms/player/machine";
+import { applyColorProperties } from "./vibrant_colors";
 
 describe("applyColorProperties", () => {
   let doc: Document;

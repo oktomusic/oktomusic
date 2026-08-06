@@ -4,7 +4,6 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { parseM3U, generateM3U } from "../src/m3u";
-
 import { playlistM3U } from "./common";
 
 const playlistFixturePath = resolve(__dirname, "./files/playlist.m3u");

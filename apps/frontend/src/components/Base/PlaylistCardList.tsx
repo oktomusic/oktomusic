@@ -1,7 +1,7 @@
 import { type PlaylistBasic } from "../../api/graphql/gql/graphql";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
-import { getCoverImagesFromAlbumIds } from "./CoverImages";
 import { ListCard } from "../ListCard/ListCard";
+import { getCoverImagesFromAlbumIds } from "./CoverImages";
 
 interface PlaylistCardListProps {
   readonly playlists: readonly PlaylistBasic[];

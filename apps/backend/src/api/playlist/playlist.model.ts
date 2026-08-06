@@ -1,7 +1,7 @@
 import { Field, GraphQLISODateTime, Int, ObjectType } from "@nestjs/graphql";
 
-import { PlaylistVisibility } from "./playlist-visibility.enum";
 import { TrackModel } from "../track/track.model";
+import { PlaylistVisibility } from "./playlist-visibility.enum";
 
 @ObjectType("PlaylistCreator")
 export class PlaylistCreatorModel {

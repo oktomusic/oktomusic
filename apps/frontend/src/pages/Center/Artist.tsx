@@ -3,14 +3,14 @@ import { useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
 import { LuShare } from "react-icons/lu";
 
-import { GenericLoading } from "./GenericLoading";
-import { GenericGraphQLError } from "./GenericGraphQLError";
 import { ARTIST_QUERY } from "../../api/graphql/queries/artist";
+import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { AlbumCardList } from "../../components/Base/AlbumCardList";
 import { CollectionView } from "../../components/CollectionView/CollectionView";
 import { CollectionViewToolbarUser } from "../../components/CollectionView/CollectionViewToolbarUser";
-import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { useShare } from "../../hooks/use_share";
+import { GenericGraphQLError } from "./GenericGraphQLError";
+import { GenericLoading } from "./GenericLoading";
 
 export function Artist() {
   const { cuid } = useParams();

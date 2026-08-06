@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { buildMediaMetadata } from "./media_metadata";
-import { getMediaImages } from "./media_images";
 import { TrackWithAlbum } from "../atoms/player/machine";
+import { getMediaImages } from "./media_images";
+import { buildMediaMetadata } from "./media_metadata";
 
 vi.mock("./media_images", () => {
   return {

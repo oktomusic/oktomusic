@@ -1,5 +1,6 @@
-import hbs from "hbs";
 import Handlebars from "handlebars";
+import hbs from "hbs";
+
 import type { ViewModel } from "../view-model";
 
 /**

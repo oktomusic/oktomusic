@@ -15,11 +15,11 @@ import {
 } from "@nestjs/swagger";
 import type { NextFunction, Request, Response } from "express";
 
-import { ViewModel, ViewModelOpenSearch } from "./view-model";
 import { MetaTagsService } from "../common/metatags/metatags.service";
-import { getAssetTags, type ViteManifest } from "../utils/vite_manifest";
-import viteConfig, { type ViteConfig } from "../config/definitions/vite.config";
 import appConfig, { type AppConfig } from "../config/definitions/app.config";
+import viteConfig, { type ViteConfig } from "../config/definitions/vite.config";
+import { getAssetTags, type ViteManifest } from "../utils/vite_manifest";
+import { ViewModel, ViewModelOpenSearch } from "./view-model";
 
 @Controller()
 export class ViewsController {

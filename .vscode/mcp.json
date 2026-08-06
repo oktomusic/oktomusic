@@ -3,18 +3,12 @@
     "ESLint": {
       "type": "stdio",
       "command": "pnpm",
-      "args": [
-        "dlx",
-        "@eslint/mcp@latest"
-      ]
+      "args": ["dlx", "@eslint/mcp@latest"]
     },
     "playwright": {
       "type": "stdio",
       "command": "pnpm",
-      "args": [
-        "dlx",
-        "@playwright/mcp@latest"
-      ]
+      "args": ["dlx", "@playwright/mcp@latest"]
     },
     "github": {
       "type": "http",
@@ -22,11 +16,7 @@
     },
     "io.github.ChromeDevTools/chrome-devtools-mcp": {
       "command": "pnpm",
-      "args": [
-        "dlx",
-        "chrome-devtools-mcp@latest",
-        "--no-usage-statistics"
-      ],
+      "args": ["dlx", "chrome-devtools-mcp@latest", "--no-usage-statistics"],
       "env": {},
       "type": "stdio"
     }

@@ -1,5 +1,8 @@
 import { Link } from "react-router";
+import { useMutation } from "@apollo/client/react";
 import { Button } from "@base-ui/react/button";
+import { useLingui } from "@lingui/react/macro";
+import { useSetAtom } from "jotai";
 import {
   LuDisc3,
   LuEllipsis,
@@ -7,17 +10,13 @@ import {
   LuPause,
   LuPlay,
 } from "react-icons/lu";
-import { useSetAtom } from "jotai";
-import { useMutation } from "@apollo/client/react";
-import { useLingui } from "@lingui/react/macro";
-
-import { addToQueueAtom, TrackWithAlbum } from "../../atoms/player/machine";
-import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
-import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
 
 import { ADD_TRACKS_TO_PLAYLIST_MUTATION } from "../../api/graphql/mutations/playlists/addTracksToPlaylist";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
+import { addToQueueAtom, TrackWithAlbum } from "../../atoms/player/machine";
 import { usePanelToast } from "../../hooks/use_panel_toast";
+import { OktoMenu, OktoMenuItem } from "../Base/OktoMenu";
+import { SubmenuPlaylistsSearch } from "../SubmenuPlaylistsSearch";
 
 import "./QueueTrack.css";
 

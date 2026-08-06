@@ -1,5 +1,5 @@
-import { useAtomValue } from "jotai";
 import { Navigate, Outlet, useLocation } from "react-router";
+import { useAtomValue } from "jotai";
 
 import { authSessionAtom } from "../atoms/auth/atoms";
 

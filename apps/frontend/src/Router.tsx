@@ -1,29 +1,25 @@
 import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import { useAtomValue, useSetAtom } from "jotai";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-
-import { authSessionAtom } from "./atoms/auth/atoms.ts";
-import { browserSupportAtom } from "./atoms/app/browser_support.ts";
-
-import { useScreenWakeLock } from "./hooks/wake_lock.ts";
-import { useStoragePersistence } from "./hooks/persistent_storage.ts";
-import { usePwaDeferredPrompt } from "./hooks/pwa_prompt.ts";
-import { useKioskExitHandler } from "./hooks/kiosk_exit_handler.ts";
-import { useSWRegister } from "./hooks/sw_register.ts";
-
-import { AuthSessionInitializer } from "./components/AuthSessionInitializer.tsx";
-import { WindowControls } from "./components/WindowControls.tsx";
-import { Login } from "./pages/Auth/Login.tsx";
-import { UnsupportedOverlay } from "./pages/Unsupported/UnsupportedOverlay.tsx";
+import { useAtomValue, useSetAtom } from "jotai";
 
 import { App } from "./App.tsx";
-
+import { browserSupportAtom } from "./atoms/app/browser_support.ts";
 import {
   applicationLanguageReady,
   bootstrapLocaleAtom,
 } from "./atoms/app/language.ts";
+import { authSessionAtom } from "./atoms/auth/atoms.ts";
+import { AuthSessionInitializer } from "./components/AuthSessionInitializer.tsx";
+import { WindowControls } from "./components/WindowControls.tsx";
+import { useKioskExitHandler } from "./hooks/kiosk_exit_handler.ts";
+import { useStoragePersistence } from "./hooks/persistent_storage.ts";
+import { usePwaDeferredPrompt } from "./hooks/pwa_prompt.ts";
+import { useSWRegister } from "./hooks/sw_register.ts";
+import { useScreenWakeLock } from "./hooks/wake_lock.ts";
+import { Login } from "./pages/Auth/Login.tsx";
+import { UnsupportedOverlay } from "./pages/Unsupported/UnsupportedOverlay.tsx";
 
 function LoginRedirect() {
   const authSession = useAtomValue(authSessionAtom);

@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+
 import getByPath from "./json_path";
 
 const testObj = {

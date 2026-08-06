@@ -6,7 +6,6 @@
     "ms-vscode-remote.remote-containers",
     "redhat.vscode-yaml",
     "redhat.vscode-xml",
-    "esbenp.prettier-vscode",
     "matthewpi.caddyfile-support",
     "vitest.explorer",
     "myriad-dreamin.tinymist",
@@ -14,6 +13,7 @@
     "prisma.prisma",
     "pomdtr.excalidraw-editor",
     "bradlc.vscode-tailwindcss",
-    "github.vscode-github-actions"
+    "github.vscode-github-actions",
+    "oxc.oxc-vscode"
   ]
 }

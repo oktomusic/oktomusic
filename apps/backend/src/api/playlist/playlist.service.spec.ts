@@ -12,8 +12,8 @@ import {
   type User,
 } from "../../generated/prisma/client";
 import type { TrackService } from "../track/track.service";
-import { PlaylistService } from "./playlist.service";
 import { PlaylistVisibility } from "./playlist-visibility.enum";
+import { PlaylistService } from "./playlist.service";
 
 type PrismaMock = {
   readonly playlist: {

@@ -1,8 +1,8 @@
 import type { Job, Queue } from "bullmq";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { IndexingJobData } from "./processors/errors";
 import { BullmqService } from "./bullmq.service";
+import type { IndexingJobData } from "./processors/errors";
 
 type QueueMock = {
   readonly add: ReturnType<typeof vi.fn>;

@@ -50,20 +50,20 @@ This is a pnpm monorepo with the following structure:
 - Frontend: React recommended + type-checked rules, React hooks, React refresh
 - Different configurations per workspace package
 
-### Prettier
+### Oxfmt
 
-- Configuration in `prettier.config.ts`
+- Configuration in `oxfmt.config.ts`
 - 2 spaces indentation (no tabs)
 - Double quotes
-- No semicolons
+- Semicolons enabled
 - Trailing commas everywhere
-- Tailwind CSS plugin enabled
+- Tailwind CSS class and import sorting enabled
 
 ### Commands
 
 - Lint: `pnpm lint` (root) or workspace-specific
 - Format check: `pnpm format`
-- Format fix: `prettier --write .`
+- Format fix: `pnpm format:fix`
 
 ## Testing
 

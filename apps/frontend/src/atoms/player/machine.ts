@@ -1,11 +1,11 @@
 import { atom } from "jotai";
 
-import { settingClientRestartThresholdSeconds } from "../app/settings_client";
 import {
   AlbumBasic,
   PlaylistBasic,
   Track,
 } from "../../api/graphql/gql/graphql";
+import { settingClientRestartThresholdSeconds } from "../app/settings_client";
 
 /** Holds the current AudioContext instance (or null when not initialized). */
 export const playerAudioContextAtom = atom<AudioContext | null>(null);

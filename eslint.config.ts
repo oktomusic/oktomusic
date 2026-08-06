@@ -1,21 +1,19 @@
 /// <reference types="@types/node" />
 
-import js from "@eslint/js";
-import globals from "globals";
-import tseslint from "typescript-eslint";
 import e18e from "@e18e/eslint-plugin";
 import eslintReact from "@eslint-react/eslint-plugin";
+import js from "@eslint/js";
+import pluginLingui from "eslint-plugin-lingui";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import prettier from "eslint-config-prettier/flat";
-import pluginLingui from "eslint-plugin-lingui";
 import { defineConfig, globalIgnores } from "eslint/config";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 const configBase = [
   js.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
   e18e.configs.recommended,
-  prettier,
 ];
 
 const configsReact = [
@@ -26,7 +24,6 @@ const configsReact = [
   eslintReact.configs["disable-conflict-eslint-plugin-react-hooks"],
   reactHooks.configs.flat.recommended,
   reactRefresh.configs.vite,
-  prettier,
   pluginLingui.configs["flat/recommended"],
 ];
 
@@ -121,11 +118,7 @@ export default defineConfig([
   // @oktomusic/api-schemas (tsdown)
   {
     files: ["packages/api-schemas/**/*.ts"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      prettier,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: {
         project: "./packages/api-schemas/tsconfig.json",
@@ -137,11 +130,7 @@ export default defineConfig([
   // @oktomusic/lyrics (tsdown)
   {
     files: ["packages/lyrics/**/*.ts"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      prettier,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: {
         project: "./packages/lyrics/tsconfig.json",
@@ -153,11 +142,7 @@ export default defineConfig([
   // @oktomusic/playlists (tsdown)
   {
     files: ["packages/playlists/**/*.ts"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      prettier,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: {
         project: "./packages/playlists/tsconfig.json",
@@ -169,11 +154,7 @@ export default defineConfig([
   // @oktomusic/metaflac-parser (tsdown)
   {
     files: ["packages/metaflac-parser/**/*.ts"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      prettier,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: {
         project: "./packages/metaflac-parser/tsconfig.json",
@@ -185,11 +166,7 @@ export default defineConfig([
   // @oktomusic/vibrant (tsdown)
   {
     files: ["packages/vibrant/**/*.ts"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      prettier,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: {
         project: "./packages/vibrant/tsconfig.json",
@@ -201,11 +178,7 @@ export default defineConfig([
   // @oktomusic/meta-tags (tsdown)
   {
     files: ["packages/meta-tags/**/*.ts"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      prettier,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: {
         project: "./packages/meta-tags/tsconfig.json",

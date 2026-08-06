@@ -2,24 +2,24 @@
   "name": "@oktomusic/vibrant",
   "version": "0.0.0",
   "description": "",
-  "type": "module",
-  "license": "MIT",
   "homepage": "https://github.com/oktomusic/oktomusic#readme",
   "bugs": {
     "url": "https://github.com/oktomusic/oktomusic/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/oktomusic/oktomusic.git"
-  },
+  "license": "MIT",
   "author": {
     "name": "AFCMS",
     "email": "afcm.contact@gmail.com",
     "url": "https://afcms.dev"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oktomusic/oktomusic.git"
+  },
   "files": [
     "dist"
   ],
+  "type": "module",
   "types": "./dist/index.d.mts",
   "exports": {
     ".": "./dist/index.mjs",
@@ -33,10 +33,6 @@
     "lint": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts packages/metaflac-parser",
     "lint:fix": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts --fix packages/metaflac-parser"
   },
-  "devDependencies": {
-    "@types/node": "catalog:default",
-    "tsdown": "catalog:default"
-  },
   "dependencies": {
     "@vibrant/color": "^4.0.4",
     "@vibrant/core": "^4.0.4",
@@ -46,5 +42,9 @@
     "sharp": "catalog:default",
     "temporal-polyfill": "catalog:default",
     "zod": "catalog:default"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:default",
+    "tsdown": "catalog:default"
   }
 }

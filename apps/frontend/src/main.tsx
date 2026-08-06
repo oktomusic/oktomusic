@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { ApolloProvider } from "@apollo/client/react";
 import { DevTools } from "jotai-devtools";
 import jotaiCSS from "jotai-devtools/styles.css?inline";
-import { ApolloProvider } from "@apollo/client/react";
 
 import { createApolloClient } from "./api/graphql/client.ts";
 import { Router } from "./Router.tsx";

@@ -1,18 +1,18 @@
-import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
+import { useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
 import { LuPen, LuShare } from "react-icons/lu";
 
 import { PlaylistVisibility } from "../../api/graphql/gql/graphql";
 import { ME_QUERY } from "../../api/graphql/queries/me";
 import { USER_PROFILE_QUERY } from "../../api/graphql/queries/userProfile";
-import { GenericLoading } from "./GenericLoading";
-import { GenericGraphQLError } from "./GenericGraphQLError";
+import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { PlaylistCardList } from "../../components/Base/PlaylistCardList";
 import { CollectionView } from "../../components/CollectionView/CollectionView";
-import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
-import { useShare } from "../../hooks/use_share";
 import { CollectionViewToolbarUser } from "../../components/CollectionView/CollectionViewToolbarUser";
+import { useShare } from "../../hooks/use_share";
+import { GenericGraphQLError } from "./GenericGraphQLError";
+import { GenericLoading } from "./GenericLoading";
 
 export function User() {
   const { t } = useLingui();
@@ -96,9 +96,7 @@ export function User() {
 
         {isOwnProfile ? (
           <section aria-label={t`Private and unlisted playlists`}>
-            <h2 className="pb-4 text-2xl font-bold">
-              {t`Private and unlisted playlists`}
-            </h2>
+            <h2 className="pb-4 text-2xl font-bold">{t`Private and unlisted playlists`}</h2>
             {privateAndUnlistedPlaylists.length === 0 ? (
               <div className="p-6">{t`No private or unlisted playlists found`}</div>
             ) : (

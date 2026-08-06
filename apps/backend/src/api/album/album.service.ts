@@ -3,14 +3,14 @@ import path from "node:path";
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
 
-import appConfig from "../../config/definitions/app.config";
-import { Prisma } from "../../generated/prisma/client";
-import { PrismaService } from "../../db/prisma.service";
 import { AlbumCoverSizeString } from "../../common/utils/sharp-utils";
+import appConfig from "../../config/definitions/app.config";
+import { PrismaService } from "../../db/prisma.service";
+import { Prisma } from "../../generated/prisma/client";
+import { resolveChildrenPath } from "../../utils/path";
+import { TrackModel } from "../track/track.model";
 import { AlbumModel } from "./album.model";
 import type { SearchAlbumsInput } from "./dto/search-albums.input";
-import { TrackModel } from "../track/track.model";
-import { resolveChildrenPath } from "../../utils/path";
 
 const albumInclude = {
   artists: {

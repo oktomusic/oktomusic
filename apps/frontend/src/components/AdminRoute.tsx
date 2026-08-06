@@ -1,8 +1,8 @@
-import { useAtomValue } from "jotai";
 import { Navigate, Outlet } from "react-router";
+import { useAtomValue } from "jotai";
 
-import { authSessionAtom } from "../atoms/auth/atoms";
 import { Role } from "../api/graphql/gql/graphql";
+import { authSessionAtom } from "../atoms/auth/atoms";
 
 export function AdminRoute() {
   const authSession = useAtomValue(authSessionAtom);

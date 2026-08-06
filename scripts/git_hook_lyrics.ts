@@ -6,10 +6,10 @@
  * Then it runs the extract script to update the po files, if any changes are detected, it will prevent the commit and ask the user to review the changes.
  */
 
+import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
-import { execSync } from "node:child_process";
 
 const scriptCommand = "pnpm run --filter @oktomusic/frontend po:extract";
 

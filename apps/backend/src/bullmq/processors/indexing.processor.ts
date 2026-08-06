@@ -1,13 +1,12 @@
-import type { Dirent } from "node:fs";
 import crypto from "node:crypto";
+import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { Processor, WorkerHost } from "@nestjs/bullmq";
 import { Inject, Logger } from "@nestjs/common";
+import { Processor, WorkerHost } from "@nestjs/bullmq";
 import { type ConfigType } from "@nestjs/config";
 import { Job } from "bullmq";
-import { Prisma } from "../../generated/prisma/client";
 import { PubSub } from "graphql-subscriptions";
 import sharp from "sharp";
 import { Temporal } from "temporal-polyfill";
@@ -18,11 +17,19 @@ import type { MetaflacTags } from "@oktomusic/metaflac-parser";
 import { INDEXING_JOB_UPDATED } from "../../api/indexing/indexing.constants";
 import { IndexingJobStatus } from "../../api/indexing/indexing.model";
 import { PUB_SUB } from "../../common/pubsub/pubsub.module";
+import {
+  type AlbumCoverColors,
+  convertAlbumCoverCandidate,
+  extractAlbumCoverColors,
+  pickAlbumCoverCandidate,
+} from "../../common/utils/sharp-utils";
 import appConfig from "../../config/definitions/app.config";
 import { PrismaService } from "../../db/prisma.service";
+import { Prisma } from "../../generated/prisma/client";
+import { FFmpegService, FFProbeOutput } from "../../native/ffmpeg.service";
 import { MetaflacError } from "../../native/metaflac-error";
 import { MetaflacService } from "../../native/metaflac.service";
-import { FFmpegService, FFProbeOutput } from "../../native/ffmpeg.service";
+import { dateToPlainDate, plainDateToDate } from "../../utils/date";
 import {
   type IndexingJobData,
   type IndexingProgressStep,
@@ -33,13 +40,7 @@ import {
   IndexingReportType,
   type IndexingWarning,
 } from "./errors";
-import {
-  getAlbumSignature,
-  getOrderedTrackKeys,
-  getTrackCountsPerDisc,
-  pickAlbumDateFromTrackDates,
-  validateAlbumFilesMetadata,
-} from "./indexing.utils";
+import { findAndParseLyrics } from "./indexing.lyrics.utils";
 import {
   getAlbumDiscTrackKey,
   getPreferredTrackIdentity,
@@ -47,14 +48,13 @@ import {
   normalizeIsrc,
   normalizeTitle,
 } from "./indexing.tracks.utils";
-import { findAndParseLyrics } from "./indexing.lyrics.utils";
 import {
-  type AlbumCoverColors,
-  convertAlbumCoverCandidate,
-  extractAlbumCoverColors,
-  pickAlbumCoverCandidate,
-} from "../../common/utils/sharp-utils";
-import { dateToPlainDate, plainDateToDate } from "../../utils/date";
+  getAlbumSignature,
+  getOrderedTrackKeys,
+  getTrackCountsPerDisc,
+  pickAlbumDateFromTrackDates,
+  validateAlbumFilesMetadata,
+} from "./indexing.utils";
 
 interface FlacFolder {
   path: string;

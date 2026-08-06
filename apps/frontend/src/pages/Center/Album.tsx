@@ -1,16 +1,13 @@
+import { useParams } from "react-router";
 import { useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LuListPlus, LuShare } from "react-icons/lu";
-import { useParams } from "react-router";
 import { Temporal } from "temporal-polyfill";
 
+import { LibraryItemType } from "../../api/graphql/gql/graphql";
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";
-import { GenericGraphQLError } from "./GenericGraphQLError";
-import { type OktoMenuItem } from "../../components/Base/OktoMenu";
-import { CollectionView } from "../../components/CollectionView/CollectionView";
-import { TrackList } from "../../components/TrackList/TrackList";
-import { GenericLoading } from "./GenericLoading";
+import { dialogCoverId } from "../../atoms/app/dialogs";
 import {
   addToQueueAtom,
   playerQueueCurrentTrackSourceAtom,
@@ -21,15 +18,18 @@ import {
   type PlayerQueueFrom,
   type VibrantColorsPartial,
 } from "../../atoms/player/machine";
-import { dialogCoverId } from "../../atoms/app/dialogs";
-import { mapTracksWithAlbum } from "../../utils/album_tracks";
-import { useShare } from "../../hooks/use_share";
+import { type OktoMenuItem } from "../../components/Base/OktoMenu";
+import { CollectionView } from "../../components/CollectionView/CollectionView";
 import { CollectionViewMetaAlbum } from "../../components/CollectionView/CollectionViewMetaAlbum";
 import { CollectionViewToolbarAlbum } from "../../components/CollectionView/CollectionViewToolbarAlbum";
-import { albumToAlbumBasic } from "../../utils/graphql_converters";
-import { useRecordItemPlay } from "../../hooks/use_record_item_play";
+import { TrackList } from "../../components/TrackList/TrackList";
 import { useLibraryItemToggle } from "../../hooks/use_library_item_toggle";
-import { LibraryItemType } from "../../api/graphql/gql/graphql";
+import { useRecordItemPlay } from "../../hooks/use_record_item_play";
+import { useShare } from "../../hooks/use_share";
+import { mapTracksWithAlbum } from "../../utils/album_tracks";
+import { albumToAlbumBasic } from "../../utils/graphql_converters";
+import { GenericGraphQLError } from "./GenericGraphQLError";
+import { GenericLoading } from "./GenericLoading";
 
 export function Album() {
   const { t } = useLingui();

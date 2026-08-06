@@ -10,9 +10,6 @@ import {
   LuTriangleAlert,
 } from "react-icons/lu";
 
-import { TRIGGER_INDEXING_MUTATION } from "../../api/graphql/mutations/triggerIndexing";
-import { INDEXING_OVERVIEW_QUERY } from "../../api/graphql/queries/indexingOverview";
-import { INDEXING_JOB_UPDATED_SUBSCRIPTION } from "../../api/graphql/subscriptions/indexingJobUpdated";
 import {
   IndexingJobStatus,
   IndexingProgressStepStatus,
@@ -21,6 +18,9 @@ import {
   type IndexingOverviewQuery,
   type TriggerIndexingMutation,
 } from "../../api/graphql/gql/graphql";
+import { TRIGGER_INDEXING_MUTATION } from "../../api/graphql/mutations/triggerIndexing";
+import { INDEXING_OVERVIEW_QUERY } from "../../api/graphql/queries/indexingOverview";
+import { INDEXING_JOB_UPDATED_SUBSCRIPTION } from "../../api/graphql/subscriptions/indexingJobUpdated";
 import { OktoButton } from "../../components/Base/OktoButton";
 import { OktoProgress } from "../../components/Base/OktoProgress";
 import { OktoScrollArea } from "../../components/Base/OktoScrollArea";

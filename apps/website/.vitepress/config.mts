@@ -1,5 +1,5 @@
-import { defineConfig, HeadConfig } from "vitepress";
 import { withPwa } from "@vite-pwa/vitepress";
+import { defineConfig, HeadConfig } from "vitepress";
 import {
   groupIconMdPlugin,
   groupIconVitePlugin,

@@ -1,6 +1,5 @@
-import { describe, expect, it } from "vitest";
-
 import { BadRequestException } from "@nestjs/common";
+import { describe, expect, it } from "vitest";
 
 import { ParseCuid2Pipe } from "./parse-cuid2.pipe";
 

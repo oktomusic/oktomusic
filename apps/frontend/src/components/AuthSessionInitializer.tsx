@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useQuery } from "@apollo/client/react";
 import { useSetAtom } from "jotai";
 
-import { authSessionAtom } from "../atoms/auth/atoms";
 import { ME_QUERY } from "../api/graphql/queries/me";
+import { authSessionAtom } from "../atoms/auth/atoms";
 
 export function AuthSessionInitializer() {
   const setAuthSession = useSetAtom(authSessionAtom);

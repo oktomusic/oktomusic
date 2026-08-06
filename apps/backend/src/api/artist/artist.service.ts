@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
-import type { Prisma } from "../../generated/prisma/client";
 import { PrismaService } from "../../db/prisma.service";
+import type { Prisma } from "../../generated/prisma/client";
 import { AlbumBasicModel } from "../album/album.model";
-import type { SearchArtistsInput } from "./dto/search-artists.input";
 import { ArtistModel } from "./artist.model";
+import type { SearchArtistsInput } from "./dto/search-artists.input";
 
 const albumCardSelect = {
   id: true,

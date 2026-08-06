@@ -1,20 +1,19 @@
 import { Route, Routes } from "react-router";
 
+import { AdminRoute } from "../components/AdminRoute";
 import { OktoScrollArea } from "../components/Base/OktoScrollArea";
 import { ProtectedRoutes } from "../components/ProtectedRoutes";
-import { AdminRoute } from "../components/AdminRoute";
-
-import { Home } from "./Center/Home";
 import { AppInfo } from "./AppInfo/AppInfo";
-import { SettingsAccount } from "./SettingsAccount/SettingsAccount";
-import { SettingsClient } from "./SettingsClient/SettingsClient";
-import { SettingsAdmin } from "./SettingsAdmin/SettingsAdmin";
-import { Search } from "./Center/Search";
 import { Album } from "./Center/Album";
-import { Playlist } from "./Center/Playlist";
 import { Artist } from "./Center/Artist";
-import { User } from "./Center/User";
 import { Generic404 } from "./Center/Generic404";
+import { Home } from "./Center/Home";
+import { Playlist } from "./Center/Playlist";
+import { Search } from "./Center/Search";
+import { User } from "./Center/User";
+import { SettingsAccount } from "./SettingsAccount/SettingsAccount";
+import { SettingsAdmin } from "./SettingsAdmin/SettingsAdmin";
+import { SettingsClient } from "./SettingsClient/SettingsClient";
 
 export function PanelCenter() {
   return (

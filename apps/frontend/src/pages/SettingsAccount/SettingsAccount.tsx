@@ -1,16 +1,16 @@
 import { useMutation, useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
 
+import { Sex } from "../../api/graphql/gql/graphql.ts";
 import { UPDATE_MY_PROFILE_MUTATION } from "../../api/graphql/mutations/updateMyProfile";
 import { ME_QUERY } from "../../api/graphql/queries/me";
-import { Sex } from "../../api/graphql/gql/graphql.ts";
-import { useSexes, SexesKeys } from "../../utils/constants_sexes.ts";
 import {
   OktoListbox,
   OktoListboxItem,
 } from "../../components/Base/OktoListbox.tsx";
-import { SettingsAccountPlaybackHistory } from "./SettingsAccountPlaybackHistory.tsx";
+import { useSexes, SexesKeys } from "../../utils/constants_sexes.ts";
 import { SettingsAccountHeader } from "./SettingsAccountHeader.tsx";
+import { SettingsAccountPlaybackHistory } from "./SettingsAccountPlaybackHistory.tsx";
 
 function mapSexKeyToGraphql(value: SexesKeys): Sex | null {
   if (value === "unspecified") {

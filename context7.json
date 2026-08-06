@@ -4,9 +4,7 @@
   "public_key": "pk_67GQMYQEWWitorEgmaCjF",
   "projectTitle": "Oktomusic Documentation",
   "description": "Opinionated, self-hosted music streaming server",
-  "folders": [
-    "apps/website/docs"
-  ],
+  "folders": ["apps/website/docs"],
   "excludeFolders": [],
   "branch": "master",
   "excludeFiles": [],

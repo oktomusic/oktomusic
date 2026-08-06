@@ -1,5 +1,4 @@
 import type { ButtonHTMLAttributes } from "react";
-
 import { Button } from "@base-ui/react/button";
 
 export function OktoButton(props: ButtonHTMLAttributes<HTMLButtonElement>) {

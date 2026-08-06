@@ -1,5 +1,5 @@
-import { InjectQueue } from "@nestjs/bullmq";
 import { Injectable } from "@nestjs/common";
+import { InjectQueue } from "@nestjs/bullmq";
 import { Job, Queue } from "bullmq";
 
 import type { IndexingJobData } from "./processors/errors";

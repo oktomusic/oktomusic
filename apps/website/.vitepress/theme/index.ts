@@ -1,6 +1,6 @@
-import { h } from "vue";
-import Theme from "vitepress/theme";
 import "virtual:group-icons.css";
+import Theme from "vitepress/theme";
+import { h } from "vue";
 
 import RegisterSW from "./components/RegisterSW.vue";
 

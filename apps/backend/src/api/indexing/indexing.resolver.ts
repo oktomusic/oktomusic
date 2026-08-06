@@ -2,11 +2,11 @@ import { Inject, UseGuards } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver, Subscription } from "@nestjs/graphql";
 import { PubSub } from "graphql-subscriptions";
 
-import { PUB_SUB } from "../../common/pubsub/pubsub.module";
 import { GraphqlAdminGuard } from "../../common/guards/graphql-admin.guard";
+import { PUB_SUB } from "../../common/pubsub/pubsub.module";
+import { INDEXING_JOB_UPDATED } from "./indexing.constants";
 import { IndexingJobModel, IndexingOverviewModel } from "./indexing.model";
 import { IndexingService } from "./indexing.service";
-import { INDEXING_JOB_UPDATED } from "./indexing.constants";
 
 interface IndexingJobPayload {
   indexingJobUpdated: IndexingJobModel;

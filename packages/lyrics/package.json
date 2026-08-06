@@ -2,20 +2,20 @@
   "name": "@oktomusic/lyrics",
   "version": "0.0.0",
   "description": "A starter for creating a TypeScript package.",
-  "type": "module",
-  "license": "AGPL-3.0-only",
   "homepage": "https://github.com/oktomusic/oktomusic#readme",
   "bugs": {
     "url": "https://github.com/oktomusic/oktomusic/issues"
   },
+  "license": "AGPL-3.0-only",
+  "author": "AFCMS <afcm.contact@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oktomusic/oktomusic.git"
   },
-  "author": "AFCMS <afcm.contact@gmail.com>",
   "files": [
     "dist"
   ],
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -35,14 +35,14 @@
     "lint": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts packages/lyrics",
     "lint:fix": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts --fix packages/lyrics"
   },
+  "dependencies": {
+    "fast-xml-parser": "catalog:default",
+    "zod": "catalog:default"
+  },
   "devDependencies": {
     "@types/node": "catalog:default",
     "bumpp": "^12.1.1",
     "tsdown": "catalog:default",
     "typescript": "catalog:default"
-  },
-  "dependencies": {
-    "fast-xml-parser": "catalog:default",
-    "zod": "catalog:default"
   }
 }

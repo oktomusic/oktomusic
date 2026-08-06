@@ -1,5 +1,5 @@
-import type { Lyrics } from "./model";
 import { parseLrcTimeToMs } from "./lrc/time";
+import type { Lyrics } from "./model";
 
 interface LrcLine {
   readonly timestamp: number;

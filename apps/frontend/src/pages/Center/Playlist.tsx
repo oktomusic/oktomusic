@@ -1,16 +1,18 @@
-import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
+import { useAtomValue, useSetAtom } from "jotai";
 import { LuCircleMinus, LuListPlus, LuPen, LuShare } from "react-icons/lu";
 
+import { LibraryItemType, Role } from "../../api/graphql/gql/graphql";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
-import { GenericLoading } from "./GenericLoading";
-import { GenericGraphQLError } from "./GenericGraphQLError";
-import { CollectionView } from "../../components/CollectionView/CollectionView";
-import { TrackList } from "../../components/TrackList/TrackList";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
-import { getCoverImagesFromAlbumIds } from "../../components/Base/CoverImages";
+import {
+  dialogPlaylistDeleteOpenAtom,
+  dialogPlaylistOpenAtom,
+} from "../../atoms/app/dialogs";
+import { settingClientPlaylistExport } from "../../atoms/app/settings_client";
+import { authSessionAtom } from "../../atoms/auth/atoms";
 import {
   addToQueueAtom,
   playerQueueCurrentTrackSourceAtom,
@@ -21,21 +23,19 @@ import {
   type PlayerQueueFrom,
   type TrackWithAlbum,
 } from "../../atoms/player/machine";
-import {
-  dialogPlaylistDeleteOpenAtom,
-  dialogPlaylistOpenAtom,
-} from "../../atoms/app/dialogs";
-import { useShare } from "../../hooks/use_share";
+import { getCoverImagesFromAlbumIds } from "../../components/Base/CoverImages";
+import { OktoMenuItem } from "../../components/Base/OktoMenu";
+import { CollectionView } from "../../components/CollectionView/CollectionView";
 import { CollectionViewMetaPlaylist } from "../../components/CollectionView/CollectionViewMetaPlaylist";
 import { CollectionViewToolbarPlaylist } from "../../components/CollectionView/CollectionViewToolbarPlaylist";
-import { OktoMenuItem } from "../../components/Base/OktoMenu";
-import { authSessionAtom } from "../../atoms/auth/atoms";
-import { LibraryItemType, Role } from "../../api/graphql/gql/graphql";
-import { playlistToPlaylistBasic } from "../../utils/graphql_converters";
-import { useRecordItemPlay } from "../../hooks/use_record_item_play";
-import { useLibraryItemToggle } from "../../hooks/use_library_item_toggle";
-import { settingClientPlaylistExport } from "../../atoms/app/settings_client";
 import { SubmenuPlaylistExport } from "../../components/SubmenuPlaylistExport";
+import { TrackList } from "../../components/TrackList/TrackList";
+import { useLibraryItemToggle } from "../../hooks/use_library_item_toggle";
+import { useRecordItemPlay } from "../../hooks/use_record_item_play";
+import { useShare } from "../../hooks/use_share";
+import { playlistToPlaylistBasic } from "../../utils/graphql_converters";
+import { GenericGraphQLError } from "./GenericGraphQLError";
+import { GenericLoading } from "./GenericLoading";
 
 export function Playlist() {
   const { t } = useLingui();

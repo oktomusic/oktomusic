@@ -4,11 +4,11 @@ import { useLingui } from "@lingui/react/macro";
 import { useAtom } from "jotai";
 import { LuVolume, LuVolume1, LuVolume2, LuVolumeX } from "react-icons/lu";
 
-import { OktoSlider } from "../Base/OktoSlider";
 import {
   settingClientVolume,
   settingClientVolumeMuted,
 } from "../../atoms/app/settings_client";
+import { OktoSlider } from "../Base/OktoSlider";
 
 const minimumVolume = 1;
 

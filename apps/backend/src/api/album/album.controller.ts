@@ -12,14 +12,14 @@ import {
 } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiSecurity, ApiTags } from "@nestjs/swagger";
 
+import { ApiFile } from "../../common/decorators/api-file.decorator";
 import { AuthGuard } from "../../common/guards/auth.guard";
 import { ParseCuid2Pipe } from "../../common/pipes/parse-cuid2.pipe";
-import { ApiFile } from "../../common/decorators/api-file.decorator";
-import { AlbumService } from "./album.service";
 import {
   albumCoverSizes,
   type AlbumCoverSizeString,
 } from "../../common/utils/sharp-utils";
+import { AlbumService } from "./album.service";
 
 @ApiTags("Media")
 @Controller("api/album")

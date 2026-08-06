@@ -1,5 +1,4 @@
 import { useEffect, useReducer, useRef } from "react";
-
 import { useLocation, useNavigate } from "react-router";
 
 interface HistoryState {
