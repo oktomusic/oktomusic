@@ -39,7 +39,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build @oktomusic/api-schemas
@@ -87,7 +86,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build @oktomusic/api-schemas
@@ -114,7 +112,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build
@@ -141,7 +138,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build
@@ -168,7 +164,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build
@@ -195,7 +190,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build
@@ -218,7 +212,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build
@@ -245,7 +238,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build
@@ -274,7 +266,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build @oktomusic/meta-tags
@@ -301,7 +292,6 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/setup@v2
         with:
-          cache: true
           install: true
 
       - name: Build @oktomusic/meta-tags

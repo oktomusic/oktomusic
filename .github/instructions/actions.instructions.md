@@ -25,7 +25,6 @@ new-job-name:
     - name: Setup PNPM
       uses: pnpm/setup@v2
       with:
-        cache: true
         install: true
 
     - name: Do something
