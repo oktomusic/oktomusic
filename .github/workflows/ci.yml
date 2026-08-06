@@ -36,8 +36,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build @oktomusic/api-schemas
         run: pnpm --filter "@oktomusic/api-schemas" build
@@ -81,8 +84,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build @oktomusic/api-schemas
         run: pnpm --filter "@oktomusic/api-schemas" build
@@ -105,8 +111,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build
         run: pnpm --filter "@oktomusic/lyrics" build
@@ -129,8 +138,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build
         run: pnpm --filter "@oktomusic/playlists" build
@@ -153,8 +165,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build
         run: pnpm --filter "@oktomusic/metaflac-parser" build
@@ -177,8 +192,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build
         run: pnpm --filter "@oktomusic/api-schemas" build
@@ -197,8 +215,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build
         run: pnpm --filter "@oktomusic/vibrant" build
@@ -221,8 +242,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build
         run: pnpm --filter "@oktomusic/meta-tags" build
@@ -247,8 +271,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build @oktomusic/meta-tags
         run: pnpm --filter "@oktomusic/meta-tags" build
@@ -271,8 +298,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup-environment
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          install: true
 
       - name: Build @oktomusic/meta-tags
         run: pnpm --filter "@oktomusic/meta-tags" build
