@@ -3,8 +3,8 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     projects: [
-      "./apps/backend/vitest.config.ts",
-      "./apps/backend/vitest.e2e.config.ts",
+      "./apps/backend/vitest.config.mts",
+      "./apps/backend/vitest.e2e.config.mts",
       "./apps/frontend/vitest.config.ts",
       "./packages/lyrics/vitest.config.ts",
       "./packages/playlists/vitest.config.ts",

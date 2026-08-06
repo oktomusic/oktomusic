@@ -4,7 +4,7 @@ export default defineConfig({
   plugins: [],
   test: {
     name: "@oktomusic/vibrant",
-    root: __dirname,
+    root: import.meta.dirname,
     globals: true,
     environment: "node",
     include: ["**/*.{test,spec}.{ts,tsx}"],

@@ -15,7 +15,7 @@ export default defineConfig({
   ],
   test: {
     name: "@oktomusic/frontend",
-    root: __dirname,
+    root: import.meta.dirname,
     globals: true,
     environment: "jsdom",
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
