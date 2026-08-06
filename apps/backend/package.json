@@ -47,7 +47,7 @@
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "7.9.1",
     "@types/hbs": "^4.0.5",
-    "@types/pg": "^8.20.3",
+    "@types/pg": "^8.20.4",
     "@valkey/valkey-glide": "^2.5.0",
     "bullmq": "^5.80.7",
     "cookie-parser": "^1.4.7",
