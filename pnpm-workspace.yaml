@@ -20,11 +20,11 @@ blockExoticSubdeps: true
 
 catalogs:
   default:
-    "@types/node": ^24.13.2
-    fast-xml-parser: ^5.9.3
-    sharp: ^0.35.2
-    temporal-polyfill: ^0.3.2
-    tsdown: ^0.22.3
+    "@types/node": ^24.13.3
+    fast-xml-parser: ^5.10.1
+    sharp: ^0.35.3
+    temporal-polyfill: ^1.0.3
+    tsdown: ^0.22.14
     typescript: ^5.9.3
     zod: ^4.4.3
 
