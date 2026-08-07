@@ -51,7 +51,7 @@ msgstr "Add an optional description"
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/components/QueueTrack/QueueTrack.tsx:46
+#: src/components/QueueTrack/QueueTrack.tsx:45
 #: src/components/TrackList/TrackElement.tsx:103
 #: src/pages/Center/Album.tsx:122
 #: src/pages/Center/Playlist.tsx:145
@@ -62,7 +62,7 @@ msgstr "Add to queue"
 #~ msgid "Add to Queue"
 #~ msgstr "Add to Queue"
 
-#: src/components/QueueTrack/QueueTrack.tsx:70
+#: src/components/QueueTrack/QueueTrack.tsx:69
 #: src/components/TrackList/TrackElement.tsx:127
 msgid "Added to playlist"
 msgstr "Added to playlist"
@@ -94,7 +94,7 @@ msgstr "Albums"
 msgid "All"
 msgstr "All"
 
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:26
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:27
 msgid "Already in library"
 msgstr "Already in library"
 
@@ -111,7 +111,7 @@ msgstr "Ambient"
 msgid "Appears on"
 msgstr "Appears on"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:210
+#: src/pages/SettingsClient/SettingsClient.tsx:208
 msgid "Application language:"
 msgstr "Application language:"
 
@@ -129,7 +129,7 @@ msgstr "Artists"
 #~ msgid "Audio Session API is not supported in this browser."
 #~ msgstr "Audio Session API is not supported in this browser."
 
-#: src/pages/SettingsClient/SettingsClient.tsx:178
+#: src/pages/SettingsClient/SettingsClient.tsx:177
 msgid "Audio session:"
 msgstr "Audio session:"
 
@@ -141,19 +141,19 @@ msgstr "Browse"
 #~ msgid "Buffering…"
 #~ msgstr "Buffering…"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:305
+#: src/pages/SettingsClient/SettingsClient.tsx:300
 msgid "Cache max age (days):"
 msgstr "Cache max age (days):"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:291
+#: src/pages/SettingsClient/SettingsClient.tsx:288
 msgid "Cache max entries:"
 msgstr "Cache max entries:"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:111
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:109
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:326
+#: src/pages/SettingsClient/SettingsClient.tsx:320
 msgid "Checking storage persistence..."
 msgstr "Checking storage persistence..."
 
@@ -190,7 +190,7 @@ msgstr "Close Picture-in-Picture"
 #~ msgid "Controls how Oktomusic mixes with other audio."
 #~ msgstr "Controls how Oktomusic mixes with other audio."
 
-#: src/pages/PanelLeft.tsx:83
+#: src/pages/PanelLeft.tsx:80
 msgid "Could not load library"
 msgstr "Could not load library"
 
@@ -207,15 +207,15 @@ msgstr "Create a playlist"
 msgid "Create playlist"
 msgstr "Create playlist"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:247
+#: src/pages/SettingsClient/SettingsClient.tsx:245
 msgid "Crossfade (seconds)"
 msgstr "Crossfade (seconds)"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:238
+#: src/pages/SettingsClient/SettingsClient.tsx:236
 msgid "Crossfade (seconds):"
 msgstr "Crossfade (seconds):"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:119
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:117
 msgid "Delete"
 msgstr "Delete"
 
@@ -236,7 +236,7 @@ msgstr "Description"
 #~ msgid "Disabled"
 #~ msgstr "Disabled"
 
-#: src/components/TrackList/TrackList.tsx:465
+#: src/components/TrackList/TrackList.tsx:464
 msgid "Disc {discNumber}"
 msgstr "Disc {discNumber}"
 
@@ -274,7 +274,7 @@ msgstr "English"
 msgid "Export as..."
 msgstr "Export as..."
 
-#: src/components/QueueTrack/QueueTrack.tsx:74
+#: src/components/QueueTrack/QueueTrack.tsx:73
 #: src/components/TrackList/TrackElement.tsx:131
 msgid "Failed to add track"
 msgstr "Failed to add track"
@@ -329,7 +329,7 @@ msgstr "Go back"
 msgid "Go forward"
 msgstr "Go forward"
 
-#: src/components/QueueTrack/QueueTrack.tsx:54
+#: src/components/QueueTrack/QueueTrack.tsx:53
 #: src/components/TrackList/TrackElement.tsx:111
 msgid "Go to album"
 msgstr "Go to album"
@@ -374,7 +374,7 @@ msgstr "Line by line"
 msgid "Link copied to clipboard"
 msgstr "Link copied to clipboard"
 
-#: src/pages/PanelLeft.tsx:78
+#: src/pages/PanelLeft.tsx:77
 msgid "Loading library"
 msgstr "Loading library"
 
@@ -390,11 +390,11 @@ msgstr "Logout"
 msgid "Lyrics"
 msgstr "Lyrics"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:200
+#: src/pages/SettingsClient/SettingsClient.tsx:198
 msgid "Lyrics display mode:"
 msgstr "Lyrics display mode:"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:223
+#: src/pages/SettingsClient/SettingsClient.tsx:221
 msgid "Lyrics translation:"
 msgstr "Lyrics translation:"
 
@@ -410,13 +410,13 @@ msgstr "Man"
 #~ msgid "Maximum number of media files to cache."
 #~ msgstr "Maximum number of media files to cache."
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:44
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:53
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:45
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:54
 #: src/components/CollectionView/CollectionViewToolbarUser.tsx:24
 msgid "More options for {albumName}"
 msgstr "More options for {albumName}"
 
-#: src/components/QueueTrack/QueueTrack.tsx:135
+#: src/components/QueueTrack/QueueTrack.tsx:134
 #: src/components/TrackList/TrackElement.tsx:272
 msgid "More options for {trackName}"
 msgstr "More options for {trackName}"
@@ -474,7 +474,7 @@ msgstr "No artists found"
 msgid "No playlists found"
 msgstr "No playlists found"
 
-#: src/pages/Center/User.tsx:103
+#: src/pages/Center/User.tsx:101
 msgid "No private or unlisted playlists found"
 msgstr "No private or unlisted playlists found"
 
@@ -527,11 +527,11 @@ msgstr "Pause {albumName}"
 msgid "Pause {trackName}"
 msgstr "Pause {trackName}"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:327
+#: src/pages/SettingsClient/SettingsClient.tsx:321
 msgid "Persistent storage granted"
 msgstr "Persistent storage granted"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:329
+#: src/pages/SettingsClient/SettingsClient.tsx:323
 msgid "Persistent storage not granted"
 msgstr "Persistent storage not granted"
 
@@ -613,7 +613,7 @@ msgid "Private"
 msgstr "Private"
 
 #: src/pages/Center/User.tsx:98
-#: src/pages/Center/User.tsx:100
+#: src/pages/Center/User.tsx:99
 msgid "Private and unlisted playlists"
 msgstr "Private and unlisted playlists"
 
@@ -635,8 +635,8 @@ msgstr "Public playlists"
 msgid "Queue"
 msgstr "Queue"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:31
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:28
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:32
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:29
 msgid "Remove from library"
 msgstr "Remove from library"
 
@@ -648,19 +648,19 @@ msgstr "Remove from playlist"
 msgid "Removed from playlist"
 msgstr "Removed from playlist"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:338
+#: src/pages/SettingsClient/SettingsClient.tsx:332
 msgid "Request"
 msgstr "Request"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:360
+#: src/pages/SettingsClient/SettingsClient.tsx:354
 msgid "Reset"
 msgstr "Reset"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:278
+#: src/pages/SettingsClient/SettingsClient.tsx:276
 msgid "Restart threshold (seconds)"
 msgstr "Restart threshold (seconds)"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:269
+#: src/pages/SettingsClient/SettingsClient.tsx:267
 msgid "Restart threshold (seconds):"
 msgstr "Restart threshold (seconds):"
 
@@ -676,10 +676,10 @@ msgstr "Russian"
 msgid "Save"
 msgstr "Save"
 
-#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:31
 #: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:32
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:29
-#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:41
+#: src/components/CollectionView/CollectionViewToolbarAlbum.tsx:33
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:30
+#: src/components/CollectionView/CollectionViewToolbarPlaylist.tsx:42
 msgid "Save to library"
 msgstr "Save to library"
 
@@ -736,15 +736,15 @@ msgstr "Spanish"
 msgid "Static"
 msgstr "Static"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:322
+#: src/pages/SettingsClient/SettingsClient.tsx:316
 msgid "Storage Persistence:"
 msgstr "Storage Persistence:"
 
-#: src/pages/Unsupported/UnsupportedOverlay.tsx:38
+#: src/pages/Unsupported/UnsupportedOverlay.tsx:39
 msgid "The following modern web features are missing:"
 msgstr "The following modern web features are missing:"
 
-#: src/components/Dialogs/DialogPlaylistDelete.tsx:103
+#: src/components/Dialogs/DialogPlaylistDelete.tsx:102
 msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
 
@@ -774,15 +774,15 @@ msgstr "Unspecified"
 msgid "Updating results"
 msgstr "Updating results"
 
-#: src/pages/Unsupported/UnsupportedOverlay.tsx:15
+#: src/pages/Unsupported/UnsupportedOverlay.tsx:16
 msgid "Upgrade to a supported Chromium browser"
 msgstr "Upgrade to a supported Chromium browser"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:260
+#: src/pages/SettingsClient/SettingsClient.tsx:258
 msgid "Volume enabled:"
 msgstr "Volume enabled:"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:190
+#: src/pages/SettingsClient/SettingsClient.tsx:188
 msgid "Wake lock:"
 msgstr "Wake lock:"
 
@@ -794,10 +794,10 @@ msgstr "Woman"
 msgid "Word by word"
 msgstr "Word by word"
 
-#: src/pages/SettingsClient/SettingsClient.tsx:230
+#: src/pages/SettingsClient/SettingsClient.tsx:228
 msgid "Your browser does not support lyrics translation"
 msgstr "Your browser does not support lyrics translation"
 
-#: src/pages/PanelLeft.tsx:88
+#: src/pages/PanelLeft.tsx:83
 msgid "Your library is empty"
 msgstr "Your library is empty"
