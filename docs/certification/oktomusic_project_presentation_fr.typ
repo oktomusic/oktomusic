@@ -298,7 +298,7 @@
   *FFmpeg custom*
 
   - Compilation statique de
-    - #link("https://ffmpeg.org")[FFmpeg 8]
+    - #link("https://ffmpeg.org")[FFmpeg 9]
     - #link("https://xiph.org/flac")[metaflac]
   - Image dédiée intégrable comme layer Docker
   - Support ciblé sur les codecs nécessaires : FLAC et Opus

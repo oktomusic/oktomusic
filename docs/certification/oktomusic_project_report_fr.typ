@@ -1027,7 +1027,7 @@ Ce composant montre plusieurs points attendus pour l'accès aux données :
 
 L'application exploite les capacités de FFmpeg et metaflac pour l'extraction des métadonnées des fichiers FLAC.
 
-Pour l'inclusion de FFmpeg dans l'image Docker de l'application, le choix a été fait de compiler une version statique et customisée de FFmpeg 8 et de ses dépendances principales à partir des sources officielles.
+Pour l'inclusion de FFmpeg dans l'image Docker de l'application, le choix a été fait de compiler une version statique et customisée de FFmpeg 9 et de ses dépendances principales à partir des sources officielles.
 
 L'avantage principal de cette approche est de limiter la taille de l'image finale en n'incluant que les codecs audio FLAC et Opus.
 
