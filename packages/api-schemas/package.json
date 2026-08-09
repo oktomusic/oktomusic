@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@types/node": "catalog:default",
-    "bumpp": "^12.2.0",
+    "bumpp": "^12.2.1",
     "install": "^0.13.0",
     "tsdown": "catalog:default",
     "typescript": "catalog:default"
