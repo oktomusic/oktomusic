@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState, type SVGProps } from "react";
 import { ErrorLike } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
@@ -17,6 +17,15 @@ import { useLyricsTranslation } from "./use_translator";
 import { useTranslatorAvailability } from "./use_translator_availability";
 
 export type PanelOverlayLanguage = "original" | Locale;
+
+function downloadingLanguageIcon(iconProps: SVGProps<SVGSVGElement>) {
+  return (
+    <LuLoaderCircle
+      {...iconProps}
+      className={`${iconProps.className ?? ""} animate-spin`.trim()}
+    />
+  );
+}
 
 interface TranslationStatus {
   readonly status:
@@ -98,76 +107,62 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
     preservePreviousTranslation: true,
   });
 
-  const languageOptions = useMemo<
-    readonly OktoListboxItem<PanelOverlayLanguage>[]
-  >(() => {
-    const options: OktoListboxItem<PanelOverlayLanguage>[] = [
-      {
-        value: "original",
-        label: t`Original`,
-      },
-    ];
+  const languageOptions: readonly OktoListboxItem<PanelOverlayLanguage>[] =
+    (() => {
+      const options: OktoListboxItem<PanelOverlayLanguage>[] = [
+        {
+          value: "original",
+          label: t`Original`,
+        },
+      ];
 
-    if (
-      !translationEnabled ||
-      languageDetectionState.status !== "ready" ||
-      !languageDetectionState.detectedLanguage
-    ) {
+      if (
+        !translationEnabled ||
+        languageDetectionState.status !== "ready" ||
+        !languageDetectionState.detectedLanguage
+      ) {
+        return options;
+      }
+
+      for (const targetLanguage of locales) {
+        if (targetLanguage === languageDetectionState.detectedLanguage) {
+          continue;
+        }
+
+        const label = localeLabels[targetLanguage];
+        const availability =
+          availabilityState.availabilityByLocale[targetLanguage];
+        const downloadKey = `${languageDetectionState.detectedLanguage}:${targetLanguage}`;
+        const isDownloaded = downloadedLanguages[downloadKey] === true;
+
+        if (availability === "unavailable" || availability === undefined) {
+          continue;
+        }
+
+        if (isDownloaded || availability === "available") {
+          options.push({ value: targetLanguage, label });
+          continue;
+        }
+
+        if (availability === "downloadable") {
+          options.push({ value: targetLanguage, label, icon: LuDownload });
+          continue;
+        }
+
+        if (availability === "downloading") {
+          options.push({
+            value: targetLanguage,
+            label,
+            icon: downloadingLanguageIcon,
+          });
+          continue;
+        }
+
+        options.push({ value: targetLanguage, label, icon: LuCheck });
+      }
+
       return options;
-    }
-
-    for (const targetLanguage of locales) {
-      if (targetLanguage === languageDetectionState.detectedLanguage) {
-        continue;
-      }
-
-      const label = localeLabels[targetLanguage];
-      const availability =
-        availabilityState.availabilityByLocale[targetLanguage];
-      const downloadKey = `${languageDetectionState.detectedLanguage}:${targetLanguage}`;
-      const isDownloaded = downloadedLanguages[downloadKey] === true;
-
-      if (availability === "unavailable" || availability === undefined) {
-        continue;
-      }
-
-      if (isDownloaded || availability === "available") {
-        options.push({ value: targetLanguage, label });
-        continue;
-      }
-
-      if (availability === "downloadable") {
-        options.push({ value: targetLanguage, label, icon: LuDownload });
-        continue;
-      }
-
-      if (availability === "downloading") {
-        options.push({
-          value: targetLanguage,
-          label,
-          icon: (iconProps) => (
-            <LuLoaderCircle
-              {...iconProps}
-              className={`${iconProps.className ?? ""} animate-spin`.trim()}
-            />
-          ),
-        });
-        continue;
-      }
-
-      options.push({ value: targetLanguage, label, icon: LuCheck });
-    }
-
-    return options;
-  }, [
-    availabilityState.availabilityByLocale,
-    downloadedLanguages,
-    languageDetectionState.detectedLanguage,
-    languageDetectionState.status,
-    localeLabels,
-    t,
-    translationEnabled,
-  ]);
+    })();
 
   useEffect(() => {
     if (languageOptions.some((option) => option.value === language)) {
