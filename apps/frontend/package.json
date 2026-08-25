@@ -62,6 +62,7 @@
     "@vitest/coverage-v8": "^4.1.11",
     "globals": "^17.11.0",
     "jsdom": "^30.0.1",
+    "lightningcss": "^1.33.0",
     "oxc-transform-react": "^0.147.0",
     "typescript": "catalog:default",
     "vite": "^8.2.2",

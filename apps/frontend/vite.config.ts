@@ -58,6 +58,9 @@ export default defineConfig({
     VitePWA(viteConfigPWA),
     sri({ algorithm: "sha512" }),
   ],
+  css: {
+    transformer: "lightningcss",
+  },
   server: {
     cors: {
       origin: "http://localhost:3000",
