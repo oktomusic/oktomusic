@@ -21,11 +21,11 @@ blockExoticSubdeps: true
 catalogs:
   default:
     "@types/node": ^24.13.3
-    fast-xml-parser: ^5.10.1
-    sharp: ^0.35.3
-    temporal-polyfill: ^1.0.3
+    fast-xml-parser: ^5.11.1
+    sharp: ^0.35.4
+    temporal-polyfill: ^1.0.4
     tsdown: ^0.22.14
-    typescript: ^5.9.3
+    typescript: ^6.0.3
     zod: ^4.4.3
 
 injectWorkspacePackages: true

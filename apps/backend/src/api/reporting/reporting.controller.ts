@@ -12,8 +12,8 @@ import {
   ApiOperation,
   ApiResponse,
   ApiTags,
+  SchemaObject,
 } from "@nestjs/swagger";
-import { SchemaObject } from "node_modules/@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 
 import {
   type ReportingBody,
