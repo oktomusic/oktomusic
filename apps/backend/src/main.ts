@@ -61,7 +61,7 @@ async function bootstrap() {
     )
     .setDescription("Oktomusic API")
     .setVersion("0.0.1")
-    .setOpenAPIVersion("3.1.0")
+    .setOpenAPIVersion("3.2.0")
     .addSecurity("session", {
       type: "apiKey",
       in: "cookie",
