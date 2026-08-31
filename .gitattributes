@@ -1,2 +1,4 @@
 # https://github.com/github-linguist/linguist/blob/main/docs/overrides.md
 *.typ linguist-language=Typst
+.agents/skills/**/*.md linguist-vendored
+
