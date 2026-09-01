@@ -497,7 +497,7 @@ msgstr ""
 msgid "Open Picture-in-Picture"
 msgstr ""
 
-#: src/hooks/use_panel_overlay_translation.tsx:107
+#: src/hooks/use_panel_overlay_translation.tsx:115
 msgid "Original"
 msgstr "Originale"
 
