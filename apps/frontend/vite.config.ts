@@ -49,12 +49,12 @@ const viteConfigPWA: Partial<VitePWAOptions> = {
 
 export default defineConfig({
   plugins: [
-    react({ compiler: true }),
     babel({
       presets: ["jotai-babel/preset", linguiTransformerBabelPreset()],
     }),
-    tailwindcss(),
+    react({ compiler: true }),
     lingui(),
+    tailwindcss(),
     VitePWA(viteConfigPWA),
     sri({ algorithm: "sha512" }),
   ],
