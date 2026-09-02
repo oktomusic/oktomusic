@@ -18,6 +18,8 @@ on:
         type: boolean
         default: true
 
+permissions: {}
+
 env:
   VITEPRESS_HOSTNAME: https://oktomusic.afcms.dev
 
@@ -25,6 +27,8 @@ jobs:
   app-backend:
     name: "@oktomusic/backend"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs:
       - pkg-lyrics
       - pkg-playlists
@@ -35,6 +39,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -76,12 +82,16 @@ jobs:
   app-frontend:
     name: "@oktomusic/frontend"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs:
       - pkg-lyrics
       - pkg-api-schemas
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -105,9 +115,13 @@ jobs:
   pkg-lyrics:
     name: "@oktomusic/lyrics"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -131,9 +145,13 @@ jobs:
   pkg-playlists:
     name: "@oktomusic/playlists"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -157,9 +175,13 @@ jobs:
   pkg-metaflac-parser:
     name: "@oktomusic/metaflac-parser"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -183,9 +205,13 @@ jobs:
   pkg-api-schemas:
     name: "@oktomusic/api-schemas"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -205,9 +231,13 @@ jobs:
   pkg-vibrant:
     name: "@oktomusic/vibrant"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -231,9 +261,13 @@ jobs:
   pkg-meta-tags:
     name: "@oktomusic/meta-tags"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -257,11 +291,15 @@ jobs:
   website:
     name: "@oktomusic/website"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs:
       - pkg-meta-tags
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -288,6 +326,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
         uses: pnpm/setup@v2
@@ -372,9 +412,13 @@ jobs:
   typst-docs:
     name: Typst Documents
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup Typst
         uses: typst-community/setup-typst@v5
