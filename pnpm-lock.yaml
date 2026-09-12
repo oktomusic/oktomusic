@@ -181,8 +181,8 @@ importers:
         specifier: ^4.7.9
         version: 4.7.9
       hbs:
-        specifier: ^4.3.0
-        version: 4.3.0
+        specifier: ^4.3.1
+        version: 4.3.1
       helmet:
         specifier: ^8.3.0
         version: 8.3.0
@@ -450,14 +450,14 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0(@vite-pwa/assets-generator@1.0.2)(supports-color@7.2.0)(vite@8.3.0)(workbox-build@7.4.1(supports-color@7.2.0))(workbox-window@7.4.1)
       vitepress:
-        specifier: 2.0.0-alpha.19
-        version: 2.0.0-alpha.19(@types/node@24.13.4)(@vitejs/devtools@0.7.3)(jiti@2.7.0)(postcss@8.5.28)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.0)
+        specifier: 2.0.0-alpha.20
+        version: 2.0.0-alpha.20(@types/node@24.13.4)(@vitejs/devtools@0.7.3)(jiti@2.7.0)(postcss@8.5.28)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.0)
       vitepress-plugin-group-icons:
         specifier: ^1.7.6
         version: 1.7.6(vite@8.3.0)
       vitepress-plugin-llms:
-        specifier: ^1.13.5
-        version: 1.13.5(supports-color@7.2.0)
+        specifier: ^1.14.0
+        version: 1.14.0(supports-color@7.2.0)
       vue:
         specifier: ^3.5.42
         version: 3.5.42(typescript@6.0.3)
@@ -6115,8 +6115,8 @@ packages:
   hast-util-whitespace@3.0.0:
     resolution: {integrity: sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==}
 
-  hbs@4.3.0:
-    resolution: {integrity: sha512-8QfAEcFcNXUw4facL8L0P4mGa0bC6v1QzYifhGsLITMYpnf+E2qwjJZKXPQc3xpbrQW9JY05mQW4rDVhQzKstw==}
+  hbs@4.3.1:
+    resolution: {integrity: sha512-3dnqb6UauidoOLE0Ve2661d6rHeJuVFCycO/2vACtx9NCs4cL2xFPuT3CozQ+5vTxjoOMZ5tRJEYDPkMHXl0Tg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
 
   header-case@2.0.4:
@@ -8626,12 +8626,12 @@ packages:
       vite:
         optional: true
 
-  vitepress-plugin-llms@1.13.5:
-    resolution: {integrity: sha512-CTiDkKRs0h64J5rdiICdHmXH4pM1gBu2S/MJ+OxSAm+vM72srBkHr86ZubzfMJbGJh4AMVKff4R3oCu8etI1ww==}
+  vitepress-plugin-llms@1.14.0:
+    resolution: {integrity: sha512-Qb42p9pYoRlMRbv+Yvh3reS4GInyr+ToU3G1tEC1Euz+gyBNywXkZIQPV/AoltizaakAeuI89Bkhkd7Y0jaM/w==}
     engines: {node: '>=18'}
 
-  vitepress@2.0.0-alpha.19:
-    resolution: {integrity: sha512-WnBsb0Bwr43kXKyiis+lld/7ri3hnMbthS8N3hpFtjjwsdLO4IRmiAE08D7aud4q6oMDf9uwRowxzNqRFe/amw==}
+  vitepress@2.0.0-alpha.20:
+    resolution: {integrity: sha512-uQWKmP9PaBkf9zxHn0iOml/ZPPDaGKqQXVMBHz3yjwyyd9Eg+BKLGxbqmOGlfOMCt6Fj8TLiAnE59qlKZ0A3xw==}
     hasBin: true
     peerDependencies:
       markdown-it-mathjax3: ^4
@@ -14719,7 +14719,7 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.5
 
-  hbs@4.3.0:
+  hbs@4.3.1:
     dependencies:
       handlebars: 4.7.9
       walk: 2.3.15
@@ -17385,7 +17385,7 @@ snapshots:
     optionalDependencies:
       vite: 8.3.0(@types/node@24.13.4)(@vitejs/devtools@0.7.3)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)
 
-  vitepress-plugin-llms@1.13.5(supports-color@7.2.0):
+  vitepress-plugin-llms@1.14.0(supports-color@7.2.0):
     dependencies:
       '@11ty/gray-matter': 2.1.0
       markdown-it: 14.3.1
@@ -17404,15 +17404,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vitepress@2.0.0-alpha.19(@types/node@24.13.4)(@vitejs/devtools@0.7.3)(jiti@2.7.0)(postcss@8.5.28)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.0):
+  vitepress@2.0.0-alpha.20(@types/node@24.13.4)(@vitejs/devtools@0.7.3)(jiti@2.7.0)(postcss@8.5.28)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.0):
     dependencies:
       '@docsearch/css': 4.7.0
       '@docsearch/js': 4.7.0
       '@docsearch/sidepanel-js': 4.7.0
       '@iconify-json/simple-icons': 1.2.95
-      '@shikijs/core': 4.4.3
       '@shikijs/transformers': 4.4.3
-      '@shikijs/types': 4.4.3
       '@types/markdown-it': 14.2.0
       '@vitejs/plugin-vue': 6.0.8(vite@8.3.0)(vue@3.5.42(typescript@6.0.3))
       '@vue/devtools-api': 8.2.1
