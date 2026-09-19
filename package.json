@@ -32,6 +32,7 @@
     "@e18e/eslint-plugin": "^0.8.0",
     "@eslint-react/eslint-plugin": "^5.19.1",
     "@eslint/js": "^10.0.1",
+    "@oxc-node/core": "^0.1.2",
     "@types/node": "catalog:default",
     "@vitest/coverage-v8": "^5.0.1",
     "@vitest/ui": "^5.0.1",

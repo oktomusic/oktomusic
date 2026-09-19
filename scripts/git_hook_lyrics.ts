@@ -1,3 +1,5 @@
+/// <reference types="@types/node" />
+
 /**
  * Git hook script to check for missing translations in the frontend locales before committing.
  *

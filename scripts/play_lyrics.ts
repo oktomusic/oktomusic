@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+/// <reference types="@types/node" />
 
 /**
  * Karaoke-like CLI player for TTML and LRC lyrics.

@@ -14,8 +14,13 @@
     <meta property="{{this.property}}" content="{{this.content}}" />
     {{/each}}
     <link rel="manifest" href="/manifest.webmanifest" />
-    {{#if openSearch}}
+    {{#if publicUrl}}
     <link rel="search" type="application/opensearchdescription+xml" title="{{appShortName}}" href="/opensearch.xml" />
+    <link
+      rel="discord:component-embed"
+      type="application/json"
+      href="{{publicUrl}}/discord-embed.json"
+    >
     {{/if}}
     {{#unless dev}}
     {{{viteAssetTags "head"}}}

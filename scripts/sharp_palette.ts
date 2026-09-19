@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+/// <reference types="@types/node" />
 
 import { access } from "node:fs/promises";
 import { createRequire } from "node:module";

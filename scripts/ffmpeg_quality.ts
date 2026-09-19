@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+/// <reference types="@types/node" />
 
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";

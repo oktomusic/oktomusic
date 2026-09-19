@@ -20,6 +20,7 @@ import appConfig, { type AppConfig } from "../config/definitions/app.config";
 import viteConfig, { type ViteConfig } from "../config/definitions/vite.config";
 import { getAssetTags, type ViteManifest } from "../utils/vite_manifest";
 import { ViewModel, ViewModelOpenSearch } from "./view-model";
+import { getDiscordEmbedJson } from "./discord-embed";
 
 @Controller()
 export class ViewsController {
@@ -137,6 +138,33 @@ export class ViewsController {
     return res.render("opensearch", viewModel);
   }
 
+  // https://docs.discord.com/developers/link-previews/component-embeds
+  // https://github.com/discord/discord-api-docs/pull/8606
+
+  @Get("/discord-embed.json")
+  @ApiOperation({
+    summary: "Get Discord Component Embed",
+    description:
+      "Returns the Discord embed JSON for rich component-based link preview in Discord.",
+  })
+  @ApiProduces("application/json")
+  @ApiNotFoundResponse({
+    description:
+      "Discord embed is disabled when APP_PUBLIC_URL is not configured.",
+  })
+  discordEmbed(@Res() res: Response) {
+    if (!this.appConf.publicUrl) {
+      return res.sendStatus(404);
+    }
+
+    return res.json({
+      component: getDiscordEmbedJson(
+        this.appConf.publicUrl,
+        this.appConf.appName,
+      ),
+    });
+  }
+
   @Get("/robots.txt")
   @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
   @ApiOperation({
@@ -181,7 +209,7 @@ export class ViewsController {
     const viewModel = {
       appName: this.appConf.appName,
       appShortName: this.appConf.appShortName,
-      openSearch: this.appConf.publicUrl !== undefined,
+      publicUrl: this.appConf.publicUrl,
       dev: this.appConf.isDev,
       metaTags: [{ property: "og:title", content: this.appConf.appName }],
       assetTags: assetTags,

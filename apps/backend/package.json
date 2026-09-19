@@ -51,6 +51,7 @@
     "@valkey/valkey-glide": "^2.5.2",
     "bullmq": "^6.3.6",
     "cookie-parser": "^1.4.7",
+    "discord-api-types": "^0.38.55",
     "express-session": "^1.19.0",
     "graphql": "^17.0.2",
     "graphql-subscriptions": "3.0.0",
