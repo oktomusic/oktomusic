@@ -13,6 +13,12 @@ updates:
       interval: "weekly"
     cooldown:
       default-days: 1
+  - package-ecosystem: "docker-compose"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 1
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
