@@ -1,4 +1,2 @@
 ---
-rules:
-  unpinned-uses:
-    disable: true
+rules: {}
