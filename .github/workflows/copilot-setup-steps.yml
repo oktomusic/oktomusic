@@ -12,8 +12,13 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
 jobs:
   copilot-setup-steps:
+    name: "Copilot Setup Steps"
     runs-on: ubuntu-latest
 
     permissions:

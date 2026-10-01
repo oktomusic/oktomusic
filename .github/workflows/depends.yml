@@ -6,8 +6,13 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   dependency-review:
+    name: Dependency Review
     runs-on: ubuntu-latest
     permissions:
       contents: read

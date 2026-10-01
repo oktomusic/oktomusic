@@ -10,9 +10,10 @@ permissions: {}
 
 jobs:
   rebuild:
+    name: Rebuild
     runs-on: ubuntu-latest
     permissions:
-      actions: write
+      actions: write # Used to retrigger a CI workflow
       contents: read
     steps:
       - name: Checkout repository
