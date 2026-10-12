@@ -15,10 +15,10 @@
     "@oktomusic/meta-tags": "workspace:^",
     "@vite-pwa/assets-generator": "^2.0.0",
     "@vite-pwa/vitepress": "^1.1.0",
-    "vite": "^8.3.2",
+    "vite": "^8.3.4",
     "vite-plugin-pwa": "^2.0.0",
     "vitepress": "2.0.0-alpha.20",
-    "vitepress-plugin-group-icons": "^1.7.6",
+    "vitepress-plugin-group-icons": "^1.7.7",
     "vitepress-plugin-llms": "^1.14.0",
     "vue": "^3.5.43",
     "workbox-window": "^7.4.1"

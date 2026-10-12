@@ -1,4 +1,4 @@
-import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin";
+import { lingui } from "@lingui/vite-plugin";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
@@ -47,13 +47,18 @@ const viteConfigPWA: Partial<VitePWAOptions> = {
   },
 };
 
-export default defineConfig({
+const jotaiIncludeRegex = /\/src\/atoms\/.*\.ts$/;
+
+export default defineConfig(({ command, mode }) => ({
   plugins: [
-    babel({
-      presets: ["jotai-babel/preset", linguiTransformerBabelPreset()],
-    }),
+    command === "serve" &&
+      mode !== "test" &&
+      babel({
+        include: jotaiIncludeRegex,
+        presets: ["jotai-babel/preset"],
+      }),
     react({ compiler: true }),
-    lingui(),
+    lingui({ macroTransform: true }),
     tailwindcss(),
     VitePWA(viteConfigPWA),
     sri({ algorithm: "sha512" }),
@@ -85,4 +90,4 @@ export default defineConfig({
   devtools: {
     enabled: false,
   },
-});
+}));

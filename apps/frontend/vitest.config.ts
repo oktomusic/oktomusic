@@ -1,14 +1,8 @@
-import babel from "@rolldown/plugin-babel";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [
-    react({ compiler: true }),
-    babel({
-      presets: ["jotai-babel/preset"],
-    }),
-  ],
+  plugins: [react({ compiler: true })],
   test: {
     name: "@oktomusic/frontend",
     root: import.meta.dirname,
