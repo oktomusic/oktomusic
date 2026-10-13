@@ -51,6 +51,7 @@ const jotaiIncludeRegex = /\/src\/atoms\/.*\.ts$/;
 
 export default defineConfig(({ command, mode }) => ({
   plugins: [
+    lingui({ macroTransform: true }),
     command === "serve" &&
       mode !== "test" &&
       babel({
@@ -58,7 +59,6 @@ export default defineConfig(({ command, mode }) => ({
         presets: ["jotai-babel/preset"],
       }),
     react({ compiler: true }),
-    lingui({ macroTransform: true }),
     tailwindcss(),
     VitePWA(viteConfigPWA),
     sri({ algorithm: "sha512" }),
