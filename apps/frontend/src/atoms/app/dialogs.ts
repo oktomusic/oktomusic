@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-import { PlaylistBasic } from "../../api/graphql/gql/graphql";
+import type { PlaylistBasic } from "../../api/graphql/types";
 
 export const dialogCoverId = atom<string | null>(null);
 

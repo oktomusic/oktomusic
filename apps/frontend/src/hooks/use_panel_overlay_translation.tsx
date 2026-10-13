@@ -5,8 +5,8 @@ import { useLingui } from "@lingui/react/macro";
 import { useAtomValue } from "jotai";
 import { LuCheck, LuDownload, LuLoaderCircle } from "react-icons/lu";
 
-import { LyricsLine } from "../api/graphql/gql/graphql";
 import { TRACK_LYRICS_QUERY } from "../api/graphql/queries/trackLyrics";
+import type { LyricsLine } from "../api/graphql/types";
 import { translatorSupportAtom } from "../atoms/app/browser_support";
 import { settingClientLyricsTranslationEnabled } from "../atoms/app/settings_client";
 import { playerQueueCurrentTrack } from "../atoms/player/machine";

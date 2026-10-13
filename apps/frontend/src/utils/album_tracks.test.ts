@@ -75,10 +75,6 @@ describe("mapTracksWithAlbum", () => {
     expect(result[0][0]).toMatchObject({
       id: "track-1",
       name: "Track One",
-      albumId: "album-1",
-      date: null,
-      isrc: null,
-      lyrics: null,
     });
 
     expect(result[0][0].album).toMatchObject({

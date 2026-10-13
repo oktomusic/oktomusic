@@ -50,20 +50,8 @@ const toTrackWithAlbum = (track: SearchTrack): TrackWithAlbum | null => {
   }
 
   return {
-    __typename: "Track",
-    id: track.id,
-    name: track.name,
-    flacFileId: track.flacFileId,
-    hasLyrics: track.hasLyrics,
-    trackNumber: track.trackNumber,
-    discNumber: track.discNumber,
-    durationMs: track.durationMs,
-    artists: track.artists,
-    albumId: track.album.id,
+    ...track,
     album: track.album,
-    date: null,
-    isrc: null,
-    lyrics: null,
   };
 };
 

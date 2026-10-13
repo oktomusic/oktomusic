@@ -1,6 +1,6 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
-const config: CodegenConfig = {
+const config = {
   overwrite: true,
   schema: "../backend/src/api/schema.gql",
   documents: ["src/**/*.tsx", "src/**/*.ts"],
@@ -12,16 +12,11 @@ const config: CodegenConfig = {
         scalars: {
           DateTime: "Date",
         },
+        enumType: "const",
         nonOptionalTypename: true,
-        avoidOptionals: {
-          field: true,
-          inputValue: false,
-          object: false,
-          defaultValue: false,
-        },
       },
     },
   },
-};
+} as const satisfies CodegenConfig;
 
 export default config;

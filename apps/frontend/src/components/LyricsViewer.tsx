@@ -1,7 +1,7 @@
 import { ErrorLike } from "@apollo/client";
 import { useAtomValue } from "jotai";
 
-import { LyricsLine } from "../api/graphql/gql/graphql";
+import type { LyricsLine } from "../api/graphql/types";
 import { settingClientLyricsDisplayMode } from "../atoms/app/settings_client";
 import {
   playerPlaybackPositionAtom,

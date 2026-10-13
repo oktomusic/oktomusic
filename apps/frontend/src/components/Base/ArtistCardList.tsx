@@ -1,4 +1,4 @@
-import { type Artist } from "../../api/graphql/gql/graphql";
+import type { Artist } from "../../api/graphql/types";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import { ListCard } from "../ListCard/ListCard";
 

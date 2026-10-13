@@ -1,4 +1,5 @@
-import type { AlbumBasic, AlbumQuery } from "../api/graphql/gql/graphql";
+import type { AlbumQuery } from "../api/graphql/gql/graphql";
+import type { AlbumBasic } from "../api/graphql/types";
 import type { TrackWithAlbum } from "../atoms/player/machine";
 
 export function mapTracksWithAlbum(
@@ -21,11 +22,7 @@ export function mapTracksWithAlbum(
   return album.tracksByDisc.map((disc) =>
     disc.map((track) => ({
       ...track,
-      albumId: album.id,
       album: albumBasic,
-      date: null,
-      isrc: null,
-      lyrics: null,
     })),
   );
 }

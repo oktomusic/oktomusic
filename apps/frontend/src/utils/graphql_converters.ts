@@ -1,12 +1,8 @@
-import {
-  Playlist,
-  PlaylistBasic,
-  type Album,
-  type AlbumBasic,
-} from "../api/graphql/gql/graphql";
+import type { AlbumQuery, PlaylistQuery } from "../api/graphql/gql/graphql";
+import type { AlbumBasic, PlaylistBasic } from "../api/graphql/types";
 
 type AlbumToAlbumBasicInput = Pick<
-  Album,
+  AlbumQuery["album"],
   | "artists"
   | "coverColorDarkMuted"
   | "coverColorDarkVibrant"
@@ -36,7 +32,7 @@ export function albumToAlbumBasic(album: AlbumToAlbumBasicInput): AlbumBasic {
 }
 
 type PlaylistToPlaylistBasicInput = Pick<
-  Playlist,
+  PlaylistQuery["playlist"],
   "coverAlbumIds" | "creator" | "description" | "id" | "name" | "visibility"
 >;
 

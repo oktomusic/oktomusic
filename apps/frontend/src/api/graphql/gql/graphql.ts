@@ -1,657 +1,167 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = T | null | undefined;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-/** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: { input: Date; output: Date; }
-};
-
-export type Album = {
-  __typename: 'Album';
-  artists: Array<Artist>;
-  /** Dark muted color from cover art (hex string) */
-  coverColorDarkMuted: Scalars['String']['output'];
-  /** Dark vibrant color from cover art (hex string) */
-  coverColorDarkVibrant: Scalars['String']['output'];
-  /** Light muted color from cover art (hex string) */
-  coverColorLightMuted: Scalars['String']['output'];
-  /** Light vibrant color from cover art (hex string) */
-  coverColorLightVibrant: Scalars['String']['output'];
-  /** Muted color from cover art (hex string) */
-  coverColorMuted: Scalars['String']['output'];
-  /** Vibrant color from cover art (hex string) */
-  coverColorVibrant: Scalars['String']['output'];
-  date: Maybe<Scalars['DateTime']['output']>;
-  id: Scalars['String']['output'];
-  /** Whether the album is in the current user's library */
-  isInLibrary: Scalars['Boolean']['output'];
-  name: Scalars['String']['output'];
-  /** Tracks grouped by disc number, ordered by track number */
-  tracksByDisc: Array<Array<Track>>;
-};
-
-export type AlbumBasic = {
-  __typename: 'AlbumBasic';
-  artists: Array<Artist>;
-  /** Dark muted color from cover art (hex string) */
-  coverColorDarkMuted: Scalars['String']['output'];
-  /** Dark vibrant color from cover art (hex string) */
-  coverColorDarkVibrant: Scalars['String']['output'];
-  /** Light muted color from cover art (hex string) */
-  coverColorLightMuted: Scalars['String']['output'];
-  /** Light vibrant color from cover art (hex string) */
-  coverColorLightVibrant: Scalars['String']['output'];
-  /** Muted color from cover art (hex string) */
-  coverColorMuted: Scalars['String']['output'];
-  /** Vibrant color from cover art (hex string) */
-  coverColorVibrant: Scalars['String']['output'];
-  date: Maybe<Scalars['DateTime']['output']>;
-  id: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-};
-
-export type Artist = {
-  __typename: 'Artist';
-  id: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-};
-
-export type ArtistDetail = {
-  __typename: 'ArtistDetail';
-  /** Albums where this artist is credited as an album artist */
-  albums: Array<AlbumBasic>;
-  /** Albums where this artist is credited on tracks but not as an album artist */
-  featuredOnAlbums: Array<AlbumBasic>;
-  id: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-};
-
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type CreatePlaylistInput = {
   /** Optional playlist description */
-  description?: InputMaybe<Scalars['String']['input']>;
+  description?: string | null | undefined;
   /** Playlist name */
-  name: Scalars['String']['input'];
+  name: string;
   /** Target user ID (admin only, defaults to current user) */
-  userId?: InputMaybe<Scalars['String']['input']>;
+  userId?: string | null | undefined;
   /** Visibility level of the playlist */
-  visibility?: InputMaybe<PlaylistVisibility>;
+  visibility?: PlaylistVisibility | null | undefined;
 };
 
-export type IndexingErrorLyricsParsing = {
-  __typename: 'IndexingErrorLyricsParsing';
-  errorMessage: Scalars['String']['output'];
-  filePath: Scalars['String']['output'];
-  type: IndexingReportType;
-};
+export const IndexingJobStatus = {
+  Active: 'ACTIVE',
+  Completed: 'COMPLETED',
+  Failed: 'FAILED',
+  Queued: 'QUEUED'
+} as const;
 
-export type IndexingErrorMetaflacParsing = {
-  __typename: 'IndexingErrorMetaflacParsing';
-  errorMessage: Scalars['String']['output'];
-  filePath: Scalars['String']['output'];
-  type: IndexingReportType;
-};
+export type IndexingJobStatus = typeof IndexingJobStatus[keyof typeof IndexingJobStatus];
+export const IndexingProgressStepKey = {
+  AnalyzeCovers: 'ANALYZE_COVERS',
+  DiscoverFlacFolders: 'DISCOVER_FLAC_FOLDERS',
+  ExtractMetadata: 'EXTRACT_METADATA',
+  SyncAlbums: 'SYNC_ALBUMS',
+  SyncArtists: 'SYNC_ARTISTS',
+  SyncTracks: 'SYNC_TRACKS',
+  ValidateMetadata: 'VALIDATE_METADATA'
+} as const;
 
-export type IndexingJob = {
-  __typename: 'IndexingJob';
-  completedAt: Maybe<Scalars['DateTime']['output']>;
-  error: Maybe<Scalars['String']['output']>;
-  jobId: Scalars['String']['output'];
-  progress: Maybe<Scalars['Float']['output']>;
-  reports: Array<IndexingReportItem>;
-  startedAt: Maybe<Scalars['DateTime']['output']>;
-  status: IndexingJobStatus;
-  steps: Array<IndexingProgressStep>;
-  updatedAt: Maybe<Scalars['DateTime']['output']>;
-  warnings: Maybe<Array<IndexingWarning>>;
-};
+export type IndexingProgressStepKey = typeof IndexingProgressStepKey[keyof typeof IndexingProgressStepKey];
+export const IndexingProgressStepStatus = {
+  Completed: 'COMPLETED',
+  Failed: 'FAILED',
+  Pending: 'PENDING',
+  Running: 'RUNNING',
+  Skipped: 'SKIPPED'
+} as const;
 
-export enum IndexingJobStatus {
-  Active = 'ACTIVE',
-  Completed = 'COMPLETED',
-  Failed = 'FAILED',
-  Queued = 'QUEUED'
-}
+export type IndexingProgressStepStatus = typeof IndexingProgressStepStatus[keyof typeof IndexingProgressStepStatus];
+export const IndexingReportLevel = {
+  Error: 'ERROR',
+  Info: 'INFO',
+  Warning: 'WARNING'
+} as const;
 
-export type IndexingLibraryStats = {
-  __typename: 'IndexingLibraryStats';
-  albumsCount: Scalars['Int']['output'];
-  artistsCount: Scalars['Int']['output'];
-  flacFilesCount: Scalars['Int']['output'];
-  generatedAt: Scalars['DateTime']['output'];
-  playHistoryItemsCount: Scalars['Int']['output'];
-  playlistTracksCount: Scalars['Int']['output'];
-  playlistsCount: Scalars['Int']['output'];
-  savedLibraryItemsCount: Scalars['Int']['output'];
-  tracksCount: Scalars['Int']['output'];
-  tracksWithLyricsCount: Scalars['Int']['output'];
-  usersCount: Scalars['Int']['output'];
-};
+export type IndexingReportLevel = typeof IndexingReportLevel[keyof typeof IndexingReportLevel];
+export const IndexingReportType = {
+  ErrorIndexingFailed: 'ERROR_INDEXING_FAILED',
+  ErrorLyricsParsing: 'ERROR_LYRICS_PARSING',
+  ErrorMetaflacParsing: 'ERROR_METAFLAC_PARSING',
+  InfoIndexingCompleted: 'INFO_INDEXING_COMPLETED',
+  InfoIndexingStarted: 'INFO_INDEXING_STARTED',
+  InfoIndexingSummary: 'INFO_INDEXING_SUMMARY',
+  InfoStageCompleted: 'INFO_STAGE_COMPLETED',
+  InfoStageSkipped: 'INFO_STAGE_SKIPPED',
+  InfoStageStarted: 'INFO_STAGE_STARTED',
+  WarningFolderMetadata: 'WARNING_FOLDER_METADATA',
+  WarningSubdirectories: 'WARNING_SUBDIRECTORIES'
+} as const;
 
-export type IndexingOverview = {
-  __typename: 'IndexingOverview';
-  latestJob: Maybe<IndexingJob>;
-  libraryStats: IndexingLibraryStats;
-};
-
-export type IndexingProgressStep = {
-  __typename: 'IndexingProgressStep';
-  current: Maybe<Scalars['Int']['output']>;
-  detail: Maybe<Scalars['String']['output']>;
-  key: IndexingProgressStepKey;
-  label: Scalars['String']['output'];
-  status: IndexingProgressStepStatus;
-  total: Maybe<Scalars['Int']['output']>;
-};
-
-export enum IndexingProgressStepKey {
-  AnalyzeCovers = 'ANALYZE_COVERS',
-  DiscoverFlacFolders = 'DISCOVER_FLAC_FOLDERS',
-  ExtractMetadata = 'EXTRACT_METADATA',
-  SyncAlbums = 'SYNC_ALBUMS',
-  SyncArtists = 'SYNC_ARTISTS',
-  SyncTracks = 'SYNC_TRACKS',
-  ValidateMetadata = 'VALIDATE_METADATA'
-}
-
-export enum IndexingProgressStepStatus {
-  Completed = 'COMPLETED',
-  Failed = 'FAILED',
-  Pending = 'PENDING',
-  Running = 'RUNNING',
-  Skipped = 'SKIPPED'
-}
-
-export type IndexingReportItem = {
-  __typename: 'IndexingReportItem';
-  details: Maybe<Array<Scalars['String']['output']>>;
-  emittedAt: Scalars['DateTime']['output'];
-  id: Scalars['String']['output'];
-  level: IndexingReportLevel;
-  message: Scalars['String']['output'];
-  path: Maybe<Scalars['String']['output']>;
-  type: IndexingReportType;
-};
-
-export enum IndexingReportLevel {
-  Error = 'ERROR',
-  Info = 'INFO',
-  Warning = 'WARNING'
-}
-
-export enum IndexingReportType {
-  ErrorIndexingFailed = 'ERROR_INDEXING_FAILED',
-  ErrorLyricsParsing = 'ERROR_LYRICS_PARSING',
-  ErrorMetaflacParsing = 'ERROR_METAFLAC_PARSING',
-  InfoIndexingCompleted = 'INFO_INDEXING_COMPLETED',
-  InfoIndexingStarted = 'INFO_INDEXING_STARTED',
-  InfoIndexingSummary = 'INFO_INDEXING_SUMMARY',
-  InfoStageCompleted = 'INFO_STAGE_COMPLETED',
-  InfoStageSkipped = 'INFO_STAGE_SKIPPED',
-  InfoStageStarted = 'INFO_STAGE_STARTED',
-  WarningFolderMetadata = 'WARNING_FOLDER_METADATA',
-  WarningSubdirectories = 'WARNING_SUBDIRECTORIES'
-}
-
-export type IndexingWarning = IndexingErrorLyricsParsing | IndexingErrorMetaflacParsing | IndexingWarningFolderMetadata | IndexingWarningSubdirectories;
-
-export type IndexingWarningFolderMetadata = {
-  __typename: 'IndexingWarningFolderMetadata';
-  folderPath: Scalars['String']['output'];
-  messages: Array<Scalars['String']['output']>;
-  type: IndexingReportType;
-};
-
-export type IndexingWarningSubdirectories = {
-  __typename: 'IndexingWarningSubdirectories';
-  dirPath: Scalars['String']['output'];
-  type: IndexingReportType;
-};
-
-export type LibraryItem = AlbumBasic | PlaylistBasic;
-
+export type IndexingReportType = typeof IndexingReportType[keyof typeof IndexingReportType];
 export type LibraryItemRefInput = {
-  itemId: Scalars['String']['input'];
+  itemId: string;
   itemType: LibraryItemType;
 };
 
-export enum LibraryItemType {
-  Album = 'ALBUM',
-  Playlist = 'PLAYLIST'
-}
+export const LibraryItemType = {
+  Album: 'ALBUM',
+  Playlist: 'PLAYLIST'
+} as const;
 
-export type LyricsChunk = {
-  __typename: 'LyricsChunk';
-  /** Word or character */
-  c: Scalars['String']['output'];
-  /** Duration in milliseconds since the start of the line */
-  d: Scalars['Int']['output'];
-};
-
-export type LyricsLine = {
-  __typename: 'LyricsLine';
-  /** Tokenized line content (word/character + duration) */
-  l: Array<LyricsChunk>;
-  /** Full text of the line */
-  t: Scalars['String']['output'];
-  /** Timestamp end in milliseconds */
-  te: Scalars['Int']['output'];
-  /** Timestamp start in milliseconds */
-  ts: Scalars['Int']['output'];
-};
-
-export type Mutation = {
-  __typename: 'Mutation';
-  /** Add an album or another user's public/unlisted playlist to the current user's library */
-  addLibraryItem: UserLibraryEntry;
-  /** Add one or more tracks to a playlist at a specific position */
-  addTracksToPlaylist: Scalars['Boolean']['output'];
-  /** Update a user profile as an administrator */
-  adminUpdateUserProfile: User;
-  /** Remove the records of the user playing items */
-  cleanItemPlay: Scalars['Boolean']['output'];
-  /** Create a new empty playlist for the current user, or as administrator for a specific user */
-  createPlaylist: Playlist;
-  /** Delete an existing playlist for the current user, or as administrator */
-  deletePlaylist: Scalars['Boolean']['output'];
-  /** Record that the user played an item */
-  recordItemPlay: Scalars['Boolean']['output'];
-  /** Remove an explicitly saved library item */
-  removeLibraryItem: Scalars['Boolean']['output'];
-  /** Remove one or more tracks from a playlist */
-  removeTracksFromPlaylist: Scalars['Boolean']['output'];
-  /** Move a track from one position to another in a playlist */
-  reorderPlaylistTracks: Scalars['Boolean']['output'];
-  /** Trigger a new library indexing job */
-  triggerIndexing: IndexingJob;
-  /** Update the current user's profile */
-  updateMyProfile: User;
-  /** Update an existing playlist for the current user, or any playlist as administrator */
-  updatePlaylist: Playlist;
-};
-
-
-export type MutationAddLibraryItemArgs = {
-  input: LibraryItemRefInput;
-};
-
-
-export type MutationAddTracksToPlaylistArgs = {
-  id: Scalars['String']['input'];
-  position?: InputMaybe<Scalars['Int']['input']>;
-  trackIds: Array<Scalars['String']['input']>;
-};
-
-
-export type MutationAdminUpdateUserProfileArgs = {
-  input: UpdateUserProfileInput;
-  userId: Scalars['String']['input'];
-};
-
-
-export type MutationCreatePlaylistArgs = {
-  input: CreatePlaylistInput;
-};
-
-
-export type MutationDeletePlaylistArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type MutationRecordItemPlayArgs = {
-  itemId: Scalars['String']['input'];
-  itemType: LibraryItemType;
-};
-
-
-export type MutationRemoveLibraryItemArgs = {
-  input: LibraryItemRefInput;
-};
-
-
-export type MutationRemoveTracksFromPlaylistArgs = {
-  id: Scalars['String']['input'];
-  positions: Array<Scalars['Int']['input']>;
-};
-
-
-export type MutationReorderPlaylistTracksArgs = {
-  count?: InputMaybe<Scalars['Int']['input']>;
-  fromPosition: Scalars['Int']['input'];
-  id: Scalars['String']['input'];
-  toPosition: Scalars['Int']['input'];
-};
-
-
-export type MutationUpdateMyProfileArgs = {
-  input: UpdateUserProfileInput;
-};
-
-
-export type MutationUpdatePlaylistArgs = {
-  id: Scalars['String']['input'];
-  input: UpdatePlaylistInput;
-};
-
-export type Playlist = {
-  __typename: 'Playlist';
-  /** Album IDs used for the playlist cover (either 1 or 4 unique albums) */
-  coverAlbumIds: Array<Scalars['String']['output']>;
-  createdAt: Scalars['DateTime']['output'];
-  creator: PlaylistCreator;
-  description: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
-  /** Whether the playlist is in the current user's library */
-  isInLibrary: Scalars['Boolean']['output'];
-  name: Scalars['String']['output'];
-  tracks: Array<PlaylistTrack>;
-  updatedAt: Scalars['DateTime']['output'];
-  /** Visibility level of the playlist */
-  visibility: PlaylistVisibility;
-};
-
-export type PlaylistBasic = {
-  __typename: 'PlaylistBasic';
-  /** Album IDs used for the playlist cover (either 1 or 4 unique albums) */
-  coverAlbumIds: Array<Scalars['String']['output']>;
-  creator: PlaylistCreator;
-  description: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  /** Visibility level of the playlist */
-  visibility: PlaylistVisibility;
-};
-
-export type PlaylistCreator = {
-  __typename: 'PlaylistCreator';
-  id: Scalars['String']['output'];
-  username: Scalars['String']['output'];
-};
-
-export type PlaylistTrack = {
-  __typename: 'PlaylistTrack';
-  /** When the track was added */
-  addedAt: Scalars['DateTime']['output'];
-  /** Position in the playlist (0-based) */
-  position: Scalars['Int']['output'];
-  track: Track;
-};
-
+export type LibraryItemType = typeof LibraryItemType[keyof typeof LibraryItemType];
 /** Visibility level of a playlist */
-export enum PlaylistVisibility {
-  Private = 'PRIVATE',
-  Public = 'PUBLIC',
-  Unlisted = 'UNLISTED'
-}
+export const PlaylistVisibility = {
+  Private: 'PRIVATE',
+  Public: 'PUBLIC',
+  Unlisted: 'UNLISTED'
+} as const;
 
-export type Query = {
-  __typename: 'Query';
-  /** Get a single album by ID with tracks grouped by disc number */
-  album: Album;
-  /** Get a single artist by ID */
-  artist: ArtistDetail;
-  hello: Scalars['String']['output'];
-  /** Get the status of an indexing job */
-  indexingJobStatus: IndexingJob;
-  /** Get library indexing stats and the latest active or completed indexing job */
-  indexingOverview: IndexingOverview;
-  /** Current logged-in user */
-  me: User;
-  /** Current user's effective library */
-  myLibrary: UserLibrary;
-  /** Get a playlist by ID with its tracks in order */
-  playlist: Playlist;
-  /** Search across tracks, albums, artists, and playlists with flexible filtering. Returns matching results for all entity types. Note: limit applies to each entity type separately. */
-  search: SearchMusicResult;
-  /** Search for albums with optional filters. Use this to get all albums by an artist. */
-  searchAlbums: Array<Album>;
-  /** Search for artists with optional filters */
-  searchArtists: Array<Artist>;
-  /** Search playlists owned by the current user by name (basic data) */
-  searchMyPlaylists: Array<PlaylistBasic>;
-  /** Search for tracks with optional filters */
-  searchTracks: Array<Track>;
-  /** Get a single track by ID */
-  track: Track;
-  /** User profile by identifier */
-  userProfile: User;
-};
+export type PlaylistVisibility = typeof PlaylistVisibility[keyof typeof PlaylistVisibility];
+export const Role = {
+  Admin: 'ADMIN',
+  User: 'USER'
+} as const;
 
-
-export type QueryAlbumArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type QueryArtistArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type QueryIndexingJobStatusArgs = {
-  jobId: Scalars['String']['input'];
-};
-
-
-export type QueryPlaylistArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type QuerySearchArgs = {
-  input: SearchMusicInput;
-};
-
-
-export type QuerySearchAlbumsArgs = {
-  input: SearchAlbumsInput;
-};
-
-
-export type QuerySearchArtistsArgs = {
-  input: SearchArtistsInput;
-};
-
-
-export type QuerySearchMyPlaylistsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  name: Scalars['String']['input'];
-};
-
-
-export type QuerySearchTracksArgs = {
-  input: SearchTracksInput;
-};
-
-
-export type QueryTrackArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type QueryUserProfileArgs = {
-  userId: Scalars['String']['input'];
-};
-
-export enum Role {
-  Admin = 'ADMIN',
-  User = 'USER'
-}
-
+export type Role = typeof Role[keyof typeof Role];
 export type SearchAlbumsInput = {
   /** Filter by artist ID */
-  artistId?: InputMaybe<Scalars['String']['input']>;
+  artistId?: string | null | undefined;
   /** Maximum number of results. Omit to return all matches. */
-  limit?: InputMaybe<Scalars['Int']['input']>;
+  limit?: number | null | undefined;
   /** Filter by album name (case-insensitive partial match) */
-  name?: InputMaybe<Scalars['String']['input']>;
+  name?: string | null | undefined;
   /** Number of results to skip */
-  offset?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type SearchArtistsInput = {
-  /** Maximum number of results */
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  /** Filter by artist name (case-insensitive partial match) */
-  name?: InputMaybe<Scalars['String']['input']>;
-  /** Number of results to skip */
-  offset?: InputMaybe<Scalars['Int']['input']>;
+  offset?: number | null | undefined;
 };
 
 export type SearchMusicInput = {
   /** Filter by exact album ID */
-  albumId?: InputMaybe<Scalars['String']['input']>;
+  albumId?: string | null | undefined;
   /** Maximum number of album results to return */
-  albumLimit?: InputMaybe<Scalars['Int']['input']>;
+  albumLimit?: number | null | undefined;
   /** Filter by album name (case-insensitive partial match) */
-  albumName?: InputMaybe<Scalars['String']['input']>;
+  albumName?: string | null | undefined;
   /** Filter by exact artist ID */
-  artistId?: InputMaybe<Scalars['String']['input']>;
+  artistId?: string | null | undefined;
   /** Maximum number of artist results to return */
-  artistLimit?: InputMaybe<Scalars['Int']['input']>;
+  artistLimit?: number | null | undefined;
   /** Filter by artist name (case-insensitive partial match) */
-  artistName?: InputMaybe<Scalars['String']['input']>;
+  artistName?: string | null | undefined;
   /** Include albums in search results */
-  includeAlbums?: InputMaybe<Scalars['Boolean']['input']>;
+  includeAlbums?: boolean | null | undefined;
   /** Include artists in search results */
-  includeArtists?: InputMaybe<Scalars['Boolean']['input']>;
+  includeArtists?: boolean | null | undefined;
   /** Include playlists in search results */
-  includePlaylists?: InputMaybe<Scalars['Boolean']['input']>;
+  includePlaylists?: boolean | null | undefined;
   /** Include tracks in search results */
-  includeTracks?: InputMaybe<Scalars['Boolean']['input']>;
+  includeTracks?: boolean | null | undefined;
   /** Maximum number of results to return */
-  limit?: InputMaybe<Scalars['Int']['input']>;
+  limit?: number | null | undefined;
   /** Number of results to skip */
-  offset?: InputMaybe<Scalars['Int']['input']>;
+  offset?: number | null | undefined;
   /** Maximum number of playlist results to return */
-  playlistLimit?: InputMaybe<Scalars['Int']['input']>;
+  playlistLimit?: number | null | undefined;
   /** Filter by playlist name (case-insensitive partial match) */
-  playlistName?: InputMaybe<Scalars['String']['input']>;
+  playlistName?: string | null | undefined;
   /** Maximum number of track results to return */
-  trackLimit?: InputMaybe<Scalars['Int']['input']>;
+  trackLimit?: number | null | undefined;
   /** Filter by track name (case-insensitive partial match) */
-  trackName?: InputMaybe<Scalars['String']['input']>;
+  trackName?: string | null | undefined;
 };
 
-export type SearchMusicResult = {
-  __typename: 'SearchMusicResult';
-  albums: Array<Album>;
-  artists: Array<Artist>;
-  playlists: Array<PlaylistBasic>;
-  tracks: Array<Track>;
-};
+export const Sex = {
+  Xx: 'XX',
+  Xy: 'XY'
+} as const;
 
-export type SearchTracksInput = {
-  /** Filter by album ID */
-  albumId?: InputMaybe<Scalars['String']['input']>;
-  /** Filter by artist ID */
-  artistId?: InputMaybe<Scalars['String']['input']>;
-  /** Maximum number of results */
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  /** Filter by track name (case-insensitive partial match) */
-  name?: InputMaybe<Scalars['String']['input']>;
-  /** Number of results to skip */
-  offset?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export enum Sex {
-  Xx = 'XX',
-  Xy = 'XY'
-}
-
-export type Subscription = {
-  __typename: 'Subscription';
-  /** Subscribe to indexing job status updates */
-  indexingJobUpdated: IndexingJob;
-};
-
-
-export type SubscriptionIndexingJobUpdatedArgs = {
-  jobId: Scalars['String']['input'];
-};
-
-export type Track = {
-  __typename: 'Track';
-  /** Album metadata */
-  album: Maybe<AlbumBasic>;
-  albumId: Maybe<Scalars['String']['output']>;
-  artists: Array<Artist>;
-  date: Maybe<Scalars['DateTime']['output']>;
-  discNumber: Scalars['Int']['output'];
-  /** Duration in milliseconds */
-  durationMs: Scalars['Int']['output'];
-  /** Linked FLAC file id if present */
-  flacFileId: Maybe<Scalars['String']['output']>;
-  /** Whether the track has lyrics indexed */
-  hasLyrics: Scalars['Boolean']['output'];
-  id: Scalars['String']['output'];
-  isrc: Maybe<Scalars['String']['output']>;
-  /** Optional lyrics data associated with the track */
-  lyrics: Maybe<Array<LyricsLine>>;
-  name: Scalars['String']['output'];
-  trackNumber: Scalars['Int']['output'];
-};
-
+export type Sex = typeof Sex[keyof typeof Sex];
 export type UpdatePlaylistInput = {
   /** Optional playlist description, or null to clear */
-  description?: InputMaybe<Scalars['String']['input']>;
+  description?: string | null | undefined;
   /** Playlist name */
-  name?: InputMaybe<Scalars['String']['input']>;
+  name?: string | null | undefined;
   /** Visibility level of the playlist */
-  visibility?: InputMaybe<PlaylistVisibility>;
+  visibility?: PlaylistVisibility | null | undefined;
 };
 
 export type UpdateUserProfileInput = {
   /** User sex chosen during profile setup */
-  sex?: InputMaybe<Sex>;
+  sex?: Sex | null | undefined;
 };
 
-export type User = {
-  __typename: 'User';
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['String']['output'];
-  oidcSub: Scalars['String']['output'];
-  /** Playlists visible to the connected user */
-  playlists: Maybe<Array<PlaylistBasic>>;
-  role: Role;
-  sex: Maybe<Sex>;
-  updatedAt: Scalars['DateTime']['output'];
-  username: Scalars['String']['output'];
-};
+export const UserLibraryItemSource = {
+  OwnedPlaylist: 'OWNED_PLAYLIST',
+  Saved: 'SAVED'
+} as const;
 
-export type UserLibrary = {
-  __typename: 'UserLibrary';
-  items: Array<UserLibraryEntry>;
-};
-
-export type UserLibraryEntry = {
-  __typename: 'UserLibraryEntry';
-  addedAt: Scalars['DateTime']['output'];
-  id: Scalars['String']['output'];
-  item: LibraryItem;
-  itemId: Scalars['String']['output'];
-  itemType: LibraryItemType;
-  lastPlayedAt: Maybe<Scalars['DateTime']['output']>;
-  source: UserLibraryItemSource;
-};
-
-export enum UserLibraryItemSource {
-  OwnedPlaylist = 'OWNED_PLAYLIST',
-  Saved = 'SAVED'
-}
-
+export type UserLibraryItemSource = typeof UserLibraryItemSource[keyof typeof UserLibraryItemSource];
 export type AddLibraryItemMutationVariables = Exact<{
   input: LibraryItemRefInput;
 }>;
@@ -660,7 +170,7 @@ export type AddLibraryItemMutationVariables = Exact<{
 export type AddLibraryItemMutation = { __typename: 'Mutation', addLibraryItem: { __typename: 'UserLibraryEntry', id: string, itemType: LibraryItemType, itemId: string, source: UserLibraryItemSource } };
 
 export type AdminUpdateUserProfileMutationVariables = Exact<{
-  userId: Scalars['String']['input'];
+  userId: string;
   input: UpdateUserProfileInput;
 }>;
 
@@ -673,9 +183,9 @@ export type CleanItemPlayMutationVariables = Exact<{ [key: string]: never; }>;
 export type CleanItemPlayMutation = { __typename: 'Mutation', cleanItemPlay: boolean };
 
 export type AddTracksToPlaylistMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  trackIds: Array<Scalars['String']['input']> | Scalars['String']['input'];
-  position?: InputMaybe<Scalars['Int']['input']>;
+  id: string;
+  trackIds: Array<string> | string;
+  position?: number | null | undefined;
 }>;
 
 
@@ -689,32 +199,32 @@ export type CreatePlaylistMutationVariables = Exact<{
 export type CreatePlaylistMutation = { __typename: 'Mutation', createPlaylist: { __typename: 'Playlist', id: string, name: string, description: string | null, visibility: PlaylistVisibility, createdAt: Date, updatedAt: Date, tracks: Array<{ __typename: 'PlaylistTrack', position: number, addedAt: Date, track: { __typename: 'Track', id: string, name: string, durationMs: number } }> } };
 
 export type DeletePlaylistMutationVariables = Exact<{
-  id: Scalars['String']['input'];
+  id: string;
 }>;
 
 
 export type DeletePlaylistMutation = { __typename: 'Mutation', deletePlaylist: boolean };
 
 export type RemoveTracksFromPlaylistMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  positions: Array<Scalars['Int']['input']> | Scalars['Int']['input'];
+  id: string;
+  positions: Array<number> | number;
 }>;
 
 
 export type RemoveTracksFromPlaylistMutation = { __typename: 'Mutation', removeTracksFromPlaylist: boolean };
 
 export type ReorderPlaylistTracksMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  fromPosition: Scalars['Int']['input'];
-  toPosition: Scalars['Int']['input'];
-  count?: InputMaybe<Scalars['Int']['input']>;
+  id: string;
+  fromPosition: number;
+  toPosition: number;
+  count?: number | null | undefined;
 }>;
 
 
 export type ReorderPlaylistTracksMutation = { __typename: 'Mutation', reorderPlaylistTracks: boolean };
 
 export type UpdatePlaylistMutationVariables = Exact<{
-  id: Scalars['String']['input'];
+  id: string;
   input: UpdatePlaylistInput;
 }>;
 
@@ -723,7 +233,7 @@ export type UpdatePlaylistMutation = { __typename: 'Mutation', updatePlaylist: {
 
 export type RecordItemPlayMutationVariables = Exact<{
   itemType: LibraryItemType;
-  itemId: Scalars['String']['input'];
+  itemId: string;
 }>;
 
 
@@ -749,21 +259,21 @@ export type UpdateMyProfileMutationVariables = Exact<{
 export type UpdateMyProfileMutation = { __typename: 'Mutation', updateMyProfile: { __typename: 'User', id: string, username: string, sex: Sex | null } };
 
 export type AlbumQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+  id: string;
 }>;
 
 
 export type AlbumQuery = { __typename: 'Query', album: { __typename: 'Album', id: string, name: string, isInLibrary: boolean, date: Date | null, coverColorVibrant: string, coverColorDarkVibrant: string, coverColorLightVibrant: string, coverColorMuted: string, coverColorDarkMuted: string, coverColorLightMuted: string, artists: Array<{ __typename: 'Artist', id: string, name: string }>, tracksByDisc: Array<Array<{ __typename: 'Track', id: string, flacFileId: string | null, hasLyrics: boolean, name: string, trackNumber: number, discNumber: number, durationMs: number, artists: Array<{ __typename: 'Artist', id: string, name: string }> }>> } };
 
 export type ArtistQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+  id: string;
 }>;
 
 
 export type ArtistQuery = { __typename: 'Query', artist: { __typename: 'ArtistDetail', id: string, name: string, albums: Array<{ __typename: 'AlbumBasic', id: string, name: string, date: Date | null, coverColorVibrant: string, coverColorDarkVibrant: string, coverColorLightVibrant: string, coverColorMuted: string, coverColorDarkMuted: string, coverColorLightMuted: string, artists: Array<{ __typename: 'Artist', id: string, name: string }> }>, featuredOnAlbums: Array<{ __typename: 'AlbumBasic', id: string, name: string, date: Date | null, coverColorVibrant: string, coverColorDarkVibrant: string, coverColorLightVibrant: string, coverColorMuted: string, coverColorDarkMuted: string, coverColorLightMuted: string, artists: Array<{ __typename: 'Artist', id: string, name: string }> }> } };
 
 export type IndexingJobStatusQueryVariables = Exact<{
-  jobId: Scalars['String']['input'];
+  jobId: string;
 }>;
 
 
@@ -788,7 +298,7 @@ export type MyLibraryQuery = { __typename: 'Query', myLibrary: { __typename: 'Us
        }> } };
 
 export type PlaylistQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+  id: string;
 }>;
 
 
@@ -809,29 +319,29 @@ export type SearchMusicQueryVariables = Exact<{
 export type SearchMusicQuery = { __typename: 'Query', search: { __typename: 'SearchMusicResult', tracks: Array<{ __typename: 'Track', id: string, name: string, flacFileId: string | null, hasLyrics: boolean, trackNumber: number, discNumber: number, durationMs: number, artists: Array<{ __typename: 'Artist', id: string, name: string }>, album: { __typename: 'AlbumBasic', id: string, name: string, date: Date | null, coverColorVibrant: string, coverColorDarkVibrant: string, coverColorLightVibrant: string, coverColorMuted: string, coverColorDarkMuted: string, coverColorLightMuted: string, artists: Array<{ __typename: 'Artist', id: string, name: string }> } | null }>, albums: Array<{ __typename: 'Album', id: string, name: string, date: Date | null, coverColorVibrant: string, coverColorDarkVibrant: string, coverColorLightVibrant: string, coverColorMuted: string, coverColorDarkMuted: string, coverColorLightMuted: string, artists: Array<{ __typename: 'Artist', id: string, name: string }> }>, artists: Array<{ __typename: 'Artist', id: string, name: string }>, playlists: Array<{ __typename: 'PlaylistBasic', id: string, name: string, description: string | null, visibility: PlaylistVisibility, coverAlbumIds: Array<string>, creator: { __typename: 'PlaylistCreator', id: string, username: string } }> } };
 
 export type SearchMyPlaylistsQueryVariables = Exact<{
-  name: Scalars['String']['input'];
-  limit?: InputMaybe<Scalars['Int']['input']>;
+  name: string;
+  limit?: number | null | undefined;
 }>;
 
 
 export type SearchMyPlaylistsQuery = { __typename: 'Query', searchMyPlaylists: Array<{ __typename: 'PlaylistBasic', id: string, name: string, description: string | null, visibility: PlaylistVisibility, coverAlbumIds: Array<string>, creator: { __typename: 'PlaylistCreator', id: string, username: string } }> };
 
 export type TrackLyricsQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+  id: string;
 }>;
 
 
 export type TrackLyricsQuery = { __typename: 'Query', track: { __typename: 'Track', id: string, hasLyrics: boolean, lyrics: Array<{ __typename: 'LyricsLine', t: string, te: number, ts: number, l: Array<{ __typename: 'LyricsChunk', c: string, d: number }> }> | null } };
 
 export type UserProfileQueryVariables = Exact<{
-  userId: Scalars['String']['input'];
+  userId: string;
 }>;
 
 
 export type UserProfileQuery = { __typename: 'Query', userProfile: { __typename: 'User', id: string, username: string, role: Role, sex: Sex | null, createdAt: Date, updatedAt: Date, playlists: Array<{ __typename: 'PlaylistBasic', id: string, name: string, description: string | null, visibility: PlaylistVisibility, coverAlbumIds: Array<string>, creator: { __typename: 'PlaylistCreator', id: string, username: string } }> | null } };
 
 export type IndexingJobUpdatedSubscriptionVariables = Exact<{
-  jobId: Scalars['String']['input'];
+  jobId: string;
 }>;
 
 

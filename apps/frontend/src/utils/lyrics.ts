@@ -1,4 +1,4 @@
-import { LyricsChunk, LyricsLine } from "../api/graphql/gql/graphql";
+import type { LyricsChunk, LyricsLine } from "../api/graphql/types";
 
 /**
  * Returns whether the given playback position falls within the time span of the lyrics line.

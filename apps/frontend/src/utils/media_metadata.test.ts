@@ -43,9 +43,6 @@ describe("buildMediaMetadata", () => {
       id: "track_123",
       name: "Song A",
       hasLyrics: false,
-      date: null,
-      lyrics: null,
-      isrc: null,
       flacFileId: null,
       artists: [
         { __typename: "Artist", id: "artist_1", name: "Artist A" },
@@ -67,7 +64,6 @@ describe("buildMediaMetadata", () => {
       discNumber: 1,
       trackNumber: 1,
       durationMs: 210_000,
-      albumId: "alb_123",
     };
     const metadata = buildMediaMetadata(track);
 

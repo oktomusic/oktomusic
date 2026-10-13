@@ -1,10 +1,7 @@
 import { atom } from "jotai";
 
-import {
-  AlbumBasic,
-  PlaylistBasic,
-  Track,
-} from "../../api/graphql/gql/graphql";
+import type { PlaylistQuery } from "../../api/graphql/gql/graphql";
+import type { AlbumBasic, PlaylistBasic } from "../../api/graphql/types";
 import { settingClientRestartThresholdSeconds } from "../app/settings_client";
 
 /** Holds the current AudioContext instance (or null when not initialized). */
@@ -12,8 +9,10 @@ export const playerAudioContextAtom = atom<AudioContext | null>(null);
 
 // Queue
 
-export type TrackWithAlbum = Omit<Track, "album"> & {
-  album: NonNullable<Track["album"]>;
+type PlaylistTrack = PlaylistQuery["playlist"]["tracks"][number]["track"];
+
+export type TrackWithAlbum = Omit<PlaylistTrack, "album"> & {
+  readonly album: NonNullable<PlaylistTrack["album"]>;
 };
 
 /**

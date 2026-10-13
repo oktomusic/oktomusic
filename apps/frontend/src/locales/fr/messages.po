@@ -81,12 +81,12 @@ msgstr ""
 
 #: src/pages/Center/Artist.tsx:74
 #: src/pages/Center/Artist.tsx:75
-#: src/pages/Center/Search.tsx:86
-#: src/pages/Center/Search.tsx:296
+#: src/pages/Center/Search.tsx:74
+#: src/pages/Center/Search.tsx:284
 msgid "Albums"
 msgstr "Albums"
 
-#: src/pages/Center/Search.tsx:84
+#: src/pages/Center/Search.tsx:72
 msgid "All"
 msgstr "Tout"
 
@@ -116,8 +116,8 @@ msgstr ""
 msgid "Artist"
 msgstr "Artiste"
 
-#: src/pages/Center/Search.tsx:87
-#: src/pages/Center/Search.tsx:308
+#: src/pages/Center/Search.tsx:75
+#: src/pages/Center/Search.tsx:296
 msgid "Artists"
 msgstr "Artistes"
 
@@ -450,9 +450,9 @@ msgstr "À suivre dans : <0>{queueFromName}</0>"
 msgid "Next in queue"
 msgstr "À suivre"
 
-#: src/pages/Center/Search.tsx:268
-#: src/pages/Center/Search.tsx:300
-#: src/pages/Center/Search.tsx:355
+#: src/pages/Center/Search.tsx:256
+#: src/pages/Center/Search.tsx:288
+#: src/pages/Center/Search.tsx:343
 msgid "No albums found"
 msgstr ""
 
@@ -460,13 +460,13 @@ msgstr ""
 msgid "No albums found for this artist."
 msgstr ""
 
-#: src/pages/Center/Search.tsx:312
-#: src/pages/Center/Search.tsx:365
+#: src/pages/Center/Search.tsx:300
+#: src/pages/Center/Search.tsx:353
 msgid "No artists found"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:324
-#: src/pages/Center/Search.tsx:374
+#: src/pages/Center/Search.tsx:312
+#: src/pages/Center/Search.tsx:362
 msgid "No playlists found"
 msgstr ""
 
@@ -484,8 +484,8 @@ msgstr ""
 msgid "No track playing"
 msgstr ""
 
-#: src/pages/Center/Search.tsx:282
-#: src/pages/Center/Search.tsx:345
+#: src/pages/Center/Search.tsx:270
+#: src/pages/Center/Search.tsx:333
 msgid "No tracks found"
 msgstr ""
 
@@ -585,8 +585,8 @@ msgstr ""
 msgid "Playlist export:"
 msgstr "Exportation de playlist :"
 
-#: src/pages/Center/Search.tsx:88
-#: src/pages/Center/Search.tsx:320
+#: src/pages/Center/Search.tsx:76
+#: src/pages/Center/Search.tsx:308
 msgid "Playlists"
 msgstr ""
 
@@ -684,7 +684,7 @@ msgstr "Sauvegarder dans la bibliothèque"
 msgid "Search"
 msgstr "Rechercher"
 
-#: src/pages/Center/Search.tsx:230
+#: src/pages/Center/Search.tsx:218
 msgid "Search type"
 msgstr ""
 
@@ -748,8 +748,8 @@ msgstr ""
 msgid "Title"
 msgstr "Titre"
 
-#: src/pages/Center/Search.tsx:85
-#: src/pages/Center/Search.tsx:278
+#: src/pages/Center/Search.tsx:73
+#: src/pages/Center/Search.tsx:266
 msgid "Tracks"
 msgstr "Titres"
 
@@ -766,7 +766,7 @@ msgstr ""
 msgid "Unspecified"
 msgstr "Non Spécifié"
 
-#: src/pages/Center/Search.tsx:253
+#: src/pages/Center/Search.tsx:241
 msgid "Updating results"
 msgstr ""
 
