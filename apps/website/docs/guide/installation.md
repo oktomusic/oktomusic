@@ -164,6 +164,21 @@ Then open `http://localhost:3100`.
 >
 > You need to enable reverse proxy support in Oktomusic by setting the `TRUST_PROXY` environment variable to `true`.
 
+### Custom certificate authorities
+
+For outgoing HTTPS requests to services using a private CA, mount a PEM bundle and set `NODE_EXTRA_CA_CERTS` to its container path:
+
+```yaml
+services:
+  app:
+    environment:
+      NODE_EXTRA_CA_CERTS: /certs/custom-ca.pem
+    volumes:
+      - ./custom-ca.pem:/certs/custom-ca.pem:ro
+```
+
+Restart the app after changing the bundle. Development commands use the system CA store via `--use-system-ca`.
+
 ### Behind a reverse proxy
 
 TODO

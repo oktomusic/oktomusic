@@ -13,6 +13,7 @@ Configuration for the app is provided with environment variables.
 | Name                    | Description                                                                                                                 |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `NODE_ENV`              | Application environment. One of `development`, `production`, or `test`. Default: `development`.                             |
+| `NODE_EXTRA_CA_CERTS`   | Optional path to a PEM bundle of additional trusted CAs. Mount the file into the container; restart after changes.          |
 | `DATABASE_URL`          | Prisma PostgreSQL [connection URL][prisma_connection_url]. Required.                                                        |
 | `SESSION_SECRET`        | Secret string used for session encryption. Required. Keep secret in production.                                             |
 | `APP_NAME`              | Application name. Default: `Oktomusic`                                                                                      |
