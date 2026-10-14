@@ -42,6 +42,7 @@ COPY apps/backend/package.json apps/backend/
 COPY apps/frontend/package.json apps/frontend/
 
 RUN --mount=type=cache,id=pnpm,target="/pnpm/store" \
+  mkdir -p .agents/skills && \
   pnpm install --frozen-lockfile \
   --filter @oktomusic/metaflac-parser \
   --filter @oktomusic/lyrics \
@@ -98,7 +99,6 @@ FROM ghcr.io/oktomusic/ffmpeg-custom:0.6.0 AS ffmpeg
 FROM ${IMAGE_PROD} AS production
 
 ENV NODE_ENV=production
-ENV UPDATE_CA=
 
 EXPOSE 3000
 
@@ -118,28 +118,12 @@ COPY --from=builder /prod/backend/ ./
 # Copy compiled backend output and generated Prisma client used at runtime
 COPY --from=builder /usr/src/app/apps/backend/dist ./dist
 
-# Create entrypoint script for running migrations before starting the app
-RUN <<'EOF'
-cat > /entrypoint.sh <<'SH'
-#!/bin/sh
-set -e
+# Copy entrypoint and healthcheck scripts
+COPY scripts/docker/entrypoint.ts /entrypoint.ts
+COPY scripts/docker/healthcheck.ts /healthcheck.ts
 
-if [ -n "$UPDATE_CA" ]; then
-  echo "Updating CA certificates..."
-  update-ca-certificates
-fi
-
-cd /usr/src/app
-echo "Running Prisma migrations..."
-node ./node_modules/prisma/build/index.js migrate deploy
-echo "Migrations completed successfully"
-exec node --use-system-ca dist/main.js
-SH
-chmod +x /entrypoint.sh
-EOF
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["node", "/entrypoint.ts"]
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=5 \
-  CMD wget -qO- http://localhost:3000/api/health >/dev/null 2>&1 || exit 1
+  CMD ["node", "/healthcheck.ts"]
 
