@@ -131,6 +131,13 @@ services:
       - ./.env
     ports:
       - "3100:3000"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev
     volumes:
       # Replace the left side paths with directories on your host.
       # The source library path is set to read-only.
@@ -145,6 +152,16 @@ services:
 volumes:
   postgres_data:
   valkey_data:
+```
+
+The official production image runs as the non-root user `node` (UID/GID `1000:1000`).
+
+If you use bind mounts, and your host folders belong to another user, set `user` on the app service to that user's UID and GID (check with `id -u` and `id -g`):
+
+```yaml
+services:
+  app:
+    user: "1001:1001" # Replace with your host UID:GID.
 ```
 
 Start the stack:

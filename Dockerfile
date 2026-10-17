@@ -4,11 +4,10 @@
 # Supported base images:
 # - node:24-alpine (builder and production)
 # - dhi.io/node:24-alpine3.24-dev (builder and production)
-# 
-# TODO: support dhi.io/node:24-alpine3.24 as production image
+# - dhi.io/node:24-alpine3.24 (production)
 
 ARG IMAGE_BUILDER=dhi.io/node:24-alpine3.24-dev
-ARG IMAGE_PROD=dhi.io/node:24-alpine3.24-dev
+ARG IMAGE_PROD=dhi.io/node:24-alpine3.24
 
 FROM --platform=$BUILDPLATFORM ${IMAGE_BUILDER} AS builder
 
@@ -96,6 +95,9 @@ RUN pnpm --filter @oktomusic/backend --prod deploy /prod/backend
 
 FROM ghcr.io/oktomusic/ffmpeg-custom:0.6.0 AS ffmpeg
 
+# Select runtime libraries for the production architecture.
+FROM ${IMAGE_BUILDER} AS runtime-libs
+
 FROM ${IMAGE_PROD} AS production
 
 ENV NODE_ENV=production
@@ -104,23 +106,26 @@ EXPOSE 3000
 
 WORKDIR /usr/src/app
 
-COPY --from=ffmpeg /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
-COPY --from=ffmpeg /usr/local/bin/ffprobe /usr/local/bin/ffprobe
-COPY --from=ffmpeg /usr/local/bin/metaflac /usr/local/bin/metaflac
+# Prisma's schema engine requires OpenSSL shared libraries.
+COPY --from=runtime-libs --chmod=a=r /usr/lib/libssl.so.3 /usr/lib/libcrypto.so.3 /usr/lib/
+
+COPY --from=ffmpeg --chmod=a=rx /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
+COPY --from=ffmpeg --chmod=a=rx /usr/local/bin/ffprobe /usr/local/bin/ffprobe
+COPY --from=ffmpeg --chmod=a=rx /usr/local/bin/metaflac /usr/local/bin/metaflac
 
 ENV FFMPEG_PATH=/usr/local/bin/ffmpeg
 ENV FFPROBE_PATH=/usr/local/bin/ffprobe
 ENV METAFLAC_PATH=/usr/local/bin/metaflac
 
 # Copy deployed backend artifact with isolated production dependencies
-COPY --from=builder /prod/backend/ ./
+COPY --from=builder --chmod=a=rX /prod/backend/ ./
 
 # Copy compiled backend output and generated Prisma client used at runtime
-COPY --from=builder /usr/src/app/apps/backend/dist ./dist
+COPY --from=builder --chmod=a=rX /usr/src/app/apps/backend/dist ./dist
 
 # Copy entrypoint and healthcheck scripts
-COPY scripts/docker/entrypoint.ts /entrypoint.ts
-COPY scripts/docker/healthcheck.ts /healthcheck.ts
+COPY --chmod=a=r scripts/docker/entrypoint.ts /entrypoint.ts
+COPY --chmod=a=r scripts/docker/healthcheck.ts /healthcheck.ts
 
 ENTRYPOINT ["node", "/entrypoint.ts"]
 

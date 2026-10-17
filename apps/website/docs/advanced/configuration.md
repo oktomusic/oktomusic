@@ -10,20 +10,20 @@ Configuration for the app is provided with environment variables.
 
 ## App
 
-| Name                    | Description                                                                                                                 |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `NODE_ENV`              | Application environment. One of `development`, `production`, or `test`. Default: `development`.                             |
-| `NODE_EXTRA_CA_CERTS`   | Optional path to a PEM bundle of additional trusted CAs. Mount the file into the container; restart after changes.          |
-| `DATABASE_URL`          | Prisma PostgreSQL [connection URL][prisma_connection_url]. Required.                                                        |
-| `SESSION_SECRET`        | Secret string used for session encryption. Required. Keep secret in production.                                             |
-| `APP_NAME`              | Application name. Default: `Oktomusic`                                                                                      |
-| `APP_SHORT_NAME`        | Application short name. Default: `Oktomusic`                                                                                |
-| `APP_PUBLIC_URL`        | Optional public URL where Oktomusic is reachable. Used for browser registration as search engine.                           |
-| `APP_LIBRARY_PATH`      | Path to the music library folder. Must exist and be a directory; the path is resolved at startup.                           |
-| `APP_INTERMEDIATE_PATH` | Path to store intermediate files (transcoding, etc) folder. Must exist and be a directory; the path is resolved at startup. |
-| `FFMPEG_PATH`           | Optional path to the `ffmpeg` binary.                                                                                       |
-| `FFPROBE_PATH`          | Optional path to the `ffprobe` binary.                                                                                      |
-| `METAFLAC_PATH`         | Optional path to the `metaflac` binary.                                                                                     |
+| Name                    | Description                                                                                                        |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `NODE_ENV`              | Application environment. One of `development`, `production`, or `test`. Default: `development`.                    |
+| `NODE_EXTRA_CA_CERTS`   | Optional path to a PEM bundle of additional trusted CAs. Mount the file into the container; restart after changes. |
+| `DATABASE_URL`          | Prisma PostgreSQL [connection URL][prisma_connection_url]. Required.                                               |
+| `SESSION_SECRET`        | Secret string used for session encryption. Required. Keep secret in production.                                    |
+| `APP_NAME`              | Application name. Default: `Oktomusic`                                                                             |
+| `APP_SHORT_NAME`        | Application short name. Default: `Oktomusic`                                                                       |
+| `APP_PUBLIC_URL`        | Optional public URL where Oktomusic is reachable. Used for browser registration as search engine.                  |
+| `APP_LIBRARY_PATH`      | Path to the music library folder. Must exist and be a directory; the path is resolved at startup.                  |
+| `APP_INTERMEDIATE_PATH` | Path to store intermediate files (transcoding, etc). Must exist and be a writable directory; resolved at startup.  |
+| `FFMPEG_PATH`           | Optional path to the `ffmpeg` binary.                                                                              |
+| `FFPROBE_PATH`          | Optional path to the `ffprobe` binary.                                                                             |
+| `METAFLAC_PATH`         | Optional path to the `metaflac` binary.                                                                            |
 
 ## HTTP
 

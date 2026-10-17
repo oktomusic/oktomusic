@@ -78,7 +78,8 @@ async function bootstrap() {
   });
 
   app.enableCors({ origin: false });
-  app.enableShutdownHooks();
+  // Exit after cleanup instead of re-sending a signal that PID 1 may ignore.
+  app.enableShutdownHooks(undefined, { useProcessExit: true });
   // Configure Handlebars view engine
   app.setBaseViewsDir(path.join(__dirname, "views"));
   app.setViewEngine("hbs");
