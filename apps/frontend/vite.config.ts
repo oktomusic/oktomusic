@@ -1,7 +1,7 @@
 import { lingui } from "@lingui/vite-plugin";
-import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import jotai from "jotai-rolldown";
 import { defineConfig } from "vite";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 import sri from "vite-plugin-sri-gen";
@@ -47,17 +47,10 @@ const viteConfigPWA: Partial<VitePWAOptions> = {
   },
 };
 
-const jotaiIncludeRegex = /\/src\/atoms\/.*\.ts$/;
-
-export default defineConfig(({ command, mode }) => ({
+export default defineConfig({
   plugins: [
     lingui({ macroTransform: true }),
-    command === "serve" &&
-      mode !== "test" &&
-      babel({
-        include: jotaiIncludeRegex,
-        presets: ["jotai-babel/preset"],
-      }),
+    jotai(),
     react({ compiler: true }),
     tailwindcss(),
     VitePWA(viteConfigPWA),
@@ -90,4 +83,4 @@ export default defineConfig(({ command, mode }) => ({
   devtools: {
     enabled: false,
   },
-}));
+});

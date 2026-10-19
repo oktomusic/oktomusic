@@ -56,3 +56,5 @@ pmOnFail: "ignore"
 permissions:
   "@apollo/client":
     skills: true
+  jotai-rolldown:
+    build: true

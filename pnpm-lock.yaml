@@ -298,12 +298,6 @@ importers:
       jotai:
         specifier: ^3.0.1
         version: 3.0.1(@types/react@19.3.0)(react@19.3.0)
-      jotai-babel:
-        specifier: ^0.3.0
-        version: 0.3.0(@babel/core@7.29.7(supports-color@7.2.0))(@babel/template@7.29.7)(jotai@3.0.1(@types/react@19.3.0)(react@19.3.0))
-      jotai-devtools:
-        specifier: ^0.15.1
-        version: 0.15.1(@types/react@19.3.0)(jotai@3.0.1(@types/react@19.3.0)(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(redux@5.0.1)
       react:
         specifier: ^19.3.0
         version: 19.3.0
@@ -323,18 +317,12 @@ importers:
         specifier: catalog:default
         version: 1.0.5
     devDependencies:
-      '@babel/core':
-        specifier: ^7.29.7
-        version: 7.29.7(supports-color@7.2.0)
       '@graphql-codegen/cli':
         specifier: 7.4.6
         version: 7.4.6(@types/node@24.19.2)(crossws@0.4.15(srvx@1.0.5))(graphql@17.0.2)(supports-color@7.2.0)(typescript@6.0.3)
       '@graphql-codegen/client-preset':
         specifier: 6.2.3
         version: 6.2.3(graphql@17.0.2)
-      '@lingui/babel-plugin-lingui-macro':
-        specifier: ^6.9.1
-        version: 6.9.1(@babel/core@7.29.7(supports-color@7.2.0))
       '@lingui/cli':
         specifier: ^6.9.1
         version: 6.9.1(rolldown@1.2.13)(supports-color@7.2.0)
@@ -350,9 +338,6 @@ importers:
       '@rolldown/plugin-babel':
         specifier: ^0.2.4
         version: 0.2.4(@babel/core@7.29.7(supports-color@7.2.0))(@babel/runtime@8.0.7)(rolldown@1.2.13)(vite@8.3.4)
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
       '@types/node':
         specifier: catalog:default
         version: 24.19.2
@@ -389,6 +374,12 @@ importers:
       globals:
         specifier: ^17.13.0
         version: 17.13.0
+      jotai-devtools:
+        specifier: ^0.15.1
+        version: 0.15.1(@types/react@19.3.0)(jotai@3.0.1(@types/react@19.3.0)(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(redux@5.0.1)
+      jotai-rolldown:
+        specifier: ^0.2.0
+        version: 0.2.0(rolldown@1.2.13)(vite@8.3.4)
       jsdom:
         specifier: ^30.1.2
         version: 30.1.2(@noble/hashes@1.8.0)
@@ -6367,19 +6358,22 @@ packages:
   jose@6.2.12:
     resolution: {integrity: sha512-9NiFmJEex0sy2Dk58j2UGBSHgUs2ypF9eZSu4L6vjOX3Dp96Sw1F3uL+H+D1sx02jZZdzUT0HgvCy59CuvXcWw==}
 
-  jotai-babel@0.3.0:
-    resolution: {integrity: sha512-YL8MJ4ZKsKoXNCgrJvayVyBrwg0tJ56SVJg7i2s9SpTCa/SJ/KNc0gJBEWZDJuXC7xEcAKFbFNOc2cKQM9Ak5w==}
-    peerDependencies:
-      '@babel/core': '>=7.0.0'
-      '@babel/template': '>=7.0.0'
-      jotai: '>=2.0.0'
-
   jotai-devtools@0.15.1:
     resolution: {integrity: sha512-/tFXdAJ326yAkpvZJX7HtOF4pemnOsgh/xuDPhXdfuhNQdiEEQicOCQnahaDAkudcUs6VMB710xlklK4YLUsmQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       jotai: '>=3.0.0'
       react: '>=18.0.0'
+
+  jotai-rolldown@0.2.0:
+    resolution: {integrity: sha512-kGiT1CCQjApBj/v8urZEqawT23siltGy+6Uys1qIorIqH0dW8xqzYRzwlGw44vAFy3EpAjqisXkOmDVvImCs1g==}
+    engines: {node: '>=22.12.0 || ^24.0.0'}
+    peerDependencies:
+      rolldown: ^1.0.3
+      vite: ^8.0.14
+    peerDependenciesMeta:
+      vite:
+        optional: true
 
   jotai@3.0.1:
     resolution: {integrity: sha512-6tS7wY9otdiNp26Wqb/1ds3OuVJVoV+tJlN4hpLrYmfFf/t9bauVt+zKBNSpS5qSl5h6GieVQ+OknVraZX+udQ==}
@@ -7079,6 +7073,18 @@ packages:
     resolution: {integrity: sha512-9p/BCIQj12y8Uble3WWUxVeZy88RjqOU7cVp18cLV7PTbNYVaWOyxC2+J9g+EdC9/AOKXzX/z1l92NZ9rvvgVQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
+  oxc-unshadowed-visitor@0.1.0:
+    resolution: {integrity: sha512-WC5yVscFTCOS7mKp95CySilgntq8Xz7gHc+NyOU4XMMMsmug1lXeykJcV92rpW6QuSFdjPOI8nKRfzlEmZ8MlQ==}
+    engines: {node: '>=22.12.0 || ^24.0.0'}
+    peerDependencies:
+      oxc-parser: ^0.121.0
+      rolldown: ^1.0.0-rc.12
+    peerDependenciesMeta:
+      oxc-parser:
+        optional: true
+      rolldown:
+        optional: true
+
   oxfmt@0.72.0:
     resolution: {integrity: sha512-16OQeL0uhPZbfmT9S9WWM0Nv9+BmVi8Ra1uTYaSKj/qSCs6FB30KOhz9JoNYw6thT+K5bVxsk/tSEOu497i34g==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -7620,6 +7626,15 @@ packages:
       typescript:
         optional: true
       vue-tsc:
+        optional: true
+
+  rolldown-string@0.3.1:
+    resolution: {integrity: sha512-dv8GOXkYqUQdI0rsXB8hmzO95pKWSuX2eg5/JSJa9czfEVIFuKNR7ZJDfat8LlmD35RAhWY+evS7/wXXqFDfSg==}
+    engines: {node: '>=20.19.0'}
+    peerDependencies:
+      rolldown: '*'
+    peerDependenciesMeta:
+      rolldown:
         optional: true
 
   rolldown@1.2.13:
@@ -12008,19 +12023,23 @@ snapshots:
       '@types/babel__generator': 7.27.0
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.28.0
+    optional: true
 
   '@types/babel__generator@7.27.0':
     dependencies:
       '@babel/types': 7.29.8
+    optional: true
 
   '@types/babel__template@7.4.4':
     dependencies:
       '@babel/parser': 7.29.9
       '@babel/types': 7.29.8
+    optional: true
 
   '@types/babel__traverse@7.28.0':
     dependencies:
       '@babel/types': 7.29.8
+    optional: true
 
   '@types/body-parser@1.19.6':
     dependencies:
@@ -14682,12 +14701,6 @@ snapshots:
 
   jose@6.2.12: {}
 
-  jotai-babel@0.3.0(@babel/core@7.29.7(supports-color@7.2.0))(@babel/template@7.29.7)(jotai@3.0.1(@types/react@19.3.0)(react@19.3.0)):
-    dependencies:
-      '@babel/core': 7.29.7(supports-color@7.2.0)
-      '@babel/template': 7.29.7
-      jotai: 3.0.1(@types/react@19.3.0)(react@19.3.0)
-
   jotai-devtools@0.15.1(@types/react@19.3.0)(jotai@3.0.1(@types/react@19.3.0)(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(redux@5.0.1):
     dependencies:
       '@mantine/code-highlight': 7.17.4(@mantine/core@7.17.4(@mantine/hooks@7.17.4(react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@mantine/hooks@7.17.4(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -14707,6 +14720,16 @@ snapshots:
       - '@types/react'
       - react-dom
       - redux
+
+  jotai-rolldown@0.2.0(rolldown@1.2.13)(vite@8.3.4):
+    dependencies:
+      oxc-unshadowed-visitor: 0.1.0(rolldown@1.2.13)
+      rolldown: 1.2.13
+      rolldown-string: 0.3.1(rolldown@1.2.13)
+    optionalDependencies:
+      vite: 8.3.4(@types/node@24.19.2)(@vitejs/devtools@0.7.6)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
+    transitivePeerDependencies:
+      - oxc-parser
 
   jotai@3.0.1(@types/react@19.3.0)(react@19.3.0):
     optionalDependencies:
@@ -15479,6 +15502,10 @@ snapshots:
       '@oxc-transform-react/binding-win32-ia32-msvc': 0.153.0
       '@oxc-transform-react/binding-win32-x64-msvc': 0.153.0
 
+  oxc-unshadowed-visitor@0.1.0(rolldown@1.2.13):
+    optionalDependencies:
+      rolldown: 1.2.13
+
   oxfmt@0.72.0:
     dependencies:
       tinypool: 2.2.0
@@ -16003,6 +16030,12 @@ snapshots:
       typescript: 6.0.3
     transitivePeerDependencies:
       - oxc-resolver
+
+  rolldown-string@0.3.1(rolldown@1.2.13):
+    dependencies:
+      magic-string: 1.4.3
+    optionalDependencies:
+      rolldown: 1.2.13
 
   rolldown@1.2.13:
     dependencies:
