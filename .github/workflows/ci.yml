@@ -11,12 +11,6 @@ on:
     branches:
       - master
   workflow_dispatch:
-    inputs:
-      use_cache:
-        description: "Use build cache"
-        required: true
-        type: boolean
-        default: true
 
 permissions: {}
 
@@ -399,7 +393,7 @@ jobs:
         io.artifacthub.package.maintainers=[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]
       sbom: true
       sign: auto
-      cache: true
+      cache: false
       cache-mode: max
       distribute: true
       fail-fast: false
