@@ -109,9 +109,11 @@ WORKDIR /usr/src/app
 # Prisma's schema engine requires OpenSSL shared libraries.
 COPY --from=runtime-libs --chmod=a=r /usr/lib/libssl.so.3 /usr/lib/libcrypto.so.3 /usr/lib/
 
-COPY --from=ffmpeg --chmod=a=rx /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
-COPY --from=ffmpeg --chmod=a=rx /usr/local/bin/ffprobe /usr/local/bin/ffprobe
-COPY --from=ffmpeg --chmod=a=rx /usr/local/bin/metaflac /usr/local/bin/metaflac
+COPY --from=ffmpeg --chmod=a=rx \
+  /usr/local/bin/ffmpeg \
+  /usr/local/bin/ffprobe \
+  /usr/local/bin/metaflac \
+  /usr/local/bin/
 
 ENV FFMPEG_PATH=/usr/local/bin/ffmpeg
 ENV FFPROBE_PATH=/usr/local/bin/ffprobe
@@ -124,8 +126,7 @@ COPY --from=builder --chmod=a=rX /prod/backend/ ./
 COPY --from=builder --chmod=a=rX /usr/src/app/apps/backend/dist ./dist
 
 # Copy entrypoint and healthcheck scripts
-COPY --chmod=a=r scripts/docker/entrypoint.ts /entrypoint.ts
-COPY --chmod=a=r scripts/docker/healthcheck.ts /healthcheck.ts
+COPY --chmod=a=r scripts/docker/entrypoint.ts scripts/docker/healthcheck.ts /
 
 ENTRYPOINT ["node", "/entrypoint.ts"]
 
