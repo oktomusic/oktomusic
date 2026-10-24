@@ -56,7 +56,7 @@ export class IndexingResolver {
       return payload.indexingJobUpdated.jobId === variables.jobId;
     },
   })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // oxlint-disable-next-line eslint/no-unused-vars
   indexingJobUpdated(@Args("jobId") jobId: string) {
     return this.pubSub.asyncIterableIterator(INDEXING_JOB_UPDATED);
   }

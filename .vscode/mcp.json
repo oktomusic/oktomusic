@@ -1,10 +1,5 @@
 {
   "servers": {
-    "ESLint": {
-      "type": "stdio",
-      "command": "pnpm",
-      "args": ["dlx", "@eslint/mcp@latest"]
-    },
     "playwright": {
       "type": "stdio",
       "command": "pnpm",

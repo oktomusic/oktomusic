@@ -3,7 +3,7 @@ import { suite, test, expect } from "vitest";
 import { LyricsSchema } from "./model";
 
 void suite("Lyrics schema", () => {
-  void test("accepts a valid lyrics object", () => {
+  test("accepts a valid lyrics object", () => {
     const data = [
       {
         ts: 1000,
@@ -21,7 +21,7 @@ void suite("Lyrics schema", () => {
     expect(result.success).toBe(true);
   });
 
-  void test("rejects non-positive ts/te/d", () => {
+  test("rejects non-positive ts/te/d", () => {
     const invalids = [
       // ts must be positive
       [
@@ -58,7 +58,7 @@ void suite("Lyrics schema", () => {
     }
   });
 
-  void test("rejects wrong types and missing properties", () => {
+  test("rejects wrong types and missing properties", () => {
     const invalids: unknown[] = [
       // Not an array
       { ts: 1, te: 2, l: [], t: "" },
@@ -113,7 +113,7 @@ void suite("Lyrics schema", () => {
     }
   });
 
-  void test("allows empty tokens array", () => {
+  test("allows empty tokens array", () => {
     const data = [
       {
         ts: 1,

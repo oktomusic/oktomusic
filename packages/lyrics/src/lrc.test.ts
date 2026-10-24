@@ -8,25 +8,25 @@ import { parseLrcTimeToMs } from "./lrc/time";
 import { LyricsSchema } from "./model";
 
 void suite("LRC time parser", () => {
-  void test("parses standard format mm:ss.cc (centiseconds)", () => {
+  test("parses standard format mm:ss.cc (centiseconds)", () => {
     expect(parseLrcTimeToMs("[00:12.00]")).toBe(12_000);
     expect(parseLrcTimeToMs("[00:17.20]")).toBe(17_200);
     expect(parseLrcTimeToMs("[01:23.45]")).toBe(83_450);
   });
 
-  void test("parses format with milliseconds", () => {
+  test("parses format with milliseconds", () => {
     expect(parseLrcTimeToMs("[00:12.000]")).toBe(12_000);
     expect(parseLrcTimeToMs("[00:17.200]")).toBe(17_200);
     expect(parseLrcTimeToMs("[01:23.456]")).toBe(83_456);
   });
 
-  void test("parses angle bracket format for enhanced LRC", () => {
+  test("parses angle bracket format for enhanced LRC", () => {
     expect(parseLrcTimeToMs("<00:00.00>")).toBe(0);
     expect(parseLrcTimeToMs("<00:00.50>")).toBe(500);
     expect(parseLrcTimeToMs("<00:01.00>")).toBe(1000);
   });
 
-  void test("returns undefined for invalid formats", () => {
+  test("returns undefined for invalid formats", () => {
     expect(parseLrcTimeToMs("")).toBe(undefined);
     expect(parseLrcTimeToMs("invalid")).toBe(undefined);
     expect(parseLrcTimeToMs("[00:00]")).toBe(undefined);
@@ -35,7 +35,7 @@ void suite("LRC time parser", () => {
 });
 
 void suite("Standard LRC parser", () => {
-  void test("parses standard LRC file", () => {
+  test("parses standard LRC file", () => {
     const file = resolve(__dirname, "./test/test_standard.lrc");
     const lrc = readFileSync(file, "utf8");
     const parsed = parseLRCtoLyrics(lrc);
@@ -47,7 +47,7 @@ void suite("Standard LRC parser", () => {
     expect(parsed[1]?.t).toBe("Line 2 lyrics");
   });
 
-  void test("standard LRC matches LyricsSchema", () => {
+  test("standard LRC matches LyricsSchema", () => {
     const file = resolve(__dirname, "./test/test_standard.lrc");
     const lrc = readFileSync(file, "utf8");
     const parsed = parseLRCtoLyrics(lrc);
@@ -55,7 +55,7 @@ void suite("Standard LRC parser", () => {
     expect(result.success).toBe(true);
   });
 
-  void test("calculates end times from next line timestamp", () => {
+  test("calculates end times from next line timestamp", () => {
     const lrc = `[00:01.00]First line
 [00:03.00]Second line
 [00:05.00]Third line`;
@@ -67,7 +67,7 @@ void suite("Standard LRC parser", () => {
     expect(parsed[1]?.te).toBe(5000);
   });
 
-  void test("estimates end time for last line", () => {
+  test("estimates end time for last line", () => {
     const lrc = `[00:01.00]Only line`;
     const parsed = parseLRCtoLyrics(lrc);
 
@@ -75,7 +75,7 @@ void suite("Standard LRC parser", () => {
     expect(parsed[0]?.te).toBeGreaterThan(1000); // Should have estimated end time
   });
 
-  void test("ignores metadata lines", () => {
+  test("ignores metadata lines", () => {
     const lrc = `[ar:Artist Name]
 [ti:Song Title]
 [00:01.00]Actual lyrics`;
@@ -85,7 +85,7 @@ void suite("Standard LRC parser", () => {
     expect(parsed[0]?.t).toBe("Actual lyrics");
   });
 
-  void test("handles empty lines", () => {
+  test("handles empty lines", () => {
     const lrc = `[00:01.00]First line
 
 [00:03.00]Second line`;
@@ -98,7 +98,7 @@ void suite("Standard LRC parser", () => {
 });
 
 void suite("Enhanced LRC parser", () => {
-  void test("parses enhanced LRC file with word timestamps", () => {
+  test("parses enhanced LRC file with word timestamps", () => {
     const file = resolve(__dirname, "./test/test_enhanced.lrc");
     const lrc = readFileSync(file, "utf8");
     const parsed = parseLRCtoLyrics(lrc);
@@ -109,7 +109,7 @@ void suite("Enhanced LRC parser", () => {
     expect(parsed[0]?.l.length).toBeGreaterThan(1); // Should have multiple tokens
   });
 
-  void test("enhanced LRC matches LyricsSchema", () => {
+  test("enhanced LRC matches LyricsSchema", () => {
     const file = resolve(__dirname, "./test/test_enhanced.lrc");
     const lrc = readFileSync(file, "utf8");
     const parsed = parseLRCtoLyrics(lrc);
@@ -117,7 +117,7 @@ void suite("Enhanced LRC parser", () => {
     expect(result.success).toBe(true);
   });
 
-  void test("word timestamps create tokens with correct offsets", () => {
+  test("word timestamps create tokens with correct offsets", () => {
     const lrc = `[00:00.00]<00:00.00>First <00:00.50>second <00:01.00>third`;
     const parsed = parseLRCtoLyrics(lrc);
 
@@ -132,7 +132,7 @@ void suite("Enhanced LRC parser", () => {
     expect(parsed[0]?.l[2]?.d).toBe(999);
   });
 
-  void test("handles mixed format - prefers enhanced when detected", () => {
+  test("handles mixed format - prefers enhanced when detected", () => {
     const lrc = `[00:01.00]<00:01.00>Word1 <00:01.50>Word2
 [00:03.00]Plain line without words`;
     const parsed = parseLRCtoLyrics(lrc);

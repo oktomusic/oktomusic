@@ -8,7 +8,7 @@
   "editor.indentSize": 2,
   "editor.detectIndentation": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always",
+    "source.fixAll.oxc": "always",
     "source.fixAll.ts": "always"
   },
   "editor.quickSuggestions": {
@@ -18,7 +18,9 @@
   },
   "files.insertFinalNewline": true,
   "files.eol": "\n",
+  "oxc.enable.oxlint": true,
   "oxc.enable.oxfmt": true,
+  "oxc.configPath": "oxlint.config.ts",
   "oxc.fmt.configPath": "oxfmt.config.ts",
   "npm.packageManager": "pnpm",
   "material-icon-theme.activeIconPack": "nest",
@@ -246,6 +248,42 @@
     "*.xspf": "xml",
     "*.jspf": "json"
   },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.tabSize": 2
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.tabSize": 2
+  },
+  "[tailwindcss]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.tabSize": 2
+  },
+  "[jsonc]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.tabSize": 2
+  },
+  "[snippets]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.tabSize": 2
+  },
   "[yaml]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
@@ -257,7 +295,23 @@
       "other": true,
       "comments": false
     },
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.tabSize": 2
+  },
+  "[markdown]": {
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    },
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[xml]": {
     "editor.autoClosingBrackets": "never",
@@ -276,8 +330,5 @@
   },
   "tinymist.formatterMode": "typstfmt",
   "js/ts.tsdk.path": "node_modules/typescript/lib",
-  "eslint.enable": true,
-  "eslint.options": {
-    "flags": ["unstable_native_nodejs_ts_config"]
-  }
+  "eslint.enable": false
 }

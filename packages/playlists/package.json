@@ -30,8 +30,8 @@
     "dev": "tsdown --watch",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "lint": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts packages/playlists",
-    "lint:fix": "pnpm -w exec eslint --flag unstable_native_nodejs_ts_config -c eslint.config.ts --fix packages/playlists"
+    "lint": "pnpm -w exec oxlint packages/playlists",
+    "lint:fix": "pnpm -w exec oxlint --fix packages/playlists"
   },
   "dependencies": {
     "fast-xml-parser": "catalog:default",

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ImageBase, type ImageData, type ImageSource } from "@vibrant/image";
 import type { Sharp } from "sharp";
 

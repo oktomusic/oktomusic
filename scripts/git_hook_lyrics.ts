@@ -56,7 +56,7 @@ try {
   execSync(scriptCommand, {
     stdio: "ignore",
   });
-} catch (err) {
+} catch {
   console.error("Failed to run command");
   process.exit(1);
 }

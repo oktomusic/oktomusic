@@ -19,8 +19,8 @@ import { MetaTagsService } from "../common/metatags/metatags.service";
 import appConfig, { type AppConfig } from "../config/definitions/app.config";
 import viteConfig, { type ViteConfig } from "../config/definitions/vite.config";
 import { getAssetTags, type ViteManifest } from "../utils/vite_manifest";
-import { ViewModel, ViewModelOpenSearch } from "./view-model";
 import { getDiscordEmbedJson } from "./discord-embed";
+import { ViewModel, ViewModelOpenSearch } from "./view-model";
 
 @Controller()
 export class ViewsController {

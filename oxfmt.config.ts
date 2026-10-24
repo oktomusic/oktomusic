@@ -89,6 +89,7 @@ export default defineConfig({
   sortPackageJson: true,
   sortTailwindcss: true,
   ignorePatterns: [
+    ".agents/skills/**",
     ".github/skills/**",
     "apps/backend/dist",
     "apps/backend/prisma/migrations/**",

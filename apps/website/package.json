@@ -7,8 +7,8 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "lint": "pnpm -w exec eslint -c eslint.config.ts --no-error-on-unmatched-pattern apps/website",
-    "lint:fix": "pnpm -w exec eslint -c eslint.config.ts --no-error-on-unmatched-pattern --fix apps/website",
+    "lint": "pnpm -w exec oxlint apps/website",
+    "lint:fix": "pnpm -w exec oxlint --fix apps/website",
     "pwa-assets": "pwa-assets-generator --config pwa-assets.config.ts"
   },
   "devDependencies": {

@@ -7,7 +7,7 @@ import { parseTTMLtoLyrics } from "./index";
 import { LyricsSchema } from "./model";
 
 void suite("Lyrics parser", () => {
-  void test("schema: parsed TTML matches LyricsSchema", () => {
+  test("schema: parsed TTML matches LyricsSchema", () => {
     const file = resolve(__dirname, "./test/test.ttml");
     const xml = readFileSync(file, "utf8");
     const parsed = parseTTMLtoLyrics(xml);
