@@ -444,13 +444,13 @@ jobs:
         run: typst compile --root . docs/certification/oktomusic_project_presentation_fr.typ docs/certification/oktomusic_project_presentation_fr.pdf
 
       - name: Upload report PDF as Artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           path: docs/certification/oktomusic_project_report_fr.pdf
           archive: false
 
       - name: Upload presentation PDF as Artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           path: docs/certification/oktomusic_project_presentation_fr.pdf
           archive: false
