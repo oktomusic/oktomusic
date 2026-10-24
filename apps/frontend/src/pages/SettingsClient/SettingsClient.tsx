@@ -11,6 +11,7 @@ import {
 } from "../../atoms/app/atoms.ts";
 import {
   audioSessionSupportAtom,
+  batterySupportAtom,
   translatorSupportAtom,
 } from "../../atoms/app/browser_support.ts";
 import {
@@ -20,6 +21,7 @@ import {
 import {
   AudioSessionKey,
   settingClientAudioSession,
+  settingClientBatteryIndicator,
   settingClientCrossfadeSeconds,
   settingClientKioskMode,
   settingClientLyricsDisplayMode,
@@ -47,6 +49,10 @@ export function SettingsClient() {
   const { t } = useLingui();
 
   const [kioskMode, setKioskMode] = useAtom(settingClientKioskMode);
+  const [batteryIndicator, setBatteryIndicator] = useAtom(
+    settingClientBatteryIndicator,
+  );
+  const batterySupported = useAtomValue(batterySupportAtom);
   const [playlistExport, setPlaylistExport] = useAtom(
     settingClientPlaylistExport,
   );
@@ -158,6 +164,33 @@ export function SettingsClient() {
               id="settings:client:kiosk-mode"
               checked={kioskMode}
               onCheckedChange={setKioskMode}
+            />
+          </div>
+
+          <div className="flex min-h-14 flex-row items-center justify-between gap-4 py-2">
+            <div className="flex flex-col gap-1">
+              <label htmlFor="settings:client:battery-indicator">
+                {t`Show battery indicator:`}
+              </label>
+              {!batterySupported && (
+                <p
+                  id="settings:client:battery-indicator-description"
+                  className="text-sm text-white/80"
+                >
+                  {t`Battery information is unavailable in this browser or context.`}
+                </p>
+              )}
+            </div>
+            <OktoSwitch
+              id="settings:client:battery-indicator"
+              checked={batteryIndicator}
+              onCheckedChange={setBatteryIndicator}
+              disabled={!batterySupported}
+              aria-describedby={
+                !batterySupported
+                  ? "settings:client:battery-indicator-description"
+                  : undefined
+              }
             />
           </div>
 
@@ -341,6 +374,7 @@ export function SettingsClient() {
               onClick={() => {
                 // Reset all settings to their default values
                 setKioskMode(RESET);
+                setBatteryIndicator(RESET);
                 setAudioSessionType(RESET);
                 setWakeLockMode(RESET);
                 setLyricsDisplayMode(RESET);

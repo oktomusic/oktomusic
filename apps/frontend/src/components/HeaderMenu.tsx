@@ -21,6 +21,7 @@ import { settingClientKioskMode } from "../atoms/app/settings_client";
 import { authSessionAtom } from "../atoms/auth/atoms";
 import { useNavigationHistory } from "../hooks/use_navigation_history";
 import { OktoMenu, OktoMenuItem } from "./Base/OktoMenu";
+import { BatteryIndicator } from "./BatteryIndicator.tsx";
 import { HeaderMenuSearch } from "./HeaderMenuSearch";
 
 export function HeaderMenu() {
@@ -109,8 +110,8 @@ export function HeaderMenu() {
         </Link>
       </div>
       <HeaderMenuSearch />
-      <div className="flex w-full grow"></div>
-      <div className="mr-2 flex flex-row items-center justify-end gap-2">
+      <div className="min-w-0 flex-1" />
+      <div className="mr-2 flex shrink-0 flex-row items-center justify-end gap-2">
         {pwaDeferedPrompt && (
           <Button
             className="hide-in-standalone flex aspect-square size-8 items-center justify-center rounded-full"
@@ -122,6 +123,7 @@ export function HeaderMenu() {
             <LuCircleArrowDown className="size-6" />
           </Button>
         )}
+        <BatteryIndicator />
         <Link
           to="/settings/client"
           title="Client Settings"

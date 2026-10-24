@@ -53,6 +53,12 @@ export const browserSupportedAtom = atom(
   (get) => get(browserSupportAtom).supported,
 );
 
+export const batterySupportAtom = atom<boolean>(
+  () =>
+    typeof navigator !== "undefined" &&
+    typeof navigator.getBattery === "function",
+);
+
 /**
  * @see https://www.w3.org/TR/audio-session
  */

@@ -14,7 +14,7 @@ import { NextFunction, Request, Response } from "express";
 type PermissionsPolicyWhitelist = "*" | "self" | "src" | [] | string[];
 
 /**
- * Commented-out directives appears on MDN but trigger a warning in latest Chrome
+ * Commented-out directives are specified but trigger a warning in latest Chrome.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy#directives
  */
@@ -23,6 +23,7 @@ type PermissionsPolicyDirective =
   // | "ambient-light-sensor"
   | "aria-notify"
   | "autoplay"
+  // | "battery"
   // | "bluetooth"
   | "camera"
   | "captured-surface-control"
@@ -73,6 +74,7 @@ export const permissionsPolicy: PermissionsPolicyMap = {
   // "ambient-light-sensor": [],
   "aria-notify": [],
   autoplay: "self",
+  // battery: "self", // https://w3c.github.io/battery/#permissions-policy-integration
   // bluetooth: [],
   camera: [],
   "captured-surface-control": [],

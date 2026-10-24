@@ -1,5 +1,15 @@
 // Web APIs not yet in TypeScript
 
+// https://w3c.github.io/battery/
+interface Navigator {
+  getBattery?(): Promise<BatteryManager>;
+}
+
+interface BatteryManager extends EventTarget {
+  readonly level: number;
+  readonly charging: boolean;
+}
+
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowControlsOverlay
 interface Navigator {
   windowControlsOverlay?: {

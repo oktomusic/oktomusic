@@ -14,6 +14,19 @@ export const settingClientKioskMode = atomWithStorage<boolean>(
   },
 );
 
+// Battery Indicator Setting
+
+const batteryIndicatorLocalStorageKey = "oktomusic:battery_indicator";
+
+export const settingClientBatteryIndicator = atomWithStorage<boolean>(
+  batteryIndicatorLocalStorageKey,
+  false,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
 // Audio Session Setting
 
 const audioSessionLocalStorageKey = "oktomusic:audio_session";

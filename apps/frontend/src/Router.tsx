@@ -13,6 +13,7 @@ import {
 import { authSessionAtom } from "./atoms/auth/atoms.ts";
 import { AuthSessionInitializer } from "./components/AuthSessionInitializer.tsx";
 import { WindowControls } from "./components/WindowControls.tsx";
+import { useBatteryStatus } from "./hooks/battery_status.ts";
 import { useKioskExitHandler } from "./hooks/kiosk_exit_handler.ts";
 import { useStoragePersistence } from "./hooks/persistent_storage.ts";
 import { usePwaDeferredPrompt } from "./hooks/pwa_prompt.ts";
@@ -42,6 +43,7 @@ export function Router() {
   useStoragePersistence();
   usePwaDeferredPrompt();
   useKioskExitHandler();
+  useBatteryStatus();
 
   useSWRegister();
 
