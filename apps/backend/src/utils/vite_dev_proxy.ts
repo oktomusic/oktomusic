@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 export const vitePrefixes = [
   "/dev-sw.js",
+  "/llms.txt",
   "/src/sw",
   "/node_modules/",
 ] as const;

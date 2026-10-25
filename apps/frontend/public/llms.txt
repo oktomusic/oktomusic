@@ -1,0 +1,10 @@
+# Oktomusic
+
+> Oktomusic is an open-source, self-hosted, opinionated music streaming server for your personal music collection.
+
+## Project
+
+- [GitHub](https://github.com/oktomusic/oktomusic): Source code, issues, and releases.
+- [Documentation](https://oktomusic.afcms.dev): Installation, configuration, and usage guides.
+- [Documentation index for LLMs](https://oktomusic.afcms.dev/llms.txt): Links to documentation in Markdown.
+- [Full documentation for LLMs](https://oktomusic.afcms.dev/llms-full.txt): Complete documentation in a single text file.
