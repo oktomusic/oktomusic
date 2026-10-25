@@ -31,7 +31,7 @@
     "@commitlint/config-conventional": "^21.2.4",
     "@commitlint/types": "^21.2.3",
     "@e18e/eslint-plugin": "^0.8.1",
-    "@oxc-node/core": "^0.1.7",
+    "@oxc-node/core": "^1.0.1",
     "@types/node": "catalog:default",
     "@vitest/coverage-v8": "^5.0.5",
     "@vitest/ui": "^5.0.5",
@@ -52,7 +52,7 @@
     },
     "runtime": {
       "name": "node",
-      "version": "^24",
+      "version": "^26",
       "onFail": "error"
     }
   }

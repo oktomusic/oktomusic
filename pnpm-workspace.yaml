@@ -20,13 +20,13 @@ blockExoticSubdeps: true
 
 catalogs:
   default:
-    "@types/node": ^24.13.4
-    fast-xml-parser: ^5.11.1
-    sharp: ^0.35.4
-    temporal-polyfill: ^1.0.4
-    tsdown: ^0.23.0
+    "@types/node": ^26.6.5
+    fast-xml-parser: ^5.11.2
+    sharp: ^0.35.5
+    temporal-polyfill: ^1.0.6
+    tsdown: ^0.23.2
     typescript: ^6.0.3
-    zod: ^4.6.1
+    zod: ^4.6.7
 
 injectWorkspacePackages: true
 
@@ -58,3 +58,5 @@ permissions:
     skills: true
   jotai-rolldown:
     build: true
+  prisma-json-types-generator:
+    skills: true
