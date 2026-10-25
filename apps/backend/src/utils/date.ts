@@ -1,5 +1,3 @@
-import { Temporal } from "temporal-polyfill";
-
 /**
  * Matches a strict ISO-like calendar date string: `YYYY-MM-DD`.
  *

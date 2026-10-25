@@ -1,4 +1,3 @@
-import { Temporal } from "temporal-polyfill";
 import { expect, suite, test } from "vitest";
 
 import { parseMetaflacTags } from "../src";

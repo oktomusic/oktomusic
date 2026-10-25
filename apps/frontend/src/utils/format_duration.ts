@@ -1,5 +1,3 @@
-import { Temporal } from "temporal-polyfill";
-
 type FormatDurationLongResult = (
   | {
       readonly hours: number;

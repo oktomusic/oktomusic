@@ -34,7 +34,6 @@
     "lint:fix": "pnpm -w exec oxlint --fix packages/metaflac-parser"
   },
   "dependencies": {
-    "temporal-polyfill": "catalog:default",
     "zod": "catalog:default"
   },
   "devDependencies": {

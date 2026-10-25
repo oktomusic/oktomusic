@@ -1,5 +1,4 @@
 import { atom } from "jotai";
-import { Temporal } from "temporal-polyfill";
 
 export interface BrowserSupport {
   readonly supported: boolean;

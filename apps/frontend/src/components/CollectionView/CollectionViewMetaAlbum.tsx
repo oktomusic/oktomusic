@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 import { Plural } from "@lingui/react/macro";
-import { Temporal } from "temporal-polyfill";
 
 import { DurationLong } from "../DurationLong";
 
