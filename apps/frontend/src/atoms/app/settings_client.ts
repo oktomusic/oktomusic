@@ -175,6 +175,19 @@ export const settingClientPlaylistExport = atomWithStorage<boolean>(
   },
 );
 
+// Album/Playlist Print Setting
+
+const albumPlaylistPrintLocalStorageKey = "oktomusic:album_playlist_print";
+
+export const settingClientAlbumPlaylistPrint = atomWithStorage<boolean>(
+  albumPlaylistPrintLocalStorageKey,
+  false,
+  undefined,
+  {
+    getOnInit: true,
+  },
+);
+
 // Lyrics display mode
 
 const lyricsDisplayModeLocalStorageKey = "oktomusic:lyrics_display_mode";

@@ -2,16 +2,26 @@ import { useParams } from "react-router";
 import { useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
-import { LuCircleMinus, LuListPlus, LuPen, LuShare } from "react-icons/lu";
+import {
+  LuCircleMinus,
+  LuListPlus,
+  LuPen,
+  LuPrinter,
+  LuShare,
+} from "react-icons/lu";
 
 import { LibraryItemType, Role } from "../../api/graphql/gql/graphql";
 import { PLAYLIST_QUERY } from "../../api/graphql/queries/playlist";
 import coverPlaceHolder from "../../assets/pip-cover-placeholder.svg";
 import {
+  dialogAlbumPlaylistPrintAtom,
   dialogPlaylistDeleteOpenAtom,
   dialogPlaylistOpenAtom,
 } from "../../atoms/app/dialogs";
-import { settingClientPlaylistExport } from "../../atoms/app/settings_client";
+import {
+  settingClientAlbumPlaylistPrint,
+  settingClientPlaylistExport,
+} from "../../atoms/app/settings_client";
 import { authSessionAtom } from "../../atoms/auth/atoms";
 import {
   addToQueueAtom,
@@ -47,9 +57,14 @@ export function Playlist() {
     user.status === "authenticated" && user.user.role === Role.Admin;
 
   const playlistExport = useAtomValue(settingClientPlaylistExport);
+  const playlistAlbumPrint = useAtomValue(settingClientAlbumPlaylistPrint);
 
   const setDialogPlaylistOpen = useSetAtom(dialogPlaylistOpenAtom);
   const setDialogPlaylistDeleteOpen = useSetAtom(dialogPlaylistDeleteOpenAtom);
+
+  const setDialogAlbumPlaylistPrintOpen = useSetAtom(
+    dialogAlbumPlaylistPrintAtom,
+  );
 
   const { data, loading, error } = useQuery(PLAYLIST_QUERY, {
     variables: { id: cuid! },
@@ -183,6 +198,18 @@ export function Playlist() {
       type: "submenu",
       component: <SubmenuPlaylistExport playlistId={playlist.id} />,
       hidden: !playlistExport,
+    },
+    {
+      type: "button",
+      label: t`Print playlist`,
+      icon: <LuPrinter className="size-4" />,
+      onClick: () => {
+        setDialogAlbumPlaylistPrintOpen({
+          subject: playlistToPlaylistBasic(playlist),
+          colors: playlistColors,
+        });
+      },
+      hidden: !playlistAlbumPrint,
     },
   ] as const satisfies readonly OktoMenuItem[];
 

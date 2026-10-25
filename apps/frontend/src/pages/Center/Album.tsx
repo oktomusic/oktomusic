@@ -2,12 +2,16 @@ import { useParams } from "react-router";
 import { useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
-import { LuListPlus, LuShare } from "react-icons/lu";
+import { LuListPlus, LuPrinter, LuShare } from "react-icons/lu";
 import { Temporal } from "temporal-polyfill";
 
 import { LibraryItemType } from "../../api/graphql/gql/graphql";
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";
-import { dialogCoverId } from "../../atoms/app/dialogs";
+import {
+  dialogAlbumPlaylistPrintAtom,
+  dialogCoverId,
+} from "../../atoms/app/dialogs";
+import { settingClientAlbumPlaylistPrint } from "../../atoms/app/settings_client";
 import {
   addToQueueAtom,
   playerQueueCurrentTrackSourceAtom,
@@ -16,7 +20,7 @@ import {
   replaceQueueAtom,
   requestPlaybackToggleAtom,
   type PlayerQueueFrom,
-  type VibrantColorsPartial,
+  type VibrantColors,
 } from "../../atoms/player/machine";
 import { type OktoMenuItem } from "../../components/Base/OktoMenu";
 import { CollectionView } from "../../components/CollectionView/CollectionView";
@@ -41,7 +45,7 @@ export function Album() {
     skip: !cuid,
   });
 
-  const albumColors: VibrantColorsPartial = {
+  const albumColors: VibrantColors = {
     vibrant: data?.album.coverColorVibrant ?? "#ffffff",
     darkVibrant: data?.album.coverColorDarkVibrant ?? "#ffffff",
     lightVibrant: data?.album.coverColorLightVibrant ?? "#ffffff",
@@ -49,6 +53,12 @@ export function Album() {
     darkMuted: data?.album.coverColorDarkMuted ?? "#ffffff",
     lightMuted: data?.album.coverColorLightMuted ?? "#ffffff",
   };
+
+  const playlistAlbumPrint = useAtomValue(settingClientAlbumPlaylistPrint);
+
+  const setDialogAlbumPlaylistPrintOpen = useSetAtom(
+    dialogAlbumPlaylistPrintAtom,
+  );
 
   const replaceQueue = useSetAtom(replaceQueueAtom);
   const currentQueueFrom = useAtomValue(playerQueueFromAtom);
@@ -123,6 +133,18 @@ export function Album() {
       onClick: () => {
         addToQueue(flatTracks);
       },
+    },
+    {
+      type: "button",
+      label: t`Print album`,
+      icon: <LuPrinter className="size-4" />,
+      onClick: () => {
+        setDialogAlbumPlaylistPrintOpen({
+          subject: albumToAlbumBasic(data!.album),
+          colors: albumColors,
+        });
+      },
+      hidden: !playlistAlbumPrint,
     },
   ];
 

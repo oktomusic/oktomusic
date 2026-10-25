@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { useAtom } from "jotai";
 
 import { pipOpenAtom, pipSupportedAtom } from "../../atoms/player/pip";
+import { cloneStyles } from "../../utils/styles";
 import { PipControlsWindow } from "./PipControlsWindow";
 
 import "./PipControls.css";
@@ -44,22 +45,11 @@ export function PipControls(): ReactPortal | null {
 
         const doc = pipWin.document;
 
-        [...document.querySelectorAll('link[rel="stylesheet"]')].forEach(
-          (link) => {
-            doc.head.appendChild(link.cloneNode(true));
-          },
-        );
+        cloneStyles(document, doc);
 
         doc.title = "Oktomusic PiP";
         doc.body.id = "pip-body";
         doc.documentElement.lang = document.documentElement.lang || "en";
-
-        // In dev mode styles are applied via style tags
-        if (import.meta.env.DEV) {
-          [...document.querySelectorAll("style")].forEach((style) => {
-            doc.head.appendChild(style.cloneNode(true));
-          });
-        }
 
         const container = doc.createElement("main");
         container.id = "pip-shell";

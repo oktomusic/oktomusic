@@ -11,6 +11,7 @@ import {
 import { DialogCover } from "./components/Dialogs/DialogCover";
 import { DialogPlaylistDelete } from "./components/Dialogs/DialogPlaylistDelete";
 import { DialogPlaylistEdit } from "./components/Dialogs/DialogPlaylistEdit";
+import { DialogPrint } from "./components/Dialogs/DialogPrint";
 import { HeaderMenu } from "./components/HeaderMenu";
 import { OktoDragOverlay } from "./components/OktoDragOverlay";
 import { PipControls } from "./components/PipControls/PipControls";
@@ -46,6 +47,7 @@ export function App() {
           <DialogCover />
           <DialogPlaylistDelete />
           <DialogPlaylistEdit />
+          <DialogPrint />
           <div
             id="oktomusic:content-grid"
             data-left={leftExpanded ? "expanded" : "collapsed"}

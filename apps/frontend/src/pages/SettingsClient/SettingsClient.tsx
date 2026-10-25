@@ -26,6 +26,7 @@ import {
   settingClientKioskMode,
   settingClientLyricsDisplayMode,
   settingClientLyricsTranslationEnabled,
+  settingClientAlbumPlaylistPrint,
   settingClientPlaylistExport,
   settingClientRestartThresholdSeconds,
   settingClientSWMediaMaxAge,
@@ -55,6 +56,9 @@ export function SettingsClient() {
   const batterySupported = useAtomValue(batterySupportAtom);
   const [playlistExport, setPlaylistExport] = useAtom(
     settingClientPlaylistExport,
+  );
+  const [playlistAlbumPrint, setPlaylistAlbumPrint] = useAtom(
+    settingClientAlbumPlaylistPrint,
   );
   const [audioSessionType, setAudioSessionType] = useAtom(
     settingClientAudioSession,
@@ -203,6 +207,18 @@ export function SettingsClient() {
               id="settings:client:playlist-export"
               checked={playlistExport}
               onCheckedChange={setPlaylistExport}
+            />
+          </div>
+
+          <div className="flex h-14 flex-row items-center justify-between py-2">
+            <label
+              htmlFor="settings:client:playlist-album-printing"
+              className=""
+            >{t`Album/Playlist printing:`}</label>
+            <OktoSwitch
+              id="settings:client:playlist-album-printing"
+              checked={playlistAlbumPrint}
+              onCheckedChange={setPlaylistAlbumPrint}
             />
           </div>
 
