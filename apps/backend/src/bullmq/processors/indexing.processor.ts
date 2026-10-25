@@ -9,7 +9,6 @@ import { type ConfigType } from "@nestjs/config";
 import { Job } from "bullmq";
 import { PubSub } from "graphql-subscriptions";
 import sharp from "sharp";
-import { Temporal } from "temporal-polyfill";
 
 import type { Lyrics } from "@oktomusic/lyrics";
 import type { MetaflacTags } from "@oktomusic/metaflac-parser";

@@ -3,7 +3,6 @@ import { useQuery } from "@apollo/client/react";
 import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LuListPlus, LuPrinter, LuShare } from "react-icons/lu";
-import { Temporal } from "temporal-polyfill";
 
 import { LibraryItemType } from "../../api/graphql/gql/graphql";
 import { ALBUM_QUERY } from "../../api/graphql/queries/album";

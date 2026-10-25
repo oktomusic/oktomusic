@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/CollectionView/CollectionViewMetaAlbum.tsx:44
+#: src/components/CollectionView/CollectionViewMetaAlbum.tsx:43
 #: src/components/CollectionView/CollectionViewMetaPlaylist.tsx:52
 msgid "{count, plural, one {# track} other {# tracks}}"
 msgstr "{count, plural, one {# titre} other {# titres}}"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: src/components/QueueTrack/QueueTrack.tsx:45
 #: src/components/TrackList/TrackElement.tsx:103
-#: src/pages/Center/Album.tsx:132
+#: src/pages/Center/Album.tsx:131
 #: src/pages/Center/Playlist.tsx:160
 msgid "Add to queue"
 msgstr ""
@@ -70,7 +70,7 @@ msgstr ""
 
 #: src/components/LibraryRow/LibraryRow.tsx:83
 #: src/components/TrackList/TrackList.tsx:447
-#: src/pages/Center/Album.tsx:153
+#: src/pages/Center/Album.tsx:152
 msgid "Album"
 msgstr "Album"
 
@@ -620,7 +620,7 @@ msgid "Previous"
 msgstr "Précédent"
 
 #: src/components/Dialogs/DialogPrint.tsx:43
-#: src/pages/Center/Album.tsx:139
+#: src/pages/Center/Album.tsx:138
 msgid "Print album"
 msgstr ""
 
@@ -734,7 +734,7 @@ msgstr ""
 msgid "Sex :"
 msgstr "Sexe :"
 
-#: src/pages/Center/Album.tsx:125
+#: src/pages/Center/Album.tsx:124
 #: src/pages/Center/Artist.tsx:59
 #: src/pages/Center/Playlist.tsx:167
 #: src/pages/Center/User.tsx:79

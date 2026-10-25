@@ -40,7 +40,6 @@
     "@vibrant/image": "^4.0.4",
     "@vibrant/quantizer-mmcq": "^4.0.4",
     "sharp": "catalog:default",
-    "temporal-polyfill": "catalog:default",
     "zod": "catalog:default"
   },
   "devDependencies": {

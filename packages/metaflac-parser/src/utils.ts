@@ -1,4 +1,3 @@
-import { Temporal } from "temporal-polyfill";
 import z from "zod";
 
 export type MetaflacLinesParseResult = Record<string, string[]>;

@@ -1,5 +1,3 @@
-import { Temporal } from "temporal-polyfill";
-
 /**
  * Minimal track information required to build a stable per-album track signature.
  */
