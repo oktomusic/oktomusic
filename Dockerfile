@@ -2,12 +2,12 @@
 # check=error=true
 
 # Supported base images:
-# - node:24-alpine (builder and production)
-# - dhi.io/node:24-alpine3.24-dev (builder and production)
-# - dhi.io/node:24-alpine3.24 (production)
+# - node:26-alpine (builder and production)
+# - dhi.io/node:26-alpine3.24-dev (builder and production)
+# - dhi.io/node:26-alpine3.24 (production)
 
-ARG IMAGE_BUILDER=dhi.io/node:24-alpine3.24-dev
-ARG IMAGE_PROD=dhi.io/node:24-alpine3.24
+ARG IMAGE_BUILDER=dhi.io/node:26-alpine3.24-dev
+ARG IMAGE_PROD=dhi.io/node:26-alpine3.24
 
 FROM --platform=$BUILDPLATFORM ${IMAGE_BUILDER} AS builder
 
