@@ -241,7 +241,9 @@
     "iex": false
   },
   "files.associations": {
+    "**/.github/workflows/*.{yml,yaml}": "github-actions-workflow",
     "_headers": "plaintext", // Cloudflare _headers file, tend to be misdetected as TypeScript
+    "llms.txt": "markdown",
     "*.ttml": "xml",
     "*.css": "tailwindcss",
     "*.m3u": "plaintext",
