@@ -18,6 +18,7 @@ export async function dynamicActivate(
 
   i18n.load(locale, messages);
   i18n.activate(locale);
+  document.documentElement.lang = locale;
 
   return true;
 }

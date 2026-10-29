@@ -15,9 +15,17 @@ import { SettingsAccount } from "./SettingsAccount/SettingsAccount";
 import { SettingsAdmin } from "./SettingsAdmin/SettingsAdmin";
 import { SettingsClient } from "./SettingsClient/SettingsClient";
 
-export function PanelCenter() {
+interface PanelCenterProps {
+  readonly inert: boolean;
+}
+
+export function PanelCenter(props: PanelCenterProps) {
   return (
-    <OktoScrollArea id="oktomusic:panel-center" className="rounded bg-zinc-900">
+    <OktoScrollArea
+      id="oktomusic:panel-center"
+      className="rounded bg-zinc-900"
+      inert={props.inert}
+    >
       <Routes>
         <Route element={<ProtectedRoutes />}>
           <Route index element={<Home />} />

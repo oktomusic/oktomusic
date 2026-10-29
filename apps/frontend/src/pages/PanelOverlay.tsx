@@ -1,4 +1,6 @@
+import { useEffect, useId, useRef } from "react";
 import { Button } from "@base-ui/react/button";
+import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LuLoaderCircle, LuX } from "react-icons/lu";
 
@@ -10,6 +12,10 @@ import { LyricsViewer } from "../components/LyricsViewer";
 import { usePanelOverlayTranslation } from "../hooks/use_panel_overlay_translation";
 
 export function PanelOverlay() {
+  const { t } = useLingui();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const headingId = useId();
   const closeOverlay = useSetAtom(panelOverlayVisibleAtom);
   const currentTrack = useAtomValue(playerQueueCurrentTrack);
   const panelOverlayTranslation = usePanelOverlayTranslation();
@@ -20,16 +26,47 @@ export function PanelOverlay() {
     panelOverlayTranslation.lyricsError === undefined &&
     panelOverlayTranslation.lyrics.length > 0;
 
+  useEffect(() => {
+    const opener = document.activeElement;
+    const panel = panelRef.current;
+    closeButtonRef.current?.focus();
+
+    return () => {
+      const focusIsInPanel =
+        document.activeElement === document.body ||
+        panel?.contains(document.activeElement);
+
+      if (
+        focusIsInPanel &&
+        opener instanceof HTMLElement &&
+        opener.isConnected
+      ) {
+        opener.focus();
+      }
+    };
+  }, []);
+
   return (
     <div
       id="oktomusic:panel-overlay"
+      ref={panelRef}
       className="relative flex h-full min-h-0 w-full flex-col overflow-hidden rounded"
       role="region"
+      aria-labelledby={headingId}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && !event.defaultPrevented) {
+          event.stopPropagation();
+          closeOverlay(false);
+        }
+      }}
     >
+      <h2 id={headingId} className="sr-only">{t`Lyrics`}</h2>
       <Button
+        ref={closeButtonRef}
         type="button"
         className="absolute top-4 left-4 z-10 rounded p-2 hover:bg-white/10 focus-visible:outline-offset-2"
-        title="Close"
+        title={t`Close lyrics`}
+        aria-label={t`Close lyrics`}
         onClick={() => {
           closeOverlay(false);
         }}
@@ -40,6 +77,7 @@ export function PanelOverlay() {
       <OktoScrollArea className="min-h-0 flex-1">
         <LyricsViewer
           selectedLanguage={panelOverlayTranslation.language}
+          sourceLanguage={panelOverlayTranslation.sourceLanguage}
           translatedLyrics={panelOverlayTranslation.translatedLyrics}
           lyrics={panelOverlayTranslation.lyrics}
           lyricsLoading={panelOverlayTranslation.lyricsLoading}

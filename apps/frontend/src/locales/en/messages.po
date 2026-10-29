@@ -198,6 +198,11 @@ msgstr "Client Settings"
 msgid "Close"
 msgstr "Close"
 
+#: src/pages/PanelOverlay.tsx:68
+#: src/pages/PanelOverlay.tsx:69
+msgid "Close lyrics"
+msgstr "Close lyrics"
+
 #: src/components/Player/PlayerControlsAdditional.tsx:78
 msgid "Close Picture-in-Picture"
 msgstr "Close Picture-in-Picture"
@@ -403,6 +408,7 @@ msgid "Logout"
 msgstr "Logout"
 
 #: src/components/Player/PlayerControlsAdditional.tsx:44
+#: src/pages/PanelOverlay.tsx:63
 msgid "Lyrics"
 msgstr "Lyrics"
 
@@ -455,8 +461,8 @@ msgstr "New playlist"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:64
 #: src/components/PipControls/PipControlsOverlay.tsx:65
-#: src/components/PipControls/PipControlsWindow.tsx:121
-#: src/components/PipControls/PipControlsWindow.tsx:122
+#: src/components/PipControls/PipControlsWindow.tsx:125
+#: src/components/PipControls/PipControlsWindow.tsx:126
 #: src/components/Player/PlayerControlsPlayback.tsx:75
 #: src/components/Player/PlayerControlsPlayback.tsx:76
 msgid "Next"
@@ -485,6 +491,11 @@ msgstr "No albums found for this artist."
 msgid "No artists found"
 msgstr "No artists found"
 
+#: src/components/LyricsViewer.tsx:43
+#: src/components/LyricsViewer.tsx:60
+msgid "No lyrics available for this track"
+msgstr "No lyrics available for this track"
+
 #: src/pages/Center/Search.tsx:312
 #: src/pages/Center/Search.tsx:362
 msgid "No playlists found"
@@ -498,11 +509,15 @@ msgstr "No private or unlisted playlists found"
 msgid "No public playlists found"
 msgstr "No public playlists found"
 
-#: src/components/PipControls/PipControlsWindow.tsx:64
-#: src/components/PipControls/PipControlsWindow.tsx:72
+#: src/components/PipControls/PipControlsWindow.tsx:68
+#: src/components/PipControls/PipControlsWindow.tsx:76
 #: src/components/Player/PlayerControlsInfos.tsx:25
 msgid "No track playing"
 msgstr "No track playing"
+
+#: src/components/LyricsViewer.tsx:35
+msgid "No track selected"
+msgstr "No track selected"
 
 #: src/pages/Center/Search.tsx:270
 #: src/pages/Center/Search.tsx:333
@@ -517,7 +532,7 @@ msgstr "Now playing"
 msgid "Open Picture-in-Picture"
 msgstr "Open Picture-in-Picture"
 
-#: src/hooks/use_panel_overlay_translation.tsx:115
+#: src/hooks/use_panel_overlay_translation.tsx:116
 msgid "Original"
 msgstr "Original"
 
@@ -528,8 +543,8 @@ msgstr "Page not found"
 #: src/components/CollectionView/CollectionView.tsx:85
 #: src/components/PipControls/PipControlsOverlay.tsx:53
 #: src/components/PipControls/PipControlsOverlay.tsx:54
-#: src/components/PipControls/PipControlsWindow.tsx:107
-#: src/components/PipControls/PipControlsWindow.tsx:108
+#: src/components/PipControls/PipControlsWindow.tsx:111
+#: src/components/PipControls/PipControlsWindow.tsx:112
 #: src/components/Player/PlayerControlsPlayback.tsx:60
 #: src/components/Player/PlayerControlsPlayback.tsx:61
 msgid "Pause"
@@ -554,8 +569,8 @@ msgstr "Persistent storage not granted"
 #: src/components/CollectionView/CollectionView.tsx:85
 #: src/components/PipControls/PipControlsOverlay.tsx:53
 #: src/components/PipControls/PipControlsOverlay.tsx:54
-#: src/components/PipControls/PipControlsWindow.tsx:107
-#: src/components/PipControls/PipControlsWindow.tsx:108
+#: src/components/PipControls/PipControlsWindow.tsx:111
+#: src/components/PipControls/PipControlsWindow.tsx:112
 #: src/components/Player/PlayerControlsPlayback.tsx:60
 #: src/components/Player/PlayerControlsPlayback.tsx:61
 msgid "Play"
@@ -575,7 +590,7 @@ msgid "Playback"
 msgstr "Playback"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:39
-#: src/components/PipControls/PipControlsWindow.tsx:94
+#: src/components/PipControls/PipControlsWindow.tsx:98
 #: src/components/Player/PlayerControlsPlayback.tsx:41
 msgid "Playback controls"
 msgstr "Playback controls"
@@ -616,8 +631,8 @@ msgstr "Portuguese"
 
 #: src/components/PipControls/PipControlsOverlay.tsx:43
 #: src/components/PipControls/PipControlsOverlay.tsx:44
-#: src/components/PipControls/PipControlsWindow.tsx:97
-#: src/components/PipControls/PipControlsWindow.tsx:98
+#: src/components/PipControls/PipControlsWindow.tsx:101
+#: src/components/PipControls/PipControlsWindow.tsx:102
 #: src/components/Player/PlayerControlsPlayback.tsx:49
 #: src/components/Player/PlayerControlsPlayback.tsx:50
 msgid "Previous"

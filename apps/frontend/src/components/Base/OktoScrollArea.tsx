@@ -9,6 +9,7 @@ interface OktoScrollAreaProps {
   readonly className?: string;
   readonly noMargin?: boolean;
   readonly children: ReactNode;
+  readonly inert?: boolean;
 }
 
 export function OktoScrollArea(props: OktoScrollAreaProps) {
@@ -16,6 +17,7 @@ export function OktoScrollArea(props: OktoScrollAreaProps) {
     <ScrollArea.Root
       id={props.id}
       className={`oktoscrollarea__root${props.className ? ` ${props.className}` : ""}`}
+      inert={props.inert}
       render={props.render}
     >
       <ScrollArea.Viewport className={"oktoscrollarea__viewport"}>

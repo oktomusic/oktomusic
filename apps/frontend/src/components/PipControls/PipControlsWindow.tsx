@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@base-ui/react/button";
 import { useLingui } from "@lingui/react/macro";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -32,7 +32,11 @@ interface PipControlsWindowProps {
  * The grid + breakpoints are implemented in `PipControls.css` (see `#pip-shell > #pip-shell-inner`).
  */
 export function PipControlsWindow(props: PipControlsWindowProps) {
-  const { t } = useLingui();
+  const { i18n, t } = useLingui();
+
+  useEffect(() => {
+    props.pipDocument.documentElement.setAttribute("lang", i18n.locale);
+  }, [i18n.locale, props.pipDocument]);
 
   const figureRef = useRef<HTMLElement | null>(null);
 

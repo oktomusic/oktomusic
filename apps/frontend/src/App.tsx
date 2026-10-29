@@ -54,7 +54,7 @@ export function App() {
             data-right={rightVisible ? "visible" : "hidden"}
           >
             <PanelLeft />
-            <PanelCenter />
+            <PanelCenter inert={overlayVisible} />
             {overlayVisible && <PanelOverlay />}
             <PanelToastProvider />
             <PanelRight />

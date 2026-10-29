@@ -2,7 +2,7 @@
 
 Self-hosted opinionated music streaming server.
 
-This project uses PNPM.
+This project uses PNPM. Only Chromium browsers less than a year old are supported.
 
 Commits must follow `@commitlint/config-conventional`.
 

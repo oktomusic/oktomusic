@@ -41,6 +41,7 @@ interface TranslationStatus {
 export interface PanelOverlayTranslationState {
   readonly translationEnabled: boolean;
   readonly language: PanelOverlayLanguage;
+  readonly sourceLanguage: string | null;
   readonly setLanguage: (language: PanelOverlayLanguage) => void;
   readonly languageOptions: readonly OktoListboxItem<PanelOverlayLanguage>[];
   readonly showTranslationSpinner: boolean;
@@ -222,6 +223,7 @@ export function usePanelOverlayTranslation(): PanelOverlayTranslationState {
   return {
     translationEnabled,
     language,
+    sourceLanguage: languageDetectionState.detectedLanguage,
     setLanguage,
     languageOptions,
     showTranslationSpinner,
