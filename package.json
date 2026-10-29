@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "keywords": [],
+  "license": "AGPL-3.0-only",
+  "files": [],
   "type": "module",
   "scripts": {
     "lint": "oxlint",

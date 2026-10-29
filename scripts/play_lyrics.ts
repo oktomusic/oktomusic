@@ -112,7 +112,7 @@ async function startKaraoke(lyrics: Lyrics, options: RenderOptions) {
   let printed = 1;
   console.log("");
 
-  const lastEnd = lyrics.length ? lyrics[lyrics.length - 1].te : 0;
+  const lastEnd = lyrics.at(-1)?.te ?? 0;
 
   function tick() {
     const now = Date.now() - start;

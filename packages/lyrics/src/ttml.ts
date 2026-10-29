@@ -32,7 +32,7 @@ function pickRoot(doc: unknown): TtmlRoot | undefined {
 function safeGet(obj: unknown, key: string): unknown {
   if (!isRecord(obj)) return undefined;
   const rec: Record<string, unknown> = obj;
-  return Object.prototype.hasOwnProperty.call(rec, key) ? rec[key] : undefined;
+  return Object.hasOwn(rec, key) ? rec[key] : undefined;
 }
 
 function normalizeParagraphs(
@@ -102,7 +102,7 @@ export function parseTTMLtoLyrics(input: string): Lyrics {
 
     if (te == null) {
       if (tokens.length > 0) {
-        const lastOffset = tokens[tokens.length - 1]?.d ?? 1;
+        const lastOffset = tokens.at(-1)?.d ?? 1;
         te = startMs + Math.max(500, lastOffset + 500);
       } else {
         te = startMs + 2000;
