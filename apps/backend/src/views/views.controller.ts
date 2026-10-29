@@ -1,3 +1,6 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+
 import {
   Controller,
   Get,
@@ -6,6 +9,8 @@ import {
   Next,
   Inject,
   Header,
+  NotFoundException,
+  StreamableFile,
 } from "@nestjs/common";
 import {
   ApiNotFoundResponse,
@@ -182,6 +187,39 @@ export class ViewsController {
   robots(@Res() res: Response) {
     res.type("text/plain");
     res.send("User-agent: *\nDisallow: /\n");
+  }
+
+  @Get("/.well-known/sbom")
+  @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
+  @ApiOperation({
+    summary: "Get the software bill of materials",
+    description:
+      "Returns backend and frontend production dependencies as a CycloneDX SBOM, when generated at build time.",
+  })
+  @ApiProduces("application/vnd.cyclonedx+json")
+  @ApiOkResponse({
+    description: "CycloneDX 1.7 software bill of materials.",
+    schema: { $ref: "https://cyclonedx.org/schema/bom-1.7.schema.json" },
+  })
+  @ApiNotFoundResponse({ description: "The SBOM has not been generated." })
+  async sbom(): Promise<StreamableFile> {
+    try {
+      const file = await fs.readFile(path.join(__dirname, "../sbom.cdx.json"));
+
+      return new StreamableFile(file, {
+        type: "application/vnd.cyclonedx+json",
+        disposition: 'inline; filename="sbom.cdx.json"',
+      });
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        "code" in error &&
+        error.code === "ENOENT"
+      ) {
+        throw new NotFoundException("The SBOM has not been generated.");
+      }
+      throw error;
+    }
   }
 
   @Get("*")

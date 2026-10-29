@@ -60,6 +60,7 @@ COPY packages/vibrant/ packages/vibrant/
 COPY packages/meta-tags/ packages/meta-tags/
 COPY apps/backend/ apps/backend/
 COPY apps/frontend/ apps/frontend/
+COPY scripts/sbom/ scripts/sbom/
 
 # Build the metaflac-parser package
 RUN pnpm run --filter @oktomusic/metaflac-parser build
@@ -85,6 +86,9 @@ RUN pnpm run --filter @oktomusic/frontend build
 # Build the backend
 RUN pnpm run --filter @oktomusic/backend db:generate
 RUN pnpm run --filter @oktomusic/backend build
+
+# Generate production dependency BOMs and merge them into backend/frontend assemblies.
+RUN pnpm run generate:sbom
 
 # Copy frontend dist to backend's public directory (including hidden .vite directory)
 RUN mkdir -p apps/backend/dist/public && \

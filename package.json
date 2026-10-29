@@ -11,6 +11,7 @@
     "format": "oxfmt --check .",
     "format:fix": "oxfmt .",
     "build": "pnpm run --filter \"*\" build",
+    "generate:sbom": "pnpm sbom --sbom-format cyclonedx --prod --filter @oktomusic/backend --out apps/backend/dist/backend.cdx.json && pnpm sbom --sbom-format cyclonedx --prod --filter @oktomusic/frontend --out apps/backend/dist/frontend.cdx.json && node scripts/sbom/merge.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
@@ -38,8 +39,8 @@
     "eslint-plugin-lingui": "^0.16.0",
     "graphql-config": "^5.1.8",
     "husky": "^9.1.7",
-    "oxfmt": "^0.74.0",
-    "oxlint": "^1.89.0",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
     "oxlint-tsgolint": "^7.0.2005",
     "typescript": "catalog:default",
     "vitest": "^5.0.5"
