@@ -22,7 +22,7 @@ LABEL io.artifacthub.package.keywords="music,server,streaming"
 LABEL io.artifacthub.package.license="AGPL-3.0-only"
 LABEL io.artifacthub.package.maintainers='[{"name":"AFCMS","email":"afcm.contact@gmail.com"}]'
 
-RUN npm install --global pnpm@12
+RUN npm install --ignore-scripts --global pnpm@12.16.1
 
 ARG TARGETOS
 ARG TARGETARCH
