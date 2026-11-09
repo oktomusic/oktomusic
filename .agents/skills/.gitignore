@@ -1,1 +1,4 @@
-pnpm-*
+# pnpm
+/apollo-client
+/prisma-json-types-generator
+# pnpm end
