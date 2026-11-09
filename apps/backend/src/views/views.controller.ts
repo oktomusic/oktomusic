@@ -222,6 +222,39 @@ export class ViewsController {
     }
   }
 
+  // https://ai-catalog.io
+
+  @Get("/.well-known/ai-catalog.json")
+  @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
+  @ApiOperation({
+    summary: "Get AI Catalog",
+    description:
+      "Returns the application's [AI Catalog](https://ai-catalog.io).",
+  })
+  @ApiProduces("application/ai-catalog+json")
+  @ApiOkResponse({
+    description: "AI Catalog",
+  })
+  @ApiNotFoundResponse({
+    description:
+      "AI Catalog is disabled when APP_PUBLIC_URL is not configured.",
+  })
+  async aiCatalog(@Res() res: Response) {
+    if (!this.appConf.publicUrl) {
+      return res.sendStatus(404);
+    }
+
+    res.type("application/ai-catalog+json");
+    res.json({
+      specVersion: "1.0",
+      host: {
+        displayName: this.appConf.appName,
+        identifier: `did:web:${new URL(this.appConf.publicUrl).host}`,
+      },
+      entries: [],
+    });
+  }
+
   @Get("*")
   @Header("Cache-Control", "public, max-age=0, s-maxage=0, must-revalidate")
   @ApiOperation({
