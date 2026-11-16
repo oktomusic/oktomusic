@@ -91,6 +91,7 @@ export default defineConfig({
   ignorePatterns: [
     ".agents/skills/**",
     ".github/skills/**",
+    ".github/workflows/actions.lock",
     "apps/backend/dist",
     "apps/backend/prisma/migrations/**",
     "apps/backend/src/api/schema.gql",

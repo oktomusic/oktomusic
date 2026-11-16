@@ -242,6 +242,7 @@
   },
   "files.associations": {
     "**/.github/workflows/*.{yml,yaml}": "github-actions-workflow",
+    "**/.github/workflows/actions.lock": "yaml",
     "_headers": "plaintext", // Cloudflare _headers file, tend to be misdetected as TypeScript
     "llms.txt": "markdown",
     "*.ttml": "xml",
