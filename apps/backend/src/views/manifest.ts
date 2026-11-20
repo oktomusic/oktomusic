@@ -1,4 +1,7 @@
-// Copied from Vite PWA plugin types to avoid adding it as a dependency
+// SPDX-License-Identifier: MIT
+
+// Copied from Unplugin PWA plugin types to avoid adding it as a dependency
+// https://github.com/vite-pwa/unplugin-pwa/blob/main/packages/core/src/types.ts
 
 interface ShareTargetFiles {
   name: string;
