@@ -421,13 +421,13 @@ jobs:
         run: |
           mkdir -p ~/.local/share/fonts
 
-          wget -O Inter.zip \
+          wget --secure-protocol=TLSv1_2 --max-redirect=1 -q -O Inter.zip \
             https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip
 
           unzip -j Inter.zip "Inter.ttc" -d ~/.local/share/fonts
           rm Inter.zip
 
-          wget -O ~/.local/share/fonts/comic-shanns.ttf \
+          wget --secure-protocol=TLSv1_2 --max-redirect=1 -q -O ~/.local/share/fonts/comic-shanns.ttf \
             https://github.com/shannpersand/comic-shanns/raw/refs/heads/master/v2/comic%20shanns%202.ttf
 
           fc-cache --force --verbose
