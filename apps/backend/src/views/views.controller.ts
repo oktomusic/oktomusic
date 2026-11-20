@@ -61,6 +61,9 @@ export class ViewsController {
       name: this.appConf.appName,
       short_name: this.appConf.appShortName,
       description: "Your personal music streaming server",
+      description_localized: {
+        "fr-FR": "Votre serveur de streaming musical personnel",
+      },
       categories: ["music", "entertainment"],
       start_url: "/",
       display: "standalone",
