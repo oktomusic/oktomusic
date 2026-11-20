@@ -143,14 +143,14 @@ function rawTrackToJspf(raw: RawTrack): JspfTrack {
   if (raw.trackNum != null) {
     const n =
       typeof raw.trackNum === "string"
-        ? parseInt(raw.trackNum, 10)
+        ? Number.parseInt(raw.trackNum, 10)
         : raw.trackNum;
     if (!isNaN(n)) track.trackNum = n;
   }
   if (raw.duration != null) {
     const d =
       typeof raw.duration === "string"
-        ? parseInt(raw.duration, 10)
+        ? Number.parseInt(raw.duration, 10)
         : raw.duration;
     if (!isNaN(d)) track.duration = d;
   }

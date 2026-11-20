@@ -73,11 +73,16 @@ export class FFmpegService {
 
       const audioStream = parsed.streams[0];
 
-      const sampleRate = parseInt(audioStream.sample_rate, 10);
-      const bitsPerRawSample = parseInt(audioStream.bits_per_raw_sample, 10);
-      const durationMs = Math.floor(parseFloat(parsed.format.duration) * 1000);
-      const fileSize = parseInt(parsed.format.size, 10);
-      const bitRate = parseInt(parsed.format.bit_rate, 10);
+      const sampleRate = Number.parseInt(audioStream.sample_rate, 10);
+      const bitsPerRawSample = Number.parseInt(
+        audioStream.bits_per_raw_sample,
+        10,
+      );
+      const durationMs = Math.floor(
+        Number.parseFloat(parsed.format.duration) * 1000,
+      );
+      const fileSize = Number.parseInt(parsed.format.size, 10);
+      const bitRate = Number.parseInt(parsed.format.bit_rate, 10);
 
       return {
         sampleRate,

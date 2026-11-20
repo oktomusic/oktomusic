@@ -31,7 +31,7 @@ export function parseM3U(m3u: string, name: string): JspfPlaylist {
       if (!match) {
         throw new Error(`Invalid EXTINF line: ${lines[i]}`);
       }
-      const durationMs = parseInt(match[1], 10) * 1000;
+      const durationMs = Number.parseInt(match[1], 10) * 1000;
       const title = match[2];
       i++;
       if (i >= lines.length) {
